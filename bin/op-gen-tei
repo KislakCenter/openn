@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LIB_DIR=$HOME/dev/Java/SaxonHE9-5-1-5J
+LIB_DIR=$HOME/Java/SaxonHE9-5-1-5J
 CLASSPATH=$CLASSPATH:$LIB_DIR/saxon9he.jar
 
 java -cp $CLASSPATH net.sf.saxon.Transform -s:$1 -xsl:$2
