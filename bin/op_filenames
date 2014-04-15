@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+
+"""OP Filenames
+Extract filenames from Penn in Hand XML and return them in order.
+
+"""
+
+# optparse is both easy to use and produces clean code
+# the main optparse docs can be found here:
+# http://docs.python.org/library/optparse.html
+# there's a much better tutorial that works you through optparse
+# starting with a simple example and slowly adding complexity.
+from optparse import OptionParser
+import os
+import sys
+from lxml import etree
+
+
+def filenames(data):
+    tree = etree.parse(data)
+    pages = tree.xpath("//xml[@name='pages']/page")
+    out = []
+    for page in pages:
+        out.append(page.attrib['image'])
+    return out
+
+def main(cmdline=None):
+    parser = make_parser()
+
+    opts, args = parser.parse_args(cmdline)
+
+    if len(args) != 1:
+        parser.error("Wrong number of arguments")
+
+    xml = args[0]
+    if not os.path.isfile(xml):
+        parser.error("Could not find file: " + xml)
+
+    for name in filenames(open(xml)):
+        print name
+
+    return 0
+
+def make_parser():
+    """Construct an option parser"""
+
+    usage = """%prog XML
+
+Extract filenames from Penn in Hand XML and return them in order.
+"""
+
+    parser = OptionParser(usage)
+
+    return parser
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
+
