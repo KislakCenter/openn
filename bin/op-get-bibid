@@ -2,17 +2,7 @@
 # -ex:
 # bail on errors and show debugging stuff
 read -r -d '' HELP <<-'EOF'
-For SOURCE_DIR, 
-  
-  collect metadata using BibID
-  confirm directory name matches object name
-  extract the file names from the XML
-  compare XML file names with actual file names
-  copy master TIFFs (with correct names to destination) to destination folder
-  generate derivatives
-  create manifest
-  create TEI with new filenames and paths
-  
+Snatch the BIBID from the jaws of SOURCE_DIR.
 
 EOF
 
@@ -41,10 +31,10 @@ source "`dirname $0`/op-functions"
 LOGFILE=LOG_${COMMAND}_`tstamp`.log
 
 usage() {
-   echo "Usage: $cmd SOURCE_DIR"
-   echo ""
-   echo "Prepare SOURCE_DIR for OPenn."
-   echo ""
+  echo "Usage: $cmd SOURCE_DIR"
+  echo
+  echo "Snatch the BIBID from the jaws of SOURCE_DIR."
+  echo
 }
 
 print_help() {
@@ -74,19 +64,18 @@ shift $((OPTIND-1))
 
 ################################################################################
 ### THESCRIPT
-
 SOURCE_DIR="$1"
-if dir_exists "$SOURCE_DIR" SOURCE_DIR ; then
-  message "Using SOURCE_DIR: $SOURCE_DIR"
+if dir_exists "$SOURCE_DIR" SOURCE_DIR; then
+  :
 else
   error "Error finding SOURCE_DIR"
 fi
 
-this_dir=`dirname $0`
-
-BIBID=`./${this_dir}/op-get-bibid "$SOURCE_DIR"`
-if [ $? -eq 0 ]; then
-  message "Using ID: $BIBID"
+ID_FILE="$SOURCE_DIR/bibid.txt"
+if [ -f "$ID_FILE" ]; then
+  cat "$ID_FILE"
+else
+  error "Could not find $ID_FILE"
 fi
 
 
