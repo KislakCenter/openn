@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><page><response xmlns:cinclude="http://apache.org/cocoon/include/1.0"><links xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere" detail-page-params=".html?id=MEDREN_999999999999&amp;"><feeds><str name="media.rss">feeds/pageturn.mrss?rotation=0&amp;id=MEDREN_999999999999 OR id:MEDREN_999999999999_*&amp;rows=500</str><str name="rss">feeds/pageturn.rss?id=MEDREN_999999999999&amp;rotation=0&amp;</str><str name="ical">feeds/calendar.ics?id=MEDREN_999999999999&amp;rotation=0&amp;</str><str name="url">http://dla.library.upenn.edu/dla/medren/pageturn.html?id=MEDREN_999999999999&amp;rotation=0&amp;rotation=0&amp;</str><str name="display-record" display="[more information]">record.html?id=MEDREN_999999999999&amp;rotation=0&amp;</str><str name="enable-fullview" display="Enable Full View">pageturn.html?id=MEDREN_999999999999&amp;rotation=0&amp;fullview=true</str><str name="rotate-right" display="Rotate Right">pageturn.html?id=MEDREN_999999999999&amp;rotation=90</str><str name="rotate-left" display="Rotate Left">pageturn.html?id=MEDREN_999999999999&amp;rotation=270</str><str name="handle">http://hdl.library.upenn.edu/1017/d/medren/999999999999</str></feeds><sidebar><str name="mailto" display="Contact Us">mailto:shawcros@pobox.upenn.edu?subject=Penn%20in%20Hand%3A%20Selected%20Manuscripts%20%28DLA%20Collection%29&amp;body=Question%20regarding%20this%20page%3A%20http%3A%2F%2Fdla.library.upenn.edu%2Fdla%2Fmedren%2Fpageturn.html%3Fid%3DMEDREN_999999999999%26rotation%3D0%26</str></sidebar></links><params xmlns:my="http://nowhere"><str name="q"/><str name="id">MEDREN_999999999999</str><str name="fq"/><str name="start">0</str><str name="rows">25</str><str name="sort">score desc, date_sort asc</str><str name="page">pageturn</str><str name="browse"/><str name="facet">true</str><str name="view"/><str name="detail">brief</str><str name="showall"/><str name="fullview"/><info><str name="params-forward">true</str><str name="url">http://dla.library.upenn.edu/dla</str></info><page-specific name="pageturn"><str name="currentpage">1</str><str name="doubleside">1</str><str name="filter"/><str name="rotation">0</str><str name="region"/><str name="filetype"/><str name="image"/><str name="naturalwidth"/><str name="naturalheight"/><str name="levels"/><str name="zoom"/><str name="level"/><str name="oldwidth"/><str name="oldheight"/><str name="oldx"/><str name="oldy"/><str name="x"/><str name="y"/><str name="size"/><str name="oldsize"/></page-specific></params>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">1</int><lst name="params"><str name="facet">true</str><str name="sort">score desc, date_sort asc</str><str name="fl">*</str><str name="facet.mincount">1</str><str name="facet.sort">true</str><str name="q">id:MEDREN_999999999999</str><str name="facet.limit">5</str><str name="f..facet.limit">400</str><str name="f..facet.sort">false</str><arr name="facet.field"><str>collection_facet</str><str>has_999_facet</str><str>facsimile_facet</str><str>illuminated_facet</str><str>illustrated_facet</str><str>notated_facet</str><str>language_facet</str><str>century_facet</str><str>date_facet</str><str>genre_facet</str><str>subject_facet</str><str>geography_facet</str><str>author_facet</str><str>related_names_facet</str><str>page_material_facet</str></arr><str name="qt">dla-standard</str><str name="rows">25</str></lst></lst><result name="response" numFound="0" start="0"/><lst name="facet_counts"><lst xmlns:my="http://nowhere" name="current_facets"/><lst name="facet_queries"/><lst xmlns:my="http://nowhere" name="facet_fields"><lst name="collection_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=collection_facet&amp;</str></lst></lst><lst name="has_999_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=has_999_facet&amp;</str></lst></lst><lst name="facsimile_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=facsimile_facet&amp;</str></lst></lst><lst name="illuminated_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=illuminated_facet&amp;</str></lst></lst><lst name="illustrated_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=illustrated_facet&amp;</str></lst></lst><lst name="notated_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=notated_facet&amp;</str></lst></lst><lst name="language_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=language_facet&amp;</str></lst></lst><lst name="century_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=century_facet&amp;</str></lst></lst><lst name="date_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=date_facet&amp;</str></lst></lst><lst name="genre_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=genre_facet&amp;</str></lst></lst><lst name="subject_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=subject_facet&amp;</str></lst></lst><lst name="geography_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=geography_facet&amp;</str></lst></lst><lst name="author_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=author_facet&amp;</str></lst></lst><lst name="related_names_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=related_names_facet&amp;</str></lst></lst><lst name="page_material_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_999999999999&amp;browse=page_material_facet&amp;</str></lst></lst></lst><lst name="facet_dates"/><lst name="facet_ranges"/></lst>
+</response><params xmlns:my="http://nowhere" xmlns:h="http://apache.org/cocoon/request/2.0"><param name="id">MEDREN_999999999999</param><context><param name="solr-url">http://localhost:8082/index/medren/select/</param><param name="collection">medren</param><param name="requested-page">pageturn</param><param name="host">dla.library.upenn.edu</param><param name="request">http://dla.library.upenn.edu/dla/medren/pageturn.xml?id=MEDREN_999999999999</param></context></params><collection xmlns:my="http://nowhere" xmlns:dla-caption="http://dla.upennlib/caption"><ref/><name>Penn in Hand: Selected Manuscripts</name><shortname>medren</shortname><record detail="brief" exclude-subfield="6">
+    <include field="100" label="Author" exclude-subfield="6"/>
+    <include field="110" label="Author" exclude-subfield="6"/>
+    <include field="130" label="Title" exclude-subfield="6"/>
+    <include field="245" label="Title" exclude-subfield="6"/>
+    <include field="240" label="Title" exclude-subfield="6"/>
+    <include field="260" label="Origin" exclude-subfield="6"/>
+    <include field="300" label="Physical description" exclude-subfield="6"/>
+	<include field="520" label="Summary" exclude-subfield="6"/>
+	<include field="500" label="Notes" delimiter=" - " exclude-subfield="6"/>    
+	<include field="524" label="Cite as" exclude-subfield="6"/> 
+    <include field="773" label="Contained in" exclude-subfield="6"/>
+    <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+    <include field="880" label="Vernacular script" exclude-subfield="6"/>
+  </record><record detail="detailed" exclude-subfield="6">
+    <include field="100" label="Author" exclude-subfield="6"/>
+    <include field="110" label="Author" exclude-subfield="6"/>
+    <include field="130" label="Title" exclude-subfield="6"/>
+    <include field="245" label="Title" exclude-subfield="6"/>
+    <include field="240" label="Title" exclude-subfield="6"/>
+    <include field="260" label="Origin" exclude-subfield="6"/>
+    <include field="300" label="Physical description" exclude-subfield="6"/>
+    <include field="546" label="Language(s)" exclude-subfield="6"/>
+	<include field="545" label="Biographical / Organizational History" exclude-subfield="6"/>
+    <include field="520" label="Summary" exclude-subfield="6"/>    
+    <include field="505" label="Contents" exclude-subfield="6"/>
+	<include field="561" label="Provenance" exclude-subfield="6"/>
+	<include field="700" label="Related names" exclude-subfield="6"/>
+    <include field="710" label="Related names" exclude-subfield="6"/>
+	<include field="600" label="Subject" exclude-subfield="6"/>
+    <include field="610" label="Subject" delimiter=" - "/>
+    <include field="630" label="Subject" delimiter=" - "/>
+    <include field="650" label="Subject" delimiter=" - "/>
+    <include field="651" label="Subject" delimiter=" - "/>
+    <include field="655" label="Form / Genre" exclude-subfield="2" delimiter=" - "/>
+    <include field="500" label="Notes" exclude-subfield="6"/>
+    <include field="530" label="Other formats" exclude-subfield="6"/>
+    <include field="510" label="Indexed / Referenced in" exclude-subfield="6"/>
+    <include field="581" label="Publications of or about this material" exclude-subfield="6"/> 
+    <include field="246" label="Other Titles" exclude-subfield="6"/>
+    <include field="730" label="Other Titles" exclude-subfield="6"/>
+    <include field="740" label="Other Titles" exclude-subfield="6"/>
+	<include field="524" label="Cite as" exclude-subfield="6"/>    
+    <include field="773" label="Contained in" exclude-subfield="6"/>
+    <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+    <include field="880" label="Vernacular script" exclude-subfield="6"/>
+  </record><view>html</view><view>html</view><rows>25,50,100</rows><fl>*</fl><sort>score desc, date_sort asc</sort><style>rbm</style><advancedsearch.field type="number">century_search</advancedsearch.field><advancedsearch.field>language_search</advancedsearch.field><advancedsearch.field>place_search</advancedsearch.field><advancedsearch.field>subject_search</advancedsearch.field><advancedsearch.field>descriptive_notes_search</advancedsearch.field><advancedsearch.field>author_search</advancedsearch.field><advancedsearch.field display="Other Contributors/Owners">other_contributors_search</advancedsearch.field><advancedsearch.textcount>7</advancedsearch.textcount><advancedsearch.numbercount>1</advancedsearch.numbercount><advancedsearch.texthelp>(For example: <i>france</i> ; <i>german*</i> ; <i>german?</i> ;  <i>france germany italy</i>. 
+    See the <a href="ancillary.html?id=collections/rbm/medren/advancedsearch">Advanced Search Help</a> for more details)</advancedsearch.texthelp><facet>true</facet><facet.mincount>1</facet.mincount><facet.limit>5</facet.limit><facet.field>page_material_facet</facet.field><facet.field>related_names_facet</facet.field><facet.field>author_facet</facet.field><facet.field>geography_facet</facet.field><facet.field>subject_facet</facet.field><facet.field>genre_facet</facet.field><facet.field>date_facet</facet.field><facet.field>century_facet</facet.field><facet.field>language_facet</facet.field><facet.field>notated_facet</facet.field><facet.field>illustrated_facet</facet.field><facet.field>illuminated_facet</facet.field><facet.field>facsimile_facet</facet.field><facet.field>has_999_facet</facet.field><facet.field>collection_facet</facet.field><rss icon="true">
+    <title-field>titledate_field</title-field>
+  </rss><sortoptions>title_sort, author_sort, date_sort, 
+    date_facsimile_added_sort</sortoptions><caption context="title">
+<!--  doesn't give priority to LJS collection
+  	<dla-caption:if not-empty="collection_field">
+  		<div class="fromcollection">
+  			from the 
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field"  src="collection_field"/>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+-->
+
+  	<dla-caption:if not-empty="LJScollection_field">
+  		<div class="fromcollection">
+  			<html>
+  				<dla-caption:link-external type="field" src="LJScollectionSEARCH_URL_field">
+  					<dla-caption:field type="field" src="LJScollection_field"/><span class="coll-title">:</span>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+  	<dla-caption:if empty="LJScollection_field">
+  		<div class="fromcollection">
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field" src="collection_field"/><span class="coll-title">:</span>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+
+
+
+
+
+    <span class="recordtitlechrome">
+      <dla-caption:field type="field" src="call_number_field"/>
+      <dla-caption:if not-empty="call_number_field"> - </dla-caption:if>
+      <dla-caption:field type="field" src="primary_author_field"/>
+      <dla-caption:if not-empty="primary_author_field"> - </dla-caption:if>
+      <dla-caption:field type="field" src="title_field"/>
+    </span>
+  </caption><caption context="mobile">
+
+			
+			 <div style="font-family: Verdana, arial, sans-serif; font-size:13px; margin-bottom:7px;line-height:130%;">
+				 <div><dla-caption:field type="field" src="call_number_field"/></div>
+				 <div>
+					<dla-caption:link-to-detail>
+						<dla-caption:field type="field" src="title_field"/>
+					 </dla-caption:link-to-detail>
+				 </div>
+				 <div>				 
+					 <dla-caption:if equal="facsimile_field, {Yes}">
+					    <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*" style="border: none;"/>Facsimile available</dla-caption:link-to-detail>
+					  </dla-caption:if>
+		            </div>
+				 <div style="margin-bottom: 10px; border-bottom: dotted 1px #999;">
+						<dla-caption:if not-empty="origin_field">
+							 <div><dla-caption:field type="field" src="origin_field"/></div> 
+						</dla-caption:if> 				    
+						<dla-caption:if sort="date_facsimile_added_sort">
+							 <dla-caption:if not-empty="date_facsimile_added_field">
+							    <div class="facadded">Facsimile added: <dla-caption:field type="field" src="date_facsimile_added_field"/></div>	
+							 </dla-caption:if>
+						</dla-caption:if>
+				</div>
+			</div>
+
+	</caption><caption context="results">				
+     <tr class="medrenresultrecord">
+        <td class="oneresult">          	 
+           <div class="callno">
+	     <dla-caption:field type="field" src="call_number_field"/>
+	      <dla-caption:if equal="facsimile_field, {Yes}">
+	         <span class="facavail">       <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*"/>Facsimile available</dla-caption:link-to-detail></span>
+	       </dla-caption:if> 
+	   </div>
+			
+	   <dla-caption:if sort="date_facsimile_added_field">
+	      <dla-caption:if not-empty="date_facsimile_added_field">
+	         <div class="facadded">Facsimile added: <dla-caption:field type="field" src="date_facsimile_added_field"/></div>	
+	      </dla-caption:if>
+	   </dla-caption:if>			
+			             
+               
+           <dla-caption:if not-empty="primary_author_field">
+             <div><dla-caption:field type="field" src="primary_author_field"/></div>
+	   </dla-caption:if>                
+	   <div class="medrenresultstitle">
+	      <dla-caption:link-to-detail>
+	      	<dla-caption:field type="field" src="title_field"/>
+	      </dla-caption:link-to-detail>
+	   </div>                                       
+          
+           <dla-caption:if not-empty="origin_field">
+	      <div class="origin"><dla-caption:field type="field" src="origin_field"/></div> 
+	   </dla-caption:if>                       
+        </td>
+        <td class="holdresultsdate">          	
+           <div><dla-caption:if not-empty="probable_date_field"><dla-caption:field type="field" src="probable_date_field"/></dla-caption:if></div>
+        </td>
+     </tr>
+  </caption><caption context="image wall">
+            <div class="thumbonly">
+		  <dla-caption:link-to-detail extra-params-field="page_param">
+                <img>
+                    <dla-caption:attribute name="src">../images/medren/<dla-caption:field type="field" src="id"/>-<dla-caption:field type="field" src="page_param"/>.jpg</dla-caption:attribute>				
+				<dla-caption:attribute name="title">
+					<dla-caption:field type="field" src="title"/>
+				</dla-caption:attribute>
+				<dla-caption:attribute name="alt">
+					<dla-caption:field type="field" src="title"/>
+				</dla-caption:attribute>
+				<dla-caption:attribute name="width">200px</dla-caption:attribute>
+				<dla-caption:attribute name="height">200px</dla-caption:attribute>
+                </img>
+            </dla-caption:link-to-detail>
+		  </div>
+	</caption><stickyfacets>collection_facet</stickyfacets><footeremail>rbml@pobox.upenn.edu</footeremail><footermailto>rbml@pobox.upenn.edu,shawcros@pobox.upenn.edu</footermailto><poweredby>This site has been made possible through a grant from the National
+    Endowment to the Humanities.</poweredby><maxzoomlevels>5</maxzoomlevels><noresultsmessage>
+    <div class="noresults">
+      Sorry, no results matched your search terms.
+    </div>
+  </noresultsmessage><tocEntries>
+  	<entry name="toc" display="Contents"/>
+  	<entry name="ill" display="Illustrations"/>
+  </tocEntries><tabs type="pageturn">
+         <tab name="View Manuscript" target="pageturn"/>
+         <tab name="View Provenance &amp; Subject Details" target="record"/>
+    </tabs><solr-url>http://localhost:8082/index/medren/select/</solr-url><services name="Navigating the Collection" display="block" class="recordDescription">
+    <service name="Collection Home" link="index.html"/>
+    <service name="Search Strategies" link="ancillary.html?id=collections/brinton/searchdla"/>
+    <service type="back-to-results"/>
+    <service name="Advanced Search" link="advancedsearch.html"/>
+    <service name="New: Manuscripts recently digitized" link="search.html?sort=date_facsimile_added_sort%20desc&amp;showall=sort&amp;fq=facsimile_facet%3A%22Yes%22"/>
+  </services><services name="Manuscripts at Penn">
+    <service name="Overview" link="ancillary.html?id=collections/rbm/mss/mss"/>
+    <service name="Schoenberg Database of Manuscripts" link="http://hdl.library.upenn.edu/1017/59753"/>
+    <service name="Manuscripts on Microfilm" link="http://www.library.upenn.edu/collections/microforms/medmss.html "/>
+  </services><services name="Information &amp; Contacts" display="block" class="recordDescription">
+    <service type="mailto" address="shawcros@pobox.upenn.edu" name="Contact Us" body="Question regarding this page: " appendurl="true"/>
+    <service name="Copyright &amp; Permissions" link="ancillary.html?id=collections/brinton/copyright"/>
+  </services><services name="Rare Book &amp; Manuscript Library" link="http://www.library.upenn.edu/rbm/">
+    <service name="Access" link="ancillary.html?id=access/rbm"/>
+    <service name="Hours" link="http://events.library.upenn.edu/cgi-bin/calendar.cgi?library=rbm;size=large"/>
+    <service name="Locate on Campus" link="http://hdl.library.upenn.edu/1017/82076"/>
+    <service name="Services" link="ancillary.html?id=rbm/services"/>
+    <service name="Staff" link="http://dla.library.upenn.edu/dla/staff/search.html?fq=library_facet%3A%22Rare%20Book%20%26%20Manuscript%20Library%22"/>
+    <service name="Visitor Information" link="http://www.library.upenn.edu/access/visitors/visitors.html"/>
+  </services><services name="NEH Grant Information" link="ancillary.html?id=collections/manuscripts/grant"> </services><maps metadataPrefix="marc21">
+    <map to="marc:record">marcrecord</map>
+  </maps><maps metadataPrefix="oai_dc">
+    <map to="title">title_field</map>
+    <map to="contributor">author_field</map>
+    <map to="coverage"/>
+    <map to="creator"/>
+    <map to="date">probable_date_field</map>
+    <map to="description"/>
+    <map to="format"/>
+    <map to="identifier">id</map>
+    <map to="language">language_field</map>
+    <map to="publisher"/>
+    <map to="relation"/>
+    <map to="rights"/>
+    <map to="source"/>
+    <map to="subject">geography_field</map>
+    <map to="subject">subject_field</map>
+    <map to="subject">genre_field</map>
+    <map to="type"/>
+  </maps><maps metadataPrefix="dla">
+    <map to="datestamp">last_update</map>
+  </maps></collection><defaults xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere"><param name="start">0</param><param name="rows">25</param><param name="facet.offset">0</param><param name="browse.limit">400</param><param name="browse.sort">false</param><param name="sort">score desc, date_sort asc</param><param name="facet.limit">5</param><param name="facet.mincount">1</param></defaults><recordinfo xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere" xmlns:marc="http://www.loc.gov/MARC21/slim" detail="brief"/></page>
