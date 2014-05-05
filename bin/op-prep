@@ -1,0 +1,173 @@
+#!/usr/bin/env python
+
+"""Module summary
+
+-  collect metadata using BibID
+-  confirm directory name matches object name
+-  extract the file names from the XML
+  compare XML file names with actual file names
+  generate new names using BibID
+  copy master TIFFs (with correct names to destination) to destination folder
+  generate derivatives
+  create manifest
+  create TEI with new filenames and paths
+"""
+
+# optparse is both easy to use and produces clean code
+# the main optparse docs can be found here:
+# http://docs.python.org/library/optparse.html
+# there's a much better tutorial that works you through optparse
+# starting with a simple example and slowly adding complexity.
+from optparse import OptionParser
+import os
+import glob
+import sys
+import re
+import httplib
+import urllib2
+from lxml import etree
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../lib'))
+from openn_exception import OPennException
+from openn_functions import *
+
+
+HOST = "dla.library.upenn.edu"
+PATH = "/dla/medren/pageturn.xml?id=MEDREN_{0}"
+
+def cmd():
+    return os.path.basename(__file__)
+
+def get_bibid(source_dir):
+    if not os.path.exists(source_dir):
+        raise OPennException("Could not find source_dir: %s" % source_dir)
+    bibid_txt = os.path.join(source_dir, 'bibid.txt')
+
+    if not os.path.exists(bibid_txt):
+        raise OPennException("Could not find bibid.txt: %s" % bibid_txt)
+    bibid = open(bibid_txt).read().strip()
+
+    if not re.match('\d+$', bibid):
+        raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
+
+    return bibid
+
+def full_url(bibid):
+    return 'http://{0}{1}'.format(HOST, PATH.format(bibid))
+
+def check_url(bibid):
+    conn = httplib.HTTPConnection(HOST)
+    conn.request("HEAD", PATH.format(bibid))
+    res = conn.getresponse()
+    return res.status
+
+def sys_file_names(source_dir):
+    files =  glob.glob(source_dir + '/*.tif')
+
+def xml_file_names(pih_xml):
+    # //xml[@name='pages']/page/@image
+    f = open(pih_xml)
+    tree = etree.parse(f)
+    r = tree.xpath('//xml[@name="pages"]/page/@image')
+    for i in range(len(r)):
+        r[i] += '.tif'
+    return r
+
+def check_file_names(source_dir, pih_xml):
+    # print sys_file_names(source_dir)
+    expected = xml_file_names(pih_xml)
+    missing = []
+    for file in expected:
+        path = os.path.join(source_dir, file)
+        if not os.path.exists(path):
+            missing.append(file)
+    if len(missing) > 0:
+        smiss = ', '.join(missing)
+        raise OPennException("Expected images are missing from %s: %s" % (source_dir, smiss))
+
+def get_xml(bibid):
+    status = check_url(bibid)
+    if status != 200:
+        raise OPennException('Got status %d calling: %s' % (status, full_url(bibid)))
+    return urllib2.urlopen(full_url(bibid)).read()
+
+def write_xml(source_dir, bibid):
+    outfile = os.path.join(source_dir, 'pih_{0}.xml'.format(bibid))
+    if os.path.exists(outfile):
+        backup = '{0}-{1}'.format(outfile, tstamp())
+        warning(cmd(), 'Backing up existing XML file {0} to {1}'.format(outfile, backup))
+        os.rename(outfile, backup)
+
+    f = open(outfile, 'w+')
+    f.write(get_xml(bibid))
+    return outfile
+
+def matches_folder_name(source_dir, call_no):
+    s = re.sub(' +', '', call_no)
+    s = re.sub('\.', '', s)
+    s = s.lower()
+    return os.path.basename(source_dir) == s
+
+def check_valid_xml(source_dir,pih_xml):
+    f = open(pih_xml)
+    tree = etree.parse(f)
+    r = tree.xpath("/page/response/result/doc/arr[@name='call_number_field']/str")
+
+    if len(r) < 1:
+        raise OPennException('No call number found in PIH XML: %s' % pih_xml)
+
+    call_no = r[0].text
+    if not matches_folder_name(source_dir, call_no):
+        raise OPennException('Folder name %s does not match call_no %s' % (source_dir, call_no))
+
+def main(cmdline=None):
+    """Get XML main function.
+    """
+    status = 0
+    parser = make_parser()
+
+    opts, args = parser.parse_args(cmdline)
+
+    if len(args) != 1:
+        parser.error('Wrong number of arguments')
+
+    source_dir = args[0]
+
+    try:
+        bibid  = get_bibid(source_dir)
+        pih_xml = write_xml(source_dir, bibid)
+        message(cmd(), 'Wrote PIH XML to: %s' % pih_xml)
+        check_valid_xml(source_dir,pih_xml)
+        check_file_names(source_dir, pih_xml)
+    except OPennException as ex:
+        # error_no_exit(cmd(), str(ex))
+        status = 4
+        parser.error(str(ex))
+
+    return status
+
+
+def make_parser():
+    """get_xml option parser"""
+
+    usage = """%prog SOURCE_DIR
+
+Prepare the given source diretory for OPenn.
+
+SOURCE_DIR contains a set of manuscript or book image TIFF files, a
+sha1manifest.txt file, and a file bibid.txt which contains the bibid for the
+given book or manuscript.
+"""
+
+    parser = OptionParser(usage)
+
+    return parser
+
+if __name__ == "__main__":
+    # this runs when the application is run from the command
+    # it grabs sys.argv[1:] which is everything after the program name
+    # and passes it to main
+    # the return value from main is then used as the argument to
+    # sys.exit, which you can test for in the shell.
+    # program exit codes are usually 0 for ok, and non-zero for something
+    # going wrong.
+    sys.exit(main(sys.argv[1:]))
