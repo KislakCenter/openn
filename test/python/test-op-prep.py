@@ -38,53 +38,67 @@ class TestOpPrep(unittest.TestCase):
                 stdout=subprocess.PIPE)
 
     def test_run(self):
+        # setup
         self.stage_template()
+        # run
         p = self.build_command()
         out, err = p.communicate()
+        # test
         self.assertEqual(0, p.returncode, err)
 
     def test_bad_source_dir(self):
+        # run
         p = self.build_command()
         out, err = p.communicate()
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("Could not find source_dir", err) is not None)
 
     def test_no_bibidtxt(self):
+        # setup
         os.mkdir(TestOpPrep.staged_source)
+        # run
         p = self.build_command()
+        # test
         out, err = p.communicate()
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("Could not find bibid.txt", err) is not None)
 
     def test_bad_bibid(self):
+        # setup
         os.mkdir(TestOpPrep.staged_source)
         # create a bad bibid value
         bibid = open(os.path.join(TestOpPrep.staged_source, 'bibid.txt'), 'w')
         bibid.write('1234x')
         bibid.close()
-
+        # run
         p = self.build_command()
         out, err = p.communicate()
+        # test
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("Bad BibID.*'1234x'", err) is not None)
 
     def test_missing_files(self):
+        # setup
         self.stage_template()
         tiff = glob.glob(os.path.join(TestOpPrep.staged_source, '*.tif'))[-1]
         os.remove(tiff)
+        # run
         p = self.build_command()
         out, err = p.communicate()
+        # test
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("Expected images", err) is not None)
 
     def test_no_call_num(self):
+        # setup
         os.mkdir(TestOpPrep.staged_source)
         bibid = open(os.path.join(TestOpPrep.staged_source, 'bibid.txt'), 'w')
         bibid.write('9999999999')
         bibid.close()
-
+        # run
         p = self.build_command()
         out, err = p.communicate()
+        # test
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("No call number.*9999999999", err) is not None)
 
