@@ -21,3 +21,13 @@ DATABASES = {
 INSTALLED_APPS = ( 
         'openn', 'south',
         )   
+
+COLLECTIONS = {
+        'medren': {
+            'prep_class': 'openn.prep.medren_prep.MedrenPrep',
+            'kwargs' : { 
+                'host': 'dla.library.upenn.edu', 
+                'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
+                },
+            },
+        }

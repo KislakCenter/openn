@@ -9,9 +9,9 @@ import sys
 import re
 import shutil
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../lib'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
-from openn_exception import OPennException
+from openn.openn_exception import OPennException
 class TestOpPrep(unittest.TestCase):
 
     this_dir      = os.path.dirname(os.path.abspath(__file__))
