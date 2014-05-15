@@ -3,6 +3,68 @@ OPenn scripts
 
 ## Workflow
 
+#### High level
+
+- Create package (metadata, derivs, manifest, TEI, browse HTML, desc'n HTML)
+
+- Update TOC file
+
+- Push packages and update indices
+
+#### Proposed package creation process
+
+The package generation script will be called like this:
+
+       $ create_pkg COLLECTION SOURCE_DIR
+
+Where `COLLECTION` is a name of collection and indicates that the `SOURCE_DIR`
+will have a particular known format and can be processed according to a known
+set of rules. Each collection will have its data arrive in a certain directory
+structure and have particular source or format for its metadata (e.g., Penn in
+Hand XML metadata).
+
+This script will create a comple package having this format:
+
+    CALL_NUMBER/
+      manifest.txt
+      metadata.xml
+      data/
+        master/
+        thumb/
+        web/
+        CALL_NUMBER_TEI.xml
+        description.html
+        browse.html
+
+
+The package generation will occur in two steps:
+
+1. COLLECTION specific preparation; this will take input data and return a 
+   directory structure as follows:
+
+        CALL_NUMBER/
+          PARTIAL_TEI.xml # lacks facsimile section
+          file_list.json  # list of all files with labels
+          data/
+            image1.tif
+            image2.tif
+            ...
+
+2. The common process will take the prepared directory, and
+      - rename the files using the project format: (0001_0000.tif,
+        0001_0001.tif, 0001_0002.tif, ...)
+      - move the files into data/master
+      - create thumbnail and web JPEG derivatives in thumb and web, resp.
+      - add to the file list the new file names
+      - append the facsimile section to the TEI file, outputting
+        `data/<CALL_NUMBER>_TEI.xml`
+      - generate description.html
+      - generate browse.html
+
+
+
+
+
 - ID MS
 
 - Copy images to scratch disk
@@ -47,3 +109,5 @@ OPenn scripts
 
 - Push data
 
+
+## High level overview
