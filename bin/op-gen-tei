@@ -19,15 +19,22 @@ trap "rm -f $tmp.?; exit 1" 0 1 2 3 13 15
 
 ################################################################################
 ### CONFIG
-XSL_DIR=$(cd $(dirname $0)/../xsl; pwd)
-PIH_TO_TEI_XSL=$XSL_DIR/pih2tei.xsl
 
 ################################################################################
 #### USAGE AND ERRORS
 COMMAND=`basename $0`
 # Load basic functions; primarily messaging functions
 # Rename file name here to match actual functions
-source "`dirname $0`/op-functions"
+funcs="`dirname $0`/op-functions"
+# source "`dirname $0`/op-functions"
+if [ -f "$funcs" ]; then
+  source "$funcs"
+  message "Loaded functions: $funcs" >&2
+else
+  echo  "ERROR: Can't load functions from: $funcs"
+  echo "\$0 is $0"
+  exit 1
+fi
 
 # Note that LOGFILE is used by functions for log commands: log_message,
 # log_warning, log_error, etc.
@@ -36,12 +43,9 @@ source "`dirname $0`/op-functions"
 LOGFILE=LOG_${COMMAND}_`tstamp`.log
 
 usage() {
-   echo "Usage: $cmd [OPTIONS] XML"
+   echo "Usage: $cmd [OPTIONS] XML XSL"
    echo ""
    echo "Given a Penn in Hand XML file generate OPenn TEI."
-   echo ""
-   echo "OPTIONS"
-   echo "      -t    Optional XSL [DEFAULT=$PIH_TO_TEI_XSL]"
    echo ""
 }
 
@@ -52,15 +56,12 @@ print_help() {
 
 ################################################################################
 ### OPTIONS
-while getopts "ht:" opt; do
+while getopts "h" opt; do
   case $opt in
     h)
       usage
       print_help
       exit 1
-      ;;
-    t)
-      PIH_TO_TEI_XSL=$OPTARG
       ;;
     \?)
       echo "ERROR Invalid option: -$OPTARG" >&2
@@ -84,13 +85,18 @@ else
   error "Error finding XML"
 fi
 
-message "Using XSL: $PIH_TO_TEI_XSL" >&2
+XSL="$2"
+if file_exists "$XSL" XSL ; then
+  message "Using XSL: $XSL" >&2
+else
+  error "Error finding XSL"
+fi
 
 # TODO: Figure out a more flexible way to handle classpath
 LIB_DIR=$HOME/Java/SaxonHE9-5-1-5J
 CLASSPATH=$CLASSPATH:$LIB_DIR/saxon9he.jar
 
-java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$PIH_TO_TEI_XSL
+java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$XSL
 
 
 ################################################################################

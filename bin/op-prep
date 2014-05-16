@@ -42,7 +42,7 @@ from django.conf import settings
 def cmd():
     return os.path.basename(__file__)
 
-def get_prep(source_dir, collection):
+def get_collection_prep(source_dir, collection):
     config = settings.COLLECTIONS.get(collection.lower(), None)
     if config is None:
         raise OPennException("Configuration not found for %s" % collection)
@@ -71,11 +71,10 @@ def main(cmdline=None):
     collection = args[0]
     source_dir = args[1]
 
-    prep = get_prep(source_dir, collection)
-    # prep = medren_prep.MedrenPrep(source_dir, HOST, PATH)
+    collection_prep = get_collection_prep(source_dir, collection)
 
     try:
-        prep.prep_dir()
+        collection_prep.prep_dir()
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
         status = 4

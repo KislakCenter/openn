@@ -3,6 +3,7 @@
 
 import unittest
 import subprocess
+import json
 import os
 import glob
 import sys
@@ -19,7 +20,11 @@ class TestOpPrep(unittest.TestCase):
     command       = os.path.join(this_dir, '../../bin/op-prep')
     template_dir  = os.path.join(this_dir, '../data/mscodex1223')
     staged_source = os.path.join(staging_dir, os.path.basename(template_dir))
+    partial_tei   = os.path.join(staged_source, 'PARTIAL_TEI.xml')
+    file_list     = os.path.join(staged_source, 'file_list.json')
     prep_config   = 'medren'
+    dir_extra_images = os.path.join(this_dir, '../data/mscodex1589')
+    staged_w_extra   = os.path.join(staging_dir, os.path.basename(dir_extra_images))
 
     def setUp(self):
         if not os.path.exists(TestOpPrep.staging_dir):
@@ -32,9 +37,10 @@ class TestOpPrep(unittest.TestCase):
     def stage_template(self):
         shutil.copytree(TestOpPrep.template_dir, TestOpPrep.staged_source)
 
-    def build_command(self):
+    def build_command(self,dir=None):
+        dir = dir or TestOpPrep.staged_source
         return subprocess.Popen(
-                ["python", TestOpPrep.command, TestOpPrep.prep_config, TestOpPrep.staged_source],
+                ["python", TestOpPrep.command, TestOpPrep.prep_config, dir],
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
 
@@ -46,6 +52,23 @@ class TestOpPrep(unittest.TestCase):
         out, err = p.communicate()
         # test
         self.assertEqual(0, p.returncode, err)
+        self.assertTrue(os.path.exists(TestOpPrep.partial_tei),
+                "Expected TEI file: %s" % TestOpPrep.partial_tei)
+        self.assertTrue(os.path.exists(TestOpPrep.file_list),
+                "Expected TEI file: %s" % TestOpPrep.file_list)
+
+    def test_images_not_in_pih(self):
+        # setup
+        shutil.copytree(TestOpPrep.dir_extra_images, TestOpPrep.staged_w_extra)
+        # run
+        p = self.build_command(TestOpPrep.staged_w_extra)
+        out, err = p.communicate()
+        print out + err
+        # test
+        self.assertEqual(0, p.returncode, err)
+        file_list = os.path.join(TestOpPrep.staged_w_extra, 'file_list.json')
+        self.assertTrue(os.path.exists(file_list), 
+                "Expected TEI file: %s" % file_list)
 
     def test_bad_source_dir(self):
         # run
@@ -114,6 +137,8 @@ class TestOpPrep(unittest.TestCase):
         # test
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("Configuration not found", err) is not None)
+
+        
 
 if __name__ == '__main__':
     unittest.main()
