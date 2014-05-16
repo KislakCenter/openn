@@ -31,7 +31,7 @@ class MedrenPrep(CollectionPrep):
         return self.config['host']
 
     @property
-    def url_path(data):
+    def url_path(self):
         return self.config['path']
 
     def get_bibid(self):
@@ -78,11 +78,11 @@ class MedrenPrep(CollectionPrep):
         return call_no
 
     def full_url(self, bibid):
-        return 'http://{0}{1}'.format(self.config['host'], self.config['path'].format(bibid))
+        return 'http://{0}{1}'.format(self.host, self.url_path.format(bibid))
 
     def check_url(self, bibid):
-        conn = httplib.HTTPConnection(self.config['host'])
-        conn.request("HEAD", self.config['path'].format(bibid))
+        conn = httplib.HTTPConnection(self.host)
+        conn.request("HEAD", self.url_path.format(bibid))
         res = conn.getresponse()
         return res.status
 
