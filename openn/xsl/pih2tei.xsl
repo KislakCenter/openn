@@ -125,6 +125,7 @@
                 </fileDesc>
             </teiHeader>
             <facsimile>
+              <!--
                 <xsl:for-each select="//xml[@name='pages']/page">
                     <surface>
                         <xsl:attribute name="n">
@@ -137,6 +138,7 @@
                         <graphic url="{concat(./@image, '.tif')}"/>
                     </surface>
                 </xsl:for-each>
+                -->
             </facsimile>
         </TEI>
     </xsl:template>
