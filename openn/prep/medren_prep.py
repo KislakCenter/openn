@@ -3,13 +3,13 @@ import httplib
 import re
 import urllib2
 from lxml import etree
-from openn.prep import collection_prep
+from openn.prep.collection_prep import CollectionPrep
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 
-class MedrenPrep(collection_prep.CollectionPrep):
+class MedrenPrep(CollectionPrep):
 
-    def __init__(self,source_dir, host, path):
+    def __init__(self, source_dir, host=None, path=None):
         """
         Create a new MedrenPrep for the given source_dir with metadata to be found
         on host at path. NB: path is a formattable string like:
@@ -32,7 +32,7 @@ class MedrenPrep(collection_prep.CollectionPrep):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
         return bibid
 
-    def xml_file_names(self,pih_xml):
+    def xml_file_names(self, pih_xml):
         # //xml[@name='pages']/page/@image
         f = open(pih_xml)
         tree = etree.parse(f)
@@ -53,7 +53,7 @@ class MedrenPrep(collection_prep.CollectionPrep):
             smiss = ', '.join(missing)
             raise OPennException("Expected images are missing from %s: %s" % (self.source_dir, smiss))
 
-    def check_valid_xml(self,pih_xml):
+    def check_valid_xml(self, pih_xml):
         f = open(pih_xml)
         tree = etree.parse(f)
         r = tree.xpath("/page/response/result/doc/arr[@name='call_number_field']/str")
@@ -64,16 +64,16 @@ class MedrenPrep(collection_prep.CollectionPrep):
         call_no = r[0].text
         return call_no
 
-    def full_url(self,bibid):
+    def full_url(self, bibid):
         return 'http://{0}{1}'.format(self.host, self.path.format(bibid))
 
-    def check_url(self,bibid):
+    def check_url(self, bibid):
         conn = httplib.HTTPConnection(self.host)
         conn.request("HEAD", self.path.format(bibid))
         res = conn.getresponse()
         return res.status
 
-    def get_xml(self,bibid):
+    def get_xml(self, bibid):
         url = self.full_url(bibid)
         status = self.check_url(bibid)
         if status != 200:

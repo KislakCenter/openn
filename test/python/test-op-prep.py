@@ -19,6 +19,7 @@ class TestOpPrep(unittest.TestCase):
     command       = os.path.join(this_dir, '../../bin/op-prep')
     template_dir  = os.path.join(this_dir, '../data/mscodex1223')
     staged_source = os.path.join(staging_dir, os.path.basename(template_dir))
+    prep_config   = 'medren'
 
     def setUp(self):
         if not os.path.exists(TestOpPrep.staging_dir):
@@ -33,7 +34,7 @@ class TestOpPrep(unittest.TestCase):
 
     def build_command(self):
         return subprocess.Popen(
-                ["python", TestOpPrep.command, TestOpPrep.staged_source],
+                ["python", TestOpPrep.command, TestOpPrep.prep_config, TestOpPrep.staged_source],
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
 

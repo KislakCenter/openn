@@ -1,6 +1,6 @@
 class CollectionPrep:
 
-    def prep_dir(source_dir):
+    def prep_dir():
         pass
 
     

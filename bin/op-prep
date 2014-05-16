@@ -26,12 +26,18 @@
 from optparse import OptionParser
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.prep import medren_prep
 
-print sys.path
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
+
+# Import your models for use in your script
+from openn.models import *
+from django.core import serializers
+from django.conf import settings
 
 HOST = "dla.library.upenn.edu"
 PATH = "/dla/medren/pageturn.xml?id=MEDREN_{0}"
@@ -39,20 +45,37 @@ PATH = "/dla/medren/pageturn.xml?id=MEDREN_{0}"
 def cmd():
     return os.path.basename(__file__)
 
+def get_prep(source_dir, collection):
+    config = settings.COLLECTIONS[collection.lower()]
+    if config is None:
+        raise OPennException("Configuration not found for %s" % collection)
+    cls = get_class(config['prep_class'])
+    return cls(source_dir, **config['kwargs'])
+
+def get_class(kls):
+    parts = kls.split('.')
+    module = ".".join(parts[:-1])
+    m = __import__( module )
+    for comp in parts[1:]:
+        m = getattr(m, comp)
+    return m
+
 def main(cmdline=None):
-    """Get XML main function.
+    """op-prep main
     """
     status = 0
     parser = make_parser()
 
     opts, args = parser.parse_args(cmdline)
 
-    if len(args) != 1:
+    if len(args) != 2:
         parser.error('Wrong number of arguments')
 
-    source_dir = args[0]
+    collection = args[0]
+    source_dir = args[1]
 
-    prep = medren_prep.MedrenPrep(source_dir, HOST, PATH)
+    prep = get_prep(source_dir, collection)
+    # prep = medren_prep.MedrenPrep(source_dir, HOST, PATH)
 
     try:
         prep.prep_dir()
@@ -67,7 +90,7 @@ def main(cmdline=None):
 def make_parser():
     """get_xml option parser"""
 
-    usage = """%prog SOURCE_DIR
+    usage = """%prog COLLECTION SOURCE_DIR
 
 Prepare the given source diretory for OPenn.
 
