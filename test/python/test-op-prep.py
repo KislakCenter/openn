@@ -103,6 +103,17 @@ class TestOpPrep(unittest.TestCase):
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("No call number.*9999999999", err) is not None)
 
+    def test_bad_collection_name(self):
+        # setup
+        # run
+        p = subprocess.Popen(
+                ["python", TestOpPrep.command, 'bad_collection', TestOpPrep.staged_source],
+                stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        # test
+        self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
+        self.assertTrue(re.search("Configuration not found", err) is not None)
 
 if __name__ == '__main__':
     unittest.main()

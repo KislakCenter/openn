@@ -46,7 +46,7 @@ def cmd():
     return os.path.basename(__file__)
 
 def get_prep(source_dir, collection):
-    config = settings.COLLECTIONS[collection.lower()]
+    config = settings.COLLECTIONS.get(collection.lower(), None)
     if config is None:
         raise OPennException("Configuration not found for %s" % collection)
     cls = get_class(config['prep_class'])
