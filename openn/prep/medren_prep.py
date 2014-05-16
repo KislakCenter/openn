@@ -9,17 +9,30 @@ from openn.openn_functions import *
 
 class MedrenPrep(CollectionPrep):
 
-    def __init__(self, source_dir, host=None, path=None):
+    def __init__(self, source_dir, config):
         """
-        Create a new MedrenPrep for the given source_dir with metadata to be found
-        on host at path. NB: path is a formattable string like:
+        Create a new MedrenPrep for the given source_dir with config dictionary `config`.
+        Config should have:
 
-             /dla/medren/pageturn.xml?id=MEDREN_{0}
-            
+            host  the XML source URL host
+
+            path  a formattable string for the URL path for the metadata; e.g.,
+                    /dla/medren/pageturn.xml?id=MEDREN_{0}
+
+            xsl   absolute path to the XSL to transform the XML to TEI
+
         """
         self.source_dir = source_dir
-        self.host       = host
-        self.path       = path
+        self.config     = config
+
+
+    @property
+    def host(self):
+        return self.config['host']
+
+    @property
+    def url_path(data):
+        return self.config['path']
 
     def get_bibid(self):
         if not os.path.exists(self.source_dir):
@@ -65,11 +78,11 @@ class MedrenPrep(CollectionPrep):
         return call_no
 
     def full_url(self, bibid):
-        return 'http://{0}{1}'.format(self.host, self.path.format(bibid))
+        return 'http://{0}{1}'.format(self.config['host'], self.config['path'].format(bibid))
 
     def check_url(self, bibid):
-        conn = httplib.HTTPConnection(self.host)
-        conn.request("HEAD", self.path.format(bibid))
+        conn = httplib.HTTPConnection(self.config['host'])
+        conn.request("HEAD", self.config['path'].format(bibid))
         res = conn.getresponse()
         return res.status
 
@@ -79,7 +92,7 @@ class MedrenPrep(CollectionPrep):
         if status != 200:
             raise OPennException('Got status %d calling: %s' % (status, url))
         return urllib2.urlopen(url).read()
-            
+
     def write_xml(self):
         bibid = self.get_bibid()
         outfile = os.path.join(self.source_dir, 'pih_{0}.xml'.format(bibid))
@@ -91,7 +104,7 @@ class MedrenPrep(CollectionPrep):
         f.write(self.get_xml(bibid))
         f.close()
         return outfile
-    
+
     def prep_dir(self):
         pih_xml = self.write_xml()
         call_no = self.check_valid_xml(pih_xml)

@@ -22,15 +22,17 @@ INSTALLED_APPS = (
         'openn', 'south',
         )   
 
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+
 COLLECTIONS = {
         'medren': {
             'prep_class': 'openn.prep.medren_prep.MedrenPrep',
-            'kwargs' : { 
+            'config' : { 
                 'host': 'dla.library.upenn.edu', 
                 'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
+                'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
                 },
             },
         }
 
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
