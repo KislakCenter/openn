@@ -38,7 +38,7 @@ class TestCommonPrep(unittest.TestCase):
         prep = CommonPrep(TestCommonPrep.staged_source)
         # run
         prep.prep_dir()
-    
+
     def test_no_data_dir(self):
         # setup
         os.mkdir(TestCommonPrep.staged_source)
