@@ -52,3 +52,6 @@ secret_key.txt
 # Sphinx documentation
 docs/_build/
 
+# Project stuff
+*.sqlite3
+*.db
