@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Description of Ms. Codex 1223 - Fragments of the Digests of Justinian, Book 37, Titles 7-9 (1400-1499)</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Schoenberg Center for Electronic Text and Image, University of Pennsylvania</publisher>
+            <availability>
+               <p>This work and all referenced images are ©2014 University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License, http://creativecommons.org/licenses/by-nc-sa/3.0/.</p>
+            </availability>
+         </publicationStmt>
+         <sourceDesc>
+            <msDesc>
+               <msIdentifier>
+                  <settlement>Philadelphia</settlement>
+                  <institution>University of Pennsylvania</institution>
+                  <repository>Rare Book &amp; Manuscript Library</repository>
+                  <idno>Ms. Codex 1223</idno>
+               </msIdentifier>
+               <msContents>
+                  <summary>Bifolium with fragments from Book 37 of the Digests of Justinian I (Byzantine emperor, 527-565), containing (in order) sections of Title 7 on dowries, Title 9 on inheritance, and Title 8 on the children of marriages in which one partner is an emancipated slave. The text is surrounded by 15th-century commentary on the laws.</summary>
+                  <textLang>Latin</textLang>
+                  <msItem>
+                     <title>Fragments of the Digests of Justinian, Book 37, Titles 7-9</title>
+                  </msItem>
+               </msContents>
+               <physDesc>
+                  <decoDesc>
+                     <decoNote n="1v">Puzzle initial, Initial S, f. 1v</decoNote>
+                  </decoDesc>
+               </physDesc>
+               <history>
+                  <origin>
+                     <origDate>1400-1499</origDate>
+                     <origPlace>France?</origPlace>
+                  </origin>
+               </history>
+            </msDesc>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <facsimile/>
+</TEI>
