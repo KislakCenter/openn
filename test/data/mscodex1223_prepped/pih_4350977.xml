@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?><page><images xmlns:xs="http://www.w3.org/2001/XMLSchema"><image xmlns:my="http://nowhere" src="https://repo.library.upenn.edu/djatoka/resolver?url_ver=Z39.88-2004&amp;svc_id=info:lanl-repo/svc/getRegion&amp;svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&amp;svc.format=image/jpeg&amp;rft_id=medren_mscodex1223_wk1_front0001&amp;svc.level=4&amp;svc.rotate="><params><identifier>medren_mscodex1223_wk1_front0001</identifier><imagefile>/repo/store/pairtree_root/me/dr/en/_m/sc/od/ex/12/23/_w/k1/_f/ro/nt/00/01/medren_mscodex1223_wk1_front0001/v001/full/mscodex1223_wk1_front0001.DELIVERY.jp2</imagefile><width>4985</width><height>7141</height><dwtLevels>7</dwtLevels><levels>7</levels><compositingLayerCount>1</compositingLayerCount><defaultscale>3</defaultscale></params><control><zoomcontrol zoom="in"><input name="zoom" type="radio" value="in" onclick="selectZoomControl('in')" checked="yes">zoom in</input><input name="zoom" type="radio" value="out" onclick="selectZoomControl('out')">zoom out</input><input name="zoom" type="radio" value="none" onclick="selectZoomControl('none')">recenter</input></zoomcontrol><sizecontrol><input name="size" type="radio" value="0" onClick="this.form.submit()">full</input><input name="size" type="radio" value="1" onClick="this.form.submit()">1/2</input><input name="size" type="radio" value="2" onClick="this.form.submit()">1/4</input><input name="size" type="radio" value="3" checked="yes">1/8</input><input name="size" type="radio" value="4" onClick="this.form.submit()">1/16</input><input name="size" type="radio" value="5" onClick="this.form.submit()">1/32</input><input name="size" type="radio" value="6" onClick="this.form.submit()">1/64</input><input name="size" type="radio" value="7" onClick="this.form.submit()">1/128</input></sizecontrol></control></image></images><response xmlns:cinclude="http://apache.org/cocoon/include/1.0"><links xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere" detail-page-params=".html?id=MEDREN_4350977&amp;"><feeds><str name="media.rss">feeds/pageturn.mrss?rotation=0&amp;id=MEDREN_4350977 OR id:MEDREN_4350977_*&amp;rows=500</str><str name="rss">feeds/pageturn.rss?id=MEDREN_4350977&amp;rotation=0&amp;</str><str name="ical">feeds/calendar.ics?id=MEDREN_4350977&amp;rotation=0&amp;</str><str name="url">http://dla.library.upenn.edu/dla/medren/pageturn.html?id=MEDREN_4350977&amp;rotation=0&amp;rotation=0&amp;</str><str name="display-record" display="[more information]">record.html?id=MEDREN_4350977&amp;rotation=0&amp;</str><str name="enable-fullview" display="Enable Full View">pageturn.html?id=MEDREN_4350977&amp;rotation=0&amp;fullview=true</str><str name="rotate-right" display="Rotate Right">pageturn.html?id=MEDREN_4350977&amp;rotation=90</str><str name="rotate-left" display="Rotate Left">pageturn.html?id=MEDREN_4350977&amp;rotation=270</str><str name="handle">http://hdl.library.upenn.edu/1017/d/medren/4350977</str></feeds><sidebar><str name="mailto" display="Contact Us">mailto:shawcros@pobox.upenn.edu?subject=Penn%20in%20Hand%3A%20Selected%20Manuscripts%20%28DLA%20Collection%29&amp;body=Question%20regarding%20this%20page%3A%20http%3A%2F%2Fdla.library.upenn.edu%2Fdla%2Fmedren%2Fpageturn.html%3Fid%3DMEDREN_4350977%26rotation%3D0%26</str></sidebar></links><params xmlns:my="http://nowhere"><str name="q"/><str name="id">MEDREN_4350977</str><str name="fq"/><str name="start">0</str><str name="rows">25</str><str name="sort">score desc, date_sort asc</str><str name="page">pageturn</str><str name="browse"/><str name="facet">true</str><str name="view"/><str name="detail">brief</str><str name="showall"/><str name="fullview"/><info><str name="params-forward">true</str><str name="url">http://dla.library.upenn.edu/dla</str></info><page-specific name="pageturn"><str name="currentpage">1</str><str name="doubleside">1</str><str name="filter"/><str name="rotation">0</str><str name="region"/><str name="filetype"/><str name="image"/><str name="naturalwidth"/><str name="naturalheight"/><str name="levels"/><str name="zoom"/><str name="level"/><str name="oldwidth"/><str name="oldheight"/><str name="oldx"/><str name="oldy"/><str name="x"/><str name="y"/><str name="size"/><str name="oldsize"/></page-specific></params>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">1</int><lst name="params"><str name="facet">true</str><str name="sort">score desc, date_sort asc</str><str name="fl">*</str><str name="facet.mincount">1</str><str name="facet.sort">true</str><str name="q">id:MEDREN_4350977</str><str name="facet.limit">5</str><str name="f..facet.limit">400</str><str name="f..facet.sort">false</str><arr name="facet.field"><str>collection_facet</str><str>has_999_facet</str><str>facsimile_facet</str><str>illuminated_facet</str><str>illustrated_facet</str><str>notated_facet</str><str>language_facet</str><str>century_facet</str><str>date_facet</str><str>genre_facet</str><str>subject_facet</str><str>geography_facet</str><str>author_facet</str><str>related_names_facet</str><str>page_material_facet</str></arr><str name="qt">dla-standard</str><str name="rows">25</str></lst></lst><result name="response" numFound="1" start="0"><doc><str name="id">MEDREN_4350977</str><arr name="call_number_field"><str>Ms. Codex 1223</str></arr><str name="orientation"/><str name="format">pageturn</str><arr name="title_field"><str>[Fragments of the Digests of Justinian, Book 37, Titles 7-9]</str></arr><arr name="probable_date_field"><str>1400-1499</str></arr><arr name="titledate_field"><str>Ms. Codex 1223 - [Fragments of the Digests of Justinian, Book 37, Titles 7-9] (1400-1499)</str></arr><arr name="primary_author_field"><str/></arr><arr name="origin_field"><str>[France?, 14--]</str></arr><arr name="date_facsimile_added_field"><str>01-07-2010</str></arr><arr name="collection_field"><str>Medieval &amp; Renaissance Manuscripts Collection</str></arr><arr name="collectionSEARCH_URL_field"><str>search.html?fq=collection_facet%3A"Medieval %26 Renaissance Manuscripts"</str></arr><arr name="facsimile_field"><str>Yes</str></arr><arr name="language_field"><str>Latin</str></arr><arr name="genre_field"><str>Codices</str><str>Laws (documents)</str><str>Commentaries</str><str>Manuscripts, Latin - 15th century</str><str>Manuscripts, Renaissance</str></arr><arr name="subject_field"><str>Roman law</str><str>Inheritance and succession (Roman law)</str><str>Marriage (Roman law)</str><str>Property (Roman law)</str></arr><xml name="marcrecord"><marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
+   <marc:leader>02903ctm a2200541Ia 4500</marc:leader>
+   <marc:controlfield tag="001">4350977</marc:controlfield>
+   <marc:controlfield tag="005">20100121125419.0</marc:controlfield>
+   <marc:controlfield tag="008">080715q14001499pau           000 0 lat d</marc:controlfield>
+   <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn233986140</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">PAULM</marc:subfield>
+      <marc:subfield code="c">PAULM</marc:subfield>
+      <marc:subfield code="e">amremm</marc:subfield>
+      <marc:subfield code="d">PAULM</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)233986140</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="079" ind1=" " ind2=" ">
+      <marc:subfield code="a">ocn233986138</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="099" ind1=" " ind2="9">
+      <marc:subfield code="a">Ms. Codex 1223</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">PAUM</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="130" ind1="0" ind2=" ">
+      <marc:subfield code="a">Corpus juris civilis.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="a">[Fragments of the Digests of Justinian, Book 37, Titles 7-9]</marc:subfield>
+      <marc:subfield code="h">[manuscript].</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">[France?,</marc:subfield>
+      <marc:subfield code="c">14--]</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">2 leaves :</marc:subfield>
+      <marc:subfield code="b">paper ;</marc:subfield>
+      <marc:subfield code="c">429 x 289 (237 x 135) mm. bound to 439 x 295 mm.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Ms. leaves.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="520" ind1=" " ind2=" ">
+      <marc:subfield code="a">Bifolium with fragments from Book 37 of the Digests of Justinian I (Byzantine emperor, 527-565), containing (in order) sections of Title 7 on dowries, Title 9 on inheritance, and Title 8 on the children of marriages in which one partner is an emancipated slave.  The text is surrounded by 15th-century commentary on the laws.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="546" ind1=" " ind2=" ">
+      <marc:subfield code="a">Latin.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Title supplied by cataloger (Zacour-Hirsch).</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="505" ind1="0" ind2=" ">
+      <marc:subfield code="a">1. f.1r-1v:  De dotis collatione (37.7.1.4).</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="505" ind1="0" ind2=" ">
+      <marc:subfield code="a">2. f.1v:  De ventre in possessionem mittendo et curatore eius (37.9.1).</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="505" ind1="0" ind2=" ">
+      <marc:subfield code="a">3. f.2r-2v:  De coniungendis cum emancipato liberis eius (37.8.1.10).</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Layout: Main text written in 2 columns of 50-52 lines; commentary text written in 2 columns of 90-109 lines; horizontal and vertical bounding lines ruled in lead.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Script:  Written in a Gothic script.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Decoration: Initials (1-line to 3-line) alternating in red and blue ink, paragraph marks in red and blue ink, six-line Title 8 initial in red and blue ink.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Binding:  Modern boards.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Origin:  Probably written in France in the 15th century (Zacour-Hirsch).</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="510" ind1="4" ind2=" ">
+      <marc:subfield code="a">Described in Zacour, Norman P. and Hirsch, Rudolf. Catalogue of Manuscripts in the Libraries of the University of Pennsylvania to 1800, Supplement A (1). The Library Chronicle 35 (1969),</marc:subfield>
+      <marc:subfield code="c">p. 10 (Ms. Latin 222).</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="561" ind1="1" ind2=" ">
+      <marc:subfield code="a">Gift of Albert C. Baugh, 1965.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="524" ind1=" " ind2=" ">
+      <marc:subfield code="a">UPenn Ms. Codex 1223</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Roman law.</marc:subfield>
+      <marc:subfield code="v">Early works to 1800.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Inheritance and succession (Roman law)</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Marriage (Roman law)</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Property (Roman law)</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Codices.</marc:subfield>
+      <marc:subfield code="2">aat</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Laws (documents)</marc:subfield>
+      <marc:subfield code="2">aat</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Commentaries.</marc:subfield>
+      <marc:subfield code="2">aat</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="0">
+      <marc:subfield code="a">Manuscripts, Latin</marc:subfield>
+      <marc:subfield code="y">15th century.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="0">
+      <marc:subfield code="a">Manuscripts, Renaissance.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="700" ind1="0" ind2=" ">
+      <marc:subfield code="a">Justinian</marc:subfield>
+      <marc:subfield code="b">I,</marc:subfield>
+      <marc:subfield code="c">Emperor of the East,</marc:subfield>
+      <marc:subfield code="d">483?-565.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="700" ind1="1" ind2=" ">
+      <marc:subfield code="a">Baugh, Albert C.</marc:subfield>
+      <marc:subfield code="q">(Albert Croll),</marc:subfield>
+      <marc:subfield code="d">1891-1981,</marc:subfield>
+      <marc:subfield code="e">former owner.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="852" ind1=" " ind2=" ">
+      <marc:subfield code="b">Rare Book &amp; Manuscript Library</marc:subfield>
+      <marc:subfield code="a">University of Pennsylvania</marc:subfield>
+      <marc:subfield code="e">3420 Walnut Street, Philadelphia, Pennsylvania 19104-6206.</marc:subfield>
+      <marc:subfield code="j">Ms. Codex 1223</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="856" ind1="4" ind2="1">
+      <marc:subfield code="z">Facsimile</marc:subfield>
+      <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/medren/4350977</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">DLA</marc:subfield>
+      <marc:subfield code="b">20100107</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">PAULM</marc:subfield>
+   </marc:datafield>
+</marc:record>
+</xml><xml name="pages"><page number="1" seq="1" id="medren_4350977_333936" image.defaultscale="3" side="recto" image.id="medren_mscodex1223_wk1_front0001" image="mscodex1223_wk1_front0001" visiblepage="Front cover"/>
+<page number="2" seq="2" id="medren_4350977_333937" image.defaultscale="3" side="verso" image.id="medren_mscodex1223_wk1_front0002" image="mscodex1223_wk1_front0002" visiblepage="Inside front cover"/>
+<page number="3" seq="3" id="medren_4350977_333938" image.defaultscale="3" side="recto" image.id="medren_mscodex1223_wk1_front0003" image="mscodex1223_wk1_front0003" visiblepage="[Flyleaf 1 recto]"/>
+<page number="4" seq="4" id="medren_4350977_333939" image.defaultscale="3" side="verso" image.id="medren_mscodex1223_wk1_front0004" image="mscodex1223_wk1_front0004" visiblepage="[Flyleaf 1 verso]"/>
+<page number="5" seq="5" id="medren_4350977_333940" image.defaultscale="3" side="recto" image.id="medren_mscodex1223_wk1_body0001" image="mscodex1223_wk1_body0001" visiblepage="1r">
+   <tocentry name="toc">De dotis collatione (37.7.1.4), f. 1r</tocentry>
+</page>
+<page number="6" seq="6" id="medren_4350977_333941" image.defaultscale="3" side="verso" image.id="medren_mscodex1223_wk1_body0002" image="mscodex1223_wk1_body0002" visiblepage="1v">
+   <tocentry name="toc">De ventre in possessionem mittendo et curatore eius (37.9.1), f. 1v</tocentry>
+   <tocentry name="ill">Puzzle initial, Initial S, f. 1v</tocentry>
+</page>
+<page number="7" seq="7" id="medren_4350977_333942" image.defaultscale="3" side="recto" image.id="medren_mscodex1223_wk1_body0003" image="mscodex1223_wk1_body0003" visiblepage="2r">
+   <tocentry name="toc">De coniungendis cum emancipato liberis eius (37.8.1.10), f. 2r</tocentry>
+</page>
+<page number="8" seq="8" id="medren_4350977_333943" image.defaultscale="3" side="verso" image.id="medren_mscodex1223_wk1_body0004" image="mscodex1223_wk1_body0004" visiblepage="2v"/>
+<page number="9" seq="9" id="medren_4350977_333944" image.defaultscale="3" side="recto" image.id="medren_mscodex1223_wk1_back0001" image="mscodex1223_wk1_back0001" visiblepage="[Flyleaf 1 recto]"/>
+<page number="10" seq="10" id="medren_4350977_333945" image.defaultscale="3" side="verso" image.id="medren_mscodex1223_wk1_back0002" image="mscodex1223_wk1_back0002" visiblepage="[Flyleaf 1 verso]"/>
+<page number="11" seq="11" id="medren_4350977_333946" image.defaultscale="3" side="recto" image.id="medren_mscodex1223_wk1_back0003" image="mscodex1223_wk1_back0003" visiblepage="Inside back cover"/>
+<page number="12" seq="12" id="medren_4350977_333947" image.defaultscale="3" side="verso" image.id="medren_mscodex1223_wk1_back0004" image="mscodex1223_wk1_back0004" visiblepage="Back cover"/>
+<page number="13" seq="13" id="medren_4350977_333948" image.defaultscale="3" side="recto" image.id="medren_mscodex1223_wk1_back0005" image="mscodex1223_wk1_back0005" visiblepage="Spine"/>
+</xml><str xmlns:my="http://nowhere" name="link">pageturn.html?id=MEDREN_4350977&amp;rotation=0&amp;id=MEDREN_4350977</str><str xmlns:my="http://nowhere" name="link_no_params">pageturn.html?id=MEDREN_4350977</str><str xmlns:my="http://nowhere" name="handle">http://hdl.library.upenn.edu/1017/d/medren/4350977</str></doc></result><lst name="facet_counts"><lst xmlns:my="http://nowhere" name="current_facets"/><lst name="facet_queries"/><lst xmlns:my="http://nowhere" name="facet_fields"><lst name="collection_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=collection_facet&amp;</str></lst><str name="Medieval &amp; Renaissance Manuscripts" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=collection_facet%3A%22Medieval%20%26%20Renaissance%20Manuscripts%22</str><str name="Penn Collection" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=collection_facet%3A%22Penn%20Collection%22</str></lst><lst name="has_999_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=has_999_facet&amp;</str></lst></lst><lst name="facsimile_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=facsimile_facet&amp;</str></lst><str name="Yes" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=facsimile_facet%3A%22Yes%22</str></lst><lst name="illuminated_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=illuminated_facet&amp;</str></lst><str name="No" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=illuminated_facet%3A%22No%22</str></lst><lst name="illustrated_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=illustrated_facet&amp;</str></lst><str name="No" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=illustrated_facet%3A%22No%22</str></lst><lst name="notated_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=notated_facet&amp;</str></lst><str name="No" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=notated_facet%3A%22No%22</str></lst><lst name="language_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=language_facet&amp;</str></lst><str name="Latin" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=language_facet%3A%22Latin%22</str></lst><lst name="century_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=century_facet&amp;</str></lst><str name="15th century" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=century_facet%3A%2215th%20century%22</str></lst><lst name="date_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=date_facet&amp;</str></lst><str name="1400" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=date_facet%3A%221400%22</str></lst><lst name="genre_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=genre_facet&amp;</str></lst><str name="Codices" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=genre_facet%3A%22Codices%22</str><str name="Commentaries" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=genre_facet%3A%22Commentaries%22</str><str name="Laws (documents)" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=genre_facet%3A%22Laws%20%28documents%29%22</str><str name="Manuscripts, Latin - 15th century" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=genre_facet%3A%22Manuscripts%2C%20Latin%20-%2015th%20century%22</str><str name="Manuscripts, Renaissance" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=genre_facet%3A%22Manuscripts%2C%20Renaissance%22</str></lst><lst name="subject_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=subject_facet&amp;</str></lst><str name="Inheritance and succession (Roman law)" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=subject_facet%3A%22Inheritance%20and%20succession%20%28Roman%20law%29%22</str><str name="Marriage (Roman law)" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=subject_facet%3A%22Marriage%20%28Roman%20law%29%22</str><str name="Property (Roman law)" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=subject_facet%3A%22Property%20%28Roman%20law%29%22</str><str name="Roman law" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=subject_facet%3A%22Roman%20law%22</str></lst><lst name="geography_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=geography_facet&amp;</str></lst></lst><lst name="author_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=author_facet&amp;</str></lst></lst><lst name="related_names_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=related_names_facet&amp;</str></lst><str name="Baugh, Albert C. (Albert Croll), 1891-1981, former owner" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=related_names_facet%3A%22Baugh%2C%20Albert%20C.%20%28Albert%20Croll%29%2C%201891-1981%2C%20former%20owner%22</str><str name="Justinian I, Emperor of the East, 483?-565" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=related_names_facet%3A%22Justinian%20I%2C%20Emperor%20of%20the%20East%2C%20483%3F-565%22</str></lst><lst name="page_material_facet"><lst name="links"><str name="browse">browse.html?id=MEDREN_4350977&amp;browse=page_material_facet&amp;</str></lst><str name="Paper" num="1">pageturn.html?id=MEDREN_4350977&amp;fq=page_material_facet%3A%22Paper%22</str></lst></lst><lst name="facet_dates"/><lst name="facet_ranges"/></lst>
+</response><params xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere"><param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="size">3</param><param name="id">MEDREN_4350977</param><context><param name="solr-url">http://localhost:8082/index/medren/select/</param><param name="collection">medren</param><param name="requested-page">pageturn</param><param name="host">dla.library.upenn.edu</param><param name="request">http://dla.library.upenn.edu/dla/medren/pageturn.xml?id=MEDREN_4350977</param></context></params><collection xmlns:my="http://nowhere" xmlns:dla-caption="http://dla.upennlib/caption"><ref/><name>Penn in Hand: Selected Manuscripts</name><shortname>medren</shortname><record detail="brief" exclude-subfield="6">
+    <include field="100" label="Author" exclude-subfield="6"/>
+    <include field="110" label="Author" exclude-subfield="6"/>
+    <include field="130" label="Title" exclude-subfield="6"/>
+    <include field="245" label="Title" exclude-subfield="6"/>
+    <include field="240" label="Title" exclude-subfield="6"/>
+    <include field="260" label="Origin" exclude-subfield="6"/>
+    <include field="300" label="Physical description" exclude-subfield="6"/>
+	<include field="520" label="Summary" exclude-subfield="6"/>
+	<include field="500" label="Notes" delimiter=" - " exclude-subfield="6"/>    
+	<include field="524" label="Cite as" exclude-subfield="6"/> 
+    <include field="773" label="Contained in" exclude-subfield="6"/>
+    <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+    <include field="880" label="Vernacular script" exclude-subfield="6"/>
+  </record><record detail="detailed" exclude-subfield="6">
+    <include field="100" label="Author" exclude-subfield="6"/>
+    <include field="110" label="Author" exclude-subfield="6"/>
+    <include field="130" label="Title" exclude-subfield="6"/>
+    <include field="245" label="Title" exclude-subfield="6"/>
+    <include field="240" label="Title" exclude-subfield="6"/>
+    <include field="260" label="Origin" exclude-subfield="6"/>
+    <include field="300" label="Physical description" exclude-subfield="6"/>
+    <include field="546" label="Language(s)" exclude-subfield="6"/>
+	<include field="545" label="Biographical / Organizational History" exclude-subfield="6"/>
+    <include field="520" label="Summary" exclude-subfield="6"/>    
+    <include field="505" label="Contents" exclude-subfield="6"/>
+	<include field="561" label="Provenance" exclude-subfield="6"/>
+	<include field="700" label="Related names" exclude-subfield="6"/>
+    <include field="710" label="Related names" exclude-subfield="6"/>
+	<include field="600" label="Subject" exclude-subfield="6"/>
+    <include field="610" label="Subject" delimiter=" - "/>
+    <include field="630" label="Subject" delimiter=" - "/>
+    <include field="650" label="Subject" delimiter=" - "/>
+    <include field="651" label="Subject" delimiter=" - "/>
+    <include field="655" label="Form / Genre" exclude-subfield="2" delimiter=" - "/>
+    <include field="500" label="Notes" exclude-subfield="6"/>
+    <include field="530" label="Other formats" exclude-subfield="6"/>
+    <include field="510" label="Indexed / Referenced in" exclude-subfield="6"/>
+    <include field="581" label="Publications of or about this material" exclude-subfield="6"/> 
+    <include field="246" label="Other Titles" exclude-subfield="6"/>
+    <include field="730" label="Other Titles" exclude-subfield="6"/>
+    <include field="740" label="Other Titles" exclude-subfield="6"/>
+	<include field="524" label="Cite as" exclude-subfield="6"/>    
+    <include field="773" label="Contained in" exclude-subfield="6"/>
+    <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+    <include field="880" label="Vernacular script" exclude-subfield="6"/>
+  </record><view>html</view><view>html</view><rows>25,50,100</rows><fl>*</fl><sort>score desc, date_sort asc</sort><style>rbm</style><advancedsearch.field type="number">century_search</advancedsearch.field><advancedsearch.field>language_search</advancedsearch.field><advancedsearch.field>place_search</advancedsearch.field><advancedsearch.field>subject_search</advancedsearch.field><advancedsearch.field>descriptive_notes_search</advancedsearch.field><advancedsearch.field>author_search</advancedsearch.field><advancedsearch.field display="Other Contributors/Owners">other_contributors_search</advancedsearch.field><advancedsearch.textcount>7</advancedsearch.textcount><advancedsearch.numbercount>1</advancedsearch.numbercount><advancedsearch.texthelp>(For example: <i>france</i> ; <i>german*</i> ; <i>german?</i> ;  <i>france germany italy</i>. 
+    See the <a href="ancillary.html?id=collections/rbm/medren/advancedsearch">Advanced Search Help</a> for more details)</advancedsearch.texthelp><facet>true</facet><facet.mincount>1</facet.mincount><facet.limit>5</facet.limit><facet.field>page_material_facet</facet.field><facet.field>related_names_facet</facet.field><facet.field>author_facet</facet.field><facet.field>geography_facet</facet.field><facet.field>subject_facet</facet.field><facet.field>genre_facet</facet.field><facet.field>date_facet</facet.field><facet.field>century_facet</facet.field><facet.field>language_facet</facet.field><facet.field>notated_facet</facet.field><facet.field>illustrated_facet</facet.field><facet.field>illuminated_facet</facet.field><facet.field>facsimile_facet</facet.field><facet.field>has_999_facet</facet.field><facet.field>collection_facet</facet.field><rss icon="true">
+    <title-field>titledate_field</title-field>
+  </rss><sortoptions>title_sort, author_sort, date_sort, 
+    date_facsimile_added_sort</sortoptions><caption context="title">
+<!--  doesn't give priority to LJS collection
+  	<dla-caption:if not-empty="collection_field">
+  		<div class="fromcollection">
+  			from the 
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field"  src="collection_field"/>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+-->
+
+  	<dla-caption:if not-empty="LJScollection_field">
+  		<div class="fromcollection">
+  			<html>
+  				<dla-caption:link-external type="field" src="LJScollectionSEARCH_URL_field">
+  					<dla-caption:field type="field" src="LJScollection_field"/><span class="coll-title">:</span>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+  	<dla-caption:if empty="LJScollection_field">
+  		<div class="fromcollection">
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field" src="collection_field"/><span class="coll-title">:</span>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+
+
+
+
+
+    <span class="recordtitlechrome">
+      <dla-caption:field type="field" src="call_number_field"/>
+      <dla-caption:if not-empty="call_number_field"> - </dla-caption:if>
+      <dla-caption:field type="field" src="primary_author_field"/>
+      <dla-caption:if not-empty="primary_author_field"> - </dla-caption:if>
+      <dla-caption:field type="field" src="title_field"/>
+    </span>
+  </caption><caption context="mobile">
+
+			
+			 <div style="font-family: Verdana, arial, sans-serif; font-size:13px; margin-bottom:7px;line-height:130%;">
+				 <div><dla-caption:field type="field" src="call_number_field"/></div>
+				 <div>
+					<dla-caption:link-to-detail>
+						<dla-caption:field type="field" src="title_field"/>
+					 </dla-caption:link-to-detail>
+				 </div>
+				 <div>				 
+					 <dla-caption:if equal="facsimile_field, {Yes}">
+					    <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*" style="border: none;"/>Facsimile available</dla-caption:link-to-detail>
+					  </dla-caption:if>
+		            </div>
+				 <div style="margin-bottom: 10px; border-bottom: dotted 1px #999;">
+						<dla-caption:if not-empty="origin_field">
+							 <div><dla-caption:field type="field" src="origin_field"/></div> 
+						</dla-caption:if> 				    
+						<dla-caption:if sort="date_facsimile_added_sort">
+							 <dla-caption:if not-empty="date_facsimile_added_field">
+							    <div class="facadded">Facsimile added: <dla-caption:field type="field" src="date_facsimile_added_field"/></div>	
+							 </dla-caption:if>
+						</dla-caption:if>
+				</div>
+			</div>
+
+	</caption><caption context="results">				
+     <tr class="medrenresultrecord">
+        <td class="oneresult">          	 
+           <div class="callno">
+	     <dla-caption:field type="field" src="call_number_field"/>
+	      <dla-caption:if equal="facsimile_field, {Yes}">
+	         <span class="facavail">       <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*"/>Facsimile available</dla-caption:link-to-detail></span>
+	       </dla-caption:if> 
+	   </div>
+			
+	   <dla-caption:if sort="date_facsimile_added_field">
+	      <dla-caption:if not-empty="date_facsimile_added_field">
+	         <div class="facadded">Facsimile added: <dla-caption:field type="field" src="date_facsimile_added_field"/></div>	
+	      </dla-caption:if>
+	   </dla-caption:if>			
+			             
+               
+           <dla-caption:if not-empty="primary_author_field">
+             <div><dla-caption:field type="field" src="primary_author_field"/></div>
+	   </dla-caption:if>                
+	   <div class="medrenresultstitle">
+	      <dla-caption:link-to-detail>
+	      	<dla-caption:field type="field" src="title_field"/>
+	      </dla-caption:link-to-detail>
+	   </div>                                       
+          
+           <dla-caption:if not-empty="origin_field">
+	      <div class="origin"><dla-caption:field type="field" src="origin_field"/></div> 
+	   </dla-caption:if>                       
+        </td>
+        <td class="holdresultsdate">          	
+           <div><dla-caption:if not-empty="probable_date_field"><dla-caption:field type="field" src="probable_date_field"/></dla-caption:if></div>
+        </td>
+     </tr>
+  </caption><caption context="image wall">
+            <div class="thumbonly">
+		  <dla-caption:link-to-detail extra-params-field="page_param">
+                <img>
+                    <dla-caption:attribute name="src">../images/medren/<dla-caption:field type="field" src="id"/>-<dla-caption:field type="field" src="page_param"/>.jpg</dla-caption:attribute>				
+				<dla-caption:attribute name="title">
+					<dla-caption:field type="field" src="title"/>
+				</dla-caption:attribute>
+				<dla-caption:attribute name="alt">
+					<dla-caption:field type="field" src="title"/>
+				</dla-caption:attribute>
+				<dla-caption:attribute name="width">200px</dla-caption:attribute>
+				<dla-caption:attribute name="height">200px</dla-caption:attribute>
+                </img>
+            </dla-caption:link-to-detail>
+		  </div>
+	</caption><stickyfacets>collection_facet</stickyfacets><footeremail>rbml@pobox.upenn.edu</footeremail><footermailto>rbml@pobox.upenn.edu,shawcros@pobox.upenn.edu</footermailto><poweredby>This site has been made possible through a grant from the National
+    Endowment to the Humanities.</poweredby><maxzoomlevels>5</maxzoomlevels><noresultsmessage>
+    <div class="noresults">
+      Sorry, no results matched your search terms.
+    </div>
+  </noresultsmessage><tocEntries>
+  	<entry name="toc" display="Contents"/>
+  	<entry name="ill" display="Illustrations"/>
+  </tocEntries><tabs type="pageturn">
+         <tab name="View Manuscript" target="pageturn"/>
+         <tab name="View Provenance &amp; Subject Details" target="record"/>
+    </tabs><solr-url>http://localhost:8082/index/medren/select/</solr-url><services name="Navigating the Collection" display="block" class="recordDescription">
+    <service name="Collection Home" link="index.html"/>
+    <service name="Search Strategies" link="ancillary.html?id=collections/brinton/searchdla"/>
+    <service type="back-to-results"/>
+    <service name="Advanced Search" link="advancedsearch.html"/>
+    <service name="New: Manuscripts recently digitized" link="search.html?sort=date_facsimile_added_sort%20desc&amp;showall=sort&amp;fq=facsimile_facet%3A%22Yes%22"/>
+  </services><services name="Manuscripts at Penn">
+    <service name="Overview" link="ancillary.html?id=collections/rbm/mss/mss"/>
+    <service name="Schoenberg Database of Manuscripts" link="http://hdl.library.upenn.edu/1017/59753"/>
+    <service name="Manuscripts on Microfilm" link="http://www.library.upenn.edu/collections/microforms/medmss.html "/>
+  </services><services name="Information &amp; Contacts" display="block" class="recordDescription">
+    <service type="mailto" address="shawcros@pobox.upenn.edu" name="Contact Us" body="Question regarding this page: " appendurl="true"/>
+    <service name="Copyright &amp; Permissions" link="ancillary.html?id=collections/brinton/copyright"/>
+  </services><services name="Rare Book &amp; Manuscript Library" link="http://www.library.upenn.edu/rbm/">
+    <service name="Access" link="ancillary.html?id=access/rbm"/>
+    <service name="Hours" link="http://events.library.upenn.edu/cgi-bin/calendar.cgi?library=rbm;size=large"/>
+    <service name="Locate on Campus" link="http://hdl.library.upenn.edu/1017/82076"/>
+    <service name="Services" link="ancillary.html?id=rbm/services"/>
+    <service name="Staff" link="http://dla.library.upenn.edu/dla/staff/search.html?fq=library_facet%3A%22Rare%20Book%20%26%20Manuscript%20Library%22"/>
+    <service name="Visitor Information" link="http://www.library.upenn.edu/access/visitors/visitors.html"/>
+  </services><services name="NEH Grant Information" link="ancillary.html?id=collections/manuscripts/grant"> </services><maps metadataPrefix="marc21">
+    <map to="marc:record">marcrecord</map>
+  </maps><maps metadataPrefix="oai_dc">
+    <map to="title">title_field</map>
+    <map to="contributor">author_field</map>
+    <map to="coverage"/>
+    <map to="creator"/>
+    <map to="date">probable_date_field</map>
+    <map to="description"/>
+    <map to="format"/>
+    <map to="identifier">id</map>
+    <map to="language">language_field</map>
+    <map to="publisher"/>
+    <map to="relation"/>
+    <map to="rights"/>
+    <map to="source"/>
+    <map to="subject">geography_field</map>
+    <map to="subject">subject_field</map>
+    <map to="subject">genre_field</map>
+    <map to="type"/>
+  </maps><maps metadataPrefix="dla">
+    <map to="datestamp">last_update</map>
+  </maps></collection><defaults xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere"><param name="start">0</param><param name="rows">25</param><param name="facet.offset">0</param><param name="browse.limit">400</param><param name="browse.sort">false</param><param name="sort">score desc, date_sort asc</param><param name="facet.limit">5</param><param name="facet.mincount">1</param></defaults><recordinfo xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere" xmlns:marc="http://www.loc.gov/MARC21/slim" detail="brief"><str name="Title">Corpus juris civilis.</str><str name="Title">[Fragments of the Digests of Justinian, Book 37, Titles 7-9] [manuscript].</str><str name="Origin">[France?, 14--]</str><str name="Physical description">2 leaves : paper ; 429 x 289 (237 x 135) mm. bound to 439 x 295 mm.</str><str name="Summary">Bifolium with fragments from Book 37 of the Digests of Justinian I (Byzantine emperor, 527-565), containing (in order) sections of Title 7 on dowries, Title 9 on inheritance, and Title 8 on the children of marriages in which one partner is an emancipated slave.  The text is surrounded by 15th-century commentary on the laws.</str><str name="Notes">Ms. leaves.</str><str name="Notes">Title supplied by cataloger (Zacour-Hirsch).</str><str name="Notes">Layout: Main text written in 2 columns of 50-52 lines; commentary text written in 2 columns of 90-109 lines; horizontal and vertical bounding lines ruled in lead.</str><str name="Notes">Script:  Written in a Gothic script.</str><str name="Notes">Decoration: Initials (1-line to 3-line) alternating in red and blue ink, paragraph marks in red and blue ink, six-line Title 8 initial in red and blue ink.</str><str name="Notes">Binding:  Modern boards.</str><str name="Notes">Origin:  Probably written in France in the 15th century (Zacour-Hirsch).</str><str name="Cite as">UPenn Ms. Codex 1223</str><str name="Manuscript location">Rare Book &amp; Manuscript Library University of Pennsylvania Ms. Codex 1223</str></recordinfo></page>

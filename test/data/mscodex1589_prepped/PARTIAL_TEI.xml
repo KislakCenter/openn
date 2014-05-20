@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Description of Ms. Codex 1589 - Texts for the Commemorative Office of the Virgin Mary and notated Office of... (1596)</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Schoenberg Center for Electronic Text and Image, University of Pennsylvania</publisher>
+            <availability>
+               <p>This work and all referenced images are ©2014 University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License, http://creativecommons.org/licenses/by-nc-sa/3.0/.</p>
+            </availability>
+         </publicationStmt>
+         <sourceDesc>
+            <msDesc>
+               <msIdentifier>
+                  <settlement>Philadelphia</settlement>
+                  <institution>University of Pennsylvania</institution>
+                  <repository>Rare Book &amp; Manuscript Library</repository>
+                  <idno>Ms. Codex 1589</idno>
+               </msIdentifier>
+               <msContents>
+                  <summary>Benedictine manuscript containing texts for Matins and Lauds from the Commemorative Office of the Virgin. This version of the Office was said most often on Saturday in place of the usual Office of the day. Also contains the Office of the Dead accompanied by musical notation for the chants. The manuscript once had leather finding tabs flush to the edge of the leaves, all but one (f. 96) of which have been torn out (for example, f. 1, 7, 69).</summary>
+                  <textLang>Latin</textLang>
+                  <msItem>
+                     <title>Texts for the Commemorative Office of the Virgin Mary and notated Office of the Dead</title>
+                     <author>Catholic Church</author>
+                  </msItem>
+               </msContents>
+               <physDesc>
+                  <decoDesc>
+                     <decoNote n="1v">Decorated border, f. 1v</decoNote>
+                     <decoNote n="2r">Decorated border, f. 2r</decoNote>
+                     <decoNote n="2r">Decorated initial, Initial I, f. 2r</decoNote>
+                     <decoNote n="4r">Decorated initial, Initial P, f. 4r</decoNote>
+                     <decoNote n="4r">Decorated initial, Initial A, f. 4r</decoNote>
+                     <decoNote n="4v">Decorated initial, Initial A, f. 4v</decoNote>
+                     <decoNote n="4v">Decorated initial, Initial S, f. 4v</decoNote>
+                     <decoNote n="4v">Decorated initial, Initial A, f. 4v</decoNote>
+                     <decoNote n="7r">Decorated initial, Initial S, f. 7r</decoNote>
+                     <decoNote n="9v">Decorated initial, Initial S, f. 9v</decoNote>
+                     <decoNote n="12r">Decorated initial, Initial D, f. 12r</decoNote>
+                     <decoNote n="14v">Decorated initial, Initial B, f. 14v</decoNote>
+                     <decoNote n="17r">Decorated initial, Initial D, f. 17r</decoNote>
+                     <decoNote n="19v">Decorated initial, Initial E, f. 19v</decoNote>
+                     <decoNote n="22r">Decorated initial, Initial A, f. 22r</decoNote>
+                     <decoNote n="22r">Decorated initial, Initial N, f. 22v</decoNote>
+                     <decoNote n="24v">Decorated initial, Initial S, f. 24v</decoNote>
+                     <decoNote n="27r">Decorated initial, Initial B, f. 27r</decoNote>
+                     <decoNote n="29v">Decorated initial, Initial S, f. 29</decoNote>
+                     <decoNote n="32r">Decorated initial, Initial E, f. 32r</decoNote>
+                     <decoNote n="32r">Decorated initial, Initial N, f. 32r</decoNote>
+                     <decoNote n="34v">Decorated initial, Initial D, f. 34v</decoNote>
+                     <decoNote n="37v">Decorated initial, Initial S, f. 37v</decoNote>
+                     <decoNote n="40r">Decorated initial, Initial S, f. 40r</decoNote>
+                     <decoNote n="42r">Decorated initial, Initial E, f. 42r</decoNote>
+                     <decoNote n="45r">Decorated initial, Initial S, f. 45r</decoNote>
+                     <decoNote n="47v">Decorated initial, Initial S, f. 47v</decoNote>
+                     <decoNote n="47v">Decorated initial, Initial O, f. 47v</decoNote>
+                     <decoNote n="54v">Decorated initial, Initial I, f. 54v</decoNote>
+                     <decoNote n="54v">Decorated border, f. 54v</decoNote>
+                     <decoNote n="55r">Decorated initial, Initial L, f. 55r</decoNote>
+                     <decoNote n="58v">Decorated initial, Initial S, f. 58v</decoNote>
+                     <decoNote n="61r">Decorated initial, Initial S, f. 61r</decoNote>
+                     <decoNote n="69v">Decorated border, f. 69v</decoNote>
+                     <decoNote n="70r">Decorated initial, Initial D, f. 70r</decoNote>
+                     <decoNote n="72v">Decorated initial, Initial S, f. 72v</decoNote>
+                     <decoNote n="72v">Decorated initial, Initial N, f. 72v</decoNote>
+                     <decoNote n="75r">Decorated initial, Initial E, f. 75r</decoNote>
+                     <decoNote n="75r">Decorated initial, Initial I, f. 75r</decoNote>
+                     <decoNote n="78r">Decorated initial, Initial S, f. 78r</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial I, f. 84r</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial D, f. 84v</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial D, f. 84v</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial U, f. 84v</decoNote>
+                     <decoNote n="85r">Decorated initial, Initial Q, f. 85r</decoNote>
+                     <decoNote n="85v">Decorated initial, Initial A, f. 85v</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial S, f. 86r</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial I, f. 86r</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial D, f. 86r</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial C, f. 86r</decoNote>
+                     <decoNote n="86v">Decorated initial, Initial D, f. 86v</decoNote>
+                     <decoNote n="88v">Decorated initial, Initial B, f. 88v</decoNote>
+                     <decoNote n="88v">Decorated initial, Initial F, f. 86v</decoNote>
+                     <decoNote n="90v">Decorated initial, Initial A, f. 90v</decoNote>
+                     <decoNote n="90v">Decorated initial, Initial L, f. 90v</decoNote>
+                     <decoNote n="91r">Decorated initial, Initial T, f. 91r</decoNote>
+                     <decoNote n="91v">Decorated initial, Initial C, f. 91v</decoNote>
+                     <decoNote n="92r">Decorated initial, Initial F, f. 92r</decoNote>
+                     <decoNote n="92r">Decorated initial, Initial S, f. 92r</decoNote>
+                     <decoNote n="92v">Decorated initial, Initial I, f. 92v</decoNote>
+                     <decoNote n="93r">Decorated initial, Initial B, f. 93r</decoNote>
+                     <decoNote n="93v">Decorated initial, Initial L, f. 93v</decoNote>
+                     <decoNote n="94r">Decorated initial, Initial C, f. 94r</decoNote>
+                     <decoNote n="94r">Decorated initial, Initial L, f. 92r</decoNote>
+                     <decoNote n="95r">Decorated initial, Initial S, f. 95r</decoNote>
+                     <decoNote n="96r">Decorated initial, Initial E, f. 96r</decoNote>
+                     <decoNote n="96r">Decorated endpiece, f. 96r</decoNote>
+                     <decoNote n="97r">Musical notation, f. 97r</decoNote>
+                     <decoNote n="97v">Musical notation, f. 97v</decoNote>
+                     <decoNote n="97v">Decorated initial, Initial P, f. 97r</decoNote>
+                     <decoNote n="98v">Decorated initial, Initial D, f. 98v</decoNote>
+                     <decoNote n="99r">Decorated initial, Initial C, f. 99r</decoNote>
+                     <decoNote n="99v">Decorated initial, Initial Q, f. 99v</decoNote>
+                     <decoNote n="100r">Decorated initial, Initial D, f. 100r</decoNote>
+                     <decoNote n="101r">Decorated initial, Initial I, f. 101r</decoNote>
+                     <decoNote n="101r">Decorated initial, Initial M, f. 101r</decoNote>
+                     <decoNote n="101v">Decorated initial, Initial H, f. 102r</decoNote>
+                     <decoNote n="102r">Decorated initial, Initial R, f. 102r</decoNote>
+                     <decoNote n="103r">Decorated initial, Initial C, f. 103r</decoNote>
+                     <decoNote n="103v">Decorated initial, Initial P, f. 103v</decoNote>
+                     <decoNote n="104r">Decorated initial, Initial D, f. 104r</decoNote>
+                     <decoNote n="105r">Decorated initial, Initial L, f. 105r</decoNote>
+                     <decoNote n="105v">Decorated initial, Initial L, f. 105v</decoNote>
+                     <decoNote n="106v">Decorated initial, Initial E, f. 106v</decoNote>
+                     <decoNote n="107r">Decorated initial, Initial E, f. 107r</decoNote>
+                     <decoNote n="108r">Musical notation, f. 108r</decoNote>
+                  </decoDesc>
+               </physDesc>
+               <history>
+                  <origin>
+                     <origDate>1596 </origDate>
+                     <origPlace>Elchingen</origPlace>
+                  </origin>
+               </history>
+            </msDesc>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <facsimile/>
+</TEI>
