@@ -7,9 +7,9 @@ import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
-from openn.xml.openn_tei import OPennTei
+from openn.xml.openn_tei import OPennTEI
 
-class TestOPennTei(unittest.TestCase):
+class TestOPennTEI(unittest.TestCase):
 
 
     this_dir         = os.path.dirname(os.path.abspath(__file__))
@@ -22,7 +22,7 @@ class TestOPennTei(unittest.TestCase):
         pass
 
     def test_get_shelf_mark(self):
-        openn_tei = OPennTei(TestOPennTei.test_partial_tei)
+        openn_tei = OPennTEI(TestOPennTEI.test_partial_tei)
         self.assertEqual('Ms. Codex 1223', openn_tei.shelf_mark())
 
 if __name__ == '__main__':

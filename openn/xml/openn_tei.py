@@ -1,6 +1,6 @@
 from lxml import etree
 
-class OPennTei():
+class OPennTEI:
     def __init__(self, tei_path, mode='r'):
         self.tei = etree.parse(open(tei_path, mode))
 
