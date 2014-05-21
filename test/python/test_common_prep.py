@@ -94,5 +94,13 @@ class TestCommonPrep(unittest.TestCase):
         self.assertTrue(msg is not None)
         self.assertTrue(re.search('file_list\.json', msg) is not None)
 
+    def test_tei_present(self):
+        # setup
+        self.stage_template()
+        prep = CommonPrep(TestCommonPrep.staged_source)
+
+        # run
+        self.assertTrue(prep.tei is not None)
+
 if __name__ == '__main__':
     unittest.main()

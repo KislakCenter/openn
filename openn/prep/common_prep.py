@@ -69,7 +69,7 @@ class CommonPrep:
 
     @property
     def tei(self):
-        if self.openn_tei is None:
+        if getattr(self, 'openn_tei', None) is None:
             self.openn_tei = OPennTEI(self.tei_path)
         return self.openn_tei
 
