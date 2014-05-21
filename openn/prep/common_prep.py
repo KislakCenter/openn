@@ -38,6 +38,11 @@ class CommonPrep:
 
     """
 
+    # A list of names and path attributes required for a
+    # valid source_dir. E.g., the "data directory" should
+    # be assigned to the attribute `data_dir` and should
+    # existon the file system. The method `check_valid` 
+    # uses these values to test source validity.
     _required_paths = {
             'data directory':  'data_dir',
             'PARTIAL_TEI.xml': 'tei_path',
@@ -48,10 +53,19 @@ class CommonPrep:
         self.source_dir    = source_dir
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.config        = config
-        self.data_dir      = os.path.join(self.source_dir, 'data')
-        self.tei_path      = os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
-        self.file_list_path = os.path.join(self.source_dir, 'file_list.json')
         self.check_valid()
+
+    @property
+    def data_dir(self):
+        return os.path.join(self.source_dir, 'data')
+
+    @property
+    def tei_path(self):
+        return os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
+
+    @property
+    def file_list_path(self):
+        return os.path.join(self.source_dir, 'file_list.json')
 
     @property
     def tei(self):
