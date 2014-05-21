@@ -38,11 +38,10 @@ class CommonPrep:
 
     """
 
-    # A list of names and path attributes required for a
-    # valid source_dir. E.g., the "data directory" should
-    # be assigned to the attribute `data_dir` and should
-    # existon the file system. The method `check_valid` 
-    # uses these values to test source validity.
+    # A list of names and path attributes required for a valid source_dir.
+    # E.g., the "data directory" should be assigned to the attribute `data_dir`
+    # and should existon the file system. The method `check_valid` uses these
+    # values to test source validity.
     _required_paths = {
             'data directory':  'data_dir',
             'PARTIAL_TEI.xml': 'tei_path',
