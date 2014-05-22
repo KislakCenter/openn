@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.common_prep import CommonPrep
 from openn.prep.file_list import FileList
+from openn.xml.openn_tei import OPennTEI
 
 class TestCommonPrep(unittest.TestCase):
 
@@ -101,7 +102,7 @@ class TestCommonPrep(unittest.TestCase):
         prep = CommonPrep(TestCommonPrep.staged_source)
 
         # run
-        self.assertTrue(prep.tei is not None)
+        self.assertTrue(isinstance(prep.tei, OPennTEI))
 
     def test_files_present(self):
         # setup
