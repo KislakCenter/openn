@@ -10,6 +10,7 @@ import unittest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.common_prep import CommonPrep
+from openn.prep.file_list import FileList
 
 class TestCommonPrep(unittest.TestCase):
 
@@ -101,6 +102,14 @@ class TestCommonPrep(unittest.TestCase):
 
         # run
         self.assertTrue(prep.tei is not None)
+
+    def test_files_present(self):
+        # setup
+        self.stage_template()
+        prep = CommonPrep(TestCommonPrep.staged_source)
+
+        # run
+        self.assertTrue(isinstance(prep.files, FileList))
 
 if __name__ == '__main__':
     unittest.main()

@@ -5,6 +5,7 @@ import re
 from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.openn_exception import OPennException
+from openn.prep.file_list import FileList
 
 class CommonPrep:
     """
@@ -71,6 +72,12 @@ class CommonPrep:
         if getattr(self, 'openn_tei', None) is None:
             self.openn_tei = OPennTEI(self.tei_path)
         return self.openn_tei
+
+    @property
+    def files(self):
+        if getattr(self, 'file_list', None) is None:
+            self.file_list= FileList(self.file_list_path)
+        return self.file_list
 
     def create_image_dirs(self):
         for name in 'master web thumb extra'.split():
