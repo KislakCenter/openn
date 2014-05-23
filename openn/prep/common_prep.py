@@ -6,6 +6,11 @@ from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
+from openn.models import *
+
+from django.core import serializers
+from django.conf import settings
+
 
 class CommonPrep:
     """
@@ -49,10 +54,10 @@ class CommonPrep:
             'file_list.json':  'file_list_path'
             }
 
-    def __init__(self,source_dir,config={}):
+    def __init__(self,source_dir,collection):
         self.source_dir    = source_dir
         self.source_dir_re = re.compile('^%s/*' % source_dir)
-        self.config        = config
+        self.collection    = collection
         self.check_valid()
 
     @property
@@ -74,6 +79,12 @@ class CommonPrep:
         return self.openn_tei
 
     @property
+    def basedir(self):
+        if getattr(self, 'base_directory', None) is None:
+            self.base_directory = os.path.basename(self.source_dir)
+        return self.base_directory
+
+    @property
     def files(self):
         if getattr(self, 'file_list', None) is None:
             self.file_list= FileList(self.file_list_path)
@@ -93,5 +104,15 @@ class CommonPrep:
             if not os.path.exists(path):
                 raise OPennException("No %s found in %s" % (name, self.source_dir))
 
+    def record_document(self):
+        """ Store this manuscript or book or whatever in the database, 
+        so we can track it and make sure it's unique."""
+        doc = Document(call_number = self.tei.call_number,
+                collection = self.collection,
+                base_dir = self.basedir)
+        doc.save()
+
+
     def prep_dir(self):
+        self.record_document()
         self.create_image_dirs()

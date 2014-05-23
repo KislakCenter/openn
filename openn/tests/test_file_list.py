@@ -3,17 +3,18 @@
 
 import os
 import sys
-import unittest
+from django.utils import unittest
+from django.test import TestCase
+from django.conf import settings
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
 
-class TestFileList(unittest.TestCase):
+class TestFileList(TestCase):
 
 
-    this_dir         = os.path.dirname(os.path.abspath(__file__))
-    test_file_list   = os.path.join(this_dir, '../data/json/mscodex1223_file_list.json')
+    test_file_list   = os.path.join(settings.PROJECT_PATH, 'test/data/json/mscodex1223_file_list.json')
 
     def setUp(self):
         pass

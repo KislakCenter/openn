@@ -5,26 +5,29 @@ import os
 import re
 import shutil
 import sys
-import unittest
+from django.utils import unittest
+from django.test import TestCase
+from django.conf import settings
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.common_prep import CommonPrep
 from openn.prep.file_list import FileList
 from openn.xml.openn_tei import OPennTEI
+from openn.models import Document
 
-class TestCommonPrep(unittest.TestCase):
+class TestCommonPrep(TestCase):
 
-    this_dir         = os.path.dirname(os.path.abspath(__file__))
-    staging_dir      = os.path.join(this_dir, 'staging')
-    command          = os.path.join(this_dir, '../../bin/op-prep')
-    template_dir     = os.path.join(this_dir, '../data/mscodex1223_prepped')
+    staging_dir      = os.path.join(settings.PROJECT_PATH, 'test/staging')
+    command          = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')
+    template_dir     = os.path.join(settings.PROJECT_PATH, 'test/data/mscodex1223_prepped')
     staged_source    = os.path.join(staging_dir, 'mscodex1223')
     staged_data      = os.path.join(staged_source, 'data')
     staged_tei       = os.path.join(staged_source, 'PARTIAL_TEI.xml')
     staged_file_list = os.path.join(staged_source, 'file_list.json')
-    dir_extra_images = os.path.join(this_dir, '../data/mscodex1589_prepped')
+    dir_extra_images = os.path.join(settings.PROJECT_PATH, 'test/data/mscodex1589_prepped')
     staged_w_extra   = os.path.join(staging_dir, 'mscodex1589')
+    medren_coll      = 'medren'
 
     def setUp(self):
         if not os.path.exists(TestCommonPrep.staging_dir):
@@ -44,7 +47,7 @@ class TestCommonPrep(unittest.TestCase):
     def test_run(self):
         # setup
         self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source)
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
         # run
         prep.prep_dir()
 
@@ -57,7 +60,7 @@ class TestCommonPrep(unittest.TestCase):
         # run
         msg = None
         try:
-            CommonPrep(TestCommonPrep.staged_source)
+            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
         except OPennException as ex:
             msg = str(ex)
 
@@ -73,7 +76,7 @@ class TestCommonPrep(unittest.TestCase):
         # run
         msg = None
         try:
-            CommonPrep(TestCommonPrep.staged_source)
+            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
         except OPennException as ex:
             msg = str(ex)
 
@@ -89,7 +92,7 @@ class TestCommonPrep(unittest.TestCase):
         # run
         msg = None
         try:
-            CommonPrep(TestCommonPrep.staged_source)
+            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
         except OPennException as ex:
             msg = str(ex)
 
@@ -99,7 +102,7 @@ class TestCommonPrep(unittest.TestCase):
     def test_tei_present(self):
         # setup
         self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source)
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
 
         # run
         self.assertTrue(isinstance(prep.tei, OPennTEI))
@@ -107,7 +110,7 @@ class TestCommonPrep(unittest.TestCase):
     def test_files_present(self):
         # setup
         self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source)
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
 
         # run
         self.assertTrue(isinstance(prep.files, FileList))
