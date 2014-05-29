@@ -110,6 +110,7 @@ class CommonPrep:
         doc = Document(call_number = self.tei.call_number,
                 collection = self.collection,
                 base_dir = self.basedir)
+        doc.full_clean()
         doc.save()
 
 

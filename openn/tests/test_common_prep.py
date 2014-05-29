@@ -8,6 +8,7 @@ import sys
 from django.utils import unittest
 from django.test import TestCase
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
@@ -114,6 +115,17 @@ class TestCommonPrep(TestCase):
 
         # run
         self.assertTrue(isinstance(prep.files, FileList))
+
+    def test_collection_empty(self):
+        # setup
+        self.stage_template()
+        prep = CommonPrep(TestCommonPrep.staged_source, '')
+
+        # run
+        with self.assertRaises(ValidationError) as ve:
+            prep.prep_dir()
+        ex = ve.exception
+        self.assertIn('collection', ex.message_dict)
 
 if __name__ == '__main__':
     unittest.main()
