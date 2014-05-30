@@ -102,6 +102,9 @@ class TestCommonPrep(TestCase):
         self.assertIsInstance(prep.files, FileList)
 
     def test_collection_empty(self):
+        """ if the test collection is the empty string, the prep should fail when
+        it tries to save the Document data.
+        """
         # setup
         self.stage_template()
         prep = CommonPrep(TestCommonPrep.staged_source, '')
@@ -111,6 +114,20 @@ class TestCommonPrep(TestCase):
             prep.prep_dir()
         ex = ve.exception
         self.assertIn('collection', ex.message_dict)
+
+    def test_document_saved(self):
+        """When common prep is run, it should create a new document in the
+        database"""
+        # setup
+        self.stage_template()
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+
+        # run
+        start_count = Document.objects.count()
+        prep.prep_dir()
+        self.assertEqual(Document.objects.count(), start_count+1,
+                "Number of Documents should increase by one")
+
 
 if __name__ == '__main__':
     unittest.main()
