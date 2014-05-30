@@ -59,14 +59,9 @@ class TestCommonPrep(TestCase):
         self.touch(TestCommonPrep.staged_file_list)
 
         # run
-        msg = None
-        try:
+        with self.assertRaises(OPennException) as oe:
             CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
-        except OPennException as ex:
-            msg = str(ex)
-
-        self.assertTrue(msg is not None)
-        self.assertTrue(re.search('data directory', msg) is not None)
+        self.assertIn('data directory', str(oe.exception))
 
     def test_no_partial_tei(self):
         # setup
@@ -75,14 +70,9 @@ class TestCommonPrep(TestCase):
         self.touch(TestCommonPrep.staged_file_list)
 
         # run
-        msg = None
-        try:
+        with self.assertRaises(OPennException) as oe:
             CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
-        except OPennException as ex:
-            msg = str(ex)
-
-        self.assertTrue(msg is not None)
-        self.assertTrue(re.search('PARTIAL_TEI\.xml', msg) is not None)
+        self.assertIn('PARTIAL_TEI.xml', str(oe.exception))
 
     def test_no_file_list(self):
         # setup
@@ -91,14 +81,9 @@ class TestCommonPrep(TestCase):
         self.touch(TestCommonPrep.staged_tei)
 
         # run
-        msg = None
-        try:
+        with self.assertRaises(OPennException) as oe:
             CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
-        except OPennException as ex:
-            msg = str(ex)
-
-        self.assertTrue(msg is not None)
-        self.assertTrue(re.search('file_list\.json', msg) is not None)
+        self.assertIn('file_list.json', str(oe.exception))
 
     def test_tei_present(self):
         # setup
@@ -106,7 +91,7 @@ class TestCommonPrep(TestCase):
         prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
 
         # run
-        self.assertTrue(isinstance(prep.tei, OPennTEI))
+        self.assertIsInstance(prep.tei, OPennTEI)
 
     def test_files_present(self):
         # setup
@@ -114,7 +99,7 @@ class TestCommonPrep(TestCase):
         prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
 
         # run
-        self.assertTrue(isinstance(prep.files, FileList))
+        self.assertIsInstance(prep.files, FileList)
 
     def test_collection_empty(self):
         # setup
