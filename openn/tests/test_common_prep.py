@@ -128,6 +128,17 @@ class TestCommonPrep(TestCase):
         self.assertEqual(Document.objects.count(), start_count+1,
                 "Number of Documents should increase by one")
 
+    def test_duplicate_document(self):
+        """When a duplicate document is prepped, prep_dir should fail
+        with an error."""
+        # setup
+        self.stage_template()
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+        # run
+        prep.prep_dir()
+        with self.assertRaises(ValidationError) as ve:
+            prep.prep_dir()
+        self.assertIn('already exists', str(ve.exception))
 
 if __name__ == '__main__':
     unittest.main()
