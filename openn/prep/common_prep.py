@@ -1,6 +1,5 @@
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
-import re
 
 from openn.models import *
 from openn.xml.openn_tei import OPennTEI
@@ -90,7 +89,7 @@ class CommonPrep:
         for i in range(self.files.count()):
             curr_name = self.files.filename(i)
             print curr_name
-            # new_name = '%05d_%05d'
+            print self.package_dir.master_name(curr_name, doc_id, i)
 
     def prep_dir(self):
         doc = self.record_document()

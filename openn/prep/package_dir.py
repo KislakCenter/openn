@@ -44,7 +44,10 @@ class PackageDir:
 
     @property
     def image_dirs(self):
-        return self._image_dirs if self._image_dirs else CommonPrep.IMAGE_DIRS
+        if getattr(self, '_image_dirs', None):
+            return self._image_dirs
+        else:
+            return PackageDir.IMAGE_DIRS
 
     @image_dirs.setter
     def image_dirs(self,dirs):
@@ -62,8 +65,29 @@ class PackageDir:
     def file_list_path(self):
         return os.path.join(self.source_dir, 'file_list.json')
 
+    @property
+    def master_dir(self):
+        if getattr(self,'_master_dir', None):
+            return _master_dir
+        else:
+            return os.path.join(self.data_dir, PackageDir.MASTER)
+
+    @master_dir.setter
+    def master_dir(self,path):
+        self._master_dir = path
+
+    @master_dir.deleter
+    def master_dir(self):
+        del(self._master_dir)
+
+    def master_name(self,orig,doc_id,index):
+        orig_dir = os.path.dirname(orig)
+        orig_ext = os.path.splitext(orig)[1]
+        new_base = "%04d_%04d.%s" % ( doc_id, index, orig_ext )
+        return os.path.join(self.master_dir, new_base)
+
     def create_image_dirs(self):
-        for name in 'master web thumb extra'.split():
+        for name in self.image_dirs:
            dir = os.path.join(self.data_dir, name)
            if not os.path.exists(dir):
                os.mkdir(dir)
