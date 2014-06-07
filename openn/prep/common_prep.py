@@ -105,15 +105,33 @@ class CommonPrep:
                 raise OPennException("No %s found in %s" % (name, self.source_dir))
 
     def record_document(self):
-        """ Store this manuscript or book or whatever in the database, 
+        """ Store this manuscript or book or whatever in the database,
         so we can track it and make sure it's unique."""
         doc = Document(call_number = self.tei.call_number,
                 collection = self.collection,
                 base_dir = self.basedir)
         doc.full_clean()
         doc.save()
+        return doc
 
+    def rename_files(self, doc_id):
+        """ Using the doc_id rename the existing files giving them sequential
+        names following this pattern:
+
+                0001_0001.tif
+                0001_0002.tif
+                0001_0003.tif
+                0001_0004.tif
+                ....
+
+        Record the new file names and write them to file_list.json.
+        """
+        for i in range(self.files.count()):
+            curr_name = self.files.filename(i)
+            print curr_name
+            # new_name = '%05d_%05d'
 
     def prep_dir(self):
-        self.record_document()
+        doc = self.record_document()
         self.create_image_dirs()
+        self.rename_files(doc.id)
