@@ -23,7 +23,7 @@ class TestFileList(TestCase):
         pass
 
     def test_init(self):
-        self.assertTrue(isinstance(FileList(TestFileList.test_file_list),FileList))
+        self.assertIsInstance(FileList(TestFileList.test_file_list), FileList)
 
 if __name__ == '__main__':
     unittest.main()
