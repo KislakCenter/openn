@@ -14,8 +14,8 @@ from openn.prep.file_list import FileList
 class TestFileList(TestCase):
 
 
-    test_file_list   = os.path.join(settings.PROJECT_PATH, 'test/data/json/mscodex1223_file_list.json')
-    test_no_extras   = os.path.join(settings.PROJECT_PATH, 'test/data/json/mscodex1223_no_extra.json')
+    file_list_path   = os.path.join(settings.PROJECT_PATH, 'test/data/json/mscodex1223_file_list.json')
+    no_extras_path   = os.path.join(settings.PROJECT_PATH, 'test/data/json/mscodex1223_no_extra.json')
 
     def setUp(self):
         pass
@@ -24,28 +24,28 @@ class TestFileList(TestCase):
         pass
 
     def test_init(self):
-        self.assertIsInstance(FileList(TestFileList.test_file_list), FileList)
+        self.assertIsInstance(FileList(TestFileList.file_list_path), FileList)
 
-    def test_file_lists(self):
-        lst = FileList(TestFileList.test_file_list)
+    def file_list_paths(self):
+        lst = FileList(TestFileList.file_list_path)
         self.assertIsInstance(lst.files(FileList.DOCUMENT), list)
         self.assertIsInstance(lst.files(FileList.EXTRA), list)
 
-    def test_no_extras_has_empty_list(self):
-        lst = FileList(TestFileList.test_no_extras)
+    def no_extras_path_has_empty_list(self):
+        lst = FileList(TestFileList.no_extras_path)
         self.assertIsInstance(lst.files(FileList.EXTRA), list)
 
     def test_document_count_not_zero(self):
-        self.assertGreater(FileList(TestFileList.test_file_list).count(), 0)
+        self.assertGreater(FileList(TestFileList.file_list_path).count(), 0)
 
     def test_extras_count_not_zero(self):
-        self.assertGreater(FileList(TestFileList.test_file_list).count(FileList.EXTRA), 0)
+        self.assertGreater(FileList(TestFileList.file_list_path).count(FileList.EXTRA), 0)
 
     def test_extras_count_is_zero(self):
-        self.assertEqual(FileList(TestFileList.test_no_extras).count(FileList.EXTRA), 0)
+        self.assertEqual(FileList(TestFileList.no_extras_path).count(FileList.EXTRA), 0)
 
     def test_file_data_is_correct_type(self):
-        self.assertIsInstance(FileList(TestFileList.test_file_list).files()[0], FileList.FileData)
+        self.assertIsInstance(FileList(TestFileList.file_list_path).files()[0], FileList.FileData)
 
 
 if __name__ == '__main__':
