@@ -1,5 +1,22 @@
 from django.db import models
 
+"""
+Document corresponds to a set of OPenn images and metadata.
+
+A Document records:
+
+    - `call_number`: the shelfmark or other identfying ID; for example,
+        'Ms Codex 1234'
+    - `collection`: the name of the collection; this value will
+        be used as the directory name of the images; for example, 'LJS',
+        'PennMedRen'
+    - `base_dir`: the base directory of the document folder, for example,
+        'mscodex1234' or 'ljs223'
+    - `is_online`: whether the document's images and other data are online
+    - `tei_file_name`: the name of the document's TEI description
+    - `created`: the date-time the record was created
+    - `updated`: the date-time the record was last updated
+"""
 class Document(models.Model):
     call_number   = models.CharField(max_length = 255, null = False, default = None, blank = False)
     collection    = models.CharField(max_length = 30, null = False, default = None, blank = False)

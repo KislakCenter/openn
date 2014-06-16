@@ -74,24 +74,8 @@ class CommonPrep:
     def check_valid(self):
         self.package_dir.check_valid()
 
-    def rename_files(self, doc_id):
-        """ Using the doc_id rename the existing files giving them sequential
-        names following this pattern:
-
-                0001_0001.tif
-                0001_0002.tif
-                0001_0003.tif
-                0001_0004.tif
-                ....
-
-        Record the new file names and write them to file_list.json.
-        """
-        for i in range(self.files.count()):
-            curr_name = self.files.filename(i)
-            print curr_name
-            print self.package_dir.master_name(curr_name, doc_id, i)
-
     def prep_dir(self):
         doc = self.record_document()
-        self.package_dir.create_image_dirs()
-        self.rename_files(doc.id)
+        self.package_dir.rename_masters(doc.id)
+        self.package_dir.create_derivs(settings.DERIVS)
+        print self.package_dir.file_list

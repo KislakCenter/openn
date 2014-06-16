@@ -76,10 +76,45 @@ class FileList:
         if self.file(index,type):
             return self.file(index,type).filename
 
+    @property
+    def data(self):
+        d = {}
+        for key in self.file_list:
+            d[key] = []
+            for fdata in self.files(key):
+                d[key].append(fdata.data)
+        return d
+
+    def __str__(self):
+        return json.dumps(self.data)
 
     class FileData:
-        def __init__(self, dict):
-            self.filename = dict.get('filename')
-            self.label = dict.get('label')
-            self.derivs = dict.get('derivs', {})
+        MASTER = 'master'
+        WEB    = 'web'
+        THUMB  = 'thumb'
 
+        def __init__(self, dict):
+            self.data = dict
+            if self.data.get('derivs', None) is None:
+                self.data['derivs'] = {}
+
+        @property
+        def filename(self):
+            return self.data.get('filename')
+
+        @property
+        def label(self):
+            return self.data.get('label')
+
+        @property
+        def derivs(self):
+            return self.data.get('derivs')
+
+        def add_deriv(self, path, deriv_type):
+            self.derivs[deriv_type] = path
+
+        def get_deriv(self,deriv_type):
+            return self.derivs.get(deriv_type)
+
+        def __str__(self):
+            return json.dumps(self.data)
