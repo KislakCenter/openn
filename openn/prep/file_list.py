@@ -2,7 +2,7 @@ import json
 import os
 
 """
-A wrapper for accessing and managing the ``file_list.jsion`` file from
+A wrapper for accessing and managing the ``file_list.json`` file from
 a package directory.
 
 The FileList exposes each individual file as a FileData object.
