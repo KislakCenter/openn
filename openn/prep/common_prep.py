@@ -11,6 +11,13 @@ from openn.models import *
 from django.core import serializers
 from django.conf import settings
 
+"""
+CommonPrep performs OPenn preparation common to all OPenn data packages.
+
+CommonPrep expects an input package to have undergone collection-specific
+preparation and to conform to its input requirements, which are described
+below.
+"""
 
 class CommonPrep:
     """

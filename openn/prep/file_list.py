@@ -1,6 +1,12 @@
 import json
 import os
 
+"""
+A wrapper for accessing and managing the ``file_list.jsion`` file from
+a package directory.
+
+The FileList exposes each individual file as a FileData object.
+"""
 class FileList:
     DOCUMENT   = 'document'
     EXTRA      = 'extra'
@@ -50,6 +56,9 @@ class FileList:
         }
     """
     def __init__(self, file_list_path):
+        """
+        Create a new FileList from the provided ``file_list_path``.
+        """
         self.file_list_path = file_list_path
         file_dict = json.load(open(file_list_path))
         self.file_list = {}
@@ -59,10 +68,16 @@ class FileList:
                 self.file_list[file_type].append(self.FileData(fdata))
 
     def files(self,type=DOCUMENT):
+        """
+        Return all FileData instances for the given file `type`.
+        """
         return self.file_list[type]
 
     @property
     def document_files(self):
+        """
+        Convenience property for ``FileList.files(FileList.DOCUMENT)``.
+        """
         return self.files(FileList.DOCUMENT)
 
     def count(self,type=DOCUMENT):
