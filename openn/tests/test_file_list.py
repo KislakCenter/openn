@@ -47,6 +47,8 @@ class TestFileList(TestCase):
     def test_file_data_is_correct_type(self):
         self.assertIsInstance(FileList(TestFileList.file_list_path).files()[0], FileList.FileData)
 
+    def test_file_list_has_types(self):
+        self.assertEqual(FileList(TestFileList.file_list_path).types, [ 'document', 'extra' ])
 
 if __name__ == '__main__':
     unittest.main()

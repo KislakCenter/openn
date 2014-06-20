@@ -67,6 +67,10 @@ class FileList:
             for fdata in file_dict.get(file_type, []):
                 self.file_list[file_type].append(self.FileData(fdata))
 
+    @property
+    def types(self):
+        return self.file_list.keys()
+
     def files(self,type=DOCUMENT):
         """
         Return all FileData instances for the given file `type`.
