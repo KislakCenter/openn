@@ -106,9 +106,11 @@ class PackageDir:
             fdata = self.file_list.file(i, FileList.DOCUMENT)
             curr_name = fdata.filename
             new_name = self.master_name(curr_name, doc_id, i)
-            os.rename(os.path.join(self.source_dir, curr_name),
-                    os.path.join(self.source_dir, new_name))
-            fdata.add_deriv(new_name, FileList.FileData.MASTER)
+            src = os.path.join(self.source_dir, curr_name)
+            dst = os.path.join(self.source_dir, new_name)
+            os.rename(src, dst)
+            details = image_deriv.details(self.source_dir, new_name)
+            fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
 
     def master_name(self,orig,doc_id,index):
         orig_dir = os.path.dirname(orig)
@@ -162,5 +164,5 @@ class PackageDir:
             for fdata in self.file_list.document_files:
                 master = fdata.get_deriv_path(FileList.FileData.MASTER)
                 deriv = self.deriv_name(master, deriv_type, dconf['ext'])
-                image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
-                fdata.add_deriv(deriv, deriv_type)
+                details = image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
+                fdata.add_deriv(deriv, deriv_type, details=details)

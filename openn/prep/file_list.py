@@ -129,9 +129,13 @@ class FileList:
         def derivs(self):
             return self.data.get('derivs')
 
-        def add_deriv(self, path, deriv_type):
+        def add_deriv(self, path, deriv_type, details={}):
             self.derivs[deriv_type] = {}
             self.derivs[deriv_type]['path'] = path
+            self.derivs[deriv_type].update(details)
+
+        def add_deriv_details(self, deriv_type, details):
+            self.derivs[deriv_type].update(details)
 
         def get_deriv_path(self,deriv_type):
             if self.get_deriv(deriv_type):

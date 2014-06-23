@@ -1,5 +1,6 @@
 import os
 import subprocess
+from PIL import Image
 from openn.openn_exception import OPennException
 
 def generate(pkg_dir, master, deriv, max_side):
@@ -10,14 +11,33 @@ def generate(pkg_dir, master, deriv, max_side):
     parameter is used to create the absolute path to the file.
     """
     # only shc
-    size = "%dx%d>" % (max_side, max_side)
+    size = (max_side, max_side)
     infile = os.path.join(pkg_dir, master)
     outfile = os.path.join(pkg_dir, deriv)
-    p = subprocess.Popen(["convert", infile,  '-resize', size, outfile],
-            stderr=subprocess.PIPE,
-            stdout=subprocess.PIPE)
-    out, err = p.communicate()
+    im = Image.open(infile)
+    im.thumbnail(size, Image.ANTIALIAS)
+    im.save(outfile)
+    return details(pkg_dir, deriv)
 
-    if p.returncode is not 0:
-        msg = "Error generating derivative %s from master %s: %s" % (deriv, master, err)
-        raise OPennException(msg)
+def details(pkg_dir, img_path):
+    """
+    Return a dictionary of the image size in bytes, and width and height in
+    pixels:
+
+      {
+          'path':   'data/web/0001_0001_web.jpg',
+          'bytes':  177552,
+          'width':  147,
+          'height': 200
+      }
+    """
+    path = os.path.join(pkg_dir, img_path)
+    bytes = os.stat(path).st_size
+    im = Image.open(path)
+    width, height = im.size
+    return {
+            'path': img_path,
+            'bytes': bytes,
+            'width': width,
+            'height': height 
+            }
