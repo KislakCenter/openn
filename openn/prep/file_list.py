@@ -130,9 +130,24 @@ class FileList:
             return self.data.get('derivs')
 
         def add_deriv(self, path, deriv_type):
-            self.derivs[deriv_type] = path
+            self.derivs[deriv_type] = {}
+            self.derivs[deriv_type]['path'] = path
+
+        def get_deriv_path(self,deriv_type):
+            if self.get_deriv(deriv_type):
+                return self.get_deriv(deriv_type).get('path')
 
         def get_deriv(self,deriv_type):
+            """
+            Return a dict of details for this deriv:
+
+                {
+                    'path': 'data/master/0001_0001.tif',
+                    'bytes': 4483731844837318,
+                    'width': 3239,
+                    'height': 4141
+                }
+            """
             return self.derivs.get(deriv_type)
 
         def __str__(self):

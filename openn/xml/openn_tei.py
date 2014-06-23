@@ -4,7 +4,7 @@ import re
 class OPennTEI:
     TEI_NS = 'http://www.tei-c.org/ns/1.0'
     fix_path_re = re.compile('^data/')
-    
+
     def __init__(self, tei_path, mode='r'):
         parser = etree.XMLParser(remove_blank_text=True)
         self.tei = etree.parse(open(tei_path, mode), parser)
@@ -36,7 +36,7 @@ class OPennTEI:
         for fdata in file_list.document_files:
             surface = etree.Element("surface", n=fdata.label, nsmap=self.ns)
             for dtype in fdata.derivs:
-                path = OPennTEI.fix_path_re.sub("", fdata.derivs[dtype])
+                path = OPennTEI.fix_path_re.sub("", fdata.get_deriv_path(dtype))
                 graphic = etree.Element('graphic', url=path)
                 surface.append(graphic)
             facs.append(surface)

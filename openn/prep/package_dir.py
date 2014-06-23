@@ -160,7 +160,7 @@ class PackageDir:
             self.create_image_dir(deriv_type)
             dconf = deriv_configs[deriv_type]
             for fdata in self.file_list.document_files:
-                master = fdata.get_deriv(FileList.FileData.MASTER)
+                master = fdata.get_deriv_path(FileList.FileData.MASTER)
                 deriv = self.deriv_name(master, deriv_type, dconf['ext'])
                 image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
                 fdata.add_deriv(deriv, deriv_type)
