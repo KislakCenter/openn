@@ -85,4 +85,5 @@ class CommonPrep:
         doc = self.record_document()
         self.package_dir.rename_masters(doc.id)
         self.package_dir.create_derivs(settings.DERIVS)
-        print self.package_dir.file_list
+        self.tei.add_file_list(self.package_dir.file_list)
+        # print self.tei.to_string()
