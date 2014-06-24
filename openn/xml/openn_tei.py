@@ -36,8 +36,13 @@ class OPennTEI:
         for fdata in file_list.document_files:
             surface = etree.Element("surface", n=fdata.label, nsmap=self.ns)
             for dtype in fdata.derivs:
-                path = OPennTEI.fix_path_re.sub("", fdata.get_deriv_path(dtype))
-                graphic = etree.Element('graphic', url=path)
+                deriv = fdata.get_deriv(dtype)
+                path = OPennTEI.fix_path_re.sub("", deriv['path'])
+                attrs = {}
+                attrs['url'] = path
+                attrs['width'] = str(deriv['width'])
+                attrs['height'] = str(deriv['height'])
+                graphic = etree.Element('graphic', **attrs)
                 surface.append(graphic)
             facs.append(surface)
         # print etree.tostring(facs,pretty_print=True)
