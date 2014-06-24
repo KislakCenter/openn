@@ -44,7 +44,9 @@
                     <publicationStmt>
                         <publisher>Schoenberg Center for Electronic Text and Image, University of Pennsylvania</publisher>
                         <availability>
-                            <p>This work and all referenced images are ©<xsl:value-of select="year-from-date(current-date())"></xsl:value-of> University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License, http://creativecommons.org/licenses/by-nc-sa/3.0/.</p>
+                          <licence target="http://creativecommons.org/licenses/by-nc/4.0/legalcode">
+                            This work and all referenced images are ©<xsl:value-of select="year-from-date(current-date())"></xsl:value-of> University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.
+                          </licence>
                         </availability>
                     </publicationStmt>
                     <sourceDesc>
