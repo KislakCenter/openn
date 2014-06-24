@@ -15,7 +15,7 @@ class MedrenPrep(CollectionPrep):
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
 
-    def __init__(self, source_dir, config):
+    def __init__(self, source_dir, collection):
         """
         Create a new MedrenPrep for the given source_dir with config dictionary `config`.
         Config should have:
@@ -28,18 +28,17 @@ class MedrenPrep(CollectionPrep):
             xsl   absolute path to the XSL to transform the XML to TEI
 
         """
+        CollectionPrep.__init__(self,collection)
         self.source_dir    = source_dir
         self.source_dir_re = re.compile('^%s/*' % source_dir)
-        self.config        = config
-
 
     @property
     def host(self):
-        return self.config['host']
+        return self.coll_config['host']
 
     @property
     def url_path(self):
-        return self.config['path']
+        return self.coll_config['path']
 
     def write_tei(self, xml_path, xsl_path):
         outfile = os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
@@ -186,4 +185,4 @@ class MedrenPrep(CollectionPrep):
         self.check_file_names(pih_xml)
         self.stage_tiffs()
         self.add_file_list(pih_xml)
-        tei_xml = self.write_tei(pih_xml, self.config['xsl'])
+        tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])

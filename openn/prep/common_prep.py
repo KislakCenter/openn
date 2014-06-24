@@ -1,15 +1,14 @@
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
 from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
 from openn.prep.package_dir import PackageDir
+from openn.openn_settings import OPennSettings
 from openn.models import *
 
 from django.core import serializers
-from django.conf import settings
 
 """
 CommonPrep performs OPenn preparation common to all OPenn data packages.
@@ -19,7 +18,7 @@ preparation and to conform to its input requirements, which are described
 below.
 """
 
-class CommonPrep:
+class CommonPrep(OPennSettings):
     """
     Perform common preparation of OPenn data packages, including:
          - Create image directory structure
@@ -52,6 +51,7 @@ class CommonPrep:
     """
 
     def __init__(self,source_dir,collection):
+        OPennSettings.__init__(self,collection)
         self.package_dir   = PackageDir(source_dir)
         self.collection    = collection
         self.check_valid()
@@ -84,7 +84,6 @@ class CommonPrep:
     def prep_dir(self):
         doc = self.record_document()
         self.package_dir.rename_masters(doc.id)
-        self.package_dir.create_derivs(settings.DERIVS)
+        self.package_dir.create_derivs(self.deriv_configs)
         # print self.package_dir.file_list
         self.tei.add_file_list(self.package_dir.file_list)
-        print self.tei.to_string()
