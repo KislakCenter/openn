@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import os
+import datetime
 
 SECRET_KEY = None
 skey_file = os.path.join(os.path.dirname(__file__), 'secret_key.txt')
+today = datetime.date.today()
 if os.environ.get('OPENN_SECRET_KEY') is not None:
     SECRET_KEY = os.environ['OPENN_SECRET_KEY']
 elif os.path.exists(skey_file):
@@ -43,6 +47,12 @@ COLLECTIONS = {
                 'host': 'dla.library.upenn.edu',
                 'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
                 'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+                'image_rights': {
+                    'xmpRights:Marked': 'True',
+                    'xmpRights:WebStatment': 'http://creativecommons.org/licenses/by-nc/4.0/',
+                    'xmpRights:UsageTerms': ('This work and all referenced images are ©%d University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.' % today.year),
+                    'dc:rights': ('This work and all referenced images are ©%d University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.' % today.year),
+                    },
                 },
             },
         }
