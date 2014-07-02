@@ -103,17 +103,13 @@ class TestCommonPrep(TestCase):
 
     def test_collection_empty(self):
         """ if the test collection is the empty string, the prep should fail when
-        it tries to save the Document data.
+        it tries to create the CommonPrep instance.
         """
         # setup
         self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source, '')
-
-        # run
-        with self.assertRaises(ValidationError) as ve:
-            prep.prep_dir()
-        ex = ve.exception
-        self.assertIn('collection', ex.message_dict)
+        with self.assertRaises(OPennException) as oe:
+            prep = CommonPrep(TestCommonPrep.staged_source, '')
+        self.assertIn('collection', str(oe.exception))
 
     def test_document_saved(self):
         """When common prep is run, it should create a new document in the
