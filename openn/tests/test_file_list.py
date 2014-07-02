@@ -50,5 +50,16 @@ class TestFileList(TestCase):
     def test_file_list_has_types(self):
         self.assertEqual(FileList(TestFileList.file_list_path).types, [ 'document', 'extra' ])
 
+    def test_paths(self):
+        fl = FileList(TestFileList.file_list_path)
+        for file in fl.files():
+            base, ext = os.path.splitext(file.filename)
+            for dtype in [ 'master', 'web', 'thumb' ]:
+                file.add_deriv("%s_%s%s" % (base, dtype, ext), dtype)
+        self.assertIsInstance(fl.paths, list)
+        # should be three paths for each doc file and 1 for each extra
+        expected_count = fl.count('document') * 3 + fl.count('extra')
+        self.assertEqual(len(fl.paths), expected_count)
+
 if __name__ == '__main__':
     unittest.main()

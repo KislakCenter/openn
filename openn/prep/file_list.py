@@ -96,6 +96,20 @@ class FileList:
             return self.file(index,type).filename
 
     @property
+    def paths(self):
+        """
+        Return all image paths for this file list. If there are derivatives,
+        all derivative paths are returned. For those files without derivatives,
+        the filename will be returned.
+        """
+        ps = []
+        for lst in self.file_list.values():
+            for file in lst:
+                ps += file.paths
+
+        return ps
+
+    @property
     def data(self):
         d = {}
         for key in self.file_list:
@@ -128,6 +142,17 @@ class FileList:
         @property
         def derivs(self):
             return self.data.get('derivs')
+
+        @property
+        def paths(self):
+            """
+            Return all paths for this FileData; if there are derivs, all deriv
+            paths are returned; if not, FileData.filename is returned.
+            """
+            if self.derivs and len(self.derivs) > 0:
+                return [ d['path'] for d in self.derivs.values() ]
+            else:
+                return [ self.filename ]
 
         def add_deriv(self, path, deriv_type, details={}):
             self.derivs[deriv_type] = {}
