@@ -3,6 +3,7 @@ import re
 
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
+from openn.prep.exif_manager import ExifManager
 import openn.prep.image_deriv as image_deriv
 
 class PackageDir:
@@ -140,12 +141,12 @@ class PackageDir:
         Create a deriv for each master file for each configured derivative type
         in deriv_configs.
         Deriv config is a dictionary of values like this:
-        
+
         {
             'web': {
                 'ext': 'jpg',
                 'max_side': 1800,
-       
+
                 },
             'thumb': {
                 'ext': 'jpg',
@@ -166,3 +167,9 @@ class PackageDir:
                 deriv = self.deriv_name(master, deriv_type, dconf['ext'])
                 details = image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
                 fdata.add_deriv(deriv, deriv_type, details=details)
+
+    def add_image_metadata(self,md_dict):
+        images = []
+        files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]
+        exman = ExifManager()
+        exman.add_json_metadata(files, md_dict)
