@@ -19,14 +19,14 @@ from openn.models import Document
 
 class TestCommonPrep(TestCase):
 
-    staging_dir      = os.path.join(settings.PROJECT_PATH, 'test/staging')
+    staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
     command          = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')
-    template_dir     = os.path.join(settings.PROJECT_PATH, 'test/data/mscodex1223_prepped')
+    template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1589_prepped')
     staged_source    = os.path.join(staging_dir, 'mscodex1223')
     staged_data      = os.path.join(staged_source, 'data')
     staged_tei       = os.path.join(staged_source, 'PARTIAL_TEI.xml')
     staged_file_list = os.path.join(staged_source, 'file_list.json')
-    dir_extra_images = os.path.join(settings.PROJECT_PATH, 'test/data/mscodex1589_prepped')
+    dir_extra_images = os.path.join(os.path.dirname(__file__), 'data/mscodex1589_prepped')
     staged_w_extra   = os.path.join(staging_dir, 'mscodex1589')
     medren_coll      = 'medren'
 

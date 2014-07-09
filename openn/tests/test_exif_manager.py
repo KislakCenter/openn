@@ -17,8 +17,8 @@ from openn.prep.exif_manager import ExifManager
 
 class TestExifManager(TestCase):
 
-    staging_dir      = os.path.join(settings.PROJECT_PATH, 'test/staging')
-    source_dir       = os.path.join(settings.PROJECT_PATH, 'test/data/mscodex1223')
+    staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
+    source_dir       = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
     test_image_names = [ 'mscodex1223_wk1_body0001.tif', 'mscodex1223_wk1_body0002.tif', 'mscodex1223_wk1_body0003.tif' ]
     test_images      = [ os.path.join(source_dir, img) for img in test_image_names ]
     staged_images    = [ os.path.join(staging_dir, img) for img in test_image_names ]

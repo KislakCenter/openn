@@ -17,14 +17,14 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 class TestOpPrep(TestCase):
 
-    staging_dir   = os.path.join(settings.PROJECT_PATH, 'test/staging')
-    command       = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')
-    template_dir  = os.path.join(settings.PROJECT_PATH, 'test/data/mscodex1223')
-    staged_source = os.path.join(staging_dir, os.path.basename(template_dir))
-    partial_tei   = os.path.join(staged_source, 'PARTIAL_TEI.xml')
-    file_list     = os.path.join(staged_source, 'file_list.json')
-    prep_config   = 'medren'
-    dir_extra_images = os.path.join(settings.PROJECT_PATH, 'test/data/mscodex1589')
+    staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
+    command          = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')
+    template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
+    staged_source    = os.path.join(staging_dir, os.path.basename(template_dir))
+    partial_tei      = os.path.join(staged_source, 'PARTIAL_TEI.xml')
+    file_list        = os.path.join(staged_source, 'file_list.json')
+    prep_config      = 'medren'
+    dir_extra_images = os.path.join(os.path.dirname(__file__), 'data/mscodex1589')
     staged_w_extra   = os.path.join(staging_dir, os.path.basename(dir_extra_images))
 
     def setUp(self):

@@ -14,8 +14,8 @@ from openn.prep.file_list import FileList
 class TestFileList(TestCase):
 
 
-    file_list_path   = os.path.join(settings.PROJECT_PATH, 'test/data/json/mscodex1223_file_list.json')
-    no_extras_path   = os.path.join(settings.PROJECT_PATH, 'test/data/json/mscodex1223_no_extra.json')
+    file_list_path   = os.path.join(os.path.dirname(__file__), 'data/json/mscodex1223_file_list.json')
+    no_extras_path   = os.path.join(os.path.dirname(__file__), 'data/json/mscodex1223_no_extra.json')
 
     def setUp(self):
         pass

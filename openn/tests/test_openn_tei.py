@@ -14,7 +14,7 @@ from openn.xml.openn_tei import OPennTEI
 class TestOPennTEI(TestCase):
 
 
-    test_partial_tei = os.path.join(settings.PROJECT_PATH, 'test/data/xml/ms1223_PARTIAL_TEI.xml')
+    test_partial_tei = os.path.join(os.path.dirname(__file__), 'data/xml/ms1223_PARTIAL_TEI.xml')
 
     def setUp(self):
         pass
