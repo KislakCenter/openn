@@ -8,6 +8,62 @@ a package directory.
 The FileList exposes each individual file as a FileData object.
 """
 class FileList:
+    """
+        A completed file list looks like this.
+
+            {
+              "document": [
+                {
+                  "filename": "data/mscodex1589_wk1_front0001.tif",
+                  "derivs": {
+                    "web": {
+                      "path": "data/web/0001_0000_web.jpg",
+                      "bytes": 2218,
+                      "width": 78,
+                      "height": 100
+                    },
+                    "master": {
+                      "path": "data/master/0001_0000.tif",
+                      "bytes": 24912,
+                      "width": 78,
+                      "height": 100
+                    },
+                    "thumb": {
+                      "path": "data/thumb/0001_0000_thumb.jpg",
+                      "bytes": 2218,
+                      "width": 78,
+                      "height": 100
+                    }
+                  },
+                  "label": "Front cover"
+                },
+                {
+                  "filename": "data/mscodex1589_wk1_front0002.tif",
+                  "derivs": {
+                    "web": {
+                      "path": "data/web/0001_0001_web.jpg",
+                      "bytes": 1823,
+                      "width": 78,
+                      "height": 100
+                    },
+                    "master": {
+                      "path": "data/master/0001_0001.tif",
+                      "bytes": 24912,
+                      "width": 78,
+                      "height": 100
+                    },
+                    "thumb": {
+                      "path": "data/thumb/0001_0001_thumb.jpg",
+                      "bytes": 1823,
+                      "width": 78,
+                      "height": 100
+                    }
+                  },
+                  "label": "Inside front cover"
+                },
+                // ...
+           }
+    """
     DOCUMENT   = 'document'
     EXTRA      = 'extra'
     FILE_TYPES = ( DOCUMENT, EXTRA )
@@ -84,6 +140,16 @@ class FileList:
         """
         return self.files(FileList.DOCUMENT)
 
+    @property
+    def file_count(self):
+        """Return a count of all the files."""
+        return sum([len(fls) for fls in self.file_list.values()])
+
+    @property
+    def deriv_count(self):
+        """Return count of all derivatives."""
+        return sum([fdata.deriv_count for fdata in fls for fls in self.files.values()])
+        
     def count(self,type=DOCUMENT):
         return len(self.files(type))
 
@@ -142,6 +208,10 @@ class FileList:
         @property
         def derivs(self):
             return self.data.get('derivs')
+
+        @property
+        def deriv_count(self):
+            return len(self.derivs)
 
         @property
         def paths(self):

@@ -15,7 +15,7 @@ from openn.openn_exception import OPennException
 from openn.prep.common_prep import CommonPrep
 from openn.prep.file_list import FileList
 from openn.xml.openn_tei import OPennTEI
-from openn.models import Document
+from openn.models import *
 
 class TestCommonPrep(TestCase):
 
@@ -51,6 +51,7 @@ class TestCommonPrep(TestCase):
         prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
         # run
         prep.prep_dir()
+        self.assertEqual(Image.objects.count(), prep.package_dir.file_list.file_count)
 
     def test_no_data_dir(self):
         # setup

@@ -19,7 +19,7 @@ DATABASES = {
         }
 
 INSTALLED_APPS = (
-        'openn', 'south',
+        'openn', 'south', 'ordered_model',
         )
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
@@ -39,6 +39,8 @@ DERIVS = {
             'max_side': 190,
             },
         }
+
+TEMPLATE_DIRS = ('openn/templates', )
 
 COLLECTIONS = {
         'medren': {

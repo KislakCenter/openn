@@ -1,4 +1,5 @@
 from django.db import models
+from ordered_model.models import OrderedModel
 
 """
 Document corresponds to a set of OPenn images and metadata.
@@ -47,3 +48,39 @@ class Document(models.Model):
                         tei_file_name=self.tei_file_name,
                         created=self.created,
                         updated=self.updated)
+
+class DocumentImageManager(models.Manager):
+    def get_query_set(self):
+        return super(DocumentImageManager, self).get_query_set().filter(image_type='d')
+
+class ExtraImageManager(models.Manager):
+    def get_query_set(self):
+        return super(ExtraImageManager, self).get_query_set().filter(image_type='x')
+
+class Image(OrderedModel):
+    document              = models.ForeignKey(Document)
+    label                 = models.CharField(max_length = 255, null = False, default = None, blank = False)
+    filename              = models.CharField(max_length = 255, null = False, default = None, blank = False)
+    image_type            = models.CharField(max_length = 1, choices=(('d', 'Document'), ('x', 'Extra')))
+    order_with_respect_to = 'document'
+    objects               = models.Manager()
+    images                = models.Manager()
+    document_images       = DocumentImageManager()
+    extra_images          = ExtraImageManager()
+
+    def __unicode__(self):
+        return u"label: %s, filename: %s" % (self.label, self.filename)
+
+    class Meta(OrderedModel.Meta):
+        pass
+
+class Derivative(models.Model):
+    component  = models.ForeignKey(Image)
+    deriv_type = models.CharField(max_length  = 20, null  = False, default = None, blank = False)
+    path       = models.CharField(max_length  = 255, null = False, default = None, blank = False)
+    bytes      = models.IntegerField()
+    width      = models.IntegerField()
+    height     = models.IntegerField()
+
+    class Meta:
+        ordering = [ 'deriv_type' ]

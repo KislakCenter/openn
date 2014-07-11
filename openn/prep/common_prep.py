@@ -78,6 +78,20 @@ class CommonPrep(OPennSettings):
         doc.save()
         return doc
 
+    def add_image(self,doc,img_type,img_set):
+        attrs = {
+                'label': img_set.get('label', 'Unknown'),
+                'filename': img_set.get('filename'),
+                'image_type': ('d' if img_type == 'document' else 'x'),
+                }
+        doc.image_set.create(**attrs)
+
+    def save_file_list(self,document,file_list_dict):
+        # img_type is 'document' or 'extra'
+        for img_type in file_list_dict:
+            for img_set in file_list_dict.get(img_type, []):
+                self.add_image(document, img_type, img_set)
+
     def check_valid(self):
         self.package_dir.check_valid()
 
@@ -85,6 +99,6 @@ class CommonPrep(OPennSettings):
         doc = self.record_document()
         self.package_dir.rename_masters(doc.id)
         self.package_dir.create_derivs(self.deriv_configs)
+        self.save_file_list(doc, self.package_dir.file_list.data)
         self.package_dir.add_image_metadata(self.coll_config.get('image_rights'))
-        # print self.package_dir.file_list
         self.tei.add_file_list(self.package_dir.file_list)
