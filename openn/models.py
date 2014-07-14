@@ -75,7 +75,7 @@ class Image(OrderedModel):
         pass
 
 class Derivative(models.Model):
-    component  = models.ForeignKey(Image)
+    image      = models.ForeignKey(Image)
     deriv_type = models.CharField(max_length  = 20, null  = False, default = None, blank = False)
     path       = models.CharField(max_length  = 255, null = False, default = None, blank = False)
     bytes      = models.IntegerField()

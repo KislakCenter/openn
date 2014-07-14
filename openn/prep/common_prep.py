@@ -78,13 +78,26 @@ class CommonPrep(OPennSettings):
         doc.save()
         return doc
 
+    def add_deriv(self,image,attrs):
+        """
+        Add a derivative record to the database with attributes attrs and
+        parent record image.
+        """
+        image.derivative_set.create(**attrs)
+
     def add_image(self,doc,img_type,img_set):
+        """Add an image record to the database with doc as its parent."""
         attrs = {
                 'label': img_set.get('label', 'Unknown'),
                 'filename': img_set.get('filename'),
                 'image_type': ('d' if img_type == 'document' else 'x'),
                 }
-        doc.image_set.create(**attrs)
+        image = doc.image_set.create(**attrs)
+        derivs = image_set.get('deriv_type' {})
+        for deriv_type in derivs:
+            attrs = dict({ 'deriv_type': deriv_type }, **derivs[deriv_type])
+            self.add_deriv(image, attrs)
+
 
     def save_file_list(self,document,file_list_dict):
         # img_type is 'document' or 'extra'

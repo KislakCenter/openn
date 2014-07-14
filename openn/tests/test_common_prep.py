@@ -52,6 +52,8 @@ class TestCommonPrep(TestCase):
         # run
         prep.prep_dir()
         self.assertEqual(Image.objects.count(), prep.package_dir.file_list.file_count)
+        print Derivative.objects.count()
+        print Image.objects.count()
 
     def test_no_data_dir(self):
         # setup
