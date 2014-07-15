@@ -15,6 +15,7 @@ class FileList:
               "document": [
                 {
                   "filename": "data/mscodex1589_wk1_front0001.tif",
+                  "image_type": "document",
                   "derivs": {
                     "web": {
                       "path": "data/web/0001_0000_web.jpg",
@@ -39,20 +40,24 @@ class FileList:
                 },
                 {
                   "filename": "data/mscodex1589_wk1_front0002.tif",
+                  "image_type": "document",
                   "derivs": {
                     "web": {
+                      "deriv_type": "web",
                       "path": "data/web/0001_0001_web.jpg",
                       "bytes": 1823,
                       "width": 78,
                       "height": 100
                     },
                     "master": {
+                      "deriv_type": "master",
                       "path": "data/master/0001_0001.tif",
                       "bytes": 24912,
                       "width": 78,
                       "height": 100
                     },
                     "thumb": {
+                      "deriv_type": "master",
                       "path": "data/thumb/0001_0001_thumb.jpg",
                       "bytes": 1823,
                       "width": 78,
@@ -62,6 +67,13 @@ class FileList:
                   "label": "Inside front cover"
                 },
                 // ...
+               ],
+              "extra": [
+                {
+                  "image_type": "extra",
+                  "filename": "data/mscodex1589_test ref1_1.tif"
+                }
+              ]
            }
     """
     DOCUMENT   = 'document'
@@ -225,7 +237,7 @@ class FileList:
                 return [ self.filename ]
 
         def add_deriv(self, path, deriv_type, details={}):
-            self.derivs[deriv_type] = {}
+            self.derivs[deriv_type] = { 'deriv_type': deriv_type }
             self.derivs[deriv_type]['path'] = path
             self.derivs[deriv_type].update(details)
 
@@ -241,6 +253,7 @@ class FileList:
             Return a dict of details for this deriv:
 
                 {
+                    'deriv_type': 'master',
                     'path': 'data/master/0001_0001.tif',
                     'bytes': 4483731844837318,
                     'width': 3239,

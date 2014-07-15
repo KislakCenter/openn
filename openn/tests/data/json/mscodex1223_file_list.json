@@ -69,7 +69,8 @@
   "extra": [
     {
       "image_type": "extra",
-      "filename": "data/mscodex1589_test ref1_1.tif"
+      "filename": "data/mscodex1589_test ref1_1.tif",
+      "label": "None"
     }
   ]
 }

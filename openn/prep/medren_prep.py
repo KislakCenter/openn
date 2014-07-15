@@ -164,7 +164,7 @@ class MedrenPrep(CollectionPrep):
             for pair in sec_files:
                 files.remove(pair['filename'])
             sorted_files += sec_files
-        files = [ { 'filename': x, 'image_type': 'extra' } for x in files ]
+        files = [ { 'filename': x, 'image_type': 'extra', 'label': 'None' } for x in files ]
         return { 'document': sorted_files, 'extra': files }
 
     def write_xml(self):
