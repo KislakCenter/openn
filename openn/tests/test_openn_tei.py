@@ -26,5 +26,9 @@ class TestOPennTEI(TestCase):
         openn_tei = OPennTEI(TestOPennTEI.test_partial_tei)
         self.assertEqual('Ms. Codex 1223', openn_tei.call_number)
 
+    def test_get_title(self):
+        openn_tei = OPennTEI(TestOPennTEI.test_partial_tei)
+        self.assertEqual('Fragments of the Digests of Justinian, Book 37, Titles 7-9', openn_tei.title)
+
 if __name__ == '__main__':
     unittest.main()

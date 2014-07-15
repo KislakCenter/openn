@@ -16,8 +16,11 @@ class OPennTEI:
 
     @property
     def call_number(self):
-        xpath = '//t:msIdentifier/t:idno'
-        return self.tei.xpath(xpath, namespaces=self.ns)[0].text
+        return self._get_text('//t:msIdentifier/t:idno')
+
+    @property
+    def title(self):
+        return self._get_text('//t:msContents/t:msItem/t:title')
 
     def add_file_list(self,file_list):
         """
@@ -49,3 +52,10 @@ class OPennTEI:
 
     def to_string(self):
         print etree.tostring(self.tei, pretty_print=True, xml_declaration=True, encoding='UTF-8')
+
+    def _get_text(self,xpath):
+        nodes = self._get_nodes(xpath)
+        return nodes[0].text if len(nodes) > 0 else None
+
+    def _get_nodes(self,xpath):
+        return self.tei.xpath(xpath, namespaces=self.ns)
