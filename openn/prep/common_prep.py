@@ -68,7 +68,7 @@ class CommonPrep(OPennSettings):
             self.file_list= FileList(self.package_dir.file_list_path)
         return self.file_list
 
-    def record_document(self):
+    def save_document(self):
         """ Store this manuscript or book or whatever in the database,
         so we can track it and make sure it's unique."""
         doc = Document(call_number = self.tei.call_number,
@@ -78,14 +78,15 @@ class CommonPrep(OPennSettings):
         doc.save()
         return doc
 
-    def add_deriv(self,image,attrs):
+    def save_deriv(self,image,attrs):
         """
         Add a derivative record to the database with attributes attrs and
         parent record image.
         """
-        image.derivative_set.create(**attrs)
+        deriv = image.derivative_set.create(**attrs)
+        return deriv
 
-    def add_image(self,doc,img_type,img_set):
+    def save_image(self,doc,img_type,img_set):
         """Add an image record to the database with doc as its parent."""
         attrs = {
                 'label': img_set.get('label', 'Unknown'),
@@ -93,23 +94,24 @@ class CommonPrep(OPennSettings):
                 'image_type': ('d' if img_type == 'document' else 'x'),
                 }
         image = doc.image_set.create(**attrs)
-        derivs = image_set.get('deriv_type' {})
+        derivs = img_set.get('deriv_type', {})
         for deriv_type in derivs:
             attrs = dict({ 'deriv_type': deriv_type }, **derivs[deriv_type])
-            self.add_deriv(image, attrs)
+            self.save_deriv(image, attrs)
+        return image
 
 
     def save_file_list(self,document,file_list_dict):
         # img_type is 'document' or 'extra'
         for img_type in file_list_dict:
             for img_set in file_list_dict.get(img_type, []):
-                self.add_image(document, img_type, img_set)
+                self.save_image(document, img_type, img_set)
 
     def check_valid(self):
         self.package_dir.check_valid()
 
     def prep_dir(self):
-        doc = self.record_document()
+        doc = self.save_document()
         self.package_dir.rename_masters(doc.id)
         self.package_dir.create_derivs(self.deriv_configs)
         self.save_file_list(doc, self.package_dir.file_list.data)
