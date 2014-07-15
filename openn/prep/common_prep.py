@@ -73,7 +73,8 @@ class CommonPrep(OPennSettings):
         so we can track it and make sure it's unique."""
         doc = Document(call_number = self.tei.call_number,
                 collection = self.collection,
-                base_dir = self.package_dir.basedir)
+                base_dir = self.package_dir.basedir,
+                title = getattr(self.tei, 'title', 'Untitled'))
         doc.full_clean()
         doc.save()
         return doc

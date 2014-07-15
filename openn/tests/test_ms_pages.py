@@ -26,6 +26,7 @@ class TestMSPages(TestCase):
         if getattr(self,'doc', None) is None:
             self.doc = Document(call_number = 'MS Codex 123',
                     collection = 'medren',
+                    title = 'Title of the Ms.',
                     base_dir = 'mscodex123')
             self.doc.full_clean()
             self.doc.save()
