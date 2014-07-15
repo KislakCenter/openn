@@ -160,11 +160,11 @@ class MedrenPrep(CollectionPrep):
         sorted_files = []
         for section in ('front', 'body', 'back'):
             sec_files     = sorted(filter(lambda x: section  in x, files))
-            sec_files     = [ { 'filename': x } for x in sec_files ]
+            sec_files     = [ { 'filename': x, 'image_type': 'document' } for x in sec_files ]
             for pair in sec_files:
                 files.remove(pair['filename'])
             sorted_files += sec_files
-        files = [ { 'filename': x } for x in files ]
+        files = [ { 'filename': x, 'image_type': 'extra' } for x in files ]
         return { 'document': sorted_files, 'extra': files }
 
     def write_xml(self):
