@@ -1,6 +1,7 @@
 import os
 
 from openn.models import *
+from openn import openn_db
 from openn.xml.openn_tei import OPennTEI
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
@@ -71,42 +72,12 @@ class CommonPrep(OPennSettings):
     def save_document(self):
         """ Store this manuscript or book or whatever in the database,
         so we can track it and make sure it's unique."""
-        doc = Document(call_number = self.tei.call_number,
-                collection = self.collection,
-                base_dir = self.package_dir.basedir,
-                title = getattr(self.tei, 'title', 'Untitled'))
-        doc.full_clean()
-        doc.save()
-        return doc
-
-    def save_deriv(self,image,attrs):
-        """
-        Add a derivative record to the database with attributes attrs and
-        parent record image.
-        """
-        deriv = image.derivative_set.create(**attrs)
-        return deriv
-
-    def save_image(self,doc,img_type,img_set):
-        """Add an image record to the database with doc as its parent."""
-        attrs = {
-                'label': img_set.get('label', 'Unknown'),
-                'filename': img_set.get('filename'),
-                'image_type': ('d' if img_type == 'document' else 'x'),
-                }
-        image = doc.image_set.create(**attrs)
-        derivs = img_set.get('deriv_type', {})
-        for deriv_type in derivs:
-            attrs = dict({ 'deriv_type': deriv_type }, **derivs[deriv_type])
-            self.save_deriv(image, attrs)
-        return image
-
-
-    def save_file_list(self,document,file_list_dict):
-        # img_type is 'document' or 'extra'
-        for img_type in file_list_dict:
-            for img_set in file_list_dict.get(img_type, []):
-                self.save_image(document, img_type, img_set)
+        return openn_db.save_document({
+            'call_number': self.tei.call_number,
+            'collection': self.collection,
+            'base_dir': self.package_dir.basedir,
+            'title': getattr(self.tei, 'title', 'Untitled')
+            })
 
     def check_valid(self):
         self.package_dir.check_valid()
@@ -115,6 +86,6 @@ class CommonPrep(OPennSettings):
         doc = self.save_document()
         self.package_dir.rename_masters(doc.id)
         self.package_dir.create_derivs(self.deriv_configs)
-        self.save_file_list(doc, self.package_dir.file_list.data)
+        openn_db.save_image_data(doc,self.package_dir.file_list.data)
         self.package_dir.add_image_metadata(self.coll_config.get('image_rights'))
         self.tei.add_file_list(self.package_dir.file_list)
