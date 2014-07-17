@@ -53,7 +53,7 @@ description""" }
         shutil.copy(TestExifManager.test_images[index],
                 TestExifManager.staged_images[index])
         return TestExifManager.staged_images[index]
-    
+
     def test_init(self):
         self.assertIsInstance(ExifManager(), ExifManager)
 
@@ -81,7 +81,7 @@ description""" }
             md = self.get_metadata(img)
             self.assertIn('XMP:Marked', md)
             self.assertTrue(os.path.exists(img + "_original"))
-    
+
     def test_add_json_metadata(self):
         self.stage_images()
         xman = ExifManager()
@@ -92,6 +92,26 @@ description""" }
             self.assertIn('XMP:Rights', md)
             self.assertTrue(os.path.exists(img + "_original"))
 
+    def test_add_xmp_metadata_overwrite(self):
+        self.stage_images()
+        xman = ExifManager()
+        xman.add_metadata(TestExifManager.staged_images, TestExifManager.xmp_marked,
+               overwrite_original=True)
+        for img in TestExifManager.staged_images:
+            md = self.get_metadata(img)
+            self.assertIn('XMP:Marked', md)
+            self.assertFalse(os.path.exists(img + "_original"))
+
+    def test_add_json_metadata_overwrite(self):
+        self.stage_images()
+        xman = ExifManager()
+        xman.add_json_metadata(TestExifManager.staged_images, TestExifManager.tag_dict,
+                overwrite_original=True)
+        for img in TestExifManager.staged_images:
+            md = self.get_metadata(img)
+            self.assertIn('XMP:Marked', md)
+            self.assertIn('XMP:Rights', md)
+            self.assertFalse(os.path.exists(img + "_original"))
 
 if __name__ == '__main__':
     unittest.main()

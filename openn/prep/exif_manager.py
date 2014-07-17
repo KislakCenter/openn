@@ -5,7 +5,10 @@ import json
 import os
 import re
 import sh
+import subprocess
 import tempfile
+
+from openn.openn_exception import OPennException
 
 class ExifManager(object):
     xmp_re = re.compile(':')
@@ -18,27 +21,31 @@ class ExifManager(object):
     def __del__(self):
         self.stop()
 
-    def add_metadata(self,file_list,prop_dict):
+    def add_metadata(self,file_list,prop_dict,overwrite_original=False):
         self.start()
         for file in file_list:
-            self._add_md_to_file(file, prop_dict)
+            self._add_md_to_file(file, prop_dict, overwrite_original)
         self.stop()
 
-    def add_json_metadata(self,file_list,prop_dict):
+    def add_json_metadata(self,file_list,prop_dict,overwrite_original=False):
         self.start()
         for file in file_list:
-            self._add_json_md_to_file(file,prop_dict)
+            self._add_json_md_to_file(file,prop_dict, overwrite_original)
         self.stop()
 
-    def _add_json_md_to_file(self,file,prop_dict):
+    def _add_json_md_to_file(self,file,prop_dict,overwrite_original=False):
         dct = { 'SourceFile': file }
         dct.update(**prop_dict)
         path = self._to_json_file(dct)
         tags = [ '-json=%s' % path, file ]
-        self._exiftool.execute(*tags)
+        if overwrite_original:
+            tags.insert(0, '-overwrite_original')
+        return self._exiftool.execute(*tags)
 
-    def _add_md_to_file(self,file,prop_dict):
+    def _add_md_to_file(self,file,prop_dict,overwrite_original=False):
         tags = self._build_tags(prop_dict)
+        if overwrite_original:
+            tags.insert(0, '-overwrite_original')
         tags.append(file)
         self._exiftool.execute(*tags)
 
