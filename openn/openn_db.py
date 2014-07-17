@@ -15,7 +15,7 @@ def save_images(doc,attr_array=[{}]):
     return [ save_image(doc,attrs) for  attrs in attr_array ]
 
 def save_deriv(image,attrs={}):
-    return image.derivative_set(**attrs)
+    return image.derivative_set.create(**attrs)
 
 def save_derivs(image,attr_array=[{}]):
     return [ save_deriv(image,attrs) for attrs in attr_array ]
@@ -96,5 +96,5 @@ def save_image_data(doc,file_list_dict):
             if 'derivs' in attr_copy:
                 del(attr_copy['derivs'])
             image = save_image(doc, attr_copy)
-            if 'deriv' in image_attrs:
-                save_derivs(image, image_attrs['deriv'].values())
+            if 'derivs' in image_attrs:
+                save_derivs(image, image_attrs['derivs'].values())

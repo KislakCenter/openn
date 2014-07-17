@@ -86,6 +86,6 @@ class CommonPrep(OPennSettings):
         doc = self.save_document()
         self.package_dir.rename_masters(doc.id)
         self.package_dir.create_derivs(self.deriv_configs)
-        openn_db.save_image_data(doc,self.package_dir.file_list.data)
         self.package_dir.add_image_metadata(self.coll_config.get('image_rights'))
+        openn_db.save_image_data(doc,self.package_dir.file_list.data)
         self.tei.add_file_list(self.package_dir.file_list)

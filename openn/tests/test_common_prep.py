@@ -49,9 +49,14 @@ class TestCommonPrep(TestCase):
         # setup
         self.stage_template()
         prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+        doc_count = Document.objects.count()
+        image_count = Image.objects.count()
+        deriv_count = Derivative.objects.count()
         # run
         prep.prep_dir()
-        self.assertEqual(Image.objects.count(), prep.package_dir.file_list.file_count)
+        self.assertEqual(Document.objects.count(), doc_count + 1)
+        self.assertEqual(Image.objects.count(), image_count + prep.package_dir.file_list.file_count)
+        self.assertEqual(Derivative.objects.count(), deriv_count + prep.package_dir.file_list.deriv_count)
 
     def test_no_data_dir(self):
         # setup
@@ -111,19 +116,6 @@ class TestCommonPrep(TestCase):
         with self.assertRaises(OPennException) as oe:
             prep = CommonPrep(TestCommonPrep.staged_source, '')
         self.assertIn('collection', str(oe.exception))
-
-    def test_document_saved(self):
-        """When common prep is run, it should create a new document in the
-        database"""
-        # setup
-        self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
-
-        # run
-        start_count = Document.objects.count()
-        prep.prep_dir()
-        self.assertEqual(Document.objects.count(), start_count+1,
-                "Number of Documents should increase by one")
 
     def test_duplicate_document(self):
         """When a duplicate document is prepped, prep_dir should fail
