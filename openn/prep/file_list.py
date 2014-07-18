@@ -139,6 +139,10 @@ class FileList:
     def types(self):
         return self.file_list.keys()
 
+    @property
+    def all_file_data(self):
+        return [ fdata for file_type in self.types for fdata in self.files(file_type) ]
+
     def files(self,type=DOCUMENT):
         """
         Return all FileData instances for the given file `type`.

@@ -168,6 +168,13 @@ class PackageDir:
                 details = image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
                 fdata.add_deriv(deriv, deriv_type, details=details)
 
+    def update_image_details(self):
+        for fdata in self.file_list.all_file_data:
+            if len(fdata.derivs) > 0:
+                for deriv in fdata.derivs.values():
+                    details = image_deriv.details(self.source_dir, deriv['path'])
+                    deriv.update(details)
+
     def add_image_metadata(self,md_dict):
         images = []
         files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]
