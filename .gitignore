@@ -56,3 +56,6 @@ docs/_build/
 # Project stuff
 *.sqlite3
 *.db
+
+# friggin' emacs backup files pollutin my dirs
+*~
