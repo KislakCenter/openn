@@ -39,7 +39,7 @@ class OPennSettings(object):
     @property
     def coll(self):
         """
-        Return the collection configuration. These are setup in
+        Return the collection configuration. These are set up in
         the settings.COLLECTIONS dict. A collection is a dict like this:
 
             'medren': {
@@ -78,4 +78,3 @@ class OPennSettings(object):
             msg = "No collection found for %s; expected one of %s"
             msg = msg % (self._coll_name, ','.join(self.known_colls))
             raise OPennException(msg)
-
