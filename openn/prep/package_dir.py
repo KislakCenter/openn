@@ -178,7 +178,6 @@ class PackageDir:
         If deriv_dir is specified, all images will be written to
         'data/<deriv_dir>'; e.g., 'data/extra'. Otherwise, all images will be
         written to the deriv_type dir: 'data/web', 'data/thumb'.
-
         Derivatives are created for each type, here 'web' and 'thumb'; 'ext'
         gives the file type and extension; 'max_side' gives the maximum number of
         pixels on the derivative image side. Derivatives are only reduced in
@@ -204,4 +203,4 @@ class PackageDir:
         images = []
         files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]
         exman = ExifManager()
-        exman.add_json_metadata(files, md_dict)
+        exman.add_json_metadata(files, md_dict,overwrite_original=True)
