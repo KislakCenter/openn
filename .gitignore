@@ -59,3 +59,6 @@ docs/_build/
 
 # friggin' emacs backup files pollutin my dirs
 *~
+
+# test temp dir
+openn/tests/staging
