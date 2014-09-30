@@ -15,6 +15,9 @@ class PackageDir:
     DOCUMENT   = 'document'
     IMAGE_DIRS = ( MASTER, WEB, THUMB, EXTRA )
 
+    # All white space in filenames will be replace by '_' or removed
+    white_space_re = re.compile('\s')
+
     # A list of names and path attributes required for a valid source_dir.
     # E.g., the "data directory" should be assigned to the attribute `data_dir`
     # and should existon the file system. The method `check_valid` uses these
@@ -112,6 +115,21 @@ class PackageDir:
             os.rename(src, dst)
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
+        self.create_image_dir('extra')
+        for fdata in self.file_list.files(FileList.EXTRA):
+            curr_name = fdata.filename
+            new_name = self.extra_filename(curr_name)
+            src = os.path.join(self.source_dir, curr_name)
+            dst = os.path.join(self.source_dir, new_name)
+            os.rename(src, dst)
+            details = image_deriv.details(self.source_dir, new_name)
+            fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
+
+    def extra_filename(self,curr_name):
+        base  = os.path.basename(curr_name)
+        new_base = PackageDir.white_space_re.sub('_', base)
+        return self.source_dir_re.sub('',
+                os.path.join(self.data_dir, 'extra', new_base))
 
     def master_name(self,orig,doc_id,index):
         orig_dir = os.path.dirname(orig)
@@ -131,15 +149,18 @@ class PackageDir:
             os.mkdir(dir)
         return dir
 
-    def deriv_name(self,master,deriv_type,ext):
+    def deriv_name(self,master,deriv_type,ext,deriv_dir=None):
+        if deriv_dir is None:
+            deriv_dir = deriv_type
         base = os.path.splitext(os.path.basename(master))[0]
         dbase = "%s_%s.%s" % (base, deriv_type, ext)
         return os.path.join('data', deriv_type, dbase)
 
-    def create_derivs(self, deriv_configs):
+    def create_derivs(self, deriv_configs,deriv_dir=None):
         """
         Create a deriv for each master file for each configured derivative type
         in deriv_configs.
+
         Deriv config is a dictionary of values like this:
 
         {
@@ -153,6 +174,10 @@ class PackageDir:
                 'max_side': 190,
                 },
            }
+
+        If deriv_dir is specified, all images will be written to
+        'data/<deriv_dir>'; e.g., 'data/extra'. Otherwise, all images will be
+        written to the deriv_type dir: 'data/web', 'data/thumb'.
 
         Derivatives are created for each type, here 'web' and 'thumb'; 'ext'
         gives the file type and extension; 'max_side' gives the maximum number of
