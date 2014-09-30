@@ -4,6 +4,7 @@
 from django.utils import unittest
 from django.test import TestCase
 from django.conf import settings
+from django.db import models
 import subprocess
 import json
 import os
@@ -32,8 +33,11 @@ class TestOpPrep(TestCase):
             os.mkdir(TestOpPrep.staging_dir)
 
     def tearDown(self):
-        if os.path.exists(TestOpPrep.staging_dir):
-           shutil.rmtree(TestOpPrep.staging_dir)
+        # have to delete the stuff from the database
+        for m in models.get_models():
+            m.objects.all().delete()
+        # if os.path.exists(TestOpPrep.staging_dir):
+        #     shutil.rmtree(TestOpPrep.staging_dir)
 
     def stage_template(self):
         shutil.copytree(TestOpPrep.template_dir, TestOpPrep.staged_source)
@@ -67,7 +71,7 @@ class TestOpPrep(TestCase):
         # test
         self.assertEqual(0, p.returncode, err)
         file_list = os.path.join(TestOpPrep.staged_w_extra, 'file_list.json')
-        self.assertTrue(os.path.exists(file_list), 
+        self.assertTrue(os.path.exists(file_list),
                 "Expected TEI file: %s" % file_list)
 
     def test_bad_source_dir(self):
@@ -138,8 +142,5 @@ class TestOpPrep(TestCase):
         self.assertNotEqual(0, p.returncode, "Exit code should not be 0")
         self.assertTrue(re.search("Configuration not found", err) is not None)
 
-        
-
 if __name__ == '__main__':
     unittest.main()
-

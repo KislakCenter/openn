@@ -31,6 +31,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.prep import medren_prep
+from openn.prep.common_prep import CommonPrep
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
@@ -75,6 +76,8 @@ def main(cmdline=None):
 
     try:
         collection_prep.prep_dir()
+        common_prep = CommonPrep(source_dir, collection)
+        common_prep.prep_dir()
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
         status = 4
