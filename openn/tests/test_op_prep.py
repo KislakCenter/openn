@@ -21,6 +21,7 @@ class TestOpPrep(TestCase):
     staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
     command          = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')
     template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
+    db_file          = os.path.join(settings.SITE_ROOT, 'database.sqlite3')
     staged_source    = os.path.join(staging_dir, os.path.basename(template_dir))
     partial_tei      = os.path.join(staged_source, 'PARTIAL_TEI.xml')
     file_list        = os.path.join(staged_source, 'file_list.json')
@@ -35,9 +36,14 @@ class TestOpPrep(TestCase):
     def tearDown(self):
         # have to delete the stuff from the database
         for m in models.get_models():
-            m.objects.all().delete()
-        # if os.path.exists(TestOpPrep.staging_dir):
-        #     shutil.rmtree(TestOpPrep.staging_dir)
+            table = m._meta.db_table
+            self.empty_table(table)
+        if os.path.exists(TestOpPrep.staging_dir):
+            shutil.rmtree(TestOpPrep.staging_dir)
+
+    def empty_table(self, table):
+        p = subprocess.Popen(['sqlite3', TestOpPrep.db_file, ('delete from %s' % table )])
+        p.communicate()
 
     def stage_template(self):
         shutil.copytree(TestOpPrep.template_dir, TestOpPrep.staged_source)
@@ -56,6 +62,7 @@ class TestOpPrep(TestCase):
         p = self.build_command()
         out, err = p.communicate()
         # test
+        print out
         self.assertEqual(0, p.returncode, err)
         self.assertTrue(os.path.exists(TestOpPrep.partial_tei),
                 "Expected TEI file: %s" % TestOpPrep.partial_tei)
