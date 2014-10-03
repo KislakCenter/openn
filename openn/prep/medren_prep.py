@@ -52,8 +52,7 @@ class MedrenPrep(CollectionPrep):
             OPennTEI(outfile)
         except Exception as ex:
             raise OPennException("Error creating TEI: %s" % str(ex))
-        # ok, it must've worked, delete the Penn in Hand XML
-        os.remove(xml_path)
+
         return outfile
 
     def gen_tei(self, xml_path, xsl_path):
@@ -78,6 +77,9 @@ class MedrenPrep(CollectionPrep):
         if not re.match('\d+$', bibid):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
         return bibid
+
+    def pih_filename(self,bibid):
+        return os.path.join(self.source_dir, 'pih_{0}.xml'.format(bibid))
 
     def xml_file_names(self, pih_xml):
         # //xml[@name='pages']/page/@image
@@ -179,7 +181,7 @@ class MedrenPrep(CollectionPrep):
 
     def write_xml(self):
         bibid = self.get_bibid()
-        outfile = os.path.join(self.source_dir, 'pih_{0}.xml'.format(bibid))
+        outfile = self.pih_filename(bibid)
         if os.path.exists(outfile):
             backup = '{0}-{1}'.format(outfile, tstamp())
             warning(cmd(), 'Backing up existing XML file {0} to {1}'.format(outfile, backup))
