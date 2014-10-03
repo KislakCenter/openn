@@ -9,6 +9,7 @@ import shutil
 from lxml import etree
 from openn.prep.collection_prep import CollectionPrep
 from openn.openn_exception import OPennException
+from openn.xml.openn_tei import OPennTEI
 from openn.openn_functions import *
 
 class MedrenPrep(CollectionPrep):
@@ -46,6 +47,12 @@ class MedrenPrep(CollectionPrep):
         f = open(outfile, 'w')
         f.write(self.gen_tei(xml_path, xsl_path))
         f.close()
+        # try to read it
+        try:
+            OPennTEI(outfile)
+        except Exception as ex:
+            raise OPennException("Error creating TEI: %s" % str(ex))
+
         return outfile
 
     def gen_tei(self, xml_path, xsl_path):
@@ -57,6 +64,7 @@ class MedrenPrep(CollectionPrep):
         out, err = p.communicate()
         if p.returncode != 0:
             raise OPennException("TEI Generation failed: %s" % err)
+
         return out
 
     def get_bibid(self):
