@@ -45,7 +45,7 @@ class CommonPrep(OPennSettings):
       - create thumbnail and web JPEG derivatives in thumb and web, resp.
       - add to the file list the new file names
       - append the facsimile section to the TEI file, outputting
-        `data/<CALL_NUMBER>_TEI.xml`
+        `data/<DOC_ID>_TEI.xml` (using format "%04d_TEI.xml")
       - generate description.html
       - generate browse.html
 
@@ -90,3 +90,4 @@ class CommonPrep(OPennSettings):
         self.package_dir.update_image_details()
         openn_db.save_image_data(doc,self.package_dir.file_list.data)
         self.tei.add_file_list(self.package_dir.file_list)
+        self.package_dir.save_tei(self.tei, doc.id)

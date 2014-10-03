@@ -115,7 +115,7 @@ class PackageDir:
             os.rename(src, dst)
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
-        self.create_image_dir('extra')
+            self.create_image_dir('extra')
         for fdata in self.file_list.files(FileList.EXTRA):
             curr_name = fdata.filename
             new_name = self.extra_filename(curr_name)
@@ -128,8 +128,29 @@ class PackageDir:
     def extra_filename(self,curr_name):
         base  = os.path.basename(curr_name)
         new_base = PackageDir.white_space_re.sub('_', base)
-        return self.source_dir_re.sub('',
-                os.path.join(self.data_dir, 'extra', new_base))
+        return self.source_dir_re.sub('', os.path.join(self.data_dir, 'extra', new_base))
+
+    def save_tei(self, openn_tei, doc_id):
+        """
+        Save openn_tei content to path returned by tei_name()
+        """
+        file_name = self.tei_name(doc_id)
+        try:
+            f = open(self.tei_name(doc_id), 'w+')
+            f.write(openn_tei.to_string())
+        except IOError as ex:
+            raise OPennException(str(ex))
+        else:
+            f.close()
+
+    def tei_name(self,doc_id):
+        """ TEI file name is:
+
+               "<data_dir>/%04d_TEI.xml" % doc_id
+
+        """
+        new_base = "%04d_TEI.xml" % doc_id
+        return os.path.join(self.data_dir, new_base)
 
     def master_name(self,orig,doc_id,index):
         orig_dir = os.path.dirname(orig)
