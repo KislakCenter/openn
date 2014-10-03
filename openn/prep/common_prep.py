@@ -91,3 +91,4 @@ class CommonPrep(OPennSettings):
         openn_db.save_image_data(doc,self.package_dir.file_list.data)
         self.tei.add_file_list(self.package_dir.file_list)
         self.package_dir.save_tei(self.tei, doc.id)
+        self.package_dir.create_manifest()

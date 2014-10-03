@@ -1,5 +1,6 @@
 import os
 import re
+import hashlib
 
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
@@ -134,13 +135,10 @@ class PackageDir:
         """
         Save openn_tei content to path returned by tei_name()
         """
-        file_name = self.tei_name(doc_id)
+        f = open(self.tei_name(doc_id), 'w+')
         try:
-            f = open(self.tei_name(doc_id), 'w+')
             f.write(openn_tei.to_string())
-        except IOError as ex:
-            raise OPennException(str(ex))
-        else:
+        finally:
             f.close()
 
     def tei_name(self,doc_id):
@@ -151,6 +149,9 @@ class PackageDir:
         """
         new_base = "%04d_TEI.xml" % doc_id
         return os.path.join(self.data_dir, new_base)
+
+    def manifest_path(self, ):
+        return os.path.join(self.source_dir, 'manifest-sha1.txt')
 
     def master_name(self,orig,doc_id,index):
         orig_dir = os.path.dirname(orig)
@@ -176,6 +177,30 @@ class PackageDir:
         base = os.path.splitext(os.path.basename(master))[0]
         dbase = "%s_%s.%s" % (base, deriv_type, ext)
         return os.path.join('data', deriv_type, dbase)
+
+    def rel_path(self, path):
+        return self.source_dir_re.sub('', path)
+
+    def get_sha1(self, path):
+        sha1 = hashlib.sha1()
+        f = open(path, 'rb')
+        try:
+            sha1.update(f.read())
+        finally:
+            f.close()
+
+        return sha1.hexdigest()
+
+    def create_manifest(self):
+        manifest = open(self.manifest_path(), 'w+')
+
+        try:
+            for root, dirs, files in os.walk(self.data_dir):
+                for name in files:
+                    path = os.path.join(root, name)
+                    manifest.write("%s  %s\n" % (self.get_sha1(path), self.rel_path(path)))
+        finally:
+            manifest.close()
 
     def create_derivs(self, deriv_configs,deriv_dir=None):
         """
