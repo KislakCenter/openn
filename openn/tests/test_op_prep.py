@@ -72,6 +72,8 @@ class TestOpPrep(TestCase):
         self.assertTrue(len(tei_files) == 1)
         # make sure bibid.txt was deleted
         self.assertFalse(os.path.exists(os.path.join(TestOpPrep.staged_source, 'bibid.txt')))
+        # make sure sha1manifest.txt was deleted
+        self.assertFalse(os.path.exists(os.path.join(TestOpPrep.staged_source, 'sha1manifest.txt')))
         # make sure pih file was deleted
         pih_files = glob.glob(os.path.join(TestOpPrep.staged_source, 'pih_[0-9]*.xml'))
         self.assertTrue(len(pih_files) == 0)

@@ -209,6 +209,8 @@ class MedrenPrep(CollectionPrep):
 
         removals.append(self.pih_filename(bibid))
         removals.append(self.bibid_filename())
+        removals.append(os.path.join(self.source_dir, 'sha1manifest.txt'))
 
         for f in removals:
-            os.remove(f)
+            if os.path.exists(f):
+                os.remove(f)
