@@ -28,6 +28,7 @@ class MedrenPrep(CollectionPrep):
             xsl   absolute path to the XSL to transform the XML to TEI
 
         """
+        # TODO: break if SAXON_JAR not set; see bin/op-gen-tei
         CollectionPrep.__init__(self,collection)
         self.source_dir    = source_dir
         self.source_dir_re = re.compile('^%s/*' % source_dir)
