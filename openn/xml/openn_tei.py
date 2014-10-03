@@ -7,7 +7,8 @@ class OPennTEI:
 
     def __init__(self, tei_path, mode='r'):
         parser = etree.XMLParser(remove_blank_text=True)
-        self.tei = etree.parse(open(tei_path, mode), parser)
+        self._tei_path = tei_path
+        self.tei = etree.parse(open(self._tei_path, mode), parser)
         self._namespaces = { 't': OPennTEI.TEI_NS }
 
     @property
@@ -43,15 +44,14 @@ class OPennTEI:
                 path = OPennTEI.fix_path_re.sub("", deriv['path'])
                 attrs = {}
                 attrs['url'] = path
-                attrs['width'] = str(deriv['width'])
-                attrs['height'] = str(deriv['height'])
+                attrs['width'] = "%spx" % str(deriv['width'])
+                attrs['height'] = "%spx" % str(deriv['height'])
                 graphic = etree.Element('graphic', **attrs)
                 surface.append(graphic)
             facs.append(surface)
-        # print etree.tostring(facs,pretty_print=True)
 
     def to_string(self):
-        print etree.tostring(self.tei, pretty_print=True, xml_declaration=True, encoding='UTF-8')
+        return etree.tostring(self.tei, pretty_print=True, xml_declaration=True, encoding='UTF-8')
 
     def _get_text(self,xpath):
         nodes = self._get_nodes(xpath)
