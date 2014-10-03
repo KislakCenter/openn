@@ -76,22 +76,21 @@ class ExifManager(object):
             return "-%s" % name
 
     def _to_json_file(self,prop_dict):
-        f = tempfile.NamedTemporaryFile()
-        f.write(json.dumps(prop_dict))
-        f.flush()
-        f.seek(0)
-        self._tempfiles.add(f)
-        return f.name
+        return self._value_to_file(json.dumps(prop_dict))
 
     def _value_to_file(self,value):
-        f = tempfile.NamedTemporaryFile()
+        f = tempfile.NamedTemporaryFile(delete=False)
         f.write(value)
         f.flush()
         f.seek(0)
-        self._tempfiles.add(f)
-        return f.name
+        name = f.name
+        self._tempfiles.add(name)
+        return name
 
     def _cleanup(self):
         for f in self._tempfiles:
-            f.close()
+            try:
+                os.remove(f)
+            except OSError:
+                pass
         self._tempfiles.clear()
