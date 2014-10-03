@@ -25,7 +25,7 @@ class PackageDir:
     # values to test source validity.
     _required_paths = {
             'data directory':  'data_dir',
-            'PARTIAL_TEI.xml': 'tei_path',
+            'PARTIAL_TEI.xml': 'partial_tei_path',
             'file_list.json':  'file_list_path'
             }
 
@@ -65,7 +65,7 @@ class PackageDir:
         del(self._image_dirs)
 
     @property
-    def tei_path(self):
+    def partial_tei_path(self):
         return os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
 
     @property

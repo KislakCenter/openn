@@ -60,7 +60,7 @@ class CommonPrep(OPennSettings):
     @property
     def tei(self):
         if getattr(self, 'openn_tei', None) is None:
-            self.openn_tei = OPennTEI(self.package_dir.tei_path)
+            self.openn_tei = OPennTEI(self.package_dir.partial_tei_path)
         return self.openn_tei
 
     @property
@@ -92,3 +92,12 @@ class CommonPrep(OPennSettings):
         self.tei.add_file_list(self.package_dir.file_list)
         self.package_dir.save_tei(self.tei, doc.id)
         self.package_dir.create_manifest()
+        self._cleanup()
+
+    def _cleanup(self):
+        removals = []
+        removals.append(self.package_dir.partial_tei_path)
+        removals.append(self.package_dir.file_list_path)
+        for r in removals:
+            if os.path.exists(r):
+                os.remove(r)
