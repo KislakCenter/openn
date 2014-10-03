@@ -60,5 +60,7 @@ docs/_build/
 # friggin' emacs backup files pollutin my dirs
 *~
 
-# test temp dir
+# transient dirs
 openn/tests/staging
+docs
+tmp
