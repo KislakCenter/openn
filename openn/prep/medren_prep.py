@@ -52,7 +52,8 @@ class MedrenPrep(CollectionPrep):
             OPennTEI(outfile)
         except Exception as ex:
             raise OPennException("Error creating TEI: %s" % str(ex))
-
+        # ok, it must've worked, delete the Penn in Hand XML
+        os.remove(xml_path)
         return outfile
 
     def gen_tei(self, xml_path, xsl_path):
