@@ -67,6 +67,8 @@ class TestOpPrep(TestCase):
                 "Expected TEI file: %s" % TestOpPrep.partial_tei)
         self.assertTrue(os.path.exists(TestOpPrep.file_list),
                 "Expected TEI file: %s" % TestOpPrep.file_list)
+        tei_files = glob.glob(os.path.join(TestOpPrep.staged_source, 'data', '[0-9][0-9][0-9][0-9]_TEI.xml'))
+        self.assertTrue(len(tei_files) == 1)
 
     def test_images_not_in_pih(self):
         # setup
