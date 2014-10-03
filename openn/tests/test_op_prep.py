@@ -62,7 +62,6 @@ class TestOpPrep(TestCase):
         p = self.build_command()
         out, err = p.communicate()
         # test
-        print out
         self.assertEqual(0, p.returncode, err)
         self.assertTrue(os.path.exists(TestOpPrep.partial_tei),
                 "Expected TEI file: %s" % TestOpPrep.partial_tei)
@@ -115,7 +114,7 @@ class TestOpPrep(TestCase):
     def test_missing_files(self):
         # setup
         self.stage_template()
-        tiff = glob.glob(os.path.join(TestOpPrep.staged_source, '*.tif'))[-1]
+        tiff = glob.glob(os.path.join(TestOpPrep.staged_source, '*0001.tif'))[-1]
         os.remove(tiff)
         # run
         p = self.build_command()
