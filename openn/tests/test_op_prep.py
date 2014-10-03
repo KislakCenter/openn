@@ -67,8 +67,14 @@ class TestOpPrep(TestCase):
                 "Expected TEI file: %s" % TestOpPrep.partial_tei)
         self.assertTrue(os.path.exists(TestOpPrep.file_list),
                 "Expected TEI file: %s" % TestOpPrep.file_list)
+        # make sure the TEI file was create
         tei_files = glob.glob(os.path.join(TestOpPrep.staged_source, 'data', '[0-9][0-9][0-9][0-9]_TEI.xml'))
         self.assertTrue(len(tei_files) == 1)
+        # make sure bibid.txt was deleted
+        self.assertFalse(os.path.exists(os.path.join(TestOpPrep.staged_source, 'bibid.txt')))
+        # make sure pih file was deleted
+        pih_files = glob.glob(os.path.join(TestOpPrep.staged_source, 'pih_[0-9]*.xml'))
+        self.assertTrue(len(pih_files) == 0)
 
     def test_images_not_in_pih(self):
         # setup

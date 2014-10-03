@@ -67,13 +67,16 @@ class MedrenPrep(CollectionPrep):
 
         return out
 
-    def get_bibid(self):
+    def bibid_filename(self):
         if not os.path.exists(self.source_dir):
             raise OPennException("Could not find source_dir: %s" % self.source_dir)
         bibid_txt = os.path.join(self.source_dir, 'bibid.txt')
         if not os.path.exists(bibid_txt):
             raise OPennException("Could not find bibid.txt: %s" % bibid_txt)
-        bibid = open(bibid_txt).read().strip()
+        return bibid_txt
+
+    def get_bibid(self):
+        bibid = open(self.bibid_filename()).read().strip()
         if not re.match('\d+$', bibid):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
         return bibid
@@ -198,3 +201,14 @@ class MedrenPrep(CollectionPrep):
         self.stage_tiffs()
         self.add_file_list(pih_xml)
         tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])
+        self._cleanup()
+
+    def _cleanup(self):
+        removals = []
+        bibid = self.get_bibid()
+
+        removals.append(self.pih_filename(bibid))
+        removals.append(self.bibid_filename())
+
+        for f in removals:
+            os.remove(f)
