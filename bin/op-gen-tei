@@ -92,8 +92,8 @@ else
   error "Error finding XSL"
 fi
 
-# TODO: Figure out a more flexible way to handle classpath
-LIB_DIR=$HOME/Java/SaxonHE9-5-1-5J
+# TODO: get saxon jar path from env variable; break if var not set
+LIB_DIR=$HOME/dev/Java/SaxonHE9-5-1-5J
 CLASSPATH=$CLASSPATH:$LIB_DIR/saxon9he.jar
 
 java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$XSL
@@ -105,4 +105,3 @@ java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$XSL
 rm -f $tmp.?
 trap 0
 exit 0
-
