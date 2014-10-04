@@ -87,8 +87,6 @@ class TestOpPrep(TestCase):
         # test
         self.assertEqual(0, p.returncode, err)
         file_list = os.path.join(TestOpPrep.staged_w_extra, 'file_list.json')
-        self.assertTrue(os.path.exists(file_list),
-                "Expected TEI file: %s" % file_list)
 
     def test_bad_source_dir(self):
         # run
