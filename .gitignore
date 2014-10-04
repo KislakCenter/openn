@@ -59,6 +59,8 @@ docs/_build/
 
 # friggin' emacs backup files pollutin my dirs
 *~
+\#*#
+.#*
 
 # transient dirs
 openn/tests/staging
