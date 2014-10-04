@@ -50,14 +50,6 @@ def get_collection_prep(source_dir, collection):
     cls = get_class(config['prep_class'])
     return cls(source_dir, collection)
 
-def get_class(kls):
-    parts = kls.split('.')
-    module = ".".join(parts[:-1])
-    m = __import__( module )
-    for comp in parts[1:]:
-        m = getattr(m, comp)
-    return m
-
 def main(cmdline=None):
     """op-prep main
     """
