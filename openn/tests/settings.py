@@ -14,7 +14,7 @@ elif os.path.exists(skey_file):
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'openn/database.sqlite3',                      # Or path to database file if using sqlite3.
+            'NAME': 'openn/tests/database.sqlite3',                      # Or path to database file if using sqlite3.
             }
         }
 
@@ -56,7 +56,7 @@ COLLECTIONS = {
             'config' : {
                 'host': 'dla.library.upenn.edu',
                 'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
-                'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+                'xsl': os.path.join(PROJECT_PATH, 'openn/xsl/pih2tei.xsl'),
                 'image_rights': {
                     'Marked': 'True',
                     'WebStatment': 'http://creativecommons.org/licenses/by-nc/4.0/',
@@ -77,7 +77,7 @@ COLLECTIONS = {
                 'config' : {
                     'host': 'dla.library.upenn.edu',
                     'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
-                    'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+                    'xsl': os.path.join(PROJECT_PATH, 'openn/xsl/pih2tei.xsl'),
                     'image_rights': {
                         'Marked': 'True',
                         'WebStatment': 'http://creativecommons.org/licenses/by-nc/4.0/',
