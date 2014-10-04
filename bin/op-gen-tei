@@ -89,7 +89,7 @@ XSL="$2"
 if file_exists "$XSL" XSL ; then
   message "Using XSL: $XSL" >&2
 else
-  error "Error finding XSL"
+  error "Error finding XSL: $XSL"
 fi
 
 # TODO: get saxon jar path from env variable; break if var not set
