@@ -42,6 +42,8 @@ DERIVS = {
 
 TEMPLATE_DIRS = ('openn/templates', )
 
+STAGING_DIR = '/give/real/path'
+
 COLLECTIONS = {
         'medren': {
             'tag': 'medren',
