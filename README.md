@@ -39,7 +39,7 @@ This script will create a comple package having this format:
 
 The package generation will occur in two steps:
 
-1. COLLECTION specific preparation; this will take input data and return a 
+1. COLLECTION specific preparation; this will take input data and return a
    directory structure as follows:
 
         CALL_NUMBER/
@@ -108,6 +108,29 @@ The package generation will occur in two steps:
 - Update Table of contents page
 
 - Push data
+
+
+## Site structure
+
+    0_ReadMe.html
+    1_TechnicalReadMe.html
+    3_Collections.html
+    TOC_LJSchoenberg.html
+    TOC_PennManuscripts.html
+    TOC_PACSL_Diaries.html
+    Data/
+        LJSchoenberg/
+            html
+                ljs123.html
+                ljs134.html
+                ...
+            ljs123/
+            ljs134/
+            ...
+        PennManuscripts/
+            ...
+        PACSCL_Diaries/
+            ...
 
 
 ## High level overview
