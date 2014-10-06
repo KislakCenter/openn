@@ -30,6 +30,7 @@ class TestOpGenPages(TestCase):
     staged_images    = os.path.join(images_dir, 'mscodex1223')
 
     def setUp(self):
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'openn.tests.settings'
         dirs  = [
             TestOpGenPages.staging_dir,
             TestOpGenPages.images_dir,
@@ -64,6 +65,7 @@ class TestOpGenPages(TestCase):
         p = self.build_command()
         out, err = p.communicate()
         self.assertEqual(0, p.returncode, err)
+        print out
 
 if __name__ == '__main__':
     unittest.main()

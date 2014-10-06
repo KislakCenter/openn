@@ -26,6 +26,8 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
+    print settings.STAGING_DIR
+
     try:
         pass
     except OPennException as ex:

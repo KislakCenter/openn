@@ -30,6 +30,7 @@ class TestOpPrep(TestCase):
     staged_w_extra   = os.path.join(staging_dir, os.path.basename(dir_extra_images))
 
     def setUp(self):
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'openn.tests.settings'
         if not os.path.exists(TestOpPrep.staging_dir):
             os.mkdir(TestOpPrep.staging_dir)
 

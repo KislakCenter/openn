@@ -22,7 +22,7 @@ INSTALLED_APPS = (
         'openn', 'south', 'ordered_model',
         )
 
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+SITE_ROOT = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
 # put the openn/bin dir in the path
@@ -42,7 +42,7 @@ DERIVS = {
 
 TEMPLATE_DIRS = ('openn/templates', )
 
-STAGING_DIR = 'openn/tests/staging/site'
+STAGING_DIR = os.path.join(SITE_ROOT, 'tests/staging/site')
 
 COLLECTIONS = {
         'medren': {
