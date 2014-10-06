@@ -42,7 +42,7 @@ DERIVS = {
 
 TEMPLATE_DIRS = ('openn/templates', )
 
-STAGING_DIR = 'openn/tests/staging'
+STAGING_DIR = 'openn/tests/staging/site'
 
 COLLECTIONS = {
         'medren': {
