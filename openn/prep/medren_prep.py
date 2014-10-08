@@ -44,14 +44,16 @@ class MedrenPrep(CollectionPrep):
 
     def write_tei(self, xml_path, xsl_path):
         outfile = os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
-        f = open(outfile, 'w')
-        f.write(self.gen_tei(xml_path, xsl_path))
-        f.close()
-        # try to read it
+        f = open(outfile, 'w+')
         try:
-            OPennTEI(outfile)
+            f.write(self.gen_tei(xml_path, xsl_path))
+            # try to read it
+            f.seek(0)
+            OPennTEI(f)
         except Exception as ex:
             raise OPennException("Error creating TEI: %s" % str(ex))
+        finally:
+            f.close()
 
         return outfile
 

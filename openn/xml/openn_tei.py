@@ -5,10 +5,12 @@ class OPennTEI:
     TEI_NS = 'http://www.tei-c.org/ns/1.0'
     fix_path_re = re.compile('^data/')
 
-    def __init__(self, tei_path, mode='r'):
+    def __init__(self, xml):
         parser = etree.XMLParser(remove_blank_text=True)
-        self._tei_path = tei_path
-        self.tei = etree.parse(open(self._tei_path, mode), parser)
+        if isinstance(xml, str):
+            self.tei = etree.fromstring(xml, parser)
+        else:
+            self.tei = etree.parse(xml, parser)
         self._namespaces = { 't': OPennTEI.TEI_NS }
 
     @property

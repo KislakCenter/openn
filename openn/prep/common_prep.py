@@ -60,7 +60,11 @@ class CommonPrep(OPennSettings):
     @property
     def tei(self):
         if getattr(self, 'openn_tei', None) is None:
-            self.openn_tei = OPennTEI(self.package_dir.partial_tei_path)
+            f = open(self.package_dir.partial_tei_path, 'r')
+            try:
+                self.openn_tei = OPennTEI(f.read())
+            finally:
+                f.close()
         return self.openn_tei
 
     @property
