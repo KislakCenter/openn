@@ -17,8 +17,7 @@ class TableOfContents(Pages):
         super(TableOfContents,self).__init__(**kwargs)
 
     def get_context(self):
-        # items = Document.objects.filter(collection=self.collection)
-        items = Document.objects.all()
+        items = Document.objects.filter(collection=self.collection)
         return Context({ 'collection': settings.COLLECTIONS[self.collection],
                          'items': items })
 
