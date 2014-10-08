@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Hosted collections{% endblock %}
+
+{% block content %}
+<ul>
+{% for collection in collections %}
+   <li>
+     <span class="coll-name">{{ collection.name }}</span><br/>
+     <span>{{ collection.blurb }}</span>
+   </li>
+{% endfor %}
+</ul>
+{% endblock %}

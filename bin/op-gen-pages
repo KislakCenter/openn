@@ -7,6 +7,9 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
+from openn.pages.pages import Pages
+from openn.pages.collections import Collections
+from openn.pages.table_of_contents import TableOfContents
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
@@ -26,10 +29,17 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
-    print settings.STAGING_DIR
-
+    print Document.objects.all()
     try:
-        pass
+        pages = []
+        pages.append(Collections('3_Collections.html', settings.STAGING_DIR))
+        pages.append(
+            TableOfContents('medren', **{
+                'template_name': 'TableOfContents.html',
+                'outdir': settings.STAGING_DIR
+            }))
+        for page in pages:
+            page.create_pages()
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
         status = 4

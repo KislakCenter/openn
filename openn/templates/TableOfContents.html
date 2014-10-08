@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ collection.name }}{% endblock %}
+
+{% block content %}
+<ul>
+  {% for item in items %}
+  <li>
+    <span class="item-id">{{ item.call_number }}</span>
+    <span class="item-name">{{ item.title }}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

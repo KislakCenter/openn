@@ -15,11 +15,12 @@ DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
             'NAME': 'openn/database.sqlite3',                      # Or path to database file if using sqlite3.
+            'TEST_NAME': 'openn/bloddy_goddamn_hell.sqlite3', # don't do any fucking magic, jesus.
             }
         }
 
 INSTALLED_APPS = (
-        'openn', 'south', 'ordered_model',
+        'openn', 'south', 'ordered_model','django_extensions',
         )
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
@@ -40,9 +41,9 @@ DERIVS = {
             },
         }
 
-TEMPLATE_DIRS = ('openn/templates', )
+TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
-STAGING_DIR = '/give/real/path'
+STAGING_DIR = os.path.join(os.environ['HOME'], 'tmp/openn/staging')
 
 COLLECTIONS = {
         'medren': {
@@ -51,7 +52,7 @@ COLLECTIONS = {
             'blurb': 'This manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with permission of their owners.',
             'toc_file': 'TOC_PennManuscripts.html',
             'web_dir': 'Data/PennManuscripts',
-            'html_dir': 'Date/PennManuscripts/html',
+            'html_dir': 'Data/PennManuscripts/html',
             'prep_class': 'openn.prep.medren_prep.MedrenPrep',
             'config' : {
                 'host': 'dla.library.upenn.edu',
@@ -72,7 +73,7 @@ COLLECTIONS = {
                 'blurb': 'This manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
                 'toc_file': 'TOC_LJSchoenberg_Manuscripts.html',
                 'web_dir': 'Data/LJSchoenberg_Manuscripts',
-                'html_dir': 'Date/LJSchoenberg_Manuscripts/html',
+                'html_dir': 'Data/LJSchoenberg_Manuscripts/html',
                 'prep_class': 'openn.prep.medren_prep.MedrenPrep',
                 'config' : {
                     'host': 'dla.library.upenn.edu',

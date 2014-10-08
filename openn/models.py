@@ -1,5 +1,7 @@
 from django.db import models
 from ordered_model.models import OrderedModel
+from django.conf import settings
+import re
 
 """
 Document corresponds to a set of OPenn images and metadata.
@@ -32,7 +34,7 @@ class Document(models.Model):
     # While the collection + call_number should be unique, the collection +
     # base_dir must be unique to prevent filesystem collisions on the host.
     class Meta:
-        ordering        = ['collection', 'base_dir']
+        ordering        = ['collection', 'base_dir', 'call_number' ]
         unique_together = ('collection', 'base_dir')
 
 
@@ -69,6 +71,15 @@ class Image(OrderedModel):
     document_images       = DocumentImageManager()
     extra_images          = ExtraImageManager()
 
+    BRACKET_RE = re.compile('^\[|\]$')
+
+    def display_label(self):
+        s = Image.BRACKET_RE.sub('', self.label)
+        if re.search('\d+[rv]', s):
+            return "fol. %s" % s
+        else:
+            return s
+
     def __unicode__(self):
         return u"label: %s, filename: %s" % (self.label, self.filename)
 
@@ -85,3 +96,7 @@ class Derivative(models.Model):
 
     class Meta:
         ordering = [ 'deriv_type' ]
+
+    def url(self):
+        collection = settings.COLLECTIONS[self.image.document.collection]
+        return "/%s/%s/%s" % (collection['web_dir'], self.image.document.base_dir, self.path)

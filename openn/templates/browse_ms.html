@@ -1,9 +1,45 @@
-<html>
-  <head>
-    <title>Browse: {{ doc.call_number }}</title>
-  </head>
-  <body id="doc_{{ doc.pk }}">
-    <h1>Hi!</h1>
-    <p>The page.</p>
-  </body>
-</html>
+{% extends "base.html" %}
+{% load openn_filters %}
+
+{% block title %}{{ doc.call_number }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ doc.call_number }} {{ doc.title }}</h1>
+
+<div class="col-sm-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ doc.call_number }}</h3>
+    </div>
+    <div class="panel-body">
+      <div>
+        <h4>Title</h4>
+        <span></span>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+
+
+
+  <ul>
+    {% for image in doc.image_set.all %}
+    <li>
+      <h4><span class="label label-default">{{ image.display_label|capfirst }}</span></h3>
+      <ul>
+        {% for deriv in image.derivative_set.all %}
+        <li>
+          <a href="{{ deriv.url }}">{{ deriv.path }}</a>
+          <span>({{ deriv.bytes|filesizeformat }}, {{ deriv.bytes }} bytes)</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}
