@@ -15,7 +15,7 @@ DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
             'NAME': 'openn/database.sqlite3',                      # Or path to database file if using sqlite3.
-            'TEST_NAME': 'openn/bloddy_goddamn_hell.sqlite3', # don't do any fucking magic, jesus.
+            'TEST_NAME': 'openn/tests/database.sqlite3',
             }
         }
 
