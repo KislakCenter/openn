@@ -13,11 +13,26 @@ elif os.path.exists(skey_file):
 
 DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'openn/database.sqlite3',                      # Or path to database file if using sqlite3.
-            'TEST_NAME': 'openn/tests/database.sqlite3',
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ['OPENN_DB_NAME'],
+            'USER': os.environ['OPENN_DB_USER'],
+            'PASSWORD': os.environ['OPENN_DB_PASSWORD'],
+            'HOST': os.environ['OPENN_DB_HOST'],
             }
         }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ['SDBM_DB_NAME'],
+#         'USER': os.environ['SDBM_DB_USER'],
+#         'PASSWORD': os.environ['SDBM_DB_PASSWORD'],
+#         'HOST': os.environ['SDBM_DB_HOST'],
+#         'OPTIONS': {
+#             'init_command': 'SET storage_engine=INNODB',
+#         },
+#     }
+# }
 
 INSTALLED_APPS = (
         'openn', 'south', 'ordered_model','django_extensions',

@@ -62,7 +62,7 @@ class ExtraImageManager(models.Manager):
         return super(ExtraImageManager, self).get_query_set().filter(image_type='x')
 
 class Image(OrderedModel):
-    document              = models.ForeignKey(Document)
+    document              = models.ForeignKey(Document, default = None)
     label                 = models.CharField(max_length = 255, null = False, default = None, blank = False)
     filename              = models.CharField(max_length = 255, null = False, default = None, blank = False)
     image_type            = models.CharField(max_length = 1, choices=(('d', 'Document'), ('x', 'Extra')))
@@ -88,7 +88,7 @@ class Image(OrderedModel):
         pass
 
 class Derivative(models.Model):
-    image      = models.ForeignKey(Image)
+    image      = models.ForeignKey(Image, default = None)
     deriv_type = models.CharField(max_length  = 20, null  = False, default = None, blank = False)
     path       = models.CharField(max_length  = 255, null = False, default = None, blank = False)
     bytes      = models.IntegerField()

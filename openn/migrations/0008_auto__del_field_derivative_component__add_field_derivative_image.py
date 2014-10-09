@@ -13,14 +13,14 @@ class Migration(SchemaMigration):
 
         # Adding field 'Derivative.image'
         db.add_column(u'openn_derivative', 'image',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['openn.Image']),
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['openn.Image']),
                       keep_default=False)
 
 
     def backwards(self, orm):
         # Adding field 'Derivative.component'
         db.add_column(u'openn_derivative', 'component',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['openn.Image']),
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['openn.Image']),
                       keep_default=False)
 
         # Deleting field 'Derivative.image'
