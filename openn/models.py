@@ -65,7 +65,7 @@ class Image(OrderedModel):
     document              = models.ForeignKey(Document, default = None)
     label                 = models.CharField(max_length = 255, null = False, default = None, blank = False)
     filename              = models.CharField(max_length = 255, null = False, default = None, blank = False)
-    image_type            = models.CharField(max_length = 1, choices=(('d', 'Document'), ('x', 'Extra')))
+    image_type            = models.CharField(max_length = 20, choices=(('document', 'Document'), ('extra', 'Extra')))
     order_with_respect_to = 'document'
     objects               = models.Manager()
     images                = models.Manager()
