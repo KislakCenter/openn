@@ -8,7 +8,9 @@
          <publicationStmt>
             <publisher>Schoenberg Center for Electronic Text and Image, University of Pennsylvania</publisher>
             <availability>
-               <p>This work and all referenced images are ©2014 University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License, http://creativecommons.org/licenses/by-nc-sa/3.0/.</p>
+               <licence target="http://creativecommons.org/licenses/by-nc/4.0/legalcode">
+                            This work and all referenced images are ©2014 University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.
+                          </licence>
             </availability>
          </publicationStmt>
          <sourceDesc>
@@ -25,6 +27,34 @@
                   <msItem>
                      <title>Texts for the Commemorative Office of the Virgin Mary and notated Office of the Dead</title>
                      <author>Catholic Church</author>
+                  </msItem>
+                  <msItem n="2r">
+                     <locus>2r</locus>
+                     <title>Antiphona et responsoria et lectiones de commune beate Marie semper virginis..., f. 2r</title>
+                  </msItem>
+                  <msItem n="54v">
+                     <locus>54v</locus>
+                     <title>Lectiones infra tricesimum [assumptionis] beate Mariae semper virginis, f. 54v</title>
+                  </msItem>
+                  <msItem n="70r">
+                     <locus>70r</locus>
+                     <title>De commune beatae mariae semper virginis post octavas epiphaniae usque ad purificationem, f. 70r</title>
+                  </msItem>
+                  <msItem n="84v">
+                     <locus>84v</locus>
+                     <title>Psalmos omnes tam ad mattutinas quam ad laudes, ymnos, cantica, Te Deum laudamus, omnia secundum ordinem, f. 84v</title>
+                  </msItem>
+                  <msItem n="97r">
+                     <locus>97r</locus>
+                     <title>Kyrie eleison, f. 97r</title>
+                  </msItem>
+                  <msItem n="97v">
+                     <locus>97v</locus>
+                     <title>Antiphona ad Placebo, ad vigilias, et ad laudes, una cum responsoriis Officium pro defunctis, f. 97v</title>
+                  </msItem>
+                  <msItem n="108r">
+                     <locus>108r</locus>
+                     <title>In die depositionis ingrediendo ecclesia, f. 108r</title>
                   </msItem>
                </msContents>
                <physDesc>
@@ -127,5 +157,7 @@
          </sourceDesc>
       </fileDesc>
    </teiHeader>
-   <facsimile/>
+   <facsimile>
+      <graphic url=""/>
+   </facsimile>
 </TEI>
