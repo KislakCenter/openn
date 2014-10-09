@@ -29,6 +29,7 @@ class Document(models.Model):
     title         = models.TextField(null = False, default = None, blank = False)
     created       = models.DateTimeField(auto_now_add = True)
     updated       = models.DateTimeField(auto_now = True)
+    tei_xml       = models.TextField(null = True, default = None, blank = True)
 
     # Choosing collection, base_dir as the uniqueness columns
     # While the collection + call_number should be unique, the collection +
