@@ -81,6 +81,21 @@
                                         </xsl:if>
                                     </msItem>
                                     
+                                    <xsl:for-each select="//page/tocentry[@name='toc']">
+                                        <xsl:variable name="locus" select="./parent::page/@visiblepage"></xsl:variable>
+                                        <msItem>
+                                            <xsl:attribute name="n">
+                                                <xsl:call-template name="clean-up-text">
+                                                    <xsl:with-param name="some-text">
+                                                        <xsl:value-of select="$locus"/>
+                                                    </xsl:with-param>
+                                                </xsl:call-template>
+                                            </xsl:attribute>
+                                            <locus><xsl:value-of select="$locus"/></locus>
+                                            <title><xsl:value-of select="normalize-space(.)"/></title>
+                                        </msItem>
+                                    </xsl:for-each>
+                                    
                                 </msContents>
                             <xsl:if test="count(//page/tocentry[@name='ill']) > 0">
                                 <physDesc>
@@ -140,7 +155,8 @@
                         <graphic url="{concat(./@image, '.tif')}"/>
                     </surface>
                 </xsl:for-each>
-                -->
+               -->
+                <graphic url=""/>
             </facsimile>
         </TEI>
     </xsl:template>
