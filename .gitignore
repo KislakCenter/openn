@@ -66,3 +66,6 @@ docs/_build/
 openn/tests/staging
 docs
 tmp
+
+# ignore shunit2*
+shunit2
