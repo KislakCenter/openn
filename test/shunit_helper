@@ -1,0 +1,57 @@
+#!/usr/bin/env sh
+
+export PATH=`dirname $0`/../bin:$PATH
+
+export TEST_DATA_DIR=`dirname $0`/../openn/tests/data
+export TEST_STAGING_DIR=`dirname $0`/../openn/tests/staging
+
+shunit=`dirname $0`/../shunit2/src/shunit2
+
+print_output() {
+  echo "\n====\n$output"
+}
+
+assertMatch() {
+  aM_msg=
+  aM_string=
+  aM_pattern=
+  aM_match=
+  if [ $# -eq 3 ]; then
+    aM_msg=$1
+    shift
+  fi
+  aM_string=$1
+  aM_pattern=$2
+
+  # the default message
+  if [ "$aM_msg" = "" ]; then
+    aM_msg="Expected to find '$aM_pattern' in: $aM_string"
+  fi
+
+  aM_match=`echo "$aM_string" | grep "$aM_pattern"`
+  assertNotNull "$aM_msg" "$aM_match"
+}
+
+assertNotMatch() {
+  aNM_msg=
+  aNM_string=
+  aNM_pattern=
+  aNM_match=
+  if [ $# -eq 3 ]; then
+    aNM_msg=$1
+    shift
+  fi
+  aNM_string=$1
+  aNM_pattern=$2
+
+  # the default message
+  if [ "$aNM_msg" = "" ]; then
+    aNM_msg="Expected NOT to find '$aNM_pattern' in: $aNM_string"
+  fi
+
+  aNM_match=`echo "$aNM_string" | grep "$aNM_pattern"`
+  assertNull "$aNM_msg" "$aNM_match"
+
+}
+
+. $shunit
