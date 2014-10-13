@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
-DATA_DIR=`dirname $0`/data
-SHUNIT_HELPER=`dirname $0`/shunit_helper
+source `dirname $0`/shunit_helper
+
+DIR_EXTRA_IMAGES=$TEST_DATA_DIR/mscodex1589
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -27,4 +28,6 @@ testRun() {
     op-prep medren $TEST_STAGING_DIR/mscodex1223
 }
 
-. $SHUNIT_HELPER
+
+# Run shunit
+. $shunit

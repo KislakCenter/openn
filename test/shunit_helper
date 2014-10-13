@@ -53,5 +53,3 @@ assertNotMatch() {
   assertNull "$aNM_msg" "$aNM_match"
 
 }
-
-. $shunit
