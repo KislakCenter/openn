@@ -58,7 +58,9 @@ DERIVS = {
 
 TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
-STAGING_DIR = os.path.join(os.environ['HOME'], 'tmp/openn/staging')
+STAGING_DIR = os.environ['OPENN_STAGING_DIR']
+PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
+
 
 COLLECTIONS = {
         'medren': {
