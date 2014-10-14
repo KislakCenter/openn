@@ -15,6 +15,10 @@ setUp() {
     done
 }
 
+# suite() {
+#     suite_addTest testRun
+# }
+
 tearDown() {
     for table in openn_derivative openn_image openn_document
     do
