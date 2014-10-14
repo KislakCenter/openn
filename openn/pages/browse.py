@@ -7,13 +7,15 @@ from django.template.loader import get_template
 from operator import itemgetter
 
 from openn.models import *
+from openn.xml.openn_tei import OPennTEI
 from openn.pages.pages import Pages
 
 class Browse(Pages):
 
-    def __init__(self, doc_id,collection,**kwargs):
-        self.collection = collection
+    def __init__(self,doc_id,**kwargs):
         self.doc_id = doc_id
+        self.collection = self.document().collection
+
         updated_kwargs = kwargs.update({'template_name': 'browse_ms.html',
                                         'outfile':self.get_outfile_name()})
         super(Browse,self).__init__(**kwargs)
@@ -21,7 +23,8 @@ class Browse(Pages):
     def get_context(self):
         # items = Document.objects.filter(collection=self.collection)
         doc = self.document()
-        return Context({ 'doc': doc })
+        tei = OPennTEI(doc.tei_xml)
+        return Context({ 'doc': doc, 'tei': tei })
 
     def get_outfile_name(self):
         html_dir = settings.COLLECTIONS[self.collection]['html_dir']

@@ -1,4 +1,5 @@
 from lxml import etree
+from StringIO import StringIO
 import re
 
 class OPennTEI:
@@ -6,10 +7,15 @@ class OPennTEI:
     fix_path_re = re.compile('^data/')
 
     def __init__(self, xml):
-        parser = etree.XMLParser(remove_blank_text=True)
         if isinstance(xml, str):
+            parser = etree.XMLParser(recover=True, encoding='utf-8')
             self.tei = etree.fromstring(xml, parser)
+        elif isinstance(xml, unicode):
+            parser = etree.XMLParser(recover=True, encoding='utf-8')
+            # self.tei = etree.parse(StringIO(xml.encode('utf-8')), parser)
+            self.tei = etree.parse(StringIO(xml.encode('utf-8')), parser)
         else:
+            parser = etree.XMLParser(remove_blank_text=True)
             self.tei = etree.parse(xml, parser)
         self._namespaces = { 't': OPennTEI.TEI_NS }
 
@@ -24,6 +30,46 @@ class OPennTEI:
     @property
     def title(self):
         return self._get_text('//t:msContents/t:msItem/t:title')
+
+    @property
+    def settlement(self):
+        return self._get_text('//t:msIdentifier/t:settlement')
+
+    @property
+    def institution(self):
+        return self._get_text('//t:msIdentifier/t:institution')
+
+    @property
+    def repository(self):
+        return self._get_text('//t:msIdentifier/t:repository')
+
+    @property
+    def summary(self):
+        return self._get_text('//t:msContents/t:summary')
+
+    @property
+    def license(self):
+        return self._get_text('//t:publicationStmt/t:availability/t:licence')
+
+    @property
+    def license_url(self):
+        return self._get_attr('//t:publicationStmt/t:availability/t:licence', 'target')
+
+    @property
+    def publisher(self):
+        return self._get_text('//t:publicationStmt/t:publisher')
+
+    @property
+    def text_lang(self):
+        return self._get_text('//t:msContents/t:textLang')
+
+    @property
+    def orig_date(self):
+        return self._get_text('//t:history/t:origin/t:origDate')
+
+    @property
+    def orig_place(self):
+        return self._get_text('//t:history/t:origin/t:origPlace')
 
     def add_file_list(self,file_list):
         """
@@ -54,6 +100,10 @@ class OPennTEI:
 
     def to_string(self):
         return etree.tostring(self.tei, pretty_print=True, xml_declaration=True, encoding='UTF-8')
+
+    def _get_attr(self,xpath,attr):
+        nodes = self._get_nodes(xpath)
+        return nodes[0].get(attr) if len(nodes) > 0 else None
 
     def _get_text(self,xpath):
         nodes = self._get_nodes(xpath)

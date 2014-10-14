@@ -4,19 +4,19 @@ from optparse import OptionParser
 import os
 import sys
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
+
+from django.core import serializers
+from django.conf import settings
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from openn.models import *
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.pages.pages import Pages
 from openn.pages.collections import Collections
 from openn.pages.table_of_contents import TableOfContents
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
-
-# Import your models for use in your script
-from openn.models import *
-from django.core import serializers
-from django.conf import settings
+from openn.pages.browse import Browse
 
 def cmd():
     return os.path.basename(__file__)
@@ -38,6 +38,9 @@ def main(cmdline=None):
                 'template_name': 'TableOfContents.html',
                 'outdir': settings.STAGING_DIR
             }))
+        for doc in Document.objects.all():
+            pages.append(Browse(doc.id, **{ 'outdir': settings.STAGING_DIR }))
+
         for page in pages:
             page.create_pages()
     except OPennException as ex:
