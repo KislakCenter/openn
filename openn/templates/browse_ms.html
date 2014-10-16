@@ -57,6 +57,19 @@
           <span><a href="{{tei.license_url }}">{{ tei.license_url }}</a></span><br />
            <span>{{ tei.license }}</span>
         </div>
+
+        {% with items=tei.ms_items %}
+        {% if items|length > 1 %}
+        <div>
+          <h4>Table of contents</h4>
+          <ul>
+          {% for item in items %}
+          <li>{{ item.title }}</li>
+          {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
       </div>
     </div>
   </div>
