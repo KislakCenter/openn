@@ -2,21 +2,24 @@ from lxml import etree
 from StringIO import StringIO
 import re
 
-class OPennTEI:
+from openn.xml.xml_whatsit import XMLWhatsit
+from openn.xml.ms_item import MSItem
+
+class OPennTEI(XMLWhatsit):
     TEI_NS = 'http://www.tei-c.org/ns/1.0'
     fix_path_re = re.compile('^data/')
 
     def __init__(self, xml):
         if isinstance(xml, str):
             parser = etree.XMLParser(recover=True, encoding='utf-8')
-            self.tei = etree.fromstring(xml, parser)
+            self.xml = etree.fromstring(xml, parser)
         elif isinstance(xml, unicode):
             parser = etree.XMLParser(recover=True, encoding='utf-8')
-            # self.tei = etree.parse(StringIO(xml.encode('utf-8')), parser)
-            self.tei = etree.parse(StringIO(xml.encode('utf-8')), parser)
+            # self.xml = etree.parse(StringIO(xml.encode('utf-8')), parser)
+            self.xml = etree.parse(StringIO(xml.encode('utf-8')), parser)
         else:
             parser = etree.XMLParser(remove_blank_text=True)
-            self.tei = etree.parse(xml, parser)
+            self.xml = etree.parse(xml, parser)
         self._namespaces = { 't': OPennTEI.TEI_NS }
 
     @property
@@ -71,6 +74,10 @@ class OPennTEI:
     def orig_place(self):
         return self._get_text('//t:history/t:origin/t:origPlace')
 
+    @property
+    def ms_items(self):
+        return  [MSItem(node,self.ns) for node in self._get_nodes('//t:msContents/t:msItem')]
+
     def add_file_list(self,file_list):
         """
            <facsimile>
@@ -84,7 +91,7 @@ class OPennTEI:
            </facsimile>
         """
         xpath = '/t:TEI/t:facsimile'
-        facs = self.tei.xpath(xpath, namespaces=self.ns)[0]
+        facs = self.xml.xpath(xpath, namespaces=self.ns)[0]
         for fdata in file_list.document_files:
             surface = etree.Element("surface", n=fdata.label, nsmap=self.ns)
             for dtype in fdata.derivs:
@@ -98,16 +105,16 @@ class OPennTEI:
                 surface.append(graphic)
             facs.append(surface)
 
-    def to_string(self):
-        return etree.tostring(self.tei, pretty_print=True, xml_declaration=True, encoding='UTF-8')
+    # def to_string(self):
+    #     return etree.tostring(self.xml, pretty_print=True, xml_declaration=True, encoding='UTF-8')
 
-    def _get_attr(self,xpath,attr):
-        nodes = self._get_nodes(xpath)
-        return nodes[0].get(attr) if len(nodes) > 0 else None
+    # def _get_attr(self,xpath,attr):
+    #     nodes = self._get_nodes(xpath)
+    #     return nodes[0].get(attr) if len(nodes) > 0 else None
 
-    def _get_text(self,xpath):
-        nodes = self._get_nodes(xpath)
-        return nodes[0].text if len(nodes) > 0 else None
+    # def _get_text(self,xpath):
+    #     nodes = self._get_nodes(xpath)
+    #     return nodes[0].text if len(nodes) > 0 else None
 
-    def _get_nodes(self,xpath):
-        return self.tei.xpath(xpath, namespaces=self.ns)
+    # def _get_nodes(self,xpath):
+    #     return self.xml.xpath(xpath, namespaces=self.ns)
