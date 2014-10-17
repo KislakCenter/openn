@@ -29,7 +29,6 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
-    print Document.objects.all()
     try:
         pages = []
         pages.append(Collections('3_Collections.html', settings.STAGING_DIR))
