@@ -39,7 +39,6 @@ def main(cmdline=None):
             }))
         for doc in Document.objects.all():
             pages.append(Browse(doc.id, **{ 'outdir': settings.STAGING_DIR }))
-
         for page in pages:
             page.create_pages()
     except OPennException as ex:

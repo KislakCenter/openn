@@ -44,4 +44,4 @@ def basename(value):
 @register.filter(name='aname')
 @stringfilter
 def aname(value):
-    return ANAME_RE.sub('', value).lower() if value else None
+    return "a%s" % (ANAME_RE.sub('', value).lower(),) if value else None

@@ -78,6 +78,14 @@ class OPennTEI(XMLWhatsit):
     def ms_items(self):
         return  [MSItem(node,self.ns) for node in self._get_nodes('//t:msContents/t:msItem')]
 
+    def ms_items(self, n):
+        nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
+        return [ MSItem(node, self.ns) for node in nodes ]
+
+    def deco_notes(self, n):
+        nodes = self._get_nodes('//t:decoNote[@n="%s"]' % n)
+        return [node.text for node in nodes ]
+
     def add_file_list(self,file_list):
         """
            <facsimile>

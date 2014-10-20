@@ -9,3 +9,6 @@ class MSItem(XMLWhatsit):
     @property
     def title(self):
         return self._get_text('.//t:title')
+
+    def tostring(self):
+        return etree.tostring(self.xml, pretty_print=True)

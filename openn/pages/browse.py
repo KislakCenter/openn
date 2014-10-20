@@ -9,12 +9,14 @@ from operator import itemgetter
 from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.pages.pages import Pages
+from openn.pages.document_data import DocumentData
 
 class Browse(Pages):
 
     def __init__(self,doc_id,**kwargs):
-        self.doc_id = doc_id
-        self.collection = self.document().collection
+        self._doc_id = doc_id
+        self._document = Document.objects.get(id=self._doc_id)
+        self._data = DocumentData(self._document)
 
         updated_kwargs = kwargs.update({'template_name': 'browse_ms.html',
                                         'outfile':self.get_outfile_name()})
@@ -22,13 +24,20 @@ class Browse(Pages):
 
     def get_context(self):
         # items = Document.objects.filter(collection=self.collection)
-        doc = self.document()
-        tei = OPennTEI(doc.tei_xml)
-        return Context({ 'doc': doc, 'tei': tei })
+        return Context({ 'doc': self.data })
 
     def get_outfile_name(self):
         html_dir = settings.COLLECTIONS[self.collection]['html_dir']
-        return '{0}/{1}_browse.html'.format(html_dir, self.document().base_dir)
+        return '{0}/{1}_browse.html'.format(html_dir, self.document.base_dir)
 
+    @property
+    def collection(self):
+        return self.document.collection
+
+    @property
+    def data(self):
+        return self._data
+
+    @property
     def document(self):
-        return Document.objects.get(id=self.doc_id)
+        return self._document
