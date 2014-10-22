@@ -8,10 +8,10 @@ from operator import itemgetter
 
 from openn.models import *
 from openn.xml.openn_tei import OPennTEI
-from openn.pages.pages import Pages
+from openn.pages.page import Page
 from openn.pages.document_data import DocumentData
 
-class Browse(Pages):
+class Browse(Page):
 
     def __init__(self,doc_id,**kwargs):
         self._doc_id = doc_id

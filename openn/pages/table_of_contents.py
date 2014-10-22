@@ -7,10 +7,10 @@ from django.template.loader import get_template
 from operator import itemgetter
 
 from openn.models import *
-from openn.pages.pages import Pages
+from openn.pages.page import Page
 from openn.pages.document_data import DocumentData
 
-class TableOfContents(Pages):
+class TableOfContents(Page):
 
     def __init__(self, collection,**kwargs):
         self.collection = collection

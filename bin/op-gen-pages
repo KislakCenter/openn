@@ -13,7 +13,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from openn.models import *
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
-from openn.pages.pages import Pages
 from openn.pages.collections import Collections
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse

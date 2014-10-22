@@ -9,7 +9,7 @@ from operator import itemgetter
 
 from openn.templatetags.openn_filters import *
 
-class Pages(object):
+class Page(object):
 
     def __init__(self,template_name,outdir,**kwargs):
         self.template_name = template_name
