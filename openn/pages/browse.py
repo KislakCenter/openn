@@ -16,23 +16,15 @@ class Browse(Pages):
     def __init__(self,doc_id,**kwargs):
         self._doc_id = doc_id
         self._document = Document.objects.get(id=self._doc_id)
-        self._data = DocumentData(self._document)
+        self._data = DocumentData(self.document)
 
         updated_kwargs = kwargs.update({'template_name': 'browse_ms.html',
-                                        'outfile':self.get_outfile_name()})
+                                        'outfile':self.document.browse_path})
         super(Browse,self).__init__(**kwargs)
 
     def get_context(self):
         # items = Document.objects.filter(collection=self.collection)
         return Context({ 'doc': self.data })
-
-    def get_outfile_name(self):
-        html_dir = settings.COLLECTIONS[self.collection]['html_dir']
-        return '{0}/{1}_browse.html'.format(html_dir, self.document.base_dir)
-
-    @property
-    def collection(self):
-        return self.document.collection
 
     @property
     def data(self):

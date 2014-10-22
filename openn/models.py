@@ -31,6 +31,42 @@ class Document(models.Model):
     updated       = models.DateTimeField(auto_now = True)
     tei_xml       = models.TextField(null = True, default = None, blank = True)
 
+    @property
+    def collection_config(self):
+        return settings.COLLECTIONS[self.collection]
+
+    @property
+    def html_dir(self):
+        return self.collection_config['html_dir']
+
+    @property
+    def web_dir(self):
+        return self.collection_config['web_dir']
+
+    @property
+    def browse_basename(self):
+        return '{0}.html'.format(self.base_dir)
+
+    @property
+    def browse_path(self):
+        return '{0}/{1}.html'.format(self.html_dir, self.browse_basename)
+
+    @property
+    def package_dir(self):
+        return '{0}/{1}'.format(self.web_dir, self.base_dir)
+
+    @property
+    def data_dir(self):
+        return '{0}/data'.format(self.package_dir)
+
+    @property
+    def tei_basename(self):
+        return '%04d_TEI.xml' % (self.id, )
+
+    @property
+    def tei_path(self):
+        return '{0}/{1}'.format(self.data_dir, self.tei_basename)
+
     # Choosing collection, base_dir as the uniqueness columns
     # While the collection + call_number should be unique, the collection +
     # base_dir must be unique to prevent filesystem collisions on the host.
