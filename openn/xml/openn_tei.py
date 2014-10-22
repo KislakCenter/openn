@@ -78,6 +78,14 @@ class OPennTEI(XMLWhatsit):
     def ms_items(self):
         return  [MSItem(node,self.ns) for node in self._get_nodes('//t:msContents/t:msItem')]
 
+    def ms_items(self, n):
+        nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
+        return [ MSItem(node, self.ns) for node in nodes ]
+
+    def deco_notes(self, n):
+        nodes = self._get_nodes('//t:decoNote[@n="%s"]' % n)
+        return [node.text for node in nodes ]
+
     def add_file_list(self,file_list):
         """
            <facsimile>
@@ -104,17 +112,3 @@ class OPennTEI(XMLWhatsit):
                 graphic = etree.Element('graphic', **attrs)
                 surface.append(graphic)
             facs.append(surface)
-
-    # def to_string(self):
-    #     return etree.tostring(self.xml, pretty_print=True, xml_declaration=True, encoding='UTF-8')
-
-    # def _get_attr(self,xpath,attr):
-    #     nodes = self._get_nodes(xpath)
-    #     return nodes[0].get(attr) if len(nodes) > 0 else None
-
-    # def _get_text(self,xpath):
-    #     nodes = self._get_nodes(xpath)
-    #     return nodes[0].text if len(nodes) > 0 else None
-
-    # def _get_nodes(self,xpath):
-    #     return self.xml.xpath(xpath, namespaces=self.ns)
