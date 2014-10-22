@@ -94,7 +94,7 @@ class PackageDir:
     def master_dir(self):
         del(self._master_dir)
 
-    def rename_masters(self, doc_id):
+    def rename_masters(self, doc):
         """ Using the doc_id rename the existing files giving them sequential
         names following this pattern:
 
@@ -110,7 +110,7 @@ class PackageDir:
         for i in range(self.file_list.count(FileList.DOCUMENT)):
             fdata = self.file_list.file(i, FileList.DOCUMENT)
             curr_name = fdata.filename
-            new_name = self.master_name(curr_name, doc_id, i)
+            new_name = self.master_name(curr_name, doc.id, i)
             src = os.path.join(self.source_dir, curr_name)
             dst = os.path.join(self.source_dir, new_name)
             os.rename(src, dst)
@@ -131,26 +131,25 @@ class PackageDir:
         new_base = PackageDir.white_space_re.sub('_', base)
         return self.source_dir_re.sub('', os.path.join(self.data_dir, 'extra', new_base))
 
-    def save_tei(self, openn_tei, doc_id):
+    def save_tei(self, openn_tei, doc):
         """
         Save openn_tei content to path returned by tei_name()
         """
-        f = open(self.tei_name(doc_id), 'w+')
+        f = open(self.tei_name(doc), 'w+')
         try:
             f.write(openn_tei.to_string())
         finally:
             f.close()
 
-    def tei_name(self,doc_id):
+    def tei_name(self,doc):
         """ TEI file name is:
 
                "<data_dir>/%04d_TEI.xml" % doc_id
 
         """
-        new_base = "%04d_TEI.xml" % doc_id
-        return os.path.join(self.data_dir, new_base)
+        return os.path.join(self.data_dir, doc.tei_basename)
 
-    def manifest_path(self, ):
+    def manifest_path(self):
         return os.path.join(self.source_dir, 'manifest-sha1.txt')
 
     def master_name(self,orig,doc_id,index):
