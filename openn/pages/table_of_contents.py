@@ -8,6 +8,7 @@ from operator import itemgetter
 
 from openn.models import *
 from openn.pages.pages import Pages
+from openn.pages.document_data import DocumentData
 
 class TableOfContents(Pages):
 
@@ -17,7 +18,8 @@ class TableOfContents(Pages):
         super(TableOfContents,self).__init__(**kwargs)
 
     def get_context(self):
-        items = Document.objects.filter(collection=self.collection)
+        docs = Document.objects.filter(collection=self.collection)
+        items = [ DocumentData(x) for x in docs ]
         return Context({ 'collection': settings.COLLECTIONS[self.collection],
                          'items': items })
 
