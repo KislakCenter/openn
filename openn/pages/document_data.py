@@ -45,3 +45,6 @@ class DocumentData:
 
     def has_deco_list(self):
         return len(self.deco_note_pages) > 0
+
+    def origin(self):
+        return [x for x in [ self.tei.orig_place, self.tei.orig_date ] if x ]

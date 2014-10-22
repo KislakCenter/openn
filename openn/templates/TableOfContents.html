@@ -7,8 +7,14 @@
 <ul>
   {% for item in items %}
   <li>
-    <span class="item-id">{{ item.document.call_number }}</span>
-    <span class="item-name">{{ item.document.title }}</span><br/>
+    <span class="item-id">{{ item.document.call_number }}:</span>
+    <span class="item-name">{{ item.document.title }}</span>
+    {% with origin=item.origin %}
+    {% if origin|length > 0 %}
+    <span class="item-origin">({{ origin|join:', '}})</span>
+    {% endif %}
+    {% endwith %}
+    <br/>
     <span class="page-link"><a href="/{{ item.document.browse_path }}">Browse</a></span> |
     <span class="page-link"><a href="/{{ item.document.tei_path }}">TEI XML</a></span> |
     <span class="page-link"><a href="/{{ item.document.package_dir }}">Data</a></span>
