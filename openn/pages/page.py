@@ -38,4 +38,6 @@ class Page(object):
             f.close()
 
     def get_context(self):
-        pass
+        """By default context is empty. Child classes should override this
+        method."""
+        return Context({})
