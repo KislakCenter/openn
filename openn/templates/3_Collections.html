@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Hosted collections{% endblock %}
+{% block title %}OPenn: Hosted collections{% endblock %}
 
 {% block content %}
+<h1>OPenn: Hosted Collections</h1>
 <ul>
 {% for collection in collections %}
    <li>
-     <span class="coll-name">{{ collection.name }}</span><br/>
+     <span class="coll-name"><a href="/{{ collection.toc_file }}">{{ collection.name }}</a></span><br/>
      <span>{{ collection.blurb }}</span>
    </li>
 {% endfor %}
