@@ -49,7 +49,7 @@ class Document(models.Model):
 
     @property
     def browse_path(self):
-        return '{0}/{1}.html'.format(self.html_dir, self.browse_basename)
+        return '{0}/{1}'.format(self.html_dir, self.browse_basename)
 
     @property
     def package_dir(self):
