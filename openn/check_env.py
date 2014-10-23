@@ -44,10 +44,10 @@ def check_requirements():
     status = True
     reqs = os.path.join(os.path.dirname(__file__), '../requirements.txt')
     if os.path.exists(reqs):
-        deps = [line for line in open(req)]
+        deps = [line for line in open(reqs)]
         try:
             pkg_resources.require(deps)
-        except (DistributionNotFound, VersionConflict) as ex:
+        except (DistributionNotFound, VersionConflict):
             print "Dependency problem found: %s" % (ex, )
             status = False
     else:
