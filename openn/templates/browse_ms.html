@@ -114,7 +114,7 @@
               <td>
                 {% with thumb=page.image.thumb %}
                 {% if thumb %}
-                <span><img src="{{ thumb.url }}" height="{{ thumb.height }}" width="{{ thumb.width }}" /></span>
+                <span><a href="{{ page.image.web.url }}"><img src="{{ thumb.url }}" height="{{ thumb.height }}" width="{{ thumb.width }}" /></a></span>
                 {% endif %}
                 {% endwith %}
               </td>
