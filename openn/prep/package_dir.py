@@ -115,15 +115,18 @@ class PackageDir:
             src = os.path.join(self.source_dir, curr_name)
             dst = os.path.join(self.source_dir, new_name)
             os.rename(src, dst)
+            os.chmod(dst, 0664)
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
-            self.create_image_dir('extra')
+
+        self.create_image_dir('extra')
         for fdata in self.file_list.files(FileList.EXTRA):
             curr_name = fdata.filename
             new_name = self.extra_filename(curr_name)
             src = os.path.join(self.source_dir, curr_name)
             dst = os.path.join(self.source_dir, new_name)
             os.rename(src, dst)
+            os.chmod(dst, 0664)
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
 
