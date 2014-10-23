@@ -69,3 +69,6 @@ tmp
 
 # ignore shunit2*
 shunit2*
+
+# ignore .bak files
+*.bak
