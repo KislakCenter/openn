@@ -34,8 +34,8 @@ def main(cmdline=None):
         pages.append(Page('0_ReadMe.html', settings.STAGING_DIR))
         pages.append(Page('1_TechnicalReadMe.html', settings.STAGING_DIR))
         pages.append(Collections('3_Collections.html', settings.STAGING_DIR))
-        pages.append(
-            TableOfContents('medren', **{
+        for collection in settings.COLLECTIONS:
+            pages.append(TableOfContents(collection, **{
                 'template_name': 'TableOfContents.html',
                 'outdir': settings.STAGING_DIR
             }))
