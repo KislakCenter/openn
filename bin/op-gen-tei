@@ -108,7 +108,7 @@ if [ ! -n "$OPENN_SAXON_JAR" ]; then
 fi
 
 if [ -f $OPENN_SAXON_JAR ]; then
-    echo "Using OPENN_SAXON_JAR: $OPENN_SAXON_JAR"
+    echo "Using OPENN_SAXON_JAR: $OPENN_SAXON_JAR" >&2
 else
     echo "OPENN_SAXON_JAR not found; looking for \"$OPENN_SAXON_JAR\"" >&2
     usage
