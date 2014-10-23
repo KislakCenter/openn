@@ -121,9 +121,18 @@ class Image(OrderedModel):
     def __unicode__(self):
         return u"label: %s, filename: %s" % (self.label, self.filename)
 
+    def deriv(self, type_name):
+        derivs = self.derivative_set.filter(deriv_type=type_name)
+        return (len(derivs) > 0 and derivs[0]) or None
+
     def thumb(self):
-        thumbs = self.derivative_set.filter(deriv_type='thumb')
-        return (len(thumbs) > 0 and thumbs[0]) or None
+        return self.deriv('thumb')
+
+    def web(self):
+        return self.deriv('web')
+
+    def master(self):
+        return self.deriv('master')
 
     class Meta(OrderedModel.Meta):
         pass
