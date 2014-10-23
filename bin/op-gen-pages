@@ -31,16 +31,18 @@ def main(cmdline=None):
 
     try:
         pages = []
-        pages.append(Page('0_ReadMe.html', settings.STAGING_DIR))
-        pages.append(Page('1_TechnicalReadMe.html', settings.STAGING_DIR))
-        pages.append(Collections('3_Collections.html', settings.STAGING_DIR))
+        outdir = settings.STAGING_DIR
+        pages.append(Page('0_ReadMe.html', outdir))
+        pages.append(Page('1_TechnicalReadMe.html', outdir))
+        pages.append(Collections('3_Collections.html', outdir))
         for collection in settings.COLLECTIONS:
-            pages.append(TableOfContents(collection, **{
+            toc = TableOfContents(collection, **{
                 'template_name': 'TableOfContents.html',
-                'outdir': settings.STAGING_DIR
-            }))
+                'outdir': outdir
+            })
+            pages.append(toc)
         for doc in Document.objects.all():
-            pages.append(Browse(doc.id, **{ 'outdir': settings.STAGING_DIR }))
+            pages.append(Browse(doc.id, **{ 'outdir': outdir }))
         for page in pages:
             page.create_pages()
     except OPennException as ex:
