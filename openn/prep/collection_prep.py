@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from openn.openn_settings import OPennSettings
 
 """

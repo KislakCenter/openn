@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from lxml import etree
 from openn.xml.xml_whatsit import XMLWhatsit
 

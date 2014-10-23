@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from ordered_model.models import OrderedModel
 from django.conf import settings

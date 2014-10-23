@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.template import Context, Template, loader
 from django.conf import settings
 from openn.models import *
