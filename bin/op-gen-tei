@@ -47,6 +47,11 @@ usage() {
    echo ""
    echo "Given a Penn in Hand XML file generate OPenn TEI."
    echo ""
+   echo "OPTIONS"
+   echo "       -h        Help"
+   echo "       -j PATH   Path to the Saxon jar file."
+   echo ""
+   echo "Note: OPENN_SAXON_JAR can be set in environment."
 }
 
 print_help() {
@@ -56,12 +61,15 @@ print_help() {
 
 ################################################################################
 ### OPTIONS
-while getopts "h" opt; do
+while getopts "hj:" opt; do
   case $opt in
     h)
       usage
       print_help
       exit 1
+      ;;
+    j)
+      OPENN_SAXON_JAR=$OPTARG
       ;;
     \?)
       echo "ERROR Invalid option: -$OPTARG" >&2
@@ -92,9 +100,22 @@ else
   error "Error finding XSL: $XSL"
 fi
 
-# TODO: get saxon jar path from env variable; break if var not set
-LIB_DIR=$HOME/dev/Java/SaxonHE9-5-1-5J
-CLASSPATH=$CLASSPATH:$LIB_DIR/saxon9he.jar
+
+if [ ! -n "$OPENN_SAXON_JAR" ]; then
+    echo "Please set the OPENN_SAXON_JAR variable!" >&2
+    usage
+    exit 1
+fi
+
+if [ -f $OPENN_SAXON_JAR ]; then
+    echo "Using OPENN_SAXON_JAR: $OPENN_SAXON_JAR"
+else
+    echo "OPENN_SAXON_JAR not found; looking for \"$OPENN_SAXON_JAR\"" >&2
+    usage
+    exit 1
+fi
+
+CLASSPATH=$CLASSPATH:$OPENN_SAXON_JAR
 
 java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$XSL
 
