@@ -11,6 +11,15 @@ if os.environ.get('OPENN_SECRET_KEY') is not None:
 elif os.path.exists(skey_file):
     SECRET_KEY = open(skey_file).read().strip()
 
+REQUIRED_ENV_VARS = [
+    'OPENN_DB_NAME',
+    'OPENN_DB_USER',
+    'OPENN_DB_PASSWORD',
+    'OPENN_DB_HOST',
+    'OPENN_SAXON_JAR',
+    'OPENN_STAGING_DIR',
+    'OPENN_PACKAGE_DIR' ]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
