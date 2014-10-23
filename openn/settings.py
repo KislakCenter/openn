@@ -18,6 +18,8 @@ DATABASES = {
             'USER': os.environ['OPENN_DB_USER'],
             'PASSWORD': os.environ['OPENN_DB_PASSWORD'],
             'HOST': os.environ['OPENN_DB_HOST'],
+            'OPTIONS': {
+                'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci',
             }
         }
 
