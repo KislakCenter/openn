@@ -109,27 +109,29 @@
         <a name="{{ page.image.label|aname }}"></a>
         <h4><span class="label label-default">{{ page.image.display_label|capfirst }}</span></h3>
         <div class="row">
-        <div class="col-md-3">
-        {% with thumb=page.image.thumb %}
-          {% if thumb %}
-            <span><img src="{{ thumb.url }}" height="{{ thumb.height }}" width="{{ thumb.width }}" /></span>
-          {% endif %}
-        {% endwith %}
-        </div>
-        <div class="col-md-6">
-        <ul class="list-unstyled">
-          {% for deriv in page.image.derivative_set.all %}
-          <li>
-            <a href="{{ deriv.url }}">{{ deriv.path|basename }}</a>
-            <span>({{ deriv.bytes|filesizeformat }}, {{ deriv.bytes }} bytes)</span>
-          </li>
-          {% endfor %}
-        </ul>
-        </div>
-        </div>
-        <div class="row">
-        {% for title in  page.titles %} Section: {{ title }}<br/> {% endfor %}
-        {% for note in page.deco_notes %}Decoration: {{ note }}<br/>{% endfor %}
+          <table class="table">
+            <tr>
+              <td>
+                {% with thumb=page.image.thumb %}
+                {% if thumb %}
+                <span><img src="{{ thumb.url }}" height="{{ thumb.height }}" width="{{ thumb.width }}" /></span>
+                {% endif %}
+                {% endwith %}
+              </td>
+              <td>
+                <ul class="list-unstyled">
+                {% for deriv in page.image.derivative_set.all %}
+                <li>
+                  <a href="{{ deriv.url }}">{{ deriv.path|basename }}</a>
+                  <span>({{ deriv.bytes|filesizeformat }}, {{ deriv.bytes }} bytes)</span>
+                </li>
+                {% endfor %}
+                </ul>
+                {% for title in  page.titles %} <span>Section: {{ title }}</span><br/> {% endfor %}
+                {% for note in page.deco_notes %}<span>Decoration: {{ note }}</span><br/>{% endfor %}
+              </td>
+            </tr>
+          </table>
         </div>
       </li>
       {% endfor %}
