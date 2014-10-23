@@ -57,7 +57,7 @@ Create some database. (Instructions swiped from codeforkjeff.)
 
 ```sql
 mysql -u root
-CREATE DATABASE openn CHARACTER SET utf8;
+CREATE DATABASE openn CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE USER 'openn'@'localhost' IDENTIFIED BY 'xxx';
 GRANT ALL PRIVILEGES ON *.* TO 'openn'@'localhost';
 FLUSH PRIVILEGES;
