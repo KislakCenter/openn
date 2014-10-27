@@ -47,6 +47,14 @@ body {
 
 }
 
+#content {
+  width: 800px;
+  top: 250px;
+  left: 50%;
+  position: absolute;
+  margin-left: -400px;
+}
+
 .separators
 {
 	font-size: 24px;
