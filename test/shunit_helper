@@ -5,6 +5,13 @@ export PATH=`dirname $0`/../bin:$PATH
 export TEST_DATA_DIR=`dirname $0`/../openn/tests/data
 export TEST_STAGING_DIR=`dirname $0`/../openn/tests/staging
 
+# test ENV
+export OPENN_DB_NAME=openn_test
+export OPENN_DB_USER=openn
+export OPENN_DB_HOST=localhost
+export OPENN_PACKAGE_DIR=$HOME/tmp/openn/packages
+export OPENN_STAGING_DIR=$HOME/tmp/openn/site
+
 shunit=`dirname $0`/../shunit2/src/shunit2
 
 print_output() {
