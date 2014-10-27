@@ -12,20 +12,20 @@ setUp() {
     # make sure the database is empty
     for table in openn_derivative openn_image openn_document
     do
-        mysql -u openn openn -e "delete from $table"
+        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
     done
 }
 
 tearDown() {
     for table in openn_derivative openn_image openn_document
     do
-        mysql -u openn openn -e "delete from $table"
+        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
     done
     rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
 testRun() {
-    mysql -uopenn --default-character-set=utf8 openn < $THIS_DIR/fixtures/test.sql
+    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     op-gen-pages
     status=$?
     assertEquals 0 $status

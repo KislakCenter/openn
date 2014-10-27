@@ -11,7 +11,7 @@ setUp() {
     # make sure the database is empty
     for table in openn_derivative openn_image openn_document
     do
-        mysql -u openn openn -e "delete from $table"
+        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
     done
 }
 
@@ -22,7 +22,7 @@ setUp() {
 tearDown() {
     for table in openn_derivative openn_image openn_document
     do
-        mysql -u openn openn -e "delete from $table"
+        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
     done
     rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
