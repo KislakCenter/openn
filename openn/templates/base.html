@@ -8,11 +8,27 @@
       <title>OPenn: {% block title %}Digital Primary Sources{% endblock %}</title>
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link href="/html/openn9.css" rel="stylesheet" type="text/css" />
+      <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:600italic' rel='stylesheet' type='text/css' />
+      <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css' />
   </head>
 
   <body>
+    <div id="divmain">
+      <div id="background"></div>
+      <div id="logo_openn"><br />
+        <span class="logo_o">O</span>
+        <span class="logo_penn">Penn</span><span>&nbsp;&nbsp;Making Primary Digital Resources Available to Everyone</span>
+      </div>
+      <div id="hosted"><img src="/html/penn_shield2.gif" align="left" alt="Penn"/>&nbsp;Hosted by the University of Pennsylvania Libraries</div>
+    </div>
     <div class="container">
       {% block content %}{% endblock %}
+    </div>
+    <div id="footer">
+      <img src="/html/separator_white.gif" width="7" height="10" />&nbsp;&nbsp;All
+      materials on this site are free to use under a Creative Commons Attribution-ShareAlike 3.0
+      Unported license.&nbsp;&nbsp;<img src="/html/separator_white.gif" width="7" height="10" />
     </div>
   </body>
 </html>

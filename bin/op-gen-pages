@@ -2,6 +2,7 @@
 
 from optparse import OptionParser
 import os
+from distutils.dir_util import copy_tree
 import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -32,6 +33,11 @@ def main(cmdline=None):
     try:
         pages = []
         outdir = settings.STAGING_DIR
+        html_dir = os.path.join(settings.STAGING_DIR, 'html')
+        if not os.path.exists(html_dir):
+            os.makedirs(html_dir)
+        this_dir = os.path.dirname(__file__)
+        copy_tree(os.path.join(this_dir, '..', 'openn/templates/html'), html_dir)
         pages.append(Page('0_ReadMe.html', outdir))
         pages.append(Page('1_TechnicalReadMe.html', outdir))
         pages.append(Collections('3_Collections.html', outdir))
