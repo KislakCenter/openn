@@ -2,7 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns="http://www.tei-c.org/ns/1.0"
-    exclude-result-prefixes="xs xd" version="2.0">
+    xmlns:marc="http://www.loc.gov/MARC21/slim"
+    exclude-result-prefixes="xs xd marc tei" version="2.0">
     <xd:doc scope="stylesheet">
         <xd:desc>
             <xd:p><xd:b>Created on:</xd:b> Nov 19, 2013</xd:p>
@@ -49,10 +50,10 @@
                     </publicationStmt>
                     
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
-                    <xsl:if xmlns:marc="http://www.loc.gov/MARC21/slim"
+                    <xsl:if
                         test="//marc:datafield[@tag='500']">
                         <notesStmt>
-                            <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim"
+                            <xsl:for-each
                                 select="//marc:datafield[@tag='500']">
                                 <note>
                                     <xsl:value-of select="marc:subfield[@code='a']"/>
@@ -67,12 +68,12 @@
                             <msIdentifier>
                                 <settlement>Philadelphia</settlement>
                                 <institution>
-                                    <xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim"
+                                    <xsl:value-of
                                         select="/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"
                                     />
                                 </institution>
                                 <repository>
-                                    <xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim"
+                                    <xsl:value-of
                                         select="/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"
                                     />
                                 </repository>
@@ -84,7 +85,7 @@
                             </msIdentifier>
                             <msContents>
                                 <summary>
-                                    <xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim"
+                                    <xsl:value-of
                                         select="normalize-space((/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"
                                     />
                                 </summary>
@@ -161,7 +162,7 @@
                                     
                                     <!-- DOT ADDED AN IF STATEMENT AROUND ORIGDATE, SO IF THERE IS NO ORIGDATE IN THE MARC RECORD ORIGDATE WILL NOT BE CREATED -->
                                     <xsl:if test="/page/response/result/doc/arr[@name='probable_date_field']/str"><origDate>
-                                        <xsl:choose xmlns:marc="http://www.loc.gov/MARC21/slim">
+                                        <xsl:choose>
                                             <xsl:when
                                                 test="/page/response/result/doc/arr[@name='probable_date_field']/str">
                                                 <xsl:value-of
@@ -179,7 +180,7 @@
                                     <!-- END DOT MOD -->
                                     
                                     <xsl:variable name="orig-place">
-                                        <xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim"
+                                        <xsl:value-of
                                             select="/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='260']/marc:subfield[@code='a']"
                                         />
                                     </xsl:variable>
@@ -194,10 +195,10 @@
                                 </origin>
                                 
                                 <!-- DOT ADDED PROVENANCE -->
-                                <xsl:if xmlns:marc="http://www.loc.gov/MARC21/slim" test="//marc:datafield[@tag='561']">
-                                    <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="//marc:datafield[@tag='561']">
+                                <xsl:if test="//marc:datafield[@tag='561']">
+                                    <xsl:for-each select="//marc:datafield[@tag='561']">
                                         <provenance>
-                                            <xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim" select="marc:subfield[@code='a']"/>
+                                            <xsl:value-of select="marc:subfield[@code='a']"/>
                                         </provenance>
                                     </xsl:for-each>
                                 </xsl:if>
@@ -212,10 +213,10 @@
                 <profileDesc>
                     <textClass>
                         <!-- DE: Switching to marc 610 and joining subfields -->
-                        <xsl:if xmlns:marc="http://www.loc.gov/MARC21/slim" test="//marc:datafield[@tag='610']">
+                        <xsl:if test="//marc:datafield[@tag='610']">
                             <keywords xmlns="http://www.tei-c.org/ns/1.0" n="subjects">
                                 <list>
-                                    <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="//marc:datafield[@tag='610']">
+                                    <xsl:for-each select="//marc:datafield[@tag='610']">
                                         <item>
                                             <xsl:call-template name="join-subfields">
                                                 <xsl:with-param name="datafield" select="."/>
@@ -225,11 +226,11 @@
                                 </list>
                             </keywords>
                         </xsl:if>
-                        <xsl:if xmlns:marc="http://www.loc.gov/MARC21/slim" test="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
+                        <xsl:if test="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
                             <keywords n="form/genre">
                                 <list>
-                                    <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
-                                        <item><xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim" select="."/></item>
+                                    <xsl:for-each select="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
+                                        <item><xsl:value-of select="."/></item>
                                     </xsl:for-each>
                                 </list>
                             </keywords>
@@ -266,9 +267,9 @@
         />
     </xsl:template>
     
-    <xsl:template name="join-subfields" xmlns:marc="http://www.loc.gov/MARC21/slim">
+    <xsl:template name="join-subfields">
         <xsl:param name="datafield"/>
-        <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="./marc:subfield">
+        <xsl:for-each select="./marc:subfield">
            <xsl:value-of select="."/>
             <xsl:if test="position() != last()">
                 <xsl:text> - </xsl:text>
