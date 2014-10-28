@@ -13,6 +13,9 @@
                 applicable, is optional </xd:p>
             <xd:p><xd:b>dorp, October 27 2014, modified to add</xd:b></xd:p>
             <xd:p> * provenance * subject terms * genre/form terms * notes</xd:p>
+            <xd:p><xd:b>rde, October 28, 2014, multiple chagnes</xd:b></xd:p>
+            <xd:p>Pulling data from marc fields, instead of Penn in Hand "*_field" elements</xd:p>
+            <xd:p>Tighten code; remove mid-tag line breaks</xd:p>
         </xd:desc>
     </xd:doc>
 
@@ -27,9 +30,9 @@
                             <xsl:call-template name="clean-up-text">
                                 <xsl:with-param name="some-text">
                                     <xsl:text>Description of </xsl:text>
-                                    <xsl:value-of
-                                        select="/page/response/result/doc/arr[@name='titledate_field']/str"
-                                    />
+                                    <xsl:call-template name="clean-up-text">
+                                        <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']" />
+                                    </xsl:call-template>
                                 </xsl:with-param>
                             </xsl:call-template>
                         </title>
@@ -39,24 +42,21 @@
                         <publisher>Schoenberg Center for Electronic Text and Image, University of
                             Pennsylvania</publisher>
                         <availability>
-                            <licence
-                                target="http://creativecommons.org/licenses/by-nc/4.0/legalcode">
+                            <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
                                 This work and all referenced images are ©<xsl:value-of
                                     select="year-from-date(current-date())"/> University of
                                 Pennsylvania. They are licensed under a Creative Commons
-                                Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0),
-                                http://creativecommons.org/licenses/by-nc/4.0/. </licence>
+                                Attribution 4.0 International License (CC 4.0),
+                                http://creativecommons.org/licenses/by/4.0/. </licence>
                         </availability>
                     </publicationStmt>
                     
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
-                    <xsl:if
-                        test="//marc:datafield[@tag='500']">
+                    <xsl:if test="//marc:datafield[@tag='500']">
                         <notesStmt>
-                            <xsl:for-each
-                                select="//marc:datafield[@tag='500']">
+                            <xsl:for-each select="//marc:datafield[@tag='500']">
                                 <note>
-                                    <xsl:value-of select="marc:subfield[@code='a']"/>
+                                    <xsl:value-of select="normalize-space(marc:subfield[@code='a'])"/>
                                 </note>
                             </xsl:for-each>
                         </notesStmt>
@@ -68,54 +68,57 @@
                             <msIdentifier>
                                 <settlement>Philadelphia</settlement>
                                 <institution>
-                                    <xsl:value-of
-                                        select="/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"
+                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"
                                     />
                                 </institution>
                                 <repository>
-                                    <xsl:value-of
-                                        select="/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"
+                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"
                                     />
                                 </repository>
                                 <idno>
-                                    <xsl:value-of
-                                        select="/page/response/result/doc/arr[@name='call_number_field']/str"
-                                    />
+                                    <xsl:value-of select="//marc:datafield[@tag='099']/marc:subfield[@code='a']" />
                                 </idno>
                             </msIdentifier>
                             <msContents>
                                 <summary>
-                                    <xsl:value-of
-                                        select="normalize-space((/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"
+                                    <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"
                                     />
                                 </summary>
 
-                                <xsl:if
-                                    test="/page/response/result/doc/arr[@name='language_field']/str">
+                                <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
                                     <textLang>
-                                        <xsl:value-of
-                                            select="normalize-space(/page/response/result/doc/arr[@name='language_field']/str)"
-                                        />
+                                        <xsl:value-of select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
                                     </textLang>
                                 </xsl:if>
                                 <msItem>
                                     <title>
                                         <xsl:call-template name="clean-up-text">
-                                            <xsl:with-param name="some-text"
-                                                select="/page/response/result/doc/arr[@name='title_field']/str"
-                                            />
+                                            <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']" />
                                         </xsl:call-template>
                                     </title>
-                                    <xsl:if
-                                        test="/page/response/result/doc/arr[@name='author_field']/str">
+                                    <!-- DE: Grab authors from marc 110, 100 and 700 -->
+                                    <!-- DE: marc 110 is a corporate author -->
+                                    <xsl:if test="//marc:datafield[@tag='110']">
                                         <author>
-                                            <xsl:call-template name="clean-up-text">
-                                                <xsl:with-param name="some-text"
-                                                  select="normalize-space(/page/response/result/doc/arr[@name='author_field']/str)"
-                                                />
+                                            <xsl:value-of select="//marc:datafield[@tag='110']/marc:subfield[@code='a']"/>
+                                        </author>
+                                    </xsl:if>
+                                    <!-- marc 100: primary author, person -->
+                                    <xsl:if test="//marc:datafield[@tag='100']">
+                                        <author>
+                                            <xsl:call-template name="extract-pn">
+                                                <xsl:with-param name="datafield" select="//marc:datafield[@tag='100']"/>
                                             </xsl:call-template>
                                         </author>
                                     </xsl:if>
+                                    <!-- DE: marc 700's w/o a relator (code='e') are secondary authors -->
+                                    <xsl:for-each select="//marc:datafield[@tag='700' and not(child::marc:subfield[@code='e'])]">
+                                        <author>
+                                            <xsl:call-template name="extract-pn">
+                                                <xsl:with-param name="datafield" select="."/>
+                                            </xsl:call-template>
+                                        </author>
+                                    </xsl:for-each>
                                 </msItem>
 
                                 <xsl:for-each select="//page/tocentry[@name='toc']">
@@ -123,9 +126,7 @@
                                     <msItem>
                                         <xsl:attribute name="n">
                                             <xsl:call-template name="clean-up-text">
-                                                <xsl:with-param name="some-text">
-                                                  <xsl:value-of select="$locus"/>
-                                                </xsl:with-param>
+                                                <xsl:with-param name="some-text" select="$locus"/>
                                             </xsl:call-template>
                                         </xsl:attribute>
                                         <locus>
@@ -136,7 +137,6 @@
                                         </title>
                                     </msItem>
                                 </xsl:for-each>
-
                             </msContents>
                             <xsl:if test="count(//page/tocentry[@name='ill']) > 0">
                                 <physDesc>
@@ -145,10 +145,7 @@
                                             <decoNote>
                                                 <xsl:attribute name="n">
                                                   <xsl:call-template name="clean-up-text">
-                                                  <xsl:with-param name="some-text">
-                                                  <xsl:value-of select="./parent::page/@visiblepage"
-                                                  />
-                                                  </xsl:with-param>
+                                                  <xsl:with-param name="some-text" select="./parent::page/@visiblepage" />
                                                   </xsl:call-template>
                                                 </xsl:attribute>
                                                 <xsl:value-of select="normalize-space(.)"/>
@@ -161,34 +158,19 @@
                                 <origin>
                                     
                                     <!-- DOT ADDED AN IF STATEMENT AROUND ORIGDATE, SO IF THERE IS NO ORIGDATE IN THE MARC RECORD ORIGDATE WILL NOT BE CREATED -->
-                                    <xsl:if test="/page/response/result/doc/arr[@name='probable_date_field']/str"><origDate>
-                                        <xsl:choose>
-                                            <xsl:when
-                                                test="/page/response/result/doc/arr[@name='probable_date_field']/str">
-                                                <xsl:value-of
-                                                  select="/page/response/result/doc/arr[@name='probable_date_field']/str"
-                                                />
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <xsl:value-of
-                                                  select="/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='260']/marc:subfield[@code='c']"
-                                                />
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </origDate></xsl:if>
-                                    
+                                    <!-- DE: just use the marc field -->
+                                    <xsl:if test="//marc:datafield[@tag='260']/marc:subfield[@code='c']">
+                                        <origDate>
+                                            <xsl:value-of select="//marc:datafield[@tag='260']/marc:subfield[@code='c']" />
+                                        </origDate>
+                                    </xsl:if>
                                     <!-- END DOT MOD -->
-                                    
-                                    <xsl:variable name="orig-place">
-                                        <xsl:value-of
-                                            select="/page/response/result/doc/xml[@name='marcrecord']/marc:record/marc:datafield[@tag='260']/marc:subfield[@code='a']"
-                                        />
-                                    </xsl:variable>
-                                    <xsl:if test="$orig-place">
+
+                                    <!-- DE: Cleaner code for origPlace; add only if present -->
+                                    <xsl:if test="//marc:datafield[@tag='260']/marc:subfield[@code='a']">
                                         <origPlace>
                                             <xsl:call-template name="clean-up-text">
-                                                <xsl:with-param name="some-text"
-                                                  select="$orig-place"/>
+                                                <xsl:with-param name="some-text" select="//marc:datafield[@tag='260']/marc:subfield[@code='a']"/>
                                             </xsl:call-template>
                                         </origPlace>
                                     </xsl:if>
@@ -262,8 +244,7 @@
 
     <xsl:template name="clean-up-text">
         <xsl:param name="some-text"/>
-        <xsl:value-of
-            select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))"
+        <xsl:value-of select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))"
         />
     </xsl:template>
     
@@ -273,6 +254,17 @@
            <xsl:value-of select="."/>
             <xsl:if test="position() != last()">
                 <xsl:text>--</xsl:text>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+
+   <!-- Extract personal names, employing the date if present. -->
+    <xsl:template name="extract-pn">
+        <xsl:param name="datafield"/>
+        <xsl:for-each select="$datafield/marc:subfield[@code='a' or @code='b' or @code='c' or @code='d']">
+            <xsl:value-of select="."/>
+            <xsl:if test="position() != last()">
+                <xsl:text> </xsl:text>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
