@@ -272,7 +272,7 @@
         <xsl:for-each select="./marc:subfield">
            <xsl:value-of select="."/>
             <xsl:if test="position() != last()">
-                <xsl:text> - </xsl:text>
+                <xsl:text>--</xsl:text>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
