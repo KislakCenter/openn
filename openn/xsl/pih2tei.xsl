@@ -138,9 +138,38 @@
                                     </msItem>
                                 </xsl:for-each>
                             </msContents>
-                            <xsl:if test="count(//page/tocentry[@name='ill']) > 0">
                                 <physDesc>
-                                    <decoDesc>
+                                    <xsl:if test="//marc:datafield[@tag='300']">
+                                        <xsl:variable name="datafield" select="//marc:datafield[@tag='300']"/>
+                                        <xsl:variable name="support" select="normalize-space(tokenize($datafield/marc:subfield[@code='b'], ';')[1])"/>
+                                        <xsl:variable name="mixed" select="matches($support, 'parchment', 'i') and matches($support, 'paper', 'i')"/>
+                                        <objectDesc>
+                                            <supportDesc>
+                                                <xsl:if test="$support">
+                                                    <xsl:attribute name="material">
+                                                        <xsl:choose>
+                                                            <xsl:when test="$mixed">
+                                                                <xsl:text>mixed</xsl:text>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <xsl:value-of select="normalize-space($support)"/>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
+                                                    </xsl:attribute>
+                                                </xsl:if>
+                                                <xsl:if test="$support">
+                                                    <support><xsl:value-of select="$support"/></support>
+                                                </xsl:if>
+                                                <xsl:if test="$datafield/marc:subfield[@code='a'] or $datafield/marc:subfield[@code='c']">
+                                                    <extent>
+                                                        <xsl:value-of select="normalize-space(concat($datafield/marc:subfield[@code='a'], ' ', $datafield/marc:subfield[@code='c']))"/>
+                                                    </extent>
+                                                </xsl:if>
+                                            </supportDesc>
+                                        </objectDesc>
+                                    </xsl:if>
+                                    <xsl:if test="count(//page/tocentry[@name='ill']) > 0">
+                                        <decoDesc>
                                         <xsl:for-each select="//page/tocentry[@name='ill']">
                                             <decoNote>
                                                 <xsl:attribute name="n">
@@ -152,8 +181,8 @@
                                             </decoNote>
                                         </xsl:for-each>
                                     </decoDesc>
+                                    </xsl:if>
                                 </physDesc>
-                            </xsl:if>
                             <history>
                                 <origin>
                                     
