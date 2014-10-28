@@ -195,7 +195,11 @@
                                 
                                 <!-- DOT ADDED PROVENANCE -->
                                 <xsl:if xmlns:marc="http://www.loc.gov/MARC21/slim" test="//marc:datafield[@tag='561']">
-                                    <xsl:for-each select="//marc:datafield[@tag='561']"><provenance><xsl:value-of select="marc:subfield[@code='a']"/></provenance></xsl:for-each>
+                                    <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="//marc:datafield[@tag='561']">
+                                        <provenance>
+                                            <xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim" select="marc:subfield[@code='a']"/>
+                                        </provenance>
+                                    </xsl:for-each>
                                 </xsl:if>
                                 <!-- END DOT MOD -->
                                 
@@ -207,16 +211,29 @@
                 <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
                 <profileDesc>
                     <textClass>
-                        <xsl:if test="/page/response/result/doc/arr[@name='subject_field']"><keywords n="subjects">
-                            <list>
-                                <xsl:for-each select="/page/response/result/doc/arr[@name='subject_field']//str"><item><xsl:value-of select="."/></item></xsl:for-each>
-                            </list>
-                        </keywords></xsl:if>
-                        <xsl:if test="/page/response/result/doc/arr[@name='genre_field']"><keywords n="form/genre">
-                            <list>
-                                <xsl:for-each select="/page/response/result/doc/arr[@name='genre_field']//str"><item><xsl:value-of select="."/></item></xsl:for-each>
-                            </list>
-                        </keywords></xsl:if>
+                        <!-- DE: Switching to marc 610 and joining subfields -->
+                        <xsl:if xmlns:marc="http://www.loc.gov/MARC21/slim" test="//marc:datafield[@tag='610']">
+                            <keywords xmlns="http://www.tei-c.org/ns/1.0" n="subjects">
+                                <list>
+                                    <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="//marc:datafield[@tag='610']">
+                                        <item>
+                                            <xsl:call-template name="join-subfields">
+                                                <xsl:with-param name="datafield" select="."/>
+                                            </xsl:call-template>
+                                        </item>
+                                    </xsl:for-each>
+                                </list>
+                            </keywords>
+                        </xsl:if>
+                        <xsl:if xmlns:marc="http://www.loc.gov/MARC21/slim" test="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
+                            <keywords n="form/genre">
+                                <list>
+                                    <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
+                                        <item><xsl:value-of xmlns:marc="http://www.loc.gov/MARC21/slim" select="."/></item>
+                                    </xsl:for-each>
+                                </list>
+                            </keywords>
+                        </xsl:if>
                     </textClass>
                 </profileDesc>
                 <!-- DOT MOD ENDS HERE -->
@@ -248,6 +265,16 @@
             select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))"
         />
     </xsl:template>
-
+    
+    <xsl:template name="join-subfields" xmlns:marc="http://www.loc.gov/MARC21/slim">
+        <xsl:param name="datafield"/>
+        <xsl:for-each xmlns:marc="http://www.loc.gov/MARC21/slim" select="./marc:subfield">
+           <xsl:value-of select="."/>
+            <xsl:if test="position() != last()">
+                <xsl:text> - </xsl:text>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+    
 
 </xsl:stylesheet>
