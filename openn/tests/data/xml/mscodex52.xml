@@ -1,0 +1,1297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+   <images xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <image xmlns:my="http://nowhere"
+         src="https://repo.library.upenn.edu/djatoka/resolver?url_ver=Z39.88-2004&amp;svc_id=info:lanl-repo/svc/getRegion&amp;svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&amp;svc.format=image/jpeg&amp;rft_id=medren_mscodex52_wk1_front0001&amp;svc.level=3&amp;svc.rotate=">
+         <params>
+            <identifier>medren_mscodex52_wk1_front0001</identifier>
+            <imagefile>/repo/store/pairtree_root/me/dr/en/_m/sc/od/ex/52/_w/k1/_f/ro/nt/00/01/medren_mscodex52_wk1_front0001/v002/full/mscodex52_wk1_front0001.DELIVERY.jp2</imagefile>
+            <width>4954</width>
+            <height>6041</height>
+            <dwtLevels>6</dwtLevels>
+            <levels>6</levels>
+            <compositingLayerCount>1</compositingLayerCount>
+            <defaultscale>3</defaultscale>
+         </params>
+         <control>
+            <zoomcontrol zoom="in">
+               <input name="zoom" type="radio" value="in" onclick="selectZoomControl('in')" checked="yes">zoom
+                  in</input>
+               <input name="zoom" type="radio" value="out" onclick="selectZoomControl('out')">zoom out</input>
+               <input name="zoom" type="radio" value="none" onclick="selectZoomControl('none')">recenter</input>
+            </zoomcontrol>
+            <sizecontrol>
+               <input name="size" type="radio" value="0" onClick="this.form.submit()">full</input>
+               <input name="size" type="radio" value="1" onClick="this.form.submit()">1/2</input>
+               <input name="size" type="radio" value="2" onClick="this.form.submit()">1/4</input>
+               <input name="size" type="radio" value="3" checked="yes">1/8</input>
+               <input name="size" type="radio" value="4" onClick="this.form.submit()">1/16</input>
+               <input name="size" type="radio" value="5" onClick="this.form.submit()">1/32</input>
+               <input name="size" type="radio" value="6" onClick="this.form.submit()">1/64</input>
+            </sizecontrol>
+         </control>
+      </image>
+   </images>
+   <response xmlns:cinclude="http://apache.org/cocoon/include/1.0">
+      <links xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere"
+         detail-page-params=".html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;">
+         <feeds>
+            <str name="media.rss"
+               >feeds/pageturn.mrss?rotation=0&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;id=MEDREN_1473932
+               OR id:MEDREN_1473932_*&amp;rows=500</str>
+            <str name="rss"
+               >feeds/pageturn.rss?id=MEDREN_1473932&amp;rotation=0&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;</str>
+            <str name="ical"
+               >feeds/calendar.ics?id=MEDREN_1473932&amp;rotation=0&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;</str>
+            <str name="url"
+               >http://dla.library.upenn.edu/dla/medren/pageturn.html?id=MEDREN_1473932&amp;rotation=0&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;rotation=0&amp;</str>
+            <str name="display-record" display="[more information]"
+               >record.html?id=MEDREN_1473932&amp;rotation=0&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;</str>
+            <str name="enable-fullview" display="Enable Full View"
+               >pageturn.html?id=MEDREN_1473932&amp;rotation=0&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;fullview=true</str>
+            <str name="rotate-right" display="Rotate Right"
+               >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;rotation=90</str>
+            <str name="rotate-left" display="Rotate Left"
+               >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;rotation=270</str>
+            <str name="handle">http://hdl.library.upenn.edu/1017/d/medren/1473932</str>
+         </feeds>
+         <sidebar>
+            <str name="mailto" display="Contact Us"
+               >mailto:dmcknigh@pobox.upenn.edu?subject=Penn%20in%20Hand%3A%20Selected%20Manuscripts%20%28DLA%20Collection%29&amp;body=Question%20regarding%20this%20page%3A%20http%3A%2F%2Fdla.library.upenn.edu%2Fdla%2Fmedren%2Fpageturn.html%3Fid%3DMEDREN_1473932%26rotation%3D0%26fq%3Drelated_names_facet%253A%2522Bartolomeus%252C%2520de%2520Velo%2520Luxiane%252C%2520scribe%2522%26</str>
+            <str name="back-to-results" display="Back to Search Results"
+               >search.html?fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;</str>
+         </sidebar>
+      </links>
+      <params xmlns:my="http://nowhere">
+         <str name="q"/>
+         <str name="id">MEDREN_1473932</str>
+         <str name="fq">related_names_facet:"Bartolomeus, de Velo Luxiane, scribe"</str>
+         <str name="start">0</str>
+         <str name="rows">25</str>
+         <str name="sort">score desc, date_sort asc</str>
+         <str name="page">pageturn</str>
+         <str name="browse"/>
+         <str name="facet">true</str>
+         <str name="view"/>
+         <str name="detail">brief</str>
+         <str name="showall"/>
+         <str name="fullview"/>
+         <info>
+            <str name="params-forward">true</str>
+            <str name="url">http://dla.library.upenn.edu/dla</str>
+         </info>
+         <page-specific name="pageturn">
+            <str name="currentpage">1</str>
+            <str name="doubleside">1</str>
+            <str name="filter"/>
+            <str name="rotation">0</str>
+            <str name="region"/>
+            <str name="filetype"/>
+            <str name="image"/>
+            <str name="naturalwidth"/>
+            <str name="naturalheight"/>
+            <str name="levels"/>
+            <str name="zoom"/>
+            <str name="level"/>
+            <str name="oldwidth"/>
+            <str name="oldheight"/>
+            <str name="oldx"/>
+            <str name="oldy"/>
+            <str name="x"/>
+            <str name="y"/>
+            <str name="size"/>
+            <str name="oldsize"/>
+         </page-specific>
+      </params>
+      <lst name="responseHeader">
+         <int name="status">0</int>
+         <int name="QTime">1</int>
+         <lst name="params">
+            <str name="facet">true</str>
+            <str name="sort">score desc, date_sort asc</str>
+            <str name="fl">*</str>
+            <str name="facet.mincount">1</str>
+            <str name="facet.sort">true</str>
+            <str name="q">id:MEDREN_1473932</str>
+            <str name="facet.limit">5</str>
+            <str name="f..facet.limit">400</str>
+            <str name="f..facet.sort">false</str>
+            <arr name="facet.field">
+               <str>collection_facet</str>
+               <str>has_999_facet</str>
+               <str>facsimile_facet</str>
+               <str>illuminated_facet</str>
+               <str>illustrated_facet</str>
+               <str>notated_facet</str>
+               <str>language_facet</str>
+               <str>century_facet</str>
+               <str>date_facet</str>
+               <str>genre_facet</str>
+               <str>subject_facet</str>
+               <str>geography_facet</str>
+               <str>author_facet</str>
+               <str>related_names_facet</str>
+               <str>page_material_facet</str>
+            </arr>
+            <str name="qt">dla-standard</str>
+            <str name="rows">25</str>
+         </lst>
+      </lst>
+      <result name="response" numFound="1" start="0">
+         <doc>
+            <str name="id">MEDREN_1473932</str>
+            <arr name="call_number_field">
+               <str>Ms. Codex 52</str>
+            </arr>
+            <str name="orientation"/>
+            <str name="format">pageturn</str>
+            <arr name="title_field">
+               <str>Liber privilegiorum septem comunium montanearum Agri Vicentini</str>
+            </arr>
+            <arr name="probable_date_field">
+               <str>1568-1657</str>
+            </arr>
+            <arr name="titledate_field">
+               <str>Ms. Codex 52 - Liber privilegiorum septem comunium montanearum Agri Vicentini (1568-1657)</str>
+            </arr>
+            <arr name="primary_author_field">
+               <str>Sette Comuni</str>
+            </arr>
+            <arr name="origin_field">
+               <str>[Italy], 1568-1657</str>
+            </arr>
+            <arr name="date_facsimile_added_field">
+               <str>04-18-2011</str>
+            </arr>
+            <arr name="collection_field">
+               <str>Medieval &amp; Renaissance Manuscripts Collection</str>
+            </arr>
+            <arr name="collectionSEARCH_URL_field">
+               <str>search.html?fq=collection_facet%3A"Medieval %26 Renaissance Manuscripts"</str>
+            </arr>
+            <arr name="facsimile_field">
+               <str>Yes</str>
+            </arr>
+            <arr name="language_field">
+               <str>Latin</str>
+            </arr>
+            <arr name="genre_field">
+               <str>Codices</str>
+               <str>Statutes</str>
+               <str>Manuscripts, Latin - 16th century</str>
+               <str>Manuscripts, Latin - 17th century</str>
+               <str>Manuscripts, Renaissance</str>
+               <str>Manuscripts, European</str>
+            </arr>
+            <arr name="geography_field">
+               <str>Sette Comuni (Italy)</str>
+               <str>Sette Comuni (Italy)</str>
+               <str>Sette Comuni (Italy)</str>
+               <str>Venice (Italy)</str>
+            </arr>
+            <arr name="author_field">
+               <str>Sette Comuni</str>
+            </arr>
+            <xml name="marcrecord">
+               <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
+                  <marc:leader>02966ctc a2200541Ia 4500</marc:leader>
+                  <marc:controlfield tag="001">1473932</marc:controlfield>
+                  <marc:controlfield tag="005">20110418125638.0</marc:controlfield>
+                  <marc:controlfield tag="008">940420i15681657pau 000 0 lat d</marc:controlfield>
+                  <marc:datafield tag="035" ind1=" " ind2=" ">
+                     <marc:subfield code="a">(OCoLC)ocn155962838</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="040" ind1=" " ind2=" ">
+                     <marc:subfield code="a">PU</marc:subfield>
+                     <marc:subfield code="e">amremm</marc:subfield>
+                     <marc:subfield code="c">PAULM</marc:subfield>
+                     <marc:subfield code="d">PAULM</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="035" ind1=" " ind2=" ">
+                     <marc:subfield code="a">(OCoLC)155962838</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="035" ind1=" " ind2=" ">
+                     <marc:subfield code="a">(CStRLIN)PAUR94-A35</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="079" ind1=" " ind2=" ">
+                     <marc:subfield code="a">ocm86167218</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="099" ind1=" " ind2="9">
+                     <marc:subfield code="a">Ms. Codex 52</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="049" ind1=" " ind2=" ">
+                     <marc:subfield code="a">PAUM</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="110" ind1="1" ind2=" ">
+                     <marc:subfield code="a">Sette Comuni.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="245" ind1="1" ind2="0">
+                     <marc:subfield code="a">Liber privilegiorum septem comunium montanearum Agri
+                        Vicentini</marc:subfield>
+                     <marc:subfield code="h">[manuscript].</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="260" ind1=" " ind2=" ">
+                     <marc:subfield code="a">[Italy],</marc:subfield>
+                     <marc:subfield code="c">1568-1657.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="300" ind1=" " ind2=" ">
+                     <marc:subfield code="a">119 leaves :</marc:subfield>
+                     <marc:subfield code="b">paper ;</marc:subfield>
+                     <marc:subfield code="c">205 x 153 (159 x 112) mm. bound to 211 x 154 mm.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Ms. codex.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="545" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Sette Comuni was a collective name for the seven villages of Asiago, Enego,
+                        Foza, Gallio, Lusiana, Roano and Rotzo, in the Province of Vicenza on the plateau of Asiago
+                        (Altipiano d'Asiago) in Italy. Originally settled by Germans, they were ruled by Venice and
+                        granted privileges.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="520" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Statutes and privileges of the Sette Comuni. Includes statutes from 1339 to
+                        1568, with some additions to 1657.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="546" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Latin.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Title from title page (f. 1r).</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Foliation: Paper, i (contemporary paper) + 119; 1-94, [95-119];
+                        contemporary foliation in ink, modern foliation in pencil, upper right recto.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Script: Written in various cursive scripts by multiple hands, including
+                        that of Bartolomeus de Velo Luxiane (f. 1r).</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Binding: Contemporary calf. First quire is pulling loose. The paper shows
+                        some worm damage and a good deal of water and mildew damage. The edges of many leaves are
+                        splitting and crumbling.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Origin: Written in Italy, 1568 (f. 1r)-1657 (f. 91r).</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Complete photocopy shelved with the manuscript.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="561" ind1="1" ind2=" ">
+                     <marc:subfield code="a">Accessioned, 1962.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="510" ind1="4" ind2=" ">
+                     <marc:subfield code="a">Described in Zacour, Norman P. and Hirsch, Rudolf. Catalogue of Manuscripts
+                        in the Libraries of the University of Pennsylvania to 1800 (Philadelphia: University of
+                        Pennsylvania Press, 1965),</marc:subfield>
+                     <marc:subfield code="c">p. 218 (Ms. Lea 365).</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="510" ind1="4" ind2=" ">
+                     <marc:subfield code="a">Fontana, L. Bibliografia degli statuti dei comuni dell'Italia superiore
+                        (Turin, 1907),</marc:subfield>
+                     <marc:subfield code="c">III, pp. 112-113.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="524" ind1=" " ind2=" ">
+                     <marc:subfield code="a">UPenn Ms. Codex 52</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="651" ind1=" " ind2="0">
+                     <marc:subfield code="a">Sette Comuni (Italy)</marc:subfield>
+                     <marc:subfield code="x">History.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="651" ind1=" " ind2="0">
+                     <marc:subfield code="a">Sette Comuni (Italy)</marc:subfield>
+                     <marc:subfield code="x">Privileges and immunities.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="651" ind1=" " ind2="0">
+                     <marc:subfield code="a">Sette Comuni (Italy)</marc:subfield>
+                     <marc:subfield code="x">Statutes.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="651" ind1=" " ind2="0">
+                     <marc:subfield code="a">Venice (Italy)</marc:subfield>
+                     <marc:subfield code="x">History</marc:subfield>
+                     <marc:subfield code="y">To 1797.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="7">
+                     <marc:subfield code="a">Codices.</marc:subfield>
+                     <marc:subfield code="2">aat</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="7">
+                     <marc:subfield code="a">Statutes.</marc:subfield>
+                     <marc:subfield code="2">aat</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="0">
+                     <marc:subfield code="a">Manuscripts, Latin</marc:subfield>
+                     <marc:subfield code="y">16th century.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="0">
+                     <marc:subfield code="a">Manuscripts, Latin</marc:subfield>
+                     <marc:subfield code="y">17th century.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="0">
+                     <marc:subfield code="a">Manuscripts, Renaissance.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="0">
+                     <marc:subfield code="a">Manuscripts, European.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="700" ind1="0" ind2=" ">
+                     <marc:subfield code="a">Bartolomeus,</marc:subfield>
+                     <marc:subfield code="c">de Velo Luxiane,</marc:subfield>
+                     <marc:subfield code="e">scribe.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="852" ind1=" " ind2=" ">
+                     <marc:subfield code="b">Rare Book &amp; Manuscript Library</marc:subfield>
+                     <marc:subfield code="a">University of Pennsylvania</marc:subfield>
+                     <marc:subfield code="e">3420 Walnut Street, Philadelphia, Pennsylvania 19104-6206.</marc:subfield>
+                     <marc:subfield code="j">Ms. Codex 52</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="856" ind1="4" ind2="1">
+                     <marc:subfield code="z">Facsimile</marc:subfield>
+                     <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/medren/1473932</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="999" ind1=" " ind2=" ">
+                     <marc:subfield code="a">DLA</marc:subfield>
+                     <marc:subfield code="b">20110418</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="994" ind1=" " ind2=" ">
+                     <marc:subfield code="a">C0</marc:subfield>
+                     <marc:subfield code="b">PAULM</marc:subfield>
+                  </marc:datafield>
+               </marc:record>
+            </xml>
+            <xml name="pages">
+               <page number="1" seq="1" id="medren_1473932_519944" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_front0001" image="mscodex52_wk1_front0001" visiblepage="Front cover"/>
+               <page number="2" seq="2" id="medren_1473932_519945" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_front0002" image="mscodex52_wk1_front0002"
+                  visiblepage="Inside front cover"/>
+               <page number="3" seq="3" id="medren_1473932_519946" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_front0003" image="mscodex52_wk1_front0003" visiblepage="[i recto]"/>
+               <page number="4" seq="4" id="medren_1473932_519947" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_front0004" image="mscodex52_wk1_front0004" visiblepage="[i verso]"/>
+               <page number="5" seq="5" id="medren_1473932_519948" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0001" image="mscodex52_wk1_body0001" visiblepage="1r"/>
+               <page number="6" seq="6" id="medren_1473932_519949" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0002" image="mscodex52_wk1_body0002" visiblepage="1v"/>
+               <page number="7" seq="7" id="medren_1473932_519950" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0003" image="mscodex52_wk1_body0003" visiblepage="2r">
+                  <tocentry name="toc">Table of contents, f. 2r</tocentry>
+               </page>
+               <page number="8" seq="8" id="medren_1473932_519951" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0004" image="mscodex52_wk1_body0004" visiblepage="2v"/>
+               <page number="9" seq="9" id="medren_1473932_519952" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0005" image="mscodex52_wk1_body0005" visiblepage="3r"/>
+               <page number="10" seq="10" id="medren_1473932_519953" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0006" image="mscodex52_wk1_body0006" visiblepage="3v"/>
+               <page number="11" seq="11" id="medren_1473932_519954" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0007" image="mscodex52_wk1_body0007" visiblepage="4r"/>
+               <page number="12" seq="12" id="medren_1473932_519955" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0008" image="mscodex52_wk1_body0008" visiblepage="4v"/>
+               <page number="13" seq="13" id="medren_1473932_519956" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0009" image="mscodex52_wk1_body0009" visiblepage="5r">
+                  <tocentry name="ill">Manicule, f. 5r</tocentry>
+               </page>
+               <page number="14" seq="14" id="medren_1473932_519957" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0010" image="mscodex52_wk1_body0010" visiblepage="5v"/>
+               <page number="15" seq="15" id="medren_1473932_519958" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0011" image="mscodex52_wk1_body0011" visiblepage="6r"/>
+               <page number="16" seq="16" id="medren_1473932_519959" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0012" image="mscodex52_wk1_body0012" visiblepage="6v"/>
+               <page number="17" seq="17" id="medren_1473932_519960" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0013" image="mscodex52_wk1_body0013" visiblepage="7r"/>
+               <page number="18" seq="18" id="medren_1473932_519961" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0014" image="mscodex52_wk1_body0014" visiblepage="7v"/>
+               <page number="19" seq="19" id="medren_1473932_519962" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0015" image="mscodex52_wk1_body0015" visiblepage="8r"/>
+               <page number="20" seq="20" id="medren_1473932_519963" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0016" image="mscodex52_wk1_body0016" visiblepage="8v"/>
+               <page number="21" seq="21" id="medren_1473932_519964" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0017" image="mscodex52_wk1_body0017" visiblepage="9r">
+                  <tocentry name="ill">Manicule, f. 9r</tocentry>
+               </page>
+               <page number="22" seq="22" id="medren_1473932_519965" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0018" image="mscodex52_wk1_body0018" visiblepage="9v"/>
+               <page number="23" seq="23" id="medren_1473932_519966" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0019" image="mscodex52_wk1_body0019" visiblepage="10r"/>
+               <page number="24" seq="24" id="medren_1473932_519967" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0020" image="mscodex52_wk1_body0020" visiblepage="10v"/>
+               <page number="25" seq="25" id="medren_1473932_519968" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0021" image="mscodex52_wk1_body0021" visiblepage="11r"/>
+               <page number="26" seq="26" id="medren_1473932_519969" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0022" image="mscodex52_wk1_body0022" visiblepage="11v"/>
+               <page number="27" seq="27" id="medren_1473932_519970" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0023" image="mscodex52_wk1_body0023" visiblepage="12r"/>
+               <page number="28" seq="28" id="medren_1473932_519971" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0024" image="mscodex52_wk1_body0024" visiblepage="12v"/>
+               <page number="29" seq="29" id="medren_1473932_519972" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0025" image="mscodex52_wk1_body0025" visiblepage="13r"/>
+               <page number="30" seq="30" id="medren_1473932_519973" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0026" image="mscodex52_wk1_body0026" visiblepage="13v"/>
+               <page number="31" seq="31" id="medren_1473932_519974" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0027" image="mscodex52_wk1_body0027" visiblepage="14r"/>
+               <page number="32" seq="32" id="medren_1473932_519975" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0028" image="mscodex52_wk1_body0028" visiblepage="14v"/>
+               <page number="33" seq="33" id="medren_1473932_519976" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0029" image="mscodex52_wk1_body0029" visiblepage="15r"/>
+               <page number="34" seq="34" id="medren_1473932_519977" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0030" image="mscodex52_wk1_body0030" visiblepage="15v"/>
+               <page number="35" seq="35" id="medren_1473932_519978" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0031" image="mscodex52_wk1_body0031" visiblepage="16r"/>
+               <page number="36" seq="36" id="medren_1473932_519979" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0032" image="mscodex52_wk1_body0032" visiblepage="16v"/>
+               <page number="37" seq="37" id="medren_1473932_519980" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0033" image="mscodex52_wk1_body0033" visiblepage="17r"/>
+               <page number="38" seq="38" id="medren_1473932_519981" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0034" image="mscodex52_wk1_body0034" visiblepage="17v"/>
+               <page number="39" seq="39" id="medren_1473932_519982" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0035" image="mscodex52_wk1_body0035" visiblepage="18r"/>
+               <page number="40" seq="40" id="medren_1473932_519983" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0036" image="mscodex52_wk1_body0036" visiblepage="18v"/>
+               <page number="41" seq="41" id="medren_1473932_519984" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0037" image="mscodex52_wk1_body0037" visiblepage="19r"/>
+               <page number="42" seq="42" id="medren_1473932_519985" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0038" image="mscodex52_wk1_body0038" visiblepage="19v"/>
+               <page number="43" seq="43" id="medren_1473932_519986" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0039" image="mscodex52_wk1_body0039" visiblepage="20r"/>
+               <page number="44" seq="44" id="medren_1473932_519987" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0040" image="mscodex52_wk1_body0040" visiblepage="20v"/>
+               <page number="45" seq="45" id="medren_1473932_519988" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0041" image="mscodex52_wk1_body0041" visiblepage="21r"/>
+               <page number="46" seq="46" id="medren_1473932_519989" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0042" image="mscodex52_wk1_body0042" visiblepage="21v"/>
+               <page number="47" seq="47" id="medren_1473932_519990" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0043" image="mscodex52_wk1_body0043" visiblepage="22r"/>
+               <page number="48" seq="48" id="medren_1473932_519991" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0044" image="mscodex52_wk1_body0044" visiblepage="22v"/>
+               <page number="49" seq="49" id="medren_1473932_519992" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0045" image="mscodex52_wk1_body0045" visiblepage="23r"/>
+               <page number="50" seq="50" id="medren_1473932_519993" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0046" image="mscodex52_wk1_body0046" visiblepage="23v"/>
+               <page number="51" seq="51" id="medren_1473932_519994" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0047" image="mscodex52_wk1_body0047" visiblepage="24r"/>
+               <page number="52" seq="52" id="medren_1473932_519995" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0048" image="mscodex52_wk1_body0048" visiblepage="24v"/>
+               <page number="53" seq="53" id="medren_1473932_519996" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0049" image="mscodex52_wk1_body0049" visiblepage="25r"/>
+               <page number="54" seq="54" id="medren_1473932_519997" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0050" image="mscodex52_wk1_body0050" visiblepage="25v"/>
+               <page number="55" seq="55" id="medren_1473932_519998" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0051" image="mscodex52_wk1_body0051" visiblepage="26r"/>
+               <page number="56" seq="56" id="medren_1473932_519999" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0052" image="mscodex52_wk1_body0052" visiblepage="26v"/>
+               <page number="57" seq="57" id="medren_1473932_520000" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0053" image="mscodex52_wk1_body0053" visiblepage="27r"/>
+               <page number="58" seq="58" id="medren_1473932_520001" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0054" image="mscodex52_wk1_body0054" visiblepage="27v"/>
+               <page number="59" seq="59" id="medren_1473932_520002" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0055" image="mscodex52_wk1_body0055" visiblepage="28r"/>
+               <page number="60" seq="60" id="medren_1473932_520003" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0056" image="mscodex52_wk1_body0056" visiblepage="28v"/>
+               <page number="61" seq="61" id="medren_1473932_520004" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0057" image="mscodex52_wk1_body0057" visiblepage="29r"/>
+               <page number="62" seq="62" id="medren_1473932_520005" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0058" image="mscodex52_wk1_body0058" visiblepage="29v"/>
+               <page number="63" seq="63" id="medren_1473932_520006" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0059" image="mscodex52_wk1_body0059" visiblepage="30r"/>
+               <page number="64" seq="64" id="medren_1473932_520007" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0060" image="mscodex52_wk1_body0060" visiblepage="30v"/>
+               <page number="65" seq="65" id="medren_1473932_520008" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0061" image="mscodex52_wk1_body0061" visiblepage="31r"/>
+               <page number="66" seq="66" id="medren_1473932_520009" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0062" image="mscodex52_wk1_body0062" visiblepage="31v"/>
+               <page number="67" seq="67" id="medren_1473932_520010" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0063" image="mscodex52_wk1_body0063" visiblepage="32r">
+                  <tocentry name="ill">Manicule, f. 32r</tocentry>
+               </page>
+               <page number="68" seq="68" id="medren_1473932_520011" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0064" image="mscodex52_wk1_body0064" visiblepage="32v">
+                  <tocentry name="ill">Manicule, f. 32v</tocentry>
+               </page>
+               <page number="69" seq="69" id="medren_1473932_520012" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0065" image="mscodex52_wk1_body0065" visiblepage="33r">
+                  <tocentry name="ill">Manicule, f. 33r</tocentry>
+               </page>
+               <page number="70" seq="70" id="medren_1473932_520013" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0066" image="mscodex52_wk1_body0066" visiblepage="33v"/>
+               <page number="71" seq="71" id="medren_1473932_520014" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0067" image="mscodex52_wk1_body0067" visiblepage="34r"/>
+               <page number="72" seq="72" id="medren_1473932_520015" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0068" image="mscodex52_wk1_body0068" visiblepage="34v"/>
+               <page number="73" seq="73" id="medren_1473932_520016" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0069" image="mscodex52_wk1_body0069" visiblepage="35r"/>
+               <page number="74" seq="74" id="medren_1473932_520017" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0070" image="mscodex52_wk1_body0070" visiblepage="35v"/>
+               <page number="75" seq="75" id="medren_1473932_520018" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0071" image="mscodex52_wk1_body0071" visiblepage="36r"/>
+               <page number="76" seq="76" id="medren_1473932_520019" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0072" image="mscodex52_wk1_body0072" visiblepage="36v"/>
+               <page number="77" seq="77" id="medren_1473932_520020" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0073" image="mscodex52_wk1_body0073" visiblepage="37r"/>
+               <page number="78" seq="78" id="medren_1473932_520021" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0074" image="mscodex52_wk1_body0074" visiblepage="37v"/>
+               <page number="79" seq="79" id="medren_1473932_520022" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0075" image="mscodex52_wk1_body0075" visiblepage="38r"/>
+               <page number="80" seq="80" id="medren_1473932_520023" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0076" image="mscodex52_wk1_body0076" visiblepage="38v"/>
+               <page number="81" seq="81" id="medren_1473932_520024" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0077" image="mscodex52_wk1_body0077" visiblepage="39r"/>
+               <page number="82" seq="82" id="medren_1473932_520025" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0078" image="mscodex52_wk1_body0078" visiblepage="39v"/>
+               <page number="83" seq="83" id="medren_1473932_520026" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0079" image="mscodex52_wk1_body0079" visiblepage="40r"/>
+               <page number="84" seq="84" id="medren_1473932_520027" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0080" image="mscodex52_wk1_body0080" visiblepage="40v"/>
+               <page number="85" seq="85" id="medren_1473932_520028" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0081" image="mscodex52_wk1_body0081" visiblepage="41r"/>
+               <page number="86" seq="86" id="medren_1473932_520029" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0082" image="mscodex52_wk1_body0082" visiblepage="41v"/>
+               <page number="87" seq="87" id="medren_1473932_520030" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0083" image="mscodex52_wk1_body0083" visiblepage="42r"/>
+               <page number="88" seq="88" id="medren_1473932_520031" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0084" image="mscodex52_wk1_body0084" visiblepage="42v"/>
+               <page number="89" seq="89" id="medren_1473932_520032" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0085" image="mscodex52_wk1_body0085" visiblepage="43r"/>
+               <page number="90" seq="90" id="medren_1473932_520033" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0086" image="mscodex52_wk1_body0086" visiblepage="43v"/>
+               <page number="91" seq="91" id="medren_1473932_520034" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0087" image="mscodex52_wk1_body0087" visiblepage="44r"/>
+               <page number="92" seq="92" id="medren_1473932_520035" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0088" image="mscodex52_wk1_body0088" visiblepage="44v"/>
+               <page number="93" seq="93" id="medren_1473932_520036" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0089" image="mscodex52_wk1_body0089" visiblepage="45r"/>
+               <page number="94" seq="94" id="medren_1473932_520037" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0090" image="mscodex52_wk1_body0090" visiblepage="45v"/>
+               <page number="95" seq="95" id="medren_1473932_520038" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0091" image="mscodex52_wk1_body0091" visiblepage="46r"/>
+               <page number="96" seq="96" id="medren_1473932_520039" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0092" image="mscodex52_wk1_body0092" visiblepage="46v">
+                  <tocentry name="ill">Manicule, f. 46v</tocentry>
+               </page>
+               <page number="97" seq="97" id="medren_1473932_520040" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0093" image="mscodex52_wk1_body0093" visiblepage="47r"/>
+               <page number="98" seq="98" id="medren_1473932_520041" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0094" image="mscodex52_wk1_body0094" visiblepage="47v"/>
+               <page number="99" seq="99" id="medren_1473932_520042" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0095" image="mscodex52_wk1_body0095" visiblepage="48r"/>
+               <page number="100" seq="100" id="medren_1473932_520043" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0096" image="mscodex52_wk1_body0096" visiblepage="48v">
+                  <tocentry name="ill">Manicule, f. 48v</tocentry>
+               </page>
+               <page number="101" seq="101" id="medren_1473932_520044" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0097" image="mscodex52_wk1_body0097" visiblepage="49r"/>
+               <page number="102" seq="102" id="medren_1473932_520045" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0098" image="mscodex52_wk1_body0098" visiblepage="49v"/>
+               <page number="103" seq="103" id="medren_1473932_520046" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0099" image="mscodex52_wk1_body0099" visiblepage="50r"/>
+               <page number="104" seq="104" id="medren_1473932_520047" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0100" image="mscodex52_wk1_body0100" visiblepage="50v"/>
+               <page number="105" seq="105" id="medren_1473932_520048" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0101" image="mscodex52_wk1_body0101" visiblepage="51r"/>
+               <page number="106" seq="106" id="medren_1473932_520049" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0102" image="mscodex52_wk1_body0102" visiblepage="51v"/>
+               <page number="107" seq="107" id="medren_1473932_520050" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0103" image="mscodex52_wk1_body0103" visiblepage="52r"/>
+               <page number="108" seq="108" id="medren_1473932_520051" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0104" image="mscodex52_wk1_body0104" visiblepage="52v"/>
+               <page number="109" seq="109" id="medren_1473932_520052" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0105" image="mscodex52_wk1_body0105" visiblepage="53r"/>
+               <page number="110" seq="110" id="medren_1473932_520053" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0106" image="mscodex52_wk1_body0106" visiblepage="53v">
+                  <tocentry name="ill">Manicule, f. 53v</tocentry>
+               </page>
+               <page number="111" seq="111" id="medren_1473932_520054" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0107" image="mscodex52_wk1_body0107" visiblepage="54r"/>
+               <page number="112" seq="112" id="medren_1473932_520055" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0108" image="mscodex52_wk1_body0108" visiblepage="54v"/>
+               <page number="113" seq="113" id="medren_1473932_520056" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0109" image="mscodex52_wk1_body0109" visiblepage="55r"/>
+               <page number="114" seq="114" id="medren_1473932_520057" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0110" image="mscodex52_wk1_body0110" visiblepage="55v"/>
+               <page number="115" seq="115" id="medren_1473932_520058" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0111" image="mscodex52_wk1_body0111" visiblepage="56r"/>
+               <page number="116" seq="116" id="medren_1473932_520059" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0112" image="mscodex52_wk1_body0112" visiblepage="56v"/>
+               <page number="117" seq="117" id="medren_1473932_520060" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0113" image="mscodex52_wk1_body0113" visiblepage="57r"/>
+               <page number="118" seq="118" id="medren_1473932_520061" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0114" image="mscodex52_wk1_body0114" visiblepage="57v"/>
+               <page number="119" seq="119" id="medren_1473932_520062" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0115" image="mscodex52_wk1_body0115" visiblepage="58r">
+                  <tocentry name="ill">Manicule, f. 58r</tocentry>
+               </page>
+               <page number="120" seq="120" id="medren_1473932_520063" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0116" image="mscodex52_wk1_body0116" visiblepage="58v"/>
+               <page number="121" seq="121" id="medren_1473932_520064" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0117" image="mscodex52_wk1_body0117" visiblepage="59r"/>
+               <page number="122" seq="122" id="medren_1473932_520065" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0118" image="mscodex52_wk1_body0118" visiblepage="59v"/>
+               <page number="123" seq="123" id="medren_1473932_520066" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0119" image="mscodex52_wk1_body0119" visiblepage="60r"/>
+               <page number="124" seq="124" id="medren_1473932_520067" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0120" image="mscodex52_wk1_body0120" visiblepage="60v"/>
+               <page number="125" seq="125" id="medren_1473932_520068" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0121" image="mscodex52_wk1_body0121" visiblepage="61r"/>
+               <page number="126" seq="126" id="medren_1473932_520069" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0122" image="mscodex52_wk1_body0122" visiblepage="61v"/>
+               <page number="127" seq="127" id="medren_1473932_520070" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0123" image="mscodex52_wk1_body0123" visiblepage="62r">
+                  <tocentry name="ill">Manicule, f. 62r</tocentry>
+               </page>
+               <page number="128" seq="128" id="medren_1473932_520071" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0124" image="mscodex52_wk1_body0124" visiblepage="62v"/>
+               <page number="129" seq="129" id="medren_1473932_520072" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0125" image="mscodex52_wk1_body0125" visiblepage="63r"/>
+               <page number="130" seq="130" id="medren_1473932_520073" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0126" image="mscodex52_wk1_body0126" visiblepage="63v"/>
+               <page number="131" seq="131" id="medren_1473932_520074" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0127" image="mscodex52_wk1_body0127" visiblepage="64r"/>
+               <page number="132" seq="132" id="medren_1473932_520075" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0128" image="mscodex52_wk1_body0128" visiblepage="64v"/>
+               <page number="133" seq="133" id="medren_1473932_520076" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0129" image="mscodex52_wk1_body0129" visiblepage="65r"/>
+               <page number="134" seq="134" id="medren_1473932_520077" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0130" image="mscodex52_wk1_body0130" visiblepage="65v"/>
+               <page number="135" seq="135" id="medren_1473932_520078" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0131" image="mscodex52_wk1_body0131" visiblepage="66r"/>
+               <page number="136" seq="136" id="medren_1473932_520079" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0132" image="mscodex52_wk1_body0132" visiblepage="66v"/>
+               <page number="137" seq="137" id="medren_1473932_520080" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0133" image="mscodex52_wk1_body0133" visiblepage="67r"/>
+               <page number="138" seq="138" id="medren_1473932_520081" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0134" image="mscodex52_wk1_body0134" visiblepage="67v"/>
+               <page number="139" seq="139" id="medren_1473932_520082" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0135" image="mscodex52_wk1_body0135" visiblepage="68r"/>
+               <page number="140" seq="140" id="medren_1473932_520083" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0136" image="mscodex52_wk1_body0136" visiblepage="68v"/>
+               <page number="141" seq="141" id="medren_1473932_520084" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0137" image="mscodex52_wk1_body0137" visiblepage="69r"/>
+               <page number="142" seq="142" id="medren_1473932_520085" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0138" image="mscodex52_wk1_body0138" visiblepage="69v"/>
+               <page number="143" seq="143" id="medren_1473932_520086" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0139" image="mscodex52_wk1_body0139" visiblepage="70r"/>
+               <page number="144" seq="144" id="medren_1473932_520087" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0140" image="mscodex52_wk1_body0140" visiblepage="70v"/>
+               <page number="145" seq="145" id="medren_1473932_520088" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0141" image="mscodex52_wk1_body0141" visiblepage="71r"/>
+               <page number="146" seq="146" id="medren_1473932_520089" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0142" image="mscodex52_wk1_body0142" visiblepage="71v">
+                  <tocentry name="ill">Manicule, f. 71v</tocentry>
+               </page>
+               <page number="147" seq="147" id="medren_1473932_520090" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0143" image="mscodex52_wk1_body0143" visiblepage="72r"/>
+               <page number="148" seq="148" id="medren_1473932_520091" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0144" image="mscodex52_wk1_body0144" visiblepage="72v"/>
+               <page number="149" seq="149" id="medren_1473932_520092" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0145" image="mscodex52_wk1_body0145" visiblepage="73r"/>
+               <page number="150" seq="150" id="medren_1473932_520093" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0146" image="mscodex52_wk1_body0146" visiblepage="73v"/>
+               <page number="151" seq="151" id="medren_1473932_520094" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0147" image="mscodex52_wk1_body0147" visiblepage="74r"/>
+               <page number="152" seq="152" id="medren_1473932_520095" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0148" image="mscodex52_wk1_body0148" visiblepage="74v"/>
+               <page number="153" seq="153" id="medren_1473932_520096" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0149" image="mscodex52_wk1_body0149" visiblepage="75r"/>
+               <page number="154" seq="154" id="medren_1473932_520097" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0150" image="mscodex52_wk1_body0150" visiblepage="75v"/>
+               <page number="155" seq="155" id="medren_1473932_520098" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0151" image="mscodex52_wk1_body0151" visiblepage="76r"/>
+               <page number="156" seq="156" id="medren_1473932_520099" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0152" image="mscodex52_wk1_body0152" visiblepage="76v"/>
+               <page number="157" seq="157" id="medren_1473932_520100" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0153" image="mscodex52_wk1_body0153" visiblepage="77r"/>
+               <page number="158" seq="158" id="medren_1473932_520101" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0154" image="mscodex52_wk1_body0154" visiblepage="77v"/>
+               <page number="159" seq="159" id="medren_1473932_520102" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0155" image="mscodex52_wk1_body0155" visiblepage="78r"/>
+               <page number="160" seq="160" id="medren_1473932_520103" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0156" image="mscodex52_wk1_body0156" visiblepage="78v"/>
+               <page number="161" seq="161" id="medren_1473932_520104" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0157" image="mscodex52_wk1_body0157" visiblepage="79r"/>
+               <page number="162" seq="162" id="medren_1473932_520105" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0158" image="mscodex52_wk1_body0158" visiblepage="79v"/>
+               <page number="163" seq="163" id="medren_1473932_520106" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0159" image="mscodex52_wk1_body0159" visiblepage="80r"/>
+               <page number="164" seq="164" id="medren_1473932_520107" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0160" image="mscodex52_wk1_body0160" visiblepage="80v"/>
+               <page number="165" seq="165" id="medren_1473932_520108" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0161" image="mscodex52_wk1_body0161" visiblepage="81r"/>
+               <page number="166" seq="166" id="medren_1473932_520109" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0162" image="mscodex52_wk1_body0162" visiblepage="81v"/>
+               <page number="167" seq="167" id="medren_1473932_520110" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0163" image="mscodex52_wk1_body0163" visiblepage="82r"/>
+               <page number="168" seq="168" id="medren_1473932_520111" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0164" image="mscodex52_wk1_body0164" visiblepage="82v"/>
+               <page number="169" seq="169" id="medren_1473932_520112" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0165" image="mscodex52_wk1_body0165" visiblepage="83r"/>
+               <page number="170" seq="170" id="medren_1473932_520113" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0166" image="mscodex52_wk1_body0166" visiblepage="83v"/>
+               <page number="171" seq="171" id="medren_1473932_520114" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0167" image="mscodex52_wk1_body0167" visiblepage="84r"/>
+               <page number="172" seq="172" id="medren_1473932_520115" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0168" image="mscodex52_wk1_body0168" visiblepage="84v"/>
+               <page number="173" seq="173" id="medren_1473932_520116" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0169" image="mscodex52_wk1_body0169" visiblepage="85r"/>
+               <page number="174" seq="174" id="medren_1473932_520117" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0170" image="mscodex52_wk1_body0170" visiblepage="85v"/>
+               <page number="175" seq="175" id="medren_1473932_520118" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0171" image="mscodex52_wk1_body0171" visiblepage="86r"/>
+               <page number="176" seq="176" id="medren_1473932_520119" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0172" image="mscodex52_wk1_body0172" visiblepage="86v"/>
+               <page number="177" seq="177" id="medren_1473932_520120" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0173" image="mscodex52_wk1_body0173" visiblepage="87r"/>
+               <page number="178" seq="178" id="medren_1473932_520121" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0174" image="mscodex52_wk1_body0174" visiblepage="87v"/>
+               <page number="179" seq="179" id="medren_1473932_520122" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0175" image="mscodex52_wk1_body0175" visiblepage="88r"/>
+               <page number="180" seq="180" id="medren_1473932_520123" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0176" image="mscodex52_wk1_body0176" visiblepage="88v"/>
+               <page number="181" seq="181" id="medren_1473932_520124" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0177" image="mscodex52_wk1_body0177" visiblepage="89r"/>
+               <page number="182" seq="182" id="medren_1473932_520125" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0178" image="mscodex52_wk1_body0178" visiblepage="89v"/>
+               <page number="183" seq="183" id="medren_1473932_520126" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0179" image="mscodex52_wk1_body0179" visiblepage="90r"/>
+               <page number="184" seq="184" id="medren_1473932_520127" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0180" image="mscodex52_wk1_body0180" visiblepage="90v"/>
+               <page number="185" seq="185" id="medren_1473932_520128" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0181" image="mscodex52_wk1_body0181" visiblepage="91r"/>
+               <page number="186" seq="186" id="medren_1473932_520129" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0182" image="mscodex52_wk1_body0182" visiblepage="91v"/>
+               <page number="187" seq="187" id="medren_1473932_520130" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0183" image="mscodex52_wk1_body0183" visiblepage="92r"/>
+               <page number="188" seq="188" id="medren_1473932_520131" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0184" image="mscodex52_wk1_body0184" visiblepage="92v"/>
+               <page number="189" seq="189" id="medren_1473932_520132" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0185" image="mscodex52_wk1_body0185" visiblepage="93r"/>
+               <page number="190" seq="190" id="medren_1473932_520133" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0186" image="mscodex52_wk1_body0186" visiblepage="93v">
+                  <tocentry name="ill">Drawing, Faces, f. 93v</tocentry>
+               </page>
+               <page number="191" seq="191" id="medren_1473932_520134" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0187" image="mscodex52_wk1_body0187" visiblepage="94r"/>
+               <page number="192" seq="192" id="medren_1473932_520135" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0188" image="mscodex52_wk1_body0188" visiblepage="94v"/>
+               <page number="193" seq="193" id="medren_1473932_520136" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0189" image="mscodex52_wk1_body0189"
+                  visiblepage="95r; 95v-117r blank, not shot"/>
+               <page number="194" seq="194" id="medren_1473932_520181" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0234" image="mscodex52_wk1_body0234" visiblepage="117v"/>
+               <page number="195" seq="195" id="medren_1473932_520182" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0235" image="mscodex52_wk1_body0235" visiblepage="118r"/>
+               <page number="196" seq="196" id="medren_1473932_520183" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0236" image="mscodex52_wk1_body0236" visiblepage="118v"/>
+               <page number="197" seq="197" id="medren_1473932_520184" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_body0237" image="mscodex52_wk1_body0237" visiblepage="119r"/>
+               <page number="198" seq="198" id="medren_1473932_520185" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_body0238" image="mscodex52_wk1_body0238" visiblepage="119v"/>
+               <page number="199" seq="199" id="medren_1473932_520186" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_back0001" image="mscodex52_wk1_back0001"
+                  visiblepage="Inside back cover"/>
+               <page number="200" seq="200" id="medren_1473932_520187" image.defaultscale="3" side="verso"
+                  image.id="medren_mscodex52_wk1_back0002" image="mscodex52_wk1_back0002" visiblepage="Back cover"/>
+               <page number="201" seq="201" id="medren_1473932_520188" image.defaultscale="3" side="recto"
+                  image.id="medren_mscodex52_wk1_back0003" image="mscodex52_wk1_back0003" visiblepage="Spine"/>
+            </xml>
+            <str xmlns:my="http://nowhere" name="link"
+               >pageturn.html?id=MEDREN_1473932&amp;rotation=0&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;id=MEDREN_1473932</str>
+            <str xmlns:my="http://nowhere" name="link_no_params">pageturn.html?id=MEDREN_1473932</str>
+            <str xmlns:my="http://nowhere" name="handle">http://hdl.library.upenn.edu/1017/d/medren/1473932</str>
+         </doc>
+      </result>
+      <lst name="facet_counts">
+         <lst xmlns:my="http://nowhere" name="current_facets">
+            <str name="related_names_facet" value="Bartolomeus, de Velo Luxiane, scribe"
+               >pageturn.html?id=MEDREN_1473932&amp;</str>
+         </lst>
+         <lst name="facet_queries"/>
+         <lst xmlns:my="http://nowhere" name="facet_fields">
+            <lst name="collection_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=collection_facet&amp;</str>
+               </lst>
+               <str name="Medieval &amp; Renaissance Manuscripts" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20collection_facet%3A%22Medieval%20%26%20Renaissance%20Manuscripts%22</str>
+               <str name="Penn Collection" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20collection_facet%3A%22Penn%20Collection%22</str>
+            </lst>
+            <lst name="has_999_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=has_999_facet&amp;</str>
+               </lst>
+            </lst>
+            <lst name="facsimile_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=facsimile_facet&amp;</str>
+               </lst>
+               <str name="Yes" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20facsimile_facet%3A%22Yes%22</str>
+            </lst>
+            <lst name="illuminated_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=illuminated_facet&amp;</str>
+               </lst>
+               <str name="No" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20illuminated_facet%3A%22No%22</str>
+            </lst>
+            <lst name="illustrated_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=illustrated_facet&amp;</str>
+               </lst>
+               <str name="No" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20illustrated_facet%3A%22No%22</str>
+            </lst>
+            <lst name="notated_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=notated_facet&amp;</str>
+               </lst>
+               <str name="No" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20notated_facet%3A%22No%22</str>
+            </lst>
+            <lst name="language_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=language_facet&amp;</str>
+               </lst>
+               <str name="Latin" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20language_facet%3A%22Latin%22</str>
+            </lst>
+            <lst name="century_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=century_facet&amp;</str>
+               </lst>
+               <str name="16th century" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20century_facet%3A%2216th%20century%22</str>
+               <str name="17th century" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20century_facet%3A%2217th%20century%22</str>
+            </lst>
+            <lst name="date_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=date_facet&amp;</str>
+               </lst>
+               <str name="1568" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20date_facet%3A%221568%22</str>
+            </lst>
+            <lst name="genre_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=genre_facet&amp;</str>
+               </lst>
+               <str name="Codices" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20genre_facet%3A%22Codices%22</str>
+               <str name="Manuscripts, European" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20genre_facet%3A%22Manuscripts%2C%20European%22</str>
+               <str name="Manuscripts, Latin - 16th century" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20genre_facet%3A%22Manuscripts%2C%20Latin%20-%2016th%20century%22</str>
+               <str name="Manuscripts, Latin - 17th century" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20genre_facet%3A%22Manuscripts%2C%20Latin%20-%2017th%20century%22</str>
+               <str name="Manuscripts, Renaissance" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20genre_facet%3A%22Manuscripts%2C%20Renaissance%22</str>
+            </lst>
+            <lst name="subject_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=subject_facet&amp;</str>
+               </lst>
+            </lst>
+            <lst name="geography_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=geography_facet&amp;</str>
+               </lst>
+               <str name="Sette Comuni (Italy)" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20geography_facet%3A%22Sette%20Comuni%20%28Italy%29%22</str>
+               <str name="Venice (Italy)" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20geography_facet%3A%22Venice%20%28Italy%29%22</str>
+            </lst>
+            <lst name="author_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=author_facet&amp;</str>
+               </lst>
+               <str name="Sette Comuni" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20author_facet%3A%22Sette%20Comuni%22</str>
+            </lst>
+            <lst name="related_names_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=related_names_facet&amp;</str>
+               </lst>
+               <str name="Bartolomeus, de Velo Luxiane, scribe" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22</str>
+            </lst>
+            <lst name="page_material_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22&amp;browse=page_material_facet&amp;</str>
+               </lst>
+               <str name="Paper" num="1"
+                  >pageturn.html?id=MEDREN_1473932&amp;fq=related_names_facet%3A%22Bartolomeus%2C%20de%20Velo%20Luxiane%2C%20scribe%22%20AND%20page_material_facet%3A%22Paper%22</str>
+            </lst>
+         </lst>
+         <lst name="facet_dates"/>
+         <lst name="facet_ranges"/>
+      </lst>
+   </response>
+   <params xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere">
+      <param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="size">3</param>
+      <param name="id">MEDREN_1473932</param>
+      <param name="fq">related_names_facet:"Bartolomeus, de Velo Luxiane, scribe"</param>
+      <context>
+         <param name="solr-url">http://localhost:8082/index/medren/select/</param>
+         <param name="collection">medren</param>
+         <param name="requested-page">pageturn</param>
+         <param name="host">dla.library.upenn.edu</param>
+         <param name="request"
+            >http://dla.library.upenn.edu/dla/medren/pageturn.xml?id=MEDREN_1473932&amp;fq=related_names_facet:"Bartolomeus,
+            de Velo Luxiane, scribe"</param>
+      </context>
+   </params>
+   <collection xmlns:my="http://nowhere" xmlns:dla-caption="http://dla.upennlib/caption">
+      <ref/>
+      <name>Penn in Hand: Selected Manuscripts</name>
+      <shortname>medren</shortname>
+      <record detail="brief" exclude-subfield="6">
+         <include field="100" label="Author" exclude-subfield="6"/>
+         <include field="110" label="Author" exclude-subfield="6"/>
+         <include field="130" label="Title" exclude-subfield="6"/>
+         <include field="245" label="Title" exclude-subfield="6"/>
+         <include field="240" label="Title" exclude-subfield="6"/>
+         <include field="260" label="Origin" exclude-subfield="6"/>
+         <include field="300" label="Physical description" exclude-subfield="6"/>
+         <include field="520" label="Summary" exclude-subfield="6"/>
+         <include field="500" label="Notes" delimiter=" - " exclude-subfield="6"/>
+         <include field="524" label="Cite as" exclude-subfield="6"/>
+         <include field="773" label="Contained in" exclude-subfield="6"/>
+         <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+         <include field="880" label="Vernacular script" exclude-subfield="6"/>
+      </record>
+      <record detail="detailed" exclude-subfield="6">
+         <include field="100" label="Author" exclude-subfield="6"/>
+         <include field="110" label="Author" exclude-subfield="6"/>
+         <include field="130" label="Title" exclude-subfield="6"/>
+         <include field="245" label="Title" exclude-subfield="6"/>
+         <include field="240" label="Title" exclude-subfield="6"/>
+         <include field="260" label="Origin" exclude-subfield="6"/>
+         <include field="300" label="Physical description" exclude-subfield="6"/>
+         <include field="546" label="Language(s)" exclude-subfield="6"/>
+         <include field="545" label="Biographical / Organizational History" exclude-subfield="6"/>
+         <include field="520" label="Summary" exclude-subfield="6"/>
+         <include field="505" label="Contents" exclude-subfield="6"/>
+         <include field="561" label="Provenance" exclude-subfield="6"/>
+         <include field="700" label="Related names" exclude-subfield="6"/>
+         <include field="710" label="Related names" exclude-subfield="6"/>
+         <include field="600" label="Subject" exclude-subfield="6"/>
+         <include field="610" label="Subject" delimiter=" - "/>
+         <include field="630" label="Subject" delimiter=" - "/>
+         <include field="650" label="Subject" delimiter=" - "/>
+         <include field="651" label="Subject" delimiter=" - "/>
+         <include field="655" label="Form / Genre" exclude-subfield="2" delimiter=" - "/>
+         <include field="500" label="Notes" exclude-subfield="6"/>
+         <include field="530" label="Other formats" exclude-subfield="6"/>
+         <include field="510" label="Indexed / Referenced in" exclude-subfield="6"/>
+         <include field="581" label="Publications of or about this material" exclude-subfield="6"/>
+         <include field="246" label="Other Titles" exclude-subfield="6"/>
+         <include field="730" label="Other Titles" exclude-subfield="6"/>
+         <include field="740" label="Other Titles" exclude-subfield="6"/>
+         <include field="524" label="Cite as" exclude-subfield="6"/>
+         <include field="773" label="Contained in" exclude-subfield="6"/>
+         <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+         <include field="880" label="Vernacular script" exclude-subfield="6"/>
+      </record>
+      <view>html</view>
+      <view>html</view>
+      <rows>25,50,100</rows>
+      <fl>*</fl>
+      <sort>score desc, date_sort asc</sort>
+      <style>rbm</style>
+      <advancedsearch.field type="number">century_search</advancedsearch.field>
+      <advancedsearch.field>language_search</advancedsearch.field>
+      <advancedsearch.field>place_search</advancedsearch.field>
+      <advancedsearch.field>subject_search</advancedsearch.field>
+      <advancedsearch.field>descriptive_notes_search</advancedsearch.field>
+      <advancedsearch.field>author_search</advancedsearch.field>
+      <advancedsearch.field display="Other Contributors/Owners">other_contributors_search</advancedsearch.field>
+      <advancedsearch.textcount>7</advancedsearch.textcount>
+      <advancedsearch.numbercount>1</advancedsearch.numbercount>
+      <advancedsearch.texthelp>(For example: <i>france</i> ; <i>german*</i> ; <i>german?</i> ; <i>france germany
+            italy</i>. See the <a href="ancillary.html?id=collections/rbm/medren/advancedsearch">Advanced Search
+            Help</a> for more details)</advancedsearch.texthelp>
+      <facet>true</facet>
+      <facet.mincount>1</facet.mincount>
+      <facet.limit>5</facet.limit>
+      <facet.field>page_material_facet</facet.field>
+      <facet.field>related_names_facet</facet.field>
+      <facet.field>author_facet</facet.field>
+      <facet.field>geography_facet</facet.field>
+      <facet.field>subject_facet</facet.field>
+      <facet.field>genre_facet</facet.field>
+      <facet.field>date_facet</facet.field>
+      <facet.field>century_facet</facet.field>
+      <facet.field>language_facet</facet.field>
+      <facet.field>notated_facet</facet.field>
+      <facet.field>illustrated_facet</facet.field>
+      <facet.field>illuminated_facet</facet.field>
+      <facet.field>facsimile_facet</facet.field>
+      <facet.field>has_999_facet</facet.field>
+      <facet.field>collection_facet</facet.field>
+      <rss icon="true">
+         <title-field>titledate_field</title-field>
+      </rss>
+      <sortoptions>title_sort, author_sort, date_sort, date_facsimile_added_sort</sortoptions>
+      <caption context="title">
+         <!--  doesn't give priority to LJS collection
+  	<dla-caption:if not-empty="collection_field">
+  		<div class="fromcollection">
+  			from the 
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field"  src="collection_field"/>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+-->
+
+         <dla-caption:if not-empty="LJScollection_field">
+            <div class="fromcollection">
+               <html>
+                  <dla-caption:link-external type="field" src="LJScollectionSEARCH_URL_field">
+                     <dla-caption:field type="field" src="LJScollection_field"/>
+                     <span class="coll-title">:</span>
+                  </dla-caption:link-external>
+               </html>
+            </div>
+         </dla-caption:if>
+         <dla-caption:if empty="LJScollection_field">
+            <div class="fromcollection">
+               <html>
+                  <dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+                     <dla-caption:field type="field" src="collection_field"/>
+                     <span class="coll-title">:</span>
+                  </dla-caption:link-external>
+               </html>
+            </div>
+         </dla-caption:if>
+
+
+
+
+
+         <span class="recordtitlechrome">
+            <dla-caption:field type="field" src="call_number_field"/>
+            <dla-caption:if not-empty="call_number_field"> - </dla-caption:if>
+            <dla-caption:field type="field" src="primary_author_field"/>
+            <dla-caption:if not-empty="primary_author_field"> - </dla-caption:if>
+            <dla-caption:field type="field" src="title_field"/>
+         </span>
+      </caption>
+      <caption context="mobile">
+
+
+         <div style="font-family: Verdana, arial, sans-serif; font-size:13px; margin-bottom:7px;line-height:130%;">
+            <div>
+               <dla-caption:field type="field" src="call_number_field"/>
+            </div>
+            <div>
+               <dla-caption:link-to-detail>
+                  <dla-caption:field type="field" src="title_field"/>
+               </dla-caption:link-to-detail>
+            </div>
+            <div>
+               <dla-caption:if equal="facsimile_field, {Yes}">
+                  <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*" style="border: none;"
+                     />Facsimile available</dla-caption:link-to-detail>
+               </dla-caption:if>
+            </div>
+            <div style="margin-bottom: 10px; border-bottom: dotted 1px #999;">
+               <dla-caption:if not-empty="origin_field">
+                  <div>
+                     <dla-caption:field type="field" src="origin_field"/>
+                  </div>
+               </dla-caption:if>
+               <dla-caption:if sort="date_facsimile_added_sort">
+                  <dla-caption:if not-empty="date_facsimile_added_field">
+                     <div class="facadded">Facsimile added: <dla-caption:field type="field"
+                           src="date_facsimile_added_field"/></div>
+                  </dla-caption:if>
+               </dla-caption:if>
+            </div>
+         </div>
+
+      </caption>
+      <caption context="results">
+         <tr class="medrenresultrecord">
+            <td class="oneresult">
+               <div class="callno">
+                  <dla-caption:field type="field" src="call_number_field"/>
+                  <dla-caption:if equal="facsimile_field, {Yes}">
+                     <span class="facavail">       <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg"
+                              alt="*"/>Facsimile available</dla-caption:link-to-detail></span>
+                  </dla-caption:if>
+               </div>
+
+               <dla-caption:if sort="date_facsimile_added_field">
+                  <dla-caption:if not-empty="date_facsimile_added_field">
+                     <div class="facadded">Facsimile added: <dla-caption:field type="field"
+                           src="date_facsimile_added_field"/></div>
+                  </dla-caption:if>
+               </dla-caption:if>
+
+
+               <dla-caption:if not-empty="primary_author_field">
+                  <div>
+                     <dla-caption:field type="field" src="primary_author_field"/>
+                  </div>
+               </dla-caption:if>
+               <div class="medrenresultstitle">
+                  <dla-caption:link-to-detail>
+                     <dla-caption:field type="field" src="title_field"/>
+                  </dla-caption:link-to-detail>
+               </div>
+
+               <dla-caption:if not-empty="origin_field">
+                  <div class="origin">
+                     <dla-caption:field type="field" src="origin_field"/>
+                  </div>
+               </dla-caption:if>
+            </td>
+            <td class="holdresultsdate">
+               <div>
+                  <dla-caption:if not-empty="probable_date_field">
+                     <dla-caption:field type="field" src="probable_date_field"/>
+                  </dla-caption:if>
+               </div>
+            </td>
+         </tr>
+      </caption>
+      <caption context="image wall">
+         <div class="thumbonly">
+            <dla-caption:link-to-detail extra-params-field="page_param">
+               <img>
+                  <dla-caption:attribute name="src">../images/medren/<dla-caption:field type="field" src="id"
+                        />-<dla-caption:field type="field" src="page_param"/>.jpg</dla-caption:attribute>
+                  <dla-caption:attribute name="title">
+                     <dla-caption:field type="field" src="title"/>
+                  </dla-caption:attribute>
+                  <dla-caption:attribute name="alt">
+                     <dla-caption:field type="field" src="title"/>
+                  </dla-caption:attribute>
+                  <dla-caption:attribute name="width">200px</dla-caption:attribute>
+                  <dla-caption:attribute name="height">200px</dla-caption:attribute>
+               </img>
+            </dla-caption:link-to-detail>
+         </div>
+      </caption>
+      <stickyfacets>collection_facet</stickyfacets>
+      <footeremail>rbml@pobox.upenn.edu</footeremail>
+      <footermailto>rbml@pobox.upenn.edu,dmcknigh@pobox.upenn.edu</footermailto>
+      <poweredby>This site has been made possible through a grant from the National Endowment to the
+         Humanities.</poweredby>
+      <maxzoomlevels>5</maxzoomlevels>
+      <noresultsmessage>
+         <div class="noresults"> Sorry, no results matched your search terms. </div>
+      </noresultsmessage>
+      <tocEntries>
+         <entry name="toc" display="Contents"/>
+         <entry name="ill" display="Illustrations"/>
+      </tocEntries>
+      <tabs type="pageturn">
+         <tab name="View Manuscript" target="pageturn"/>
+         <tab name="View Provenance &amp; Subject Details" target="record"/>
+      </tabs>
+      <solr-url>http://localhost:8082/index/medren/select/</solr-url>
+      <services name="Navigating the Collection" display="block" class="recordDescription">
+         <service name="Collection Home" link="index.html"/>
+         <service name="Search Strategies" link="ancillary.html?id=collections/brinton/searchdla"/>
+         <service type="back-to-results"/>
+         <service name="Advanced Search" link="advancedsearch.html"/>
+         <service name="New: Manuscripts recently digitized"
+            link="search.html?sort=date_facsimile_added_sort%20desc&amp;showall=sort&amp;fq=facsimile_facet%3A%22Yes%22"
+         />
+      </services>
+      <services name="Manuscripts at Penn">
+         <service name="Overview" link="ancillary.html?id=collections/rbm/mss/mss"/>
+         <service name="Schoenberg Database of Manuscripts" link="http://hdl.library.upenn.edu/1017/59753"/>
+         <service name="Manuscripts on Microfilm"
+            link="http://www.library.upenn.edu/collections/microforms/medmss.html "/>
+      </services>
+      <services name="Information &amp; Contacts" display="block" class="recordDescription">
+         <service type="mailto" address="dmcknigh@pobox.upenn.edu" name="Contact Us"
+            body="Question regarding this page: " appendurl="true"/>
+         <service name="Copyright &amp; Permissions" link="ancillary.html?id=collections/brinton/copyright"/>
+      </services>
+      <services name="Rare Book &amp; Manuscript Library" link="http://www.library.upenn.edu/rbm/">
+         <service name="Access" link="ancillary.html?id=access/rbm"/>
+         <service name="Hours" link="http://events.library.upenn.edu/cgi-bin/calendar.cgi?library=rbm;size=large"/>
+         <service name="Locate on Campus" link="http://hdl.library.upenn.edu/1017/82076"/>
+         <service name="Services" link="ancillary.html?id=rbm/services"/>
+         <service name="Staff"
+            link="http://dla.library.upenn.edu/dla/staff/search.html?fq=library_facet%3A%22Rare%20Book%20%26%20Manuscript%20Library%22"/>
+         <service name="Visitor Information" link="http://www.library.upenn.edu/access/visitors/visitors.html"/>
+      </services>
+      <services name="NEH Grant Information" link="ancillary.html?id=collections/manuscripts/grant"> </services>
+      <maps metadataPrefix="marc21">
+         <map to="marc:record">marcrecord</map>
+      </maps>
+      <maps metadataPrefix="oai_dc">
+         <map to="title">title_field</map>
+         <map to="contributor">author_field</map>
+         <map to="coverage"/>
+         <map to="creator"/>
+         <map to="date">probable_date_field</map>
+         <map to="description"/>
+         <map to="format"/>
+         <map to="identifier">id</map>
+         <map to="language">language_field</map>
+         <map to="publisher"/>
+         <map to="relation"/>
+         <map to="rights"/>
+         <map to="source"/>
+         <map to="subject">geography_field</map>
+         <map to="subject">subject_field</map>
+         <map to="subject">genre_field</map>
+         <map to="type"/>
+      </maps>
+      <maps metadataPrefix="dla">
+         <map to="datestamp">last_update</map>
+      </maps>
+   </collection>
+   <defaults xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere">
+      <param name="start">0</param>
+      <param name="rows">25</param>
+      <param name="facet.offset">0</param>
+      <param name="browse.limit">400</param>
+      <param name="browse.sort">false</param>
+      <param name="sort">score desc, date_sort asc</param>
+      <param name="facet.limit">5</param>
+      <param name="facet.mincount">1</param>
+   </defaults>
+   <recordinfo xmlns:my="http://nowhere" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:marc="http://www.loc.gov/MARC21/slim" detail="brief">
+      <str name="Author">Sette Comuni.</str>
+      <str name="Title">Liber privilegiorum septem comunium montanearum Agri Vicentini [manuscript].</str>
+      <str name="Origin">[Italy], 1568-1657.</str>
+      <str name="Physical description">119 leaves : paper ; 205 x 153 (159 x 112) mm. bound to 211 x 154 mm.</str>
+      <str name="Summary">Statutes and privileges of the Sette Comuni. Includes statutes from 1339 to 1568, with some
+         additions to 1657.</str>
+      <str name="Notes">Ms. codex.</str>
+      <str name="Notes">Title from title page (f. 1r).</str>
+      <str name="Notes">Foliation: Paper, i (contemporary paper) + 119; 1-94, [95-119]; contemporary foliation in ink,
+         modern foliation in pencil, upper right recto.</str>
+      <str name="Notes">Script: Written in various cursive scripts by multiple hands, including that of Bartolomeus de
+         Velo Luxiane (f. 1r).</str>
+      <str name="Notes">Binding: Contemporary calf. First quire is pulling loose. The paper shows some worm damage and a
+         good deal of water and mildew damage. The edges of many leaves are splitting and crumbling.</str>
+      <str name="Notes">Origin: Written in Italy, 1568 (f. 1r)-1657 (f. 91r).</str>
+      <str name="Notes">Complete photocopy shelved with the manuscript.</str>
+      <str name="Cite as">UPenn Ms. Codex 52</str>
+      <str name="Manuscript location">Rare Book &amp; Manuscript Library University of Pennsylvania Ms. Codex 52</str>
+   </recordinfo>
+</page>
