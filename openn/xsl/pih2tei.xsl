@@ -68,12 +68,10 @@
                             <msIdentifier>
                                 <settlement>Philadelphia</settlement>
                                 <institution>
-                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"
-                                    />
+                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']" />
                                 </institution>
                                 <repository>
-                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"
-                                    />
+                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']" />
                                 </repository>
                                 <idno>
                                     <xsl:value-of select="//marc:datafield[@tag='099']/marc:subfield[@code='a']" />
@@ -81,8 +79,7 @@
                             </msIdentifier>
                             <msContents>
                                 <summary>
-                                    <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"
-                                    />
+                                    <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])" />
                                 </summary>
 
                                 <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
