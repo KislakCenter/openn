@@ -239,12 +239,12 @@
                 <profileDesc>
                     <textClass>
                         <!-- DE: Switching to marc 610 and joining subfields -->
-                        <xsl:if test="//marc:datafield[@tag='610']">
+                        <xsl:if test="//marc:datafield[@tag='610' or @tag='650']">
                             <keywords xmlns="http://www.tei-c.org/ns/1.0" n="subjects">
                                 <list>
-                                    <xsl:for-each select="//marc:datafield[@tag='610']">
+                                    <xsl:for-each select="//marc:datafield[@tag='610' or @tag='650']">
                                         <item>
-                                            <xsl:call-template name="join-subfields">
+                                            <xsl:call-template name="join-keywords">
                                                 <xsl:with-param name="datafield" select="."/>
                                             </xsl:call-template>
                                         </item>
@@ -255,8 +255,12 @@
                         <xsl:if test="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
                             <keywords n="form/genre">
                                 <list>
-                                    <xsl:for-each select="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
-                                        <item><xsl:value-of select="."/></item>
+                                    <xsl:for-each select="//marc:datafield[@tag='655' and child::marc:subfield[@code='a']]">
+                                        <item>
+                                            <xsl:call-template name="join-genre">
+                                                <xsl:with-param name="datafield" select="."/>
+                                            </xsl:call-template>
+                                        </item>
                                     </xsl:for-each>
                                 </list>
                             </keywords>
@@ -292,10 +296,20 @@
         />
     </xsl:template>
     
-    <xsl:template name="join-subfields">
+    <xsl:template name="join-keywords">
         <xsl:param name="datafield"/>
         <xsl:for-each select="./marc:subfield">
            <xsl:value-of select="."/>
+            <xsl:if test="position() != last()">
+                <xsl:text>--</xsl:text>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="join-genre">
+        <xsl:param name="datafield"/>
+        <xsl:for-each select="./marc:subfield[matches(@code, '[abcvxyz]')]">
+            <xsl:value-of select="."/>
             <xsl:if test="position() != last()">
                 <xsl:text>--</xsl:text>
             </xsl:if>
@@ -312,6 +326,4 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
-    
-
 </xsl:stylesheet>
