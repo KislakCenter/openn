@@ -101,6 +101,10 @@ class OPennTEI(XMLWhatsit):
         """
         xpath = '/t:TEI/t:facsimile'
         facs = self.xml.xpath(xpath, namespaces=self.ns)[0]
+        # clear the facs
+        for graphic in self.xml.xpath('/t:TEI/t:facsimile/t:graphic', namespaces=self.ns):
+            graphic.getparent().remove(graphic)
+        # add the surface/graphic elements
         for fdata in file_list.document_files:
             surface = etree.Element("surface", n=fdata.label, nsmap=self.ns)
             for dtype in fdata.derivs:
