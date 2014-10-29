@@ -21,31 +21,44 @@
 
     <xsl:output indent="yes"/>
 
+    <xsl:variable name="institution">
+        <xsl:call-template name="clean-up-text">
+            <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"/>
+        </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="repository">
+        <xsl:call-template name="clean-up-text">
+            <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"/>
+        </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="call_number">
+        <xsl:call-template name="clean-up-text">
+            <xsl:with-param name="some-text" select="//marc:datafield[@tag='099']/marc:subfield[@code='a']"/>
+        </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="ms_title">
+        <xsl:call-template name="clean-up-text">
+            <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']"/>
+        </xsl:call-template>
+    </xsl:variable>
     <xsl:template match="/">
+
         <TEI xmlns="http://www.tei-c.org/ns/1.0">
             <teiHeader>
                 <fileDesc>
                     <titleStmt>
                         <title>
-                            <xsl:call-template name="clean-up-text">
-                                <xsl:with-param name="some-text">
-                                    <xsl:text>Description of </xsl:text>
-                                    <xsl:call-template name="clean-up-text">
-                                        <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']" />
-                                    </xsl:call-template>
-                                </xsl:with-param>
-                            </xsl:call-template>
+                            <xsl:value-of select="normalize-space(concat('Description of ', $institution, ' ', $call_number, ': ', $ms_title))"/>
                         </title>
-
                     </titleStmt>
                     <publicationStmt>
                         <publisher>The University of Pennsylvania Libraries</publisher>
                         <availability>
                             <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
-                                This description is ©<xsl:value-of select="year-from-date(current-date())"/> University of Pennsylvania. It is licensed under a Creative Commons Attribution 4.0 International License (CC 4.0), http://creativecommons.org/licenses/by/4.0/.
+                                This description is ©<xsl:value-of select="year-from-date(current-date())"/> University of Pennsylvania Libraries. It is licensed under a Creative Commons Attribution 4.0 International License (CC 4.0), http://creativecommons.org/licenses/by/4.0/. Please see the license deed for details, http://creativecommons.org/licenses/by/4.0/.
                             </licence>
                             <licence target="http://creativecommons.org/publicdomain/mark/1.0/">
-                                All images referenced here are in the Public Domain and are free for any use commercal or private. Please the Creative Commons Public Domain Mark page for details, http://creativecommons.org/publicdomain/mark/1.0/.
+                                All images referenced here are in the Public Domain and are free for any use commercal or private. Please see the Creative Commons Public Domain Mark page for details, http://creativecommons.org/publicdomain/mark/1.0/.
                             </licence>
                         </availability>
                     </publicationStmt>
@@ -67,13 +80,13 @@
                             <msIdentifier>
                                 <settlement>Philadelphia</settlement>
                                 <institution>
-                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']" />
+                                    <xsl:value-of select="$institution"/>
                                 </institution>
                                 <repository>
-                                    <xsl:value-of select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']" />
+                                    <xsl:value-of select="$repository"/>
                                 </repository>
                                 <idno>
-                                    <xsl:value-of select="//marc:datafield[@tag='099']/marc:subfield[@code='a']" />
+                                    <xsl:value-of select="$call_number"/>
                                 </idno>
                             </msIdentifier>
                             <msContents>
@@ -96,7 +109,9 @@
                                     <!-- DE: marc 110 is a corporate author -->
                                     <xsl:if test="//marc:datafield[@tag='110']">
                                         <author>
-                                            <xsl:value-of select="//marc:datafield[@tag='110']/marc:subfield[@code='a']"/>
+                                            <xsl:call-template name="chomp-period">
+                                                <xsl:with-param name="string" select="//marc:datafield[@tag='110']/marc:subfield[@code='a']"/>
+                                            </xsl:call-template>
                                         </author>
                                     </xsl:if>
                                     <!-- marc 100: primary author, person -->
@@ -118,15 +133,23 @@
                                     <xsl:for-each select="//marc:datafield[@tag='700']/marc:subfield[@code='e']">
                                         <respStmt>
                                             <resp>
-                                                <xsl:call-template name="clean-up-text">
-                                                    <xsl:with-param name="some-text" select="replace(normalize-space(.), '\.$', '')"/>
+                                                <xsl:call-template name="chomp-period">
+                                                    <xsl:with-param name="string">
+                                                        <xsl:call-template name="clean-up-text">
+                                                            <xsl:with-param name="some-text" select="."/>
+                                                        </xsl:call-template>
+                                                    </xsl:with-param>
                                                 </xsl:call-template>
                                             </resp>
                                             <persName>
-                                                <xsl:call-template name="clean-up-text">
-                                                    <xsl:with-param name="some-text">
-                                                        <xsl:call-template name="extract-pn">
-                                                            <xsl:with-param name="datafield" select="./parent::marc:datafield"/>
+                                                <xsl:call-template name="chomp-period">
+                                                    <xsl:with-param name="string">
+                                                        <xsl:call-template name="clean-up-text">
+                                                            <xsl:with-param name="some-text">
+                                                                <xsl:call-template name="extract-pn">
+                                                                    <xsl:with-param name="datafield" select="./parent::marc:datafield"/>
+                                                                </xsl:call-template>
+                                                            </xsl:with-param>
                                                         </xsl:call-template>
                                                     </xsl:with-param>
                                                 </xsl:call-template>
@@ -176,7 +199,11 @@
                                                 </xsl:if>
                                                 <xsl:if test="$datafield/marc:subfield[@code='a'] or $datafield/marc:subfield[@code='c']">
                                                     <extent>
-                                                        <xsl:value-of select="normalize-space(concat($datafield/marc:subfield[@code='a'], ' ', $datafield/marc:subfield[@code='c']))"/>
+                                                        <xsl:call-template name="chomp-period">
+                                                            <xsl:with-param name="string">
+                                                                <xsl:value-of select="normalize-space(concat($datafield/marc:subfield[@code='a'], ' ', $datafield/marc:subfield[@code='c']))"/>
+                                                            </xsl:with-param>
+                                                        </xsl:call-template>
                                                     </extent>
                                                 </xsl:if>
                                             </supportDesc>
@@ -204,7 +231,9 @@
                                     <!-- DE: just use the marc field -->
                                     <xsl:if test="//marc:datafield[@tag='260']/marc:subfield[@code='c']">
                                         <origDate>
-                                            <xsl:value-of select="//marc:datafield[@tag='260']/marc:subfield[@code='c']" />
+                                            <xsl:call-template name="clean-up-text">
+                                                <xsl:with-param name="some-text" select="//marc:datafield[@tag='260']/marc:subfield[@code='c']"/>
+                                            </xsl:call-template>
                                         </origDate>
                                     </xsl:if>
                                     <!-- END DOT MOD -->
@@ -291,34 +320,51 @@
         />
     </xsl:template>
 
+    <xsl:template name="chomp-period">
+        <xsl:param name="string"/>
+        <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
+    </xsl:template>
+
     <xsl:template name="join-keywords">
         <xsl:param name="datafield"/>
-        <xsl:for-each select="./marc:subfield">
-           <xsl:value-of select="."/>
-            <xsl:if test="position() != last()">
-                <xsl:text>--</xsl:text>
-            </xsl:if>
-        </xsl:for-each>
+        <xsl:call-template name="chomp-period">
+            <xsl:with-param name="string">
+                <xsl:for-each select="./marc:subfield">
+                    <xsl:value-of select="."/>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>--</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="join-genre">
         <xsl:param name="datafield"/>
-        <xsl:for-each select="./marc:subfield[matches(@code, '[abcvxyz]')]">
-            <xsl:value-of select="."/>
-            <xsl:if test="position() != last()">
-                <xsl:text>--</xsl:text>
-            </xsl:if>
-        </xsl:for-each>
+        <xsl:call-template name="chomp-period">
+            <xsl:with-param name="string">
+                <xsl:for-each select="./marc:subfield[matches(@code, '[abcvxyz]')]">
+                    <xsl:value-of select="."/>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>--</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 
-   <!-- Extract personal names, employing the date if present. -->
+    <!-- Extract personal names, employing the date if present. -->
     <xsl:template name="extract-pn">
         <xsl:param name="datafield"/>
-        <xsl:for-each select="$datafield/marc:subfield[@code='a' or @code='b' or @code='c' or @code='d']">
-            <xsl:value-of select="."/>
-            <xsl:if test="position() != last()">
-                <xsl:text> </xsl:text>
-            </xsl:if>
-        </xsl:for-each>
+        <xsl:call-template name="chomp-period">
+            <xsl:with-param name="string">
+                <xsl:for-each select="$datafield/marc:subfield[@code='a' or @code='b' or @code='c' or @code='d']">
+                    <xsl:value-of select="."/>
+                    <xsl:if test="position() != last()">
+                        <xsl:text> </xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 </xsl:stylesheet>
