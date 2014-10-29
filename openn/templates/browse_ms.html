@@ -20,6 +20,28 @@
           <span>{{ doc.tei.title }}</span>
         </div>
 
+        {% if doc.tei.authors %}
+        <div>
+          <h4>Authors</h4>
+          <ul class="list-unstyled">
+          {% for author in doc.tei.authors %}
+             <li>{{ author }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.related_names %}
+        <div>
+          <h4>Other related names</h4>
+          <ul class="list-unstyled">
+          {% for resp in doc.tei.related_names %}
+             <li>{{ resp.pers_name }} ({{ resp.resp }})</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
         <div>
           <h4>Call number</h4>
           <span>{{ doc.tei.call_number }}</span><br />
@@ -42,7 +64,7 @@
             <dt>Date</dt>
             <dd>{{ doc.tei.orig_date }}</dd>
 
-            <dt>Plase</dt>
+            <dt>Place</dt>
             <dd>{{ doc.tei.orig_place }}</dd>
           </dl>
         </div>
@@ -52,11 +74,83 @@
            <span>{{ doc.tei.summary }}</span>
         </div>
 
+        {% if doc.tei.notes %}
         <div>
-          <h4>License</h4>
-          <span><a href="{{doc.tei.license_url }}">{{ doc.tei.license_url }}</a></span><br />
-           <span>{{ doc.tei.license }}</span>
+          <h4>Notes</h4>
+
+          <ul class="list-unstyled">
+          {% for note in doc.tei.notes %}
+             <li>{{ note }}<br/>&nbsp;</li>
+           {% endfor %}
+          </ul>
         </div>
+        {% endif %}
+
+        {% if doc.tei.support %}
+        <div>
+          <h4>Support</h4>
+          <span>{{ doc.tei.support|capfirst }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.extent %}
+        <div>
+          <h4>Extent</h4>
+          <span>{{ doc.tei.extent|capfirst }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.provenance %}
+        <div>
+          <h4>Provenance</h4>
+
+          <ul class="list-unstyled">
+          {% for note in doc.tei.provenance %}
+             <li>{{ note }}<br/>&nbsp;</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.subjects %}
+        <div>
+          <h4>Subjects</h4>
+          <ul class="list-unstyled">
+          {% for subject in doc.tei.subjects %}
+             <li>{{ subject }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.genres %}
+        <div>
+          <h4>Genres</h4>
+          <ul class="list-unstyled">
+          {% for genre in doc.tei.genres %}
+             <li>{{ genre }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.licences %}
+        <div>
+          <h4>Licenses</h4>
+          <ul class="list-unstyled">
+          {% for licence in doc.tei.licences %}
+             <li>
+               <dl>
+                 <dt>Text</dt>
+                 <dd>{{ licence.text }}</dd>
+                 <dt>URL</dt>
+                 <dd><a href="{{ licence.target }}">{{ licence.target }}</a></dd>
+               </dl>
+             </li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
 
         {% if doc.has_toc %}
         {% with pages=doc.ms_item_pages %}

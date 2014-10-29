@@ -5,6 +5,8 @@ import re
 
 from openn.xml.xml_whatsit import XMLWhatsit
 from openn.xml.ms_item import MSItem
+from openn.xml.licence import Licence
+from openn.xml.resp_stmt import RespStmt
 
 class OPennTEI(XMLWhatsit):
     TEI_NS = 'http://www.tei-c.org/ns/1.0'
@@ -56,6 +58,13 @@ class OPennTEI(XMLWhatsit):
         return self._get_text('//t:publicationStmt/t:availability/t:licence')
 
     @property
+    def licences(self):
+        if not getattr(self, '_licences', None):
+            xpath = '//t:publicationStmt/t:availability/t:licence'
+            self._licences = [Licence(n, self.ns) for n in self._get_nodes(xpath)]
+        return self._licences
+
+    @property
     def license_url(self):
         return self._get_attr('//t:publicationStmt/t:availability/t:licence', 'target')
 
@@ -77,7 +86,58 @@ class OPennTEI(XMLWhatsit):
 
     @property
     def ms_items(self):
-        return  [MSItem(node,self.ns) for node in self._get_nodes('//t:msContents/t:msItem')]
+        if not getattr(self, '_ms_items', None):
+            xpath = '//t:msContents/t:msItem'
+            self._ms_items = [MSItem(node,self.ns) for node in self._get_nodes(xpath)]
+        return self._ms_items
+
+    @property
+    def notes(self):
+        if not getattr(self, '_notes'):
+            xpath = '//t:notesStmt/t:notes'
+            self._notes = self._all_the_strings(xpath)
+        return self._notes
+
+    @property
+    def genres(self):
+        if not getattr(self, '_genres', None):
+            xpath = '//t:keywords[@n="form/genre"]/t:term'
+            self._genres = self._all_the_strings(xpath)
+        return self._genres
+
+    @property
+    def subjects(self):
+        if not getattr(self, '_subjects', None):
+            xpath = '//t:keywords[@n="subjects"]/t:term'
+            self._subjects = self._all_the_strings(xpath)
+        return self._subjects
+
+    @property
+    def support(self):
+        return self._get_text('//t:supportDesc/t:support')
+
+    @property
+    def extent(self):
+        return self._get_text('//t:supportDesc/t:extent')
+
+    @property
+    def provenance(self):
+        if not getattr(self, '_provenance', None):
+            xpath = '//t:history/t:provenance'
+            self._provenance = self._all_the_strings(xpath)
+        return self._provenance
+
+    @property
+    def authors(self):
+        if not getattr(self, '_authors', None):
+            xpath = '//t:msContents/t:msItem[1]/t:author'
+            self._authors = self._all_the_strings(xpath)
+        return self._authors
+
+    def related_names(self):
+        if not getattr(self, '_related_names', None):
+            self._related_names = [RespStmt(n,self.ns) for n in self._get_nodes('//t:msContents/t:msItem[1]/t:respStmt')]
+        return self._related_names
 
     def ms_items(self, n):
         nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)

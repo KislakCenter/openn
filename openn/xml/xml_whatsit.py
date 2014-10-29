@@ -15,3 +15,6 @@ class XMLWhatsit:
     def _get_text(self,xpath):
         nodes = self._get_nodes(xpath)
         return nodes[0].text if len(nodes) > 0 else None
+
+    def _all_the_strings(self,xpath):
+        return [n.text for n in self._get_nodes(xpath) ]
