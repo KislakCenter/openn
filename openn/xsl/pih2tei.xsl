@@ -116,6 +116,24 @@
                                             </xsl:call-template>
                                         </author>
                                     </xsl:for-each>
+                                    <xsl:for-each select="//marc:datafield[@tag='700']/marc:subfield[@code='e']">
+                                        <respStmt>
+                                            <resp>
+                                                <xsl:call-template name="clean-up-text">
+                                                    <xsl:with-param name="some-text" select="replace(normalize-space(.), '\.$', '')"/>
+                                                </xsl:call-template>
+                                            </resp>
+                                            <persName>
+                                                <xsl:call-template name="clean-up-text">
+                                                    <xsl:with-param name="some-text">
+                                                        <xsl:call-template name="extract-pn">
+                                                            <xsl:with-param name="datafield" select="./parent::marc:datafield"/>
+                                                        </xsl:call-template>
+                                                    </xsl:with-param>
+                                                </xsl:call-template>
+                                            </persName>
+                                        </respStmt>
+                                    </xsl:for-each>
                                 </msItem>
 
                                 <xsl:for-each select="//page/tocentry[@name='toc']">
