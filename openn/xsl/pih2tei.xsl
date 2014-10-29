@@ -39,18 +39,17 @@
 
                     </titleStmt>
                     <publicationStmt>
-                        <publisher>Schoenberg Center for Electronic Text and Image, University of
-                            Pennsylvania</publisher>
+                        <publisher>The University of Pennsylvania Libraries</publisher>
                         <availability>
                             <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
-                                This work and all referenced images are ©<xsl:value-of
-                                    select="year-from-date(current-date())"/> University of
-                                Pennsylvania. They are licensed under a Creative Commons
-                                Attribution 4.0 International License (CC 4.0),
-                                http://creativecommons.org/licenses/by/4.0/. </licence>
+                                This description is ©<xsl:value-of select="year-from-date(current-date())"/> University of Pennsylvania. It is licensed under a Creative Commons Attribution 4.0 International License (CC 4.0), http://creativecommons.org/licenses/by/4.0/.
+                            </licence>
+                            <licence target="http://creativecommons.org/publicdomain/mark/1.0/">
+                                All images referenced here are in the Public Domain and are free for any use commercal or private. Please the Creative Commons Public Domain Mark page for details, http://creativecommons.org/publicdomain/mark/1.0/.
+                            </licence>
                         </availability>
                     </publicationStmt>
-                    
+
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
                     <xsl:if test="//marc:datafield[@tag='500']">
                         <notesStmt>
@@ -62,7 +61,7 @@
                         </notesStmt>
                     </xsl:if>
                     <!-- END DOT MOD -->
-                    
+
                     <sourceDesc>
                         <msDesc>
                             <msIdentifier>
@@ -200,7 +199,7 @@
                                 </physDesc>
                             <history>
                                 <origin>
-                                    
+
                                     <!-- DOT ADDED AN IF STATEMENT AROUND ORIGDATE, SO IF THERE IS NO ORIGDATE IN THE MARC RECORD ORIGDATE WILL NOT BE CREATED -->
                                     <!-- DE: just use the marc field -->
                                     <xsl:if test="//marc:datafield[@tag='260']/marc:subfield[@code='c']">
@@ -219,7 +218,7 @@
                                         </origPlace>
                                     </xsl:if>
                                 </origin>
-                                
+
                                 <!-- DOT ADDED PROVENANCE -->
                                 <xsl:if test="//marc:datafield[@tag='561']">
                                     <xsl:for-each select="//marc:datafield[@tag='561']">
@@ -229,12 +228,12 @@
                                     </xsl:for-each>
                                 </xsl:if>
                                 <!-- END DOT MOD -->
-                                
+
                             </history>
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-                
+
                 <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
                 <profileDesc>
                     <textClass>
@@ -264,7 +263,7 @@
                     </textClass>
                 </profileDesc>
                 <!-- DOT MOD ENDS HERE -->
-                
+
             </teiHeader>
             <facsimile>
                 <!--
@@ -291,7 +290,7 @@
         <xsl:value-of select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))"
         />
     </xsl:template>
-    
+
     <xsl:template name="join-keywords">
         <xsl:param name="datafield"/>
         <xsl:for-each select="./marc:subfield">
