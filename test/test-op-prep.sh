@@ -31,6 +31,9 @@ testRun() {
     source_dir=$TEST_STAGING_DIR/mscodex1223
     cp -r $TEST_DATA_DIR/mscodex1223 $source_dir
     op-prep medren $source_dir
+    # source_dir=$TEST_STAGING_DIR/mscodex1589
+    # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir
+    # op-prep medren $source_dir
     status=$?
     assertEquals 0 $status
     assertTrue "Expected TEI file in $source_dir/data; found: `ls $source_dir/data 2>/dev/null`" "ls $source_dir/data/*[0-9]_TEI.xml"
