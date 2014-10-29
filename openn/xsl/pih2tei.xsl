@@ -141,7 +141,7 @@
                                 <physDesc>
                                     <xsl:if test="//marc:datafield[@tag='300']">
                                         <xsl:variable name="datafield" select="//marc:datafield[@tag='300']"/>
-                                        <xsl:variable name="support" select="normalize-space(tokenize($datafield/marc:subfield[@code='b'], ';')[1])"/>
+                                        <xsl:variable name="support" select="normalize-space(tokenize($datafield/marc:subfield[@code='b'], '[,;]')[1])"/>
                                         <xsl:variable name="mixed" select="matches($support, 'parchment', 'i') and matches($support, 'paper', 'i')"/>
                                         <objectDesc>
                                             <supportDesc>
