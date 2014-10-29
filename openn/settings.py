@@ -75,27 +75,36 @@ PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
 
 
 COLLECTIONS = {
-        'medren': {
-            'tag': 'medren',
-            'name': 'Penn Manuscripts',
-            'blurb': 'This manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with permission of their owners.',
-            'toc_file': 'TOC_PennManuscripts.html',
-            'web_dir': 'Data/PennManuscripts',
-            'html_dir': 'Data/PennManuscripts/html',
-            'prep_class': 'openn.prep.medren_prep.MedrenPrep',
-            'config' : {
-                'host': 'dla.library.upenn.edu',
-                'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
-                'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
-                'image_rights': {
-                    'Marked': 'True',
-                    'WebStatment': 'http://creativecommons.org/licenses/by-nc/4.0/',
-                    'UsageTerms': ('This work and all referenced images are ©%d University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.' % today.year),
-                    'rights': ('This work and all referenced images are ©%d University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.' % today.year),
+    'medren': {
+        'tag': 'medren',
+        'name': 'Penn Manuscripts',
+        'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with permission of their owners.',
+        'toc_file': 'TOC_PennManuscripts.html',
+        'web_dir': 'Data/PennManuscripts',
+        'html_dir': 'Data/PennManuscripts/html',
+        'prep_class': 'openn.prep.medren_prep.MedrenPrep',
+        'config' : {
+            'host': 'dla.library.upenn.edu',
+            'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
+            'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+            'image_rights': {
+                'Marked': 'False',
+                'WebStatment': 'http://creativecommons.org/publicdomain/mark/1.0/',
+                'UsageTerms': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                'rights': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+            },
+                'rights_statements': {
+                    'images': {
+                        'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
+                        'text': 'Unless otherwise stated, all images are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
+                    },
+                    'metadata': {
+                        'url': 'http://creativecommons.org/licenses/by/4.0/',
+                        'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
                     },
                 },
             },
-
+        },
             'ljs': {
                 'tag': 'ljs',
                 'name': 'Lawrence J. Schoenberg Manuscripts',
@@ -109,12 +118,22 @@ COLLECTIONS = {
                     'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
                     'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
                     'image_rights': {
-                        'Marked': 'True',
-                        'WebStatment': 'http://creativecommons.org/licenses/by-nc/4.0/',
-                        'UsageTerms': ('This work and all referenced images are ©%d University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.' % today.year),
-                        'rights': ('This work and all referenced images are ©%d University of Pennsylvania. They are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0), http://creativecommons.org/licenses/by-nc/4.0/.' % today.year),
+                        'Marked': 'False',
+                        'WebStatment': 'http://creativecommons.org/publicdomain/mark/1.0/',
+                        'UsageTerms': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                        'rights': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                    },
+                'rights_statements': {
+                    'images': {
+                        'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
+                        'text': 'Unless otherwise stated, all images referenced are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
+                    },
+                    'metadata': {
+                        'url': 'http://creativecommons.org/licenses/by/4.0/',
+                        'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
                     },
                 },
-            },
+        },
 
-        }
+    },
+}
