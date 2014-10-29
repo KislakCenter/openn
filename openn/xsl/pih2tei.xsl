@@ -241,28 +241,24 @@
                         <!-- DE: Switching to marc 610 and joining subfields -->
                         <xsl:if test="//marc:datafield[@tag='610' or @tag='650']">
                             <keywords xmlns="http://www.tei-c.org/ns/1.0" n="subjects">
-                                <list>
-                                    <xsl:for-each select="//marc:datafield[@tag='610' or @tag='650']">
-                                        <item>
-                                            <xsl:call-template name="join-keywords">
-                                                <xsl:with-param name="datafield" select="."/>
-                                            </xsl:call-template>
-                                        </item>
-                                    </xsl:for-each>
-                                </list>
+                                <xsl:for-each select="//marc:datafield[@tag='610' or @tag='650']">
+                                    <term>
+                                        <xsl:call-template name="join-keywords">
+                                            <xsl:with-param name="datafield" select="."/>
+                                        </xsl:call-template>
+                                    </term>
+                                </xsl:for-each>
                             </keywords>
                         </xsl:if>
                         <xsl:if test="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
                             <keywords n="form/genre">
-                                <list>
-                                    <xsl:for-each select="//marc:datafield[@tag='655' and child::marc:subfield[@code='a']]">
-                                        <item>
-                                            <xsl:call-template name="join-genre">
-                                                <xsl:with-param name="datafield" select="."/>
-                                            </xsl:call-template>
-                                        </item>
-                                    </xsl:for-each>
-                                </list>
+                                <xsl:for-each select="//marc:datafield[@tag='655' and child::marc:subfield[@code='a']]">
+                                    <term>
+                                        <xsl:call-template name="join-genre">
+                                            <xsl:with-param name="datafield" select="."/>
+                                        </xsl:call-template>
+                                    </term>
+                                </xsl:for-each>
                             </keywords>
                         </xsl:if>
                     </textClass>
