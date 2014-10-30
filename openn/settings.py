@@ -78,7 +78,7 @@ COLLECTIONS = {
     'medren': {
         'tag': 'medren',
         'name': 'Penn Manuscripts',
-        'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with permission of their owners.',
+        'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with the permission of their owners.',
         'toc_file': 'TOC_PennManuscripts.html',
         'web_dir': 'Data/PennManuscripts',
         'html_dir': 'Data/PennManuscripts/html',
@@ -108,7 +108,7 @@ COLLECTIONS = {
             'ljs': {
                 'tag': 'ljs',
                 'name': 'Lawrence J. Schoenberg Manuscripts',
-                'blurb': 'This manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
+                'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
                 'toc_file': 'TOC_LJSchoenberg_Manuscripts.html',
                 'web_dir': 'Data/LJSchoenberg_Manuscripts',
                 'html_dir': 'Data/LJSchoenberg_Manuscripts/html',
