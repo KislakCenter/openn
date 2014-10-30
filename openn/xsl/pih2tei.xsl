@@ -55,10 +55,10 @@
                         <publisher>The University of Pennsylvania Libraries</publisher>
                         <availability>
                             <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
-                                This description is ©<xsl:value-of select="year-from-date(current-date())"/> University of Pennsylvania Libraries. It is licensed under a Creative Commons Attribution 4.0 International License (CC 4.0), http://creativecommons.org/licenses/by/4.0/. Please see the license deed for details, http://creativecommons.org/licenses/by/4.0/.
+                                This description is ©<xsl:value-of select="year-from-date(current-date())"/> University of Pennsylvania Libraries. It is licensed under a Creative Commons Attribution 4.0 International License (CC-BY 4.0), http://creativecommons.org/licenses/by/4.0/. Please see the license deed for details, http://creativecommons.org/licenses/by/4.0/.
                             </licence>
                             <licence target="http://creativecommons.org/publicdomain/mark/1.0/">
-                                All images referenced here are in the Public Domain and are free for any use commercal or private. Please see the Creative Commons Public Domain Mark page for details, http://creativecommons.org/publicdomain/mark/1.0/.
+                                All images referenced here are in the public domain and are free for any use commercal or private. Please see the Creative Commons Public Domain Mark page for details, http://creativecommons.org/publicdomain/mark/1.0/.
                             </licence>
                         </availability>
                     </publicationStmt>
@@ -85,9 +85,10 @@
                                 <repository>
                                     <xsl:value-of select="$repository"/>
                                 </repository>
-                                <idno>
-                                    <xsl:value-of select="$call_number"/>
-                                </idno>
+                                <idno type="call-number"><xsl:value-of select="$call_number"/></idno>
+                                <altIdentifier type="bibid">
+                                    <idno><xsl:value-of select="//marc:controlfield[@tag='001']"/></idno>
+                                </altIdentifier>
                             </msIdentifier>
                             <msContents>
                                 <summary>
