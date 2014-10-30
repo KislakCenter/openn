@@ -90,13 +90,13 @@ COLLECTIONS = {
             'image_rights': {
                 'Marked': 'False',
                 'WebStatment': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                'UsageTerms': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-                'rights': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                'UsageTerms': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                'rights': 'This image and its content aree free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
             },
                 'rights_statements': {
                     'images': {
                         'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                        'text': 'Unless otherwise stated, all images are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
+                        'text': 'Unless otherwise stated, all images and their content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
                     },
                     'metadata': {
                         'url': 'http://creativecommons.org/licenses/by/4.0/',
@@ -120,13 +120,13 @@ COLLECTIONS = {
                     'image_rights': {
                         'Marked': 'False',
                         'WebStatment': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                        'UsageTerms': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-                        'rights': 'This image is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                        'UsageTerms': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                        'rights': 'This image and its content aree free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
                     },
                 'rights_statements': {
                     'images': {
                         'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                        'text': 'Unless otherwise stated, all images referenced are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
+                        'text': 'Unless otherwise stated, all images and their content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
                     },
                     'metadata': {
                         'url': 'http://creativecommons.org/licenses/by/4.0/',
