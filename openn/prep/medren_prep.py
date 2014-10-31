@@ -16,6 +16,7 @@ from openn.openn_functions import *
 class MedrenPrep(CollectionPrep):
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
+    DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\.tif$', 'body\d{4}\.tif$', 'back\d{4}\.tif$' ]
 
     def __init__(self, source_dir, collection):
         """
@@ -38,6 +39,33 @@ class MedrenPrep(CollectionPrep):
     @property
     def host(self):
         return self.coll_config['host']
+
+    @property
+    def document_image_patterns(self):
+        """The document_image_patterns property is an optional list of
+        string patterns for selecting and ordering document image
+        names; these strings must be valid regular expressions. If this
+        value is not set, the default patterns will be used. They are:
+
+            - ``[ 'front\d{4}\.tif$', 'body\d{4}\.tif$', 'back\d{4}\.tif$' ]``
+
+        This list of patterns will be used by prep_file_list() to
+        create a sorted file list of 'front', 'body', and 'back'
+        images.
+
+        """
+        if getattr(self, '_document_image_patterns', None):
+            return self._document_image_patterns
+        else:
+            return MedrenPrep.DEFAULT_DOCUMENT_IMAGE_PATTERNS
+
+    @document_image_patterns.setter
+    def document_image_patterns(self, pattern_list):
+        self._document_image_patterns = pattern_list
+
+    @document_image_patterns.deleter
+    def document_image_patterns(self):
+        del self._document_image_patterns
 
     @property
     def url_path(self):
@@ -154,7 +182,7 @@ class MedrenPrep(CollectionPrep):
 
     def prep_label(self,label):
         if label is None:
-            return 'Blank'
+            return 'Unlabeled'
         if MedrenPrep.BLANK_RE.search(label):
             return re.sub(';.*$', '', label)
         else:
@@ -173,15 +201,27 @@ class MedrenPrep(CollectionPrep):
         return files
 
     def prep_file_list(self):
+        """" Create a list of TIFF file in the directroy. Split the list into
+        'document' and 'extra' files. The 'document' files list
+        comprises a all those that match the document_image_patterns.
+        This list is sorted within each grouping specified by the
+        patterns. The `extra` files list consists of all TIFF's that
+        do not match the document image patterns. This list is not
+        sorted.
+
+        """
         files = glob.glob(os.path.join(self.data_dir, '*.tif'))
         files = [ self.source_dir_re.sub('', x) for x in files ]
         sorted_files = []
-        for section in ('front', 'body', 'back'):
-            sec_files     = sorted(filter(lambda x: section  in x, files))
+        # find all the files that match the pattern for document images
+        for section in self.document_image_patterns:
+            sec_files     = sorted(filter(lambda x: re.search(section, x), files))
             sec_files     = [ { 'filename': x, 'image_type': 'document' } for x in sec_files ]
+            # any file we've add selected; remove from the master file list
             for pair in sec_files:
                 files.remove(pair['filename'])
             sorted_files += sec_files
+        # all the remaining files are extra
         files = [ { 'filename': x, 'image_type': 'extra', 'label': 'None' } for x in files ]
         return { 'document': sorted_files, 'extra': files }
 
