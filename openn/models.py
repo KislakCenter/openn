@@ -98,6 +98,38 @@ class ExtraImageManager(models.Manager):
     def get_query_set(self):
         return super(ExtraImageManager, self).get_query_set().filter(image_type='x')
 
+class Version(OrderedModel):
+    document              = models.ForeignKey(Document, default = None)
+    major_version         = models.IntegerField(null = False, default = 1)
+    minor_version         = models.IntegerField(null = False, default = 0)
+    patch_version         = models.IntegerField(null = False, default = 0)
+    description           = models.TextField(null = False, default = None, blank = False)
+    created               = models.DateTimeField(auto_now_add = True)
+    updated               = models.DateTimeField(auto_now = True)
+    order_with_respect_to = 'document'
+
+    class Meta:
+        ordering        = [ 'document', 'major_version', 'minor_version', 'patch_version' ]
+        unique_together = [ 'document', 'major_version', 'minor_version', 'patch_version' ]
+
+    @property
+    def text(self):
+        """Return the composed version of the document as a string; for
+        example. '1.0.0'
+
+        """
+        return '.'.join([ str(i) for i in self.version ])
+
+    @property
+    def version(self):
+        """Return the version as tuple of
+
+            - (major_version, minor_version, patch_version)
+
+        For example, ``(1,0,0)``.
+        """
+        return ( self.major_version, self.minor_version, self.patch_version )
+
 class Image(OrderedModel):
     document              = models.ForeignKey(Document, default = None)
     label                 = models.CharField(max_length = 255, null = False, default = None, blank = False)
@@ -108,6 +140,8 @@ class Image(OrderedModel):
     images                = models.Manager()
     document_images       = DocumentImageManager()
     extra_images          = ExtraImageManager()
+    created               = models.DateTimeField(auto_now_add = True)
+    updated               = models.DateTimeField(auto_now = True)
 
     BRACKET_RE = re.compile('^\[|\]$')
 
@@ -144,6 +178,8 @@ class Derivative(models.Model):
     bytes      = models.IntegerField()
     width      = models.IntegerField()
     height     = models.IntegerField()
+    created    = models.DateTimeField(auto_now_add = True)
+    updated    = models.DateTimeField(auto_now = True)
 
     class Meta:
         ordering = [ 'deriv_type' ]

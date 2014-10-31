@@ -9,6 +9,9 @@ def save_document(attrs={}):
     doc.save()
     return doc
 
+def save_version(doc,attrs={}):
+    return doc.version_set.create(**attrs)
+
 def save_image(doc,attrs={}):
     return doc.image_set.create(**attrs)
 

@@ -156,6 +156,9 @@ class PackageDir:
     def manifest_path(self):
         return os.path.join(self.source_dir, 'manifest-sha1.txt')
 
+    def version_txt_path(self):
+        return os.path.join(self.source_dir, 'version.txt')
+
     def master_name(self,orig,doc_id,index):
         orig_dir = os.path.dirname(orig)
         orig_ext = os.path.splitext(orig)[1]
@@ -204,6 +207,23 @@ class PackageDir:
                     manifest.write("%s  %s\n" % (self.get_sha1(path), self.rel_path(path)))
         finally:
             manifest.close()
+
+    def write_version_txt(self, doc):
+        version_txt = open(self.version_txt_path(), 'w+')
+
+        try:
+            for version in doc.version_set.order_by('-order'):
+                version_txt.write('version: %s\n' % (version.text,))
+                # date format: YYYY-MM-DDThh:mm:ssTZD
+                version_txt.write('date: %s\n' % (version.created.strftime('%Y-%m-%dT%H:%M:%S%z'), ))
+                version_txt.write('id: %s\n' % (version.id, ))
+                version_txt.write('document: %s\n' % (doc.id, ))
+                version_txt.write('\n')
+                version_txt.write('%s\n' % (version.description, ))
+                version_txt.write('---\n')
+
+        finally:
+            version_txt.close()
 
     def create_derivs(self, deriv_configs,deriv_dir=None):
         """

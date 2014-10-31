@@ -9,7 +9,7 @@ setUp() {
         mkdir $TEST_STAGING_DIR
     fi
     # make sure the database is empty
-    for table in openn_derivative openn_image openn_document
+    for table in openn_derivative openn_image openn_version openn_document
     do
         mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
     done
@@ -20,7 +20,7 @@ setUp() {
 # }
 
 tearDown() {
-    for table in openn_derivative openn_image openn_document
+    for table in openn_derivative openn_image openn_version openn_document
     do
         mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
     done
@@ -37,6 +37,8 @@ testRun() {
     status=$?
     assertEquals 0 $status
     assertTrue "Expected TEI file in $source_dir/data; found: `ls $source_dir/data 2>/dev/null`" "ls $source_dir/data/*[0-9]_TEI.xml"
+    assertTrue "Expected manifest in $source_dir" "[ -f $source_dir/manifest-sha1.txt ]"
+    assertTrue "Expected version.txt file in $source_dir" "[ -f $source_dir/version.txt ]"
     assertFalse "Should not find PIH XML in $source_dir found: `ls $source_dir/pih*.xml 2>/dev/null`" "ls $source_dir/pih*.xml"
     assertFalse "Should not find file_list.json in $source_dir; found: `ls $source_dir/*.json 2>/dev/null`" "ls $source_dir/*.json"
     assertFalse "Should find PARTIAL_TEI.xml in $source_dir; found `ls $source_dir/PARTIAL_TEI.xml 2>/dev/null`" "ls $source_dir/PARTIAL_TEI.xml"

@@ -74,21 +74,31 @@ class CommonPrep(OPennSettings):
             self.file_list= FileList(self.package_dir.file_list_path)
         return self.file_list
 
+    def save_version(self,doc,attrs={}):
+        attrs.setdefault('major_version', 1)
+        attrs.setdefault('minor_version', 0)
+        attrs.setdefault('patch_version', 0)
+        attrs.setdefault('description', 'Initial version')
+        return openn_db.save_version(doc,attrs)
+
     def save_document(self):
         """ Store this manuscript or book or whatever in the database,
         so we can track it and make sure it's unique."""
-        return openn_db.save_document({
+        doc = openn_db.save_document({
             'call_number': self.tei.call_number,
             'collection': self.collection,
             'base_dir': self.package_dir.basedir,
             'title': getattr(self.tei, 'title', 'Untitled')
             })
 
+        return doc
+
     def check_valid(self):
         self.package_dir.check_valid()
 
     def prep_dir(self):
         doc = self.save_document()
+        version = self.save_version(doc)
         self.package_dir.rename_masters(doc)
         self.package_dir.create_derivs(self.deriv_configs)
         self.package_dir.add_image_metadata(self.coll_config.get('image_rights'))
@@ -99,6 +109,7 @@ class CommonPrep(OPennSettings):
         doc.tei_xml = self.tei.to_string()
         doc.save()
         self.package_dir.create_manifest()
+        self.package_dir.write_version_txt(doc)
         self._cleanup()
 
     def _cleanup(self):
