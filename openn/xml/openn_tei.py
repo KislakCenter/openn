@@ -30,6 +30,17 @@ class OPennTEI(XMLWhatsit):
         return self._namespaces
 
     @property
+    def tei_authors(self):
+        """
+        If present, return the author(s) of the TEI file. This is not
+        the work authors.
+        """
+        if not getattr(self,'_tei_authors', None):
+            xpath = '//t:fileDesc/t:titleStmt/t:author'
+            self._tei_authors = self._all_the_strings(xpath)
+        return self._tei_authors
+
+    @property
     def call_number(self):
         return self._get_text('//t:msIdentifier/t:idno')
 
