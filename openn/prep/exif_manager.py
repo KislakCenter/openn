@@ -33,6 +33,43 @@ class ExifManager(object):
             self._add_json_md_to_file(file,prop_dict, overwrite_original)
         self.stop()
 
+    def add_json_one_file(self,filename,prop_dict,**kwargs):
+        """
+        kwargs can be:
+
+            overwrite_original : True|[False]
+            keep_open          : True|[False] (keep exiftool instance running)
+        """
+        keep_open = kwargs.get('keep_open', False)
+        kwargs.pop('keep_open', None)
+
+        if not self._exiftool.running:
+            self.start()
+
+        self._add_json_md_to_file(filename,prop_dict,**kwargs)
+
+        if not keep_open:
+            self.stop()
+
+    def add_md_one_file(self,filename,prop_dict,**kwargs):
+        """
+        kwargs can be:
+
+            overwrite_original : True|[False]
+            keep_open          : True|[False] (keep exiftool instance running)
+        """
+        keep_open = kwargs.get('keep_open', False)
+        kwargs.pop('keep_open', None)
+
+        if not self._exiftool.running:
+            self.start()
+
+        self._add_md_to_file(filename,prop_dict,**kwargs)
+
+        if not keep_open:
+            self.stop()
+
+
     def _add_json_md_to_file(self,file,prop_dict,overwrite_original=False):
         dct = { 'SourceFile': file }
         dct.update(**prop_dict)

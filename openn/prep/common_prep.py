@@ -101,13 +101,16 @@ class CommonPrep(OPennSettings):
         version = self.save_version(doc)
         self.package_dir.rename_masters(doc)
         self.package_dir.create_derivs(self.deriv_configs)
-        self.package_dir.add_image_metadata(self.coll_config.get('image_rights'))
-        self.package_dir.update_image_details()
         openn_db.save_image_data(doc,self.package_dir.file_list.data)
+
         self.tei.add_file_list(self.package_dir.file_list)
         self.package_dir.save_tei(self.tei, doc)
         doc.tei_xml = self.tei.to_string()
         doc.save()
+
+        self.package_dir.add_image_metadata(doc,self.coll_config.get('image_rights'))
+        self.package_dir.update_image_details()
+
         self.package_dir.create_manifest()
         self.package_dir.write_version_txt(doc)
         self._cleanup()

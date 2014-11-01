@@ -6,6 +6,7 @@ import hashlib
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
 from openn.prep.exif_manager import ExifManager
+from openn.md.image_dc import ImageDC
 import openn.prep.image_deriv as image_deriv
 
 class PackageDir:
@@ -268,8 +269,19 @@ class PackageDir:
                     details = image_deriv.details(self.source_dir, deriv['path'])
                     deriv.update(details)
 
-    def add_image_metadata(self,md_dict):
+    def add_image_metadata(self,doc,md_dict):
         images = []
         files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]
         exman = ExifManager()
-        exman.add_json_metadata(files, md_dict,overwrite_original=True)
+        for image in doc.image_set.all():
+            for deriv in image.derivative_set.all():
+                fpath = os.path.join(self.source_dir, deriv.path)
+                deriv_md = ImageDC(deriv).to_dict()
+                deriv_md.update(md_dict)
+                # for key in deriv_md:
+                #     if re.search(r'^dc:', key):
+                #         deriv_md[re.sub(r'^dc:', '', key)] = deriv_md[key]
+                #         deriv_md.pop(key, None)
+                print "%r" % deriv_md
+                exman.add_md_one_file(fpath, deriv_md, overwrite_original=True, keep_open=True)
+        exman.stop()
