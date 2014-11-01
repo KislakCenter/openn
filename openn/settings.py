@@ -91,7 +91,7 @@ COLLECTIONS = {
                 'Marked': 'False',
                 'WebStatment': 'http://creativecommons.org/publicdomain/mark/1.0/',
                 'UsageTerms': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-                'rights': 'This image and its content aree free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                'rights': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
             },
                 'rights_statements': {
                     'images': {
@@ -121,7 +121,7 @@ COLLECTIONS = {
                         'Marked': 'False',
                         'WebStatment': 'http://creativecommons.org/publicdomain/mark/1.0/',
                         'UsageTerms': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-                        'rights': 'This image and its content aree free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                        'rights': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
                     },
                 'rights_statements': {
                     'images': {

@@ -278,10 +278,5 @@ class PackageDir:
                 fpath = os.path.join(self.source_dir, deriv.path)
                 deriv_md = ImageDC(deriv).to_dict()
                 deriv_md.update(md_dict)
-                # for key in deriv_md:
-                #     if re.search(r'^dc:', key):
-                #         deriv_md[re.sub(r'^dc:', '', key)] = deriv_md[key]
-                #         deriv_md.pop(key, None)
-                print "%r" % deriv_md
                 exman.add_md_one_file(fpath, deriv_md, overwrite_original=True, keep_open=True)
         exman.stop()
