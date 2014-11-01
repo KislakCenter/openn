@@ -97,7 +97,19 @@
 
                                 <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
                                     <textLang>
-                                        <xsl:value-of select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
+                                        <xsl:if test="//marc:datafield[@tag='041']/marc:subfield[@code='a']">
+                                            <xsl:attribute name="mainLang" select="//marc:datafield[@tag='041']/marc:subfield[@code='a'][1]"/>
+                                            <xsl:if test="count(//marc:datafield[@tag='041']/marc:subfield[@code='a']) &gt; 1">
+                                                <xsl:attribute name="otherLangs">
+                                                    <xsl:call-template name="other-langs">
+                                                        <xsl:with-param name="tags" select="//marc:datafield[@tag='041']/marc:subfield[@code='a']"/>
+                                                    </xsl:call-template>
+                                                </xsl:attribute>
+                                            </xsl:if>
+                                        </xsl:if>
+                                        <xsl:call-template name="chomp-period">
+                                            <xsl:with-param name="string" select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
+                                        </xsl:call-template>
                                     </textLang>
                                 </xsl:if>
                                 <msItem>
@@ -367,5 +379,17 @@
                 </xsl:for-each>
             </xsl:with-param>
         </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="other-langs">
+        <xsl:param name="tags"/>
+        <xsl:for-each select="$tags">
+            <xsl:if test="position() > 1">
+                <xsl:value-of select="."/>
+                <xsl:if test="position() != last()">
+                    <xsl:text> </xsl:text>
+                </xsl:if>
+            </xsl:if>
+        </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>
