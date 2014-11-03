@@ -62,7 +62,8 @@ class ImageDC(CommonDC):
         if self.tei.orig_date:
             s += ', dated to %s' % (self.tei.orig_date, )
 
-        s += '.'
+        if not s.endswith('.'):
+            s += '.'
 
         return s
 
