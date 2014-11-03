@@ -7,12 +7,16 @@ import re
 import sh
 import subprocess
 import tempfile
+import logging
+
+from openn.logging.count_logger import CountLogger
 
 from openn.openn_exception import OPennException
 
 class ExifManager(object):
     xmp_re = re.compile(':')
     newline_re = re.compile('\n')
+    logger = logging.getLogger(__name__)
 
     def __init__(self):
         self._exiftool = ExifTool()
@@ -24,8 +28,11 @@ class ExifManager(object):
     def serialize_xmp(self, file_list, **kwargs):
         args = {'keep_open': True }
         args.update(kwargs)
+        counter = CountLogger(self.logger, file_list)
+        counter.count(msg='Serialize XMP', inc=False)
         for path in file_list:
             self.serialize_xmp_one_file(path, **args)
+            counter.count(msg="XMP for %s" % (os.path.basename(path), ))
         self.stop()
 
     def serialize_xmp_one_file(self, path,**kwargs):

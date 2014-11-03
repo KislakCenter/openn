@@ -26,6 +26,7 @@
 from optparse import OptionParser
 import os
 import sys
+import logging
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from openn.openn_exception import OPennException
@@ -42,6 +43,14 @@ from django.conf import settings
 
 def cmd():
     return os.path.basename(__file__)
+
+def setup_logger():
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)-15s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    logging.getLogger().addHandler(ch)
+    logging.getLogger().setLevel(logging.DEBUG)
 
 def get_collection_prep(source_dir, collection):
     config = settings.COLLECTIONS.get(collection.lower(), None)
@@ -77,6 +86,9 @@ def main(cmdline=None):
 
     collection = args[0]
     source_dir = args[1]
+
+    setup_logger()
+    logger = logging.getLogger(__name__)
 
     collection_prep = get_collection_prep(source_dir, collection)
 

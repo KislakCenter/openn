@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 import os
 import re
 import hashlib
@@ -7,9 +8,12 @@ from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
 from openn.prep.exif_manager import ExifManager
 from openn.md.image_dc import ImageDC
+from openn.logging.count_logger import CountLogger
 import openn.prep.image_deriv as image_deriv
 
 class PackageDir:
+
+    logger = logging.getLogger(__name__)
 
     MASTER     = 'master'
     WEB        = 'web'
@@ -283,10 +287,14 @@ class PackageDir:
         images = []
         files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]
         exman = ExifManager()
-        for image in doc.image_set.all():
+        all_images = doc.image_set.all()
+        cntr = CountLogger(self.logger,all_images)
+        cntr.count(msg='Adding metadata', inc=False)
+        for image in all_images:
             for deriv in image.derivative_set.all():
                 fpath = os.path.join(self.source_dir, deriv.path)
                 deriv_md = ImageDC(deriv).to_dict()
                 deriv_md.update(md_dict)
                 exman.add_md_one_file(fpath, deriv_md, overwrite_original=True, keep_open=True)
+            cntr.count("Added metadata to derivatives for %s %s" % (image.master().basename(), image.label))
         exman.stop()

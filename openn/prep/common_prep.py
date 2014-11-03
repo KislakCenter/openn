@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import logging
 
 from openn.models import *
 from openn import openn_db
@@ -52,6 +53,8 @@ class CommonPrep(OPennSettings):
 
     """
 
+    logger = logging.getLogger(__name__)
+
     def __init__(self,source_dir,collection):
         OPennSettings.__init__(self,collection)
         self.package_dir   = PackageDir(source_dir)
@@ -99,7 +102,12 @@ class CommonPrep(OPennSettings):
     def prep_dir(self):
         doc = self.save_document()
         version = self.save_version(doc)
+        # rename master files
+        self.logger.info("[%s] Rename master files" % (self.package_dir.basedir))
         self.package_dir.rename_masters(doc)
+
+        # generate derivatives
+        self.logger.info("[%s] Generate derivatives" % (self.package_dir.basedir))
         self.package_dir.create_derivs(self.deriv_configs)
         openn_db.save_image_data(doc,self.package_dir.file_list.data)
 
@@ -108,11 +116,21 @@ class CommonPrep(OPennSettings):
         doc.tei_xml = self.tei.to_string()
         doc.save()
 
+        # add metadata derivatives
+        self.logger.info("[%s] Add metadata" % (self.package_dir.basedir))
         self.package_dir.add_image_metadata(doc,self.coll_config.get('image_rights'))
+
+        # serialize_xmp
+        self.logger.info("[%s] Serialize XMP" % (self.package_dir.basedir))
         self.package_dir.serialize_xmp()
         self.package_dir.update_image_details()
 
+        # generate manifest
+        self.logger.info("[%s] Generate manifest" % (self.package_dir.basedir))
         self.package_dir.create_manifest()
+
+        # write version.txt
+        self.logger.info("[%s] Write version.txt" % (self.package_dir.basedir))
         self.package_dir.write_version_txt(doc)
         self._cleanup()
 

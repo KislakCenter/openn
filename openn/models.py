@@ -2,6 +2,7 @@
 from django.db import models
 from ordered_model.models import OrderedModel
 from django.conf import settings
+import os
 import re
 
 """
@@ -187,3 +188,6 @@ class Derivative(models.Model):
     def url(self):
         collection = settings.COLLECTIONS[self.image.document.collection]
         return "/%s/%s/%s" % (collection['web_dir'], self.image.document.base_dir, self.path)
+
+    def basename(self):
+        return os.path.splitext(os.path.basename(self.path))[0]
