@@ -21,6 +21,27 @@ class ExifManager(object):
     def __del__(self):
         self.stop()
 
+    def serialize_xmp(self, file_list, **kwargs):
+        args = {'keep_open': True }
+        args.update(kwargs)
+        for path in file_list:
+            self.serialize_xmp_one_file(path, **args)
+        self.stop()
+
+    def serialize_xmp_one_file(self, path,**kwargs):
+        keep_open = kwargs.get('keep_open', False)
+        kwargs.pop('keep_open', None)
+
+        if not self._exiftool.running:
+            self.start()
+        xmp = "%s.xmp" % (path, )
+        tags = [ '-tagsFromFile', path, xmp ]
+        self._exiftool.execute(*tags)
+
+        if not keep_open:
+            self.stop()
+
+
     def add_metadata(self,file_list,prop_dict,overwrite_original=False):
         self.start()
         for file in file_list:

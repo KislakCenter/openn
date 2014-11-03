@@ -109,6 +109,7 @@ class CommonPrep(OPennSettings):
         doc.save()
 
         self.package_dir.add_image_metadata(doc,self.coll_config.get('image_rights'))
+        self.package_dir.serialize_xmp()
         self.package_dir.update_image_details()
 
         self.package_dir.create_manifest()

@@ -269,6 +269,16 @@ class PackageDir:
                     details = image_deriv.details(self.source_dir, deriv['path'])
                     deriv.update(details)
 
+    def serialize_xmp(self):
+        files = []
+        for fdata in self.file_list.all_file_data:
+            for deriv in getattr(fdata, 'derivs', {}).values():
+                path = os.path.join(self.source_dir, deriv['path'])
+                files.append(path)
+        exman = ExifManager()
+        exman.serialize_xmp(files)
+        exman.stop()
+
     def add_image_metadata(self,doc,md_dict):
         images = []
         files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]

@@ -166,7 +166,7 @@ class FileList:
     def deriv_count(self):
         """Return count of all derivatives."""
         return sum([fdata.deriv_count for fls in self.file_list.values() for fdata in fls ])
-        
+
     def count(self,type=DOCUMENT):
         return len(self.files(type))
 
