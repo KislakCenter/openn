@@ -7,6 +7,7 @@ from openn.xml.xml_whatsit import XMLWhatsit
 from openn.xml.ms_item import MSItem
 from openn.xml.licence import Licence
 from openn.xml.resp_stmt import RespStmt
+from openn.xml.identifier import Identifier
 
 class OPennTEI(XMLWhatsit):
     TEI_NS = 'http://www.tei-c.org/ns/1.0'
@@ -153,10 +154,24 @@ class OPennTEI(XMLWhatsit):
             self._authors = self._all_the_strings(xpath)
         return self._authors
 
+    @property
+    def hdl(self):
+        return self._get_text('//t:msIdentifier/t:altIdentifier[@type="hdl"]/idno')
+
+    @property
+    def bibid(self):
+        return self._get_text('//t:msIdentifier/t:altIdentifier[@type="bidid"]/idno')
+
+    @property
     def related_names(self):
         if not getattr(self, '_related_names', None):
             self._related_names = [RespStmt(n,self.ns) for n in self._get_nodes('//t:msContents/t:msItem[1]/t:respStmt')]
         return self._related_names
+
+    @property
+    def alt_identifiers(self):
+        nodes = self._get_nodes('//t:msIdentifier/t:altIdentifier')
+        return [ Identifier(n,self.ns) for n in nodes ]
 
     def ms_items(self, n):
         nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)

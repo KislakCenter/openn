@@ -20,7 +20,7 @@ class PackageDir:
     THUMB      = 'thumb'
     EXTRA      = 'extra'
     DOCUMENT   = 'document'
-    IMAGE_DIRS = ( MASTER, WEB, THUMB, EXTRA )
+    IMAGE_DIRS = ( MASTER, WEB, THUMB )
 
     # All white space in filenames will be replace by '_' or removed
     white_space_re = re.compile('\s')
@@ -124,8 +124,11 @@ class PackageDir:
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
 
-        self.create_image_dir('extra')
-        for fdata in self.file_list.files(FileList.EXTRA):
+        extra_files = self.file_list.files(FileList.EXTRA)
+        if extra_files and len(extra_files) > 0:
+            self.create_image_dirs(suppl='extra')
+
+        for fdata in extra_files:
             curr_name = fdata.filename
             new_name = self.extra_filename(curr_name)
             src = os.path.join(self.source_dir, curr_name)
@@ -138,7 +141,7 @@ class PackageDir:
     def extra_filename(self,curr_name):
         base  = os.path.basename(curr_name)
         new_base = PackageDir.white_space_re.sub('_', base)
-        return self.source_dir_re.sub('', os.path.join(self.data_dir, 'extra', new_base))
+        return self.source_dir_re.sub('', os.path.join(self.data_dir, 'extra', 'master', new_base))
 
     def save_tei(self, openn_tei, doc):
         """
@@ -170,9 +173,21 @@ class PackageDir:
         new_base = "%04d_%04d%s" % ( doc_id, index, orig_ext )
         return os.path.join(self.master_dir, new_base)
 
-    def create_image_dirs(self):
+    def create_image_dirs(self,suppl=None):
+        """By default, create image derivatives dirs in <DATA_DIR>. If suppl
+        is provided, create suppl dir <DATA_DIR>/suppl, and then
+        create the derivative dirs in <DATA_DIR>/suppl.
+
+        """
+        data_dir = self.data_dir
+        if suppl:
+            data_dir = os.path.join(self.data_dir, suppl)
+
+        if not os.path.exists(data_dir):
+            os.mkdir(data_dir)
+
         for name in self.image_dirs:
-           dir = os.path.join(self.data_dir, name)
+           dir = os.path.join(data_dir, name)
            if not os.path.exists(dir):
                os.mkdir(dir)
 
@@ -187,7 +202,7 @@ class PackageDir:
             deriv_dir = deriv_type
         base = os.path.splitext(os.path.basename(master))[0]
         dbase = "%s_%s.%s" % (base, deriv_type, ext)
-        return os.path.join('data', deriv_type, dbase)
+        return os.path.join('data', deriv_dir, dbase)
 
     def rel_path(self, path):
         return self.source_dir_re.sub('', path)
@@ -263,6 +278,12 @@ class PackageDir:
             for fdata in self.file_list.document_files:
                 master = fdata.get_deriv_path(FileList.FileData.MASTER)
                 deriv = self.deriv_name(master, deriv_type, dconf['ext'])
+                details = image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
+                fdata.add_deriv(deriv, deriv_type, details=details)
+            for fdata in self.file_list.extra_files:
+                extra_dir = os.path.join('extra', deriv_type)
+                master = fdata.get_deriv_path(FileList.FileData.MASTER)
+                deriv = self.deriv_name(master, deriv_type, dconf['ext'], deriv_dir=extra_dir)
                 details = image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
                 fdata.add_deriv(deriv, deriv_type, details=details)
 

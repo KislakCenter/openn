@@ -124,7 +124,12 @@ class ExifManager(object):
     def _build_tags(self,prop_dict):
         tags = []
         for key in prop_dict:
-            tags.append(self._build_tag(key,prop_dict.get(key)))
+            value = prop_dict.get(key)
+            if isinstance(value,list) or isinstance(value,tuple):
+                for v in value:
+                    tags.append(self._build_tag(key,v))
+            else:
+                tags.append(self._build_tag(key,value))
         return tags
 
     def _build_tag(self,name,value):

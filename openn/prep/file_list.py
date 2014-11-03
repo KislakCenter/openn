@@ -158,6 +158,10 @@ class FileList:
         return self.files(FileList.DOCUMENT)
 
     @property
+    def extra_files(self):
+        return self.files(FileList.EXTRA)
+
+    @property
     def file_count(self):
         """Return a count of all the files."""
         return sum([len(fls) for fls in self.file_list.values()])

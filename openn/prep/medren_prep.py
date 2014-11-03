@@ -171,6 +171,17 @@ class MedrenPrep(CollectionPrep):
         f.write(json.dumps(file_list))
         f.close()
 
+    def fix_tiff_names(self):
+        space_re = re.compile('\s+')
+        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
+        for tiff in tiffs:
+            basename = os.path.basename(tiff)
+            if space_re.search(basename):
+                new_name = os.path.join(self.source_dir,
+                                        space_re.sub('_', basename))
+                shutil.move(tiff, new_name)
+
+
     def stage_tiffs(self):
         """Move the TIFF files into the data directory"""
         self.data_dir = os.path.join(self.source_dir, 'data')
@@ -230,7 +241,7 @@ class MedrenPrep(CollectionPrep):
         outfile = self.pih_filename(bibid)
         if os.path.exists(outfile):
             backup = '{0}-{1}'.format(outfile, tstamp())
-            warning(cmd(), 'Backing up existing XML file {0} to {1}'.format(outfile, backup))
+            warning(__name__, 'Backing up existing XML file {0} to {1}'.format(outfile, backup))
             os.rename(outfile, backup)
         f = open(outfile, 'w+')
         f.write(self.get_xml(bibid))
@@ -241,6 +252,7 @@ class MedrenPrep(CollectionPrep):
         pih_xml = self.write_xml()
         call_no = self.check_valid_xml(pih_xml)
         self.check_file_names(pih_xml)
+        self.fix_tiff_names()
         self.stage_tiffs()
         self.add_file_list(pih_xml)
         tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])

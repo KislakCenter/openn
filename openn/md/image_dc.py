@@ -29,6 +29,11 @@ class ImageDC(CommonDC):
     def dc_identifier(self):
         return '%d.%d' % (self.document.id, self.image.id)
 
+    def dc_relation(self):
+        rels = [ '%s %s' % (self.tei.institution, self.document.call_number) ]
+        rels += super(ImageDC, self).dc_relation()
+        return rels
+
     def dc_date(self):
         return self.image.updated.strftime('%Y-%m-%d')
 
@@ -38,7 +43,7 @@ class ImageDC(CommonDC):
     def dc_description(self):
         s = 'This is'
         label = self.image.display_label()
-        if not label or ImageDC.BLANK_RE.search(label):
+        if not label or ImageDC.BLANK_RE.search(label) or label == 'None':
             s += ' an image'
         else:
             s += ' an image of %s' % (label, )
@@ -57,7 +62,8 @@ class ImageDC(CommonDC):
         if self.tei.orig_date:
             s += ', dated to %s' % (self.tei.orig_date, )
 
-        s += '.'
+        if not s.endswith('.'):
+            s += '.'
 
         return s
 
