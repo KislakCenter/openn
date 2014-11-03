@@ -43,7 +43,7 @@ class ImageDC(CommonDC):
     def dc_description(self):
         s = 'This is'
         label = self.image.display_label()
-        if not label or ImageDC.BLANK_RE.search(label):
+        if not label or ImageDC.BLANK_RE.search(label) or label == 'None':
             s += ' an image'
         else:
             s += ' an image of %s' % (label, )
