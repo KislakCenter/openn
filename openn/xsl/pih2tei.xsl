@@ -89,6 +89,11 @@
                                 <altIdentifier type="bibid">
                                     <idno><xsl:value-of select="//marc:controlfield[@tag='001']"/></idno>
                                 </altIdentifier>
+                                <xsl:if test="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]">
+                                    <altIdentifier type="hdl">
+                                        <idno><xsl:value-of select="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]/parent::marc:datafield/marc:subfield[@code='u']"></xsl:value-of></idno>
+                                    </altIdentifier>
+                                </xsl:if>
                             </msIdentifier>
                             <msContents>
                                 <summary>
