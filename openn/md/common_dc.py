@@ -16,7 +16,10 @@ class CommonDC(DublinCore):
     def tei(self):
         return self._tei
 
-    def dc_subjects(self):
+    def dc_relation(self):
+        return [ n.text for n in self.tei.alt_identifiers ]
+
+    def dc_subject(self):
         return self.tei.subjects + self.tei.genres
 
     def dc_publisher(self):

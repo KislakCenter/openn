@@ -39,7 +39,7 @@ class DocumentDC(CommonDC):
         super(DocumentDC,self).__init__(**kwargs)
 
     def dc_identifier(self):
-        return "%s %s" % (self.tei.repository, self.document.call_number)
+        return "%s %s" % (self.tei.institution, self.document.call_number)
 
     def dc_date(self):
         return self.document.updated.strftime('%Y-%m-%d')

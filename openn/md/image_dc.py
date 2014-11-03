@@ -29,6 +29,11 @@ class ImageDC(CommonDC):
     def dc_identifier(self):
         return '%d.%d' % (self.document.id, self.image.id)
 
+    def dc_relation(self):
+        rels = [ '%s %s' % (self.tei.institution, self.document.call_number) ]
+        rels += super(ImageDC, self).dc_relation()
+        return rels
+
     def dc_date(self):
         return self.image.updated.strftime('%Y-%m-%d')
 
