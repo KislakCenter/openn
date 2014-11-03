@@ -39,7 +39,7 @@ class ImageDC(CommonDC):
         s = 'This is'
         label = self.image.display_label()
         if not label or ImageDC.BLANK_RE.search(label):
-            s += ' an unlabeled image from '
+            s += ' an image'
         else:
             s += ' an image of %s' % (label, )
 
