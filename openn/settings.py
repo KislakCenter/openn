@@ -33,6 +33,11 @@ DATABASES = {
     }
 }
 
+# Files matching the following pattern will be cleaned from source
+# directories.  The pattern must be a valid, UNCOMPILED python regular
+# expression string.
+CLOBBER_PATTERN = 'Thumbs.db|.*\.lnk'
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',

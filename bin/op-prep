@@ -50,6 +50,20 @@ def get_collection_prep(source_dir, collection):
     cls = get_class(config['prep_class'])
     return cls(source_dir, collection)
 
+def fix_perms(source_dir):
+    for root, dirs, files in os.walk(source_dir):
+        os.chmod(root, 0775)
+        for name in files:
+            os.chmod(os.path.join(root, name), 0664)
+
+def clean_dir(source_dir, clobber_pattern):
+    clobber_re = re.compile(clobber_pattern)
+    for root, dirs, files, in os.walk(source_dir):
+        for name in files:
+            if clobber_re.search(name):
+                path = os.path.join(root, name)
+                os.remove(path)
+
 def main(cmdline=None):
     """op-prep main
     """
@@ -67,6 +81,10 @@ def main(cmdline=None):
     collection_prep = get_collection_prep(source_dir, collection)
 
     try:
+        fix_perms(source_dir)
+        os.umask(0002)
+        if hasattr(settings, 'CLOBBER_PATTERN'):
+            clean_dir(source_dir, settings.CLOBBER_PATTERN)
         collection_prep.prep_dir()
         common_prep = CommonPrep(source_dir, collection)
         common_prep.prep_dir()
