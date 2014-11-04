@@ -17,6 +17,7 @@ setUp() {
 
 # suite() {
 #     suite_addTest testRun
+#     #suite_addTest testBloodyUnicode
 # }
 
 tearDown() {
@@ -42,6 +43,17 @@ testRun() {
     assertFalse "Should not find PIH XML in $source_dir found: `ls $source_dir/pih*.xml 2>/dev/null`" "ls $source_dir/pih*.xml"
     assertFalse "Should not find file_list.json in $source_dir; found: `ls $source_dir/*.json 2>/dev/null`" "ls $source_dir/*.json"
     assertFalse "Should find PARTIAL_TEI.xml in $source_dir; found `ls $source_dir/PARTIAL_TEI.xml 2>/dev/null`" "ls $source_dir/PARTIAL_TEI.xml"
+}
+
+testBloodyUnicode() {
+    source_dir=$TEST_STAGING_DIR/ljs454
+    cp -r $TEST_DATA_DIR/ljs454 $source_dir
+    op-prep ljs $source_dir
+    # source_dir=$TEST_STAGING_DIR/mscodex1589
+    # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir
+    # op-prep medren $source_dir
+    status=$?
+    assertEquals 0 $status
 }
 
 testImagesNotInPIH() {
