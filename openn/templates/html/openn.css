@@ -1,0 +1,142 @@
+@charset "utf-8";
+
+
+html {
+  position: relative;
+  min-height: 99%;
+  overflow-x:hidden;
+}
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 40px;
+}
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 40px;
+	font-family: 'PT Sans', sans-serif;
+	font-size: 14px;
+	color: #333;
+	background-color: #f5f5f5;
+	text-align: center;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-top-color: #CCC;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	border-left-color: #CCC;
+	padding-bottom: 5px;
+}
+
+#pagetop {
+	font-family: 'PT Sans', sans-serif;
+	font-size: 14px;
+	color: #333;
+	overflow: visible;
+	position: absolute;
+	z-index: 5;
+	height: 30px;
+	width: 98%;
+	left: 0px;
+	top: 13px;
+	letter-spacing: .05em;
+	clear: both;
+	padding: 5px;
+}
+
+#pagetop a:link, a:visited{
+	color: #333;
+    text-decoration: none;
+}
+
+
+.topleft {
+	float: left;
+}
+.topright {
+	float: right;
+}
+
+#opennlogo {
+	font-family: 'PT Sans', sans-serif;
+	font-size: 16px;
+	color: #900;
+	overflow: visible;
+	position: absolute;
+	visibility: visible;
+	z-index: 2;
+	top: 60px;
+	text-align: center;
+	width: 100%;
+	letter-spacing: .08em;
+	font-weight: bold;
+
+}
+
+
+#text_openn {
+	position: static;
+	overflow: visible;
+	visibility: visible;
+	z-index: 5;
+	height: auto;
+	width: 15%;
+	font-family: 'Roboto Slab', serif;
+	font-size: 12px;
+	color: #333;
+	line-height: 135%;
+	letter-spacing: .02em;
+	background-color: #f5f5f5;
+	float: right;
+	margin-top: 155px;
+	margin-right: 10px;
+	border-radius: 8px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #999;
+	padding: 7px;
+	border-top-width: 9px;
+	border-top-style: inset;
+	border-top-color: #e2e2e2;
+}
+
+#openn_directory {
+	width: 600px;
+	top: 135px;
+	left: 50%;
+	position: absolute;
+	margin-left: -300px;
+	background-color: #FFF;
+	z-index: 10;
+}
+
+#tbl_directory {
+  width: 600px;
+  font-family: Courier, monospace;
+}
+
+#tbl_directory a:link, a:visited {
+  text-decoration: none;
+	color: #333;
+}
+
+#tbl_directory td, #tbl_directory th {
+  white-space: nowrap;  
+}
+
+/*
+#tbl_directory th a:link, a:visited {
+	text-decoration: none;
+	color: #333;
+}
+
+#tbl_directory td a:link, a:visited {
+  text-decoration: none;
+  color: #333;
+} */
