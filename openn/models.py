@@ -63,7 +63,7 @@ class Document(models.Model):
 
     @property
     def tei_basename(self):
-        return '%04d_TEI.xml' % (self.id, )
+        return '%s_TEI.xml' % (self.base_dir, )
 
     @property
     def tei_path(self):
