@@ -251,26 +251,16 @@ class MedrenPrep(CollectionPrep):
         return outfile
 
     def _do_prep_dir(self):
-        if self.get_status() >= self.COLLECTION_PREP_COMPLETED:
-            self.logger.warning("[%s] Collection prep already completed" % (self.basedir,))
-        else:
-            pih_xml = self.write_xml()
-            call_no = self.check_valid_xml(pih_xml)
-            self.check_file_names(pih_xml)
-            self.fix_tiff_names()
-            self.stage_tiffs()
-            self.add_file_list(pih_xml)
-            tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])
-            self._cleanup()
+        pih_xml = self.write_xml()
+        call_no = self.check_valid_xml(pih_xml)
+        self.check_file_names(pih_xml)
+        self.fix_tiff_names()
+        self.stage_tiffs()
+        self.add_file_list(pih_xml)
+        tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])
 
-    def _cleanup(self):
-        removals = []
+        # files to cleanup
         bibid = self.get_bibid()
-
-        removals.append(self.pih_filename(bibid))
-        removals.append(self.bibid_filename())
-        removals.append(os.path.join(self.source_dir, 'sha1manifest.txt'))
-
-        for f in removals:
-            if os.path.exists(f):
-                os.remove(f)
+        self.add_removal(self.pih_filename(bibid))
+        self.add_removal(self.bibid_filename())
+        self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
