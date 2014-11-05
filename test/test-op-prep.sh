@@ -31,11 +31,15 @@ tearDown() {
 testRun() {
     source_dir=$TEST_STAGING_DIR/mscodex1223
     cp -r $TEST_DATA_DIR/mscodex1223 $source_dir
-    op-prep medren $source_dir
+    output=`op-prep medren $source_dir`
     # source_dir=$TEST_STAGING_DIR/mscodex1589
     # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir
     # op-prep medren $source_dir
     status=$?
+    if [ $status != 0 ]
+    then
+        print "$output"
+    fi
     assertEquals 0 $status
     assertTrue "Expected TEI file in $source_dir/data; found: `ls $source_dir/data 2>/dev/null`" "ls $source_dir/data/*[0-9]_TEI.xml"
     assertTrue "Expected manifest in $source_dir" "[ -f $source_dir/manifest-sha1.txt ]"
@@ -48,7 +52,11 @@ testRun() {
 testBloodyUnicode() {
     source_dir=$TEST_STAGING_DIR/ljs454
     cp -r $TEST_DATA_DIR/ljs454 $source_dir
-    op-prep ljs $source_dir
+    output=`op-prep ljs $source_dir`
+    if [ $status != 0 ]
+    then
+        print "$output"
+    fi
     # source_dir=$TEST_STAGING_DIR/mscodex1589
     # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir
     # op-prep medren $source_dir
@@ -60,7 +68,11 @@ testImagesNotInPIH() {
 
     package_dir=$TEST_STAGING_DIR/mscodex1589
     cp -r $DIR_EXTRA_IMAGES $package_dir
-    op-prep medren $package_dir
+    output=`op-prep medren $package_dir`
+    if [ $status != 0 ]
+    then
+        print "$output"
+    fi
     status=$?
     assertEquals 0 $status
 }
