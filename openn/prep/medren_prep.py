@@ -32,8 +32,7 @@ class MedrenPrep(CollectionPrep):
 
         """
         # TODO: break if SAXON_JAR not set; see bin/op-gen-tei
-        CollectionPrep.__init__(self,collection)
-        self.source_dir    = source_dir
+        CollectionPrep.__init__(self,source_dir,collection)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
 
     @property
@@ -248,7 +247,7 @@ class MedrenPrep(CollectionPrep):
         f.close()
         return outfile
 
-    def prep_dir(self):
+    def _do_prep_dir(self):
         pih_xml = self.write_xml()
         call_no = self.check_valid_xml(pih_xml)
         self.check_file_names(pih_xml)

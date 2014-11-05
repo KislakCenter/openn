@@ -38,7 +38,7 @@ testRun() {
     status=$?
     if [ $status != 0 ]
     then
-        print "$output"
+        echo "$output"
     fi
     assertEquals 0 $status
     assertTrue "Expected TEI file in $source_dir/data; found: `ls $source_dir/data 2>/dev/null`" "ls $source_dir/data/*[0-9]_TEI.xml"
@@ -55,7 +55,7 @@ testBloodyUnicode() {
     output=`op-prep ljs $source_dir`
     if [ $status != 0 ]
     then
-        print "$output"
+        echo "$output"
     fi
     # source_dir=$TEST_STAGING_DIR/mscodex1589
     # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir
@@ -71,7 +71,7 @@ testImagesNotInPIH() {
     output=`op-prep medren $package_dir`
     if [ $status != 0 ]
     then
-        print "$output"
+        echo "$output"
     fi
     status=$?
     assertEquals 0 $status

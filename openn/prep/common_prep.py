@@ -9,6 +9,7 @@ from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
 from openn.prep.package_dir import PackageDir
 from openn.openn_settings import OPennSettings
+from openn.prep.status import Status
 from openn.models import *
 
 from django.core import serializers
@@ -21,7 +22,7 @@ preparation and to conform to its input requirements, which are described
 below.
 """
 
-class CommonPrep(OPennSettings):
+class CommonPrep(OPennSettings,Status):
     """
     Perform common preparation of OPenn data packages, including:
          - Create image directory structure
@@ -57,6 +58,7 @@ class CommonPrep(OPennSettings):
 
     def __init__(self,source_dir,collection):
         OPennSettings.__init__(self,collection)
+        Status.__init__(self,source_dir)
         self.package_dir   = PackageDir(source_dir)
         self.collection    = collection
         self.check_valid()
@@ -84,6 +86,18 @@ class CommonPrep(OPennSettings):
         attrs.setdefault('description', 'Initial version')
         return openn_db.save_version(doc,attrs)
 
+    def prep_document(self):
+        doc = None
+        try:
+            attrs = {
+                'collection': self.collection,
+                'base_dir': self.package_dir.basedir
+            }
+            doc = Document.objects.get(**attrs)
+        except Document.DoesNotExist:
+            doc = self.save_document()
+        return doc
+
     def save_document(self):
         """ Store this manuscript or book or whatever in the database,
         so we can track it and make sure it's unique."""
@@ -100,44 +114,87 @@ class CommonPrep(OPennSettings):
         self.package_dir.check_valid()
 
     def prep_dir(self):
-        doc = self.save_document()
-        version = self.save_version(doc)
+        if self.get_status() < self.COLLECTION_PREP_COMPLETED:
+            raise OPennException("Collection prep not complete")
+        doc = self.prep_document()
+
+        basedir = self.package_dir.basedir
         # rename master files
-        self.logger.info("[%s] Rename master files" % (self.package_dir.basedir))
-        self.package_dir.rename_masters(doc)
+        if self.get_status() > self.MASTERS_RENAMED:
+            self.logger.warning("[%s] Master files already renamed" % (basedir,))
+        else:
+            self.logger.info("[%s] Rename master files" % (basedir,))
+            self.package_dir.rename_masters(doc)
+            self.write_status(self.MASTERS_RENAMED)
 
         # generate derivatives
-        self.logger.info("[%s] Generate derivatives" % (self.package_dir.basedir))
-        self.package_dir.create_derivs(self.deriv_configs)
-        openn_db.save_image_data(doc,self.package_dir.file_list.data)
+        if self.get_status() > self.DERIVS_CREATED:
+            self.logger.warning("[%s] Derivatives already created" % (basedir,))
+        else:
+            self.logger.info("[%s] Generate derivatives" % (basedir,))
+            self.package_dir.create_derivs(self.deriv_configs)
+            openn_db.save_image_data(doc,self.package_dir.file_list.data)
+            self.write_status(self.DERIVS_CREATED)
 
-        self.tei.add_file_list(self.package_dir.file_list)
-        self.package_dir.save_tei(self.tei, doc)
-        doc.tei_xml = self.tei.to_string()
-        doc.save()
+        # generate derivatives
+        if self.get_status() > self.TEI_COMPLETED:
+            self.logger.warning("[%s] TEI already completed" % (basedir,))
+        else:
+            self.logger.info("[%s] Complete TEI" % (basedir,))
+            self.tei.add_file_list(self.package_dir.file_list)
+            self.package_dir.save_tei(self.tei, doc)
+            doc.tei_xml = self.tei.to_string()
+            doc.save()
+            self.write_status(self.TEI_COMPLETED)
 
         # add metadata derivatives
-        self.logger.info("[%s] Add metadata" % (self.package_dir.basedir))
-        self.package_dir.add_image_metadata(doc,self.coll_config.get('image_rights'))
+        if self.get_status() > self.IMAGE_METADATA_ADDED:
+            self.logger.warning("[%s] Image metadata already added" % (basedir,))
+        else:
+            self.logger.info("[%s] Add metadata" % (basedir,))
+            self.package_dir.add_image_metadata(doc,self.coll_config.get('image_rights'))
+            self.write_status(self.IMAGE_METADATA_ADDED)
 
         # serialize_xmp
-        self.logger.info("[%s] Serialize XMP" % (self.package_dir.basedir))
-        self.package_dir.serialize_xmp()
-        self.package_dir.update_image_details()
+        if self.get_status() > self.IMAGE_DETAILS_UPDATED:
+            self.logger.warning("[%s] Image details already updated" % (basedir,))
+        else:
+            self.logger.info("[%s] Serialize XMP" % (basedir,))
+            self.package_dir.serialize_xmp()
+            self.package_dir.update_image_details()
+            self.write_status(self.IMAGE_DETAILS_UPDATED)
 
         # generate manifest
-        self.logger.info("[%s] Generate manifest" % (self.package_dir.basedir))
-        self.package_dir.create_manifest()
+        if self.get_status() > self.MANIFEST_CREATED:
+            self.logger.warning("[%s] Manifest already generated" % (basedir,))
+        else:
+            self.logger.info("[%s] Generate manifest" % (basedir,))
+            self.package_dir.create_manifest()
+            self.write_status(self.MANIFEST_CREATED)
 
         # write version.txt
-        self.logger.info("[%s] Write version.txt" % (self.package_dir.basedir))
-        self.package_dir.write_version_txt(doc)
+        if self.get_status() > self.VERSION_TXT_WRITTEN:
+            self.logger.warning("[%s] Version.txt already written" % (basedir,))
+        else:
+            self.logger.info("[%s] Write version.txt" % (basedir,))
+            version = self.save_version(doc)
+            self.package_dir.write_version_txt(doc)
+            self.write_status(self.VERSION_TXT_WRITTEN)
+
+        if self.get_status() > self.COMMON_PREP_COMPLETED:
+            self.logger.warning("[%s] Common prep already complete" % (basedir,))
+        else:
+            self.logger.info("[%s] Marking common prep COMPLETED" % (basedir,))
+
         self._cleanup()
 
     def _cleanup(self):
         removals = []
         removals.append(self.package_dir.partial_tei_path)
         removals.append(self.package_dir.file_list_path)
+        removals.append(self.status_file_path)
         for r in removals:
             if os.path.exists(r):
+                self.logger.debug("[%s] Cleanup: removing \'%s\'" % (
+                    self.package_dir.basedir,r))
                 os.remove(r)
