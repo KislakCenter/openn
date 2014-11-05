@@ -2,7 +2,7 @@
 
 source `dirname $0`/shunit_helper
 
-DIR_EXTRA_IMAGES=$TEST_DATA_DIR/mscodex1589
+DIR_EXTRA_IMAGES=$TEST_DATA_DIR/ljs454
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -66,7 +66,7 @@ testBloodyUnicode() {
 
 testImagesNotInPIH() {
 
-    package_dir=$TEST_STAGING_DIR/mscodex1589
+    package_dir=$TEST_STAGING_DIR/ljs454
     cp -r $DIR_EXTRA_IMAGES $package_dir
     output=`op-prep medren $package_dir`
     if [ $status != 0 ]
