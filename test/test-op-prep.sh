@@ -3,6 +3,7 @@
 source `dirname $0`/shunit_helper
 
 DIR_EXTRA_IMAGES=$TEST_DATA_DIR/ljs454
+PREPPED_DIR=$TEST_DATA_DIR/mscodex1223_prepped
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -16,8 +17,9 @@ setUp() {
 }
 
 # suite() {
-#     suite_addTest testRun
+#     #suite_addTest testRun
 #     #suite_addTest testBloodyUnicode
+#     suite_addTest testStatusFlags
 # }
 
 tearDown() {
@@ -53,6 +55,7 @@ testBloodyUnicode() {
     source_dir=$TEST_STAGING_DIR/ljs454
     cp -r $TEST_DATA_DIR/ljs454 $source_dir
     output=`op-prep ljs $source_dir`
+    status=$?
     if [ $status != 0 ]
     then
         echo "$output"
@@ -68,13 +71,28 @@ testImagesNotInPIH() {
 
     package_dir=$TEST_STAGING_DIR/ljs454
     cp -r $DIR_EXTRA_IMAGES $package_dir
-    output=`op-prep medren $package_dir`
+    output=`op-prep ljs $package_dir`
+    status=$?
     if [ $status != 0 ]
     then
         echo "$output"
     fi
     status=$?
     assertEquals 0 $status
+}
+
+testStatusFlags() {
+    package_dir=$TEST_STAGING_DIR/mscodex1223
+    cp -r $PREPPED_DIR $package_dir
+    output=`op-prep medren $package_dir`
+    status=$?
+    if [ $status != 0 ]
+    then
+        echo "$output"
+    fi
+    status=$?
+    assertEquals 0 $status
+    assertMatch "$output" "Collection prep already completed"
 }
 
 # Run shunit

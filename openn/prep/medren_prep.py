@@ -7,6 +7,7 @@ import urllib2
 import subprocess
 import glob
 import shutil
+import logging
 from lxml import etree
 from openn.prep.collection_prep import CollectionPrep
 from openn.openn_exception import OPennException
@@ -17,6 +18,8 @@ class MedrenPrep(CollectionPrep):
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
     DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\.tif$', 'body\d{4}\.tif$', 'back\d{4}\.tif$' ]
+
+    logger = logging.getLogger(__name__)
 
     def __init__(self, source_dir, collection):
         """
@@ -248,14 +251,17 @@ class MedrenPrep(CollectionPrep):
         return outfile
 
     def _do_prep_dir(self):
-        pih_xml = self.write_xml()
-        call_no = self.check_valid_xml(pih_xml)
-        self.check_file_names(pih_xml)
-        self.fix_tiff_names()
-        self.stage_tiffs()
-        self.add_file_list(pih_xml)
-        tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])
-        self._cleanup()
+        if self.get_status() >= self.COLLECTION_PREP_COMPLETED:
+            self.logger.warning("[%s] Collection prep already completed" % (self.basedir,))
+        else:
+            pih_xml = self.write_xml()
+            call_no = self.check_valid_xml(pih_xml)
+            self.check_file_names(pih_xml)
+            self.fix_tiff_names()
+            self.stage_tiffs()
+            self.add_file_list(pih_xml)
+            tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])
+            self._cleanup()
 
     def _cleanup(self):
         removals = []
