@@ -12,7 +12,7 @@ body {
   margin-bottom: 40px;
 }
 .footer {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	width: 100%;
 	/* Set the fixed height of the footer here */
@@ -117,9 +117,10 @@ body {
 }
 
 #content {
-	width: 90%;
-	top: 135px;
-	position: absolute;
+    width: 90%;
+    top: 100px;
+    left: 10%;
+    position: absolute;
 }
 
 #tbl_directory {
