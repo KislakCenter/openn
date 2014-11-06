@@ -116,6 +116,12 @@ body {
 	z-index: 10;
 }
 
+#content {
+	width: 90%;
+	top: 135px;
+	position: absolute;
+}
+
 #tbl_directory {
   width: 600px;
   font-family: Courier, monospace;
@@ -127,7 +133,7 @@ body {
 }
 
 #tbl_directory td, #tbl_directory th {
-  white-space: nowrap;  
+  white-space: nowrap;
 }
 
 /*
