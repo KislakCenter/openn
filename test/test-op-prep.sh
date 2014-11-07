@@ -17,9 +17,9 @@ setUp() {
 }
 
 # suite() {
-#     #suite_addTest testRun
-#     #suite_addTest testBloodyUnicode
-#     suite_addTest testStatusFlags
+#     suite_addTest testRun
+#     # suite_addTest testBloodyUnicode
+#     # suite_addTest testStatusFlags
 # }
 
 tearDown() {
@@ -34,9 +34,15 @@ testRun() {
     source_dir=$TEST_STAGING_DIR/mscodex1223
     cp -r $TEST_DATA_DIR/mscodex1223 $source_dir
     output=`op-prep medren $source_dir`
+
     # source_dir=$TEST_STAGING_DIR/mscodex1589
     # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir
-    # op-prep medren $source_dir
+    # source=`op-prep medren $source_dir`
+
+    # source_dir=$TEST_STAGING_DIR/ljs454
+    # cp -r $TEST_DATA_DIR/ljs454 $source_dir
+    # output=`op-prep ljs $source_dir`
+
     status=$?
     if [ $status != 0 ]
     then
