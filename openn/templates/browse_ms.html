@@ -48,6 +48,17 @@
           ({{ doc.tei.settlement }}, {{ doc.tei.institution }}, {{ doc.tei.repository }})
         </div>
 
+        {% if doc.tei.alt_identifiers %}
+        <div>
+          <h4>Alternate identifiers</h4>
+          <ul class="list-unstyled">
+          {% for id in doc.tei.alt_identifiers %}
+             <li>{{ id.text|urlize }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
         <div>
           <h4>Publisher</h4>
           <span>{{ doc.tei.publisher }}</span><br />
