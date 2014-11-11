@@ -160,7 +160,7 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Image details already updated" % (basedir,))
         else:
             self.logger.info("[%s] Serialize XMP" % (basedir,))
-            self.package_dir.serialize_xmp()
+            self.package_dir.serialize_xmp(doc)
             self.package_dir.update_image_details()
             self.write_status(self.IMAGE_DETAILS_UPDATED)
 

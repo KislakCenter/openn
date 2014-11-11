@@ -12,7 +12,7 @@ body {
   margin-bottom: 40px;
 }
 .footer {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	width: 100%;
 	/* Set the fixed height of the footer here */
@@ -116,6 +116,13 @@ body {
 	z-index: 10;
 }
 
+#content {
+    width: 90%;
+    top: 100px;
+    left: 10%;
+    position: absolute;
+}
+
 #tbl_directory {
   width: 600px;
   font-family: Courier, monospace;
@@ -127,7 +134,7 @@ body {
 }
 
 #tbl_directory td, #tbl_directory th {
-  white-space: nowrap;  
+  white-space: nowrap;
 }
 
 /*
