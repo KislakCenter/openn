@@ -26,7 +26,7 @@ tearDown() {
 
 testRun() {
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
-    op-gen-pages
+    op-pages
     status=$?
     assertEquals 0 $status
 }
