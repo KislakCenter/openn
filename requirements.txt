@@ -1,21 +1,20 @@
 Django==1.6.4
 Jinja2==2.7.3
 MarkupSafe==0.23
-MySQL-python==1.2.3
+MySQL-python==1.2.5
 Pillow==2.4.0
-# PyExifTool==0.1 not in PyPI; git@github.com:demery/pyexiftool.git
+PyExifTool==0.1
 Pygments==1.6
 South==0.8.4
 Sphinx==1.2.2
 Wand==0.3.7
-distribute==0.6.10
-django-extensions==1.4.4
+django-extensions==1.4.0
+django-markdown-deux==1.0.5
 django-ordered-model==0.4.0
 docutils==0.11
 lxml==3.3.4
+markdown2==2.3.0
 sh==1.09
 six==1.8.0
 virtualenv==1.5.1
 wsgiref==0.1.2
-xlsx2csv==0.6.1
-zc.buildout==2.2.1

@@ -52,7 +52,7 @@ CLOBBER_PATTERN = 'Thumbs.db|.*\.lnk'
 # }
 
 INSTALLED_APPS = (
-        'openn', 'south', 'ordered_model','django_extensions',
+        'openn', 'south', 'markdown_deux', 'ordered_model','django_extensions',
         )
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
