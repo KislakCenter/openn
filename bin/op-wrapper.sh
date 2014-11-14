@@ -22,8 +22,6 @@ usage() {
 # SCRIPT NAME CHECK
 # Do we have an arg?
 if [ $# -lt 2 ]; then
-    :
-else
     echo "Please provide a Python script path"
     usage
     exit 1
