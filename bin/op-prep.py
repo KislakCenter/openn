@@ -38,8 +38,14 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
 # Import your models for use in your script
 from openn.models import *
+# database access functions
+from openn.openn_db import *
 from django.core import serializers
 from django.conf import settings
+
+class OpOptParser(OptionParser):
+    def format_epilog(self, formatter):
+        return self.epilog
 
 def cmd():
     return os.path.basename(__file__)
@@ -55,7 +61,7 @@ def setup_logger():
 def get_collection_prep(source_dir, collection):
     config = settings.COLLECTIONS.get(collection.lower(), None)
     if config is None:
-        raise OPennException("Configuration not found for %s" % collection)
+        raise OPennException("Configuration not found for collection: '%s'" % collection)
     cls = get_class(config['prep_class'])
     return cls(source_dir, collection)
 
@@ -87,12 +93,29 @@ def main(cmdline=None):
     collection = args[0]
     source_dir = args[1]
 
+    base_dir = os.path.basename(source_dir)
+
+    if doc_exists({ 'base_dir': base_dir, 'collection': collection }):
+        if opts.resume:
+            pass
+        elif opts.update:
+            parser.error('Update function not yet implemented')
+        else:
+            parser.error("Document already exists with base_dir"
+                         " '%s' and collection '%s'" % (base_dir, collection))
+
+    if opts.resume:
+        status_txt = os.path.join(source_dir, 'status.txt')
+        if os.path.exists(status_txt):
+            pass
+        else:
+            parser.error('Cannot resume prep without expected status file:\n %s' % (status_txt, ))
+
     setup_logger()
     logger = logging.getLogger(__name__)
 
-    collection_prep = get_collection_prep(source_dir, collection)
-
     try:
+        collection_prep = get_collection_prep(source_dir, collection)
         fix_perms(source_dir)
         os.umask(0002)
         if hasattr(settings, 'CLOBBER_PATTERN'):
@@ -111,16 +134,30 @@ def main(cmdline=None):
 def make_parser():
     """get_xml option parser"""
 
-    usage = """%prog COLLECTION SOURCE_DIR
-
+    usage = "%prog [OPTIONS] COLLECTION SOURCE_DIR"
+    epilog = """
 Prepare the given source diretory for OPenn.
 
-SOURCE_DIR contains a set of manuscript or book image TIFF files, a
-sha1manifest.txt file, and a file bibid.txt which contains the bibid for the
-given book or manuscript.
-"""
+SOURCE_DIR contains a set of document image TIFF files and a file
+named bibid.txt which contains the bibid for the given book or
+manuscript.
 
-    parser = OptionParser(usage)
+Update: Note that this function has not yet been implemented.
+
+Resume: Resume will fail if the source directory does not have a
+`status.txt` file.
+
+"""
+    # usage = "%prog COLLECTION SOURCE_DIR"
+
+    parser = OpOptParser(usage=usage,epilog=epilog)
+    parser.add_option('-u', '--update',
+                      action='store_true', dest='update', default=False,
+                      help='update db if doc exists [default: %default]; NOT YET IMPLEMENTED')
+
+    parser.add_option('-r', '--resume',
+                      action='store_true', dest='resume', default=False,
+                      help='resume processing of document [default: %default]')
 
     return parser
 
