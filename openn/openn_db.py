@@ -9,6 +9,9 @@ def save_document(attrs={}):
     doc.save()
     return doc
 
+def doc_exists(params={}):
+    return Document.objects.filter(**params).count() > 0
+
 def save_version(doc,attrs={}):
     return doc.version_set.create(**attrs)
 
