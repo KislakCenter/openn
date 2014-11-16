@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+usage() {
+    echo "Usage: $0 [-b bibid ] SOURCE_DIR [DEST_DIR=.]"
+}
+
+cmd=`basename $0`
+
+### OPTIONS
+while getopts "hc:" opt; do
+  case $opt in
+    h)
+      usage
+      exit 1
+      ;;
+    b)
+      BIBID=$OPTARG
+      ;;
+    \?)
+      echo "ERROR Invalid option: -$OPTARG" >&2
+      echo ""
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+### Get the parameters
+if [ -d "$1" ]; then
+    SOURCE_DIR=$1
+    echo "Using SOURCE_DIR: $SOURCE_DIR"
+else
+    echo "ERROR: Cannot find SOURCE_DIR: $1" >&2
+    echo "ERROR: Please provide a valid SOURCE_DIR" >&2
+    usage
+    exit 1
+fi
+
+if [ -n "$2" ]; then
+    if [ -d "$2" ]; then
+        DEST_DIR=$2
+    else
+        echo "ERROR: Cannot find DEST_DIR: $DEST_DIR" >&2
+    fi
+else
+    DEST_DIR=.
+fi
+echo "[$cmd] Using DEST_DIR: $DEST_DIR"
+
+### DO STUFF
+# Copying
+echo "[$cmd] Copying $SOURCE_DIR to $DEST_DIR"
+cp -rv "$SOURCE_DIR" $DEST_DIR
+
+if [ $? -ne 0 ]; then
+    echo "[$cmd] ERROR: Error copying $SOURCE_DIR to $DEST_DIR" >&2
+    exit 1
+fi
+
+# Fixing perms
+base=`basename $SOURCE_DIR`
+dest=$DEST_DIR/$base
+echo "[$cmd] Fixing permissions on $dest"
+chmod 775 $dest && find $dest -type d -exec chmod 775 {} \; && find $dest -type f -exec chmod 664 {} \;
+if [ $? -ne 0 ]; then
+    echo "[$cmd] ERROR: Error setting permissions on $dest" >&2
+    exit 1
+fi
+
+# Delete junk
+echo "[$cmd] Deleting junk files from $dest"
+find $dest -iname Thumbs.db -delete
+
+# Write bibid.txt
+bibid_file=$dest/bibid.txt
+if [ -n "$BIBID" ]; then
+    echo "[$cmd] BidID provided ($BIBID)"
+    echo "[$cmd] Writing $BIBID to $bibid_file"
+    echo $BIBID > $bibid_file
+else
+    echo "[$cmd] WARNING: No bibid provided; $bibid_file not created!"
+fi
