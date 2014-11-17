@@ -17,6 +17,8 @@
 this_dir=`dirname $0`
 cmd=`basenme $0`
 
+PYEXIFTOOL_GIT=git@github.com:demery/pyexiftool.git
+
 usage() {
     echo "Usage: $cmd [OPTIONS]"
     echo ""
@@ -94,11 +96,13 @@ shift $((OPTIND-1))
 
 
 # - locate python v2.6|7
-if [[ "$OPENN_PYTHON" ]]; then
+if [[ "$OPENN_PYTHON" ]]
+then
     :
 else
     OPENN_PYTHON=`find_python`
-    if [[ $? -ne 0 ]]; then
+    if [[ $? -ne 0 ]]
+then
         echo "Could not find python version 2.6.x or 2.7.x; quitting" >&2
         exit 1
     fi
@@ -106,26 +110,98 @@ fi
 echo "Using python: $OPENN_PYTHON"
 
 # - locate virtualenv
-if [[ "$OPENN_VIRTUALENV" ]]; then
+if [[ "$OPENN_VIRTUALENV" ]]
+then
     :
 else
     OPENN_VIRTUALENV=`find_virtualenv`
-    if [[ $? -ne 0 ]]; thenf
+    if [[ $? -ne 0 ]]
+        then
         echo "Could not find virtualenv; quitting" >&2
         exit1
     fi
 fi
 echo "Using virtualenv: $OPENN_VIRTUALENV"
 
-# # - create virtualenv
-# if [[ -d $this_dir/venv ]]; then
+# - create virtualenv
+venv_dir=$this_dir/venv
+if [[ -d $venv_dir ]]
+then
+    echo "ERROR: Pffft! $venv_dir already exists; I'm quitting." >&2
+    exit 1
+fi
 
-# fi
+$OPENN_VIRTUALENV --python=$OPENN_PYTHON --prompt="(openn-prodn)" $venv_dir
+if [[ $? -ne 0 ]]
+then
+    echo "ERROR: Error creating virtualenv at: $venv_dir" >&2
+    exit 1
+fi
+
+source $venv_dir/bin/activate
+
+# make sure python in expected path
+if [[ `which python 2>/dev/null` = $venv_dir/bin/python ]]
+then
+    :
+else
+    echo "ERROR: Expected python at $venv_dir/bin/python" >&2
+    exit 1
+fi
 
 # - install pyexiftool from demery github repo
 #       - clone
+clone_dir=$this_dir/pyexiftool
+if [[ -d $clone_dir ]]
+then
+    echo "ERROR: pyexiftool directory already exists: $clone_dir"
+    exit 1
+fi
+git clone $pyexiftool_git $clone_dir
+
+# - install pyexiftool from demery github repo
 #       - setup install
-#       - delete clone repo
+curr_dir=`pwd`
+cd $clone_dir && python setup.py install || echo "Error installing pyexiftool" >&2; exit 1
+
+[[ `pwd` =~ pyexiftool$ ]] && rm -rf * .* || echo "Error cleaning $clone_dir" >&2; exit 1
+
+cd $curr_dir || echo "ERROR: Can't cd back to: $curr_dir" >&2; exit 1
+
+# - install pyexiftool from demery github repo
+#   - delete clone repo
+if [[ -d $clone_dir ]]
+then
+    echo "ERROR: Py_Exiftool not found: $clone_dir" >&2
+    exit 1
+fi
+
+rmdir $clone_dir || echo "WARNING: Unable to delete $clone_dir" >&2
+
 # - run pip install -r requirements.txt
+reqs_txt=$this_dir/requirements.txt
+if [[ -f $reqs_txt ]]
+then
+    :
+else
+    echo "ERROR: requirements.txt not found: $reqs_txt" >&2
+    exit 1
+fi
+pip install -r $reqs_txt
+if [[ $? -ne 0 ]]
+then
+    :
+else
+    echo "ERROR: Problem installing required libraries" >&2
+    exit 1
+fi
+
 #
 # - print some helpful instructions
+full_path=$((cd $this_dir; pwd))
+openn_bin=$full_path/bin
+echo "SUCCESS! OPenn scripts are configured"
+echo "Be sure to add the OPenn scripts to your path:"
+echo
+echo "export PATH=$openn_bin:$PATH"
+echo
