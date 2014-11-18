@@ -22,7 +22,7 @@ this_dir=`dirname $0`
 this_dir=$( cd $this_dir; pwd )
 cmd=`basename $0`
 
-PYEXIFTOOL_GIT=git@github.com:demery/pyexiftool.git
+PYEXIFTOOL_GIT=https://github.com/demery/pyexiftool.git
 
 usage() {
     echo "Usage: $cmd [OPTIONS]"
