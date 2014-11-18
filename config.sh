@@ -15,7 +15,8 @@
 # - print some helpful instructions
 
 this_dir=`dirname $0`
-cmd=`basenme $0`
+this_dir=$( cd $this_dir; pwd )
+cmd=`basename $0`
 
 PYEXIFTOOL_GIT=git@github.com:demery/pyexiftool.git
 
@@ -62,7 +63,7 @@ find_virtualenv() {
             return 0
             break
         else
-            echo "Didn't find virtualenv: $fv_virtualenv"
+            echo "Didn't find virtualenv: $fv_virtualenv" >&2
         fi
         fv_virtualenv=
     done
@@ -85,7 +86,7 @@ while getopts "hp:e:" opt; do
             ;;
         \?)
             echo "ERROR Invalid option: -$OPTARG" >&2
-            echo ""
+            echo
             usage
             exit 1
             ;;
@@ -103,11 +104,11 @@ else
     OPENN_PYTHON=`find_python`
     if [[ $? -ne 0 ]]
 then
-        echo "Could not find python version 2.6.x or 2.7.x; quitting" >&2
+        echo "[$cmd] Could not find python version 2.6.x or 2.7.x; quitting" >&2
         exit 1
     fi
 fi
-echo "Using python: $OPENN_PYTHON"
+echo "[$cmd] Using python: $OPENN_PYTHON"
 
 # - locate virtualenv
 if [[ "$OPENN_VIRTUALENV" ]]
@@ -117,35 +118,36 @@ else
     OPENN_VIRTUALENV=`find_virtualenv`
     if [[ $? -ne 0 ]]
         then
-        echo "Could not find virtualenv; quitting" >&2
+        echo "[$cmd] Could not find virtualenv; quitting" >&2
         exit1
     fi
 fi
-echo "Using virtualenv: $OPENN_VIRTUALENV"
+echo "[$cmd] Using virtualenv: $OPENN_VIRTUALENV"
 
 # - create virtualenv
 venv_dir=$this_dir/venv
 if [[ -d $venv_dir ]]
 then
-    echo "ERROR: Pffft! $venv_dir already exists; I'm quitting." >&2
+    echo "[$cmd] ERROR: Pffft! $venv_dir already exists; I'm quitting." >&2
     exit 1
 fi
 
 $OPENN_VIRTUALENV --python=$OPENN_PYTHON --prompt="(openn-prodn)" $venv_dir
 if [[ $? -ne 0 ]]
 then
-    echo "ERROR: Error creating virtualenv at: $venv_dir" >&2
+    echo "[$cmd] ERROR: Error creating virtualenv at: $venv_dir" >&2
     exit 1
 fi
 
 source $venv_dir/bin/activate
 
 # make sure python in expected path
-if [[ `which python 2>/dev/null` = $venv_dir/bin/python ]]
+which_python=`which python`
+if [[ "$which_python" = $venv_dir/bin/python ]]
 then
     :
 else
-    echo "ERROR: Expected python at $venv_dir/bin/python" >&2
+    echo "[$cmd] ERROR: Expected python at $venv_dir/bin/python; found: $which_python" >&2
     exit 1
 fi
 
@@ -154,54 +156,84 @@ fi
 clone_dir=$this_dir/pyexiftool
 if [[ -d $clone_dir ]]
 then
-    echo "ERROR: pyexiftool directory already exists: $clone_dir"
+    echo "[$cmd] ERROR: pyexiftool directory already exists: $clone_dir"
     exit 1
 fi
-git clone $pyexiftool_git $clone_dir
+git clone $PYEXIFTOOL_GIT $clone_dir
 
 # - install pyexiftool from demery github repo
 #       - setup install
 curr_dir=`pwd`
-cd $clone_dir && python setup.py install || echo "Error installing pyexiftool" >&2; exit 1
+cd $clone_dir
 
-[[ `pwd` =~ pyexiftool$ ]] && rm -rf * .* || echo "Error cleaning $clone_dir" >&2; exit 1
-
-cd $curr_dir || echo "ERROR: Can't cd back to: $curr_dir" >&2; exit 1
-
-# - install pyexiftool from demery github repo
-#   - delete clone repo
-if [[ -d $clone_dir ]]
+if python setup.py install
 then
-    echo "ERROR: Py_Exiftool not found: $clone_dir" >&2
+    :
+else
+    echo "[$cmd] Error installing pyexiftool" >&2
     exit 1
 fi
 
-rmdir $clone_dir || echo "WARNING: Unable to delete $clone_dir" >&2
+echo "[$cmd] pyexiftool installed"
 
+if [[ `pwd` =~ pyexiftool$ ]]
+then
+    find . -delete
+else
+    echo "[$cmd] ERROR: Should be in pyexiftool directory; found: `pwd`" >&2
+    exit 1
+fi
+
+if cd $curr_dir
+then
+    if rmdir pyexiftool
+    then
+        :
+    else
+        echo "[$cmd] ERROR: Error removing pyexiftool" >&2
+        exit 1
+    fi
+fi
+
+echo "[$cmd] Running pip install -r requirements.txt"
 # - run pip install -r requirements.txt
 reqs_txt=$this_dir/requirements.txt
 if [[ -f $reqs_txt ]]
 then
     :
 else
-    echo "ERROR: requirements.txt not found: $reqs_txt" >&2
+    echo "[$cmd] ERROR: requirements.txt not found: $reqs_txt" >&2
     exit 1
 fi
 pip install -r $reqs_txt
-if [[ $? -ne 0 ]]
+if [[ $? -eq 0 ]]
 then
-    :
+    echo "[$cmd] Libraries installed"
 else
-    echo "ERROR: Problem installing required libraries" >&2
+    echo "[$cmd] ERROR: Problem installing required libraries" >&2
     exit 1
+fi
+
+# secret
+secret_txt=$this_dir/openn/secret_key.txt
+if [[ -f $secret_txt ]]
+then
+    echo "[$cmd] Found secret: $secret_txt"
+else
+    echo "[$cmd] Creating secret file: $secret_txt"
+    LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 50 | xargs > $secret_txt
 fi
 
 #
 # - print some helpful instructions
-full_path=$((cd $this_dir; pwd))
-openn_bin=$full_path/bin
-echo "SUCCESS! OPenn scripts are configured"
-echo "Be sure to add the OPenn scripts to your path:"
+openn_bin=$this_dir/bin
 echo
-echo "export PATH=$openn_bin:$PATH"
+echo "[$cmd] ============================================================"
+echo "[$cmd]"
+echo "[$cmd] SUCCESS! OPenn scripts are configured"
+echo "[$cmd] Be sure to add the OPenn scripts to your path:"
+echo "[$cmd]"
+echo "[$cmd]      export PATH=$openn_bin:\$PATH"
+echo "[$cmd]"
+echo "[$cmd] ============================================================"
 echo
