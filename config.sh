@@ -13,6 +13,10 @@
 # - run pip install -r requirements.txt
 #
 # - print some helpful instructions
+#
+# TODO: Add ability to exclude libraries from requirements by name
+#
+################################################################################
 
 this_dir=`dirname $0`
 this_dir=$( cd $this_dir; pwd )
