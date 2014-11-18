@@ -37,7 +37,7 @@ find_python() {
         echo "Testing python for version 2.[67].x: $fp_python" >&2
         if which $fp_python  >/dev/null 2>&1
         then
-            fp_v=`python -V 2>&1`
+            fp_v=`$fp_python -V 2>&1`
             if [[ "$fp_v" =~ 2\.[67]\.[0-9] ]];
             then
                 echo $fp_python
@@ -54,7 +54,18 @@ find_python() {
 }
 
 find_virtualenv() {
-    for fv_virtualenv in virtualenv2.6 virtualenv26 virtualenv2.7 virtualenv27 virtualenv
+    fv_virtualenvs="
+virtualenv2.6
+virtualenv26
+virtualenv2.7
+virtualenv27
+virtualenv-2.6
+virtualenv-26
+virtualenv-2.7
+virtualenv-27
+virtualenv
+"
+    for fv_virtualenv in $fv_virtualenvs
     do
         echo "Testing virtualenv: $fv_virtualenv" >&2
         if which $fv_virtualenv  >/dev/null 2>&1
