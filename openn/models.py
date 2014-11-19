@@ -93,11 +93,11 @@ class Document(models.Model):
 
 class DocumentImageManager(models.Manager):
     def get_query_set(self):
-        return super(DocumentImageManager, self).get_query_set().filter(image_type='d')
+        return super(DocumentImageManager, self).get_query_set().filter(image_type=u'document')
 
 class ExtraImageManager(models.Manager):
     def get_query_set(self):
-        return super(ExtraImageManager, self).get_query_set().filter(image_type='x')
+        return super(ExtraImageManager, self).get_query_set().filter(image_type=u'extra')
 
 class Version(OrderedModel):
     document              = models.ForeignKey(Document, default = None)
