@@ -11,7 +11,6 @@ import logging
 from lxml import etree
 from openn.prep.collection_prep import CollectionPrep
 from openn.openn_exception import OPennException
-from openn.xml.openn_tei import OPennTEI
 from openn.openn_functions import *
 
 class MedrenPrep(CollectionPrep):
@@ -72,33 +71,6 @@ class MedrenPrep(CollectionPrep):
     @property
     def url_path(self):
         return self.coll_config['path']
-
-    def write_tei(self, xml_path, xsl_path, outdir):
-        outfile = os.path.join(outdir, 'PARTIAL_TEI.xml')
-        f = open(outfile, 'w+')
-        try:
-            f.write(self.gen_tei(xml_path, xsl_path))
-            # try to read it
-            f.seek(0)
-            OPennTEI(f)
-        except Exception as ex:
-            raise OPennException("Error creating TEI: %s" % str(ex))
-        finally:
-            f.close()
-
-        return outfile
-
-    def gen_tei(self, xml_path, xsl_path):
-        # xsl_command = os.path.join(os.path.dirname(__file__), 'op-gen-tei')
-        xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, xml_path, xsl_path],
-                stderr=subprocess.PIPE,
-                stdout=subprocess.PIPE)
-        out, err = p.communicate()
-        if p.returncode != 0:
-            raise OPennException("TEI Generation failed: %s" % err)
-
-        return out
 
     def bibid_filename(self):
         if not os.path.exists(self.source_dir):
