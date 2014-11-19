@@ -141,7 +141,7 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] TEI already completed" % (basedir,))
         else:
             self.logger.info("[%s] Complete TEI" % (basedir,))
-            self.tei.add_file_list(self.package_dir.file_list)
+            self.tei.add_file_list(doc)
             self.package_dir.save_tei(self.tei, doc)
             doc.tei_xml = self.tei.to_string()
             doc.save()

@@ -8,10 +8,16 @@ from openn.xml.ms_item import MSItem
 from openn.xml.licence import Licence
 from openn.xml.resp_stmt import RespStmt
 from openn.xml.identifier import Identifier
+from openn.models import *
 
 class OPennTEI(XMLWhatsit):
-    TEI_NS = 'http://www.tei-c.org/ns/1.0'
-    fix_path_re = re.compile('^data/')
+    TEI_NS            = 'http://www.tei-c.org/ns/1.0'
+    fix_path_re       = re.compile('^data/')
+    n_brackets_re     = re.compile('[\[\]]')
+    n_open_paren_re   = re.compile('\( ')
+    n_close_paren_re  = re.compile(' \)')
+    n_final_comma_re  = re.compile(',\s*$')
+    n_extra_spaces_re = re.compile('\s+')
 
     def __init__(self, xml):
         if isinstance(xml, str):
@@ -173,6 +179,15 @@ class OPennTEI(XMLWhatsit):
         nodes = self._get_nodes('//t:msIdentifier/t:altIdentifier')
         return [ Identifier(n,self.ns) for n in nodes ]
 
+    def fix_n(self, label):
+        # normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))
+        s = self.n_brackets_re.sub('', label)
+        s = self.n_final_comma_re.sub('', s)
+        s = self.n_extra_spaces_re.sub(' ', s)
+        s = self.n_open_paren_re.sub('(', s)
+        s = self.n_close_paren_re.sub(')', s)
+        return s.strip()
+
     def ms_items(self, n):
         nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
         return [ MSItem(node, self.ns) for node in nodes ]
@@ -181,7 +196,7 @@ class OPennTEI(XMLWhatsit):
         nodes = self._get_nodes('//t:decoNote[@n="%s"]' % n)
         return [node.text for node in nodes ]
 
-    def add_file_list(self,file_list):
+    def add_file_list(self,document):
         """
            <facsimile>
               <surface n="Front cover">
@@ -199,15 +214,17 @@ class OPennTEI(XMLWhatsit):
         for graphic in self.xml.xpath('/t:TEI/t:facsimile/t:graphic', namespaces=self.ns):
             graphic.getparent().remove(graphic)
         # add the surface/graphic elements
-        for fdata in file_list.document_files:
-            surface = etree.Element("surface", n=fdata.label, nsmap=self.ns)
-            for dtype in fdata.derivs:
-                deriv = fdata.get_deriv(dtype)
-                path = OPennTEI.fix_path_re.sub("", deriv['path'])
+        for image in document.image_set.filter(image_type='document'):
+            n = self.fix_n(image.label)
+            surface = etree.Element("surface", n=n, nsmap=self.ns)
+            for deriv in image.derivative_set.all():
+                deriv_type = deriv.deriv_type
+                # path = OPennTEI.fix_path_re.sub("", deriv['path'])
+                path = deriv.path
                 attrs = {}
                 attrs['url'] = path
-                attrs['width'] = "%spx" % str(deriv['width'])
-                attrs['height'] = "%spx" % str(deriv['height'])
+                attrs['width'] = "%spx" % str(deriv.width)
+                attrs['height'] = "%spx" % str(deriv.height)
                 graphic = etree.Element('graphic', **attrs)
                 surface.append(graphic)
             facs.append(surface)
