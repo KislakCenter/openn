@@ -73,8 +73,8 @@ class MedrenPrep(CollectionPrep):
     def url_path(self):
         return self.coll_config['path']
 
-    def write_tei(self, xml_path, xsl_path):
-        outfile = os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
+    def write_tei(self, xml_path, xsl_path, outdir):
+        outfile = os.path.join(outdir, 'PARTIAL_TEI.xml')
         f = open(outfile, 'w+')
         try:
             f.write(self.gen_tei(xml_path, xsl_path))
@@ -257,7 +257,7 @@ class MedrenPrep(CollectionPrep):
         self.fix_tiff_names()
         self.stage_tiffs()
         self.add_file_list(pih_xml)
-        tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'])
+        tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'], self.source_dir)
 
         # files to cleanup
         bibid = self.get_bibid()
