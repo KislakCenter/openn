@@ -7,7 +7,7 @@ usage() {
 cmd=`basename $0`
 
 ### OPTIONS
-while getopts "hc:" opt; do
+while getopts "hb:" opt; do
   case $opt in
     h)
       usage
