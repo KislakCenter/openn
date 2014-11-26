@@ -76,7 +76,7 @@ find $dest -iname Thumbs.db -delete
 # Write bibid.txt
 bibid_file=$dest/bibid.txt
 if [ -n "$BIBID" ]; then
-    echo "[$cmd] BidID provided ($BIBID)"
+    echo "[$cmd] BibID provided ($BIBID)"
     echo "[$cmd] Writing $BIBID to $bibid_file"
     echo $BIBID > $bibid_file
 else
