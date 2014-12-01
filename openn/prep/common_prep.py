@@ -181,10 +181,11 @@ class CommonPrep(OPennSettings,Status):
             self.package_dir.write_version_txt(doc)
             self.write_status(self.VERSION_TXT_WRITTEN)
 
-        if self.get_status() > self.COMMON_PREP_COMPLETED:
+        if self.get_status() >= self.COMMON_PREP_COMPLETED:
             self.logger.warning("[%s] Common prep already complete" % (basedir,))
         else:
             self.logger.info("[%s] Marking common prep COMPLETED" % (basedir,))
+            self.write_status(self.COMMON_PREP_COMPLETED)
 
         self._cleanup()
 
