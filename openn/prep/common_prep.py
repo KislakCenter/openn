@@ -56,11 +56,12 @@ class CommonPrep(OPennSettings,Status):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self,source_dir,collection):
+    def __init__(self,source_dir,collection,document):
         OPennSettings.__init__(self,collection)
         Status.__init__(self,source_dir)
         self.package_dir   = PackageDir(source_dir)
         self.collection    = collection
+        self.document      = document
         self.check_valid()
 
     @property

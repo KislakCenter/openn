@@ -16,6 +16,7 @@ from openn.openn_exception import OPennException
 from openn.prep.medren_prep import MedrenPrep
 from openn.prep.file_list import FileList
 from openn.xml.openn_tei import OPennTEI
+from openn.prep.prep_setup import PrepSetup
 from openn.models import *
 
 class TestMedrenPrep(TestCase):
@@ -47,8 +48,9 @@ class TestMedrenPrep(TestCase):
     def test_run(self):
         # setup
         self.stage_template()
-        prep = MedrenPrep(TestMedrenPrep.staged_source, TestMedrenPrep.medren_coll)
         doc_count = Document.objects.count()
+        doc = PrepSetup().prep_document(TestMedrenPrep.medren_coll, 'mscodex1223')
+        prep = MedrenPrep(TestMedrenPrep.staged_source, TestMedrenPrep.medren_coll, doc)
         image_count = Image.objects.count()
         deriv_count = Derivative.objects.count()
         # run

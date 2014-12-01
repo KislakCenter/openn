@@ -23,12 +23,12 @@ A Document records:
     - `updated`: the date-time the record was last updated
 """
 class Document(models.Model):
-    call_number   = models.CharField(max_length = 255, null = True, default = None, blank = False)
+    call_number   = models.CharField(max_length = 255, null = True, default = None, blank = True)
     collection    = models.CharField(max_length = 30, null = False, default = None, blank = False)
     base_dir      = models.CharField(max_length = 30, null = False, default = None, blank = False)
     is_online     = models.BooleanField(default = False)
     tei_file_name = models.CharField(max_length = 40, null = True, default = None, blank = True)
-    title         = models.TextField(null = True, default = None, blank = False)
+    title         = models.TextField(null = True, default = None, blank = True)
     created       = models.DateTimeField(auto_now_add = True)
     updated       = models.DateTimeField(auto_now = True)
     tei_xml       = models.TextField(null = True, default = None, blank = True)

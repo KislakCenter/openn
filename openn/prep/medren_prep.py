@@ -20,7 +20,7 @@ class MedrenPrep(CollectionPrep):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, source_dir, collection):
+    def __init__(self, source_dir, collection, document):
         """
         Create a new MedrenPrep for the given source_dir with config dictionary `config`.
         Config should have:
@@ -34,7 +34,7 @@ class MedrenPrep(CollectionPrep):
 
         """
         # TODO: break if SAXON_JAR not set; see bin/op-gen-tei
-        CollectionPrep.__init__(self,source_dir,collection)
+        CollectionPrep.__init__(self,source_dir,collection, document)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
 
     @property

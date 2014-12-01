@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.common_prep import CommonPrep
 from openn.prep.file_list import FileList
+from openn.prep.prep_setup import PrepSetup
 from openn.xml.openn_tei import OPennTEI
 from openn.models import *
 
@@ -53,8 +54,9 @@ class TestCommonPrep(TestCase):
     def test_run(self):
         # setup
         self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
         doc_count = Document.objects.count()
+        doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
         image_count = Image.objects.count()
         deriv_count = Derivative.objects.count()
         # run
@@ -71,7 +73,8 @@ class TestCommonPrep(TestCase):
 
         # run
         with self.assertRaises(OPennException) as oe:
-            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
         self.assertIn('data directory', str(oe.exception))
 
     def test_no_partial_tei(self):
@@ -82,7 +85,8 @@ class TestCommonPrep(TestCase):
 
         # run
         with self.assertRaises(OPennException) as oe:
-            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
         self.assertIn('PARTIAL_TEI.xml', str(oe.exception))
 
     def test_no_file_list(self):
@@ -93,13 +97,15 @@ class TestCommonPrep(TestCase):
 
         # run
         with self.assertRaises(OPennException) as oe:
-            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
         self.assertIn('file_list.json', str(oe.exception))
 
     def test_tei_present(self):
         # setup
         self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+        doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
 
         # run
         self.assertIsInstance(prep.tei, OPennTEI)
@@ -107,7 +113,8 @@ class TestCommonPrep(TestCase):
     def test_files_present(self):
         # setup
         self.stage_template()
-        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+        doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
 
         # run
         self.assertIsInstance(prep.files, FileList)
@@ -119,7 +126,8 @@ class TestCommonPrep(TestCase):
         # setup
         self.stage_template()
         with self.assertRaises(OPennException) as oe:
-            prep = CommonPrep(TestCommonPrep.staged_source, '')
+            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+            prep = CommonPrep(TestCommonPrep.staged_source, '', doc)
         self.assertIn('collection', str(oe.exception))
 
     # TODO: Figure out under what circumstance duplicates should break things

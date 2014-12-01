@@ -15,8 +15,9 @@ class CollectionPrep(OPennSettings,Status):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, source_dir, collection):
+    def __init__(self, source_dir, collection, document):
         self.source_dir = source_dir
+        self.document = document
         OPennSettings.__init__(self,collection)
         Status.__init__(self,source_dir)
         self._removals = []

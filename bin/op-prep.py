@@ -29,10 +29,12 @@ import sys
 import logging
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from openn.openn_settings import OPennSettings
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
-from openn.prep import medren_prep
+# from openn.prep import medren_prep
 from openn.prep.common_prep import CommonPrep
+from openn.prep.prep_setup import PrepSetup
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
@@ -58,12 +60,12 @@ def setup_logger():
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
 
-def get_collection_prep(source_dir, collection):
+def get_collection_prep(source_dir, collection, document):
     config = settings.COLLECTIONS.get(collection.lower(), None)
     if config is None:
         raise OPennException("Configuration not found for collection: '%s'" % collection)
     cls = get_class(config['prep_class'])
-    return cls(source_dir, collection)
+    return cls(source_dir, collection, document)
 
 def fix_perms(source_dir):
     for root, dirs, files in os.walk(source_dir):
@@ -115,13 +117,15 @@ def main(cmdline=None):
     logger = logging.getLogger(__name__)
 
     try:
-        collection_prep = get_collection_prep(source_dir, collection)
+        setup = PrepSetup()
+        doc = setup.prep_document(collection, base_dir)
+        collection_prep = get_collection_prep(source_dir, collection, doc)
         fix_perms(source_dir)
         os.umask(0002)
         if hasattr(settings, 'CLOBBER_PATTERN'):
             clean_dir(source_dir, settings.CLOBBER_PATTERN)
         collection_prep.prep_dir()
-        common_prep = CommonPrep(source_dir, collection)
+        common_prep = CommonPrep(source_dir, collection, doc)
         common_prep.prep_dir()
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
