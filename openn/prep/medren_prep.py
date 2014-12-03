@@ -218,9 +218,8 @@ class MedrenPrep(CollectionPrep):
         files = [ { 'filename': x, 'image_type': 'extra', 'label': 'None' } for x in files ]
         return { 'document': sorted_files, 'extra': files }
 
-    def write_xml(self,bibid):
+    def write_xml(self,bibid,outfile):
         bibid = self.get_bibid()
-        outfile = self.pih_filename(bibid)
         if os.path.exists(outfile):
             backup = '{0}-{1}'.format(outfile, tstamp())
             warning(__name__, 'Backing up existing XML file {0} to {1}'.format(outfile, backup))
@@ -244,7 +243,7 @@ class MedrenPrep(CollectionPrep):
 
     def _do_prep_dir(self):
         bibid = self.get_bibid()
-        self.source_xml_path = self.write_xml(bibid)
+        self.source_xml_path = self.write_xml(bibid, self.pih_filename(bibid))
         call_no = self.check_valid_xml(self.source_xml_path)
         self.check_file_names(self.source_xml_path)
         self.fix_tiff_names()
@@ -254,7 +253,6 @@ class MedrenPrep(CollectionPrep):
         self.write_partial_tei(self.source_dir, partial_tei_xml)
 
         # files to cleanup
-        bibid = self.get_bibid()
         self.add_removal(self.pih_filename(bibid))
         self.add_removal(self.bibid_filename())
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
