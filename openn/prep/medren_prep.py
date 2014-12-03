@@ -86,8 +86,9 @@ class MedrenPrep(CollectionPrep):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
         return bibid
 
-    def pih_filename(self,bibid):
-        return os.path.join(self.source_dir, 'pih_{0}.xml'.format(bibid))
+    @property
+    def pih_filename(self):
+        return os.path.join(self.source_dir, 'pih.xml')
 
     def xml_file_names(self, pih_xml):
         # //xml[@name='pages']/page/@image
@@ -225,7 +226,7 @@ class MedrenPrep(CollectionPrep):
         # xsl_command = os.path.join(os.path.dirname(__file__), 'op-gen-tei')
         bibid = self.get_bibid()
         xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, self.pih_filename(bibid), self.coll_config['xsl']],
+        p = subprocess.Popen([xsl_command, self.pih_filename, self.coll_config['xsl']],
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()
@@ -236,16 +237,16 @@ class MedrenPrep(CollectionPrep):
 
     def _do_prep_dir(self):
         bibid = self.get_bibid()
-        self.write_xml(bibid, self.pih_filename(bibid))
-        call_no = self.check_valid_xml(self.pih_filename(bibid))
-        self.check_file_names(self.pih_filename(bibid))
+        self.write_xml(bibid, self.pih_filename)
+        call_no = self.check_valid_xml(self.pih_filename)
+        self.check_file_names(self.pih_filename)
         self.fix_tiff_names()
         self.stage_tiffs()
-        self.add_file_list(self.pih_filename(bibid))
+        self.add_file_list(self.pih_filename)
         partial_tei_xml = self.gen_partial_tei()
         self.write_partial_tei(self.source_dir, partial_tei_xml)
 
         # files to cleanup
-        self.add_removal(self.pih_filename(bibid))
+        self.add_removal(self.pih_filename)
         self.add_removal(self.bibid_filename())
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
