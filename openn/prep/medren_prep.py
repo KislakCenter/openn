@@ -218,7 +218,7 @@ class MedrenPrep(CollectionPrep):
         files = [ { 'filename': x, 'image_type': 'extra', 'label': 'None' } for x in files ]
         return { 'document': sorted_files, 'extra': files }
 
-    def write_xml(self):
+    def write_xml(self,bibid):
         bibid = self.get_bibid()
         outfile = self.pih_filename(bibid)
         if os.path.exists(outfile):
@@ -243,7 +243,8 @@ class MedrenPrep(CollectionPrep):
         return out
 
     def _do_prep_dir(self):
-        self.source_xml_path = self.write_xml()
+        bibid = self.get_bibid()
+        self.source_xml_path = self.write_xml(bibid)
         call_no = self.check_valid_xml(self.source_xml_path)
         self.check_file_names(self.source_xml_path)
         self.fix_tiff_names()
