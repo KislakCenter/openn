@@ -42,6 +42,14 @@ class MedrenPrep(CollectionPrep):
         return self.coll_config['host']
 
     @property
+    def source_xml_path(self):
+        return self._source_xml_path
+
+    @source_xml_path.setter
+    def source_xml_path(self, path):
+        self._source_xml_path = path
+
+    @property
     def document_image_patterns(self):
         """The document_image_patterns property is an optional list of
         string patterns for selecting and ordering document image
@@ -222,14 +230,27 @@ class MedrenPrep(CollectionPrep):
         f.close()
         return outfile
 
+    def gen_partial_tei(self):
+        # xsl_command = os.path.join(os.path.dirname(__file__), 'op-gen-tei')
+        xsl_command = 'op-gen-tei'
+        p = subprocess.Popen([xsl_command, self.source_xml_path, self.coll_config['xsl']],
+                stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        if p.returncode != 0:
+            raise OPennException("TEI Generation failed: %s" % err)
+
+        return out
+
     def _do_prep_dir(self):
-        pih_xml = self.write_xml()
-        call_no = self.check_valid_xml(pih_xml)
-        self.check_file_names(pih_xml)
+        self.source_xml_path = self.write_xml()
+        call_no = self.check_valid_xml(self.source_xml_path)
+        self.check_file_names(self.source_xml_path)
         self.fix_tiff_names()
         self.stage_tiffs()
-        self.add_file_list(pih_xml)
-        tei_xml = self.write_tei(pih_xml, self.coll_config['xsl'], self.source_dir)
+        self.add_file_list(self.source_xml_path)
+        partial_tei_xml = self.gen_partial_tei()
+        self.write_partial_tei(self.source_dir, partial_tei_xml)
 
         # files to cleanup
         bibid = self.get_bibid()

@@ -45,32 +45,24 @@ class CollectionPrep(OPennSettings,Status):
             if os.path.exists(f):
                 os.remove(f)
 
-    def write_tei(self, xml_path, xsl_path, outdir):
+    def write_partial_tei(self, outdir, xml):
         outfile = os.path.join(outdir, 'PARTIAL_TEI.xml')
         f = open(outfile, 'w+')
         try:
-            f.write(self.gen_tei(xml_path, xsl_path))
+            f.write(xml)
             # try to read it
             f.seek(0)
             OPennTEI(f)
         except Exception as ex:
+            # TODO: rename outfile if error
             raise OPennException("Error creating TEI: %s" % str(ex))
         finally:
             f.close()
 
         return outfile
 
-    def gen_tei(self, xml_path, xsl_path):
-        # xsl_command = os.path.join(os.path.dirname(__file__), 'op-gen-tei')
-        xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, xml_path, xsl_path],
-                stderr=subprocess.PIPE,
-                stdout=subprocess.PIPE)
-        out, err = p.communicate()
-        if p.returncode != 0:
-            raise OPennException("TEI Generation failed: %s" % err)
-
-        return out
+    def gen_partial_tei(self):
+        raise NotImplementedError
 
     def prep_dir(self):
         if self.get_status() >= self.COLLECTION_PREP_COMPLETED:
