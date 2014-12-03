@@ -162,11 +162,14 @@ class OPennTEI(XMLWhatsit):
 
     @property
     def hdl(self):
-        return self._get_text('//t:msIdentifier/t:altIdentifier[@type="hdl"]/idno')
+        return self.alt_id('hdl')
 
     @property
     def bibid(self):
-        return self._get_text('//t:msIdentifier/t:altIdentifier[@type="bidid"]/idno')
+        return self.alt_id('bibid')
+
+    def alt_id(self, id_type):
+        return self._get_text('//t:msIdentifier/t:altIdentifier[@type="%s"]/idno' % (id_type, ))
 
     @property
     def related_names(self):
