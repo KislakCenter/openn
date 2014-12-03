@@ -24,6 +24,7 @@
 # there's a much better tutorial that works you through optparse
 # starting with a simple example and slowly adding complexity.
 from optparse import OptionParser
+from datetime import datetime
 import os
 import sys
 import logging
@@ -59,6 +60,26 @@ def setup_logger():
     ch.setFormatter(formatter)
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
+
+def setup_prepstatus(doc):
+    # destroy the associate prep if it exists
+    if hasattr(doc, 'prepstatus'):
+        prepstatus = doc.prepstatus
+        prepstatus.delete()
+    prepstatus = PrepStatus(document=doc)
+    prepstatus.save()
+    return prepstatus
+
+def success_status(prepstatus):
+    prepstatus.finished  = datetime.now()
+    prepstatus.succeeded = True
+    prepstatus.save()
+
+def failure_status(prepstatus, ex):
+    prepstatus.finished  = datetime.now()
+    prepstatus.succeeded = False
+    prepstatus.error     = str(ex)
+    prepstatus.save()
 
 def get_collection_prep(source_dir, collection, document):
     config = settings.COLLECTIONS.get(collection.lower(), None)
@@ -119,6 +140,7 @@ def main(cmdline=None):
     try:
         setup = PrepSetup()
         doc = setup.prep_document(collection, base_dir)
+        prepstatus = setup_prepstatus(doc)
         collection_prep = get_collection_prep(source_dir, collection, doc)
         fix_perms(source_dir)
         os.umask(0002)
@@ -127,8 +149,10 @@ def main(cmdline=None):
         collection_prep.prep_dir()
         common_prep = CommonPrep(source_dir, collection, doc)
         common_prep.prep_dir()
+        success_status(prepstatus)
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
+        failure_status(prepstatus)
         status = 4
         parser.error(str(ex))
 

@@ -87,29 +87,12 @@ class CommonPrep(OPennSettings,Status):
         attrs.setdefault('description', 'Initial version')
         return openn_db.save_version(doc,attrs)
 
-    def prep_document(self):
-        doc = None
-        try:
-            attrs = {
-                'collection': self.collection,
-                'base_dir': self.package_dir.basedir
-            }
-            doc = Document.objects.get(**attrs)
-        except Document.DoesNotExist:
-            doc = self.save_document()
-        return doc
-
-    def save_document(self):
-        """ Store this manuscript or book or whatever in the database,
-        so we can track it and make sure it's unique."""
-        doc = openn_db.save_document({
-            'call_number': self.tei.call_number,
-            'collection': self.collection,
-            'base_dir': self.package_dir.basedir,
-            'title': getattr(self.tei, 'title', 'Untitled')
-            })
-
-        return doc
+    def update_document(self):
+        self.document.call_number = self.tei.call_number
+        self.document.title = getattr(self.tei, 'title', 'Untitled')
+        self.document.full_clean()
+        self.document.save()
+        return document
 
     def check_valid(self):
         self.package_dir.check_valid()
@@ -117,7 +100,6 @@ class CommonPrep(OPennSettings,Status):
     def prep_dir(self):
         if self.get_status() < self.COLLECTION_PREP_COMPLETED:
             raise OPennException("Collection prep not complete")
-        doc = self.prep_document()
 
         basedir = self.package_dir.basedir
         # rename master files
@@ -125,7 +107,7 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Master files already renamed" % (basedir,))
         else:
             self.logger.info("[%s] Rename master files" % (basedir,))
-            self.package_dir.rename_masters(doc)
+            self.package_dir.rename_masters(self.document)
             self.write_status(self.MASTERS_RENAMED)
 
         # generate derivatives
@@ -134,7 +116,7 @@ class CommonPrep(OPennSettings,Status):
         else:
             self.logger.info("[%s] Generate derivatives" % (basedir,))
             self.package_dir.create_derivs(self.deriv_configs)
-            openn_db.save_image_data(doc,self.package_dir.file_list.data)
+            openn_db.save_image_data(self.document,self.package_dir.file_list.data)
             self.write_status(self.DERIVS_CREATED)
 
         # generate derivatives
@@ -142,10 +124,10 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] TEI already completed" % (basedir,))
         else:
             self.logger.info("[%s] Complete TEI" % (basedir,))
-            self.tei.add_file_list(doc)
-            self.package_dir.save_tei(self.tei, doc)
-            doc.tei_xml = self.tei.to_string()
-            doc.save()
+            self.tei.add_file_list(self.document)
+            self.package_dir.save_tei(self.tei, self.document)
+            self.document.tei_xml = self.tei.to_string()
+            self.document.save()
             self.write_status(self.TEI_COMPLETED)
 
         # add metadata derivatives
@@ -153,7 +135,7 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Image metadata already added" % (basedir,))
         else:
             self.logger.info("[%s] Add metadata" % (basedir,))
-            self.package_dir.add_image_metadata(doc,self.coll_config.get('image_rights'))
+            self.package_dir.add_image_metadata(self.document,self.coll_config.get('image_rights'))
             self.write_status(self.IMAGE_METADATA_ADDED)
 
         # serialize_xmp
@@ -161,7 +143,7 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Image details already updated" % (basedir,))
         else:
             self.logger.info("[%s] Serialize XMP" % (basedir,))
-            self.package_dir.serialize_xmp(doc)
+            self.package_dir.serialize_xmp(self.document)
             self.package_dir.update_image_details()
             self.write_status(self.IMAGE_DETAILS_UPDATED)
 
@@ -178,8 +160,8 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Version.txt already written" % (basedir,))
         else:
             self.logger.info("[%s] Write version.txt" % (basedir,))
-            version = self.save_version(doc)
-            self.package_dir.write_version_txt(doc)
+            version = self.save_version(self.document)
+            self.package_dir.write_version_txt(self.document)
             self.write_status(self.VERSION_TXT_WRITTEN)
 
         if self.get_status() >= self.COMMON_PREP_COMPLETED:

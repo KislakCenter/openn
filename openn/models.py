@@ -99,6 +99,14 @@ class ExtraImageManager(models.Manager):
     def get_query_set(self):
         return super(ExtraImageManager, self).get_query_set().filter(image_type=u'extra')
 
+class PrepStatus(models.Model):
+    document  = models.OneToOneField(Document, primary_key = True)
+    started   = models.DateTimeField(auto_now_add = True)
+    updated   = models.DateTimeField(auto_now = True)
+    finished  = models.DateTimeField(null = True, default = None, blank = True)
+    succeeded = models.BooleanField(default = False)
+    error     = models.TextField(null = True, default = None, blank = True)
+
 class Version(OrderedModel):
     document              = models.ForeignKey(Document, default = None)
     major_version         = models.IntegerField(null = False, default = 1)
