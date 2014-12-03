@@ -12,7 +12,16 @@ export OPENN_DB_HOST=localhost
 export OPENN_PACKAGE_DIR=$HOME/tmp/openn/packages
 export OPENN_STAGING_DIR=$HOME/tmp/openn/site
 
+TABLES_TO_DELETE="openn_derivative openn_image openn_version openn_prepstatus openn_document"
+
 shunit=`dirname $0`/../shunit2/src/shunit2
+
+clear_tables() {
+    for table in $TABLES_TO_DELETE
+    do
+        mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "delete from $table"
+    done
+}
 
 print_output() {
   echo "\n====\n$output"

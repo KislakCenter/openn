@@ -10,17 +10,11 @@ setUp() {
         mkdir $TEST_STAGING_DIR
     fi
     # make sure the database is empty
-    for table in openn_derivative openn_image openn_version openn_document
-    do
-        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
-    done
+    clear_tables
 }
 
 tearDown() {
-    for table in openn_derivative openn_image openn_version openn_document
-    do
-        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
-    done
+    clear_tables
     rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 

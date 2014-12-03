@@ -4,17 +4,13 @@ source `dirname $0`/shunit_helper
 
 DIR_EXTRA_IMAGES=$TEST_DATA_DIR/ljs454
 PREPPED_DIR=$TEST_DATA_DIR/mscodex1223_prepped
-TABLES_TO_DELETE="openn_derivative openn_image openn_version openn_prepstatus openn_document"
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
         mkdir $TEST_STAGING_DIR
     fi
     # make sure the database is empty
-    for table in $TABLES_TO_DELETE
-    do
-        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
-    done
+    clear_tables
 }
 
 # suite() {
@@ -24,10 +20,7 @@ setUp() {
 # }
 
 tearDown() {
-    for table in $TABLES_TO_DELETE
-    do
-        mysql -u $OPENN_DB_USER openn_test -e "delete from $table"
-    done
+    clear_tables
     rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
