@@ -169,7 +169,7 @@ class OPennTEI(XMLWhatsit):
         return self.alt_id('bibid')
 
     def alt_id(self, id_type):
-        return self._get_text('//t:msIdentifier/t:altIdentifier[@type="%s"]/idno' % (id_type, ))
+        return self._get_text('//t:msIdentifier/t:altIdentifier[@type="%s"]/t:idno' % (id_type, ))
 
     @property
     def related_names(self):
