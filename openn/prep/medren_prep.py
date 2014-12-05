@@ -8,10 +8,13 @@ import subprocess
 import glob
 import shutil
 import logging
+import sys
+import codecs
 from lxml import etree
 from openn.prep.collection_prep import CollectionPrep
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
+from openn.xml.openn_tei import OPennTEI
 
 class MedrenPrep(CollectionPrep):
 
@@ -212,7 +215,6 @@ class MedrenPrep(CollectionPrep):
         return { 'document': sorted_files, 'extra': files }
 
     def write_xml(self,bibid,outfile):
-        bibid = self.get_bibid()
         if os.path.exists(outfile):
             backup = '{0}-{1}'.format(outfile, tstamp())
             warning(__name__, 'Backing up existing XML file {0} to {1}'.format(outfile, backup))
@@ -234,6 +236,22 @@ class MedrenPrep(CollectionPrep):
             raise OPennException("TEI Generation failed: %s" % err)
 
         return out
+
+    def regen_partial_tei(self, doc, **kwargs):
+        xsl_command = 'op-gen-tei'
+        tei = OPennTEI(doc.tei_xml)
+        bibid = tei.bibid
+        if bibid is None:
+            raise Exception("Whoah now. bibid is none. That ain't right.")
+        self.write_xml(bibid,self.pih_filename)
+        p = subprocess.Popen([xsl_command, self.pih_filename, self.coll_config['xsl']],
+                stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        if p.returncode != 0:
+            raise OPennException("TEI Generation failed: %s" % err)
+
+        self.write_partial_tei(self.source_dir, out)
 
     def _do_prep_dir(self):
         bibid = self.get_bibid()

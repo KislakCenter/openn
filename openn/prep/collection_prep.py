@@ -64,6 +64,9 @@ class CollectionPrep(OPennSettings,Status):
     def gen_partial_tei(self):
         raise NotImplementedError
 
+    def regen_partial_tei(self, doc, **kwargs):
+        raise NotImplementedError
+
     def prep_dir(self):
         if self.get_status() >= self.COLLECTION_PREP_COMPLETED:
             self.logger.warning("[%s] Collection prep already completed" % (self.basedir,))
