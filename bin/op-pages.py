@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 
+"""op-pages
+
+Script to generate HTML files for OPenn.
+
+
+
+"""
+
+
 from optparse import OptionParser
 import os
 from distutils.dir_util import copy_tree
@@ -23,7 +32,10 @@ def cmd():
     return os.path.basename(__file__)
 
 def main(cmdline=None):
-    """op-prep main
+    """op-pages
+
+
+
     """
     status = 0
     parser = make_parser()
@@ -64,11 +76,46 @@ def make_parser():
 
     usage = """%prog
 
-Update all the pages for objects in OPenn
-
-"""
+Update HTML pages OPenn.  """
 
     parser = OptionParser(usage)
+
+    parser.add_option('-a', '--all',
+                      action='store_true', dest='all_as_needed', default=True,
+                      help='Process all HTML files (browse, TOC, ReadMe) as needed [default: %default]')
+
+    parser.add_option('-A', '--all-force',
+                      action='store_true', dest='force_all', default=False,
+                      help='Force process all HTML files (browse, TOC, ReadMe) [default: %default]')
+
+    parser.add_option('-b', '--browse',
+                      action='store_true', dest='browse', default=False,
+                      help='Process browse HTML files as needed [default: %default]')
+
+    parser.add_option('-B', '--browse-force',
+                      action='store_true', dest='force_browse', default=False,
+                      help='Force process all browse HTML files [default: %default]')
+
+    parser.add_option('-t', '--toc',
+                      action='store_true', dest='toc', default=False,
+                      help='Process TOC HTML files as needed [default: %default]')
+
+    parser.add_option('-T', '--toc-force',
+                      action='store_true', dest='force_toc', default=False,
+                      help='Force process all TOC HTML files [default: %default]')
+
+    parser.add_option('-n', '--dry-run',
+                      action='store_true', dest='dry_run', default=False,
+                      help='Make no changes; show what would be done [default: %default]')
+
+    parser.add_option('-c', '--collection', dest='collection', default=None,
+                      help="Force process table of contents for CONTENTS [default=%default]",
+                      metavar="COLLECTION")
+
+
+    parser.add_option('-d', '--document-id', dest='doc_id', default=None,
+                      help="Force process browse HTML for DOC_ID [default=%default]",
+                      metavar="DOC_ID")
 
     return parser
 
