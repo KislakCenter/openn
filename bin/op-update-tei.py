@@ -81,6 +81,7 @@ def main(cmdline=None):
         doc = Document.objects.get(id=document_id)
         collection_prep = get_collection_prep(opts.out_dir, doc.collection, doc)
         collection_prep.regen_partial_tei(doc)
+        common_prep = CommonPrep(opts.out_dir, doc.collection, doc)
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
         status = 4
