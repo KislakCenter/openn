@@ -96,6 +96,12 @@ class CommonPrep(OPennSettings,Status):
     def check_valid(self):
         self.package_dir.check_valid()
 
+    def update_tei(self):
+        self.tei.add_file_list(self.document)
+        self.package_dir.save_tei(self.tei, self.document)
+        self.document.tei_xml = self.tei.to_string()
+        self.document.save()
+
     def prep_dir(self):
         self.check_valid()
 
@@ -120,15 +126,12 @@ class CommonPrep(OPennSettings,Status):
             openn_db.save_image_data(self.document,self.package_dir.file_list.data)
             self.write_status(self.DERIVS_CREATED)
 
-        # generate derivatives
+        # update tei
         if self.get_status() > self.TEI_COMPLETED:
             self.logger.warning("[%s] TEI already completed" % (basedir,))
         else:
             self.logger.info("[%s] Complete TEI" % (basedir,))
-            self.tei.add_file_list(self.document)
-            self.package_dir.save_tei(self.tei, self.document)
-            self.document.tei_xml = self.tei.to_string()
-            self.document.save()
+            self.update_tei()
             self.write_status(self.TEI_COMPLETED)
 
         # add metadata derivatives
