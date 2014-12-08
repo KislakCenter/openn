@@ -27,7 +27,6 @@ class Document(models.Model):
     collection    = models.CharField(max_length = 30, null = False, default = None, blank = False)
     base_dir      = models.CharField(max_length = 30, null = False, default = None, blank = False)
     is_online     = models.BooleanField(default = False)
-    tei_file_name = models.CharField(max_length = 40, null = True, default = None, blank = True)
     title         = models.TextField(null = True, default = None, blank = True)
     created       = models.DateTimeField(auto_now_add = True)
     updated       = models.DateTimeField(auto_now = True)
