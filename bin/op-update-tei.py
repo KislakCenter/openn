@@ -79,9 +79,15 @@ def main(cmdline=None):
 
     try:
         doc = Document.objects.get(id=document_id)
+        # collection specific
         collection_prep = get_collection_prep(opts.out_dir, doc.collection, doc)
         collection_prep.regen_partial_tei(doc)
+        collection_prep._cleanup()
+
+        # common tei prep
         common_prep = CommonPrep(opts.out_dir, doc.collection, doc)
+        common_prep.update_tei()
+        common_prep._cleanup()
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
         status = 4
