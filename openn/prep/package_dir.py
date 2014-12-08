@@ -147,6 +147,9 @@ class PackageDir:
         """
         Save openn_tei content to path returned by tei_name()
         """
+        if not os.path.exists(self.data_dir):
+            os.mkdir(self.data_dir)
+
         f = open(self.tei_name(doc), 'w+')
         try:
             f.write(openn_tei.to_string())
