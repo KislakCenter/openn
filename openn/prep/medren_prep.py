@@ -252,6 +252,7 @@ class MedrenPrep(CollectionPrep):
             raise OPennException("TEI Generation failed: %s" % err)
 
         self.write_partial_tei(self.source_dir, out)
+        self.add_removal(self.pih_filename)
 
     def _do_prep_dir(self):
         bibid = self.get_bibid()
