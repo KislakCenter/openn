@@ -62,7 +62,6 @@ class CommonPrep(OPennSettings,Status):
         self.package_dir   = PackageDir(source_dir)
         self.collection    = collection
         self.document      = document
-        self.check_valid()
 
     @property
     def tei(self):
@@ -98,6 +97,8 @@ class CommonPrep(OPennSettings,Status):
         self.package_dir.check_valid()
 
     def prep_dir(self):
+        self.check_valid()
+
         if self.get_status() < self.COLLECTION_PREP_COMPLETED:
             raise OPennException("Collection prep not complete")
 

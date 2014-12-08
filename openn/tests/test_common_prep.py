@@ -74,7 +74,8 @@ class TestCommonPrep(TestCase):
         # run
         with self.assertRaises(OPennException) as oe:
             doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            prep.prep_dir()
         self.assertIn('data directory', str(oe.exception))
 
     def test_no_partial_tei(self):
@@ -86,7 +87,8 @@ class TestCommonPrep(TestCase):
         # run
         with self.assertRaises(OPennException) as oe:
             doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            prep.prep_dir()
         self.assertIn('PARTIAL_TEI.xml', str(oe.exception))
 
     def test_no_file_list(self):
@@ -98,7 +100,8 @@ class TestCommonPrep(TestCase):
         # run
         with self.assertRaises(OPennException) as oe:
             doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-            CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            prep.prep_dir()
         self.assertIn('file_list.json', str(oe.exception))
 
     def test_tei_present(self):
