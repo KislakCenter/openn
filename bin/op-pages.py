@@ -27,14 +27,67 @@ from openn.pages.collections import Collections
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
 
-
 def cmd():
     return os.path.basename(__file__)
 
+def process_all(opts):
+    print "No options processing all as needed"
+
+def force_all(opts):
+    print "Option --all-force selected"
+
+def browse(opts):
+    print "Option --browse selected"
+
+def force_browse(opts):
+    print "Option --browse-force selected"
+
+def toc(opts):
+    print "Option --toc selected"
+
+def force_toc(opts):
+    print "Option --toc-force selected"
+
+def collection(opts):
+    print "Option --collection=%s selected" % (opts.collection, )
+
+def force_collection(opts):
+    print "Option --collection-force=%s selected" % (opts.force_collection, )
+
+def force_document(opts):
+    print "Option --document-force=%s selected" % (opts.force_document, )
+
+def document(opts):
+    print "Option --document=%s selected" % (opts.document, )
+
+def readme(opts):
+    print "Option --readme selected"
+
+def force_readme(opts):
+    print "Option --readme-force selected"
+
+def check_options(opts):
+    # get the options
+    opt_dict = vars(opts)
+
+    # remove dry-run
+    dry_run = opt_dict['dry_run']
+    del opt_dict['dry_run']
+
+    # collect used options
+    os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
+
+    if len(os) > 1:
+        s = ', '.join(["%s=%s" % (k,str(v)) for k,v in os.iteritems()])
+        raise OPennException("More than one option selected: %s" % (s,))
+
+    if dry_run:
+        os['dry_run'] = dry_run
+
+    return os
+
 def main(cmdline=None):
     """op-pages
-
-
 
     """
     status = 0
@@ -43,46 +96,85 @@ def main(cmdline=None):
     opts, args = parser.parse_args(cmdline)
 
     try:
-        pages = []
-        outdir = settings.STAGING_DIR
-        html_dir = os.path.join(settings.STAGING_DIR, 'html')
-        if not os.path.exists(html_dir):
-            os.makedirs(html_dir)
-        this_dir = os.path.dirname(__file__)
-        copy_tree(os.path.join(this_dir, '..', 'openn/templates/html'), html_dir)
-        pages.append(Page('0_ReadMe.html', outdir))
-        pages.append(Page('1_TechnicalReadMe.html', outdir))
-        pages.append(Collections('3_Collections.html', outdir))
-        for collection in settings.COLLECTIONS:
-            toc = TableOfContents(collection, **{
-                'template_name': 'TableOfContents.html',
-                'outdir': outdir
-            })
-            pages.append(toc)
-        for doc in Document.objects.all():
-            pages.append(Browse(doc.id, **{ 'outdir': outdir }))
-        for page in pages:
-            page.create_pages()
+        check_options(opts)
+
+        if opts.force_all:
+            force_all(opts)
+
+        elif opts.browse:
+            browse(opts)
+        elif opts.force_browse:
+            force_browse(opts)
+
+        elif opts.toc:
+            toc(opts)
+        elif opts.force_toc:
+            force_toc(opts)
+
+        elif opts.readme:
+            readme(opts)
+        elif opts.force_readme:
+            force_readme(opts)
+
+        elif opts.collection:
+            collection(opts)
+        elif opts.force_collection:
+            force_collection(opts)
+
+        elif opts.document:
+            document(opts)
+        elif opts.force_document:
+            force_document(opts)
+
+        else:
+            process_all(opts)
+
     except OPennException as ex:
-        # error_no_exit(cmd(), str(ex))
-        status = 4
         parser.error(str(ex))
+        status = 4
 
     return status
+    # try:
+    #     pages = []
+    #     outdir = settings.STAGING_DIR
+    #     html_dir = os.path.join(settings.STAGING_DIR, 'html')
+    #     if not os.path.exists(html_dir):
+    #         os.makedirs(html_dir)
+    #     this_dir = os.path.dirname(__file__)
+    #     copy_tree(os.path.join(this_dir, '..', 'openn/templates/html'), html_dir)
+    #     pages.append(Page('0_ReadMe.html', outdir))
+    #     pages.append(Page('1_TechnicalReadMe.html', outdir))
+    #     pages.append(Collections('3_Collections.html', outdir))
+    #     for collection in settings.COLLECTIONS:
+    #         toc = TableOfContents(collection, **{
+    #             'template_name': 'TableOfContents.html',
+    #             'outdir': outdir
+    #         })
+    #         pages.append(toc)
+    #     for doc in Document.objects.all():
+    #         pages.append(Browse(doc.id, **{ 'outdir': outdir }))
+    #     for page in pages:
+    #         page.create_pages()
+    # except OPennException as ex:
+    #     # error_no_exit(cmd(), str(ex))
+    #     status = 4
+    #     parser.error(str(ex))
 
 
 def make_parser():
-    """get_xml option parser"""
+    """ option parser"""
 
-    usage = """%prog
+    usage = """%prog [OPTIONS]
 
-Update HTML pages OPenn.  """
+Update HTML pages for OPenn.
+
+By default page types (browse, TOC, ReadMe) will be generated as
+needed. Use options to change behavior.
+
+Except for --dry-run, options may not be combined.
+"""
 
     parser = OptionParser(usage)
-
-    parser.add_option('-a', '--all',
-                      action='store_true', dest='all_as_needed', default=True,
-                      help='Process all HTML files (browse, TOC, ReadMe) as needed [default: %default]')
 
     parser.add_option('-A', '--all-force',
                       action='store_true', dest='force_all', default=False,
@@ -91,7 +183,6 @@ Update HTML pages OPenn.  """
     parser.add_option('-b', '--browse',
                       action='store_true', dest='browse', default=False,
                       help='Process browse HTML files as needed [default: %default]')
-
     parser.add_option('-B', '--browse-force',
                       action='store_true', dest='force_browse', default=False,
                       help='Force process all browse HTML files [default: %default]')
@@ -99,23 +190,34 @@ Update HTML pages OPenn.  """
     parser.add_option('-t', '--toc',
                       action='store_true', dest='toc', default=False,
                       help='Process TOC HTML files as needed [default: %default]')
-
     parser.add_option('-T', '--toc-force',
                       action='store_true', dest='force_toc', default=False,
                       help='Force process all TOC HTML files [default: %default]')
 
+    parser.add_option('-r', '--readme',
+                      action='store_true', dest='readme', default=False,
+                      help='Process ReadMe files as needed [default: %default]')
+    parser.add_option('-R', '--readme-force',
+                      action='store_true', dest='force_readme', default=False,
+                      help='Force process all ReadMe files [default: %default]')
+
+    parser.add_option('-c', '--collection', dest='collection', default=None,
+                      help="Process table of contents for COLLECTION [default=%default]",
+                      metavar="COLLECTION")
+    parser.add_option('-C', '--collection-force', dest='force_collection', default=None,
+                      help="Force process table of contents for COLLECTION [default=%default]",
+                      metavar="COLLECTION")
+
+    parser.add_option('-d', '--document', dest='document', default=None,
+                      help="Process browse HTML for DOC_ID [default=%default]",
+                      metavar="DOC_ID")
+    parser.add_option('-D', '--document-force', dest='force_document', default=None,
+                      help="Force process browse HTML for DOC_ID [default=%default]",
+                      metavar="DOC_ID")
+
     parser.add_option('-n', '--dry-run',
                       action='store_true', dest='dry_run', default=False,
                       help='Make no changes; show what would be done [default: %default]')
-
-    parser.add_option('-c', '--collection', dest='collection', default=None,
-                      help="Force process table of contents for CONTENTS [default=%default]",
-                      metavar="COLLECTION")
-
-
-    parser.add_option('-d', '--document-id', dest='doc_id', default=None,
-                      help="Force process browse HTML for DOC_ID [default=%default]",
-                      metavar="DOC_ID")
 
     return parser
 
