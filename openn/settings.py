@@ -58,6 +58,8 @@ INSTALLED_APPS = (
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
+OPENN_HOST = 'openn.library.upenn.edu'
+
 # put the openn/bin dir in the path
 os.environ['PATH'] = os.path.join(PROJECT_PATH, 'bin') + os.pathsep + os.environ['PATH']
 

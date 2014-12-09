@@ -2,6 +2,7 @@
 from django.db import models
 from ordered_model.models import OrderedModel
 from django.conf import settings
+import httplib
 import os
 import re
 
@@ -68,6 +69,16 @@ class Document(models.Model):
     def tei_path(self):
         return '{0}/{1}'.format(self.data_dir, self.tei_basename)
 
+    @property
+    def manifest_path(self):
+        return '%s/manifest-sha1.txt' % (self.package_dir, )
+
+    def is_live(self):
+        c = httplib.HTTPConnection(settings.OPENN_HOST)
+        path = '/%s' % (self.manifest_path, )
+        c.request('HEAD', path)
+        return c.getresponse().status < 400
+
     # Choosing collection, base_dir as the uniqueness columns
     # While the collection + call_number should be unique, the collection +
     # base_dir must be unique to prevent filesystem collisions on the host.
@@ -79,14 +90,13 @@ class Document(models.Model):
     def __str__(self):
         return ("Document: id={id:d}, call_number={call_number}" +
                 ", collection={collection}, base_dir={base_dir}" +
-                ", is_online={is_online}, tei_file_name={tei_file_name}" +
+                ", is_online={is_online}" +
                 ", created={created}, updated={updated}").format(
                         id=self.id,
                         call_number=self.call_number,
                         collection=self.collection,
                         base_dir=self.base_dir,
                         is_online=self.is_online,
-                        tei_file_name=self.tei_file_name,
                         created=self.created,
                         updated=self.updated)
 
