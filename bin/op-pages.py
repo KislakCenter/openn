@@ -13,6 +13,8 @@ from optparse import OptionParser
 import os
 from distutils.dir_util import copy_tree
 import sys
+import logging
+from datetime import datetime
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
@@ -30,14 +32,86 @@ from openn.pages.browse import Browse
 def cmd():
     return os.path.basename(__file__)
 
+def staging_dir():
+    return settings.STAGING_DIR
+
+def setup_logger():
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)-15s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    logging.getLogger().addHandler(ch)
+    logging.getLogger().setLevel(logging.DEBUG)
+
+def do_online_prep():
+    for doc in Document.objects.all():
+        if doc.is_online:
+            pass
+        else:
+            if doc.is_live():
+                doc.is_online = True
+                doc.save()
+        logging.debug("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
+
+def html_makeable(doc):
+    if doc.is_online:
+        pass
+    else:
+        logging.debug("Document not online; skipping: %s/%s" % (doc.collection, doc.base_dir))
+        return False
+
+    if doc.tei_xml and len(doc.tei_xml) > 0:
+        pass
+    else:
+        logging.debug("Document lacks TEI; skipping: %s/%s" % (doc.collection, doc.base_dir))
+        return False
+
+    return True
+
+def html_needed(doc):
+    # doesn't matter if it's needed if we can't make it
+    if not html_makeable(doc):
+        return False
+    if not doc.prepstatus.succeeded:
+        logging.debug("Document's last prep failed; skipping: %s/%s" % (doc.collection, doc.base_dir))
+        return False
+
+    outfile = os.path.join(staging_dir(), doc.browse_path)
+    if os.path.exists(outfile):
+        mtime = datetime.fromtimestamp(os.path.getmtime(outfile))
+        if mtime < doc.prepstatus.started:
+            return True
+        else:
+            logging.debug("Document's HTML up-to-date; skipping: %s/%s" % (doc.collection, doc.base_dir))
+            return False
+    else:
+        return True
+
+def make_browse_html(doc, force=False):
+    make_page = html_makeable(doc) if force else html_needed(doc)
+    logpath = os.path.join(staging_dir(), doc.browse_path)
+
+    if make_page:
+        page = Browse(doc.id, **{ 'outdir': staging_dir() })
+        logging.debug("Creating page: %s" % (logpath, ))
+        page.create_pages()
+    else:
+        logging.debug("Skipping page: %s" % (logpath, ))
+
+# ------------------------------------------------------------------------------
+# ACTIONS
+# ------------------------------------------------------------------------------
 def process_all(opts):
-    print "No options processing all as needed"
+    browse(opts)
 
 def force_all(opts):
     print "Option --all-force selected"
 
 def browse(opts):
-    print "Option --browse selected"
+    pages = []
+    do_online_prep()
+    for doc in Document.objects.filter(is_online = True):
+        make_browse_html(doc)
 
 def force_browse(opts):
     print "Option --browse-force selected"
@@ -94,6 +168,9 @@ def main(cmdline=None):
     parser = make_parser()
 
     opts, args = parser.parse_args(cmdline)
+
+    setup_logger()
+    logger = logging.getLogger(__name__)
 
     try:
         check_options(opts)
