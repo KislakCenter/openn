@@ -9,8 +9,8 @@ export TEST_STAGING_DIR=`dirname $0`/../openn/tests/staging
 export OPENN_DB_NAME=openn_test
 export OPENN_DB_USER=openn
 export OPENN_DB_HOST=localhost
-export OPENN_PACKAGE_DIR=$HOME/tmp/openn/packages
-export OPENN_STAGING_DIR=$HOME/tmp/openn/site
+export OPENN_PACKAGE_DIR=$TEST_STAGING_DIR/openn/packages
+export OPENN_STAGING_DIR=$TEST_STAGING_DIR/openn/site
 
 TABLES_TO_DELETE="openn_derivative openn_image openn_version openn_prepstatus openn_document"
 
