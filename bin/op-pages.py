@@ -336,12 +336,118 @@ def make_parser():
 
     usage = """%prog [OPTIONS]
 
-Update HTML pages for OPenn.
+Create and stage HTML pages for OPenn.
 
-By default page types (browse, TOC, ReadMe) will be generated as
-needed. Use options to change behavior.
+By default all HTML page types will be generated and staged as needed in this
+order:
 
-Except for --dry-run, options may not be combined.
+    1. browse pages for each document on-line
+    2. table of contents for each collection with documents on-line
+    3. all ReadMe files
+
+Use options for more granular behavior, to force creation of certain files, or
+to do a dry run of the script.
+
+IN MORE DETAIL
+==============
+
+If you've published a document's image files to OPenn or updated a published
+document, this script will generate a browse page for it.  If a document is in
+the database but its image files haven't been published to OPenn or something
+went wrong with the document's preparation, then no page will be generated.  If
+a document's browse page already exists and is up-to-date, then a new one won't
+be regenerated.
+
+Before browse page generation is done, %prog looks online for each
+document that hasn't already been marked as being online.
+
+A table of contents (TOC) file is generated for any collection that has
+documents with published images and browse pages.  A collection's TOC file is
+regenerated whenever new browse pages are added or existing ones are updated.
+
+A ReadMe file is generated when no staged copy of the file is found or its
+template is updated (thus making the staged copy out-of-date).
+
+Note that you can force the regeneration of a file by deleting its staged copy.
+
+The --force option will cause the system to generate any *makeable* file even if
+the it doesn't "think" it needs to (on *makeable* files, see YADDA YADDA below).
+
+THE YADDA YADDA
+===============
+
+Here's some more detailed information about how this script workds.
+
+WHERE ARE FILES CREATED?
+========================
+
+Documents are staged according to parameters defined in `openn/settings`.  These
+include the STAGING_DIR, the local directory where pages are staged for pushing
+to OPenn; and collection-specific files and subdirectories as defined under
+COLLECTIONS[<COLLECTION_KEY>]:
+
+    - `toc_file`: output name of the table of contents file; e.g.,
+       'TOC_LJSchoenberg_Manuscripts.html'
+    - `web_dir`: output directory for browse HTML pages; e.g.,
+      'Data/LJSchoenberg_Manuscripts/html'
+
+WHEN ARE FILES CREATED?
+=======================
+
+Before creating any file the system asks the following questions and only
+creates the file if the answer to both is Yes:
+
+    - Is it *makeable*? That is, can this file be created?
+    - Is a new version of this file *needed*?
+
+Typically, a file *is needed* only if it is makeable, and (a) it hasn't already
+been staged, or (b) the staged file is out-of-date.  By default %prog will
+generate all *needed* files. The `--force` option will generate all *makeable*
+files.
+
+BROWSE PAGES
+------------
+
+Browse pages are *makeable* for any document:
+
+    - whose images have been published to OPenn, and
+    - whose last prep was successfully completed.
+
+Browse pages are *needed* for a document if:
+
+    - its HTML file hasn't yet been staged, or
+    - its most recent prep is newer than the currently staged HTML file.
+
+TABLE OF CONTENTS PAGES
+-----------------------
+
+Table of contents (TOC) files are created at the collection level.  Each TOC
+file lists all published documents for a given collection.  A collection's TOC
+file is *makeable" only if there is an HTML browse page for at least one of the
+collection's documents.  Note that TOC generation must be run after browse page
+generation to be up-to-date.  A TOC file is *needed* if it is makeable and (a) it
+hasn't already been staged, or (b) if the currently staged file is older than
+at least one of the staged browse HTML for the TOC file's collection.
+
+README FILES
+------------
+
+The list of ReadMe files is taken from the application's README_TEMPLATES
+setting defined in `openn/settings`.  A ReadMe file is considered *makeable* if
+its source file is found in one of the application's TEMPLATE_DIRS as defined in
+`openn/settings.py`.  A ReadMe file is *needed* when its source file is newer
+than the currently staged HTML file.
+
+OPTIONS
+=======
+
+Except for --dry-run and --force, options may not be combined.
+
+Note that --dry-run may show inaccurate information for TOC files.  An actual
+run may create new browse files that would trigger TOC generation.  Dry runs
+don't create new or update browse files, so the TOC steps will likely report
+skipped TOC creation for files that would be generated for an actual run.
+
 """
 
     parser = OptionParser(usage)
@@ -372,10 +478,10 @@ Except for --dry-run, options may not be combined.
 
     parser.add_option('-n', '--dry-run',
                       action='store_true', dest='dry_run', default=False,
-                      help='Make no changes; show what would be done [default: %default]')
+                      help='Make no changes; show what would be done')
     parser.add_option('-f', '--force',
                       action='store_true', dest='force', default=False,
-                      help='Create all makeable files; not just those needed')
+                      help='Create all makeable files; not just as needed')
 
     return parser
 
