@@ -12,6 +12,7 @@ import glob
 import os
 import sys
 import logging
+import copy
 from distutils.dir_util import copy_tree
 from optparse import OptionParser
 from datetime import datetime
@@ -69,19 +70,19 @@ def update_online_statuses():
             if doc.is_live():
                 doc.is_online = True
                 doc.save()
-        logging.debug("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
+        logging.info("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
 
 def browse_makeable(doc):
     if doc.is_online:
         pass
     else:
-        logging.debug("Document not online; skipping: %s/%s" % (doc.collection, doc.base_dir))
+        logging.info("Document not online; skipping: %s/%s" % (doc.collection, doc.base_dir))
         return False
 
     if doc.tei_xml and len(doc.tei_xml) > 0:
         pass
     else:
-        logging.debug("Document lacks TEI; skipping: %s/%s" % (doc.collection, doc.base_dir))
+        logging.info("Document lacks TEI; skipping: %s/%s" % (doc.collection, doc.base_dir))
         return False
 
     return True
@@ -91,7 +92,7 @@ def browse_needed(doc):
     if not browse_makeable(doc):
         return False
     if not doc.prepstatus.succeeded:
-        logging.debug("Document's last prep failed; skipping: %s/%s" % (doc.collection, doc.base_dir))
+        logging.info("Document's last prep failed; skipping: %s/%s" % (doc.collection, doc.base_dir))
         return False
 
     outfile = os.path.join(staging_dir(), doc.browse_path)
@@ -100,23 +101,24 @@ def browse_needed(doc):
         if mtime < doc.prepstatus.started:
             return True
         else:
-            logging.debug("Document's HTML up-to-date; skipping: %s/%s" % (doc.collection, doc.base_dir))
+            logging.info("Document's HTML up-to-date; skipping: %s/%s" % (doc.collection, doc.base_dir))
             return False
     else:
         return True
 
-def make_browse_html(docid, force=False):
+def make_browse_html(docid, force=False, dry_run=False):
     try:
         doc = Document.objects.get(pk=docid)
         make_page = browse_makeable(doc) if force else browse_needed(doc)
         outpath = os.path.join(staging_dir(), doc.browse_path)
 
         if make_page:
-            page = Browse(doc.id, **{ 'outdir': staging_dir() })
-            logging.debug("Creating page: %s" % (outpath, ))
-            page.create_pages()
+            logging.info("Creating page: %s" % (outpath, ))
+            if not dry_run:
+                page = Browse(doc.id, **{ 'outdir': staging_dir() })
+                page.create_pages()
         else:
-            logging.debug("Skipping page: %s" % (outpath, ))
+            logging.info("Skipping page: %s" % (outpath, ))
     except Exception as ex:
         msg = "Error creating browse HTML for docid: '%s'; error: %s" % (str(docid), str(ex))
         raise OPennException(msg)
@@ -125,12 +127,12 @@ def toc_makeable(coll_config):
     tag = coll_config['tag']
     html_dir = os.path.join(staging_dir(), coll_config['html_dir'])
     if not os.path.exists(html_dir):
-        logging.debug("No HTML dir found: %s; skipping %s" % (html_dir, tag))
+        logging.info("No HTML dir found: %s; skipping %s" % (html_dir, tag))
         return False
 
     html_files = glob.glob(os.path.join(html_dir, '*.html'))
     if len(html_files) == 0:
-        logging.debug("No HTML files found in %s; skipping %s" % (html_dir, tag))
+        logging.info("No HTML files found in %s; skipping %s" % (html_dir, tag))
         return False
 
     return True
@@ -148,25 +150,26 @@ def toc_needed(coll_config):
 
     newest_html = max([os.path.getmtime(x) for x in html_files])
     if os.path.getmtime(toc_path) > newest_html:
-        logging.debug("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, tag))
+        logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, tag))
         return False
 
     return True
 
-def make_toc_html(coll_name, force=False):
+def make_toc_html(coll_name, force=False, dry_run=False):
     try:
         coll_config = settings.COLLECTIONS[coll_name]
         make_page = toc_makeable(coll_config) if force else toc_needed(coll_config)
         outpath = os.path.join(staging_dir(), coll_config['toc_file'])
 
         if make_page:
-            toc = TableOfContents(coll_name, **{
-                'template_name': 'TableOfContents.html',
-                'outdir': staging_dir() })
-            logging.debug("Creating TOC for collection %s: %s" % (coll_config['tag'], outpath))
-            toc.create_pages()
+            logging.info("Creating TOC for collection %s: %s" % (coll_config['tag'], outpath))
+            if not dry_run:
+                toc = TableOfContents(coll_name, **{
+                    'template_name': 'TableOfContents.html',
+                    'outdir': staging_dir() })
+                toc.create_pages()
         else:
-            logging.debug("Skipping TOC for collection %s: %s" % (coll_config['tag'], outpath))
+            logging.info("Skipping TOC for collection %s: %s" % (coll_config['tag'], outpath))
     except Exception as ex:
         msg = "Error creating TOC for: '%s'; error: %s" % (collection, str(ex))
         raise OPennException(msg)
@@ -184,7 +187,7 @@ def readme_needed(source_path,outpath):
     else:
         return True
 
-def make_readme_html(readme, force=False):
+def make_readme_html(readme, force=False, dry_run=False):
     try:
         source_path = readme_source_path(readme)
         outpath = os.path.join(staging_dir(), readme)
@@ -196,11 +199,12 @@ def make_readme_html(readme, force=False):
             make_page = readme_needed(source_path, outpath)
 
         if make_page:
-            page = Page(readme, staging_dir())
-            logging.debug("Creating page: %s" % (outpath, ))
-            page.create_pages()
+            logging.info("Creating page: %s" % (outpath, ))
+            if not dry_run:
+                page = Page(readme, staging_dir())
+                page.create_pages()
         else:
-            logging.debug("Skipping page: %s" % (outpath, ))
+            logging.info("Skipping page: %s" % (outpath, ))
     except Exception as ex:
         msg = "Error creating ReadMe file: '%s'; error: %s" % (readme, str(ex))
         raise OPennException(msg)
@@ -225,21 +229,26 @@ def toc(opts):
         collection(coll, opts)
 
 def collection(collection, opts):
-    make_toc_html(collection, opts.force)
+    make_toc_html(collection, opts.force, opts.dry_run)
 
 def document(docid, opts):
-    make_browse_html(docid, opts.force)
+    make_browse_html(docid, opts.force, opts.dry_run)
 
 def readme(opts):
     for readme in settings.README_TEMPLATES:
-        readmefile(readme, opts)
+        readme_file(readme, opts)
 
-def readmefile(filename,opts):
-    make_readme_html(filename, opts.force)
+def readme_file(filename,opts):
+    make_readme_html(filename, opts.force, opts.dry_run)
+
+def print_options(opts):
+    for k in vars(opts):
+        print "OPTION: %12s  %s" % (k, getattr(opts, k))
+
 
 def check_options(opts):
     # get the options
-    opt_dict = vars(opts)
+    opt_dict = copy.deepcopy(vars(opts))
 
     # remove dry-run
     dry_run = opt_dict['dry_run']
@@ -268,12 +277,17 @@ def main(cmdline=None):
     parser = make_parser()
 
     opts, args = parser.parse_args(cmdline)
+    if opts.show_options:
+        print_options(opts)
 
     setup_logger()
     logger = logging.getLogger(__name__)
 
     try:
         check_options(opts)
+
+        if opts.dry_run:
+            logging.warn("Performing DRY RUN")
 
         if opts.browse:
             browse(opts)
@@ -290,11 +304,14 @@ def main(cmdline=None):
         elif opts.document:
             document(opts.document, opts)
 
-        elif opts.readmefile:
-            readmefile(opts.readmefile, opts)
+        elif opts.readme_file:
+            readme_file(opts.readme_file, opts)
 
         else:
             process_all(opts)
+
+        if opts.dry_run:
+            logging.warn("DRY RUN COMPLETE; displayed actions approximate")
 
     except OPennException as ex:
         parser.error(str(ex))
@@ -464,7 +481,7 @@ skipped TOC creation for files that would be generated for an actual run.
                       action='store_true', dest='readme', default=False,
                       help='Process ReadMe files as needed')
 
-    parser.add_option('-m', '--readmefile', dest='readmefile', default=None,
+    parser.add_option('-m', '--readme-file', dest='readme_file', default=None,
                       help="Process ReadMe HTML for README", metavar="README")
 
     parser.add_option('-c', '--collection', dest='collection', default=None,
@@ -482,6 +499,9 @@ skipped TOC creation for files that would be generated for an actual run.
     parser.add_option('-f', '--force',
                       action='store_true', dest='force', default=False,
                       help='Create all makeable files; not just as needed')
+    parser.add_option('-o', '--show-options',
+                      action='store_true', dest='show_options', default=False,
+                      help='Print out the options at runtime')
 
     return parser
 
