@@ -321,32 +321,6 @@ def main(cmdline=None):
         status = 4
 
     return status
-    # try:
-    #     pages = []
-    #     outdir = settings.STAGING_DIR
-    #     html_dir = os.path.join(settings.STAGING_DIR, 'html')
-    #     if not os.path.exists(html_dir):
-    #         os.makedirs(html_dir)
-    #     this_dir = os.path.dirname(__file__)
-    #     copy_tree(os.path.join(this_dir, '..', 'openn/templates/html'), html_dir)
-    #     pages.append(Page('0_ReadMe.html', outdir))
-    #     pages.append(Page('1_TechnicalReadMe.html', outdir))
-    #     pages.append(Collections('3_Collections.html', outdir))
-    #     for collection in settings.COLLECTIONS:
-    #         toc = TableOfContents(collection, **{
-    #             'template_name': 'TableOfContents.html',
-    #             'outdir': outdir
-    #         })
-    #         pages.append(toc)
-    #     for doc in Document.objects.all():
-    #         pages.append(Browse(doc.id, **{ 'outdir': outdir }))
-    #     for page in pages:
-    #         page.create_pages()
-    # except OPennException as ex:
-    #     # error_no_exit(cmd(), str(ex))
-    #     status = 4
-    #     parser.error(str(ex))
-
 
 def make_parser():
     """ option parser"""
