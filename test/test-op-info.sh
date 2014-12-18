@@ -39,5 +39,13 @@ testRun() {
     assertEquals 0 $status
 }
 
+testCheckOline() {
+    loadDb
+    op-info --check-online
+    status=$?
+    # if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+}
+
 # Run shunit
 . $shunit

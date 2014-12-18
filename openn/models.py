@@ -73,6 +73,10 @@ class Document(models.Model):
     def manifest_path(self):
         return '%s/manifest-sha1.txt' % (self.package_dir, )
 
+    @property
+    def is_prepped(self):
+        return (self.prepstatus and self.prepstatus.succeeded) or False
+
     def is_live(self):
         c = httplib.HTTPConnection(settings.OPENN_HOST)
         path = '/%s' % (self.manifest_path, )
