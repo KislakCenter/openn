@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+#
+# Wrapper script to run op-pages.py in this directory.
+#
+
+this_dir=`dirname $0`
+wrapper=$this_dir/op-wrapper.sh
+script=$this_dir/op-info.py
+
+$wrapper -C $script $@
