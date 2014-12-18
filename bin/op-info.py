@@ -41,22 +41,29 @@ def setup_logger():
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
 
-# def add_missing_preps():
-#     for doc in Document.objects.all():
-#         if doc.prepstatus:
-#             logging.info("Doc already has prep: %d: %s/%s" % (doc.id, doc.collection, doc.base_dir))
-#         else:
+def add_prep(doc):
+    prepstatus = PrepStatus(document=doc)
+    if doc.is_online:
+        prepstatus.succeeded = True
+    else:
+        prepstatus.succeeded = False
+        prepstatus.error = 'Unknown; bulkset by %s' % (cmd(), )
 
+    prepstatus.finished = datetime.now()
+    prepstatus.save()
 
+def add_missing_preps():
+    for doc in Document.objects.all():
+        if hasattr(doc, 'prepstatus'):
+            logging.info("Doc already has prep: %d: %s/%s" % (doc.id, doc.collection, doc.base_dir))
+        else:
+            add_prep(doc)
 
 def update_online_statuses():
-    for doc in Document.objects.all():
-        if doc.is_online:
-            pass
-        else:
-            if doc.is_live():
-                doc.is_online = True
-                doc.save()
+    for doc in Document.objects.filter(is_online=False):
+        if doc.is_live():
+            doc.is_online = True
+            doc.save()
         logging.info("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
 
 def print_options(opts):
@@ -85,14 +92,20 @@ class ReportSegment:
         return '%-{0}{1}'.format(self._width,self._fmt)
 
     def fix_value(self, val):
-        if self._fmt == val and val and len(val) > self._width:
+        if self._fmt == 's' and val and len(str(val)) > self._width:
             return '%s...' % (val[:-3], )
         else:
             return val
 
     def line_val(self, obj):
-        if hasattr(obj, self._attr):
+        s = None
+
+        if isinstance(obj, dict) and self._attr in obj:
+            s = obj[self._attr]
+        elif hasattr(obj, self._attr):
             s = getattr(obj, self._attr)
+
+        if s:
             return self.fix_value(s)
         else:
             return ''
@@ -147,12 +160,24 @@ def show_all(opts):
     for doc in Document.objects.all():
         print report.row(doc)
 
+def collections(opts):
+    report = Report(colsep=' | ')
+    report.add(ReportSegment(attr='tag', fmt='s', width=20))
+    report.add(ReportSegment(attr='name', fmt='s', width=50))
+
+    print report.header()
+    print report.divider()
+    for coll in settings.COLLECTIONS:
+        h = settings.COLLECTIONS[coll]
+        # print h
+        print report.row(h)
+
 def check_online(opts):
     update_online_statuses()
 
 def set_preps(opts):
     check_online(opts)
-    # add_missing_preps()
+    add_missing_preps()
 
 def main(cmdline=None):
     """op-info
@@ -175,8 +200,17 @@ def main(cmdline=None):
 
         if opts.check_online:
             check_online(opts)
-
-        show_all(opts)
+            show_all(opts)
+        elif opts.set_preps:
+            logging.info('Runing --set-preps')
+            logging.info('Pre check status')
+            show_all(opts)
+            print ''
+            set_preps(opts)
+            print ''
+            show_all(opts)
+        elif opts.collections:
+            collections(opts)
 
     except OPennException as ex:
         parser.error(str(ex))
@@ -210,6 +244,10 @@ By default prints summary information about each document.
     parser.add_option('-p', '--set-preps',
                       action='store_true', dest='set_preps', default=False,
                       help='Fill in any missing prep objects based on online status')
+
+    parser.add_option('-c', '--collections',
+                      action='store_true', dest='collections', default=False,
+                      help='List known collections')
 
     return parser
 
