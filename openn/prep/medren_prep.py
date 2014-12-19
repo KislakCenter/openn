@@ -19,7 +19,8 @@ from openn.xml.openn_tei import OPennTEI
 class MedrenPrep(CollectionPrep):
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
-    DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\.tif$', 'body\d{4}\.tif$', 'back\d{4}\.tif$' ]
+    DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\w*\.tif$', 'body\d{4}\w*\.tif$', 'back\d{4}\w*\.tif$' ]
+    STRICT_IMAGE_PATTERN_RE = re.compile('^\w*_(front|body|back)\d{4}.tif$')
 
     logger = logging.getLogger(__name__)
 
@@ -102,9 +103,8 @@ class MedrenPrep(CollectionPrep):
             r[i] += '.tif'
         return r
 
-    def check_file_names(self, pih_xml):
+    def check_file_names(self, expected):
         # print sys_file_names(source_dir)
-        expected = self.xml_file_names(pih_xml)
         if len(expected) < 1:
             raise OPennException("Penn in Hand XML lists no files: see %s" % pih_xml)
         missing = []
@@ -142,8 +142,8 @@ class MedrenPrep(CollectionPrep):
             raise OPennException('Got status %d calling: %s' % (status, url))
         return urllib2.urlopen(url).read()
 
-    def add_file_list(self,pih_xml):
-        file_list = self.get_file_list(pih_xml)
+    def add_file_list(self,file_list):
+        # file_list = self.get_file_list(pih_xml)
         outfile = os.path.join(self.source_dir, 'file_list.json')
         f = open(outfile, 'w')
         f.write(json.dumps(file_list))
@@ -177,7 +177,7 @@ class MedrenPrep(CollectionPrep):
         else:
             return label
 
-    def get_file_list(self,pih_xml):
+    def build_file_list(self,pih_xml):
         files = self.prep_file_list()
         xml = etree.parse(open(pih_xml))
         for tif in files.get('document'):
@@ -258,10 +258,12 @@ class MedrenPrep(CollectionPrep):
         bibid = self.get_bibid()
         self.write_xml(bibid, self.pih_filename)
         call_no = self.check_valid_xml(self.pih_filename)
-        self.check_file_names(self.pih_filename)
+        expected_files = self.xml_file_names(self.pih_filename)
+        self.check_file_names(expected_files)
         self.fix_tiff_names()
         self.stage_tiffs()
-        self.add_file_list(self.pih_filename)
+        file_list = self.build_file_list(self.pih_filename)
+        self.add_file_list(file_list)
         partial_tei_xml = self.gen_partial_tei()
         self.write_partial_tei(self.source_dir, partial_tei_xml)
 
