@@ -40,6 +40,7 @@ class MedrenPrep(CollectionPrep):
         # TODO: break if SAXON_JAR not set; see bin/op-gen-tei
         CollectionPrep.__init__(self,source_dir,collection, document)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
+        self.data_dir = os.path.join(self.source_dir, 'data')
 
     @property
     def host(self):
@@ -159,10 +160,8 @@ class MedrenPrep(CollectionPrep):
                                         space_re.sub('_', basename))
                 shutil.move(tiff, new_name)
 
-
     def stage_tiffs(self):
         """Move the TIFF files into the data directory"""
-        self.data_dir = os.path.join(self.source_dir, 'data')
         if not os.path.exists(self.data_dir):
             os.mkdir(self.data_dir)
         tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
@@ -178,7 +177,42 @@ class MedrenPrep(CollectionPrep):
             return label
 
     def build_file_list(self,pih_xml):
-        files = self.prep_file_list()
+        """Build a list of files using the pih_xml file.
+
+        The resulting file list will have the format:
+
+            {
+              "document": [
+                {
+                  "filename": "data/mscodex1589_wk1_front0001.tif",
+                  "image_type": "document",
+                  "label": "Front cover"
+                },
+                {
+                  "filename": "data/mscodex1589_wk1_front0002.tif",
+                  "image_type": "document",
+                  "label": "Inside front cover"
+                },
+                // ...
+               ],
+              "extra": [
+                {
+                  "image_type": "extra",
+                  "filename": "data/mscodex1589_test ref1_1.tif"
+                }
+              ]
+           }
+
+        The 'document' files will include:
+
+           - all files listed in PIH XML
+
+           - all identifiable 'blank' files; that is, those matching
+             the STRICT_IMAGE_PATTERN_RE not found in the PIH list
+
+        """
+        expected = self.xml_file_names(pih_xml)
+        files = self.prep_file_list(expected)
         xml = etree.parse(open(pih_xml))
         for tif in files.get('document'):
             base         = os.path.splitext(os.path.basename(tif['filename']))[0]
@@ -189,7 +223,12 @@ class MedrenPrep(CollectionPrep):
             tif['label'] = self.prep_label(label)
         return files
 
-    def prep_file_list(self):
+    def include_file(self, filename, pttrn, expected_files):
+        if re.search(pttrn, filename):
+            base = os.path.basename(filename)
+            return (base in expected_files) or self.STRICT_IMAGE_PATTERN_RE.match(base)
+
+    def prep_file_list(self, expected):
         """" Create a list of TIFF file in the directroy. Split the list into
         'document' and 'extra' files. The 'document' files list
         comprises a all those that match the document_image_patterns.
@@ -203,13 +242,15 @@ class MedrenPrep(CollectionPrep):
         files = [ self.source_dir_re.sub('', x) for x in files ]
         sorted_files = []
         # find all the files that match the pattern for document images
-        for section in self.document_image_patterns:
-            sec_files     = sorted(filter(lambda x: re.search(section, x), files))
-            sec_files     = [ { 'filename': x, 'image_type': 'document' } for x in sec_files ]
+        for sec_pttrn in self.document_image_patterns:
+            # temp_list     = filter(lambda x: re.search(sec_pttrn, x), files)
+            sec_files     = filter(lambda x: self.include_file(x, sec_pttrn, expected), files)
+            sec_files     = sorted(sec_files)
+            sec_infos     = [ { 'filename': x, 'image_type': 'document' } for x in sec_files ]
+            sorted_files += sec_infos
             # any file we've add selected; remove from the master file list
-            for pair in sec_files:
-                files.remove(pair['filename'])
-            sorted_files += sec_files
+            for fileinfo in sec_infos: files.remove(fileinfo['filename'])
+
         # all the remaining files are extra
         files = [ { 'filename': x, 'image_type': 'extra', 'label': 'None' } for x in files ]
         return { 'document': sorted_files, 'extra': files }
