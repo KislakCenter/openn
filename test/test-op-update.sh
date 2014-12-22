@@ -18,7 +18,8 @@ tearDown() {
 
 testRun() {
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
-    op-update-tei -o $TEST_STAGING_DIR 55
+    doc_id=`mysql -B -u openn openn --disable-column-names -e 'select max(id) from openn_document'`
+    op-update-tei -o $TEST_STAGING_DIR $doc_id
     status=$?
     assertEquals 0 $status
 }
