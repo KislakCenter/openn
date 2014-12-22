@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from glob import glob
+import fnmatch
 import re
 import logging
 import subprocess
@@ -18,44 +19,44 @@ and directory.
 
 
         {
-            'valid_name_pttrns': ['.*\.tif', 'bibid.txt'],
-            'invalid_name_pttrns': ['.*CaptureOne.*', '.*Output.*', '.*[()].*'],
-            'required_globs': ['*.tif', 'bibid.txt'],
+            'valid_names': ['*.tif', 'bibid.txt'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', 'bibid.txt'],
         },
 
 
-  - valid_name_pttrns: list of valid file and directory name patterns;
-    if None or [], then no file names are permitted; re.search() is
-    used to compare names to patterns
+  - valid_names: list of valid file and directory glob patterns; if
+    None or [], then no file names are permitted; globs are converted
+    to regular expressions by fnmatch
 
-  - invalid_name_pttrns: list of invalid file and directory name
-    patterns; if None or [], then any file or directory name is
-    permitted; re.search() is used to compare names to patterns
+  - invalid_names: list of invalid file and directory glob patterns;
+    if None or [], then any file or directory name is permitted; globs
+    are converted to regular expressions by fnmatch
 
-  - required_globs: list of glob patterns that must be present; if
+  - required_names: list of glob patterns that must be present; if
     None or [], then no files are considered required; glob.glob()
     is used to find matching files
 
 Note that `valid_names` and `invalid_names` complement each other and
 may even be redundant. In the above example, a subdirectory named
 'CaptureOne' would fail both the 'valid_names' and the 'invalid_names'
-tests.  On the other hand, the 'invalid_names' pattern '.*[()].*'
+tests.  On the other hand, the 'invalid_names' pattern '*[()]*'
 disallows any object names with parentheses and is needed to exclude a
 file name like 'somefile(1).tif'.
 
 """
 class PackageValidation(object):
 
-    def __init__(self, valid_name_pttrns=[], invalid_name_pttrns=[], required_globs=[]):
+    def __init__(self, valid_names=[], invalid_names=[], required_names=[]):
         "Initialize this PackageValidation object"
-        self._valid_name_res   = self.build_res(valid_name_pttrns)
-        self._invalid_name_res = self.build_res(invalid_name_pttrns)
-        self._required_globs   = required_globs or []
+        self._valid_name_res   = self.build_res(valid_names)
+        self._invalid_name_res = self.build_res(invalid_names)
+        self._required_names   = required_names or []
 
-    def build_res(self, pttrns):
-        if not pttrns or len(pttrns) == 0:
+    def build_res(self, globs):
+        if not globs or len(globs) == 0:
             return []
-        res = [ re.compile(x) for x in pttrns ]
+        res = [ re.compile(fnmatch.translate(g)) for g in globs ]
         return res
 
     def validate(self, pkgdir):
@@ -73,7 +74,7 @@ class PackageValidation(object):
 
     def check_required(self, pkgdir):
         errors  = []
-        for g in self._required_globs:
+        for g in self._required_names:
             path = os.path.join(pkgdir,g)
             if len(glob(path)) == 0:
                 errors.append(g)

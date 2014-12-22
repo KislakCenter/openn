@@ -25,9 +25,9 @@ class TestPackageValidation(TestCase):
     template_dir      = os.path.join(os.path.dirname(__file__), 'data/package_validation')
     staged_package    = os.path.join(staging_dir, 'package_validation')
     validation_config = {
-        'valid_name_pttrns': ['\.tif$', 'bibid.txt'],
-        'invalid_name_pttrns': ['CaptureOne', 'Output', '[()]'],
-        'required_globs': ['*.tif', 'bibid.txt']
+        'valid_names': ['*.tif', 'bibid.txt'],
+        'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+        'required_names': ['*.tif', 'bibid.txt']
     }
 
     def touch(self,fname):
