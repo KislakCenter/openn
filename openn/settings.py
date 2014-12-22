@@ -123,9 +123,9 @@ COLLECTIONS = {
                 'tag': 'ljs',
                 'name': 'Lawrence J. Schoenberg Manuscripts',
                 'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
-                'toc_file': 'TOC_LJSchoenberg_Manuscripts.html',
-                'web_dir': 'Data/LJSchoenberg_Manuscripts',
-                'html_dir': 'Data/LJSchoenberg_Manuscripts/html',
+                'toc_file': 'TOC_LJSchoenbergManuscripts.html',
+                'web_dir': 'Data/LJSchoenbergManuscripts',
+                'html_dir': 'Data/LJSchoenbergManuscripts/html',
                 'prep_class': 'openn.prep.medren_prep.MedrenPrep',
                 'package_validation': {
                     'valid_names': ['*.tif', 'bibid.txt'],
