@@ -211,6 +211,8 @@ def main(cmdline=None):
             show_all(opts)
         elif opts.collections:
             collections(opts)
+        else:
+            show_all(opts)
 
     except OPennException as ex:
         parser.error(str(ex))
