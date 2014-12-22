@@ -92,6 +92,11 @@ COLLECTIONS = {
         'web_dir': 'Data/PennManuscripts',
         'html_dir': 'Data/PennManuscripts/html',
         'prep_class': 'openn.prep.medren_prep.MedrenPrep',
+        'package_validation': {
+            'valid_names': ['*.tif', 'bibid.txt'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', 'bibid.txt'],
+        },
         'config' : {
             'host': 'dla.library.upenn.edu',
             'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
@@ -122,6 +127,11 @@ COLLECTIONS = {
                 'web_dir': 'Data/LJSchoenberg_Manuscripts',
                 'html_dir': 'Data/LJSchoenberg_Manuscripts/html',
                 'prep_class': 'openn.prep.medren_prep.MedrenPrep',
+                'package_validation': {
+                    'valid_names': ['*.tif', 'bibid.txt'],
+                    'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+                    'required_names': ['*.tif', 'bibid.txt'],
+                },
                 'config' : {
                     'host': 'dla.library.upenn.edu',
                     'path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',

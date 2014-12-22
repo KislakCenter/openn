@@ -7,6 +7,7 @@ from openn.openn_settings import OPennSettings
 from openn.prep.status import Status
 from openn.openn_exception import OPennException
 from openn.xml.openn_tei import OPennTEI
+from openn.prep.package_validation import PackageValidation
 
 """
 Parent of collection-specific Prep classes.
@@ -18,6 +19,7 @@ class CollectionPrep(OPennSettings,Status):
     def __init__(self, source_dir, collection, document):
         self.source_dir = source_dir
         self.document = document
+        self._package_validation = None
         OPennSettings.__init__(self,collection)
         Status.__init__(self,source_dir)
         self._removals = []
@@ -29,6 +31,12 @@ class CollectionPrep(OPennSettings,Status):
     @property
     def removals(self):
         return [x for x in self._removals ]
+
+    @property
+    def package_validation(self):
+        if not self._package_validation and self.coll.get('package_validation', None):
+            self._package_validation =  PackageValidation(**self.coll['package_validation'])
+        return self._package_validation
 
     def add_removals(self, removals):
         for removal in removals:
@@ -44,6 +52,14 @@ class CollectionPrep(OPennSettings,Status):
         for f in self.removals:
             if os.path.exists(f):
                 os.remove(f)
+
+    def validate(self):
+        errors = []
+        if self.package_validation:
+            errors = self.package_validation.validate(self.source_dir)
+        if len(errors) > 0:
+            msg = 'Invalid package directory: %s' % (self.source_dir,)
+            raise(OPennException('\n'.join([msg] + errors)))
 
     def write_partial_tei(self, outdir, xml):
         outfile = os.path.join(outdir, 'PARTIAL_TEI.xml')
@@ -71,6 +87,7 @@ class CollectionPrep(OPennSettings,Status):
         if self.get_status() >= self.COLLECTION_PREP_COMPLETED:
             self.logger.warning("[%s] Collection prep already completed" % (self.basedir,))
         else:
+            self.validate()
             self._do_prep_dir()
             self.write_status(self.COLLECTION_PREP_COMPLETED)
             self._cleanup()
