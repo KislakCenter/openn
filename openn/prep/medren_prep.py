@@ -296,17 +296,46 @@ class MedrenPrep(CollectionPrep):
         self.add_removal(self.pih_filename)
 
     def _do_prep_dir(self):
-        bibid = self.get_bibid()
-        self.write_xml(bibid, self.pih_filename)
-        call_no = self.check_valid_xml(self.pih_filename)
-        expected_files = self.xml_file_names(self.pih_filename)
-        self.check_file_names(expected_files)
-        self.fix_tiff_names()
-        self.stage_tiffs()
-        file_list = self.build_file_list(self.pih_filename)
-        self.add_file_list(file_list)
-        partial_tei_xml = self.gen_partial_tei()
-        self.write_partial_tei(self.source_dir, partial_tei_xml)
+        if self.get_status() > self.COLLECTION_PREP_MD_VALIDATED:
+            self.logger.warning("[%s] Metadata alreaady validated" % (self.basedir, ))
+        else:
+            self.logger.info("[%s] Validating metadata" % (self.basedir, ))
+            bibid = self.get_bibid()
+            self.write_xml(bibid, self.pih_filename)
+            call_no = self.check_valid_xml(self.pih_filename)
+            self.write_status(self.COLLECTION_PREP_MD_VALIDATED)
+
+        if self.get_status() > self.COLLECTION_PREP_FILES_VALIDATED:
+            self.logger.warning("[%s] Files alreaady validated" % (self.basedir, ))
+        else:
+            self.logger.info("[%s] Validating files" % (self.basedir, ))
+            expected_files = self.xml_file_names(self.pih_filename)
+            self.check_file_names(expected_files)
+            self.write_status(self.COLLECTION_PREP_FILES_VALIDATED)
+
+        if self.get_status() > self.COLLECTION_PREP_FILES_STAGED:
+            self.logger.warning("[%s] Files already staged" % (self.basedir, ))
+        else:
+            self.logger.info("[%s] Staging files" % (self.basedir, ))
+            self.fix_tiff_names()
+            self.stage_tiffs()
+            self.write_status(self.COLLECTION_PREP_FILES_STAGED)
+
+        if self.get_status() > self.COLLECTION_PREP_FILE_LIST_WRITTEN:
+            self.logger.warning("[%s] File list already written" % (self.basedir, ))
+        else:
+            self.logger.info("[%s] Writing file list" % (self.basedir, ))
+            file_list = self.build_file_list(self.pih_filename)
+            self.add_file_list(file_list)
+            self.write_status(self.COLLECTION_PREP_FILE_LIST_WRITTEN)
+
+        if self.get_status() > self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN:
+            self.logger.warning("[%s] Partial TEI already written" % (self.basedir, ))
+        else:
+            self.logger.info("[%s] Writing partial TEI" % (self.basedir, ))
+            partial_tei_xml = self.gen_partial_tei()
+            self.write_partial_tei(self.source_dir, partial_tei_xml)
+            self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
 
         # files to cleanup
         self.add_removal(self.pih_filename)
