@@ -152,7 +152,7 @@ def main(cmdline=None):
         success_status(prepstatus)
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
-        failure_status(prepstatus)
+        failure_status(prepstatus, ex)
         status = 4
         parser.error(str(ex))
 
