@@ -6,10 +6,10 @@ source $THIS_DIR/shunit_helper
 MS_COMPLETE=$TEST_DATA_DIR/mscodex1223_complete
 STAGED_DATA=$TEST_STAGING_DIR/mscodex1223
 
-suite() {
-    # suite_addTest testRun
-    suite_addTest testOverWrite
-}
+# suite() {
+#     # suite_addTest testRun
+#     suite_addTest testOverWrite
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -21,7 +21,7 @@ setUp() {
 
 tearDown() {
     clear_tables
-    # rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
 testRun() {
