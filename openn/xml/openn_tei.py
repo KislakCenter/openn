@@ -21,14 +21,14 @@ class OPennTEI(XMLWhatsit):
 
     def __init__(self, xml):
         if isinstance(xml, str):
-            parser = etree.XMLParser(recover=True, encoding='utf-8')
+            parser = etree.XMLParser(recover=True, encoding='utf-8', remove_blank_text=True)
             self.xml = etree.fromstring(xml, parser)
         elif isinstance(xml, unicode):
-            parser = etree.XMLParser(recover=True, encoding='utf-8')
+            parser = etree.XMLParser(recover=True, encoding='utf-8', remove_blank_text=True)
             # self.xml = etree.parse(StringIO(xml.encode('utf-8')), parser)
             self.xml = etree.parse(StringIO(xml.encode('utf-8')), parser)
         else:
-            parser = etree.XMLParser(remove_blank_text=True)
+            parser = etree.XMLParser(encoding='utf-8', remove_blank_text=True)
             self.xml = etree.parse(xml, parser)
         self._namespaces = { 't': OPennTEI.TEI_NS }
 
@@ -222,8 +222,7 @@ class OPennTEI(XMLWhatsit):
             surface = etree.Element("surface", n=n, nsmap=self.ns)
             for deriv in image.derivative_set.all():
                 deriv_type = deriv.deriv_type
-                # path = OPennTEI.fix_path_re.sub("", deriv['path'])
-                path = deriv.path
+                path = OPennTEI.fix_path_re.sub("", deriv.path)
                 attrs = {}
                 attrs['url'] = path
                 attrs['width'] = "%spx" % str(deriv.width)
