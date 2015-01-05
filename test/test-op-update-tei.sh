@@ -4,7 +4,10 @@ THIS_DIR=`dirname $0`
 source $THIS_DIR/shunit_helper
 
 MS_COMPLETE=$TEST_DATA_DIR/mscodex1223_complete
+ORIGINAL_TEI=$MS_COMPLETE/data/mscodex1223_TEI.xml
+
 STAGED_DATA=$TEST_STAGING_DIR/mscodex1223
+STAGED_TEI=$STAGED_DATA/data/mscodex1223_TEI.xml
 
 # suite() {
 #     # suite_addTest testRun
@@ -34,6 +37,7 @@ testRun() {
 }
 
 testOverWrite() {
+    # stage stuff
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     doc_id=`mysql -B -u openn openn --disable-column-names -e 'select max(id) from openn_document'`
     cp -r $MS_COMPLETE $STAGED_DATA
@@ -42,6 +46,8 @@ testOverWrite() {
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
+    assertTrue "TEI file should exist: $STAGED_TEI" "[ -f $STAGED_TEI ]"
+    assertFalse "TEI file should be different from original" "cmp $ORIGINAL_TEI $STAGED_TEI"
 }
 
 
