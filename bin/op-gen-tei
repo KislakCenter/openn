@@ -36,6 +36,11 @@ else
   exit 1
 fi
 
+# APPLICATION VARS
+APP_DIR=$(cd `dirname $0`; cd ..; pwd)
+JARS_FOLDER=$APP_DIR/vendor/jars
+DEFAULT_SAXON_JAR=$JARS_FOLDER/saxon9he.jar
+
 # Note that LOGFILE is used by functions for log commands: log_message,
 # log_warning, log_error, etc.
 #
@@ -51,7 +56,8 @@ usage() {
    echo "       -h        Help"
    echo "       -j PATH   Path to the Saxon jar file."
    echo ""
-   echo "Note: OPENN_SAXON_JAR can be set in environment."
+   echo "OPENN_SAXON_JAR can be set in environment or Saxon jar can be installed"
+   echo "to the default location: $DEFAULT_SAXON_JAR"
 }
 
 print_help() {
@@ -101,18 +107,19 @@ else
 fi
 
 
-if [ ! -n "$OPENN_SAXON_JAR" ]; then
-    echo "Please set the OPENN_SAXON_JAR variable!" >&2
-    usage
-    exit 1
-fi
-
-if [ -f $OPENN_SAXON_JAR ]; then
-    echo "Using OPENN_SAXON_JAR: $OPENN_SAXON_JAR" >&2
+# if user has specified OPENN_SAXON_JAR, use that
+if [ -n "$OPENN_SAXON_JAR" ]; then
+    if [ -f "$OPENN_SAXON_JAR" ]; then
+        message "Using user-specified OPENN_SAXON_JAR jar: $OPENN_SAXON_JAR" >&2
+    else
+        error "User-specified OPENN_SAXON_JAR not found: $OPENN_SAXON_JAR" >&2
+    fi
+# otherwise, see if the DEFAULT jar file is present
+elif [ -f "$DEFAULT_SAXON_JAR" ]; then
+    message "OPENN_SAXON_JAR not set; using default: $DEFAULT_SAXON_JAR" >&2
+    OPENN_SAXON_JAR=$DEFAULT_SAXON_JAR
 else
-    echo "OPENN_SAXON_JAR not found; looking for \"$OPENN_SAXON_JAR\"" >&2
-    usage
-    exit 1
+    error "Please set OPENN_SAXON_JAR var or install $DEFAULT_SAXON_JAR!" >&2
 fi
 
 CLASSPATH=$CLASSPATH:$OPENN_SAXON_JAR

@@ -72,3 +72,6 @@ shunit2*
 
 # ignore .bak files
 *.bak
+
+# ignore jar files
+*.jar
