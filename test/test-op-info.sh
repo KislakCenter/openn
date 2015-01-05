@@ -32,41 +32,41 @@ stagePages() {
 
 testRun() {
     loadDb
-    op-info
+    output=`op-info 2>&1`
     status=$?
-    # if [ $status != 0 ]; then echo "$output"; fi
+    [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
 }
 
 testCheckOline() {
     loadDb
-    op-info --check-online
+    output=`op-info --check-online 2>&1`
     status=$?
-    # if [ $status != 0 ]; then echo "$output"; fi
+    [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
 }
 
 testSetPrepsNoOp() {
     loadDb
-    op-info --set-preps
+    output=`op-info --set-preps 2>&1`
     status=$?
-    # if [ $status != 0 ]; then echo "$output"; fi
+    [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
 }
 
 testSetPrepsOneOnline() {
     loadDb
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "delete from openn_prepstatus"
-    op-info --set-preps
+    output=`op-info --set-preps 2>&1`
     status=$?
-    # if [ $status != 0 ]; then echo "$output"; fi
+    [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
 }
 
 testCollections() {
-    op-info --collections
+    output=`op-info --collections 2>&1`
     status=$?
-    # if [ $status != 0 ]; then echo "$output"; fi
+    [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
 }
 

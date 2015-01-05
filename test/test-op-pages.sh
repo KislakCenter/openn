@@ -57,7 +57,6 @@ testForce() {
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     stagePages
     output=`op-pages --force --show-options`
-    echo "$output"
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
