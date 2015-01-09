@@ -32,6 +32,9 @@ usage() {
     echo " -h              print help and exit"
     echo " -e VIRTUALENV   Virtualenv executable"
     echo " -p PYTHON       Python executable"
+    echo " -u              Attempt to update this installation"
+    echo ""
+    echo "Note: If the dir 'venv' is found, update is automatically attempted."
     echo ""
 }
 
@@ -87,7 +90,7 @@ virtualenv
 
 
 ### OPTIONS
-while getopts "hp:e:" opt; do
+while getopts "hp:e:u" opt; do
     case $opt in
         h)
             usage
@@ -98,6 +101,9 @@ while getopts "hp:e:" opt; do
             ;;
         e)
             OPENN_VIRTUALENV=$OPTARG
+            ;;
+        u)
+            UPDATE=true
             ;;
         \?)
             echo "ERROR Invalid option: -$OPTARG" >&2
@@ -110,48 +116,66 @@ done
 
 shift $((OPTIND-1))
 
+venv_dir=$this_dir/venv
+if [[ $UPDATE ]]; then
+    echo "[$cmd] User requestd update; attempting update" >&2
+elif [[ -d $venv_dir ]]; then
+    echo "[$cmd] Virtualenv dir exists ($venv_dir); attempting update" >&2
+    UPDATE=true
+fi
 
-# - locate python v2.6|7
-if [[ "$OPENN_PYTHON" ]]
-then
-    :
-else
-    OPENN_PYTHON=`find_python`
-    if [[ $? -ne 0 ]]
-then
-        echo "[$cmd] Could not find python version 2.6.x or 2.7.x; quitting" >&2
+
+if [[ "$UPDATE" ]]; then
+    # if UPDATE, assume that virtual env is set up
+    # let's make sure venv dir is present
+    if [[ ! -d $venv_dir ]]; then
+        echo "[$cmd] Expected dir '$venv_dir'; cannot update; quitting" >&2
         exit 1
     fi
-fi
-echo "[$cmd] Using python: $OPENN_PYTHON"
-
-# - locate virtualenv
-if [[ "$OPENN_VIRTUALENV" ]]
-then
-    :
 else
-    OPENN_VIRTUALENV=`find_virtualenv`
-    if [[ $? -ne 0 ]]
+    # if not updating, try to create virtualenv
+    # - locate python v2.6|7
+    if [[ "$OPENN_PYTHON" ]]
+    then
+        :
+    else
+        OPENN_PYTHON=`find_python`
+        if [[ $? -ne 0 ]]
         then
-        echo "[$cmd] Could not find virtualenv; quitting" >&2
-        exit1
+            echo "[$cmd] Could not find python version 2.6.x or 2.7.x; quitting" >&2
+            exit 1
+        fi
     fi
-fi
-echo "[$cmd] Using virtualenv: $OPENN_VIRTUALENV"
+    echo "[$cmd] Using python: $OPENN_PYTHON"
 
-# - create virtualenv
-venv_dir=$this_dir/venv
-if [[ -d $venv_dir ]]
-then
-    echo "[$cmd] ERROR: Pffft! $venv_dir already exists; I'm quitting." >&2
-    exit 1
-fi
 
-$OPENN_VIRTUALENV --python=$OPENN_PYTHON --prompt="(openn-prodn)" $venv_dir
-if [[ $? -ne 0 ]]
-then
-    echo "[$cmd] ERROR: Error creating virtualenv at: $venv_dir" >&2
-    exit 1
+    # - locate virtualenv
+    if [[ "$OPENN_VIRTUALENV" ]]
+    then
+        :
+    else
+        OPENN_VIRTUALENV=`find_virtualenv`
+        if [[ $? -ne 0 ]]
+        then
+            echo "[$cmd] Could not find virtualenv; quitting" >&2
+            exit 1
+        fi
+    fi
+    echo "[$cmd] Using virtualenv: $OPENN_VIRTUALENV"
+
+    # - create virtualenv
+    if [[ -d $venv_dir ]]
+    then
+        echo "[$cmd] ERROR: Pffft! $venv_dir already exists; I'm quitting." >&2
+        exit 1
+    fi
+
+    $OPENN_VIRTUALENV --python=$OPENN_PYTHON --prompt="(openn-prodn)" $venv_dir
+    if [[ $? -ne 0 ]]
+    then
+        echo "[$cmd] ERROR: Error creating virtualenv at: $venv_dir" >&2
+        exit 1
+    fi
 fi
 
 source $venv_dir/bin/activate
@@ -166,50 +190,56 @@ else
     exit 1
 fi
 
-# - install pyexiftool from demery github repo
-#       - clone
-clone_dir=$this_dir/pyexiftool
-if [[ -d $clone_dir ]]
-then
-    echo "[$cmd] ERROR: pyexiftool directory already exists: $clone_dir"
-    exit 1
-fi
-git clone $PYEXIFTOOL_GIT $clone_dir
-
-# - install pyexiftool from demery github repo
-#       - setup install
-curr_dir=`pwd`
-cd $clone_dir
-
-if python setup.py install
-then
+if [[ "$UPDATE" ]]; then
+    # if updating; skip pyexiftool setup
     :
 else
-    echo "[$cmd] Error installing pyexiftool" >&2
-    exit 1
-fi
+    # - install pyexiftool from demery github repo
+    #       - clone
+    clone_dir=$this_dir/pyexiftool
+    if [[ -d $clone_dir ]]
+    then
+        echo "[$cmd] ERROR: pyexiftool directory already exists: $clone_dir"
+        exit 1
+    fi
+    git clone $PYEXIFTOOL_GIT $clone_dir
 
-echo "[$cmd] pyexiftool installed"
+    # - install pyexiftool from demery github repo
+    #       - setup install
+    curr_dir=`pwd`
+    cd $clone_dir
 
-if [[ `pwd` =~ pyexiftool$ ]]
-then
-    find . -delete
-else
-    echo "[$cmd] ERROR: Should be in pyexiftool directory; found: `pwd`" >&2
-    exit 1
-fi
-
-if cd $curr_dir
-then
-    if rmdir pyexiftool
+    if python setup.py install
     then
         :
     else
-        echo "[$cmd] ERROR: Error removing pyexiftool" >&2
+        echo "[$cmd] Error installing pyexiftool" >&2
         exit 1
+    fi
+
+    echo "[$cmd] pyexiftool installed"
+
+    if [[ `pwd` =~ pyexiftool$ ]]
+    then
+        find . -delete
+    else
+        echo "[$cmd] ERROR: Should be in pyexiftool directory; found: `pwd`" >&2
+        exit 1
+    fi
+
+    if cd $curr_dir
+    then
+        if rmdir pyexiftool
+        then
+            :
+        else
+            echo "[$cmd] ERROR: Error removing pyexiftool" >&2
+            exit 1
+        fi
     fi
 fi
 
+# we always run pip install in case there are new libs
 echo "[$cmd] Running pip install -r requirements.txt"
 # - run pip install -r requirements.txt
 reqs_txt=$this_dir/requirements.txt
