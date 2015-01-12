@@ -73,15 +73,11 @@ def update_online_statuses():
         logging.info("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
 
 def browse_makeable(doc):
-    if doc.is_online:
-        pass
-    else:
+    if not doc.is_online:
         logging.info("Document not online; skipping: %s/%s" % (doc.collection, doc.base_dir))
         return False
 
-    if doc.tei_xml and len(doc.tei_xml) > 0:
-        pass
-    else:
+    if not (doc.tei_xml and len(doc.tei_xml) > 0):
         logging.info("Document lacks TEI; skipping: %s/%s" % (doc.collection, doc.base_dir))
         return False
 
