@@ -75,6 +75,15 @@ testBrowse() {
 }
 
 # test toc
+testToc() {
+    stagePages
+    output=`op-pages --toc --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating TOC"
+    assertMatch "$output" "Skipping TOC"
+}
 
 # test readme
 
