@@ -7,7 +7,7 @@ TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
 # suite() {
-#     suite_addTest testForce
+#     suite_addTest testReadMeFile
 # }
 
 setUp() {
@@ -66,7 +66,8 @@ testForce() {
 
 # test browse
 testBrowse() {
-    output=`op-pages --dry-run --show-options`
+    # TOOD tests is incorrect; change --dry-run to --browse
+    output=`op-pages --dry-run --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -98,6 +99,22 @@ testReadMe() {
 }
 
 # test readme-file
+testReadMeFile() {
+    output=`op-pages --readme-file 0_ReadMe.html --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page.*ReadMe"
+}
+
+# test readme-file failure
+testReadMeFileFailure() {
+    output=`op-pages --readme-file 01_ReadMe.html --show-options 2>&1`
+    status=$?
+    if [ $status != 2 ]; then echo "$output"; fi
+    assertEquals 2 $status
+    assertMatch "$output" "Could not find template.*ReadMe"
+}
 
 # test collection
 

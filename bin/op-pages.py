@@ -22,6 +22,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 from openn.models import *
 from django.core import serializers
 from django.conf import settings
+from django.template.base import TemplateDoesNotExist
 
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
@@ -201,6 +202,9 @@ def make_readme_html(readme, force=False, dry_run=False):
                 page.create_pages()
         else:
             logging.info("Skipping page: %s" % (outpath, ))
+    except TemplateDoesNotExist as ex:
+        msg = "Could not find template: %s" % (readme,)
+        raise OPennException(msg)
     except Exception as ex:
         msg = "Error creating ReadMe file: '%s'; error: %s" % (readme, str(ex))
         raise OPennException(msg)
@@ -456,7 +460,9 @@ skipped TOC creation for files that would be generated for an actual run.
                       help='Process ReadMe files as needed')
 
     parser.add_option('-m', '--readme-file', dest='readme_file', default=None,
-                      help="Process ReadMe HTML for README", metavar="README")
+                      help=("Process ReadMe HTML for README; one of:\n  %s" % (
+                          ', '.join(settings.README_TEMPLATES), )),
+                      metavar="README")
 
     parser.add_option('-c', '--collection', dest='collection', default=None,
                       help="Process table of contents for COLLECTION",
