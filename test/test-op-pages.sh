@@ -16,6 +16,7 @@ setUp() {
     fi
     # make sure the database is empty
     clear_tables
+    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
 }
 
 tearDown() {
@@ -30,7 +31,6 @@ stagePages() {
 }
 
 testRun() {
-    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     output=`op-pages --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
@@ -42,7 +42,6 @@ testRun() {
 
 # test dry run
 testDryRun() {
-    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     output=`op-pages --dry-run --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
@@ -54,7 +53,6 @@ testDryRun() {
 
 # test force
 testForce() {
-    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     stagePages
     output=`op-pages --force --show-options`
     status=$?
@@ -68,7 +66,6 @@ testForce() {
 
 # test browse
 testBrowse() {
-    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     output=`op-pages --dry-run --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
