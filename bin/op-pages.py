@@ -252,6 +252,9 @@ def check_options(opts):
     # remove force
     force = opt_dict['force']
     opt_dict['force'] = False
+    # remove show-options
+    show_options = opt_dict['show_options']
+    opt_dict['show_options'] = False
 
     # collect used options
     os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
@@ -262,6 +265,7 @@ def check_options(opts):
 
     os['dry_run'] = dry_run
     os['force'] = force
+    os['show_options'] = show_options
 
     return os
 
