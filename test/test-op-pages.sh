@@ -129,6 +129,16 @@ testCollection() {
 }
 
 # test document
+testDocument() {
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where collection = 'ljs'"`
+    # mark the document online to force page generation
+    mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
+    output=`op-pages --document $doc_id --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page"
+}
 
 # Run shunit
 . $shunit
