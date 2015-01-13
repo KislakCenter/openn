@@ -29,7 +29,7 @@ tearDown() {
 
 testRun() {
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
-    doc_id=`mysql -B -u openn openn --disable-column-names -e 'select max(id) from openn_document'`
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select id from openn_document where base_dir = 'mscodex1223'"`
     output=`op-update-tei -o $TEST_STAGING_DIR $doc_id 2>&1`
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
@@ -39,7 +39,7 @@ testRun() {
 testOverWrite() {
     # stage stuff
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
-    doc_id=`mysql -B -u openn openn --disable-column-names -e 'select max(id) from openn_document'`
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select id from openn_document where base_dir = 'mscodex1223'"`
     cp -r $MS_COMPLETE $STAGED_DATA
 
     output=`op-update-tei -o $STAGED_DATA $doc_id 2>&1`
