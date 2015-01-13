@@ -86,6 +86,16 @@ testToc() {
 }
 
 # test readme
+testReadMe() {
+    # stagePages
+    output=`op-pages --readme --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page.*ReadMe"
+    assertNotMatch "$output" "Creating page.*ljs454.html"
+    assertNotMatch "$output" "Creating TOC"
+}
 
 # test readme-file
 
