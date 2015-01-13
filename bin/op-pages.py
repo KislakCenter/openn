@@ -303,7 +303,7 @@ def main(cmdline=None):
             readme(opts)
 
         elif opts.collection:
-            collection(opts)
+            collection(opts.collection, opts)
 
         elif opts.document:
             document(opts.document, opts)

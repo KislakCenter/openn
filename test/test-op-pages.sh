@@ -6,9 +6,9 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
-# suite() {
-#     suite_addTest testReadMeFile
-# }
+suite() {
+    suite_addTest testCollection
+}
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -117,6 +117,16 @@ testReadMeFileFailure() {
 }
 
 # test collection
+testCollection() {
+    stagePages
+    # delete all TOCs to force TOC generation
+    find $STAGED_PAGES -name TOC_\*.html -delete
+    output=`op-pages --collection ljs --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating TOC.*LJS"
+}
 
 # test document
 
