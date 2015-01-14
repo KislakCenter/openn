@@ -49,6 +49,13 @@ else
 fi
 echo "[$cmd] Using DEST_DIR: $DEST_DIR"
 
+base=`basename $SOURCE_DIR`
+
+if ! [[ $base =~ ^[a-z].*[0-9]$ ]]; then
+    echo "ERROR: Whoa! No. I'm not copying '$SOURCE_DIR'. I expected something like 'ljs472' or 'mscodex1223'" >&2
+    exit 1
+fi
+
 ### DO STUFF
 # Copying
 echo "[$cmd] Copying $SOURCE_DIR to $DEST_DIR"
@@ -72,6 +79,7 @@ fi
 # Delete junk
 echo "[$cmd] Deleting junk files from $dest"
 find $dest -iname Thumbs.db -delete
+find $dest -iname sha1manifest.txt -delete
 
 # Write bibid.txt
 bibid_file=$dest/bibid.txt
