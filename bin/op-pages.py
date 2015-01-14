@@ -73,6 +73,10 @@ def update_online_statuses():
                 doc.save()
         logging.info("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
 
+def collection_tags():
+    return [ x for x in settings.COLLECTIONS ]
+
+
 def browse_makeable(doc):
     if not doc.is_online:
         logging.info("Document not online; skipping: %s/%s" % (doc.collection, doc.base_dir))
@@ -209,12 +213,64 @@ def make_readme_html(readme, force=False, dry_run=False):
         msg = "Error creating ReadMe file: '%s'; error: %s" % (readme, str(ex))
         raise OPennException(msg)
 
+def collections_makeable(source_path):
+    return source_path and os.path.exists(source_path)
+
+def collections_needed(source_path,outpath):
+    """If the collections template exits; we always say it's needed.
+
+    Why? If implemented, the tests for creating a new collections list
+    page would ask the following.  A Yes answer to any would trigger
+    page generation.
+
+    1. Is there no existing 3_Collections.html file?
+
+    2. Is the template newer than the current 3_Collections.html file?
+
+    3. Has the collection information in the settings file changed?
+
+    4. Are there new TOC files for collections not listed in the
+       current 3_Collections.html?
+
+    Nos. 3 and 4 are too complicated to make it worth figuring out.
+
+    Therefore, we always say the page is needed.
+
+    """
+    return collections_makeable(source_path)
+
+def make_collections(opts, force=False, dry_run=False):
+    try:
+        source_path = readme_source_path(settings.COLLECTIONS_TEMPLATE)
+        outpath = os.path.join(staging_dir(), settings.COLLECTIONS_TEMPLATE)
+
+        make_page = False
+        if force:
+            make_page = collections_makeable(source_path)
+        else:
+            make_page = collections_needed(source_path, outpath)
+
+        if make_page:
+            logging.info("Creating list of collections: %s" % (outpath, ))
+            if not dry_run:
+                page = Collections(settings.COLLECTIONS_TEMPLATE, staging_dir())
+                page.create_pages()
+        else:
+            logging.info("Skipping page: %s" % (outpath, ))
+    except TemplateDoesNotExist as ex:
+        msg = "Could not find template: %s" % (settings.COLLECTIONS_TEMPLATE,)
+        raise OPennException(msg)
+    except Exception as ex:
+        msg = "Error creating ReadMe file: '%s'; error: %s" % (settings.COLLECTIONS_TEMPLATE, str(ex))
+        raise OPennException(msg)
+
 # ------------------------------------------------------------------------------
 # ACTIONS
 # ------------------------------------------------------------------------------
 def process_all(opts):
     browse(opts)
     toc(opts)
+    collections(opts)
     readme(opts)
 
 def browse(opts):
@@ -226,10 +282,10 @@ def browse(opts):
 
 def toc(opts):
     for coll in settings.COLLECTIONS:
-        collection(coll, opts)
+        toc_collection(coll, opts)
 
-def collection(collection, opts):
-    make_toc_html(collection, opts.force, opts.dry_run)
+def toc_collection(collection_tag, opts):
+    make_toc_html(collection_tag, opts.force, opts.dry_run)
 
 def document(docid, opts):
     make_browse_html(docid, opts.force, opts.dry_run)
@@ -240,6 +296,9 @@ def readme(opts):
 
 def readme_file(filename,opts):
     make_readme_html(filename, opts.force, opts.dry_run)
+
+def collections(opts):
+    make_collections(opts, opts.force, opts.dry_run)
 
 def print_options(opts):
     for k in vars(opts):
@@ -302,8 +361,11 @@ def main(cmdline=None):
         elif opts.readme:
             readme(opts)
 
-        elif opts.collection:
-            collection(opts.collection, opts)
+        elif opts.collection_tag:
+            toc_collection(opts.collection_tag, opts)
+
+        elif opts.collections:
+            collections(opts)
 
         elif opts.document:
             document(opts.document, opts)
@@ -464,13 +526,18 @@ skipped TOC creation for files that would be generated for an actual run.
                           ', '.join(settings.README_TEMPLATES), )),
                       metavar="README")
 
-    parser.add_option('-c', '--collection', dest='collection', default=None,
-                      help="Process table of contents for COLLECTION",
-                      metavar="COLLECTION")
+    parser.add_option('-i', '--toc-collection', dest='collection_tag', default=None,
+                      help=("Process table of contents for COLLECTION_TAG; one of: %s" % (
+                          ', '.join(collection_tags()))),
+                      metavar="COLLECTION_TAG")
 
     parser.add_option('-d', '--document', dest='document', default=None,
                       help="Process browse HTML for DOC_ID",
                       metavar="DOC_ID")
+
+    parser.add_option('-c', '--collections',
+                      action='store_true', dest='collections', default=False,
+                      help='Process Collections list HTML as needed')
 
 
     parser.add_option('-n', '--dry-run',

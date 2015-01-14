@@ -2,6 +2,7 @@
 import os
 
 class Status(object):
+    PREP_BEGUN                          = 0
     COLLECTION_PREP_BEGUN               = 10
     COLLECTION_PREP_PACKAGE_VALIDATED   = 17
     COLLECTION_PREP_MD_VALIDATED        = 25
@@ -20,6 +21,7 @@ class Status(object):
     COMMON_PREP_COMPLETED               = 200
 
     STATUS_NAMES = {
+        0:    'PREP_BEGUN',
         10:   'COLLECTION_PREP_BEGUN',
         17:   'COLLECTION_PREP_PACKAGE_VALIDATED',
         25:   'COLLECTION_PREP_MD_VALIDATED',

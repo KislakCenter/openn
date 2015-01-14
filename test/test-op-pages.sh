@@ -6,9 +6,10 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
-suite() {
-    suite_addTest testCollection
-}
+# suite() {
+#     suite_addTest testRun
+#     suite_addTest testBrowse
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -37,6 +38,7 @@ testRun() {
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
     assertMatch "$output" "Creating TOC"
+    assertMatch "$output" "Creating .*Collections"
     assertMatch "$output" "Skipping"
 }
 
@@ -49,6 +51,16 @@ testDryRun() {
     assertMatch "$output" "DRY RUN COMPLETE"
     assertMatch "$output" "Skipping"
 
+}
+
+# test dry run
+testDryRunShortOpt() {
+    output=`op-pages -n --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "DRY RUN COMPLETE"
+    assertMatch "$output" "Skipping"
 }
 
 # test force
@@ -64,21 +76,54 @@ testForce() {
     assertMatch "$output" "Skipping"
 }
 
+# test force
+testForceShortOpt() {
+    stagePages
+    output=`op-pages -f --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page.*ReadMe"
+    assertMatch "$output" "Creating page.*ljs454.html"
+    assertMatch "$output" "Creating TOC"
+    assertMatch "$output" "Skipping"
+}
+
 # test browse
 testBrowse() {
     # TOOD tests is incorrect; change --dry-run to --browse
-    output=`op-pages --dry-run --show-options 2>&1`
+    output=`op-pages --browse --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
-    assertMatch "$output" "Skipping"
+}
+
+# test browse
+testBrowseShortOpt() {
+    # TOOD tests is incorrect; change --dry-run to --browse
+    output=`op-pages -b --show-options 2>&1`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page"
 }
 
 # test toc
 testToc() {
     stagePages
     output=`op-pages --toc --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating TOC"
+    assertMatch "$output" "Skipping TOC"
+}
+
+# test toc
+testTocShortOpt() {
+    stagePages
+    output=`op-pages -t --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -98,9 +143,30 @@ testReadMe() {
     assertNotMatch "$output" "Creating TOC"
 }
 
+# test readme
+testReadMeShortOpt() {
+    # stagePages
+    output=`op-pages -r --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page.*ReadMe"
+    assertNotMatch "$output" "Creating page.*ljs454.html"
+    assertNotMatch "$output" "Creating TOC"
+}
+
 # test readme-file
 testReadMeFile() {
     output=`op-pages --readme-file 0_ReadMe.html --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page.*ReadMe"
+}
+
+# test readme-file
+testReadMeFileShortOpt() {
+    output=`op-pages -m 0_ReadMe.html --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -116,16 +182,52 @@ testReadMeFileFailure() {
     assertMatch "$output" "Could not find template.*ReadMe"
 }
 
-# test collection
-testCollection() {
+# test TOC for collection
+testTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES -name TOC_\*.html -delete
-    output=`op-pages --collection ljs --show-options`
+    output=`op-pages --toc-collection ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC.*LJS"
+}
+
+# test TOC for collection
+testTocFileShortOpt() {
+    stagePages
+    # delete all TOCs to force TOC generation
+    find $STAGED_PAGES -name TOC_\*.html -delete
+    output=`op-pages -i ljs --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating TOC.*LJS"
+}
+
+# test collections
+testCollections() {
+    stagePages
+    # delete all TOCs to force TOC generation
+    find $STAGED_PAGES -name TOC_\*.html -delete
+    output=`op-pages --collections --show-options 2>&1`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating.*Collections"
+}
+
+# test collections
+testCollectionsShortOpt() {
+    stagePages
+    # delete all TOCs to force TOC generation
+    find $STAGED_PAGES -name TOC_\*.html -delete
+    output=`op-pages -c --show-options 2>&1`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating.*Collections"
 }
 
 # test document
@@ -134,6 +236,18 @@ testDocument() {
     # mark the document online to force page generation
     mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
     output=`op-pages --document $doc_id --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating page"
+}
+
+# test document
+testDocumentShortOpt() {
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where collection = 'ljs'"`
+    # mark the document online to force page generation
+    mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
+    output=`op-pages -d $doc_id --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
