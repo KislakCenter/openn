@@ -47,9 +47,14 @@ file name like 'somefile(1).tif'.
 """
 class PackageValidation(object):
 
+    # These are globs for system files that should be regarded as
+    # valid for purposes of the valid name check; they get added to the
+    # `valid_names` glob list.
+    SYSTEM_FILE_GLOBS = [ 'status.txt' ]
+
     def __init__(self, valid_names=[], invalid_names=[], required_names=[]):
         "Initialize this PackageValidation object"
-        self._valid_name_res   = self.build_res(valid_names)
+        self._valid_name_res   = self.build_res(valid_names + self.SYSTEM_FILE_GLOBS)
         self._invalid_name_res = self.build_res(invalid_names)
         self._required_names   = required_names or []
 

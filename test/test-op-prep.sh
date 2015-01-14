@@ -51,6 +51,27 @@ testRun() {
     assertFalse "Should find PARTIAL_TEI.xml in $source_dir; found `ls $source_dir/PARTIAL_TEI.xml 2>/dev/null`" "ls $source_dir/PARTIAL_TEI.xml"
 }
 
+testResume() {
+    # stage the data
+    source_dir=$TEST_STAGING_DIR/mscodex1223
+    cp -r $TEST_DATA_DIR/mscodex1223 $source_dir
+
+    # make sure we fail
+    touch $source_dir/somebadilfe.txt
+    output=`op-prep ljs $source_dir 2>&1`
+    status=$?
+    if [ $status = 0 ]; then echo "$output"; fi
+    assertNotEquals 0 $status
+    assertMatch "$output" "VALID NAME CHECK"
+
+    # fix the problem and resume
+    rm $source_dir/somebadilfe.txt
+    output=`op-prep -r ljs $source_dir 2>&1`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+}
+
 testBloodyUnicode() {
     source_dir=$TEST_STAGING_DIR/ljs454
     cp -r $TEST_DATA_DIR/ljs454 $source_dir

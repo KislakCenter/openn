@@ -36,6 +36,7 @@ from openn.openn_functions import *
 # from openn.prep import medren_prep
 from openn.prep.common_prep import CommonPrep
 from openn.prep.prep_setup import PrepSetup
+from openn.prep.status import Status
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
@@ -116,6 +117,9 @@ def main(cmdline=None):
     collection = args[0]
     source_dir = args[1]
 
+    if not os.path.exists(source_dir):
+        parser.error("SOURCE_DIR does not exist: %s" % source_dir)
+
     base_dir = os.path.basename(source_dir)
 
     if doc_exists({ 'base_dir': base_dir, 'collection': collection }):
@@ -127,8 +131,8 @@ def main(cmdline=None):
             parser.error("Document already exists with base_dir"
                          " '%s' and collection '%s'" % (base_dir, collection))
 
+    status_txt = os.path.join(source_dir, 'status.txt')
     if opts.resume:
-        status_txt = os.path.join(source_dir, 'status.txt')
         if os.path.exists(status_txt):
             pass
         else:
@@ -138,6 +142,10 @@ def main(cmdline=None):
     logger = logging.getLogger(__name__)
 
     try:
+        # mark that prep has begun
+        if not os.path.exists(status_txt):
+            Status(source_dir).write_status(Status.PREP_BEGUN)
+
         setup = PrepSetup()
         doc = setup.prep_document(collection, base_dir)
         prepstatus = setup_prepstatus(doc)
