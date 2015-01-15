@@ -6,9 +6,9 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
-suite() {
-    suite_addTest testCollection
-}
+# suite() {
+#     suite_addTest testCollection
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
