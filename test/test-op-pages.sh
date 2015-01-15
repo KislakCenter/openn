@@ -117,11 +117,11 @@ testReadMeFileFailure() {
 }
 
 # test collection
-testCollection() {
+testTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES -name TOC_\*.html -delete
-    output=`op-pages --collection ljs --show-options`
+    output=`op-pages --toc-collection ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
