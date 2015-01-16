@@ -8,7 +8,7 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 
 # suite() {
 #     suite_addTest testRun
-#     # suite_addTest testCollections
+#     suite_addTest testBrowse
 # }
 
 setUp() {
@@ -35,6 +35,7 @@ testRun() {
     output=`op-pages --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+    echo "$output"
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
     assertMatch "$output" "Creating TOC"
@@ -69,12 +70,11 @@ testForce() {
 # test browse
 testBrowse() {
     # TOOD tests is incorrect; change --dry-run to --browse
-    output=`op-pages --dry-run --show-options 2>&1`
+    output=`op-pages --browse --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
-    assertMatch "$output" "Skipping"
 }
 
 # test toc
