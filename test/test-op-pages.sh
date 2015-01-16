@@ -7,7 +7,8 @@ TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
 # suite() {
-#     suite_addTest testCollection
+#     suite_addTest testRun
+#     # suite_addTest testCollections
 # }
 
 setUp() {
@@ -37,6 +38,7 @@ testRun() {
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
     assertMatch "$output" "Creating TOC"
+    assertMatch "$output" "Creating .*Collections"
     assertMatch "$output" "Skipping"
 }
 
@@ -116,7 +118,7 @@ testReadMeFileFailure() {
     assertMatch "$output" "Could not find template.*ReadMe"
 }
 
-# test collection
+# test TOC for collection
 testTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
@@ -126,6 +128,18 @@ testTocFile() {
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC.*LJS"
+}
+
+# test collections
+testCollections() {
+    stagePages
+    # delete all TOCs to force TOC generation
+    find $STAGED_PAGES -name TOC_\*.html -delete
+    output=`op-pages --collections --show-options 2>&1`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating.*Collections"
 }
 
 # test document
