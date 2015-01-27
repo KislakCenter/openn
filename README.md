@@ -213,4 +213,6 @@ The package generation will occur in two steps:
             ...
 
 
-## High level overview
+## Backing up
+
+`mysqldump -u DB_NAME DB_USER > /mnt/scratch01/openn/db_backups/openn_`date +%Y%m%dT%H%M%S%z`.dmp`
