@@ -182,6 +182,66 @@ class OPennTEI(XMLWhatsit):
         nodes = self._get_nodes('//t:msIdentifier/t:altIdentifier')
         return [ Identifier(n,self.ns) for n in nodes ]
 
+    # Foliation
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/foliation
+    @property
+    def foliation(self):
+        return self._get_text('//t:supportDesc/t:foliation')
+
+    # Layout
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/layoutDesc/layout
+    @property
+    def layout(self):
+        return self._get_text('//t:layoutDesc/t:layout')
+
+    # Colophon
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/colophon
+    @property
+    def colophon(self):
+        return self._get_text('//t:msContents/t:msItem/t:colophon')
+
+    # Collation
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/collation
+    @property
+    def collation(self):
+        return self._get_text('//t:supportDesc/t:collation/t:p')
+
+    # Script
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/scriptDesc/scriptNote
+    @property
+    def script(self):
+        return self._get_text('//t:scriptDesc/t:scriptNote')
+
+    # Decoration
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/decoDesc/decoNote
+    @property
+    def decoration(self):
+        return self._get_text('//t:decoDesc/t:decoNote[not(@n)]')
+
+    # Binding
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/bindingDesc/binding/p
+    @property
+    def binding(self):
+        return self._get_text('//t:bindingDesc/t:binding/t:p')
+
+    # Origin
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/history/origin/p
+    @property
+    def origin(self):
+        return self._get_text('//t:history/t:origin/t:p')
+
+    # Watermarks
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/support/watermark
+    @property
+    def watermark(self):
+        return self._get_text('//t:supportDesc/t:support/t:watermark')
+
+    # Signatures
+    # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/collation/p/signatures
+    @property
+    def signatures(self):
+        return self._get_text('//t:supportDesc/t:collation/t:p/t:signatures')
+
     def fix_n(self, label):
         # normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))
         s = self.n_brackets_re.sub('', label)
