@@ -23,6 +23,8 @@ from openn.models import *
 class TestMedrenPrep(TestCase):
 
     staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
+    # template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1589')
+    # staged_source    = os.path.join(staging_dir, 'mscodex1589')
     template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
     staged_source    = os.path.join(staging_dir, 'mscodex1223')
     medren_coll      = 'medren'
