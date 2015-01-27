@@ -42,12 +42,18 @@ testOverWrite() {
     doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select id from openn_document where base_dir = 'mscodex1223'"`
     cp -r $MS_COMPLETE $STAGED_DATA
 
+    # alter the staged version of the TEI
+    echo >> $STAGED_TEI
+    control_tei=$TEST_STAGING_DIR/control_tei.xml
+    cp $STAGED_TEI $control_tei
+    assertTrue "Control and staged TEI should be the same" "cmp $STAGED_TEI $control_tei"
+
     output=`op-update-tei -o $STAGED_DATA $doc_id 2>&1`
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
     assertTrue "TEI file should exist: $STAGED_TEI" "[ -f $STAGED_TEI ]"
-    assertFalse "TEI file should be different from original" "cmp $ORIGINAL_TEI $STAGED_TEI"
+    assertFalse "TEI file should be different from original" "cmp $ORIGINAL_TEI $control_tei"
 }
 
 
