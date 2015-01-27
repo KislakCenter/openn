@@ -11,7 +11,7 @@ from openn.models import *
 from openn.pages.document_data import DocumentData
 
 class TestDocumentData(TestCase):
-    fixtures = [ 'test' ]
+    fixtures = [ 'test.json' ]
 
     def setUp(self):
         pass
