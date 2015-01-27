@@ -1,29 +1,12 @@
 # Tasks
 
-TODO Read Me
+Complete test data for new pih2tei.xsl:
 
-TODO Technical read me
+- Update openn/tests/data/           -- done
 
-TODO `op-gen-pages` timestamp checking
+        mscodex1223_prepped/         -- done
+        mscodex1589_prepped/         -- done
+        mscodex1223_complete/        -- done
+        mscodex1589_complete/        -- removed
 
-TODO `op-prep` - flag to indicate proceeding with duplicate doc
-
-TODO `op-prep` confirm proper directory state before proceeding
-
-
-- FIX these online with missing valid files:
-     ljs174
-     ljs177
-     ljs190
-     ljs195
-     ljs219
-     ljs222
-     ljs24
-     ljs319
-     ljs345
-     ljs385
-     ljs38
-     ljs427
-     ljs461
-     ljs472
-     ljs483
+- run all tests with new pih2tei.xsl -- done
