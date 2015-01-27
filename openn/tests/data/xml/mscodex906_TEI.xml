@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Description of University of Pennsylvania Ms. Codex 906: Roman de la Rose</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>The University of Pennsylvania Libraries</publisher>
+            <availability>
+               <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+                                This description is ©2015 University of
+                                Pennsylvania Libraries. It is licensed under a Creative Commons
+                                Attribution License version 4.0 (CC-BY-4.0
+                                https://creativecommons.org/licenses/by/4.0/legalcode. For a
+                                description of the terms of use see the Creative Commons Deed
+                                https://creativecommons.org/licenses/by/4.0/. </licence>
+               <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+                                referenced images and their content are free of known copyright
+                                restrictions and in the public domain. See the Creative Commons
+                                Public Domain Mark page for usage details,
+                                http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+            </availability>
+         </publicationStmt>
+         <notesStmt>
+            <note>Ms. codex.</note>
+            <note>Title from flyleaf, in a later hand.</note>
+            <note>Verses 64-73 pasted on f. [ii] recto in contemporary hand; some marginalia trimmed and lost.</note>
+         </notesStmt>
+         <sourceDesc>
+            <msDesc>
+               <msIdentifier>
+                  <settlement>Philadelphia</settlement>
+                  <institution>University of Pennsylvania</institution>
+                  <repository>Rare Book &amp; Manuscript Library</repository>
+                  <idno type="call-number">Ms. Codex 906</idno>
+                  <altIdentifier type="bibid">
+                     <idno>3559152</idno>
+                  </altIdentifier>
+                  <altIdentifier type="hdl">
+                     <idno>http://hdl.library.upenn.edu/1017/d/medren/3559152</idno>
+                  </altIdentifier>
+               </msIdentifier>
+               <msContents>
+                  <summary>French allegorical poem written in the 13th century by Guillaume de Lorris and continued by Jean de Meun; the section by Jean de Meun starts at line 4059, f. 64.</summary>
+                  <textLang>Old French</textLang>
+                  <msItem>
+                     <title>Roman de la Rose</title>
+                     <author>Guillaume, de Lorris, fl. 1230</author>
+                     <author>Jean, de Meun, d. 1305?</author>
+                     <respStmt>
+                        <resp>former owner</resp>
+                        <persName>Ashburnham, Bertram Ashburnham, Earl of, 1797-1878</persName>
+                     </respStmt>
+                  </msItem>
+               </msContents>
+               <physDesc>
+                  <objectDesc>
+                     <supportDesc material="paper">
+                        <support>
+                           <p>paper</p>
+                           <watermark>Gatherings 1-19, Briquet 1799 (1474); gatherings 20-22 include Briquet 1548 (1463), 1701 (1454), and 1546 (1457).</watermark>
+                        </support>
+                        <extent>342 leaves : 302 x 210 (192 x 90) mm. bound to 310 x 216 mm</extent>
+                        <collation>
+                           <p>Paper, 342; 1-18¹⁶ 19¹⁸ 20-22¹⁶; [ii], 1-317, 319-340, [i]; misnumbered at 318, no loss of text. Foliation and line numbering in a later hand. Signatures at bottom right; catchwords at bottom center, often cropped.</p>
+                        </collation>
+                     </supportDesc>
+                     <layoutDesc>
+                        <layout>Written in 31-37 long lines; text block boundaries ruled in drypoint.</layout>
+                     </layoutDesc>
+                  </objectDesc>
+                  <scriptDesc>
+                     <scriptNote>Written in Gothic cursive, with the first words or first line at the beginning of sections in bâtarde script; f. 306-322v (a single gathering) in a second hand.</scriptNote>
+                  </scriptDesc>
+                  <decoDesc>
+                     <decoNote>Many 2- and 3-line initials in red; capital at beginning of each line stroked with yellow; rubrication in red, often with cropped notes for rubrication or illustration barely visible at edge of page; spaces for illumination, approximately 9 lines in height, are frequent at the beginning of the manuscript but disappear in the second half (after f. 171v).</decoNote>
+                     <decoNote n="Inside front cover">Owner signature, Inside front cover</decoNote>
+                     <decoNote n="Flyleaf 2 recto">Pasted-in notes, Flyleaf 2 recto</decoNote>
+                     <decoNote n="1r">Owner signature, f. 1r</decoNote>
+                     <decoNote n="5v">Penwork initial, f. 5v</decoNote>
+                     <decoNote n="7v">Penwork initial, f. 7v</decoNote>
+                     <decoNote n="11r">Penwork initial, f. 11r</decoNote>
+                     <decoNote n="12r">Penwork initial, f. 12r</decoNote>
+                     <decoNote n="13v">Manicule, f. 13v</decoNote>
+                     <decoNote n="15r">Penwork initial, f. 15r</decoNote>
+                     <decoNote n="21v">Manicule, f. 21v</decoNote>
+                     <decoNote n="29v">Penwork initial, f. 29v</decoNote>
+                     <decoNote n="30r">Penwork initial, f. 30r</decoNote>
+                     <decoNote n="32v">Penwork initial, f. 32v</decoNote>
+                     <decoNote n="34r">Penwork initial, f. 34r</decoNote>
+                     <decoNote n="34v">Penwork initial, f. 34v</decoNote>
+                     <decoNote n="36v">Penwork initial, f. 36v</decoNote>
+                     <decoNote n="37v">Penwork initial, f. 37v</decoNote>
+                     <decoNote n="43v">Penwork initial, f. 43v</decoNote>
+                     <decoNote n="46v">Penwork initial, f. 46v</decoNote>
+                     <decoNote n="59v">Penwork initial, f. 59v</decoNote>
+                     <decoNote n="60v">Penwork initial, f. 60v</decoNote>
+                     <decoNote n="72r">Penwork initial, f. 72r</decoNote>
+                     <decoNote n="73r">Penwork initial, f. 73r</decoNote>
+                     <decoNote n="75v">Penwork initial, f. 75v</decoNote>
+                     <decoNote n="80r">Penwork initial, f. 80r</decoNote>
+                     <decoNote n="83v">Penwork initial, Initial S, f. 83v</decoNote>
+                     <decoNote n="89r">Penwork initial, f. 89r</decoNote>
+                     <decoNote n="100v">Penwork initial, f. 100v</decoNote>
+                     <decoNote n="101v">Penwork Initial, f. 101v</decoNote>
+                     <decoNote n="108v">Manicule, f. 108v</decoNote>
+                     <decoNote n="111r">Penwork initial, f. 111r</decoNote>
+                     <decoNote n="111v">Penwork initial, f. 111v</decoNote>
+                     <decoNote n="112r">Penwork initial, f. 112r</decoNote>
+                     <decoNote n="114v">Penwork initial, Initia S, f. 114v</decoNote>
+                     <decoNote n="116v">Penwork initial, Initial S, f. 116v</decoNote>
+                     <decoNote n="117v">Penwork initial, f. 117v</decoNote>
+                     <decoNote n="130r">Penwork initial, f. 130r</decoNote>
+                     <decoNote n="134r">Manicule, f. 134r</decoNote>
+                     <decoNote n="134v">Penwork initial, f. 134v</decoNote>
+                     <decoNote n="147r">Penwork initial, f. 147r</decoNote>
+                     <decoNote n="147v">Penwork initial, f. 147v</decoNote>
+                     <decoNote n="150v">Penwork initial, f. 150v</decoNote>
+                     <decoNote n="152r">Penwork initial, f. 152r</decoNote>
+                     <decoNote n="155v">Manicule, f. 155v</decoNote>
+                     <decoNote n="156v">Manicule, f. 156v</decoNote>
+                     <decoNote n="160r">Penwork initial, f. 160r</decoNote>
+                     <decoNote n="162v">Penwork initial, f. 162v</decoNote>
+                     <decoNote n="164v">Penwork initial, f. 164v</decoNote>
+                     <decoNote n="170v">Manicule, f. 170v</decoNote>
+                     <decoNote n="177v">Penwork initial, f. 177v</decoNote>
+                     <decoNote n="196v">Penwork initial, f. 196v</decoNote>
+                     <decoNote n="196v">Penwork initial, f. 196v</decoNote>
+                     <decoNote n="200r">Penwork initial, f. 200r</decoNote>
+                     <decoNote n="202r">Penwork initial, f. 202r</decoNote>
+                     <decoNote n="203r">Penwork initial, f. 203r</decoNote>
+                     <decoNote n="203v">Penwork initial, f. 203v</decoNote>
+                     <decoNote n="205r">Penwork initial, f. 205r</decoNote>
+                     <decoNote n="205v">Penwork initial, f. 205v</decoNote>
+                     <decoNote n="206r">Penwork initial, f. 206r</decoNote>
+                     <decoNote n="207r">Penwork initial, f. 207r</decoNote>
+                     <decoNote n="226v">Penwork initial, f. 226v</decoNote>
+                     <decoNote n="232v">Penwork initial, f. 232v</decoNote>
+                     <decoNote n="248r">Penwork initial, f. 248r</decoNote>
+                     <decoNote n="257r">Penwork initial, f. 257r</decoNote>
+                     <decoNote n="257v">Penwork initial, f. 257v</decoNote>
+                     <decoNote n="268v">Penwork initial, f. 268v</decoNote>
+                     <decoNote n="270v">Penwork initial, f. 270v</decoNote>
+                     <decoNote n="272r">Penwork initial, f. 272r</decoNote>
+                     <decoNote n="273r">Penwork initial, f. 273r</decoNote>
+                     <decoNote n="274r">Penwork initial, f. 274r</decoNote>
+                     <decoNote n="275v">Penwork initial, f. 275v</decoNote>
+                     <decoNote n="288r">Penwork initial, f. 288r</decoNote>
+                     <decoNote n="291v">Penwork initial, f. 291v</decoNote>
+                     <decoNote n="294v">Penwork initial, f. 294v</decoNote>
+                  </decoDesc>
+                  <bindingDesc>
+                     <binding>
+                        <p>Contemporary blind-stamped calf, rebacked; wormholes in boards, leather, and text near spine.</p>
+                     </binding>
+                  </bindingDesc>
+               </physDesc>
+               <history>
+                  <origin>
+                     <p>Written in France after 1474, based on primary watermark.</p>
+                     <origDate>after 1474</origDate>
+                     <origPlace>France</origPlace>
+                  </origin>
+                  <provenance>Signatures: Marcel (inside upper cover); Delaplanches (f.
+                        1r).</provenance>
+                  <provenance>Sold in the Ashburnham collection at auction at Sotheby's, 10 June 1901,
+                        lot 607.</provenance>
+                  <provenance>Sold by Librairie J. Thiebaud, 1950.</provenance>
+               </history>
+            </msDesc>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <textClass>
+            <keywords n="subjects">
+               <term>French poetry--To 1500</term>
+            </keywords>
+            <keywords n="form/genre">
+               <term>Codices</term>
+               <term>Romances (literary genre)</term>
+               <term>Manuscripts, French--15th century</term>
+               <term>Manuscripts, Medieval</term>
+               <term>Manuscripts, Renaissance</term>
+            </keywords>
+         </textClass>
+      </profileDesc>
+   </teiHeader>
+   <facsimile>
+      <graphic url=""/>
+   </facsimile>
+</TEI>

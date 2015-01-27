@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Description of University of Pennsylvania LJS 498: Tsurat ha-arets ... etc.</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>The University of Pennsylvania Libraries</publisher>
+            <availability>
+               <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+                                This description is ©2015 University of
+                                Pennsylvania Libraries. It is licensed under a Creative Commons
+                                Attribution License version 4.0 (CC-BY-4.0
+                                https://creativecommons.org/licenses/by/4.0/legalcode. For a
+                                description of the terms of use see the Creative Commons Deed
+                                https://creativecommons.org/licenses/by/4.0/. </licence>
+               <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+                                referenced images and their content are free of known copyright
+                                restrictions and in the public domain. See the Creative Commons
+                                Public Domain Mark page for usage details,
+                                http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+            </availability>
+         </publicationStmt>
+         <notesStmt>
+            <note>Ms. codex.</note>
+            <note>Title for manuscript from title supplied for first work by cataloger.</note>
+         </notesStmt>
+         <sourceDesc>
+            <msDesc>
+               <msIdentifier>
+                  <settlement>Philadelphia</settlement>
+                  <institution>University of Pennsylvania</institution>
+                  <repository>Rare Book &amp; Manuscript Library</repository>
+                  <idno type="call-number">LJS 498</idno>
+                  <altIdentifier type="bibid">
+                     <idno>5700150</idno>
+                  </altIdentifier>
+                  <altIdentifier type="hdl">
+                     <idno>http://hdl.library.upenn.edu/1017/d/medren/5700150</idno>
+                  </altIdentifier>
+               </msIdentifier>
+               <msContents>
+                  <summary>Collection of astronomical texts in Hebrew from source texts ranging from the 11th to the 16th centuries. Subjects include geography, the Ptolemaic model of the universe, solar and lunar eclipses, and the astrolabe. Frequent marginal notes and glosses, some from copied from known commentaries to these works.</summary>
+                  <textLang mainLang="heb">Hebrew</textLang>
+                  <msItem>
+                     <title>Tsurat ha-arets ... etc.</title>
+                     <author>Abraham bar Hiyya Savasorda, ca. 1065-ca. 1136</author>
+                     <author>Bonfils, Immanuel ben Jacob, 14th cent</author>
+                     <author>Ibn al-Ṣaffār, Abū al-Qāsim Aḥmad ibn ʻAbd Allāh, d. 1035</author>
+                     <author>Peurbach, Georg von, 1423-1461</author>
+                     <author>Ibn Ezra, Abraham ben Meïr, 1092-1167</author>
+                     <respStmt>
+                        <resp>translator</resp>
+                        <persName>Ibn Tibbon, Jacob ben Machir, b. ca. 1236</persName>
+                     </respStmt>
+                     <respStmt>
+                        <resp>translator</resp>
+                        <persName>Mizraḥi, Ephraim</persName>
+                     </respStmt>
+                     <respStmt>
+                        <resp>former owner</resp>
+                        <persName>Luzzatto, Samuel David, 1800-1865</persName>
+                     </respStmt>
+                     <respStmt>
+                        <resp>former owner</resp>
+                        <persName>Halberstam, S. J. 1832-1900</persName>
+                     </respStmt>
+                     <respStmt>
+                        <resp>former owner</resp>
+                        <persName>Schoenberg, Lawrence J</persName>
+                     </respStmt>
+                  </msItem>
+                  <msItem n="1r">
+                     <locus>1r</locus>
+                     <title>Partial copy of Tsurat ha-arets, f. 1r</title>
+                  </msItem>
+                  <msItem n="67r">
+                     <locus>67r</locus>
+                     <title>Abridgement of Tsurat ha-arets, f. 67r</title>
+                  </msItem>
+                  <msItem n="79r">
+                     <locus>79r</locus>
+                     <title>Shesh kenafayim, f. 79r</title>
+                  </msItem>
+                  <msItem n="134r">
+                     <locus>134r</locus>
+                     <title>Keli ha-itst?rolav, f. 134r</title>
+                  </msItem>
+                  <msItem n="148r">
+                     <locus>148r</locus>
+                     <title>?Iyyun ha-kokhavim ha-meshartim, f. 148r</title>
+                  </msItem>
+                  <msItem n="197r">
+                     <locus>197r</locus>
+                     <title>Diagrams, f. 197r</title>
+                  </msItem>
+                  <msItem n="199r">
+                     <locus>199r</locus>
+                     <title>Keli ha-neh?oshet, f. 199r</title>
+                  </msItem>
+               </msContents>
+               <physDesc>
+                  <objectDesc>
+                     <supportDesc material="paper">
+                        <support>
+                           <p>paper</p>
+                           <watermark>Similar to Briquet, Aigle à deux têtes 285 (f. 45, 48; Gratz, 1594-1598; Millstatt (Carinthie), 1597-1600; Vienna, 1599) and Aigle à deux têtes 282 (Gratz, 1580; Osnabruck, 1588); similar to Briquet, Aigle à deux têtes 291 (f. 189; Gratz, 1598; Kempten, 1607-1627).</watermark>
+                        </support>
+                        <extent>204 leaves : 201 x 150 (130-155 x 92-120) mm. bound to 210 x 172 mm</extent>
+                        <foliation>Paper, iii (modern paper) + 204 + iii (modern paper); [1-204], modern foliation in pencil, upper left recto; contemporary foliation using Hebrew letters in ink visible on some leaves.</foliation>
+                     </supportDesc>
+                     <layoutDesc>
+                        <layout>Written in 20-27 long lines.</layout>
+                     </layoutDesc>
+                  </objectDesc>
+                  <scriptDesc>
+                     <scriptNote>Written in Ashkenazi semi-cursive script by multiple hands.</scriptNote>
+                  </scriptDesc>
+                  <decoDesc>
+                     <decoNote>25 full-page diagrams, numerous small diagrams in text; some rubrication in red; tables in red and black (f. 107r-133v).</decoNote>
+                     <decoNote n="1r">Stamp, f. 1r</decoNote>
+                     <decoNote n="4v">Diagram, f. 4v</decoNote>
+                     <decoNote n="11r">Diagram, f. 11r</decoNote>
+                     <decoNote n="12r">Diagram, f. 12r</decoNote>
+                     <decoNote n="13v">Diagram, f. 13v</decoNote>
+                     <decoNote n="19r">Diagram, f. 19r</decoNote>
+                     <decoNote n="20v">Diagram, f. 20v</decoNote>
+                     <decoNote n="23v">Diagram, f. 23v</decoNote>
+                     <decoNote n="25v">Diagram, f. 25v</decoNote>
+                     <decoNote n="27r">Diagram, f. 27r</decoNote>
+                     <decoNote n="29r">Diagram, f. 29r</decoNote>
+                     <decoNote n="33r">Diagram, f. 33r</decoNote>
+                     <decoNote n="34v">Diagram, f. 34v</decoNote>
+                     <decoNote n="36r">Diagram, f. 36r</decoNote>
+                     <decoNote n="38v">Diagram, f. 38v</decoNote>
+                     <decoNote n="39v">Diagram, f. 39v</decoNote>
+                     <decoNote n="64v">Diagram, f. 64v</decoNote>
+                     <decoNote n="65r">Diagram, f. 65r</decoNote>
+                     <decoNote n="70r">Diagram, f. 70r</decoNote>
+                     <decoNote n="70v">Diagram, f. 70v</decoNote>
+                     <decoNote n="71v">Diagram, f. 71v</decoNote>
+                     <decoNote n="72r">Diagram, f. 72r</decoNote>
+                     <decoNote n="73r">Diagram, f. 73r</decoNote>
+                     <decoNote n="73v">Diagram, f. 73v</decoNote>
+                     <decoNote n="74r">Diagram, f. 74r</decoNote>
+                     <decoNote n="75r">Diagram, f. 75r</decoNote>
+                     <decoNote n="81r">Table, f. 81r</decoNote>
+                     <decoNote n="81v">Table, f. 81v</decoNote>
+                     <decoNote n="84r">Table, f. 84r</decoNote>
+                     <decoNote n="100v">Table, f. 100v</decoNote>
+                     <decoNote n="105v">Table, f. 105v</decoNote>
+                     <decoNote n="106r">Table, f. 106r</decoNote>
+                     <decoNote n="106v">Table, f. 106v</decoNote>
+                     <decoNote n="107r">Table, f. 107r</decoNote>
+                     <decoNote n="107v">Table, f. 107v</decoNote>
+                     <decoNote n="108v">Table, f. 108v</decoNote>
+                     <decoNote n="109r">Table, f. 109r</decoNote>
+                     <decoNote n="109v">Table, f. 109v</decoNote>
+                     <decoNote n="110r">Table, f. 110r</decoNote>
+                     <decoNote n="110v">Table, f. 110v</decoNote>
+                     <decoNote n="111r">Table, f. 111r</decoNote>
+                     <decoNote n="111v">Table, f. 111v</decoNote>
+                     <decoNote n="112v">Table, f. 112v</decoNote>
+                     <decoNote n="113r">Table, f. 113r</decoNote>
+                     <decoNote n="113v">Table, f. 113v</decoNote>
+                     <decoNote n="114r">Table, f. 114r</decoNote>
+                     <decoNote n="114v">Table, f. 114v</decoNote>
+                     <decoNote n="115r">Table, f. 115r</decoNote>
+                     <decoNote n="115v">Table, f. 115v</decoNote>
+                     <decoNote n="116r">Table, f. 116r</decoNote>
+                     <decoNote n="116v">Table, f. 116v</decoNote>
+                     <decoNote n="117r">Table, f. 117r</decoNote>
+                     <decoNote n="117v">Table, f. 117v</decoNote>
+                     <decoNote n="118r">Table, f. 118r</decoNote>
+                     <decoNote n="118v">Table, f. 118v</decoNote>
+                     <decoNote n="119r">Table, f. 119r</decoNote>
+                     <decoNote n="119v">Table, f. 119v</decoNote>
+                     <decoNote n="120r">Table, f. 120r</decoNote>
+                     <decoNote n="120v">Table, f. 120v</decoNote>
+                     <decoNote n="121r">Table, f. 121r</decoNote>
+                     <decoNote n="121v">Table, f. 121v</decoNote>
+                     <decoNote n="122r">Table, f. 122r</decoNote>
+                     <decoNote n="122v">Table, f. 122v</decoNote>
+                     <decoNote n="123r">Table, f. 123r</decoNote>
+                     <decoNote n="123v">Table, f. 123v</decoNote>
+                     <decoNote n="124r">Table, f. 124r</decoNote>
+                     <decoNote n="124v">Table, f. 124v</decoNote>
+                     <decoNote n="125r">Table, f. 125r</decoNote>
+                     <decoNote n="125v">Table, f. 125v</decoNote>
+                     <decoNote n="126r">Table, f. 126r</decoNote>
+                     <decoNote n="126v">Table, f. 126v</decoNote>
+                     <decoNote n="127r">Table, f. 127r</decoNote>
+                     <decoNote n="127v">Table, f. 127v</decoNote>
+                     <decoNote n="128r">Table, f. 128r</decoNote>
+                     <decoNote n="128v">Table, f. 128v</decoNote>
+                     <decoNote n="129r">Table, f. 129r</decoNote>
+                     <decoNote n="129v">Table, f. 129v</decoNote>
+                     <decoNote n="130r">Table, f. 130r</decoNote>
+                     <decoNote n="130v">Table, f. 130v</decoNote>
+                     <decoNote n="131r">Table, f. 131r</decoNote>
+                     <decoNote n="131v">Table, f. 131v</decoNote>
+                     <decoNote n="132r">Table, f. 132r</decoNote>
+                     <decoNote n="132v">Table, f. 132v</decoNote>
+                     <decoNote n="133r">Table, f. 133r</decoNote>
+                     <decoNote n="133v">Table, f. 133v</decoNote>
+                     <decoNote n="173r">Diagram, f. 173r</decoNote>
+                     <decoNote n="174v">Diagram, f. 174v</decoNote>
+                     <decoNote n="175r">Diagram, f. 175r</decoNote>
+                     <decoNote n="175v">Diagram, f. 175v</decoNote>
+                     <decoNote n="176r">Diagram, f. 176r</decoNote>
+                     <decoNote n="176v">Diagram, f. 176v</decoNote>
+                     <decoNote n="177r">Diagram, f. 177r</decoNote>
+                     <decoNote n="177v">Diagram, f. 177v</decoNote>
+                     <decoNote n="178r">Diagram, f. 178r</decoNote>
+                     <decoNote n="178v">Diagram, f. 178v</decoNote>
+                     <decoNote n="179r">Diagram, f. 179r</decoNote>
+                     <decoNote n="179v">Diagram, f. 179v</decoNote>
+                     <decoNote n="180r">Diagram, f. 180r</decoNote>
+                     <decoNote n="180v">Diagram, f. 180v</decoNote>
+                     <decoNote n="181r">Diagram, f. 181r</decoNote>
+                     <decoNote n="181v">Diagram, f. 181v</decoNote>
+                     <decoNote n="183r">Diagram, f. 183r</decoNote>
+                     <decoNote n="185r">Diagram, f. 185r</decoNote>
+                     <decoNote n="188r">Table, f. 188r</decoNote>
+                     <decoNote n="189v">Diagram, f. 189v</decoNote>
+                     <decoNote n="189v">Table, f. 189v</decoNote>
+                     <decoNote n="192r">Diagram, f. 192r</decoNote>
+                     <decoNote n="195r">Diagram, f. 195r</decoNote>
+                     <decoNote n="197r">Diagram, f. 197r</decoNote>
+                     <decoNote n="198r">Diagram, f. 198r</decoNote>
+                     <decoNote n="202v">Stamp, f. 202v</decoNote>
+                  </decoDesc>
+                  <bindingDesc>
+                     <binding>
+                        <p>19th-century half morocco over cloth</p>
+                     </binding>
+                  </bindingDesc>
+               </physDesc>
+               <history>
+                  <origin>
+                     <p>Possibly written in Gratz, in the second half of the 16th century, after the first edition of Erasmus Reinhold's Theoricae novae planetarum Georgii Purbacchii Germani in 1542, some of which is copied alongside the Hebrew translation of Peurbach (f. 188r-196v), on paper with watermarks similar to those on paper produced in Gratz in the 1580s and 1590s (Les Enluminures).</p>
+                     <origDate>ca. 1542-1599</origDate>
+                     <origPlace>Gratz?</origPlace>
+                  </origin>
+                  <provenance>Possible ownership inscription: Yitshaq Cohen (f. 1; Les
+                        Enluminures).</provenance>
+                  <provenance>Formerly owned by Italian philologist, poet, and biblical exegete Samuel
+                        David Luzzatto (Les Enluminures).</provenance>
+                  <provenance>Acquired by the Polish scholar and bibliophile S. J. Halberstam from the
+                        estate of Samuel David Luzzatto, ms. 134 (Les Enluminures).</provenance>
+                  <provenance>Sold as part of Halberstam's library to Judith Montefiore College
+                        (Ramsgate, England), after 1887, ms. 423 (gilt spine, Montefiore MS. 423; label inside lower
+                        cover).</provenance>
+                  <provenance>Placed on deposit at Jews' College (London) as part of the Montefiore
+                        Endowment, 1899 (Les Enluminures).</provenance>
+                  <provenance>Sold at auction at Sotheby's (New York) as part of a collection of
+                        manuscripts from the Montefiore Endowment, 27 Oct. 2004, lot 308.</provenance>
+                  <provenance>Sold by Les Enluminures (Paris and Chicago) to Lawrence J.
+                        Schoenberg.</provenance>
+                  <provenance>Gift of Lawrence J. Schoenberg and Barbara Brizdle in memory of Martin L.
+                        Fine, 2012.</provenance>
+               </history>
+            </msDesc>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <textClass>
+            <keywords n="subjects">
+               <term>Astronomy--Early works to 1800</term>
+               <term>Astronomy, Medieval</term>
+               <term>Jewish astronomy--Early works to 1800</term>
+               <term>Astrolabes--Early works to 1800</term>
+               <term>Geography, Medieval</term>
+            </keywords>
+            <keywords n="form/genre">
+               <term>Codices</term>
+               <term>Annotations</term>
+               <term>Commentaries</term>
+               <term>Diagrams</term>
+               <term>Tables (documents)</term>
+               <term>Treatises</term>
+               <term>Manuscripts, Hebrew--16th century</term>
+               <term>Manuscripts, Renaissance</term>
+            </keywords>
+         </textClass>
+      </profileDesc>
+   </teiHeader>
+   <facsimile>
+      <graphic url=""/>
+   </facsimile>
+</TEI>

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?><page><images xmlns:xs="http://www.w3.org/2001/XMLSchema"><image xmlns:my="http://nowhere" src="https://repo.library.upenn.edu/djatoka/resolver?url_ver=Z39.88-2004&amp;svc_id=info:lanl-repo/svc/getRegion&amp;svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&amp;svc.format=image/jpeg&amp;rft_id=medren_ljs454_wk1_front0001&amp;svc.level=4&amp;svc.rotate="><params><identifier>medren_ljs454_wk1_front0001</identifier><imagefile>/repo/store/pairtree_root/me/dr/en/_l/js/45/4_/wk/1_/fr/on/t0/00/1/medren_ljs454_wk1_front0001/v001/full/ljs454_wk1_front0001.DELIVERY.jp2</imagefile><width>2339</width><height>6361</height><dwtLevels>7</dwtLevels><levels>7</levels><compositingLayerCount>1</compositingLayerCount><defaultscale>3</defaultscale></params><control><zoomcontrol zoom="in"><input name="zoom" type="radio" value="in" onclick="selectZoomControl('in')" checked="yes">zoom in</input><input name="zoom" type="radio" value="out" onclick="selectZoomControl('out')">zoom out</input><input name="zoom" type="radio" value="none" onclick="selectZoomControl('none')">recenter</input></zoomcontrol><sizecontrol><input name="size" type="radio" value="0" onClick="this.form.submit()">full</input><input name="size" type="radio" value="1" onClick="this.form.submit()">1/2</input><input name="size" type="radio" value="2" onClick="this.form.submit()">1/4</input><input name="size" type="radio" value="3" checked="yes">1/8</input><input name="size" type="radio" value="4" onClick="this.form.submit()">1/16</input><input name="size" type="radio" value="5" onClick="this.form.submit()">1/32</input><input name="size" type="radio" value="6" onClick="this.form.submit()">1/64</input><input name="size" type="radio" value="7" onClick="this.form.submit()">1/128</input></sizecontrol></control></image></images><response xmlns:cinclude="http://apache.org/cocoon/include/1.0"><links xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere" detail-page-params=".html?q=ljs 454&amp;id=MEDREN_6016920&amp;"><feeds><str name="media.rss">feeds/pageturn.mrss?q=ljs 454&amp;doubleside=0&amp;rotation=0&amp;id=MEDREN_6016920 OR id:MEDREN_6016920_*&amp;rows=500</str><str name="rss">feeds/pageturn.rss?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=0&amp;</str><str name="ical">feeds/calendar.ics?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=0&amp;</str><str name="url">http://dla.library.upenn.edu/dla/medren/pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=0&amp;doubleside=0&amp;rotation=0&amp;</str><str name="display-record" display="[more information]">record.html?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=0&amp;</str><str name="enable-fullview" display="Enable Full View">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=0&amp;fullview=true</str><str name="rotate-right" display="Rotate Right">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=90</str><str name="rotate-left" display="Rotate Left">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=270</str><str name="handle">http://hdl.library.upenn.edu/1017/d/medren/6016920</str></feeds><sidebar><str name="mailto" display="Contact Us">mailto:dmcknigh@pobox.upenn.edu?subject=Penn%20in%20Hand%3A%20Selected%20Manuscripts%20%28DLA%20Collection%29&amp;body=Question%20regarding%20this%20page%3A%20http%3A%2F%2Fdla.library.upenn.edu%2Fdla%2Fmedren%2Fpageturn.html%3Fq%3Dljs%20454%26id%3DMEDREN_6016920%26doubleside%3D0%26rotation%3D0%26</str><str name="back-to-results" display="Back to Search Results">search.html?q=ljs 454&amp;</str></sidebar></links><params xmlns:my="http://nowhere"><str name="q">ljs 454</str><str name="id">MEDREN_6016920</str><str name="fq"/><str name="start">0</str><str name="rows">25</str><str name="sort">score desc, date_sort asc</str><str name="page">pageturn</str><str name="browse"/><str name="facet">true</str><str name="view"/><str name="detail">brief</str><str name="showall"/><str name="fullview"/><info><str name="params-forward">true</str><str name="url">http://dla.library.upenn.edu/dla</str></info><page-specific name="pageturn"><str name="currentpage">1</str><str name="doubleside">0</str><str name="filter"/><str name="rotation">0</str><str name="region"/><str name="filetype"/><str name="image"/><str name="naturalwidth"/><str name="naturalheight"/><str name="levels"/><str name="zoom"/><str name="level"/><str name="oldwidth"/><str name="oldheight"/><str name="oldx"/><str name="oldy"/><str name="x"/><str name="y"/><str name="size"/><str name="oldsize"/></page-specific></params>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">1</int><lst name="params"><str name="facet">true</str><str name="sort">score desc, date_sort asc</str><str name="fl">*</str><str name="facet.mincount">1</str><str name="facet.sort">true</str><str name="q">id:MEDREN_6016920</str><str name="facet.limit">5</str><str name="f..facet.limit">400</str><str name="f..facet.sort">false</str><arr name="facet.field"><str>collection_facet</str><str>has_999_facet</str><str>facsimile_facet</str><str>illuminated_facet</str><str>illustrated_facet</str><str>notated_facet</str><str>language_facet</str><str>century_facet</str><str>date_facet</str><str>genre_facet</str><str>subject_facet</str><str>geography_facet</str><str>author_facet</str><str>related_names_facet</str><str>page_material_facet</str></arr><str name="qt">dla-standard</str><str name="rows">25</str></lst></lst><result name="response" numFound="1" start="0"><doc><str name="id">MEDREN_6016920</str><arr name="call_number_field"><str>LJS 454</str></arr><str name="orientation">unbound</str><str name="format">pageturn</str><arr name="title_field"><str>Seiyō senpaku zukai</str></arr><arr name="probable_date_field"><str>1808 </str></arr><arr name="titledate_field"><str>LJS 454 - Seiyō senpaku zukai (1808 )</str></arr><arr name="primary_author_field"><str/></arr><arr name="origin_field"><str>[Nagasaki, Japan, after 1808]</str></arr><arr name="date_facsimile_added_field"><str>09-09-2014</str></arr><arr name="LJScollection_field"><str>Lawrence J. Schoenberg Collection</str></arr><arr name="LJScollectionSEARCH_URL_field"><str>search.html?fq=collection_facet%3A"Lawrence J. Schoenberg Collection"</str></arr><arr name="facsimile_field"><str>Yes</str></arr><arr name="language_field"><str>Japanese</str></arr><arr name="genre_field"><str>Diagrams</str><str>Scrolls (information artifacts)</str><str>Manuscripts, Japanese - 18th century</str><str>Manuscripts, Japanese - 19th century</str><str>Manuscripts, Digital</str></arr><arr name="subject_field"><str>Merchant ships</str><str>History</str><str>Warships</str><str>History</str><str>Naval architecture</str><str>History</str><str>Astronomical instruments</str></arr><xml name="marcrecord"><marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
+   <marc:leader>03883ctm a2200673Ia 4500</marc:leader>
+   <marc:controlfield tag="001">6016920</marc:controlfield>
+   <marc:controlfield tag="005">20141111104720.0</marc:controlfield>
+   <marc:controlfield tag="008">130919s1808    paua          000 0 jpn d</marc:controlfield>
+   <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)ocn858634585</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">PAULM</marc:subfield>
+      <marc:subfield code="b">eng</marc:subfield>
+      <marc:subfield code="c">PAULM</marc:subfield>
+      <marc:subfield code="e">amremm</marc:subfield>
+      <marc:subfield code="d">PAULM</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="035" ind1=" " ind2=" ">
+      <marc:subfield code="a">(OCoLC)858634585</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="041" ind1="1" ind2=" ">
+      <marc:subfield code="a">jpn</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="079" ind1=" " ind2=" ">
+      <marc:subfield code="a">ocn858634605</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="099" ind1=" " ind2="9">
+      <marc:subfield code="a">LJS 454</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="049" ind1=" " ind2=" ">
+      <marc:subfield code="a">PAUM</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="130" ind1="0" ind2=" ">
+      <marc:subfield code="6">880-01</marc:subfield>
+      <marc:subfield code="a">Gunkan zukai.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="242" ind1="1" ind2="3">
+      <marc:subfield code="a">An illustrated guide to Western ships.</marc:subfield>
+      <marc:subfield code="y">eng</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="6">880-02</marc:subfield>
+      <marc:subfield code="a">Seiyō senpaku zukai</marc:subfield>
+      <marc:subfield code="h">[manuscript] /</marc:subfield>
+      <marc:subfield code="c">Nagasaki Oranda yakushi Motoki Shōei kin'yaku.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="246" ind1="1" ind2="6">
+      <marc:subfield code="6">880-03</marc:subfield>
+      <marc:subfield code="a">Gunkan zukai kōrei</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="260" ind1=" " ind2=" ">
+      <marc:subfield code="a">[Nagasaki, Japan,</marc:subfield>
+      <marc:subfield code="c">after 1808]</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">1 roll (34 sheets) :</marc:subfield>
+      <marc:subfield code="b">paper ;</marc:subfield>
+      <marc:subfield code="c">37 x 894 cm.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Ms. roll.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="520" ind1=" " ind2=" ">
+      <marc:subfield code="a">Scroll of diagrams and text concerning the construction and compartmentalization of European ships, referred to as battleships, all on the recto side.  At the top of the scroll is a thin piece of wood and a tie that wraps around the scroll; a paper label in Japanese is on the verso of the beginning of the scroll.  Sheets of a different kind of paper, of the same width but different length, are used for backing.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="546" ind1=" " ind2=" ">
+      <marc:subfield code="a">Japanese.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Title from outer label. Translated as "An illustrated guide to Western ships."</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Layout:  Written in vertical columns of characters perpendicular to the length of the scroll.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Script:  Written in Japanese script.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Decoration:  4 detailed full side diagrams of ships, 1 with a top pennant that unfolds above the upper edge of the scroll and 1 with a damaged foldout top pennant; 22 partial diagrams, including ship cross-sections and diagrams of astronomical and navigational equipment; many diagrams rubricated in red, some with syllables that are keyed to text describing the parts or areas of a ship.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Origin:  Written in Nagasaki, circa 1800.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Caption title from first preface.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Roll has additional textual content after final image with title "Suisengun kontairyaku kibun."</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="561" ind1="1" ind2=" ">
+      <marc:subfield code="a">Sold by Sam Fogg Ltd. (London) to Lawrence J. Schoenberg, 1999.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="561" ind1="1" ind2=" ">
+      <marc:subfield code="a">Deposit by Lawrence J. Schoenberg and Barbara Brizdle, 2013.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="562" ind1=" " ind2=" ">
+      <marc:subfield code="c">Version with undated preface and rubricated diagrams of astrolabe and sundial in section 4 ("dai 4-gō").</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="510" ind1="4" ind2=" ">
+      <marc:subfield code="a">Described in Transformation of knowledge:  early manuscripts from the collection of Lawrence J. Schoenberg (London: Paul Holberton, 2006),</marc:subfield>
+      <marc:subfield code="c">p. 122 (LJS 454).</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="524" ind1=" " ind2=" ">
+      <marc:subfield code="a">LJS 454</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="590" ind1=" " ind2=" ">
+      <marc:subfield code="a">Lawrence J. Schoenberg &amp; Barbara Brizdle Manuscript Initiative.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Merchant ships</marc:subfield>
+      <marc:subfield code="x">History.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Warships</marc:subfield>
+      <marc:subfield code="x">History.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Naval architecture</marc:subfield>
+      <marc:subfield code="x">History.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Astronomical instruments</marc:subfield>
+      <marc:subfield code="v">Early works to 1800.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Diagrams.</marc:subfield>
+      <marc:subfield code="2">aat</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="7">
+      <marc:subfield code="a">Scrolls (information artifacts)</marc:subfield>
+      <marc:subfield code="2">aat</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="0">
+      <marc:subfield code="a">Manuscripts, Japanese</marc:subfield>
+      <marc:subfield code="y">18th century.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="0">
+      <marc:subfield code="a">Manuscripts, Japanese</marc:subfield>
+      <marc:subfield code="y">19th century.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="655" ind1=" " ind2="4">
+      <marc:subfield code="a">Manuscripts, Digital.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="700" ind1="1" ind2=" ">
+      <marc:subfield code="6">880-04</marc:subfield>
+      <marc:subfield code="a">Motoki, Shōei,</marc:subfield>
+      <marc:subfield code="d">1767-1822,</marc:subfield>
+      <marc:subfield code="e">translator.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="730" ind1="0" ind2="2">
+      <marc:subfield code="6">880-05</marc:subfield>
+      <marc:subfield code="a">Suisengun kontairyaku kibun.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="856" ind1="4" ind2="1">
+      <marc:subfield code="z">Facsimile</marc:subfield>
+      <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/medren/6016920</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="856" ind1="4" ind2="2">
+      <marc:subfield code="3">The Lawrence J. Schoenberg and Barbara Brizdle Manuscript Initiative Fund Home Page</marc:subfield>
+      <marc:subfield code="u">http://hdl.library.upenn.edu/1017.12/366278</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="852" ind1=" " ind2=" ">
+      <marc:subfield code="b">Rare Book &amp; Manuscript Library</marc:subfield>
+      <marc:subfield code="a">University of Pennsylvania</marc:subfield>
+      <marc:subfield code="e">3420 Walnut Street, Philadelphia, Pennsylvania 19104-6206.</marc:subfield>
+      <marc:subfield code="j">LJS 454</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="880" ind1="0" ind2=" ">
+      <marc:subfield code="6">130-01</marc:subfield>
+      <marc:subfield code="a">軍艦図解.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="880" ind1="1" ind2="0">
+      <marc:subfield code="6">245-02</marc:subfield>
+      <marc:subfield code="a">西洋舩舶圖解</marc:subfield>
+      <marc:subfield code="h">[manuscript] /</marc:subfield>
+      <marc:subfield code="c">長崎和蘭譯司本木正榮謹譯.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="880" ind1="1" ind2="6">
+      <marc:subfield code="6">246-03</marc:subfield>
+      <marc:subfield code="a">軍艦圖解考例</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="880" ind1="1" ind2=" ">
+      <marc:subfield code="6">700-04</marc:subfield>
+      <marc:subfield code="a">本木正榮,</marc:subfield>
+      <marc:subfield code="d">1767-1822.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="880" ind1="0" ind2="2">
+      <marc:subfield code="6">730-05</marc:subfield>
+      <marc:subfield code="a">水戰軍今大畧紀聞.</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="996" ind1=" " ind2=" ">
+      <marc:subfield code="a">unbound</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="999" ind1=" " ind2=" ">
+      <marc:subfield code="a">DLA</marc:subfield>
+      <marc:subfield code="b">20140909</marc:subfield>
+   </marc:datafield>
+   <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">PAULM</marc:subfield>
+   </marc:datafield>
+</marc:record>
+</xml><xml name="pages"><page number="1" seq="1" id="medren_6016920_1598335" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_front0001" image="ljs454_wk1_front0001" visiblepage="Closed scroll">
+   <tocentry name="ill">Scroll label, Closed scroll</tocentry>
+</page>
+<page number="2" seq="2" id="medren_6016920_1598336" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_front0002" image="ljs454_wk1_front0002" visiblepage="Opening 1"/>
+<page number="3" seq="3" id="medren_6016920_1598337" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_front0003" image="ljs454_wk1_front0003" visiblepage="Opening 2"/>
+<page number="4" seq="4" id="medren_6016920_1598338" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0001" image="ljs454_wk1_body0001" visiblepage="Opening 3"/>
+<page number="5" seq="5" id="medren_6016920_1598339" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0002" image="ljs454_wk1_body0002" visiblepage="Opening 4"/>
+<page number="6" seq="6" id="medren_6016920_1598340" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0003" image="ljs454_wk1_body0003" visiblepage="Opening 5"/>
+<page number="7" seq="7" id="medren_6016920_1598341" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0004" image="ljs454_wk1_body0004" visiblepage="Opening 6"/>
+<page number="8" seq="8" id="medren_6016920_1598342" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0005" image="ljs454_wk1_body0005" visiblepage="Opening 7"/>
+<page number="9" seq="9" id="medren_6016920_1598343" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0006" image="ljs454_wk1_body0006" visiblepage="Opening 8"/>
+<page number="10" seq="10" id="medren_6016920_1598344" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0007" image="ljs454_wk1_body0007" visiblepage="Opening 9"/>
+<page number="11" seq="11" id="medren_6016920_1598345" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0008" image="ljs454_wk1_body0008" visiblepage="Opening 10"/>
+<page number="12" seq="12" id="medren_6016920_1598346" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0009" image="ljs454_wk1_body0009" visiblepage="Opening 11"/>
+<page number="13" seq="13" id="medren_6016920_1598347" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0010" image="ljs454_wk1_body0010" visiblepage="Opening 12"/>
+<page number="14" seq="14" id="medren_6016920_1598348" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0011" image="ljs454_wk1_body0011" visiblepage="Opening 13">
+   <tocentry name="ill">Full ship diagram, Opening 13</tocentry>
+</page>
+<page number="15" seq="15" id="medren_6016920_1598349" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0012" image="ljs454_wk1_body0012" visiblepage="Opening 14">
+   <tocentry name="ill">Partial ship diagram, Opening 14</tocentry>
+</page>
+<page number="16" seq="16" id="medren_6016920_1598350" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0013" image="ljs454_wk1_body0013" visiblepage="Opening 15">
+   <tocentry name="ill">Full ship diagram, Opening 15</tocentry>
+</page>
+<page number="17" seq="17" id="medren_6016920_1598351" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0014" image="ljs454_wk1_body0014" visiblepage="Opening 16">
+   <tocentry name="ill">Partial ship diagram, Opening 16</tocentry>
+</page>
+<page number="18" seq="18" id="medren_6016920_1598352" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0015" image="ljs454_wk1_body0015" visiblepage="Opening 17">
+   <tocentry name="ill">Cross-section diagram, Opening 17</tocentry>
+</page>
+<page number="19" seq="19" id="medren_6016920_1598353" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0016" image="ljs454_wk1_body0016" visiblepage="Opening 18">
+   <tocentry name="ill">Small partial diagrams, Opening 18</tocentry>
+</page>
+<page number="20" seq="20" id="medren_6016920_1598354" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0017" image="ljs454_wk1_body0017" visiblepage="Opening 19">
+   <tocentry name="ill">Small partial diagrams, Opening 19</tocentry>
+</page>
+<page number="21" seq="21" id="medren_6016920_1598355" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0018" image="ljs454_wk1_body0018" visiblepage="Opening 20">
+   <tocentry name="ill">Small partial diagrams, Opening 20</tocentry>
+</page>
+<page number="22" seq="22" id="medren_6016920_1598356" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0019" image="ljs454_wk1_body0019" visiblepage="Opening 21">
+   <tocentry name="ill">Navigational instruments, Opening 21</tocentry>
+</page>
+<page number="23" seq="23" id="medren_6016920_1598357" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0020" image="ljs454_wk1_body0020" visiblepage="Opening 22"/>
+<page number="24" seq="24" id="medren_6016920_1598358" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0021" image="ljs454_wk1_body0021" visiblepage="Opening 23">
+   <tocentry name="ill">Full ship diagram, Opening 23</tocentry>
+</page>
+<page number="25" seq="25" id="medren_6016920_1598359" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0022" image="ljs454_wk1_body0022" visiblepage="Opening 24">
+   <tocentry name="ill">Full ship diagram, Opening 24</tocentry>
+</page>
+<page number="26" seq="26" id="medren_6016920_1598360" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_body0023" image="ljs454_wk1_body0023" visiblepage="Opening 25"/>
+<page number="27" seq="27" id="medren_6016920_1598361" image.defaultscale="3" side="recto" image.id="medren_ljs454_wk1_body0024" image="ljs454_wk1_body0024" visiblepage="Opening 26"/>
+<page number="28" seq="28" id="medren_6016920_1598362" image.defaultscale="3" side="verso" image.id="medren_ljs454_wk1_back0001" image="ljs454_wk1_back0001" visiblepage="Closed scroll"/>
+</xml><str xmlns:my="http://nowhere" name="link">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;doubleside=0&amp;rotation=0&amp;id=MEDREN_6016920</str><str xmlns:my="http://nowhere" name="link_no_params">pageturn.html?id=MEDREN_6016920</str><str xmlns:my="http://nowhere" name="handle">http://hdl.library.upenn.edu/1017/d/medren/6016920</str></doc></result><lst name="facet_counts"><lst xmlns:my="http://nowhere" name="current_facets"><str name="Query" value="ljs 454">pageturn.html?id=MEDREN_6016920&amp;doubleside=0&amp;rotation=0&amp;</str></lst><lst name="facet_queries"/><lst xmlns:my="http://nowhere" name="facet_fields"><lst name="collection_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=collection_facet&amp;</str></lst><str name="Lawrence J. Schoenberg Collection" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=collection_facet%3A%22Lawrence%20J.%20Schoenberg%20Collection%22</str></lst><lst name="has_999_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=has_999_facet&amp;</str></lst></lst><lst name="facsimile_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=facsimile_facet&amp;</str></lst><str name="Yes" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=facsimile_facet%3A%22Yes%22</str></lst><lst name="illuminated_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=illuminated_facet&amp;</str></lst><str name="No" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=illuminated_facet%3A%22No%22</str></lst><lst name="illustrated_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=illustrated_facet&amp;</str></lst><str name="Yes" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=illustrated_facet%3A%22Yes%22</str></lst><lst name="notated_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=notated_facet&amp;</str></lst><str name="No" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=notated_facet%3A%22No%22</str></lst><lst name="language_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=language_facet&amp;</str></lst><str name="Japanese" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=language_facet%3A%22Japanese%22</str></lst><lst name="century_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=century_facet&amp;</str></lst><str name="18th century" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=century_facet%3A%2218th%20century%22</str><str name="19th century" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=century_facet%3A%2219th%20century%22</str></lst><lst name="date_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=date_facet&amp;</str></lst><str name="1808" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=date_facet%3A%221808%22</str></lst><lst name="genre_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=genre_facet&amp;</str></lst><str name="Diagrams" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=genre_facet%3A%22Diagrams%22</str><str name="Manuscripts, Digital" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=genre_facet%3A%22Manuscripts%2C%20Digital%22</str><str name="Manuscripts, Japanese - 18th century" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=genre_facet%3A%22Manuscripts%2C%20Japanese%20-%2018th%20century%22</str><str name="Manuscripts, Japanese - 19th century" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=genre_facet%3A%22Manuscripts%2C%20Japanese%20-%2019th%20century%22</str><str name="Scrolls (information artifacts)" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=genre_facet%3A%22Scrolls%20%28information%20artifacts%29%22</str></lst><lst name="subject_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=subject_facet&amp;</str></lst><str name="Astronomical instruments" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=subject_facet%3A%22Astronomical%20instruments%22</str><str name="History" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=subject_facet%3A%22History%22</str><str name="Merchant ships" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=subject_facet%3A%22Merchant%20ships%22</str><str name="Naval architecture" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=subject_facet%3A%22Naval%20architecture%22</str><str name="Warships" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=subject_facet%3A%22Warships%22</str></lst><lst name="geography_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=geography_facet&amp;</str></lst></lst><lst name="author_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=author_facet&amp;</str></lst></lst><lst name="related_names_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=related_names_facet&amp;</str></lst><str name="Motoki, Shōei, 1767-1822, translator" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=related_names_facet%3A%22Motoki%2C%20Sho%CC%84ei%2C%201767-1822%2C%20translator%22</str></lst><lst name="page_material_facet"><lst name="links"><str name="browse">browse.html?q=ljs 454&amp;id=MEDREN_6016920&amp;browse=page_material_facet&amp;</str></lst><str name="Paper" num="1">pageturn.html?q=ljs 454&amp;id=MEDREN_6016920&amp;fq=page_material_facet%3A%22Paper%22</str></lst></lst><lst name="facet_dates"/><lst name="facet_ranges"/></lst>
+</response><params xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere"><param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="size">3</param><param name="id">MEDREN_6016920</param><param name="q">ljs 454</param><context><param name="solr-url">http://localhost:8082/index/medren/select/</param><param name="collection">medren</param><param name="requested-page">pageturn</param><param name="host">dla.library.upenn.edu</param><param name="request">http://dla.library.upenn.edu/dla/medren/pageturn.xml?id=MEDREN_6016920&amp;q=ljs 454</param></context></params><collection xmlns:my="http://nowhere" xmlns:dla-caption="http://dla.upennlib/caption"><ref/><name>Penn in Hand: Selected Manuscripts</name><shortname>medren</shortname><record detail="brief" exclude-subfield="6">
+    <include field="100" label="Author" exclude-subfield="6"/>
+    <include field="110" label="Author" exclude-subfield="6"/>
+    <include field="130" label="Title" exclude-subfield="6"/>
+    <include field="245" label="Title" exclude-subfield="6"/>
+    <include field="240" label="Title" exclude-subfield="6"/>
+    <include field="260" label="Origin" exclude-subfield="6"/>
+    <include field="300" label="Physical description" exclude-subfield="6"/>
+	<include field="520" label="Summary" exclude-subfield="6"/>
+	<include field="500" label="Notes" delimiter=" - " exclude-subfield="6"/>    
+	<include field="524" label="Cite as" exclude-subfield="6"/> 
+    <include field="773" label="Contained in" exclude-subfield="6"/>
+    <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+    <include field="880" label="Vernacular script" exclude-subfield="6"/>
+  </record><record detail="detailed" exclude-subfield="6">
+    <include field="100" label="Author" exclude-subfield="6"/>
+    <include field="110" label="Author" exclude-subfield="6"/>
+    <include field="130" label="Title" exclude-subfield="6"/>
+    <include field="245" label="Title" exclude-subfield="6"/>
+    <include field="240" label="Title" exclude-subfield="6"/>
+    <include field="260" label="Origin" exclude-subfield="6"/>
+    <include field="300" label="Physical description" exclude-subfield="6"/>
+    <include field="546" label="Language(s)" exclude-subfield="6"/>
+	<include field="545" label="Biographical / Organizational History" exclude-subfield="6"/>
+    <include field="520" label="Summary" exclude-subfield="6"/>    
+    <include field="505" label="Contents" exclude-subfield="6"/>
+	<include field="561" label="Provenance" exclude-subfield="6"/>
+	<include field="700" label="Related names" exclude-subfield="6"/>
+    <include field="710" label="Related names" exclude-subfield="6"/>
+	<include field="600" label="Subject" exclude-subfield="6"/>
+    <include field="610" label="Subject" delimiter=" - "/>
+    <include field="630" label="Subject" delimiter=" - "/>
+    <include field="650" label="Subject" delimiter=" - "/>
+    <include field="651" label="Subject" delimiter=" - "/>
+    <include field="655" label="Form / Genre" exclude-subfield="2" delimiter=" - "/>
+    <include field="500" label="Notes" exclude-subfield="6"/>
+    <include field="530" label="Other formats" exclude-subfield="6"/>
+    <include field="510" label="Indexed / Referenced in" exclude-subfield="6"/>
+    <include field="581" label="Publications of or about this material" exclude-subfield="6"/> 
+    <include field="246" label="Other Titles" exclude-subfield="6"/>
+    <include field="730" label="Other Titles" exclude-subfield="6"/>
+    <include field="740" label="Other Titles" exclude-subfield="6"/>
+	<include field="524" label="Cite as" exclude-subfield="6"/>    
+    <include field="773" label="Contained in" exclude-subfield="6"/>
+    <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+    <include field="880" label="Vernacular script" exclude-subfield="6"/>
+  </record><view>html</view><view>html</view><rows>25,50,100</rows><fl>*</fl><sort>score desc, date_sort asc</sort><style>rbm</style><advancedsearch.field type="number">century_search</advancedsearch.field><advancedsearch.field>language_search</advancedsearch.field><advancedsearch.field>place_search</advancedsearch.field><advancedsearch.field>subject_search</advancedsearch.field><advancedsearch.field>descriptive_notes_search</advancedsearch.field><advancedsearch.field>author_search</advancedsearch.field><advancedsearch.field display="Other Contributors/Owners">other_contributors_search</advancedsearch.field><advancedsearch.textcount>7</advancedsearch.textcount><advancedsearch.numbercount>1</advancedsearch.numbercount><advancedsearch.texthelp>(For example: <i>france</i> ; <i>german*</i> ; <i>german?</i> ;  <i>france germany italy</i>. 
+    See the <a href="ancillary.html?id=collections/rbm/medren/advancedsearch">Advanced Search Help</a> for more details)</advancedsearch.texthelp><facet>true</facet><facet.mincount>1</facet.mincount><facet.limit>5</facet.limit><facet.field>page_material_facet</facet.field><facet.field>related_names_facet</facet.field><facet.field>author_facet</facet.field><facet.field>geography_facet</facet.field><facet.field>subject_facet</facet.field><facet.field>genre_facet</facet.field><facet.field>date_facet</facet.field><facet.field>century_facet</facet.field><facet.field>language_facet</facet.field><facet.field>notated_facet</facet.field><facet.field>illustrated_facet</facet.field><facet.field>illuminated_facet</facet.field><facet.field>facsimile_facet</facet.field><facet.field>has_999_facet</facet.field><facet.field>collection_facet</facet.field><rss icon="true">
+    <title-field>titledate_field</title-field>
+  </rss><sortoptions>title_sort, author_sort, date_sort, 
+    date_facsimile_added_sort</sortoptions><caption context="title">
+<!--  doesn't give priority to LJS collection
+  	<dla-caption:if not-empty="collection_field">
+  		<div class="fromcollection">
+  			from the 
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field"  src="collection_field"/>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+-->
+
+  	<dla-caption:if not-empty="LJScollection_field">
+  		<div class="fromcollection">
+  			<html>
+  				<dla-caption:link-external type="field" src="LJScollectionSEARCH_URL_field">
+  					<dla-caption:field type="field" src="LJScollection_field"/><span class="coll-title">:</span>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+  	<dla-caption:if empty="LJScollection_field">
+  		<div class="fromcollection">
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field" src="collection_field"/><span class="coll-title">:</span>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+
+
+
+
+
+    <span class="recordtitlechrome">
+      <dla-caption:field type="field" src="call_number_field"/>
+      <dla-caption:if not-empty="call_number_field"> - </dla-caption:if>
+      <dla-caption:field type="field" src="primary_author_field"/>
+      <dla-caption:if not-empty="primary_author_field"> - </dla-caption:if>
+      <dla-caption:field type="field" src="title_field"/>
+    </span>
+  </caption><caption context="mobile">
+
+			
+			 <div style="font-family: Verdana, arial, sans-serif; font-size:13px; margin-bottom:7px;line-height:130%;">
+				 <div><dla-caption:field type="field" src="call_number_field"/></div>
+				 <div>
+					<dla-caption:link-to-detail>
+						<dla-caption:field type="field" src="title_field"/>
+					 </dla-caption:link-to-detail>
+				 </div>
+				 <div>				 
+					 <dla-caption:if equal="facsimile_field, {Yes}">
+					    <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*" style="border: none;"/>Facsimile available</dla-caption:link-to-detail>
+					  </dla-caption:if>
+		            </div>
+				 <div style="margin-bottom: 10px; border-bottom: dotted 1px #999;">
+						<dla-caption:if not-empty="origin_field">
+							 <div><dla-caption:field type="field" src="origin_field"/></div> 
+						</dla-caption:if> 				    
+						<dla-caption:if sort="date_facsimile_added_sort">
+							 <dla-caption:if not-empty="date_facsimile_added_field">
+							    <div class="facadded">Facsimile added: <dla-caption:field type="field" src="date_facsimile_added_field"/></div>	
+							 </dla-caption:if>
+						</dla-caption:if>
+				</div>
+			</div>
+
+	</caption><caption context="results">				
+     <tr class="medrenresultrecord">
+        <td class="oneresult">          	 
+           <div class="callno">
+	     <dla-caption:field type="field" src="call_number_field"/>
+	      <dla-caption:if equal="facsimile_field, {Yes}">
+	         <span class="facavail">       <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*"/>Facsimile available</dla-caption:link-to-detail></span>
+	       </dla-caption:if> 
+	   </div>
+			
+	   <dla-caption:if sort="date_facsimile_added_field">
+	      <dla-caption:if not-empty="date_facsimile_added_field">
+	         <div class="facadded">Facsimile added: <dla-caption:field type="field" src="date_facsimile_added_field"/></div>	
+	      </dla-caption:if>
+	   </dla-caption:if>			
+			             
+               
+           <dla-caption:if not-empty="primary_author_field">
+             <div><dla-caption:field type="field" src="primary_author_field"/></div>
+	   </dla-caption:if>                
+	   <div class="medrenresultstitle">
+	      <dla-caption:link-to-detail>
+	      	<dla-caption:field type="field" src="title_field"/>
+	      </dla-caption:link-to-detail>
+	   </div>                                       
+          
+           <dla-caption:if not-empty="origin_field">
+	      <div class="origin"><dla-caption:field type="field" src="origin_field"/></div> 
+	   </dla-caption:if>                       
+        </td>
+        <td class="holdresultsdate">          	
+           <div><dla-caption:if not-empty="probable_date_field"><dla-caption:field type="field" src="probable_date_field"/></dla-caption:if></div>
+        </td>
+     </tr>
+  </caption><caption context="image wall">
+            <div class="thumbonly">
+		  <dla-caption:link-to-detail extra-params-field="page_param">
+                <img>
+                    <dla-caption:attribute name="src">../images/medren/<dla-caption:field type="field" src="id"/>-<dla-caption:field type="field" src="page_param"/>.jpg</dla-caption:attribute>				
+				<dla-caption:attribute name="title">
+					<dla-caption:field type="field" src="title"/>
+				</dla-caption:attribute>
+				<dla-caption:attribute name="alt">
+					<dla-caption:field type="field" src="title"/>
+				</dla-caption:attribute>
+				<dla-caption:attribute name="width">200px</dla-caption:attribute>
+				<dla-caption:attribute name="height">200px</dla-caption:attribute>
+                </img>
+            </dla-caption:link-to-detail>
+		  </div>
+	</caption><stickyfacets>collection_facet</stickyfacets><footeremail>rbml@pobox.upenn.edu</footeremail><footermailto>rbml@pobox.upenn.edu,dmcknigh@pobox.upenn.edu</footermailto><poweredby>This site has been made possible through a grant from the National
+    Endowment to the Humanities.</poweredby><maxzoomlevels>5</maxzoomlevels><noresultsmessage>
+    <div class="noresults">
+      Sorry, no results matched your search terms.
+    </div>
+  </noresultsmessage><tocEntries>
+  	<entry name="toc" display="Contents"/>
+  	<entry name="ill" display="Illustrations"/>
+  </tocEntries><tabs type="pageturn">
+         <tab name="View Manuscript" target="pageturn"/>
+         <tab name="View Provenance &amp; Subject Details" target="record"/>
+    </tabs><solr-url>http://localhost:8082/index/medren/select/</solr-url><services name="Navigating the Collection" display="block" class="recordDescription">
+    <service name="Collection Home" link="index.html"/>
+    <service name="Search Strategies" link="ancillary.html?id=collections/brinton/searchdla"/>
+    <service type="back-to-results"/>
+    <service name="Advanced Search" link="advancedsearch.html"/>
+    <service name="New: Manuscripts recently digitized" link="search.html?sort=date_facsimile_added_sort%20desc&amp;showall=sort&amp;fq=facsimile_facet%3A%22Yes%22"/>
+  </services><services name="Manuscripts at Penn">
+    <service name="Overview" link="ancillary.html?id=collections/rbm/mss/mss"/>
+    <service name="Schoenberg Database of Manuscripts" link="http://hdl.library.upenn.edu/1017/59753"/>
+    <service name="Manuscripts on Microfilm" link="http://www.library.upenn.edu/collections/microforms/medmss.html "/>
+  </services><services name="Information &amp; Contacts" display="block" class="recordDescription">
+    <service type="mailto" address="dmcknigh@pobox.upenn.edu" name="Contact Us" body="Question regarding this page: " appendurl="true"/>
+    <service name="Copyright &amp; Permissions" link="ancillary.html?id=collections/brinton/copyright"/>
+  </services><services name="Rare Book &amp; Manuscript Library" link="http://www.library.upenn.edu/rbm/">
+    <service name="Access" link="ancillary.html?id=access/rbm"/>
+    <service name="Hours" link="http://events.library.upenn.edu/cgi-bin/calendar.cgi?library=rbm;size=large"/>
+    <service name="Locate on Campus" link="http://hdl.library.upenn.edu/1017/82076"/>
+    <service name="Services" link="ancillary.html?id=rbm/services"/>
+    <service name="Staff" link="http://dla.library.upenn.edu/dla/staff/search.html?fq=library_facet%3A%22Rare%20Book%20%26%20Manuscript%20Library%22"/>
+    <service name="Visitor Information" link="http://www.library.upenn.edu/access/visitors/visitors.html"/>
+  </services><services name="NEH Grant Information" link="ancillary.html?id=collections/manuscripts/grant"> </services><maps metadataPrefix="marc21">
+    <map to="marc:record">marcrecord</map>
+  </maps><maps metadataPrefix="oai_dc">
+    <map to="title">title_field</map>
+    <map to="contributor">author_field</map>
+    <map to="coverage"/>
+    <map to="creator"/>
+    <map to="date">probable_date_field</map>
+    <map to="description"/>
+    <map to="format"/>
+    <map to="identifier">id</map>
+    <map to="language">language_field</map>
+    <map to="publisher"/>
+    <map to="relation"/>
+    <map to="rights"/>
+    <map to="source"/>
+    <map to="subject">geography_field</map>
+    <map to="subject">subject_field</map>
+    <map to="subject">genre_field</map>
+    <map to="type"/>
+  </maps><maps metadataPrefix="dla">
+    <map to="datestamp">last_update</map>
+  </maps></collection><defaults xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere"><param name="start">0</param><param name="rows">25</param><param name="facet.offset">0</param><param name="browse.limit">400</param><param name="browse.sort">false</param><param name="sort">score desc, date_sort asc</param><param name="facet.limit">5</param><param name="facet.mincount">1</param></defaults><recordinfo xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere" xmlns:marc="http://www.loc.gov/MARC21/slim" detail="brief"><str name="Title">Gunkan zukai.</str><str name="Title">Seiyō senpaku zukai [manuscript] / Nagasaki Oranda yakushi Motoki Shōei kin'yaku.</str><str name="Origin">[Nagasaki, Japan, after 1808]</str><str name="Physical description">1 roll (34 sheets) : paper ; 37 x 894 cm.</str><str name="Summary">Scroll of diagrams and text concerning the construction and compartmentalization of European ships, referred to as battleships, all on the recto side.  At the top of the scroll is a thin piece of wood and a tie that wraps around the scroll; a paper label in Japanese is on the verso of the beginning of the scroll.  Sheets of a different kind of paper, of the same width but different length, are used for backing.</str><str name="Notes">Ms. roll.</str><str name="Notes">Title from outer label. Translated as "An illustrated guide to Western ships."</str><str name="Notes">Layout:  Written in vertical columns of characters perpendicular to the length of the scroll.</str><str name="Notes">Script:  Written in Japanese script.</str><str name="Notes">Decoration:  4 detailed full side diagrams of ships, 1 with a top pennant that unfolds above the upper edge of the scroll and 1 with a damaged foldout top pennant; 22 partial diagrams, including ship cross-sections and diagrams of astronomical and navigational equipment; many diagrams rubricated in red, some with syllables that are keyed to text describing the parts or areas of a ship.</str><str name="Notes">Origin:  Written in Nagasaki, circa 1800.</str><str name="Notes">Caption title from first preface.</str><str name="Notes">Roll has additional textual content after final image with title "Suisengun kontairyaku kibun."</str><str name="Cite as">LJS 454</str><str name="Manuscript location">Rare Book &amp; Manuscript Library University of Pennsylvania LJS 454</str><str name="Vernacular script">軍艦図解.</str><str name="Vernacular script">西洋舩舶圖解 [manuscript] / 長崎和蘭譯司本木正榮謹譯.</str><str name="Vernacular script">軍艦圖解考例</str><str name="Vernacular script">本木正榮, 1767-1822.</str><str name="Vernacular script">水戰軍今大畧紀聞.</str></recordinfo></page>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Description of University of Pennsylvania LJS 471: Medical manual and prescriptions ... etc.</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>The University of Pennsylvania Libraries</publisher>
+            <availability>
+               <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+                                This description is ©2015 University of
+                                Pennsylvania Libraries. It is licensed under a Creative Commons
+                                Attribution License version 4.0 (CC-BY-4.0
+                                https://creativecommons.org/licenses/by/4.0/legalcode. For a
+                                description of the terms of use see the Creative Commons Deed
+                                https://creativecommons.org/licenses/by/4.0/. </licence>
+               <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+                                referenced images and their content are free of known copyright
+                                restrictions and in the public domain. See the Creative Commons
+                                Public Domain Mark page for usage details,
+                                http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+            </availability>
+         </publicationStmt>
+         <notesStmt>
+            <note>Ms. codex.</note>
+            <note>Title for manuscript from title supplied by cataloger for predominant work.</note>
+         </notesStmt>
+         <sourceDesc>
+            <msDesc>
+               <msIdentifier>
+                  <settlement>Philadelphia</settlement>
+                  <institution>University of Pennsylvania</institution>
+                  <repository>Rare Book &amp; Manuscript Library</repository>
+                  <idno type="call-number">LJS 471</idno>
+                  <altIdentifier type="bibid">
+                     <idno>5918926</idno>
+                  </altIdentifier>
+                  <altIdentifier type="hdl">
+                     <idno>http://hdl.library.upenn.edu/1017/d/medren/5918926</idno>
+                  </altIdentifier>
+               </msIdentifier>
+               <msContents>
+                  <summary>Volume of 14th-century Latin medical works translated into Hebrew. The first work, a manual and collection of prescriptions attributed to Gentilis Fulginas, professor of medicine at Perugia and Padua, comprises over half the volume. Smaller works follow: Sefer Tsirurgia, part of Florentine physician Dinus del Garbo's De emplastris et unguentis; Mavo bi-melakhah, Abraham Avigdor's translation of Bernardo Alberti's Introductorium in practica pro provectis; and a small group of additional prescriptions titled Mafteaḥ ha-sodot. Prescriptions added by a later hand inside the original lower cover. Marginal section headings or numbers and occasional marginal notes.</summary>
+                  <textLang mainLang="heb">Hebrew</textLang>
+                  <msItem>
+                     <title>Medical manual and prescriptions ... etc.</title>
+                     <author>Gentilis Fulginas, -1348</author>
+                     <author>Dinus, de Garbo, -1327</author>
+                     <author>Alberti, Bernardo</author>
+                     <respStmt>
+                        <resp>translator</resp>
+                        <persName>Avigdor, Abraham, b. 1351</persName>
+                     </respStmt>
+                  </msItem>
+                  <msItem n="1r">
+                     <locus>1r</locus>
+                     <title>Medical manual and prescriptions, f. 1r</title>
+                  </msItem>
+                  <msItem n="54r">
+                     <locus>54r</locus>
+                     <title>Sefer Tsirurgia, f. 54r</title>
+                  </msItem>
+                  <msItem n="69r">
+                     <locus>69r</locus>
+                     <title>Mavo bi-melakhah, f. 69r</title>
+                  </msItem>
+                  <msItem n="84v">
+                     <locus>84v</locus>
+                     <title>Mafteah? ha-sodot, f. 84v</title>
+                  </msItem>
+               </msContents>
+               <physDesc>
+                  <objectDesc>
+                     <supportDesc material="mixed">
+                        <support>
+                           <p>parchment and paper</p>
+                        </support>
+                        <extent>84 leaves : 220 x 150 (155 x 105) mm. bound to 230 x 165 mm</extent>
+                        <foliation>Parchment and paper, i (contemporary parchment wrapper) + 84 + i (contemporary parchment wrapper); [1-84], modern foliation in pencil, upper left recto.</foliation>
+                     </supportDesc>
+                     <layoutDesc>
+                        <layout>Written in 32-30 long lines; lists at the end of the Avigdor translation of Alberti presented in 2 columns (f. 66r) and 3 columns (f. 66v-68v) of 35-36 lines.</layout>
+                     </layoutDesc>
+                  </objectDesc>
+                  <scriptDesc>
+                     <scriptNote>Written in Italian semi-cursive Hebrew script, by multiple hands.</scriptNote>
+                  </scriptDesc>
+                  <bindingDesc>
+                     <binding>
+                        <p>Modern library cloth; former parchment wrapper bound within modern binding.</p>
+                     </binding>
+                  </bindingDesc>
+               </physDesc>
+               <history>
+                  <origin>
+                     <p>Written in Italy in the second half of the 14th or the 15th century.</p>
+                     <origDate>ca. 1350-1499</origDate>
+                     <origPlace>Italy</origPlace>
+                  </origin>
+                  <provenance>Formerly owned by the Polish scholar and bibliophile S. J. Halberstam, ms.
+                        406 (inside former upper cover, f. 1r, Ha no. on Montefiore labels).</provenance>
+                  <provenance>Sold as part of Halberstam's library to Judith Montefiore College
+                        (Ramsgate, England), after 1887, ms. 441 (library stamps, f. 1r, inside former lower cover;
+                        labels on spine, inside lower cover).</provenance>
+                  <provenance>Placed on deposit at Jews' College (London) as part of the Montefiore
+                        Endowment, 1899.</provenance>
+                  <provenance>Sold at auction at Sotheby's (New York) as part of a collection of
+                        manuscripts from the Montefiore Endowment, 27 Oct. 2004, lot 326, to Lawrence J.
+                        Schoenberg.</provenance>
+                  <provenance>Deposit by Lawrence J. Schoenberg and Barbara Brizdle,
+                        2012.</provenance>
+               </history>
+            </msDesc>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <textClass>
+            <keywords n="subjects">
+               <term>Medicine--Early works to 1800</term>
+               <term>Medicine--Formulae, receipts, prescriptions--Early works to 1800</term>
+            </keywords>
+            <keywords n="form/genre">
+               <term>Codices</term>
+               <term>Anthologies</term>
+               <term>Manuals (instructional materials)</term>
+               <term>Prescriptions</term>
+               <term>Translations (documents)</term>
+               <term>Manuscripts, Hebrew--14th century</term>
+               <term>Manuscripts, Hebrew--15th century</term>
+               <term>Manuscripts, Medieval</term>
+               <term>Manuscripts, Renaissance</term>
+            </keywords>
+         </textClass>
+      </profileDesc>
+   </teiHeader>
+   <facsimile>
+      <graphic url=""/>
+   </facsimile>
+</TEI>
