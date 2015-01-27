@@ -71,6 +71,13 @@
 
         <div>
           <h4>Origin</h4>
+
+          {% if doc.tei.origin %}
+          <div>
+            <span>{{ doc.tei.origin }}</span>
+          </div>
+          {% endif %}
+
           <dl>
             <dt>Date</dt>
             <dd>{{ doc.tei.orig_date }}</dd>
@@ -104,10 +111,73 @@
         </div>
         {% endif %}
 
+        {% if doc.tei.watermark %}
+        <div>
+          <h4>Watermark</h4>
+          <span>{{ doc.tei.watermark }}</span>
+        </div>
+        {% endif %}
+
         {% if doc.tei.extent %}
         <div>
           <h4>Extent</h4>
           <span>{{ doc.tei.extent|capfirst }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.foliation %}
+        <div>
+          <h4>Foliation</h4>
+          <span>{{ doc.tei.foliation }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.collation %}
+        <div>
+          <h4>Collation</h4>
+          <span>{{ doc.tei.collation }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.signatures %}
+        <div>
+          <h4>Signatures</h4>
+          <span>{{ doc.tei.signatures }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.binding %}
+        <div>
+          <h4>Binding</h4>
+          <span>{{ doc.tei.binding }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.layout %}
+        <div>
+          <h4>Layout</h4>
+          <span>{{ doc.tei.layout }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.decoration %}
+        <div>
+          <h4>Decoration</h4>
+          <span>{{ doc.tei.decoration }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.script %}
+        <div>
+          <h4>Script</h4>
+          <span>{{ doc.tei.script }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.colophon %}
+        <div>
+          <h4>Colophon</h4>
+          <span>{{ doc.tei.colophon }}</span>
         </div>
         {% endif %}
 
