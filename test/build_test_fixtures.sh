@@ -70,7 +70,7 @@ rm -rf $TEST_STAGING_DIR/*
 mysql -u openn openn < $TEST_SQL
 
 # dump the data
-TEST_JSON=$this_dir/../openn/fixtures/test.json
+OPENN_DB_NAME=openn TEST_JSON=$this_dir/../openn/fixtures/test.json
 $this_dir/../manage.py dumpdata > $TEST_JSON
 
 # rebuild the database

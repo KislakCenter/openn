@@ -82,6 +82,10 @@ class TestOPennTEI(TestCase):
         openn_tei = OPennTEI(open(self.mscodex75_tei))
         self.assertEqual(u'Some signatures visible in red in the first half of some quires.', openn_tei.signatures)
 
+    def test_resource(self):
+        openn_tei = OPennTEI(open(self.mscodex906_tei))
+        self.assertEqual(u'http://hdl.library.upenn.edu/1017/d/medren/3559152', openn_tei.resource)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -122,7 +122,7 @@
                                 </altIdentifier>
                                 <xsl:if
                                     test="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]">
-                                    <altIdentifier type="hdl">
+                                    <altIdentifier type="resource">
                                         <idno>
                                             <xsl:value-of select="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]/parent::marc:datafield/marc:subfield[@code='u']"/>
                                         </idno>

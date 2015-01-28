@@ -161,8 +161,8 @@ class OPennTEI(XMLWhatsit):
         return self._authors
 
     @property
-    def hdl(self):
-        return self.alt_id('hdl')
+    def resource(self):
+        return self.alt_id('resource')
 
     @property
     def bibid(self):
