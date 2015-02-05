@@ -1,0 +1,1266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+   <images xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <image xmlns:my="http://nowhere"
+         src="https://repo.library.upenn.edu/djatoka/resolver?url_ver=Z39.88-2004&amp;svc_id=info:lanl-repo/svc/getRegion&amp;svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&amp;svc.format=image/jpeg&amp;rft_id=medren_ljs386_wk1_body0001&amp;svc.level=3&amp;svc.rotate=">
+         <params>
+            <identifier>medren_ljs386_wk1_body0001</identifier>
+            <imagefile>/repo/store/pairtree_root/me/dr/en/_l/js/38/6_/wk/1_/bo/dy/00/01/medren_ljs386_wk1_body0001/v003/full/ljs386_wk1_body0001.DELIVERY.jp2</imagefile>
+            <width>3991</width>
+            <height>4886</height>
+            <dwtLevels>6</dwtLevels>
+            <levels>6</levels>
+            <compositingLayerCount>1</compositingLayerCount>
+            <defaultscale>3</defaultscale>
+         </params>
+         <control>
+            <zoomcontrol zoom="in">
+               <input name="zoom" type="radio" value="in" onclick="selectZoomControl('in')" checked="yes">zoom
+                  in</input>
+               <input name="zoom" type="radio" value="out" onclick="selectZoomControl('out')">zoom out</input>
+               <input name="zoom" type="radio" value="none" onclick="selectZoomControl('none')">recenter</input>
+            </zoomcontrol>
+            <sizecontrol>
+               <input name="size" type="radio" value="0" onClick="this.form.submit()">full</input>
+               <input name="size" type="radio" value="1" onClick="this.form.submit()">1/2</input>
+               <input name="size" type="radio" value="2" onClick="this.form.submit()">1/4</input>
+               <input name="size" type="radio" value="3" checked="yes">1/8</input>
+               <input name="size" type="radio" value="4" onClick="this.form.submit()">1/16</input>
+               <input name="size" type="radio" value="5" onClick="this.form.submit()">1/32</input>
+               <input name="size" type="radio" value="6" onClick="this.form.submit()">1/64</input>
+            </sizecontrol>
+         </control>
+      </image>
+   </images>
+   <response xmlns:cinclude="http://apache.org/cocoon/include/1.0">
+      <links xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:my="http://nowhere"
+         detail-page-params=".html?q=4824919&amp;id=MEDREN_4824919&amp;">
+         <feeds>
+            <str name="media.rss">feeds/pageturn.mrss?q=4824919&amp;rotation=0&amp;id=MEDREN_4824919 OR
+               id:MEDREN_4824919_*&amp;rows=500</str>
+            <str name="rss">feeds/pageturn.rss?q=4824919&amp;id=MEDREN_4824919&amp;rotation=0&amp;</str>
+            <str name="ical">feeds/calendar.ics?q=4824919&amp;id=MEDREN_4824919&amp;rotation=0&amp;</str>
+            <str name="url"
+               >http://dla.library.upenn.edu/dla/medren/pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;rotation=0&amp;rotation=0&amp;</str>
+            <str name="display-record" display="[more information]"
+               >record.html?q=4824919&amp;id=MEDREN_4824919&amp;rotation=0&amp;</str>
+            <str name="enable-fullview" display="Enable Full View"
+               >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;rotation=0&amp;fullview=true</str>
+            <str name="rotate-right" display="Rotate Right"
+               >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;rotation=90</str>
+            <str name="rotate-left" display="Rotate Left"
+               >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;rotation=270</str>
+            <str name="handle">http://hdl.library.upenn.edu/1017/d/medren/4824919</str>
+         </feeds>
+         <sidebar>
+            <str name="mailto" display="Contact Us"
+               >mailto:dmcknigh@pobox.upenn.edu?subject=Penn%20in%20Hand%3A%20Selected%20Manuscripts%20%28DLA%20Collection%29&amp;body=Question%20regarding%20this%20page%3A%20http%3A%2F%2Fdla.library.upenn.edu%2Fdla%2Fmedren%2Fpageturn.html%3Fq%3D4824919%26id%3DMEDREN_4824919%26rotation%3D0%26</str>
+            <str name="back-to-results" display="Back to Search Results">search.html?q=4824919&amp;</str>
+         </sidebar>
+      </links>
+      <params xmlns:my="http://nowhere">
+         <str name="q">4824919</str>
+         <str name="id">MEDREN_4824919</str>
+         <str name="fq"/>
+         <str name="start">0</str>
+         <str name="rows">25</str>
+         <str name="sort">score desc, date_sort asc</str>
+         <str name="page">pageturn</str>
+         <str name="browse"/>
+         <str name="facet">true</str>
+         <str name="view"/>
+         <str name="detail">brief</str>
+         <str name="showall"/>
+         <str name="fullview"/>
+         <info>
+            <str name="params-forward">true</str>
+            <str name="url">http://dla.library.upenn.edu/dla</str>
+         </info>
+         <page-specific name="pageturn">
+            <str name="currentpage">1</str>
+            <str name="doubleside">1</str>
+            <str name="filter"/>
+            <str name="rotation">0</str>
+            <str name="region"/>
+            <str name="filetype"/>
+            <str name="image"/>
+            <str name="naturalwidth"/>
+            <str name="naturalheight"/>
+            <str name="levels"/>
+            <str name="zoom"/>
+            <str name="level"/>
+            <str name="oldwidth"/>
+            <str name="oldheight"/>
+            <str name="oldx"/>
+            <str name="oldy"/>
+            <str name="x"/>
+            <str name="y"/>
+            <str name="size"/>
+            <str name="oldsize"/>
+         </page-specific>
+      </params>
+      <lst name="responseHeader">
+         <int name="status">0</int>
+         <int name="QTime">2</int>
+         <lst name="params">
+            <str name="facet">true</str>
+            <str name="sort">score desc, date_sort asc</str>
+            <str name="fl">*</str>
+            <str name="facet.mincount">1</str>
+            <str name="facet.sort">true</str>
+            <str name="q">id:MEDREN_4824919</str>
+            <str name="facet.limit">5</str>
+            <str name="f..facet.limit">400</str>
+            <str name="f..facet.sort">false</str>
+            <arr name="facet.field">
+               <str>collection_facet</str>
+               <str>has_999_facet</str>
+               <str>facsimile_facet</str>
+               <str>illuminated_facet</str>
+               <str>illustrated_facet</str>
+               <str>notated_facet</str>
+               <str>language_facet</str>
+               <str>century_facet</str>
+               <str>date_facet</str>
+               <str>genre_facet</str>
+               <str>subject_facet</str>
+               <str>geography_facet</str>
+               <str>author_facet</str>
+               <str>related_names_facet</str>
+               <str>page_material_facet</str>
+            </arr>
+            <str name="qt">dla-standard</str>
+            <str name="rows">25</str>
+         </lst>
+      </lst>
+      <result name="response" numFound="1" start="0">
+         <doc>
+            <str name="id">MEDREN_4824919</str>
+            <arr name="call_number_field">
+               <str>LJS 386</str>
+            </arr>
+            <str name="orientation">hinge-right</str>
+            <str name="format">pageturn</str>
+            <arr name="title_field">
+               <str>[Kitāb Mīzān al-ḥikmah]</str>
+            </arr>
+            <arr name="probable_date_field">
+               <str>1270 </str>
+            </arr>
+            <arr name="titledate_field">
+               <str>LJS 386 - [Kitāb Mīzān al-ḥikmah] (1270 )</str>
+            </arr>
+            <arr name="primary_author_field">
+               <str>Khāzinī, ʻAbd al-Raḥmān, fl. 1121</str>
+            </arr>
+            <arr name="origin_field">
+               <str>[ca. 1270]</str>
+            </arr>
+            <arr name="date_facsimile_added_field">
+               <str>01-25-2011</str>
+            </arr>
+            <arr name="collection_field">
+               <str>Medieval &amp; Renaissance Manuscripts Collection</str>
+            </arr>
+            <arr name="collectionSEARCH_URL_field">
+               <str>search.html?fq=collection_facet%3A"Medieval %26 Renaissance Manuscripts"</str>
+            </arr>
+            <arr name="LJScollection_field">
+               <str>Lawrence J. Schoenberg Collection</str>
+            </arr>
+            <arr name="LJScollectionSEARCH_URL_field">
+               <str>search.html?fq=collection_facet%3A"Lawrence J. Schoenberg Collection"</str>
+            </arr>
+            <arr name="facsimile_field">
+               <str>Yes</str>
+            </arr>
+            <arr name="language_field">
+               <str>Arabic</str>
+            </arr>
+            <arr name="genre_field">
+               <str>Codices</str>
+               <str>Treatises</str>
+               <str>Diagrams</str>
+               <str>Tables (documents)</str>
+               <str>Manuscripts, Arabic - 13th century</str>
+               <str>Manuscripts, Medieval</str>
+            </arr>
+            <arr name="subject_field">
+               <str>Balances (Weighing instruments)</str>
+               <str>Scales (Weighing instruments)</str>
+            </arr>
+            <arr name="author_field">
+               <str>Khāzinī, ʻAbd al-Raḥmān, fl. 1121</str>
+            </arr>
+            <xml name="marcrecord">
+               <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
+                  <marc:leader>03117ctm a2200553Ia 4500</marc:leader>
+                  <marc:controlfield tag="001">4824919</marc:controlfield>
+                  <marc:controlfield tag="005">20121024151435.0</marc:controlfield>
+                  <marc:controlfield tag="008">100916s1270 paua 000 0 ara d</marc:controlfield>
+                  <marc:datafield tag="035" ind1=" " ind2=" ">
+                     <marc:subfield code="a">(OCoLC)ocn792893204</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="040" ind1=" " ind2=" ">
+                     <marc:subfield code="a">PAULM</marc:subfield>
+                     <marc:subfield code="c">PAULM</marc:subfield>
+                     <marc:subfield code="e">amremm</marc:subfield>
+                     <marc:subfield code="d">PAULM</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="035" ind1=" " ind2=" ">
+                     <marc:subfield code="a">(OCoLC)792893204</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="079" ind1=" " ind2=" ">
+                     <marc:subfield code="a">ocn792895897</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="099" ind1=" " ind2="9">
+                     <marc:subfield code="a">LJS 386</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="049" ind1=" " ind2=" ">
+                     <marc:subfield code="a">PAUM</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="100" ind1="1" ind2=" ">
+                     <marc:subfield code="a">Khāzinī, ʻAbd al-Raḥmān,</marc:subfield>
+                     <marc:subfield code="d">fl. 1121.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="240" ind1="1" ind2="0">
+                     <marc:subfield code="a">Mīzān al-ḥikmah.</marc:subfield>
+                     <marc:subfield code="k">Selections.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="245" ind1="1" ind2="0">
+                     <marc:subfield code="a">[Kitāb Mīzān al-ḥikmah]</marc:subfield>
+                     <marc:subfield code="h">[manuscript].</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="260" ind1=" " ind2=" ">
+                     <marc:subfield code="c">[ca. 1270]</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="300" ind1=" " ind2=" ">
+                     <marc:subfield code="a">98 leaves :</marc:subfield>
+                     <marc:subfield code="b">paper, col. ill. ;</marc:subfield>
+                     <marc:subfield code="c">195 x 160 (145 x 110) mm.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Ms. codex.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="520" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Substantial sections from an illustrated treatise titled Book of the
+                        balance of wisdom, which concerns measurement of weight, with a historical introduction to
+                        theories of gravity and weighing in Greek and Arabic science; tables of densities of substances
+                        including metals, precious stones, solids, and liquids; and descriptions of different types of
+                        balances. A few marginal notes are present. A few catchwords and some minuscule letters under
+                        undotted letters have been added by later hands. Damage to edges of many leaves.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="546" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Arabic.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Title supplied by cataloger.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Pagination: Paper, 98 leaves; [3-18, 37-38, 43-78, 83-94, 97-188, 191-192,
+                        231-232, 235-240, 243-244, 247-248, 261-276, 285-292]; modern pagination in pencil, upper outer
+                        corners.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Layout: Written in 15 long lines.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Script: Written in naskh script, with headings in larger riqa'
+                        script.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Decoration: 26 diagrams and 18 tables in red and black ink.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Binding: Unbound, with some partial gatherings still joined or repaired at
+                        gutter.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="500" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Origin: Written ca. 1270 (based on paper and script).</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="561" ind1="1" ind2=" ">
+                     <marc:subfield code="a">Sold by Sam Fogg Ltd., cat. 22 (2000), to Lawrence J.
+                        Schoenberg.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="561" ind1="1" ind2=" ">
+                     <marc:subfield code="a">Deposit by Lawrence J. Schoenberg and Barbara Brizdle,
+                        2011.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="510" ind1="4" ind2=" ">
+                     <marc:subfield code="a">Described in Transformation of knowledge: early manuscripts from the
+                        collection of Lawrence J. Schoenberg (London: Paul Holberton, 2006),</marc:subfield>
+                     <marc:subfield code="c">p. 114-115 (LJS 386).</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="524" ind1=" " ind2=" ">
+                     <marc:subfield code="a">LJS 386</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="590" ind1=" " ind2=" ">
+                     <marc:subfield code="a">Lawrence J. Schoenberg &amp; Barbara Brizdle Manuscript
+                        Initiative.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="650" ind1=" " ind2="0">
+                     <marc:subfield code="a">Balances (Weighing instruments)</marc:subfield>
+                     <marc:subfield code="v">Early works to 1800.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="650" ind1=" " ind2="0">
+                     <marc:subfield code="a">Scales (Weighing instruments)</marc:subfield>
+                     <marc:subfield code="v">Early works to 1800.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="7">
+                     <marc:subfield code="a">Codices.</marc:subfield>
+                     <marc:subfield code="2">aat</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="7">
+                     <marc:subfield code="a">Treatises.</marc:subfield>
+                     <marc:subfield code="2">aat</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="7">
+                     <marc:subfield code="a">Diagrams.</marc:subfield>
+                     <marc:subfield code="2">aat</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="7">
+                     <marc:subfield code="a">Tables (documents)</marc:subfield>
+                     <marc:subfield code="2">aat</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="0">
+                     <marc:subfield code="a">Manuscripts, Arabic</marc:subfield>
+                     <marc:subfield code="y">13th century.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="655" ind1=" " ind2="0">
+                     <marc:subfield code="a">Manuscripts, Medieval.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="740" ind1="0" ind2=" ">
+                     <marc:subfield code="a">Book of the balance of wisdom.</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="856" ind1="4" ind2="1">
+                     <marc:subfield code="z">Facsimile</marc:subfield>
+                     <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/medren/4824919</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="856" ind1="4" ind2="2">
+                     <marc:subfield code="3">The Lawrence J. Schoenberg and Barbara Brizdle Manuscript Initiative Fund
+                        Home Page</marc:subfield>
+                     <marc:subfield code="u">http://hdl.library.upenn.edu/1017.12/366278</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="852" ind1=" " ind2=" ">
+                     <marc:subfield code="b">Rare Book &amp; Manuscript Library</marc:subfield>
+                     <marc:subfield code="a">University of Pennsylvania</marc:subfield>
+                     <marc:subfield code="e">3420 Walnut Street, Philadelphia, Pennsylvania 19104-6206.</marc:subfield>
+                     <marc:subfield code="j">LJS 386</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="996" ind1=" " ind2=" ">
+                     <marc:subfield code="a">hinge-right</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="999" ind1=" " ind2=" ">
+                     <marc:subfield code="a">DLA</marc:subfield>
+                     <marc:subfield code="b">20110125</marc:subfield>
+                  </marc:datafield>
+                  <marc:datafield tag="994" ind1=" " ind2=" ">
+                     <marc:subfield code="a">C0</marc:subfield>
+                     <marc:subfield code="b">PAULM</marc:subfield>
+                  </marc:datafield>
+               </marc:record>
+            </xml>
+            <xml name="pages">
+               <page number="1" seq="1" id="medren_4824919_432717" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0001" image="ljs386_wk1_body0001" visiblepage="3 [=1]"/>
+               <page number="2" seq="2" id="medren_4824919_432718" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0002" image="ljs386_wk1_body0002" visiblepage="4 [=2]"/>
+               <page number="3" seq="3" id="medren_4824919_432719" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0003" image="ljs386_wk1_body0003" visiblepage="5 [=3]"/>
+               <page number="4" seq="4" id="medren_4824919_432720" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0004" image="ljs386_wk1_body0004" visiblepage="6 [=4]"/>
+               <page number="5" seq="5" id="medren_4824919_432721" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0005" image="ljs386_wk1_body0005" visiblepage="7 [=5]"/>
+               <page number="6" seq="6" id="medren_4824919_432722" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0006" image="ljs386_wk1_body0006" visiblepage="8 [=6]"/>
+               <page number="7" seq="7" id="medren_4824919_432723" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0007" image="ljs386_wk1_body0007" visiblepage="9 [=7]"/>
+               <page number="8" seq="8" id="medren_4824919_432724" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0008" image="ljs386_wk1_body0008" visiblepage="10 [=8]"/>
+               <page number="9" seq="9" id="medren_4824919_432725" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0009" image="ljs386_wk1_body0009" visiblepage="11 [=9]"/>
+               <page number="10" seq="10" id="medren_4824919_432726" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0010" image="ljs386_wk1_body0010" visiblepage="12 [=10]"/>
+               <page number="11" seq="11" id="medren_4824919_432727" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0011" image="ljs386_wk1_body0011" visiblepage="13 [=11]"/>
+               <page number="12" seq="12" id="medren_4824919_432728" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0012" image="ljs386_wk1_body0012" visiblepage="14 [=12]"/>
+               <page number="13" seq="13" id="medren_4824919_432729" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0013" image="ljs386_wk1_body0013" visiblepage="15 [=13]"/>
+               <page number="14" seq="14" id="medren_4824919_432730" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0014" image="ljs386_wk1_body0014" visiblepage="16 [=14]"/>
+               <page number="15" seq="15" id="medren_4824919_432731" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0015" image="ljs386_wk1_body0015" visiblepage="17 [=15]">
+                  <tocentry name="ill">Table, p. 17 [=15]</tocentry>
+               </page>
+               <page number="16" seq="16" id="medren_4824919_432732" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0016" image="ljs386_wk1_body0016" visiblepage="18 [=16]">
+                  <tocentry name="ill">Table, p. 18 [=16]</tocentry>
+               </page>
+               <page number="17" seq="17" id="medren_4824919_432733" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0017" image="ljs386_wk1_body0017" visiblepage="37 [=17]"/>
+               <page number="18" seq="18" id="medren_4824919_432734" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0018" image="ljs386_wk1_body0018" visiblepage="38 [=18]"/>
+               <page number="19" seq="19" id="medren_4824919_432735" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0019" image="ljs386_wk1_body0019" visiblepage="43 [=19]"/>
+               <page number="20" seq="20" id="medren_4824919_432736" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0020" image="ljs386_wk1_body0020" visiblepage="44 [=20]"/>
+               <page number="21" seq="21" id="medren_4824919_432737" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0021" image="ljs386_wk1_body0021" visiblepage="45 [=21]">
+                  <tocentry name="ill">Table, p. 45 [=21]</tocentry>
+               </page>
+               <page number="22" seq="22" id="medren_4824919_432738" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0022" image="ljs386_wk1_body0022" visiblepage="46 [=22]">
+                  <tocentry name="ill">Table, p. 46 [=22]</tocentry>
+               </page>
+               <page number="23" seq="23" id="medren_4824919_432739" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0023" image="ljs386_wk1_body0023" visiblepage="47 [=23]"/>
+               <page number="24" seq="24" id="medren_4824919_432740" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0024" image="ljs386_wk1_body0024" visiblepage="48 [=24]"/>
+               <page number="25" seq="25" id="medren_4824919_432741" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0025" image="ljs386_wk1_body0025" visiblepage="49 [=25]">
+                  <tocentry name="ill">Diagram, p. 49 [=25]</tocentry>
+               </page>
+               <page number="26" seq="26" id="medren_4824919_432742" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0026" image="ljs386_wk1_body0026" visiblepage="50 [=26]">
+                  <tocentry name="ill">Diagram, p. 50 [=26]</tocentry>
+               </page>
+               <page number="27" seq="27" id="medren_4824919_432743" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0027" image="ljs386_wk1_body0027" visiblepage="51 [=27]"/>
+               <page number="28" seq="28" id="medren_4824919_432744" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0028" image="ljs386_wk1_body0028" visiblepage="52 [=28]"/>
+               <page number="29" seq="29" id="medren_4824919_432745" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0029" image="ljs386_wk1_body0029" visiblepage="53 [=29]"/>
+               <page number="30" seq="30" id="medren_4824919_432746" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0030" image="ljs386_wk1_body0030" visiblepage="54 [=30]"/>
+               <page number="31" seq="31" id="medren_4824919_432747" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0031" image="ljs386_wk1_body0031" visiblepage="55 [=31]"/>
+               <page number="32" seq="32" id="medren_4824919_432748" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0032" image="ljs386_wk1_body0032" visiblepage="56 [=32]"/>
+               <page number="33" seq="33" id="medren_4824919_432749" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0033" image="ljs386_wk1_body0033" visiblepage="57 [=33]"/>
+               <page number="34" seq="34" id="medren_4824919_432750" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0034" image="ljs386_wk1_body0034" visiblepage="58 [=34]"/>
+               <page number="35" seq="35" id="medren_4824919_432751" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0035" image="ljs386_wk1_body0035" visiblepage="59 [=35]"/>
+               <page number="36" seq="36" id="medren_4824919_432752" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0036" image="ljs386_wk1_body0036" visiblepage="60 [=36]"/>
+               <page number="37" seq="37" id="medren_4824919_432753" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0037" image="ljs386_wk1_body0037" visiblepage="61 [=37]"/>
+               <page number="38" seq="38" id="medren_4824919_432754" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0038" image="ljs386_wk1_body0038" visiblepage="62 [=38]"/>
+               <page number="39" seq="39" id="medren_4824919_432755" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0039" image="ljs386_wk1_body0039" visiblepage="63 [=39]">
+                  <tocentry name="ill">Diagram, p. 63 [=39]</tocentry>
+               </page>
+               <page number="40" seq="40" id="medren_4824919_432756" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0040" image="ljs386_wk1_body0040" visiblepage="64 [=40]"/>
+               <page number="41" seq="41" id="medren_4824919_432757" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0041" image="ljs386_wk1_body0041" visiblepage="65 [=41]"/>
+               <page number="42" seq="42" id="medren_4824919_432758" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0042" image="ljs386_wk1_body0042" visiblepage="66 [=42]">
+                  <tocentry name="ill">Diagram, p. 66 [=42]</tocentry>
+               </page>
+               <page number="43" seq="43" id="medren_4824919_432759" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0043" image="ljs386_wk1_body0043" visiblepage="67 [=43]"/>
+               <page number="44" seq="44" id="medren_4824919_432760" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0044" image="ljs386_wk1_body0044" visiblepage="68 [=44]"/>
+               <page number="45" seq="45" id="medren_4824919_432761" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0045" image="ljs386_wk1_body0045" visiblepage="69 [=45]"/>
+               <page number="46" seq="46" id="medren_4824919_432762" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0046" image="ljs386_wk1_body0046" visiblepage="70 [=46]">
+                  <tocentry name="ill">Diagram, p. 70 [=46]</tocentry>
+               </page>
+               <page number="47" seq="47" id="medren_4824919_432763" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0047" image="ljs386_wk1_body0047" visiblepage="71 [=47]"/>
+               <page number="48" seq="48" id="medren_4824919_432764" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0048" image="ljs386_wk1_body0048" visiblepage="72 [=48]"/>
+               <page number="49" seq="49" id="medren_4824919_432765" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0049" image="ljs386_wk1_body0049" visiblepage="73 [=49]"/>
+               <page number="50" seq="50" id="medren_4824919_432766" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0050" image="ljs386_wk1_body0050" visiblepage="74 [=50]"/>
+               <page number="51" seq="51" id="medren_4824919_432767" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0051" image="ljs386_wk1_body0051" visiblepage="75 [=51]">
+                  <tocentry name="ill">Diagram, p. 75 [=51]</tocentry>
+               </page>
+               <page number="52" seq="52" id="medren_4824919_432768" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0052" image="ljs386_wk1_body0052" visiblepage="76 [=52]"/>
+               <page number="53" seq="53" id="medren_4824919_432769" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0053" image="ljs386_wk1_body0053" visiblepage="77 [=53]"/>
+               <page number="54" seq="54" id="medren_4824919_432770" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0054" image="ljs386_wk1_body0054" visiblepage="78 [=54]"/>
+               <page number="55" seq="55" id="medren_4824919_432771" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0055" image="ljs386_wk1_body0055" visiblepage="83 [=55]"/>
+               <page number="56" seq="56" id="medren_4824919_432772" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0056" image="ljs386_wk1_body0056" visiblepage="84 [=56]"/>
+               <page number="57" seq="57" id="medren_4824919_432773" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0057" image="ljs386_wk1_body0057" visiblepage="85 [=57]"/>
+               <page number="58" seq="58" id="medren_4824919_432774" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0058" image="ljs386_wk1_body0058" visiblepage="86 [=58]"/>
+               <page number="59" seq="59" id="medren_4824919_432775" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0059" image="ljs386_wk1_body0059" visiblepage="87 [=59]"/>
+               <page number="60" seq="60" id="medren_4824919_432776" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0060" image="ljs386_wk1_body0060" visiblepage="88 [=60]"/>
+               <page number="61" seq="61" id="medren_4824919_432777" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0061" image="ljs386_wk1_body0061" visiblepage="89 [=61]"/>
+               <page number="62" seq="62" id="medren_4824919_432778" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0062" image="ljs386_wk1_body0062" visiblepage="90 [=62]"/>
+               <page number="63" seq="63" id="medren_4824919_432779" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0063" image="ljs386_wk1_body0063" visiblepage="91 [=63]"/>
+               <page number="64" seq="64" id="medren_4824919_432780" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0064" image="ljs386_wk1_body0064" visiblepage="92 [=64]"/>
+               <page number="65" seq="65" id="medren_4824919_432781" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0065" image="ljs386_wk1_body0065" visiblepage="93 [=65]"/>
+               <page number="66" seq="66" id="medren_4824919_432782" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0066" image="ljs386_wk1_body0066" visiblepage="94 [=66]"/>
+               <page number="67" seq="67" id="medren_4824919_432783" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0067" image="ljs386_wk1_body0067" visiblepage="97 [=67]"/>
+               <page number="68" seq="68" id="medren_4824919_432784" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0068" image="ljs386_wk1_body0068" visiblepage="98 [=68]"/>
+               <page number="69" seq="69" id="medren_4824919_432785" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0069" image="ljs386_wk1_body0069" visiblepage="99 [=69]"/>
+               <page number="70" seq="70" id="medren_4824919_432786" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0070" image="ljs386_wk1_body0070" visiblepage="100 [=70]"/>
+               <page number="71" seq="71" id="medren_4824919_432787" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0071" image="ljs386_wk1_body0071" visiblepage="101 [=71]"/>
+               <page number="72" seq="72" id="medren_4824919_432788" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0072" image="ljs386_wk1_body0072" visiblepage="102 [=72]"/>
+               <page number="73" seq="73" id="medren_4824919_432789" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0073" image="ljs386_wk1_body0073" visiblepage="103 [=73]"/>
+               <page number="74" seq="74" id="medren_4824919_432790" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0074" image="ljs386_wk1_body0074" visiblepage="104 [=74]"/>
+               <page number="75" seq="75" id="medren_4824919_432791" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0075" image="ljs386_wk1_body0075" visiblepage="105 [=75]"/>
+               <page number="76" seq="76" id="medren_4824919_432792" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0076" image="ljs386_wk1_body0076" visiblepage="106 [=76]"/>
+               <page number="77" seq="77" id="medren_4824919_432793" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0077" image="ljs386_wk1_body0077" visiblepage="107 [=77]"/>
+               <page number="78" seq="78" id="medren_4824919_432794" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0078" image="ljs386_wk1_body0078" visiblepage="108 [=78]"/>
+               <page number="79" seq="79" id="medren_4824919_432795" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0079" image="ljs386_wk1_body0079" visiblepage="109 [=79]"/>
+               <page number="80" seq="80" id="medren_4824919_432796" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0080" image="ljs386_wk1_body0080" visiblepage="110 [=80]"/>
+               <page number="81" seq="81" id="medren_4824919_432797" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0081" image="ljs386_wk1_body0081" visiblepage="111 [=81]"/>
+               <page number="82" seq="82" id="medren_4824919_432798" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0082" image="ljs386_wk1_body0082" visiblepage="112 [=82]"/>
+               <page number="83" seq="83" id="medren_4824919_432799" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0083" image="ljs386_wk1_body0083" visiblepage="113 [=83]"/>
+               <page number="84" seq="84" id="medren_4824919_432800" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0084" image="ljs386_wk1_body0084" visiblepage="114 [=84]"/>
+               <page number="85" seq="85" id="medren_4824919_432801" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0085" image="ljs386_wk1_body0085" visiblepage="115 [=85]"/>
+               <page number="86" seq="86" id="medren_4824919_432802" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0086" image="ljs386_wk1_body0086" visiblepage="116 [=86]"/>
+               <page number="87" seq="87" id="medren_4824919_432803" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0087" image="ljs386_wk1_body0087" visiblepage="117 [=87]"/>
+               <page number="88" seq="88" id="medren_4824919_432804" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0088" image="ljs386_wk1_body0088" visiblepage="118 [=88]"/>
+               <page number="89" seq="89" id="medren_4824919_432805" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0089" image="ljs386_wk1_body0089" visiblepage="119 [=89]"/>
+               <page number="90" seq="90" id="medren_4824919_432806" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0090" image="ljs386_wk1_body0090" visiblepage="120 [=90]"/>
+               <page number="91" seq="91" id="medren_4824919_432807" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0091" image="ljs386_wk1_body0091" visiblepage="121 [=91]"/>
+               <page number="92" seq="92" id="medren_4824919_432808" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0092" image="ljs386_wk1_body0092" visiblepage="122 [=92]"/>
+               <page number="93" seq="93" id="medren_4824919_432809" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0093" image="ljs386_wk1_body0093" visiblepage="123 [=93]"/>
+               <page number="94" seq="94" id="medren_4824919_432810" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0094" image="ljs386_wk1_body0094" visiblepage="124 [=94]"/>
+               <page number="95" seq="95" id="medren_4824919_432811" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0095" image="ljs386_wk1_body0095" visiblepage="125 [=95]"/>
+               <page number="96" seq="96" id="medren_4824919_432812" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0096" image="ljs386_wk1_body0096" visiblepage="126 [=96]"/>
+               <page number="97" seq="97" id="medren_4824919_432813" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0097" image="ljs386_wk1_body0097" visiblepage="127 [=97]"/>
+               <page number="98" seq="98" id="medren_4824919_432814" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0098" image="ljs386_wk1_body0098" visiblepage="128 [=98]"/>
+               <page number="99" seq="99" id="medren_4824919_432815" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0099" image="ljs386_wk1_body0099" visiblepage="129 [=99]"/>
+               <page number="100" seq="100" id="medren_4824919_432816" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0100" image="ljs386_wk1_body0100" visiblepage="130 [=100]"/>
+               <page number="101" seq="101" id="medren_4824919_432817" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0101" image="ljs386_wk1_body0101" visiblepage="131 [=101]"/>
+               <page number="102" seq="102" id="medren_4824919_432818" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0102" image="ljs386_wk1_body0102" visiblepage="132 [=102]"/>
+               <page number="103" seq="103" id="medren_4824919_432819" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0103" image="ljs386_wk1_body0103" visiblepage="133 [=103]"/>
+               <page number="104" seq="104" id="medren_4824919_432820" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0104" image="ljs386_wk1_body0104" visiblepage="134 [=104]"/>
+               <page number="105" seq="105" id="medren_4824919_432821" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0105" image="ljs386_wk1_body0105" visiblepage="135 [=105]"/>
+               <page number="106" seq="106" id="medren_4824919_432822" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0106" image="ljs386_wk1_body0106" visiblepage="136 [=106]"/>
+               <page number="107" seq="107" id="medren_4824919_432823" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0107" image="ljs386_wk1_body0107" visiblepage="137 [=107]"/>
+               <page number="108" seq="108" id="medren_4824919_432824" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0108" image="ljs386_wk1_body0108" visiblepage="138 [=108]"/>
+               <page number="109" seq="109" id="medren_4824919_432825" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0109" image="ljs386_wk1_body0109" visiblepage="139 [=109]"/>
+               <page number="110" seq="110" id="medren_4824919_432826" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0110" image="ljs386_wk1_body0110" visiblepage="140 [=110]"/>
+               <page number="111" seq="111" id="medren_4824919_432827" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0111" image="ljs386_wk1_body0111" visiblepage="141 [=111]"/>
+               <page number="112" seq="112" id="medren_4824919_432828" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0112" image="ljs386_wk1_body0112" visiblepage="142 [=112]"/>
+               <page number="113" seq="113" id="medren_4824919_432829" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0113" image="ljs386_wk1_body0113" visiblepage="143 [=113]"/>
+               <page number="114" seq="114" id="medren_4824919_432830" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0114" image="ljs386_wk1_body0114" visiblepage="144 [=114]"/>
+               <page number="115" seq="115" id="medren_4824919_432831" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0115" image="ljs386_wk1_body0115" visiblepage="145 [=115]"/>
+               <page number="116" seq="116" id="medren_4824919_432832" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0116" image="ljs386_wk1_body0116" visiblepage="146 [=116]"/>
+               <page number="117" seq="117" id="medren_4824919_432833" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0117" image="ljs386_wk1_body0117" visiblepage="147 [=117]"/>
+               <page number="118" seq="118" id="medren_4824919_432834" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0118" image="ljs386_wk1_body0118" visiblepage="148 [=118]"/>
+               <page number="119" seq="119" id="medren_4824919_432835" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0119" image="ljs386_wk1_body0119" visiblepage="149 [=119]"/>
+               <page number="120" seq="120" id="medren_4824919_432836" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0120" image="ljs386_wk1_body0120" visiblepage="150 [=120]"/>
+               <page number="121" seq="121" id="medren_4824919_432837" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0121" image="ljs386_wk1_body0121" visiblepage="151 [=121]"/>
+               <page number="122" seq="122" id="medren_4824919_432838" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0122" image="ljs386_wk1_body0122" visiblepage="152 [=122]"/>
+               <page number="123" seq="123" id="medren_4824919_432839" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0123" image="ljs386_wk1_body0123" visiblepage="153 [=123]"/>
+               <page number="124" seq="124" id="medren_4824919_432840" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0124" image="ljs386_wk1_body0124" visiblepage="154 [=124]"/>
+               <page number="125" seq="125" id="medren_4824919_432841" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0125" image="ljs386_wk1_body0125" visiblepage="155 [=125]"/>
+               <page number="126" seq="126" id="medren_4824919_432842" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0126" image="ljs386_wk1_body0126" visiblepage="156 [=126]"/>
+               <page number="127" seq="127" id="medren_4824919_432843" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0127" image="ljs386_wk1_body0127" visiblepage="157 [=127]"/>
+               <page number="128" seq="128" id="medren_4824919_432844" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0128" image="ljs386_wk1_body0128" visiblepage="158 [=128]"/>
+               <page number="129" seq="129" id="medren_4824919_432845" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0129" image="ljs386_wk1_body0129" visiblepage="159 [=129]"/>
+               <page number="130" seq="130" id="medren_4824919_432846" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0130" image="ljs386_wk1_body0130" visiblepage="160 [=130]"/>
+               <page number="131" seq="131" id="medren_4824919_432847" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0131" image="ljs386_wk1_body0131" visiblepage="161 [=131]"/>
+               <page number="132" seq="132" id="medren_4824919_432848" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0132" image="ljs386_wk1_body0132" visiblepage="162 [=132]"/>
+               <page number="133" seq="133" id="medren_4824919_432849" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0133" image="ljs386_wk1_body0133" visiblepage="163 [=133]"/>
+               <page number="134" seq="134" id="medren_4824919_432850" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0134" image="ljs386_wk1_body0134" visiblepage="164 [=134]"/>
+               <page number="135" seq="135" id="medren_4824919_432851" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0135" image="ljs386_wk1_body0135" visiblepage="165 [=135]"/>
+               <page number="136" seq="136" id="medren_4824919_432852" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0136" image="ljs386_wk1_body0136" visiblepage="166 [=136]"/>
+               <page number="137" seq="137" id="medren_4824919_432853" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0137" image="ljs386_wk1_body0137" visiblepage="167 [=137]"/>
+               <page number="138" seq="138" id="medren_4824919_432854" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0138" image="ljs386_wk1_body0138" visiblepage="168 [=138]"/>
+               <page number="139" seq="139" id="medren_4824919_432855" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0139" image="ljs386_wk1_body0139" visiblepage="169 [=139]"/>
+               <page number="140" seq="140" id="medren_4824919_432856" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0140" image="ljs386_wk1_body0140" visiblepage="170 [=140]"/>
+               <page number="141" seq="141" id="medren_4824919_432857" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0141" image="ljs386_wk1_body0141" visiblepage="171 [=141]"/>
+               <page number="142" seq="142" id="medren_4824919_432858" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0142" image="ljs386_wk1_body0142" visiblepage="172 [=142]"/>
+               <page number="143" seq="143" id="medren_4824919_432859" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0143" image="ljs386_wk1_body0143" visiblepage="173 [=143]"/>
+               <page number="144" seq="144" id="medren_4824919_432860" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0144" image="ljs386_wk1_body0144" visiblepage="174 [=144]"/>
+               <page number="145" seq="145" id="medren_4824919_432861" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0145" image="ljs386_wk1_body0145" visiblepage="175 [=145]"/>
+               <page number="146" seq="146" id="medren_4824919_432862" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0146" image="ljs386_wk1_body0146" visiblepage="176 [=146]"/>
+               <page number="147" seq="147" id="medren_4824919_432863" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0147" image="ljs386_wk1_body0147" visiblepage="177 [=147]"/>
+               <page number="148" seq="148" id="medren_4824919_432864" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0148" image="ljs386_wk1_body0148" visiblepage="178 [=148]"/>
+               <page number="149" seq="149" id="medren_4824919_432865" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0149" image="ljs386_wk1_body0149" visiblepage="179 [=149]"/>
+               <page number="150" seq="150" id="medren_4824919_432866" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0150" image="ljs386_wk1_body0150" visiblepage="180 [=150]"/>
+               <page number="151" seq="151" id="medren_4824919_432867" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0151" image="ljs386_wk1_body0151" visiblepage="181 [=151]"/>
+               <page number="152" seq="152" id="medren_4824919_432868" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0152" image="ljs386_wk1_body0152" visiblepage="182 [=152]"/>
+               <page number="153" seq="153" id="medren_4824919_432869" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0153" image="ljs386_wk1_body0153" visiblepage="183 [=153]"/>
+               <page number="154" seq="154" id="medren_4824919_432870" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0154" image="ljs386_wk1_body0154" visiblepage="184 [=154]"/>
+               <page number="155" seq="155" id="medren_4824919_432871" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0155" image="ljs386_wk1_body0155" visiblepage="185 [=155]"/>
+               <page number="156" seq="156" id="medren_4824919_432872" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0156" image="ljs386_wk1_body0156" visiblepage="186 [=156]"/>
+               <page number="157" seq="157" id="medren_4824919_432873" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0157" image="ljs386_wk1_body0157" visiblepage="187 [=157]"/>
+               <page number="158" seq="158" id="medren_4824919_432874" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0158" image="ljs386_wk1_body0158" visiblepage="188 [=158]"/>
+               <page number="159" seq="159" id="medren_4824919_432875" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0159" image="ljs386_wk1_body0159" visiblepage="191 [=159]"/>
+               <page number="160" seq="160" id="medren_4824919_432876" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0160" image="ljs386_wk1_body0160" visiblepage="192 [=160]"/>
+               <page number="161" seq="161" id="medren_4824919_432877" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0161" image="ljs386_wk1_body0161" visiblepage="231 [=161]"/>
+               <page number="162" seq="162" id="medren_4824919_432878" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0162" image="ljs386_wk1_body0162" visiblepage="232 [=162]"/>
+               <page number="163" seq="163" id="medren_4824919_432879" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0163" image="ljs386_wk1_body0163" visiblepage="235 [=163]"/>
+               <page number="164" seq="164" id="medren_4824919_432880" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0164" image="ljs386_wk1_body0164" visiblepage="236 [=164]"/>
+               <page number="165" seq="165" id="medren_4824919_432881" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0165" image="ljs386_wk1_body0165" visiblepage="237 [=165]"/>
+               <page number="166" seq="166" id="medren_4824919_432882" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0166" image="ljs386_wk1_body0166" visiblepage="238 [=166]"/>
+               <page number="167" seq="167" id="medren_4824919_432883" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0167" image="ljs386_wk1_body0167" visiblepage="239 [=167]"/>
+               <page number="168" seq="168" id="medren_4824919_432884" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0168" image="ljs386_wk1_body0168" visiblepage="240 [=168]"/>
+               <page number="169" seq="169" id="medren_4824919_432885" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0169" image="ljs386_wk1_body0169" visiblepage="243 [=169]"/>
+               <page number="170" seq="170" id="medren_4824919_432886" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0170" image="ljs386_wk1_body0170" visiblepage="244 [=170]"/>
+               <page number="171" seq="171" id="medren_4824919_432887" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0171" image="ljs386_wk1_body0171" visiblepage="247 [=171]"/>
+               <page number="172" seq="172" id="medren_4824919_432888" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0172" image="ljs386_wk1_body0172" visiblepage="248 [=172]"/>
+               <page number="173" seq="173" id="medren_4824919_432889" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0173" image="ljs386_wk1_body0173" visiblepage="261 [=173]"/>
+               <page number="174" seq="174" id="medren_4824919_432890" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0174" image="ljs386_wk1_body0174" visiblepage="262 [=174]"/>
+               <page number="175" seq="175" id="medren_4824919_432891" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0175" image="ljs386_wk1_body0175" visiblepage="263 [=175]"/>
+               <page number="176" seq="176" id="medren_4824919_432892" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0176" image="ljs386_wk1_body0176" visiblepage="264 [=176]"/>
+               <page number="177" seq="177" id="medren_4824919_432893" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0177" image="ljs386_wk1_body0177" visiblepage="265 [=177]"/>
+               <page number="178" seq="178" id="medren_4824919_432894" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0178" image="ljs386_wk1_body0178" visiblepage="266 [=178]"/>
+               <page number="179" seq="179" id="medren_4824919_432895" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0179" image="ljs386_wk1_body0179" visiblepage="267 [=179]"/>
+               <page number="180" seq="180" id="medren_4824919_432896" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0180" image="ljs386_wk1_body0180" visiblepage="268 [=180]"/>
+               <page number="181" seq="181" id="medren_4824919_432897" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0181" image="ljs386_wk1_body0181" visiblepage="269 [=181]"/>
+               <page number="182" seq="182" id="medren_4824919_432898" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0182" image="ljs386_wk1_body0182" visiblepage="270 [=182]"/>
+               <page number="183" seq="183" id="medren_4824919_432899" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0183" image="ljs386_wk1_body0183" visiblepage="271 [=183]"/>
+               <page number="184" seq="184" id="medren_4824919_432900" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0184" image="ljs386_wk1_body0184" visiblepage="272 [=184]"/>
+               <page number="185" seq="185" id="medren_4824919_432901" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0185" image="ljs386_wk1_body0185" visiblepage="273 [=185]"/>
+               <page number="186" seq="186" id="medren_4824919_432902" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0186" image="ljs386_wk1_body0186" visiblepage="274 [=186]"/>
+               <page number="187" seq="187" id="medren_4824919_432903" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0187" image="ljs386_wk1_body0187" visiblepage="275 [=187]"/>
+               <page number="188" seq="188" id="medren_4824919_432904" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0188" image="ljs386_wk1_body0188" visiblepage="276 [=188]"/>
+               <page number="189" seq="189" id="medren_4824919_432905" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0189" image="ljs386_wk1_body0189" visiblepage="285 [=189]"/>
+               <page number="190" seq="190" id="medren_4824919_432906" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0190" image="ljs386_wk1_body0190" visiblepage="286 [=190]"/>
+               <page number="191" seq="191" id="medren_4824919_432907" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0191" image="ljs386_wk1_body0191" visiblepage="287 [=191]"/>
+               <page number="192" seq="192" id="medren_4824919_432908" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0192" image="ljs386_wk1_body0192" visiblepage="288 [=192]"/>
+               <page number="193" seq="193" id="medren_4824919_432909" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0193" image="ljs386_wk1_body0193" visiblepage="289 [=193]"/>
+               <page number="194" seq="194" id="medren_4824919_432910" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0194" image="ljs386_wk1_body0194" visiblepage="290 [=194]"/>
+               <page number="195" seq="195" id="medren_4824919_432911" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_body0195" image="ljs386_wk1_body0195" visiblepage="291 [=195]"/>
+               <page number="196" seq="196" id="medren_4824919_432912" image.defaultscale="3" side="verso"
+                  image.id="medren_ljs386_wk1_body0196" image="ljs386_wk1_body0196" visiblepage="292 [=196]"/>
+               <page number="197" seq="197" id="medren_4824919_432913" image.defaultscale="3" side="recto"
+                  image.id="medren_ljs386_wk1_back0001" image="ljs386_wk1_back0001" visiblepage="No spine"/>
+            </xml>
+            <str xmlns:my="http://nowhere" name="link"
+               >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;rotation=0&amp;id=MEDREN_4824919</str>
+            <str xmlns:my="http://nowhere" name="link_no_params">pageturn.html?id=MEDREN_4824919</str>
+            <str xmlns:my="http://nowhere" name="handle">http://hdl.library.upenn.edu/1017/d/medren/4824919</str>
+         </doc>
+      </result>
+      <lst name="facet_counts">
+         <lst xmlns:my="http://nowhere" name="current_facets">
+            <str name="Query" value="4824919">pageturn.html?id=MEDREN_4824919&amp;rotation=0&amp;</str>
+         </lst>
+         <lst name="facet_queries"/>
+         <lst xmlns:my="http://nowhere" name="facet_fields">
+            <lst name="collection_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=collection_facet&amp;</str>
+               </lst>
+               <str name="Lawrence J. Schoenberg Collection" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=collection_facet%3A%22Lawrence%20J.%20Schoenberg%20Collection%22</str>
+               <str name="Medieval &amp; Renaissance Manuscripts" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=collection_facet%3A%22Medieval%20%26%20Renaissance%20Manuscripts%22</str>
+            </lst>
+            <lst name="has_999_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=has_999_facet&amp;</str>
+               </lst>
+            </lst>
+            <lst name="facsimile_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=facsimile_facet&amp;</str>
+               </lst>
+               <str name="Yes" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=facsimile_facet%3A%22Yes%22</str>
+            </lst>
+            <lst name="illuminated_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=illuminated_facet&amp;</str>
+               </lst>
+               <str name="No" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=illuminated_facet%3A%22No%22</str>
+            </lst>
+            <lst name="illustrated_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=illustrated_facet&amp;</str>
+               </lst>
+               <str name="Yes" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=illustrated_facet%3A%22Yes%22</str>
+            </lst>
+            <lst name="notated_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=notated_facet&amp;</str>
+               </lst>
+               <str name="No" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=notated_facet%3A%22No%22</str>
+            </lst>
+            <lst name="language_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=language_facet&amp;</str>
+               </lst>
+               <str name="Arabic" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=language_facet%3A%22Arabic%22</str>
+            </lst>
+            <lst name="century_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=century_facet&amp;</str>
+               </lst>
+               <str name="13th century" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=century_facet%3A%2213th%20century%22</str>
+            </lst>
+            <lst name="date_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=date_facet&amp;</str>
+               </lst>
+               <str name="1270" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=date_facet%3A%221270%22</str>
+            </lst>
+            <lst name="genre_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=genre_facet&amp;</str>
+               </lst>
+               <str name="Codices" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=genre_facet%3A%22Codices%22</str>
+               <str name="Diagrams" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=genre_facet%3A%22Diagrams%22</str>
+               <str name="Manuscripts, Arabic - 13th century" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=genre_facet%3A%22Manuscripts%2C%20Arabic%20-%2013th%20century%22</str>
+               <str name="Manuscripts, Medieval" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=genre_facet%3A%22Manuscripts%2C%20Medieval%22</str>
+               <str name="Tables (documents)" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=genre_facet%3A%22Tables%20%28documents%29%22</str>
+            </lst>
+            <lst name="subject_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=subject_facet&amp;</str>
+               </lst>
+               <str name="Balances (Weighing instruments)" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=subject_facet%3A%22Balances%20%28Weighing%20instruments%29%22</str>
+               <str name="Scales (Weighing instruments)" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=subject_facet%3A%22Scales%20%28Weighing%20instruments%29%22</str>
+            </lst>
+            <lst name="geography_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=geography_facet&amp;</str>
+               </lst>
+            </lst>
+            <lst name="author_facet">
+               <lst name="links">
+                  <str name="browse">browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=author_facet&amp;</str>
+               </lst>
+               <str name="Khāzinī, ʻAbd al-Raḥmān, fl. 1121" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=author_facet%3A%22Kha%CC%84zini%CC%84%2C%20%CA%BBAbd%20al-Rah%CC%A3ma%CC%84n%2C%20fl.%201121%22</str>
+            </lst>
+            <lst name="related_names_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=related_names_facet&amp;</str>
+               </lst>
+            </lst>
+            <lst name="page_material_facet">
+               <lst name="links">
+                  <str name="browse"
+                     >browse.html?q=4824919&amp;id=MEDREN_4824919&amp;browse=page_material_facet&amp;</str>
+               </lst>
+               <str name="Paper" num="1"
+                  >pageturn.html?q=4824919&amp;id=MEDREN_4824919&amp;fq=page_material_facet%3A%22Paper%22</str>
+            </lst>
+         </lst>
+         <lst name="facet_dates"/>
+         <lst name="facet_ranges"/>
+      </lst>
+   </response>
+   <params xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere">
+      <param xmlns:xs="http://www.w3.org/2001/XMLSchema" name="size">3</param>
+      <param name="id">MEDREN_4824919</param>
+      <param name="q">4824919</param>
+      <context>
+         <param name="solr-url">http://localhost:8082/index/medren/select/</param>
+         <param name="collection">medren</param>
+         <param name="requested-page">pageturn</param>
+         <param name="host">dla.library.upenn.edu</param>
+         <param name="request"
+            >http://dla.library.upenn.edu/dla/medren/pageturn.xml?id=MEDREN_4824919&amp;q=4824919</param>
+      </context>
+   </params>
+   <collection xmlns:my="http://nowhere" xmlns:dla-caption="http://dla.upennlib/caption">
+      <ref/>
+      <name>Penn in Hand: Selected Manuscripts</name>
+      <shortname>medren</shortname>
+      <record detail="brief" exclude-subfield="6">
+         <include field="100" label="Author" exclude-subfield="6"/>
+         <include field="110" label="Author" exclude-subfield="6"/>
+         <include field="130" label="Title" exclude-subfield="6"/>
+         <include field="245" label="Title" exclude-subfield="6"/>
+         <include field="240" label="Title" exclude-subfield="6"/>
+         <include field="260" label="Origin" exclude-subfield="6"/>
+         <include field="300" label="Physical description" exclude-subfield="6"/>
+         <include field="520" label="Summary" exclude-subfield="6"/>
+         <include field="500" label="Notes" delimiter=" - " exclude-subfield="6"/>
+         <include field="524" label="Cite as" exclude-subfield="6"/>
+         <include field="773" label="Contained in" exclude-subfield="6"/>
+         <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+         <include field="880" label="Vernacular script" exclude-subfield="6"/>
+      </record>
+      <record detail="detailed" exclude-subfield="6">
+         <include field="100" label="Author" exclude-subfield="6"/>
+         <include field="110" label="Author" exclude-subfield="6"/>
+         <include field="130" label="Title" exclude-subfield="6"/>
+         <include field="245" label="Title" exclude-subfield="6"/>
+         <include field="240" label="Title" exclude-subfield="6"/>
+         <include field="260" label="Origin" exclude-subfield="6"/>
+         <include field="300" label="Physical description" exclude-subfield="6"/>
+         <include field="546" label="Language(s)" exclude-subfield="6"/>
+         <include field="545" label="Biographical / Organizational History" exclude-subfield="6"/>
+         <include field="520" label="Summary" exclude-subfield="6"/>
+         <include field="505" label="Contents" exclude-subfield="6"/>
+         <include field="561" label="Provenance" exclude-subfield="6"/>
+         <include field="700" label="Related names" exclude-subfield="6"/>
+         <include field="710" label="Related names" exclude-subfield="6"/>
+         <include field="600" label="Subject" exclude-subfield="6"/>
+         <include field="610" label="Subject" delimiter=" - "/>
+         <include field="630" label="Subject" delimiter=" - "/>
+         <include field="650" label="Subject" delimiter=" - "/>
+         <include field="651" label="Subject" delimiter=" - "/>
+         <include field="655" label="Form / Genre" exclude-subfield="2" delimiter=" - "/>
+         <include field="500" label="Notes" exclude-subfield="6"/>
+         <include field="530" label="Other formats" exclude-subfield="6"/>
+         <include field="510" label="Indexed / Referenced in" exclude-subfield="6"/>
+         <include field="581" label="Publications of or about this material" exclude-subfield="6"/>
+         <include field="246" label="Other Titles" exclude-subfield="6"/>
+         <include field="730" label="Other Titles" exclude-subfield="6"/>
+         <include field="740" label="Other Titles" exclude-subfield="6"/>
+         <include field="524" label="Cite as" exclude-subfield="6"/>
+         <include field="773" label="Contained in" exclude-subfield="6"/>
+         <include field="852" subfield="b,a,j" label="Manuscript location" exclude-subfield="6"/>
+         <include field="880" label="Vernacular script" exclude-subfield="6"/>
+      </record>
+      <view>html</view>
+      <view>html</view>
+      <rows>25,50,100</rows>
+      <fl>*</fl>
+      <sort>score desc, date_sort asc</sort>
+      <style>rbm</style>
+      <advancedsearch.field type="number">century_search</advancedsearch.field>
+      <advancedsearch.field>language_search</advancedsearch.field>
+      <advancedsearch.field>place_search</advancedsearch.field>
+      <advancedsearch.field>subject_search</advancedsearch.field>
+      <advancedsearch.field>descriptive_notes_search</advancedsearch.field>
+      <advancedsearch.field>author_search</advancedsearch.field>
+      <advancedsearch.field display="Other Contributors/Owners">other_contributors_search</advancedsearch.field>
+      <advancedsearch.textcount>7</advancedsearch.textcount>
+      <advancedsearch.numbercount>1</advancedsearch.numbercount>
+      <advancedsearch.texthelp>(For example: <i>france</i> ; <i>german*</i> ; <i>german?</i> ; <i>france germany
+            italy</i>. See the <a href="ancillary.html?id=collections/rbm/medren/advancedsearch">Advanced Search
+            Help</a> for more details)</advancedsearch.texthelp>
+      <facet>true</facet>
+      <facet.mincount>1</facet.mincount>
+      <facet.limit>5</facet.limit>
+      <facet.field>page_material_facet</facet.field>
+      <facet.field>related_names_facet</facet.field>
+      <facet.field>author_facet</facet.field>
+      <facet.field>geography_facet</facet.field>
+      <facet.field>subject_facet</facet.field>
+      <facet.field>genre_facet</facet.field>
+      <facet.field>date_facet</facet.field>
+      <facet.field>century_facet</facet.field>
+      <facet.field>language_facet</facet.field>
+      <facet.field>notated_facet</facet.field>
+      <facet.field>illustrated_facet</facet.field>
+      <facet.field>illuminated_facet</facet.field>
+      <facet.field>facsimile_facet</facet.field>
+      <facet.field>has_999_facet</facet.field>
+      <facet.field>collection_facet</facet.field>
+      <rss icon="true">
+         <title-field>titledate_field</title-field>
+      </rss>
+      <sortoptions>title_sort, author_sort, date_sort, date_facsimile_added_sort</sortoptions>
+      <caption context="title">
+         <!--  doesn't give priority to LJS collection
+  	<dla-caption:if not-empty="collection_field">
+  		<div class="fromcollection">
+  			from the 
+  			<html>
+  				<dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+  					<dla-caption:field type="field"  src="collection_field"/>
+  				</dla-caption:link-external>
+  			</html>
+  		</div>
+  	</dla-caption:if>
+-->
+
+         <dla-caption:if not-empty="LJScollection_field">
+            <div class="fromcollection">
+               <html>
+                  <dla-caption:link-external type="field" src="LJScollectionSEARCH_URL_field">
+                     <dla-caption:field type="field" src="LJScollection_field"/>
+                     <span class="coll-title">:</span>
+                  </dla-caption:link-external>
+               </html>
+            </div>
+         </dla-caption:if>
+         <dla-caption:if empty="LJScollection_field">
+            <div class="fromcollection">
+               <html>
+                  <dla-caption:link-external type="field" src="collectionSEARCH_URL_field">
+                     <dla-caption:field type="field" src="collection_field"/>
+                     <span class="coll-title">:</span>
+                  </dla-caption:link-external>
+               </html>
+            </div>
+         </dla-caption:if>
+
+
+
+
+
+         <span class="recordtitlechrome">
+            <dla-caption:field type="field" src="call_number_field"/>
+            <dla-caption:if not-empty="call_number_field"> - </dla-caption:if>
+            <dla-caption:field type="field" src="primary_author_field"/>
+            <dla-caption:if not-empty="primary_author_field"> - </dla-caption:if>
+            <dla-caption:field type="field" src="title_field"/>
+         </span>
+      </caption>
+      <caption context="mobile">
+
+
+         <div style="font-family: Verdana, arial, sans-serif; font-size:13px; margin-bottom:7px;line-height:130%;">
+            <div>
+               <dla-caption:field type="field" src="call_number_field"/>
+            </div>
+            <div>
+               <dla-caption:link-to-detail>
+                  <dla-caption:field type="field" src="title_field"/>
+               </dla-caption:link-to-detail>
+            </div>
+            <div>
+               <dla-caption:if equal="facsimile_field, {Yes}">
+                  <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg" alt="*" style="border: none;"
+                     />Facsimile available</dla-caption:link-to-detail>
+               </dla-caption:if>
+            </div>
+            <div style="margin-bottom: 10px; border-bottom: dotted 1px #999;">
+               <dla-caption:if not-empty="origin_field">
+                  <div>
+                     <dla-caption:field type="field" src="origin_field"/>
+                  </div>
+               </dla-caption:if>
+               <dla-caption:if sort="date_facsimile_added_sort">
+                  <dla-caption:if not-empty="date_facsimile_added_field">
+                     <div class="facadded">Facsimile added: <dla-caption:field type="field"
+                           src="date_facsimile_added_field"/></div>
+                  </dla-caption:if>
+               </dla-caption:if>
+            </div>
+         </div>
+
+      </caption>
+      <caption context="results">
+         <tr class="medrenresultrecord">
+            <td class="oneresult">
+               <div class="callno">
+                  <dla-caption:field type="field" src="call_number_field"/>
+                  <dla-caption:if equal="facsimile_field, {Yes}">
+                     <span class="facavail">       <dla-caption:link-to-detail><img src="images/common/ms-icon.jpg"
+                              alt="*"/>Facsimile available</dla-caption:link-to-detail></span>
+                  </dla-caption:if>
+               </div>
+
+               <dla-caption:if sort="date_facsimile_added_field">
+                  <dla-caption:if not-empty="date_facsimile_added_field">
+                     <div class="facadded">Facsimile added: <dla-caption:field type="field"
+                           src="date_facsimile_added_field"/></div>
+                  </dla-caption:if>
+               </dla-caption:if>
+
+
+               <dla-caption:if not-empty="primary_author_field">
+                  <div>
+                     <dla-caption:field type="field" src="primary_author_field"/>
+                  </div>
+               </dla-caption:if>
+               <div class="medrenresultstitle">
+                  <dla-caption:link-to-detail>
+                     <dla-caption:field type="field" src="title_field"/>
+                  </dla-caption:link-to-detail>
+               </div>
+
+               <dla-caption:if not-empty="origin_field">
+                  <div class="origin">
+                     <dla-caption:field type="field" src="origin_field"/>
+                  </div>
+               </dla-caption:if>
+            </td>
+            <td class="holdresultsdate">
+               <div>
+                  <dla-caption:if not-empty="probable_date_field">
+                     <dla-caption:field type="field" src="probable_date_field"/>
+                  </dla-caption:if>
+               </div>
+            </td>
+         </tr>
+      </caption>
+      <caption context="image wall">
+         <div class="thumbonly">
+            <dla-caption:link-to-detail extra-params-field="page_param">
+               <img>
+                  <dla-caption:attribute name="src">../images/medren/<dla-caption:field type="field" src="id"
+                        />-<dla-caption:field type="field" src="page_param"/>.jpg</dla-caption:attribute>
+                  <dla-caption:attribute name="title">
+                     <dla-caption:field type="field" src="title"/>
+                  </dla-caption:attribute>
+                  <dla-caption:attribute name="alt">
+                     <dla-caption:field type="field" src="title"/>
+                  </dla-caption:attribute>
+                  <dla-caption:attribute name="width">200px</dla-caption:attribute>
+                  <dla-caption:attribute name="height">200px</dla-caption:attribute>
+               </img>
+            </dla-caption:link-to-detail>
+         </div>
+      </caption>
+      <stickyfacets>collection_facet</stickyfacets>
+      <footeremail>rbml@pobox.upenn.edu</footeremail>
+      <footermailto>rbml@pobox.upenn.edu,dmcknigh@pobox.upenn.edu</footermailto>
+      <poweredby>This site has been made possible through a grant from the National Endowment to the
+         Humanities.</poweredby>
+      <maxzoomlevels>5</maxzoomlevels>
+      <noresultsmessage>
+         <div class="noresults"> Sorry, no results matched your search terms. </div>
+      </noresultsmessage>
+      <tocEntries>
+         <entry name="toc" display="Contents"/>
+         <entry name="ill" display="Illustrations"/>
+      </tocEntries>
+      <tabs type="pageturn">
+         <tab name="View Manuscript" target="pageturn"/>
+         <tab name="View Provenance &amp; Subject Details" target="record"/>
+      </tabs>
+      <solr-url>http://localhost:8082/index/medren/select/</solr-url>
+      <services name="Navigating the Collection" display="block" class="recordDescription">
+         <service name="Collection Home" link="index.html"/>
+         <service name="Search Strategies" link="ancillary.html?id=collections/brinton/searchdla"/>
+         <service type="back-to-results"/>
+         <service name="Advanced Search" link="advancedsearch.html"/>
+         <service name="New: Manuscripts recently digitized"
+            link="search.html?sort=date_facsimile_added_sort%20desc&amp;showall=sort&amp;fq=facsimile_facet%3A%22Yes%22"
+         />
+      </services>
+      <services name="Manuscripts at Penn">
+         <service name="Overview" link="ancillary.html?id=collections/rbm/mss/mss"/>
+         <service name="Schoenberg Database of Manuscripts" link="http://hdl.library.upenn.edu/1017/59753"/>
+         <service name="Manuscripts on Microfilm"
+            link="http://www.library.upenn.edu/collections/microforms/medmss.html "/>
+      </services>
+      <services name="Information &amp; Contacts" display="block" class="recordDescription">
+         <service type="mailto" address="dmcknigh@pobox.upenn.edu" name="Contact Us"
+            body="Question regarding this page: " appendurl="true"/>
+         <service name="Copyright &amp; Permissions" link="ancillary.html?id=collections/brinton/copyright"/>
+      </services>
+      <services name="Rare Book &amp; Manuscript Library" link="http://www.library.upenn.edu/rbm/">
+         <service name="Access" link="ancillary.html?id=access/rbm"/>
+         <service name="Hours" link="http://events.library.upenn.edu/cgi-bin/calendar.cgi?library=rbm;size=large"/>
+         <service name="Locate on Campus" link="http://hdl.library.upenn.edu/1017/82076"/>
+         <service name="Services" link="ancillary.html?id=rbm/services"/>
+         <service name="Staff"
+            link="http://dla.library.upenn.edu/dla/staff/search.html?fq=library_facet%3A%22Rare%20Book%20%26%20Manuscript%20Library%22"/>
+         <service name="Visitor Information" link="http://www.library.upenn.edu/access/visitors/visitors.html"/>
+      </services>
+      <services name="NEH Grant Information" link="ancillary.html?id=collections/manuscripts/grant"> </services>
+      <maps metadataPrefix="marc21">
+         <map to="marc:record">marcrecord</map>
+      </maps>
+      <maps metadataPrefix="oai_dc">
+         <map to="title">title_field</map>
+         <map to="contributor">author_field</map>
+         <map to="coverage"/>
+         <map to="creator"/>
+         <map to="date">probable_date_field</map>
+         <map to="description"/>
+         <map to="format"/>
+         <map to="identifier">id</map>
+         <map to="language">language_field</map>
+         <map to="publisher"/>
+         <map to="relation"/>
+         <map to="rights"/>
+         <map to="source"/>
+         <map to="subject">geography_field</map>
+         <map to="subject">subject_field</map>
+         <map to="subject">genre_field</map>
+         <map to="type"/>
+      </maps>
+      <maps metadataPrefix="dla">
+         <map to="datestamp">last_update</map>
+      </maps>
+   </collection>
+   <defaults xmlns:h="http://apache.org/cocoon/request/2.0" xmlns:my="http://nowhere">
+      <param name="start">0</param>
+      <param name="rows">25</param>
+      <param name="facet.offset">0</param>
+      <param name="browse.limit">400</param>
+      <param name="browse.sort">false</param>
+      <param name="sort">score desc, date_sort asc</param>
+      <param name="facet.limit">5</param>
+      <param name="facet.mincount">1</param>
+   </defaults>
+   <recordinfo xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:marc="http://www.loc.gov/MARC21/slim"
+      xmlns:my="http://nowhere" detail="brief">
+      <str name="Author">Khāzinī, ʻAbd al-Raḥmān, fl. 1121.</str>
+      <str name="Title">[Kitāb Mīzān al-ḥikmah] [manuscript].</str>
+      <str name="Title">Mīzān al-ḥikmah. Selections.</str>
+      <str name="Origin">[ca. 1270]</str>
+      <str name="Physical description">98 leaves : paper, col. ill. ; 195 x 160 (145 x 110) mm.</str>
+      <str name="Summary">Substantial sections from an illustrated treatise titled Book of the balance of wisdom, which
+         concerns measurement of weight, with a historical introduction to theories of gravity and weighing in Greek and
+         Arabic science; tables of densities of substances including metals, precious stones, solids, and liquids; and
+         descriptions of different types of balances. A few marginal notes are present. A few catchwords and some
+         minuscule letters under undotted letters have been added by later hands. Damage to edges of many leaves.</str>
+      <str name="Notes">Ms. codex.</str>
+      <str name="Notes">Title supplied by cataloger.</str>
+      <str name="Notes">Pagination: Paper, 98 leaves; [3-18, 37-38, 43-78, 83-94, 97-188, 191-192, 231-232, 235-240,
+         243-244, 247-248, 261-276, 285-292]; modern pagination in pencil, upper outer corners.</str>
+      <str name="Notes">Layout: Written in 15 long lines.</str>
+      <str name="Notes">Script: Written in naskh script, with headings in larger riqa' script.</str>
+      <str name="Notes">Decoration: 26 diagrams and 18 tables in red and black ink.</str>
+      <str name="Notes">Binding: Unbound, with some partial gatherings still joined or repaired at gutter.</str>
+      <str name="Notes">Origin: Written ca. 1270 (based on paper and script).</str>
+      <str name="Cite as">LJS 386</str>
+      <str name="Manuscript location">Rare Book &amp; Manuscript Library University of Pennsylvania LJS 386</str>
+   </recordinfo>
+</page>

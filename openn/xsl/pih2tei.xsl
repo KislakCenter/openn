@@ -24,6 +24,8 @@
             <xd:p> *Foliation *Layout *Colophon *Collation *Script *Decoration *Binding *Origin *Watermarks *Signatures</xd:p>
             <xd:p><xd:b>emeryr, January 27 2015, fix bugs, tighten code to</xd:b></xd:p>
             <xd:p> prefer for-each elements to if/for-each combinations where possible</xd:p>
+            <xd:p><xd:b>emeryr, February 5, 2015, modified to add</xd:b></xd:p>
+            <xd:p> *Pagination; treated as *Foliation</xd:p>
         </xd:desc>
     </xd:doc>
     
@@ -90,7 +92,7 @@
                                 <xsl:variable name="test" select="marc:subfield[@code='a']"/>
                                 <xsl:choose>
                                     <xsl:when
-                                        test="not(starts-with($test,'Foliation:')) and not(starts-with($test,'Layout')) and not(starts-with($test,'Colophon:')) and not(starts-with($test,'Collation:')) and not(starts-with($test,'Script:')) and not(starts-with($test,'Decoration:')) and not(starts-with($test,'Binding:')) and not(starts-with($test,'Origin')) and not(starts-with($test,'Watermarks:')) and not(starts-with($test,'Watermark:')) and not(starts-with($test,'Signatures:'))">
+                                        test="not(starts-with($test,'Pagination:')) and not(starts-with($test,'Foliation:')) and not(starts-with($test,'Layout')) and not(starts-with($test,'Colophon:')) and not(starts-with($test,'Collation:')) and not(starts-with($test,'Script:')) and not(starts-with($test,'Decoration:')) and not(starts-with($test,'Binding:')) and not(starts-with($test,'Origin')) and not(starts-with($test,'Watermarks:')) and not(starts-with($test,'Watermark:')) and not(starts-with($test,'Signatures:'))">
                                         <note>
                                             <xsl:value-of
                                                 select="normalize-space(marc:subfield[@code='a'])"/>
@@ -276,9 +278,16 @@
                                                     </xsl:call-template>
                                                 </extent>
                                             </xsl:if>
-                                            <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Foliation:')]">
+                                            <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and (starts-with(., 'Foliation:') or starts-with(., 'Pagination:'))]">
                                                 <foliation>
-                                                    <xsl:value-of select="normalize-space(substring(.,11))"/>
+                                                    <xsl:choose>
+                                                        <xsl:when test="starts-with(., 'Foliation:')">
+                                                            <xsl:value-of select="normalize-space(substring(.,11))"/>        
+                                                        </xsl:when>
+                                                        <xsl:otherwise>
+                                                            <xsl:value-of select="normalize-space(substring(.,12))"/>
+                                                        </xsl:otherwise>
+                                                    </xsl:choose>
                                                 </foliation>
                                             </xsl:for-each>
                                             <xsl:if test="contains(.,'Collation:') or contains(.,'Signatures')">
