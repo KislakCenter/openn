@@ -341,7 +341,29 @@ metadata.
 
 There are two package metadata files: `manifest-sha1.txt` and
 `version.txt`.  The first lists each file in the data directory with
-its SHA-1 checksum.
+its SHA-1 checksum.  The second provides information for the *package*
+version.
+
+See below under ''Technical and preservation metadata'' for more on
+the manifest and version files.
+
+
+# Preservation and technical metadata
+
+
+## Package contents and integrity
+
+The top-level directory of each package contains a `manifest-sha1.txt`
+file that lists each file in the package's data directory with its
+SHA-1 checksum.
+
+    ljs319
+    |-- data
+    |-- manifest-sha1.txt  # <= package contents and integrity file
+    `-- version.txt
+
+The format of the `manifest-sha1.txt` follows the format of the output
+of the GNU `sha1sum` program:
 
     0d0886412592226f8a0044e7a1b0d50088830f04  data/ljs319_TEI.xml
     1f097bb51003f966e8cc709f19555581ed22ac1a  data/master/0311_0005.tif
@@ -354,16 +376,17 @@ its SHA-1 checksum.
 Checksums can be used to confirm a file's integrity; that is, that it
 has not been change since it was last modified.
 
-On Mac OS, Linux, and other Unix-like operating systems this can be
-done with `sha1sum` or a similar command line utility.
+On Mac OS, Linux, and other Unix-like operating systems verification
+can be done using `sha1sum` or a similar command-line utility.
 
 Running `sha1sum` on a file will print its checksum and name:
 
     $ sha1sum data/ljs319_TEI.xml
     0d0886412592226f8a0044e7a1b0d50088830f04  data/ljs319_TEI.xml
 
-Notice that the checksum printed by `sha1sum` is identical to the one
-listed above in the `manifest-sha1.txt` file.
+This checksum value can be used to confirm the file has remain
+unchanged.  Notice that the checksum printed by `sha1sum` is identical
+to the one listed above in the `manifest-sha1.txt` file.
 
 `Sha1sum` can also be used with the `-c` flag to check an entire
 manifest:
@@ -393,36 +416,347 @@ For more on SHA-1 see the [SHA-1 Wikipedia page][sha1wiki].
 
 [sha1wiki]: http://en.wikipedia.org/wiki/SHA-1 "SHA-1 (Wikipedia)"
 
+## Package version
+
+It should be a rare occurrence, but from time-to-time packages will
+need to be updated.  OPenn does not yet have a full system for
+managing package versions; however, in anticipation of that system
+each package is provided with a `version.txt` file its top-level
+directory:
+
+    ljs319
+    |-- data
+    |-- manifest-sha1.txt
+    `-- version.txt        # <= package version history
+
+The following is the `version.txt` file for LJS 319.
+
+    version: 1.0.0
+    date: 2015-03-24T09:55:23
+    id: 311
+    document: 311
+
+    Initial version
+    ---
+
+The file contains one or more dash-separated stanzas for each version
+of a package.  The top stanza is for the most recent version of the
+package.  The structure of each stanza is:
+
+    version: <SEMANTIC_VERSION_OF_PACKAGE>
+    date: <TIMESTAMP_OF_VERSION_RECORD>
+    id: <DATABASE_ID_OF_VERSION_RECORD>
+    document: <DATABASE_ID_OF_DOCUMENT>
+
+    <DESCRIPTION/REASON>
+    ---
 
 
-# Preservation and technical metadata
+- `version`: The version number is a three-part semantic version
+  number; e.g., `1.0.0`, `1.0.1`, or `1.1.0`.
+- `date`: timestamp of this version's creation
+- `id`: database identifier of this version
+- `document`: database identifier of the package document
+- `description`: the reason for this version
 
-The metadata.xml file in each manuscript’s data directory, encodes
-extensive technical metadata for each manuscript. The structure of the
-file is specified by the schema, idr-manifest.xsd, which can be found
-at /Supplemental/XML/schemas/idr-manifest.xsd.
+**Semantic versioning**
 
-Each metadata.xml has this information:
+OPenn uses semantic versions with a three-component version number:
 
-# XMP
+    0.0.0: <MAJOR>.<MINOR>.<PATCH>
 
-# TEI P5
+New versions of a package contain alterations of data and metadata
+content.  Version number changes indicate the type of change and
+whether a new version will likely be compatible with applications
+built on previous versions of the package.
+
+All OPenn packages are machine readable and follow a regular pattern.
+Any application that loads OPenn data dynamically should have no
+problem with changing package contents; however, applications that
+cache part of the data may fail to work with a new version of a
+package that, for example, has fewer images than images than the
+previous version or removed metadata.
+
+A change to the last digit (e.g., `1.0.0` to `1.0.1`) indicates a
+''patch'' or correction that does not add or remove data or metadata.
+The package remains compatible with applications built on the previous
+version of the package.  An example of a patch change would be the
+substitution of the a correct image for a duplicate one; or a spelling
+correction in metadata.
+
+A minor version change, a change to the second digit in the version
+number (e.g., `1.0.0` to `1.1.0`), indicates the addition of new data
+or metadata.  The package remains compatible with applications built
+on the previous version of the package.  An example of a patch change
+would be the addition of new metadata to the document's manuscript
+description or the addition of new images to the data set. While the
+new version of the package will work as before, it may desirable to
+update software to take advantage of new data.
+
+A major version change, a change to the first digit in the version
+number, indicates the removal of data or metadata or other substantive
+change that will likely cause this version to not work with software
+built on a previous version of the package.
+
+## Document descriptions and structural metadata
+
+The description of document content and structural metadata are
+provided in a TEI file like `ljs319_TEI.xml`.  The file is stored and
+named as follows:
+
+     <PACKAGEDIR>/data/<PACKAGEDIR>_TEIL.xml
+
+     ljs319/data/ljs319_TEI.xml
+
+The TEI file name always contains the name of the top-level package
+directory.
+
+See the section TEI manuscript description below for a detailed
+description of the TEI contents.
+
+## XMP
+
+Each image file has key Dublin Core metadata stored in its header.
+This information is also included in a `.xmp` sidecar file for each
+image:
+
+    0311_0000.tif
+    0311_0000.tif.xmp
+    0311_0000_thumb.jpg
+    0311_0000_thumb.jpg.xmp
+    0311_0000_web.jpg
+    0311_0000_web.jpg.xmp
+
+In addition to Dublin Core metadata the XMP file includes technical
+metadata about the image and XMP rights information.  What follows is
+the content of a sample XMP file.
+
+    <?xpacket begin='﻿' id='W5M0MpCehiHzreSzNTczkc9d'?>
+    <x:xmpmeta xmlns:x='adobe:ns:meta/' x:xmptk='Image::ExifTool 9.67'>
+    <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+
+     <rdf:Description rdf:about=''
+      xmlns:aux='http://ns.adobe.com/exif/1.0/aux/'>
+      <aux:Firmware>P45+-H, Firmware: Main=5.1.2, Boot=1.3, FPGA=1.6.8, CPLD=3.2.6, PAVR=1.0.9, UIFC=1.0.1, TGEN=1.0.1</aux:Firmware>
+     </rdf:Description>
+
+     <rdf:Description rdf:about=''
+      xmlns:dc='http://purl.org/dc/elements/1.1/'>
+      <dc:creator>
+       <rdf:Seq>
+        <rdf:li>The University of Pennsylvania Libraries</rdf:li>
+       </rdf:Seq>
+      </dc:creator>
+      <dc:date>
+       <rdf:Seq>
+        <rdf:li>2015-03-24</rdf:li>
+       </rdf:Seq>
+      </dc:date>
+      <dc:description>
+       <rdf:Alt>
+        <rdf:li xml:lang='x-default'>This is an image of fol. 1r from University of Pennsylvania LJS 319: Derrota, from Manila, Philippines, dated to approximately 1750.</rdf:li>
+       </rdf:Alt>
+      </dc:description>
+      <dc:format>image/tiff</dc:format>
+      <dc:identifier>311.64390</dc:identifier>
+      <dc:publisher>
+       <rdf:Bag>
+        <rdf:li>The University of Pennsylvania Libraries</rdf:li>
+       </rdf:Bag>
+      </dc:publisher>
+      <dc:relation>
+       <rdf:Bag>
+        <rdf:li>University of Pennsylvania LJS 319</rdf:li>
+        <rdf:li>bibid: 6074170</rdf:li>
+        <rdf:li>http://hdl.library.upenn.edu/1017/d/medren/6074170</rdf:li>
+       </rdf:Bag>
+      </dc:relation>
+      <dc:rights>
+       <rdf:Alt>
+        <rdf:li xml:lang='x-default'>This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.</rdf:li>
+       </rdf:Alt>
+      </dc:rights>
+      <dc:subject>
+       <rdf:Bag>
+        <rdf:li>Navigation--Early works to 1800</rdf:li>
+        <rdf:li>Pilot guides--Philippines</rdf:li>
+        <rdf:li>Codices</rdf:li>
+        <rdf:li>Tables (documents)</rdf:li>
+        <rdf:li>Manuscripts, Spanish--18th century</rdf:li>
+        <rdf:li>Manuscripts, European</rdf:li>
+       </rdf:Bag>
+      </dc:subject>
+      <dc:title>
+       <rdf:Alt>
+        <rdf:li xml:lang='x-default'>University of Pennsylvania LJS 319: Derrota, fol. 1r</rdf:li>
+       </rdf:Alt>
+      </dc:title>
+      <dc:type>
+       <rdf:Bag>
+        <rdf:li>image</rdf:li>
+       </rdf:Bag>
+      </dc:type>
+     </rdf:Description>
+
+     <rdf:Description rdf:about=''
+      xmlns:exif='http://ns.adobe.com/exif/1.0/'>
+      <exif:DateTimeOriginal>2014-07-08T15:11:35</exif:DateTimeOriginal>
+      <exif:ExifVersion>0220</exif:ExifVersion>
+      <exif:ExposureTime>1/60</exif:ExposureTime>
+      <exif:FileSource>3</exif:FileSource>
+      <exif:ISOSpeedRatings>
+       <rdf:Seq>
+        <rdf:li>50</rdf:li>
+       </rdf:Seq>
+      </exif:ISOSpeedRatings>
+      <exif:LightSource>255</exif:LightSource>
+      <exif:PixelXDimension>3882</exif:PixelXDimension>
+      <exif:PixelYDimension>5614</exif:PixelYDimension>
+      <exif:SceneType>1</exif:SceneType>
+      <exif:ShutterSpeedValue>23917/4049</exif:ShutterSpeedValue>
+     </rdf:Description>
+
+     <rdf:Description rdf:about=''
+      xmlns:exifEX='http://cipa.jp/exif/1.0/'>
+      <exifEX:BodySerialNumber>DR000149</exifEX:BodySerialNumber>
+     </rdf:Description>
+
+     <rdf:Description rdf:about=''
+      xmlns:photoshop='http://ns.adobe.com/photoshop/1.0/'>
+      <photoshop:DateCreated>2014-07-08</photoshop:DateCreated>
+      <photoshop:LegacyIPTCDigest>A44D267D0C570E3E8B6B52DEBEE3DCA9</photoshop:LegacyIPTCDigest>
+      <photoshop:Source>University of Pennsylvania LJS 319, fol. 1r</photoshop:Source>
+     </rdf:Description>
+
+     <rdf:Description rdf:about=''
+      xmlns:tiff='http://ns.adobe.com/tiff/1.0/'>
+      <tiff:BitsPerSample>
+       <rdf:Seq>
+        <rdf:li>8</rdf:li>
+        <rdf:li>8</rdf:li>
+        <rdf:li>8</rdf:li>
+       </rdf:Seq>
+      </tiff:BitsPerSample>
+      <tiff:Compression>1</tiff:Compression>
+      <tiff:ImageLength>5614</tiff:ImageLength>
+      <tiff:ImageWidth>3882</tiff:ImageWidth>
+      <tiff:Make>Phase One</tiff:Make>
+      <tiff:Model>P45+</tiff:Model>
+      <tiff:Orientation>1</tiff:Orientation>
+      <tiff:PhotometricInterpretation>2</tiff:PhotometricInterpretation>
+      <tiff:PlanarConfiguration>1</tiff:PlanarConfiguration>
+      <tiff:ResolutionUnit>2</tiff:ResolutionUnit>
+      <tiff:SamplesPerPixel>3</tiff:SamplesPerPixel>
+      <tiff:Software>Capture One 7 Windows</tiff:Software>
+      <tiff:XResolution>600/1</tiff:XResolution>
+      <tiff:YResolution>600/1</tiff:YResolution>
+     </rdf:Description>
+
+     <rdf:Description rdf:about=''
+      xmlns:xmp='http://ns.adobe.com/xap/1.0/'>
+      <xmp:CreateDate>2014-07-08T15:11:35</xmp:CreateDate>
+      <xmp:ModifyDate>2014-07-08T15:11:35</xmp:ModifyDate>
+     </rdf:Description>
+
+     <rdf:Description rdf:about=''
+      xmlns:xmpRights='http://ns.adobe.com/xap/1.0/rights/'>
+      <xmpRights:Marked>False</xmpRights:Marked>
+      <xmpRights:UsageTerms>
+       <rdf:Alt>
+        <rdf:li xml:lang='x-default'>This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.</rdf:li>
+       </rdf:Alt>
+      </xmpRights:UsageTerms>
+     </rdf:Description>
+    </rdf:RDF>
+    </x:xmpmeta>
+    <?xpacket end='w'?>
+
+
+#### Notable XMP elements
+
+Dublin Core elements:
+
+- `creator` -- person or organization responsible for creation of the
+  image
+    - example: "The University of Pennsylvania Libraries"
+
+- `date` -- date of the creation of this version of the image,
+  including metadata
+    - example: "2015-03-24"
+
+- `description` -- brief description of the image content
+    - example: "This is an image of fol. 1r from University of
+      Pennsylvania LJS 319: Derrota, from Manila, Philippines, dated
+      to approximately 1750."
+
+
+- `format` -- MIME type of the image, either `image/tiff` or
+  `image/jpeg`
+
+- `identifier` -- unique identifier of the master image and its
+  derivatives
+    - example: "311.64390"
+
+- `publisher` -- person or organization responsible for publication of
+  the image
+    - example: "The University of Pennsylvania Libraries"
+
+- `relation` -- a related resource
+    - example: "University of Pennsylvania LJS 319"
+
+- `rights` -- access rights
+    - example: "This image and its content are free of known copyright
+      restrictions and in the public domain. See the Creative Commons
+      Public Domain Mark page for usage details,
+      http://creativecommons.org/publicdomain/mark/1.0/."
+
+- `subject` -- a list of subjects
+    - examples: "Navigation--Early works to 1800", "Pilot
+      guides--Philippines"
+
+- `title` -- the title of the image
+    - example: "University of Pennsylvania LJS 319: Derrota, fol. 1r"
+
+- `type` -- the resource type, always "image"
+
+Photoshop element:
+
+- `Source` -- the source of the image content
+    - example: "University of Pennsylvania LJS 319, fol. 1r"
+
+#### xmpRight elements
+
+- `Marked` -- whether this is a right-managed resource; "False" if
+  Public Domain, "True" otherwise
+
+- `UsageTerms` -- a description of the terms of usage for this
+  resource
+    - example: "This image and its content are free of known copyright
+      restrictions and in the public domain. See the Creative Commons
+      Public Domain Mark page for usage details,
+      http://creativecommons.org/publicdomain/mark/1.0/."
+
+# TEI document description
+
+Each document package includes a TEI file that provides a manuscript
+description and
 
 # Standards
 
-Throughout, the Walters NEH-funded projects adhere to accepted
-international standards. The following is a list of the most important
-of those.
+OPenn data and metadata adhere to international standards. The
+following is a list of the most important of those.
 
-TIFF 6.0: all archival images adhere to the TIFF 6.0 specification
+- Dublin Core: each image includes descriptive Dublin Core metadata
+  (see Dublin Core in the Read Me file for details)
 
-Dublin Core: each image includes descriptive Dublin Core metadata (see
-Dublin Core in the Read Me file for details)
+- TEI P5: manuscript description information is encoded according to
+  Text Encoding Initiative (TEI) P5 guidelines (see the Manuscript
+  Description file) BagIt: images are packaged and delivered using the
+  BagIt protocol (see above)
 
-TEI P5: manuscript description information is encoded according to
-Text Encoding Initiative (TEI) P5 guidelines (see the Manuscript
-Description file) BagIt: images are packaged and delivered using the
-BagIt protocol (see above)
+- TIFF: when available TIFF images are used for master images
 
-Unicode: text information in XML files and other text documents is in
-Unicode, typically with UTF-8 encoding
+- Unicode: text information in XML files and other text documents is
+  in Unicode, typically with UTF-8 encoding
+
+- XMP: Extensible Metadata Platform
