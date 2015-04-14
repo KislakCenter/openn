@@ -739,7 +739,513 @@ Photoshop element:
 # TEI document description
 
 Each document package includes a TEI file that provides a manuscript
-description and
+description and structural metadata that maps images to the pages of
+the document.
+
+The following TEI tags are employed:
+
+#### The description title
+
+The TEI `titleStmt` contains the description title.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/titleStmt
+/TEI/teiHeader/fileDesc/titleStmt/title
+```
+
+Example:
+
+```xml
+    <fileDesc>
+      <titleStmt>
+        <title>Description of University of Pennsylvania LJS 319: Derrota</title>
+      </titleStmt>
+    </fileDesc>
+```
+
+#### Publication information
+
+The TEI `publicationStmt` contains the publisher and licensing
+information.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/publicationStmt/publisher
+/TEI/teiHeader/fileDesc/publicationStmt/availability
+/TEI/teiHeader/fileDesc/publicationStmt/availability/licence
+```
+
+Example:
+
+```xml
+      <publicationStmt>
+        <publisher>The University of Pennsylvania Libraries</publisher>
+        <availability>
+          <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+                   This description is ©2015 University of
+                   Pennsylvania Libraries. It is licensed under a Creative Commons
+                   Attribution License version 4.0 (CC-BY-4.0
+                   https://creativecommons.org/licenses/by/4.0/legalcode. For a
+                   description of the terms of use see the Creative Commons Deed
+                   https://creativecommons.org/licenses/by/4.0/. </licence>
+          <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+                   referenced images and their content are free of known copyright
+                   restrictions and in the public domain. See the Creative Commons
+                   Public Domain Mark page for usage details,
+                   http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+        </availability>
+      </publicationStmt>
+```
+
+#### General notes
+
+The TEI `notesStmt` contains general notes about the document.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/notesStmt
+/TEI/teiHeader/fileDesc/notesStmt/note
+```
+
+Example:
+
+```xml
+    <notesStmt>
+      <note>Ms. codex.</note>
+      <note>Title from caption title (f. 1r).</note>
+    </notesStmt>
+```
+
+#### Document identification
+
+The TEI `msIdentifier` contains identification information.  Each
+document is primarily identified by its repository and call number.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/altIdentifier
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/altIdentifier/idno
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/idno
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/institution
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/repository
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/settlement
+```
+
+Example:
+
+```xml
+<msIdentifier>
+  <settlement>Philadelphia</settlement>
+  <institution>University of Pennsylvania</institution>
+  <repository>Rare Book &amp; Manuscript Library</repository>
+  <idno type="call-number">LJS 319</idno>
+  <altIdentifier type="bibid">
+    <idno>6074170</idno>
+  </altIdentifier>
+  <altIdentifier type="resource">
+    <idno>http://hdl.library.upenn.edu/1017/d/medren/6074170</idno>
+  </altIdentifier>
+</msIdentifier>
+```
+
+#### Document abstract and summary
+
+The TEI `summary` element contains a long form description of the
+document.
+
+Element:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/summary
+```
+
+Example:
+
+```xml
+<summary>
+  A rutter (set of sailing directions) from Manila to surrounding
+  destinations. For each pair of endpoints the rhumb (fixed
+  direction) and distance between them in miles and leagues are
+  given. Stored rolled in an early bamboo case.
+</summary>
+```
+
+#### Language information
+
+The TEI `textLang` element contains information about the document's
+languages.
+
+Element:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/textLang
+```
+
+Example:
+
+```xml
+<textLang>Spanish</textLang>
+```
+
+#### Content information
+
+The description's first TEI `msContents/msItem` element contains
+detailed description of the contents of the document as a whole. This
+information includes the document title, authors, other contributors
+(scribe, artist, etc.), and colophon.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/title
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/author
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/respStmt
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/respStmt/persName
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/respStmt/resp
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/colophon
+```
+
+Example:
+
+```xml
+<msItem>
+    <title>Sefer ha-Ḳanon ... etc.</title>
+    <author>Avicenna, 980-1037</author>
+    <author>Maimonides, Moses, 1135-1204</author>
+    <respStmt>
+        <resp>translator</resp>
+        <persName>Ibn Tibon, Mosheh, 13th cent</persName>
+    </respStmt>
+    <respStmt>
+        <resp>former owner</resp>
+        <persName>Hirschel, Solomon, 1761-1842</persName>
+    </respStmt>
+</msItem>
+```
+
+#### Subdivision content information
+
+TEI `msItem` elements *after* the first `msItem` contain section and
+chapter titles.  These elements can be distinguished from the general
+document-level `msItem` by the presence of the `@n` attribute and
+child `locus` element.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/title
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/locus
+```
+
+Example:
+
+```xml
+<msItem n="1r">
+    <locus>1r</locus>
+    <title>Sefer ha-K?anon, f. 1r</title>
+</msItem>
+<msItem n="118r">
+    <locus>118r</locus>
+    <title>Ma?amar ha-nikhbad, f. 118r</title>
+</msItem>
+```
+
+Note: The `msItem/@n` attribute corresponds to the `facsimile/surface`
+element with the same `@n` attribute.
+
+#### Document support description
+
+The TEI `supportDesc` element contains information about the
+document's support, including collation information, extent, foliation
+(or pagination), support material, and watermark.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/collation
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/collation/p
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/extent
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/foliation
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/support
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/support/p
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/support/watermark
+```
+
+Example:
+
+```xml
+<supportDesc material="paper">
+    <support>
+        <p>paper</p>
+        <watermark>Hijo de J. Joyer y Sera.</watermark>
+    </support>
+    <extent>4 leaves : 314 x 215 (285 x 205) mm bound to 315 x 215 mm</extent>
+    <collation>
+        <p>Paper, 4; 1-2².</p>
+    </collation>
+</supportDesc>
+```
+
+#### Layout information
+
+The TEI `layoutDesc` contains a description of the document's layout.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/layoutDesc
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/layoutDesc/layout
+```
+
+Example:
+
+```xml
+<layoutDesc>
+    <layout>
+        Written in 4 columns of 34 lines; the leftmost column is the
+        widest, containing the names of the endpoints, followed by 3
+        narrower columns for rhumbs and distance measurements; ruled
+        faintly in lead.
+    </layout>
+</layoutDesc>
+```
+
+#### Script and palaeographic information
+
+The TEI `scriptNote` element contains a description of the document's
+script.
+
+Element:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/scriptDesc/scriptNote
+```
+
+Example:
+
+```xml
+<scriptDesc>
+    <scriptNote>Written in Italian semi-cursive Hebrew script.</scriptNote>
+</scriptDesc>
+```
+
+#### Decorations
+
+Elements:
+
+The TEI `decoDesc` element contains descriptions of decorative and
+figurative features of the document.  A `decoNote` without an `@n`
+attribute provides a general description of decorative features.  A
+`decoNote` with an `@n` attribute corresponds to the `facsimile/surface`
+element with the same `@n` attribute.
+
+Element:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/decoDesc
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/decoDesc/decoNote
+```
+
+Example:
+
+```xml
+<decoDesc>
+    <decoNote>Occasional manicules (f. 18r, 23r, 26r, 27v, 38r, 112v, 122v, 125v).</decoNote>
+    <decoNote n="i recto">Owner stamp, f. i recto</decoNote>
+    <decoNote n="18r">Manicule, f. 18r</decoNote>
+    <decoNote n="18v">Manicule, f. 18v</decoNote>
+    <decoNote n="22v">Manicule, f. 22v</decoNote>
+    <!-- ... -->
+</decoDesc>
+```
+
+#### Binding
+
+The TEI `bindingDesc` element contains a description of the document's
+binding.
+
+Element:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/bindingDesc/binding/p
+```
+
+Example:
+
+```xml
+<bindingDesc>
+    <binding>
+        <p>Sewn without a cover.</p>
+    </binding>
+</bindingDesc>
+```
+
+#### Document history
+
+The TEI `history` element contains information about the document's
+history including its date and place of origin and provenance history.
+
+Elements:
+
+```xml
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/history/origin
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/history/origin/origDate
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/history/origin/origPlace
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/history/origin/p
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/history/provenance
+```
+
+Example:
+
+```xml
+<history>
+    <origin>
+        <p>Probably written in Manila, Philippines, approximately 1750.</p>
+        <origDate>approximately 1750</origDate>
+        <origPlace>Manila, Philippines</origPlace>
+    </origin>
+    <provenance>Sold by Martayan Lan (New York) to Lawrence J. Schoenberg, August 1999.</provenance>
+    <provenance>Deposit by Lawrence J. Schoenberg and Barbara Brizdle, 2013.</provenance>
+</history>
+```
+
+#### Keywords and genre
+
+TEI `keywords` elements contain genre and subject information about
+the document.
+
+Elements:
+
+```xml
+/TEI/teiHeader/profileDesc/textClass/keywords
+/TEI/teiHeader/profileDesc/textClass/keywords/term
+```
+
+Example:
+
+```xml
+<profileDesc>
+    <textClass>
+        <keywords n="subjects">
+            <term>Navigation--Early works to 1800</term>
+            <term>Pilot guides--Philippines</term>
+        </keywords>
+        <keywords n="form/genre">
+            <term>Codices</term>
+            <term>Tables (documents)</term>
+            <term>Manuscripts, Spanish--18th century</term>
+            <term>Manuscripts, European</term>
+        </keywords>
+    </textClass>
+</profileDesc>
+```
+
+#### Structural metadata
+
+The TEI `facsimile` element contains the imaged parts of the document,
+in order, with their names, linked to the document's images.  The
+`surface/@n` attribute contains the designation image name or
+page/folio number.
+
+Elements:
+
+```xml
+/TEI/facsimile/surface
+/TEI/facsimile/surface/graphic
+```
+
+Example:
+
+```xml
+<facsimile>
+    <surface n="Front cover">
+        <graphic height="3594px" url="master/0102_0000.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0000_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0000_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="Inside front cover">
+        <graphic height="3594px" url="master/0102_0001.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0001_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0001_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="Flyleaf 1 recto">
+        <graphic height="3594px" url="master/0102_0002.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0002_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0002_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="Flyleaf 1 verso">
+        <graphic height="3594px" url="master/0102_0003.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0003_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0003_web.jpg" width="1421px"/>
+    </surface>
+    <!-- ... -->
+    <surface n="i recto">
+        <graphic height="3594px" url="master/0102_0008.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0008_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0008_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="i verso">
+        <graphic height="3594px" url="master/0102_0009.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0009_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0009_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="1r">
+        <graphic height="3594px" url="master/0102_0010.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0010_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0010_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="1v">
+        <graphic height="3594px" url="master/0102_0011.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0011_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0011_web.jpg" width="1421px"/>
+    </surface>
+    <!-- ... -->
+    <surface n="131r">
+        <graphic height="3594px" url="master/0102_0270.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0270_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0270_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="131v">
+        <graphic height="3594px" url="master/0102_0271.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0271_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0271_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="Flyleaf 1 recto">
+        <graphic height="3594px" url="master/0102_0272.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0272_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0272_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="Flyleaf 1 verso">
+        <graphic height="3594px" url="master/0102_0273.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0273_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0273_web.jpg" width="1421px"/>
+    </surface>
+    <!-- ... -->
+    <surface n="Inside back cover">
+        <graphic height="3594px" url="master/0102_0276.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0276_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0276_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="Back cover">
+        <graphic height="3594px" url="master/0102_0277.tif" width="2837px"/>
+        <graphic height="190px" url="thumb/0102_0277_thumb.jpg" width="150px"/>
+        <graphic height="1800px" url="web/0102_0277_web.jpg" width="1421px"/>
+    </surface>
+    <surface n="Spine">
+        <graphic height="3594px" url="master/0102_0278.tif" width="1211px"/>
+        <graphic height="190px" url="thumb/0102_0278_thumb.jpg" width="64px"/>
+        <graphic height="1800px" url="web/0102_0278_web.jpg" width="606px"/>
+    </surface>
+</facsimile>
+```
+
 
 # Standards
 
