@@ -1,9 +1,11 @@
-## Licenses and use
+This file provides technical information about accessing digital
+images from the OPenn website, and about the conventions and standards
+used in creating the data.
 
-All images and metadata descriptions provided here are released
-under Creative Commons licenses. All images and metadata are released
-under licenses that Creative Commons has approved for Free Cultural
-Works, bearing:
+# Licenses and use
+
+All images and metadata are released under licenses that Creative
+Commons has approved for Free Cultural Works, bearing:
 
 - the CC Public Domain mark
     - <https://creativecommons.org/about/pdm>
@@ -26,37 +28,35 @@ On this website, you will find material from several institutional
 collections.  In order to determine the license under images have been
 released, please refer to each collection's web page on OPenn.
 
-
-
-## Accessing the data
+# Accessing the data
 
 Data on this site can be accessed in a number of ways, via the HTTP
 web site, anonymous FTP, and the RSYNC remote synchronization
 utility. Each of these is discussed below.
 
 Users who want to do more than do casual browsing using the site’s
-HTML pages should understand its directory structure. The basic
+HTML pages should understand its directory structure. The site's
 organization is:
 
-    0_IntroductionReadMe.html              # general site information
-    1_TechnicalHelpReadMe.html             # this file
-    2_OPennCollection.html                 # list of collections on OPenn
-    TablesOfContents/                      # individual collection listings
+    0_IntroductionReadMe.html                # general site information
+    1_TechnicalHelpReadMe.html               # this file
+    2_OPennCollection.html                   # list of collections on OPenn
+    TablesOfContents/                        # individual collection listings
       |---- TOC_LJSchoenbergManuscripts.html # list of L. J. Schoenberg manuscripts
       |---- TOC_PennManuscripts.html         # list of Penn manuscripts
-    Data/                                  # core site data
-      |--- LJSchoenbergManuscripts/        # L. J. Schoenberg manuscript images
-      |      |--- ljs16/                   # Manuscript LJS 16
+    Data/                                    # core site data
+      |--- LJSchoenbergManuscripts/          # L. J. Schoenberg manuscript images
+      |      |--- ljs16/                     # Manuscript LJS 16
       |      |      |--- ...
       |      |--- ...
-      |--- PennManuscripts/                 # U. Penn manuscript images
-      |      |--- mscodex1048/          # Manuscript MS Codex 1048
+      |--- PennManuscripts/                  # U. Penn manuscript images
+      |      |--- mscodex1048/               # Manuscript MS Codex 1048
       |      |      |--- ...
       |      |--- ...
       |--- ...
 
 Within each manuscript directory, manuscript images and metadata are
-presented in a self-contained package, which is described below.
+presented in a structured package, which is described below.
 
 ## HTTP Access
 
@@ -70,7 +70,7 @@ This site is accessible via anonymous FTP, at openn.library.upenn.edu:
 
     $ ftp anonymous@openn.library.upenn.edu
 
-TODO: COMPLETE this
+TODO: COMPLETE Anonymous FTP
 
 Use your email address as your password.
 
@@ -88,59 +88,7 @@ All data is accessible via anonymous rsync. From the command line on
 Unix systems the following command can be used to see available
 targets.
 
-TODO: COMPLETE ANONYMOUS RSYNC
-
-    > rsync rsync://thedigitalwalters.org
-
-    WaltersManuscripts	Digitized versions of Walters Manuscripts
-    OtherCollections	Digitized versions of books and manuscripts not in the Walters collection
-    DigitalGalen   	A Syriac palimpsest of Galen
-Adding a target to the above command will show give a list of items available under that target:
-
-    > rsync rsync://thedigitalwalters.org/WaltersManuscripts/
-
-    drwxr-xr-x         197 2010/08/06 14:31:34 .
-    drwxr-xr-x         117 2011/06/09 18:07:31 ManuscriptDescriptions
-    drwxr-xr-x           7 2011/04/05 16:17:24 W102
-    drwxr-xr-x           7 2010/08/23 11:49:02 W106
-    drwxr-xr-x           7 2011/04/04 15:12:46 W12
-    drwxr-xr-x           7 2011/04/05 14:28:24 W13
-    drwxr-xr-x           7 2011/04/06 10:30:44 W165
-    drwxr-xr-x           7 2010/07/23 10:42:56 W171
-    drwxr-xr-x           7 2011/04/06 15:37:20 W174
-    drwxr-xr-x           7 2011/03/28 10:24:02 W4
-    ...
-
-You can pull down an entire Walters manuscript by using its modified
-shelf mark. This command will download all of Walters W.579 to the
-user tom’s Manuscripts directory:
-
-      > rsync -ax rsync://thedigitalwalters.org/WaltersManuscripts/W579 \
-                /Users/tom/Manuscripts/
-
-That command will silently retrieve all of W.579. To get more detailed
-information about what is happening, you could use a command like the
-following:
-
-      > rsync -avx --progress  \
-                rsync://thedigitalwalters.org/WaltersManuscripts/W579 \
-                /Users/tom/Manuscripts/
-
-Be aware that the data set is quite large, and the images for a single
-manuscripts can be over 200 GB.
-
-You can pull down a specific set of images for a manuscript (master or
-300 PPI TIFFs, or web (‘SAP’) or thumbnail JPEGs) by specifying the
-image folder. This command will retrieve all SAP web JPEGs for
-manuscript W.579:
-
-      > rsync -avx --progress  \
-                rsync://thedigitalwalters.org/WaltersManuscripts/W579/data/W.579/sap/ \
-                /Users/tom/Manuscripts/
-
-Always verify the path via the website before setting up such a
-command. Notice that there is some inconsistency in the naming of
-directories.
+TODO: Complete Anonymous RSYNC
 
 ## File naming conventions
 
@@ -165,18 +113,12 @@ Image files have names like:
 
 Each image has a base name consisting of document identifier (e.g.,
 `0284`), underscore, and a serial number (e.g., `0003`). Each of the
-three files that shares a base name is a different version of the same
+files that shares a base name is a different version of the same
 image. Serial numbers are in a natural order, such as book page
 order. For example, if an entire book has been imaged including cover,
 then the first serial number (`0000`) would be assigned to the outside
 front cover, the second serial number to the insdie front cover, and
 so on.
-
-Note that what parts of an object are imaged and what order they are
-given in will depend on the providing institution's practice and
-policies.  The order and description of each image will be given in
-each object's TEI description's `<facsimile>`.  See below for more
-information on manuscript descriptions.
 
     0284_0000
     0284_0001
@@ -184,13 +126,19 @@ information on manuscript descriptions.
     0284_0003
 
 
+Note that what parts of a document are imaged and their order will
+depend on the providing institution's practice and policies.  The
+order and description of each image will be given in each document's
+TEI description's `<facsimile>`.  See below for more information on
+document descriptions.
+
 The rest of the file name indicates the derivative and file type of
 the image. Images are either TIFF `.tif` or JPEG `.jpg`. There are
 three derivative types. They are:
 
 
 - a full-sized master image, typically a TIFF;
-- a web JPEG image is 1800 pixels on its longest side; and
+- a web JPEG image that is 1800 pixels on its longest side; and
 - a thumbnail JPEG that is 190 pixels on its longest side.
 
 The file names indicate the derivative type through a tag, which is
@@ -225,7 +173,7 @@ See below for more information on the XMP metadata.
 Image subject names are made available in two ways: through a
 human-readable browse page and through a TEI manuscript description.
 
-First, each object's web page lists the pieces in order with the piece
+Each document's browse page lists the pieces in order with the piece
 name (“folio 1a”, “front flyleaf 1a”, etc.) and associated file names,
 as can be seen here:
 
@@ -233,9 +181,9 @@ as can be seen here:
 - <http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/html/ljs168.html>
 
 
-Second, each object is provided with a TEI manuscript description that
-lists all images in order in the TEI file's `<facsimile>` section.
-Note this excerpt from [ljs168_TEI.xml][ljs168_TEI]:
+Second, each TEI manuscript description lists all images in order in
+the TEI file's `<facsimile>` section.  Note this fragment from
+[ljs168_TEI.xml][ljs168_TEI]:
 
 [ljs168_TEI]: http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs168/data/ljs168_TEI.xml "LJS 268 TEI file"
 
@@ -266,13 +214,27 @@ Note this excerpt from [ljs168_TEI.xml][ljs168_TEI]:
         <graphic height="1800px" url="web/0103_0004_web.jpg" width="1701px"/>
       </surface>
 
+TEI manuscript description is described in greater detail below.
+
 ### Manuscript packaging & preservation metadata
 
-Each object's images and metadata are provided in a packaged structure
-that permit verification allow for automated navigation of the package
-and its contents.
+Each object's images and metadata are present in a regular package
+structure that allows for automated navigation of the package and its
+contents.
 
-The diagram below shows a typical package structure:
+The directories have this structure:
+
+    ljs319
+    `-- data
+        |-- extra
+        |   |-- master
+        |   |-- thumb
+        |   `-- web
+        |-- master
+        |-- thumb
+        `-- web
+
+This diagram shows part of a typical package with files:
 
     ljs319
     |-- data
@@ -311,25 +273,22 @@ The diagram below shows a typical package structure:
     `-- version.txt
 
 
-The directories have this structure:
-
-    ljs319
-    `-- data
-        |-- extra
-        |   |-- master
-        |   |-- thumb
-        |   `-- web
-        |-- master
-        |-- thumb
-        `-- web
-
 The package is divided into the top-level directory (in this case
 `ljs319`), which contains package metadata, and the data itself, found
 here in the directory `ljs319/data`.  The `data` directory contains
 the manuscript description and the image files and their
 metadata. Each of these is described below.
 
-##### Package metadata
+### Core and "extra" images
+
+Core document images are in the package's `data/master`, `data/thumb`,
+and `data/web` directories.  All of these images are listed in the
+`<facsimile>` section of the TEI manuscript description.  Any other
+files provided with the document, like color and ruler reference
+shots, are included in the `data/extra` directory in `master`,
+`thumb`, and `web` sub-directories.
+
+### Package metadata
 
 The top-level directory contains the `data` directory and the package
 metadata.
@@ -374,7 +333,7 @@ of the GNU `sha1sum` program:
     ...
 
 Checksums can be used to confirm a file's integrity; that is, that it
-has not been change since it was last modified.
+has not changed since it was last modified.
 
 On Mac OS, Linux, and other Unix-like operating systems verification
 can be done using `sha1sum` or a similar command-line utility.
@@ -385,8 +344,9 @@ Running `sha1sum` on a file will print its checksum and name:
     0d0886412592226f8a0044e7a1b0d50088830f04  data/ljs319_TEI.xml
 
 This checksum value can be used to confirm the file has remain
-unchanged.  Notice that the checksum printed by `sha1sum` is identical
-to the one listed above in the `manifest-sha1.txt` file.
+unchanged.  Note that the checksum printed for `data/ljs319_TEI.xml`
+by `sha1sum` is identical to the one listed in the above excerpt from
+the `manifest-sha1.txt` file.
 
 `Sha1sum` can also be used with the `-c` flag to check an entire
 manifest:
@@ -412,7 +372,7 @@ you choose.  Here are some examples:
 [sha1sum]: http://linux.die.net/man/1/sha1sum "sha1sum(1) - Linux man page"
 [verifysw]: http://en.wikipedia.org/wiki/Comparison_of_file_verification_software "Comparison of file verification software (Wikipedia)"
 
-For more on SHA-1 see the [SHA-1 Wikipedia page][sha1wiki].
+For more information see the [SHA-1 Wikipedia page][sha1wiki].
 
 [sha1wiki]: http://en.wikipedia.org/wiki/SHA-1 "SHA-1 (Wikipedia)"
 
@@ -440,7 +400,7 @@ The following is the `version.txt` file for LJS 319.
     ---
 
 The file contains one or more dash-separated stanzas for each version
-of a package.  The top stanza is for the most recent version of the
+of a package.  The top stanza describes the most recent version of the
 package.  The structure of each stanza is:
 
     version: <SEMANTIC_VERSION_OF_PACKAGE>
@@ -452,8 +412,8 @@ package.  The structure of each stanza is:
     ---
 
 
-- `version`: The version number is a three-part semantic version
-  number; e.g., `1.0.0`, `1.0.1`, or `1.1.0`.
+- `version`: three-part semantic version number; e.g., `1.0.0`,
+  `1.0.1`, or `1.1.0`.
 - `date`: timestamp of this version's creation
 - `id`: database identifier of this version
 - `document`: database identifier of the package document
@@ -463,7 +423,11 @@ package.  The structure of each stanza is:
 
 OPenn uses semantic versions with a three-component version number:
 
-    0.0.0: <MAJOR>.<MINOR>.<PATCH>
+    <MAJOR>.<MINOR>.<PATCH>
+
+Example:
+
+    1.0.0
 
 New versions of a package contain alterations of data and metadata
 content.  Version number changes indicate the type of change and
@@ -474,29 +438,26 @@ All OPenn packages are machine readable and follow a regular pattern.
 Any application that loads OPenn data dynamically should have no
 problem with changing package contents; however, applications that
 cache part of the data may fail to work with a new version of a
-package that, for example, has fewer images than images than the
-previous version or removed metadata.
+package that, for example, has fewer images or removed metadata.
 
 A change to the last digit (e.g., `1.0.0` to `1.0.1`) indicates a
-''patch'' or correction that does not add or remove data or metadata.
+*patch* or correction that does not add or remove data or metadata.
 The package remains compatible with applications built on the previous
-version of the package.  An example of a patch change would be the
-substitution of the a correct image for a duplicate one; or a spelling
-correction in metadata.
+version of the package.  An example of a patch change would be a
+spelling correction in metadata.
 
-A minor version change, a change to the second digit in the version
-number (e.g., `1.0.0` to `1.1.0`), indicates the addition of new data
-or metadata.  The package remains compatible with applications built
-on the previous version of the package.  An example of a patch change
-would be the addition of new metadata to the document's manuscript
-description or the addition of new images to the data set. While the
-new version of the package will work as before, it may desirable to
+A *minor version* change (e.g., `1.0.0` to `1.1.0`), indicates the
+addition of new data or metadata.  The package will be work with
+applications built on the previous version.  An example of a minor
+change would be the addition of new metadata to the document's
+manuscript description or the addition of new images to the data
+set. While the new version will work as before, it may be desirable to
 update software to take advantage of new data.
 
-A major version change, a change to the first digit in the version
-number, indicates the removal of data or metadata or other substantive
-change that will likely cause this version to not work with software
-built on a previous version of the package.
+A major version change (e.g., `1.1.0` to `2.0.0`) indicates the
+removal of data or metadata or other substantive change that will
+likely cause this version to not work with software built on a
+previous version of the package.
 
 ## Document descriptions and structural metadata
 
@@ -504,7 +465,9 @@ The description of document content and structural metadata are
 provided in a TEI file like `ljs319_TEI.xml`.  The file is stored and
 named as follows:
 
-     <PACKAGEDIR>/data/<PACKAGEDIR>_TEIL.xml
+     <PACKAGEDIR>/data/<PACKAGEDIR>_TEI.xml
+
+Example:
 
      ljs319/data/ljs319_TEI.xml
 
@@ -512,13 +475,12 @@ The TEI file name always contains the name of the top-level package
 directory.
 
 See the section TEI manuscript description below for a detailed
-description of the TEI contents.
+description of file.
 
 ## XMP
 
-Each image file has key Dublin Core metadata stored in its header.
-This information is also included in a `.xmp` sidecar file for each
-image:
+Each image file has key metadata stored in its header.  This
+information is also included in a `.xmp` sidecar file for each image:
 
     0311_0000.tif
     0311_0000.tif.xmp
@@ -527,9 +489,8 @@ image:
     0311_0000_web.jpg
     0311_0000_web.jpg.xmp
 
-In addition to Dublin Core metadata the XMP file includes technical
-metadata about the image and XMP rights information.  What follows is
-the content of a sample XMP file.
+The XMP file includes Dublin Core and technical metadata and rights
+information.  What follows is the content of a sample XMP file.
 
     <?xpacket begin='﻿' id='W5M0MpCehiHzreSzNTczkc9d'?>
     <x:xmpmeta xmlns:x='adobe:ns:meta/' x:xmptk='Image::ExifTool 9.67'>
@@ -672,11 +633,11 @@ the content of a sample XMP file.
     <?xpacket end='w'?>
 
 
-#### Notable XMP elements
+### Notable XMP elements
 
 Dublin Core elements:
 
-- `creator` -- person or organization responsible for creation of the
+- `creator` -- person or organization responsible for creating the
   image
     - example: "The University of Pennsylvania Libraries"
 
@@ -693,7 +654,7 @@ Dublin Core elements:
 - `format` -- MIME type of the image, either `image/tiff` or
   `image/jpeg`
 
-- `identifier` -- unique identifier of the master image and its
+- `identifier` -- unique identifier for the master image and its
   derivatives
     - example: "311.64390"
 
@@ -724,9 +685,9 @@ Photoshop element:
 - `Source` -- the source of the image content
     - example: "University of Pennsylvania LJS 319, fol. 1r"
 
-#### xmpRight elements
+### xmpRight elements
 
-- `Marked` -- whether this is a right-managed resource; "False" if
+- `Marked` -- whether this is a rights-managed resource; "False" if
   Public Domain, "True" otherwise
 
 - `UsageTerms` -- a description of the terms of usage for this
@@ -744,28 +705,27 @@ the document.
 
 The following TEI tags are employed:
 
-#### The description title
+## The description title
 
 The TEI `titleStmt` contains the description title.
 
-Elements:
+Element:
 
 ```xml
-/TEI/teiHeader/fileDesc/titleStmt
 /TEI/teiHeader/fileDesc/titleStmt/title
 ```
 
 Example:
 
 ```xml
-    <fileDesc>
-      <titleStmt>
+<fileDesc>
+    <titleStmt>
         <title>Description of University of Pennsylvania LJS 319: Derrota</title>
-      </titleStmt>
-    </fileDesc>
+    </titleStmt>
+</fileDesc>
 ```
 
-#### Publication information
+## Publication information
 
 The TEI `publicationStmt` contains the publisher and licensing
 information.
@@ -774,53 +734,53 @@ Elements:
 
 ```xml
 /TEI/teiHeader/fileDesc/publicationStmt/publisher
-/TEI/teiHeader/fileDesc/publicationStmt/availability
 /TEI/teiHeader/fileDesc/publicationStmt/availability/licence
 ```
 
 Example:
 
 ```xml
-      <publicationStmt>
-        <publisher>The University of Pennsylvania Libraries</publisher>
-        <availability>
-          <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
-                   This description is ©2015 University of
-                   Pennsylvania Libraries. It is licensed under a Creative Commons
-                   Attribution License version 4.0 (CC-BY-4.0
-                   https://creativecommons.org/licenses/by/4.0/legalcode. For a
-                   description of the terms of use see the Creative Commons Deed
-                   https://creativecommons.org/licenses/by/4.0/. </licence>
-          <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
-                   referenced images and their content are free of known copyright
-                   restrictions and in the public domain. See the Creative Commons
-                   Public Domain Mark page for usage details,
-                   http://creativecommons.org/publicdomain/mark/1.0/. </licence>
-        </availability>
-      </publicationStmt>
+<publicationStmt>
+    <publisher>The University of Pennsylvania Libraries</publisher>
+    <availability>
+        <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+            This description is ©2015 University of
+            Pennsylvania Libraries. It is licensed under a Creative Commons
+            Attribution License version 4.0 (CC-BY-4.0
+            https://creativecommons.org/licenses/by/4.0/legalcode. For a
+            description of the terms of use see the Creative Commons Deed
+            https://creativecommons.org/licenses/by/4.0/.
+        </licence>
+        <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+            referenced images and their content are free of known copyright
+            restrictions and in the public domain. See the Creative Commons
+            Public Domain Mark page for usage details,
+            http://creativecommons.org/publicdomain/mark/1.0/.
+        </licence>
+    </availability>
+</publicationStmt>
 ```
 
-#### General notes
+## General notes
 
 The TEI `notesStmt` contains general notes about the document.
 
-Elements:
+Element:
 
 ```xml
-/TEI/teiHeader/fileDesc/notesStmt
 /TEI/teiHeader/fileDesc/notesStmt/note
 ```
 
 Example:
 
 ```xml
-    <notesStmt>
-      <note>Ms. codex.</note>
-      <note>Title from caption title (f. 1r).</note>
-    </notesStmt>
+<notesStmt>
+    <note>Ms. codex.</note>
+    <note>Title from caption title (f. 1r).</note>
+</notesStmt>
 ```
 
-#### Document identification
+## Document identification
 
 The TEI `msIdentifier` contains identification information.  Each
 document is primarily identified by its repository and call number.
@@ -828,33 +788,32 @@ document is primarily identified by its repository and call number.
 Elements:
 
 ```xml
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/altIdentifier
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/altIdentifier/idno
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/idno
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/settlement
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/institution
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/repository
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/settlement
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/idno
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/altIdentifier
+/TEI/teiHeader/fileDesc/sourceDesc/msDesc/msIdentifier/altIdentifier/idno
 ```
 
 Example:
 
 ```xml
 <msIdentifier>
-  <settlement>Philadelphia</settlement>
-  <institution>University of Pennsylvania</institution>
-  <repository>Rare Book &amp; Manuscript Library</repository>
-  <idno type="call-number">LJS 319</idno>
-  <altIdentifier type="bibid">
-    <idno>6074170</idno>
-  </altIdentifier>
-  <altIdentifier type="resource">
-    <idno>http://hdl.library.upenn.edu/1017/d/medren/6074170</idno>
-  </altIdentifier>
+    <settlement>Philadelphia</settlement>
+    <institution>University of Pennsylvania</institution>
+    <repository>Rare Book &amp; Manuscript Library</repository>
+    <idno type="call-number">LJS 319</idno>
+    <altIdentifier type="bibid">
+        <idno>6074170</idno>
+    </altIdentifier>
+    <altIdentifier type="resource">
+        <idno>http://hdl.library.upenn.edu/1017/d/medren/6074170</idno>
+    </altIdentifier>
 </msIdentifier>
 ```
 
-#### Document abstract and summary
+## Document abstract and summary
 
 The TEI `summary` element contains a long form description of the
 document.
@@ -876,7 +835,7 @@ Example:
 </summary>
 ```
 
-#### Language information
+## Language information
 
 The TEI `textLang` element contains information about the document's
 languages.
@@ -893,7 +852,7 @@ Example:
 <textLang>Spanish</textLang>
 ```
 
-#### Content information
+## Content information
 
 The description's first TEI `msContents/msItem` element contains
 detailed description of the contents of the document as a whole. This
@@ -929,7 +888,7 @@ Example:
 </msItem>
 ```
 
-#### Subdivision content information
+## Subdivision content information
 
 TEI `msItem` elements *after* the first `msItem` contain section and
 chapter titles.  These elements can be distinguished from the general
@@ -957,10 +916,10 @@ Example:
 </msItem>
 ```
 
-Note: The `msItem/@n` attribute corresponds to the `facsimile/surface`
+The `msItem/@n` attribute corresponds to the `facsimile/surface`
 element with the same `@n` attribute.
 
-#### Document support description
+## Document support description
 
 The TEI `supportDesc` element contains information about the
 document's support, including collation information, extent, foliation
@@ -969,11 +928,9 @@ document's support, including collation information, extent, foliation
 Elements:
 
 ```xml
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/collation
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/collation/p
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/extent
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/foliation
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/support
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/support/p
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/supportDesc/support/watermark
 ```
@@ -993,14 +950,13 @@ Example:
 </supportDesc>
 ```
 
-#### Layout information
+## Layout information
 
 The TEI `layoutDesc` contains a description of the document's layout.
 
-Elements:
+Element:
 
 ```xml
-/TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/layoutDesc
 /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/layoutDesc/layout
 ```
 
@@ -1017,7 +973,7 @@ Example:
 </layoutDesc>
 ```
 
-#### Script and palaeographic information
+## Script and palaeographic information
 
 The TEI `scriptNote` element contains a description of the document's
 script.
@@ -1036,7 +992,7 @@ Example:
 </scriptDesc>
 ```
 
-#### Decorations
+## Decorations
 
 Elements:
 
@@ -1066,7 +1022,7 @@ Example:
 </decoDesc>
 ```
 
-#### Binding
+## Binding
 
 The TEI `bindingDesc` element contains a description of the document's
 binding.
@@ -1087,7 +1043,7 @@ Example:
 </bindingDesc>
 ```
 
-#### Document history
+## Document history
 
 The TEI `history` element contains information about the document's
 history including its date and place of origin and provenance history.
@@ -1116,7 +1072,7 @@ Example:
 </history>
 ```
 
-#### Keywords and genre
+## Keywords and genre
 
 TEI `keywords` elements contain genre and subject information about
 the document.
@@ -1147,12 +1103,11 @@ Example:
 </profileDesc>
 ```
 
-#### Structural metadata
+## Structural metadata
 
-The TEI `facsimile` element contains the imaged parts of the document,
-in order, with their names, linked to the document's images.  The
-`surface/@n` attribute contains the designation image name or
-page/folio number.
+The TEI `facsimile` element lists the imaged parts of the document, in
+order, with their names, linked to the document's images.  The
+`surface/@n` attribute contains the part's name or page/folio number.
 
 Elements:
 
@@ -1266,3 +1221,172 @@ following is a list of the most important of those.
   in Unicode, typically with UTF-8 encoding
 
 - XMP: Extensible Metadata Platform
+
+# Appendix: Downloading files with wget
+
+This section provides instructions for using wget to download files
+from OPenn. Wget is a command-line utility available for Linux, Mac
+OS, and Windows.
+
+
+## Installing wget
+
+First, you’ll need to install wget on your computer.
+
+### Mac OS
+
+On a Mac you can install wget directly --
+[Install and configure wget on OS X][icwosx] -- or if you already have
+[the Homebrew package installer][homebrew] you can use it.
+
+[icwosx]: http://coolestguidesontheplanet.com/install-and-configure-wget-on-os-x/ "Coolest Guides on the Planet: Install wget on OS X Yosemite"
+[homebrew]: http://brew.sh "Homebrew home page"
+
+### Windows
+
+Download the appropriate setup*.exe file from
+<http://cygwin.com/install.html>. Double-click `setup*.exe` and choose
+"Install from Internet".  Follow the prompts until you get to the
+"Select Packages" page.  Click the **+** next to Web (you may need to
+scroll down), then select the first box next to "wget: Utility to
+retrieve files from the WWW via HTTP and FTP".  Click next, accept any
+dependencies. Download and installation may take a few minutes.
+
+### Navigating the command line
+
+Cygwin will install its own folders. Wget will download files into
+these folders, and you can move the files later.
+
+On a Mac, open your Terminal program. It will probably open in your
+Documents directory. On Windows, open the Cygwin terminal.
+
+Your command prompt will look something like this, ending with a $:
+
+```sh
+abc123:Documents user$
+```
+
+To move into a different directory, use the cd command:
+
+```sh
+$ cd openn
+```
+
+Your command prompt will reflect your new location:
+
+```sh
+abc123:openn user$
+```
+
+To see all the files and folders available to you, use the ls command:
+
+```sh
+$ ls
+```
+
+To create a new folder, use the mkdir command:
+
+```sh
+$ mkdir LJSManuscripts
+```
+
+More information about these commands and others can be found on this
+[OS X command line cheat sheet][cheat].
+
+[cheat]: https://github.com/0nn0/terminal-mac-cheatsheet/wiki/Terminal-Cheatsheet-for-Mac-%28-basics-%29 "Mac OS Terminal cheat sheet"
+
+Now on to wget.
+
+### Using wget
+
+The basic `wget` command will download a single file into the directory
+you are in. So
+
+```sh
+wget http://openn.library.upenn.edu/
+```
+
+will download the index.html page at that address. However, this is
+probably not what you want. You want to download image and metadata
+files, either for the complete collection or for specific
+manuscripts. There are a number of different commands that will allow
+you to control what exactly gets downloaded, and where those files are
+placed on your computer.
+
+### Wget Recipes
+
+#### Download a single file
+
+I want to download a single image for a specific manuscript:
+
+```sh
+wget http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs16/data/web/0284_0000_web.jpg
+```
+
+This will bring down only that image that you specify. You can use the
+same command to download the XML manuscript description:
+
+```sh
+wget http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs16/data/ljs16_TEI.xml
+```
+
+#### Download multiple files
+
+You can also use wget to bulk-download files.
+
+I want to download all of the LJS Manuscript data, including master,
+thumbnail, and web images, and XML manuscript descriptions, in the
+directory structure used on the OPenn site:
+
+```sh
+wget -np -r http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/
+```
+
+- `wget` = use the wget program
+- `-np` = “no parent”, this means do not download any files that are
+  in the folders containing the LJSchoenbergManuscripts folder
+- `-r` = “recursive”, this means download files directly in the
+  LJSchoenbergManuscripts folder, and also download any files that are
+  in folders inside that folder (without this command, you would only
+  get those files directly inside the LJSchoenbergManuscripts folder)
+- `http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/` =
+  start download from this location
+
+I want to download only the XML manuscript descriptions and jpeg files (thumbnails and web images) for a single manuscript. All files are saved in a folder named ljs225
+
+```sh
+wget -nd -np -r -A.jpg -A.xml -P openn/ljs225 \
+    http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs225/
+```
+
+- `wget` = use the wget program
+- `-nd` = “no directory”, this means do not use the directory
+  structure from OPenn, put all the files into a folder specified by
+  me
+- `-np` = “no parent”, see above
+- `-r` = “recursive”, see above
+- `-A.jpg` = “accept list”, accept only .jpg files
+- `-A.xml` = “accept list”, accept only .xml files
+- `-P openn/ljs225` = “directory prefix”, the folder to which all the
+  files will be downloaded
+-
+  `http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs225/`
+  = start download from this location
+
+I want to download all the web JPEGs for *all* the manuscripts in
+OPenn to a folder called `data/web`.
+
+```sh
+wget -nd -np -r -A _web.jpg -P data/web http://openn.library.upenn.edu/Data
+```
+
+- `wget` = use the wget program
+- `-nd` = “no directory”, see above
+- `-np` = “no parent”, see above
+- `-r` = “recursive”, see above
+- `-A.xml` = “accept list”, accept only .xml files
+- `-P openn/msDesc` = “directory prefix”, see above
+- `http://openn.library.upenn.edu/Data/` = start download from this
+  location
+
+You can combine the different commands to specify exactly what you want to download.
