@@ -4,6 +4,11 @@
 
 {% block content %}
 <h1>{{ collection.name }}</h1>
+
+{% include collection.include_file %}
+
+<h2>The documents on OPenn</h2>
+
 <ul>
   {% for item in items %}
   <li>
