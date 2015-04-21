@@ -24,4 +24,5 @@ class TableOfContents(Page):
                          'items': items })
 
     def get_toc_file_name(self):
-        return settings.COLLECTIONS[self.collection]['toc_file']
+        toc_file = settings.COLLECTIONS[self.collection]['toc_file']
+        return "%s/%s" % (settings.TOC_DIR, toc_file)
