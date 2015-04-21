@@ -91,7 +91,7 @@ class CommonPrep(OPennSettings,Status):
         self.document.title = getattr(self.tei, 'title', 'Untitled')
         self.document.full_clean()
         self.document.save()
-        return document
+        return self.document
 
     def check_valid(self):
         self.package_dir.check_valid()
@@ -100,6 +100,7 @@ class CommonPrep(OPennSettings,Status):
         self.tei.add_file_list(self.document)
         self.package_dir.save_tei(self.tei, self.document)
         self.document.tei_xml = self.tei.to_string()
+        self.document.full_clean()
         self.document.save()
 
     def prep_dir(self):
@@ -132,6 +133,7 @@ class CommonPrep(OPennSettings,Status):
         else:
             self.logger.info("[%s] Complete TEI" % (basedir,))
             self.update_tei()
+            self.update_document()
             self.write_status(self.TEI_COMPLETED)
 
         # add metadata derivatives

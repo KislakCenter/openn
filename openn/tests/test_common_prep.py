@@ -56,6 +56,7 @@ class TestCommonPrep(TestCase):
         self.stage_template()
         doc_count = Document.objects.count()
         doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+        doc_id = doc.id
         prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
         image_count = Image.objects.count()
         deriv_count = Derivative.objects.count()
@@ -64,6 +65,9 @@ class TestCommonPrep(TestCase):
         self.assertEqual(Document.objects.count(), doc_count + 1)
         self.assertEqual(Image.objects.count(), image_count + prep.package_dir.file_list.file_count)
         self.assertEqual(Derivative.objects.count(), deriv_count + prep.package_dir.file_list.deriv_count)
+        doc = Document.objects.get(pk=doc_id)
+        self.assertIsNotNone(doc.title)
+        self.assertIsNotNone(doc.call_number)
 
     def test_no_data_dir(self):
         # setup
