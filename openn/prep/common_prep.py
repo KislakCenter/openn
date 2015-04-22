@@ -89,7 +89,6 @@ class CommonPrep(OPennSettings,Status):
     def update_document(self):
         self.document.call_number = self.tei.call_number
         self.document.title = getattr(self.tei, 'title', 'Untitled')
-        self.document.full_clean()
         self.document.save()
         return self.document
 
@@ -100,7 +99,6 @@ class CommonPrep(OPennSettings,Status):
         self.tei.add_file_list(self.document)
         self.package_dir.save_tei(self.tei, self.document)
         self.document.tei_xml = self.tei.to_string()
-        self.document.full_clean()
         self.document.save()
 
     def prep_dir(self):
