@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import logging
+from datetime import datetime
+
 from django.template import Context, Template
 from django.conf import settings
 from django.template.loader import get_template
@@ -12,6 +15,8 @@ from openn.pages.page import Page
 from openn.pages.document_data import DocumentData
 
 class Browse(Page):
+
+    logger = logging.getLogger(__name__)
 
     def __init__(self,doc_id,**kwargs):
         self._doc_id = doc_id
@@ -33,3 +38,38 @@ class Browse(Page):
     @property
     def document(self):
         return self._document
+
+    def log_msg(self, msg_type, msg):
+        msg = "%s; %s: %s/%s" % (
+            msg_type, msg, self.document.collection, self.document.base_dir)
+        self.logger.info(msg)
+
+
+    def is_makeable(self):
+        if not self.document.is_online:
+            self.log_msg("page not makeable", "document not online")
+            return False
+
+        if not (self.document.tei_xml and len(self.document.tei_xml) > 0):
+            self.log_msg("page not makeable", "document lacks TEI")
+            return False
+
+        return True
+
+    def is_needed(self):
+        if not self.is_makeable():
+            return False
+
+        if not self.document.prepstatus.succeeded:
+            self.log_msg("page not needed", "document's last prep failed")
+            return False
+
+        if os.path.exists(self.outfile_path()):
+            mtime = datetime.fromtimestamp(os.path.getmtime(self.outfile_path()))
+            if mtime < self.document.prepstatus.started:
+                return True
+            else:
+                self.log_msg("page not needed", "current page up-to-date")
+                return False
+        else:
+            return True

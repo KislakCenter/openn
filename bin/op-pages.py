@@ -31,29 +31,14 @@ from openn.pages.collections import Collections
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
 
+logger = None
+
 
 def cmd():
     return os.path.basename(__file__)
 
 def staging_dir():
     return settings.STAGING_DIR
-
-def readme_source_path(readme):
-    for tdir in settings.TEMPLATE_DIRS:
-        for templ in settings.README_TEMPLATES:
-            path = os.path.join(tdir, templ)
-            if os.path.exists(path):
-                return path
-
-def find_readme_paths():
-    paths = []
-    for tdir in settings.TEMPLATE_DIRS:
-        for templ in settings.README_TEMPLATES:
-            path = os.path.join(tdir, templ)
-            if os.path.exists(path):
-                paths.append(path)
-
-    return paths
 
 def setup_logger():
     ch = logging.StreamHandler(sys.stdout)
@@ -71,141 +56,58 @@ def update_online_statuses():
             if doc.is_live():
                 doc.is_online = True
                 doc.save()
-        logging.info("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
+        logging.info("Is document online: %s/%s? %s" % (
+            doc.collection, doc.base_dir, str(doc.is_online)))
 
 def collection_tags():
     return [ x for x in settings.COLLECTIONS ]
 
 
-def browse_makeable(doc):
-    if not doc.is_online:
-        logging.info("Document not online; skipping: %s/%s" % (doc.collection, doc.base_dir))
-        return False
-
-    if not (doc.tei_xml and len(doc.tei_xml) > 0):
-        logging.info("Document lacks TEI; skipping: %s/%s" % (doc.collection, doc.base_dir))
-        return False
-
-    return True
-
-def browse_needed(doc):
-    # doesn't matter if it's needed if we can't make it
-    if not browse_makeable(doc):
-        return False
-    if not doc.prepstatus.succeeded:
-        logging.info("Document's last prep failed; skipping: %s/%s" % (doc.collection, doc.base_dir))
-        return False
-
-    outfile = os.path.join(staging_dir(), doc.browse_path)
-    if os.path.exists(outfile):
-        mtime = datetime.fromtimestamp(os.path.getmtime(outfile))
-        if mtime < doc.prepstatus.started:
-            return True
-        else:
-            logging.info("Document's HTML up-to-date; skipping: %s/%s" % (doc.collection, doc.base_dir))
-            return False
-    else:
-        return True
-
 def make_browse_html(docid, force=False, dry_run=False):
     try:
-        doc = Document.objects.get(pk=docid)
-        make_page = browse_makeable(doc) if force else browse_needed(doc)
-        outpath = os.path.join(staging_dir(), doc.browse_path)
+        page = Browse(docid, **{ 'outdir': staging_dir() })
+        make_page = page.is_makeable() if force else page.is_needed()
 
         if make_page:
-            logging.info("Creating page: %s" % (outpath, ))
+            logging.info("Creating page: %s" % (page.outfile_path(), ))
             if not dry_run:
-                page = Browse(doc.id, **{ 'outdir': staging_dir() })
                 page.create_pages()
         else:
-            logging.info("Skipping page: %s" % (outpath, ))
+            logging.info("Skipping page: %s" % (page.outfile_path(), ))
     except Exception as ex:
-        msg = "Error creating browse HTML for docid: '%s'; error: %s" % (str(docid), str(ex))
+        msg = "Error creating browse HTML for docid: '%s'; error: %s" % (
+            str(docid), str(ex))
         raise OPennException(msg)
-
-def toc_makeable(coll_config):
-    tag = coll_config['tag']
-    html_dir = os.path.join(staging_dir(), coll_config['html_dir'])
-    if not os.path.exists(html_dir):
-        logging.info("No HTML dir found: %s; skipping %s" % (html_dir, tag))
-        return False
-
-    html_files = glob.glob(os.path.join(html_dir, '*.html'))
-    if len(html_files) == 0:
-        logging.info("No HTML files found in %s; skipping %s" % (html_dir, tag))
-        return False
-
-    return True
-
-def toc_needed(coll_config):
-    if not toc_makeable(coll_config):
-        return False
-
-    tag = coll_config['tag']
-    html_dir = os.path.join(staging_dir(), coll_config['html_dir'])
-    html_files = glob.glob(os.path.join(html_dir, '*.html'))
-    toc_path = os.path.join(staging_dir(), coll_config['toc_file'])
-    if not os.path.exists(toc_path):
-        return True
-
-    newest_html = max([os.path.getmtime(x) for x in html_files])
-    if os.path.getmtime(toc_path) > newest_html:
-        logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, tag))
-        return False
-
-    return True
 
 def make_toc_html(coll_name, force=False, dry_run=False):
+    toc = TableOfContents(coll_name, **{ 'template_name': 'TableOfContents.html',
+                                         'outdir': staging_dir() })
     try:
-        coll_config = settings.COLLECTIONS[coll_name]
-        make_page = toc_makeable(coll_config) if force else toc_needed(coll_config)
-        outpath = os.path.join(staging_dir(), coll_config['toc_file'])
+        make_page = toc.is_makeable() if force else toc.is_needed()
 
         if make_page:
-            logging.info("Creating TOC for collection %s: %s" % (coll_config['tag'], outpath))
+            logging.info("Creating TOC for collection %s: %s" % (
+                coll_name, toc.outfile_path()))
             if not dry_run:
-                toc = TableOfContents(coll_name, **{
-                    'template_name': 'TableOfContents.html',
-                    'outdir': staging_dir() })
                 toc.create_pages()
         else:
-            logging.info("Skipping TOC for collection %s: %s" % (coll_config['tag'], outpath))
+            logging.info("Skipping TOC for collection %s: %s" % (
+                coll_name, toc.outfile_path()))
     except Exception as ex:
-        msg = "Error creating TOC for: '%s'; error: %s" % (collection, str(ex))
+        msg = "Error creating TOC for: '%s'; error: %s" % (coll_name, str(ex))
         raise OPennException(msg)
-
-def readme_makeable(source_path):
-    return source_path and os.path.exists(source_path)
-
-def readme_needed(source_path,outpath):
-    if not readme_makeable(source_path):
-        return False
-    if os.path.exists(outpath):
-        source_mtime = os.path.getmtime(source_path)
-        out_mtime = os.path.getmtime(outpath)
-        return source_mtime >= out_mtime
-    else:
-        return True
 
 def make_readme_html(readme, force=False, dry_run=False):
     try:
-        source_path = readme_source_path(readme)
-        outpath = os.path.join(staging_dir(), readme)
-
-        make_page = False
-        if force:
-            make_page = readme_makeable(source_path)
-        else:
-            make_page = readme_needed(source_path, outpath)
+        page = Page(readme, staging_dir())
+        make_page = page.is_makeable() if force else page.is_needed()
 
         if make_page:
-            logging.info("Creating page: %s" % (outpath, ))
+            logging.info("Creating page: %s" % (page.outfile_path(), ))
             if not dry_run:
-                page = Page(readme, staging_dir())
                 page.create_pages()
         else:
-            logging.info("Skipping page: %s" % (outpath, ))
+            logging.info("Skipping page: %s" % (page.outfile_path(), ))
     except TemplateDoesNotExist as ex:
         msg = "Could not find template: %s" % (readme,)
         raise OPennException(msg)
@@ -213,55 +115,24 @@ def make_readme_html(readme, force=False, dry_run=False):
         msg = "Error creating ReadMe file: '%s'; error: %s" % (readme, str(ex))
         raise OPennException(msg)
 
-def collections_makeable(source_path):
-    return source_path and os.path.exists(source_path)
-
-def collections_needed(source_path,outpath):
-    """If the collections template exits; we always say it's needed.
-
-    Why? If implemented, the tests for creating a new collections list
-    page would ask the following.  A Yes answer to any would trigger
-    page generation.
-
-    1. Is there no existing 3_Collections.html file?
-
-    2. Is the template newer than the current 3_Collections.html file?
-
-    3. Has the collection information in the settings file changed?
-
-    4. Are there new TOC files for collections not listed in the
-       current 3_Collections.html?
-
-    Nos. 3 and 4 are too complicated to make it worth figuring out.
-
-    Therefore, we always say the page is needed.
-
-    """
-    return collections_makeable(source_path)
-
 def make_collections(opts, force=False, dry_run=False):
     try:
-        source_path = readme_source_path(settings.COLLECTIONS_TEMPLATE)
-        outpath = os.path.join(staging_dir(), settings.COLLECTIONS_TEMPLATE)
+        page = Collections(settings.COLLECTIONS_TEMPLATE, staging_dir())
 
-        make_page = False
-        if force:
-            make_page = collections_makeable(source_path)
-        else:
-            make_page = collections_needed(source_path, outpath)
+        make_page = page.is_makeable() if force else page.is_needed()
 
         if make_page:
-            logging.info("Creating list of collections: %s" % (outpath, ))
+            logging.info("Creating list of collections: %s" % (page.outfile_path(), ))
             if not dry_run:
-                page = Collections(settings.COLLECTIONS_TEMPLATE, staging_dir())
                 page.create_pages()
         else:
-            logging.info("Skipping page: %s" % (outpath, ))
+            logging.info("Skipping page: %s" % (page.outfile_path(), ))
     except TemplateDoesNotExist as ex:
         msg = "Could not find template: %s" % (settings.COLLECTIONS_TEMPLATE,)
         raise OPennException(msg)
     except Exception as ex:
-        msg = "Error creating ReadMe file: '%s'; error: %s" % (settings.COLLECTIONS_TEMPLATE, str(ex))
+        msg = "Error creating ReadMe file: '%s'; error: %s" % (
+            settings.COLLECTIONS_TEMPLATE, str(ex))
         raise OPennException(msg)
 
 # ------------------------------------------------------------------------------

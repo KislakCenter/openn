@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import glob
+import logging
+
 from django.template import Context, Template
 from django.conf import settings
 from django.template.loader import get_template
@@ -12,9 +15,11 @@ from openn.pages.document_data import DocumentData
 
 class TableOfContents(Page):
 
+    logger = logging.getLogger(__name__)
+
     def __init__(self, collection,**kwargs):
         self.collection = collection
-        updated_kwargs = kwargs.update({'outfile':self.get_toc_file_name()})
+        updated_kwargs = kwargs.update({'outfile':self.toc_path()})
         super(TableOfContents,self).__init__(**kwargs)
 
     def get_context(self):
@@ -23,6 +28,43 @@ class TableOfContents(Page):
         return Context({ 'collection': settings.COLLECTIONS[self.collection],
                          'items': items })
 
-    def get_toc_file_name(self):
-        toc_file = settings.COLLECTIONS[self.collection]['toc_file']
+    @property
+    def collection_config(self):
+        return settings.COLLECTIONS[self.collection]
+
+    def toc_path(self):
+        toc_file = self.collection_config['toc_file']
         return "%s/%s" % (settings.TOC_DIR, toc_file)
+
+
+    def is_makeable(self):
+        html_dir = os.path.join(self.outdir, self.collection_config['html_dir'])
+        if not os.path.exists(html_dir):
+            self.logger.info("TOC not makeable; no HTML dir found: %s (collection: %s)" % (
+                html_dir, self.collection))
+            return False
+
+        html_files = glob.glob(os.path.join(html_dir, '*.html'))
+        if len(html_files) == 0:
+            self.logger.info("TOC not makeable; no HTML files found in %s (collection %s)" % (
+                html_dir, self.collection))
+            return False
+
+        return True
+
+
+    def is_needed(self):
+        if not self.is_makeable():
+            return False
+
+        if not os.path.exists(self.outfile_path()):
+            return True
+
+        html_dir = os.path.join(staging_dir(), self.collection_config['html_dir'])
+        html_files = glob.glob(os.path.join(html_dir, '*.html'))
+        newest_html = max([os.path.getmtime(x) for x in html_files])
+        if os.path.getmtime(self.outfile_path) > newest_html:
+            logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.collection))
+            return False
+
+        return True
