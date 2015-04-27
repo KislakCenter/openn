@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Description of University of Pennsylvania Ms. Codex 1589: Texts for the Commemorative Office of the Virgin Mary and notated Office of the Dead</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>The University of Pennsylvania Libraries</publisher>
+            <availability>
+               <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+                                This description is ©2015 University of
+                                Pennsylvania Libraries. It is licensed under a Creative Commons
+                                Attribution License version 4.0 (CC-BY-4.0
+                                https://creativecommons.org/licenses/by/4.0/legalcode. For a
+                                description of the terms of use see the Creative Commons Deed
+                                https://creativecommons.org/licenses/by/4.0/. </licence>
+               <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+                                referenced images and their content are free of known copyright
+                                restrictions and in the public domain. See the Creative Commons
+                                Public Domain Mark page for usage details,
+                                http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+            </availability>
+         </publicationStmt>
+         <notesStmt>
+            <note>Ms. codex.</note>
+            <note>Title supplied by cataloger.</note>
+            <note>Music: Contains Hufnagelschrift notation on 5-line staves in the Office of the Dead (f. 97r-107v), with later additions in square notation on 4-line staves (f. 108r-108v).</note>
+         </notesStmt>
+         <sourceDesc>
+            <msDesc>
+               <msIdentifier>
+                  <settlement>Philadelphia</settlement>
+                  <institution>University of Pennsylvania</institution>
+                  <repository>Rare Book &amp; Manuscript Library</repository>
+                  <idno type="call-number">Ms. Codex 1589</idno>
+                  <altIdentifier type="bibid">
+                     <idno>4936653</idno>
+                  </altIdentifier>
+                  <altIdentifier type="resource">
+                     <idno>http://hdl.library.upenn.edu/1017/d/medren/4936653</idno>
+                  </altIdentifier>
+               </msIdentifier>
+               <msContents>
+                  <summary>Benedictine manuscript containing texts for Matins and Lauds from the Commemorative Office of the Virgin. This version of the Office was said most often on Saturday in place of the usual Office of the day. Also contains the Office of the Dead accompanied by musical notation for the chants. The manuscript once had leather finding tabs flush to the edge of the leaves, all but one (f. 96) of which have been torn out (for example, f. 1, 7, 69).</summary>
+                  <textLang>Latin</textLang>
+                  <msItem>
+                     <title/>
+                     <author>Catholic Church</author>
+                     <respStmt>
+                        <resp>scribe</resp>
+                        <persName>Keysser, Georg</persName>
+                     </respStmt>
+                  </msItem>
+                  <msItem n="2r">
+                     <locus>2r</locus>
+                     <title>Antiphona et responsoria et lectiones de commune beate Marie semper virginis..., f. 2r</title>
+                  </msItem>
+                  <msItem n="54v">
+                     <locus>54v</locus>
+                     <title>Lectiones infra tricesimum [assumptionis] beate Mariae semper virginis, f. 54v</title>
+                  </msItem>
+                  <msItem n="70r">
+                     <locus>70r</locus>
+                     <title>De commune beatae mariae semper virginis post octavas epiphaniae usque ad purificationem, f. 70r</title>
+                  </msItem>
+                  <msItem n="84v">
+                     <locus>84v</locus>
+                     <title>Psalmos omnes tam ad mattutinas quam ad laudes, ymnos, cantica, Te Deum laudamus, omnia secundum ordinem, f. 84v</title>
+                  </msItem>
+                  <msItem n="97r">
+                     <locus>97r</locus>
+                     <title>Kyrie eleison, f. 97r</title>
+                  </msItem>
+                  <msItem n="97v">
+                     <locus>97v</locus>
+                     <title>Antiphona ad Placebo, ad vigilias, et ad laudes, una cum responsoriis Officium pro defunctis, f. 97v</title>
+                  </msItem>
+                  <msItem n="108r">
+                     <locus>108r</locus>
+                     <title>In die depositionis ingrediendo ecclesia, f. 108r</title>
+                  </msItem>
+               </msContents>
+               <physDesc>
+                  <objectDesc>
+                     <supportDesc material="paper">
+                        <support>
+                           <p>paper</p>
+                        </support>
+                        <extent>131 leaves : 204 x 140 (166 x 107) mm. bound to 205 x 145 mm</extent>
+                        <collation>
+                           <p>Paper, 131; 1⁶(-1) 2¹⁰ 3⁶ 4¹⁰ 5⁶ 6¹⁰ 7-9⁶ 10¹⁰(-1) 11-13⁸ 14⁸(+1) 15⁸(-2) 16¹⁰ 17⁸; contemporary foliation in red ink, upper center recto, 1-5, 7, 6, 8-53, 53--66, [67], 68-76, 78-94, [i], 95-96 (=f. 2-98); modern foliation in pencil, [v, 1-126], upper right recto. References in this record are to modern foliation. Catchwords on almost every page, lower right recto or verso.</p>
+                        </collation>
+                     </supportDesc>
+                     <layoutDesc>
+                        <layout>Written in 2 columns of 27 lines (f. 2r-95v) and 2 columns of 6 staves (f. 97v-107v); frame-ruled in red ink with text ruled in lead.</layout>
+                     </layoutDesc>
+                  </objectDesc>
+                  <scriptDesc>
+                     <scriptNote>Written in a German Gothic script by Georg Keysser (f. 96r).</scriptNote>
+                  </scriptDesc>
+                  <decoDesc>
+                     <decoNote>3 full-page borders in colored inks with architectural columns (f. 1v, 54v, 69v); 5-line initial and full scrollwork border in colored inks (f. 2r); 8-line initial in colored inks and first words in display uncials in red ink (f. 84v); 2-line initial in 2 colors and knotwork design in colored inks (f. 96r); 1- to 3-line initials in various colors throughout; rubrication, foliation, and frame-ruling in red ink.</decoNote>
+                     <decoNote n="1v">Decorated border, f. 1v</decoNote>
+                     <decoNote n="2r">Decorated border, f. 2r</decoNote>
+                     <decoNote n="2r">Decorated initial, Initial I, f. 2r</decoNote>
+                     <decoNote n="4r">Decorated initial, Initial P, f. 4r</decoNote>
+                     <decoNote n="4r">Decorated initial, Initial A, f. 4r</decoNote>
+                     <decoNote n="4v">Decorated initial, Initial A, f. 4v</decoNote>
+                     <decoNote n="4v">Decorated initial, Initial S, f. 4v</decoNote>
+                     <decoNote n="4v">Decorated initial, Initial A, f. 4v</decoNote>
+                     <decoNote n="7r">Decorated initial, Initial S, f. 7r</decoNote>
+                     <decoNote n="9v">Decorated initial, Initial S, f. 9v</decoNote>
+                     <decoNote n="12r">Decorated initial, Initial D, f. 12r</decoNote>
+                     <decoNote n="14v">Decorated initial, Initial B, f. 14v</decoNote>
+                     <decoNote n="17r">Decorated initial, Initial D, f. 17r</decoNote>
+                     <decoNote n="19v">Decorated initial, Initial E, f. 19v</decoNote>
+                     <decoNote n="22r">Decorated initial, Initial A, f. 22r</decoNote>
+                     <decoNote n="22r">Decorated initial, Initial N, f. 22v</decoNote>
+                     <decoNote n="24v">Decorated initial, Initial S, f. 24v</decoNote>
+                     <decoNote n="27r">Decorated initial, Initial B, f. 27r</decoNote>
+                     <decoNote n="29v">Decorated initial, Initial S, f. 29</decoNote>
+                     <decoNote n="32r">Decorated initial, Initial E, f. 32r</decoNote>
+                     <decoNote n="32r">Decorated initial, Initial N, f. 32r</decoNote>
+                     <decoNote n="34v">Decorated initial, Initial D, f. 34v</decoNote>
+                     <decoNote n="37v">Decorated initial, Initial S, f. 37v</decoNote>
+                     <decoNote n="40r">Decorated initial, Initial S, f. 40r</decoNote>
+                     <decoNote n="42r">Decorated initial, Initial E, f. 42r</decoNote>
+                     <decoNote n="45r">Decorated initial, Initial S, f. 45r</decoNote>
+                     <decoNote n="47v">Decorated initial, Initial S, f. 47v</decoNote>
+                     <decoNote n="47v">Decorated initial, Initial O, f. 47v</decoNote>
+                     <decoNote n="54v">Decorated initial, Initial I, f. 54v</decoNote>
+                     <decoNote n="54v">Decorated border, f. 54v</decoNote>
+                     <decoNote n="55r">Decorated initial, Initial L, f. 55r</decoNote>
+                     <decoNote n="58v">Decorated initial, Initial S, f. 58v</decoNote>
+                     <decoNote n="61r">Decorated initial, Initial S, f. 61r</decoNote>
+                     <decoNote n="69v">Decorated border, f. 69v</decoNote>
+                     <decoNote n="70r">Decorated initial, Initial D, f. 70r</decoNote>
+                     <decoNote n="72v">Decorated initial, Initial S, f. 72v</decoNote>
+                     <decoNote n="72v">Decorated initial, Initial N, f. 72v</decoNote>
+                     <decoNote n="75r">Decorated initial, Initial E, f. 75r</decoNote>
+                     <decoNote n="75r">Decorated initial, Initial I, f. 75r</decoNote>
+                     <decoNote n="78r">Decorated initial, Initial S, f. 78r</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial I, f. 84r</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial D, f. 84v</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial D, f. 84v</decoNote>
+                     <decoNote n="84v">Decorated initial, Initial U, f. 84v</decoNote>
+                     <decoNote n="85r">Decorated initial, Initial Q, f. 85r</decoNote>
+                     <decoNote n="85v">Decorated initial, Initial A, f. 85v</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial S, f. 86r</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial I, f. 86r</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial D, f. 86r</decoNote>
+                     <decoNote n="86r">Decorated initial, Initial C, f. 86r</decoNote>
+                     <decoNote n="86v">Decorated initial, Initial D, f. 86v</decoNote>
+                     <decoNote n="88v">Decorated initial, Initial B, f. 88v</decoNote>
+                     <decoNote n="88v">Decorated initial, Initial F, f. 86v</decoNote>
+                     <decoNote n="90v">Decorated initial, Initial A, f. 90v</decoNote>
+                     <decoNote n="90v">Decorated initial, Initial L, f. 90v</decoNote>
+                     <decoNote n="91r">Decorated initial, Initial T, f. 91r</decoNote>
+                     <decoNote n="91v">Decorated initial, Initial C, f. 91v</decoNote>
+                     <decoNote n="92r">Decorated initial, Initial F, f. 92r</decoNote>
+                     <decoNote n="92r">Decorated initial, Initial S, f. 92r</decoNote>
+                     <decoNote n="92v">Decorated initial, Initial I, f. 92v</decoNote>
+                     <decoNote n="93r">Decorated initial, Initial B, f. 93r</decoNote>
+                     <decoNote n="93v">Decorated initial, Initial L, f. 93v</decoNote>
+                     <decoNote n="94r">Decorated initial, Initial C, f. 94r</decoNote>
+                     <decoNote n="94r">Decorated initial, Initial L, f. 92r</decoNote>
+                     <decoNote n="95r">Decorated initial, Initial S, f. 95r</decoNote>
+                     <decoNote n="96r">Decorated initial, Initial E, f. 96r</decoNote>
+                     <decoNote n="96r">Decorated endpiece, f. 96r</decoNote>
+                     <decoNote n="97r">Musical notation, f. 97r</decoNote>
+                     <decoNote n="97v">Musical notation, f. 97v</decoNote>
+                     <decoNote n="97v">Decorated initial, Initial P, f. 97r</decoNote>
+                     <decoNote n="98v">Decorated initial, Initial D, f. 98v</decoNote>
+                     <decoNote n="99r">Decorated initial, Initial C, f. 99r</decoNote>
+                     <decoNote n="99v">Decorated initial, Initial Q, f. 99v</decoNote>
+                     <decoNote n="100r">Decorated initial, Initial D, f. 100r</decoNote>
+                     <decoNote n="101r">Decorated initial, Initial I, f. 101r</decoNote>
+                     <decoNote n="101r">Decorated initial, Initial M, f. 101r</decoNote>
+                     <decoNote n="101v">Decorated initial, Initial H, f. 102r</decoNote>
+                     <decoNote n="102r">Decorated initial, Initial R, f. 102r</decoNote>
+                     <decoNote n="103r">Decorated initial, Initial C, f. 103r</decoNote>
+                     <decoNote n="103v">Decorated initial, Initial P, f. 103v</decoNote>
+                     <decoNote n="104r">Decorated initial, Initial D, f. 104r</decoNote>
+                     <decoNote n="105r">Decorated initial, Initial L, f. 105r</decoNote>
+                     <decoNote n="105v">Decorated initial, Initial L, f. 105v</decoNote>
+                     <decoNote n="106v">Decorated initial, Initial E, f. 106v</decoNote>
+                     <decoNote n="107r">Decorated initial, Initial E, f. 107r</decoNote>
+                     <decoNote n="108r">Musical notation, f. 108r</decoNote>
+                  </decoDesc>
+                  <bindingDesc>
+                     <binding>
+                        <p>Original 16th-century vellum over pasteboard, gold-stamped with stamps of the Annunciation (upper cover) and the Nativity (lower cover) and gold-tooled borders; remnants of 2 pairs of ties.</p>
+                     </binding>
+                  </bindingDesc>
+               </physDesc>
+               <history>
+                  <origin>
+                     <p>Written in the Benedictine abbey in Elchingen (Bavaria), in 1596 (f. 96r).</p>
+                     <origDate>1596</origDate>
+                     <origPlace>Elchingen</origPlace>
+                  </origin>
+                  <provenance>Held in the abbey library no later than 1802, when the monastery was
+                        secularized and the contents of its library sent to Munich.</provenance>
+                  <provenance>Sold by Les Enluminures (Paris and Chicago), 2011.</provenance>
+               </history>
+            </msDesc>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <textClass>
+            <keywords n="subjects">
+               <term>Catholic Church--Prayers and devotions--Early works to 1800</term>
+               <term>Catholic Church--Liturgy--Texts</term>
+               <term>Benedictines--Liturgy</term>
+               <term>Gregorian chants--Manuscripts</term>
+            </keywords>
+            <keywords n="form/genre">
+               <term>Codices</term>
+               <term>Choirbooks</term>
+               <term>Gregorian chant</term>
+               <term>Finding tabs</term>
+               <term>Manuscripts, Latin--16th century</term>
+               <term>Manuscripts, Renaissance</term>
+            </keywords>
+         </textClass>
+      </profileDesc>
+   </teiHeader>
+   <facsimile>
+      <graphic url=""/>
+   </facsimile>
+</TEI>

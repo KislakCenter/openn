@@ -8,6 +8,7 @@ from openn.xml.ms_item import MSItem
 from openn.xml.licence import Licence
 from openn.xml.resp_stmt import RespStmt
 from openn.xml.identifier import Identifier
+from openn.openn_exception import OPennException
 from openn.models import *
 
 class OPennTEI(XMLWhatsit):
@@ -241,6 +242,23 @@ class OPennTEI(XMLWhatsit):
     @property
     def signatures(self):
         return self._get_text('//t:supportDesc/t:collation/t:p/t:signatures')
+
+    def validate(self):
+        """Ensure that required attributes are present.  There are two: title
+        and call_number.
+
+        """
+        errors = []
+
+        if self.title is None or self.title.strip() == '':
+            errors.append("Title (msContents/msItem/title) cannot be blank")
+
+        if self.call_number is None or self.call_number.strip() == '':
+            errors.append("Call number (msIdentifier/idno) cannot be blank")
+
+        if len(errors) > 0:
+            msg  = "TEI errors found: %s" % (', '.join(errors),)
+            raise OPennException(msg)
 
     def fix_n(self, label):
         # normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))
