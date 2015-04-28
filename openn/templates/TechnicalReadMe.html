@@ -3,16 +3,22 @@
 {% block title %}OPenn: Technical Read Me{% endblock %}
 
 {% block content %}
-<h1>OPenn: Technical Read Me</h1>
+
+<div class="breadcrumb"><p>
+    <span><a href="/">Home</a>&nbsp;</span>
+</p></div>
+
 
 {% load markdown_deux_tags %}
 {% markdown %}
+
+# OPenn: Technical Read Me
 
 This file provides technical information about accessing digital
 images from the OPenn website, and about the conventions and standards
 used in creating the data.
 
-# Licenses and use
+## Licenses and use
 
 All images and metadata are released under licenses that Creative
 Commons has approved for Free Cultural Works, bearing:
@@ -38,14 +44,14 @@ On this website, you will find material from several institutional
 collections.  In order to determine the license under images have been
 released, please refer to each collection's web page on OPenn.
 
-# Accessing the data
+## Accessing the data
 
 Data on this site can be accessed in a number of ways, via the HTTP
 web site, anonymous FTP, and the RSYNC remote synchronization
 utility. Each of these is discussed below.
 
-Users who want to do more than do casual browsing using the site’s
-HTML pages should understand its directory structure. The site's
+Users who want to do more than casual browsing using the site’s HTML
+pages should understand its directory structure.  The site's
 organization is:
 
     0_IntroductionReadMe.html                # general site information
@@ -68,39 +74,21 @@ organization is:
 Within each manuscript directory, manuscript images and metadata are
 presented in a structured package, which is described below.
 
-## HTTP Access
+### HTTP Access
 
-Individual manuscript images can viewed and downloaded from this
+Individual manuscript images can be viewed and downloaded from this
 site using a Web browser. Site navigation guides are in the How to use
 this data set section of the ReadMe file.
 
-## Anonymous FTP
+### Anonymous FTP
 
-This site is accessible via anonymous FTP, at openn.library.upenn.edu:
+Coming soon!
 
-    $ ftp anonymous@openn.library.upenn.edu
+### Anonymous RSYNC
 
-TODO: COMPLETE Anonymous FTP
+Coming soon!
 
-Use your email address as your password.
-
-Free graphical FTP clients are available for all major commercial and
-free operating systems. For configuration of FTP client software, use
-the standard FTP network port, 21.
-
-## Anonymous RSYNC
-
-RSYNC is an application for synchronizing files between computer
-systems and is probably the best tool to use for bulk retrieval of
-data from OPenn.
-
-All data is accessible via anonymous rsync. From the command line on
-Unix systems the following command can be used to see available
-targets.
-
-TODO: Complete Anonymous RSYNC
-
-## File naming conventions
+### File naming conventions
 
 Image files have names like:
 
@@ -123,11 +111,11 @@ Image files have names like:
 
 Each image has a base name consisting of document identifier (e.g.,
 `0284`), underscore, and a serial number (e.g., `0003`). Each of the
-files that shares a base name is a different version of the same
+files that share a base name is a different version of the same
 image. Serial numbers are in a natural order, such as book page
 order. For example, if an entire book has been imaged including cover,
 then the first serial number (`0000`) would be assigned to the outside
-front cover, the second serial number to the insdie front cover, and
+front cover, the second serial number to the inside front cover, and
 so on.
 
     0284_0000
@@ -136,7 +124,7 @@ so on.
     0284_0003
 
 
-Note that what parts of a document are imaged and their order will
+Note that the parts of a document that are imaged and their order will
 depend on the providing institution's practice and policies.  The
 order and description of each image will be given in each document's
 TEI description's `<facsimile>`.  See below for more information on
@@ -163,7 +151,7 @@ for LJS 16, image serial number `0284`:
     0284_0000_thumb.tif
     0284_0000_web.tif
 
-### XMP sidecar files
+#### XMP sidecar files
 
 Each image is accompanied by an XMP "sidecar" file that contains the
 image's metadata. Each sidecar file has the name of the image with an
@@ -178,14 +166,14 @@ additional `.xmp` extension:
 
 See below for more information on the XMP metadata.
 
-## Finding the file you want
+### Finding the file you want
 
 Image subject names are made available in two ways: through a
 human-readable browse page and through a TEI manuscript description.
 
-Each document's browse page lists the pieces in order with the piece
-name ("folio 1a", "front flyleaf 1a", etc.) and associated file names,
-as can be seen here:
+Each document's browse page lists the images in order with content
+names ("folio 1a", "front flyleaf 1a", etc.) and associated file
+names, as can be seen here:
 
 
 - <http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/html/ljs168.html>
@@ -226,7 +214,7 @@ the TEI file's `<facsimile>` section.  Note this fragment from
 
 TEI manuscript description is described in greater detail below.
 
-### Manuscript packaging & preservation metadata
+#### Manuscript packaging & preservation metadata
 
 Each object's images and metadata are present in a regular package
 structure that allows for automated navigation of the package and its
@@ -289,7 +277,7 @@ here in the directory `ljs319/data`.  The `data` directory contains
 the manuscript description and the image files and their
 metadata. Each of these is described below.
 
-### Core and "extra" images
+#### Core and "extra" images
 
 Core document images are in the package's `data/master`, `data/thumb`,
 and `data/web` directories.  All of these images are listed in the
@@ -298,7 +286,7 @@ files provided with the document, like color and ruler reference
 shots, are included in the `data/extra` directory in `master`,
 `thumb`, and `web` sub-directories.
 
-### Package metadata
+#### Package metadata
 
 The top-level directory contains the `data` directory and the package
 metadata.
@@ -313,14 +301,14 @@ There are two package metadata files: `manifest-sha1.txt` and
 its SHA-1 checksum.  The second provides information for the *package*
 version.
 
-See below under ''Technical and preservation metadata'' for more on
+See below under "Preservation and technical metadata" for more on
 the manifest and version files.
 
 
-# Preservation and technical metadata
+## Preservation and technical metadata
 
 
-## Package contents and integrity
+### Package contents and integrity
 
 The top-level directory of each package contains a `manifest-sha1.txt`
 file that lists each file in the package's data directory with its
@@ -353,7 +341,7 @@ Running `sha1sum` on a file will print its checksum and name:
     $ sha1sum data/ljs319_TEI.xml
     0d0886412592226f8a0044e7a1b0d50088830f04  data/ljs319_TEI.xml
 
-This checksum value can be used to confirm the file has remain
+This checksum value can be used to confirm the file has remained
 unchanged.  Note that the checksum printed for `data/ljs319_TEI.xml`
 by `sha1sum` is identical to the one listed in the above excerpt from
 the `manifest-sha1.txt` file.
@@ -386,12 +374,12 @@ For more information see the [SHA-1 Wikipedia page][sha1wiki].
 
 [sha1wiki]: http://en.wikipedia.org/wiki/SHA-1 "SHA-1 (Wikipedia)"
 
-## Package version
+### Package version
 
 It should be a rare occurrence, but from time-to-time packages will
 need to be updated.  OPenn does not yet have a full system for
 managing package versions; however, in anticipation of that system
-each package is provided with a `version.txt` file its top-level
+each package is provided with a `version.txt` file in its top-level
 directory:
 
     ljs319
@@ -464,16 +452,15 @@ manuscript description or the addition of new images to the data
 set. While the new version will work as before, it may be desirable to
 update software to take advantage of new data.
 
-A major version change (e.g., `1.1.0` to `2.0.0`) indicates the
+A *major version* change (e.g., `1.1.0` to `2.0.0`) indicates the
 removal of data or metadata or other substantive change that will
 likely cause this version to not work with software built on a
 previous version of the package.
 
-## Document descriptions and structural metadata
+### Descriptive and structural metadata
 
-The description of document content and structural metadata are
-provided in a TEI file like `ljs319_TEI.xml`.  The file is stored and
-named as follows:
+A TEI file like `ljs319_TEI.xml` provides descriptive and structural
+metadata for each document.  The file is stored and named as follows:
 
      <PACKAGEDIR>/data/<PACKAGEDIR>_TEI.xml
 
@@ -487,7 +474,7 @@ directory.
 See the section TEI manuscript description below for a detailed
 description of file.
 
-## XMP
+### XMP
 
 Each image file has key metadata stored in its header.  This
 information is also included in a `.xmp` sidecar file for each image:
@@ -643,7 +630,7 @@ information.  What follows is the content of a sample XMP file.
     <?xpacket end='w'?>
 
 
-### Notable XMP elements
+#### Notable XMP elements
 
 Dublin Core elements:
 
@@ -695,7 +682,7 @@ Photoshop element:
 - `Source` -- the source of the image content
     - example: "University of Pennsylvania LJS 319, fol. 1r"
 
-### xmpRight elements
+#### xmpRight elements
 
 - `Marked` -- whether this is a rights-managed resource; "False" if
   Public Domain, "True" otherwise
@@ -707,15 +694,17 @@ Photoshop element:
       Public Domain Mark page for usage details,
       http://creativecommons.org/publicdomain/mark/1.0/."
 
-# TEI document description
+## TEI document description
 
 Each document package includes a TEI file that provides a manuscript
 description and structural metadata that maps images to the pages of
-the document.
+the document.  TEI files comply with the [TEI P5 Guidelines][teip5].
+
+[teip5]: http://www.tei-c.org/Guidelines/P5/ "TEI P5 Guidelines"a
 
 The following TEI tags are employed:
 
-## The description title
+### The description title
 
 The TEI `titleStmt` contains the description title.
 
@@ -731,7 +720,7 @@ Example:
         </titleStmt>
     </fileDesc>
 
-## Publication information
+### Publication information
 
 The TEI `publicationStmt` contains the publisher and licensing
 information.
@@ -763,7 +752,7 @@ Example:
         </availability>
     </publicationStmt>
 
-## General notes
+### General notes
 
 The TEI `notesStmt` contains general notes about the document.
 
@@ -778,7 +767,7 @@ Example:
         <note>Title from caption title (f. 1r).</note>
     </notesStmt>
 
-## Document identification
+### Document identification
 
 The TEI `msIdentifier` contains identification information.  Each
 document is primarily identified by its repository and call number.
@@ -807,7 +796,7 @@ Example:
         </altIdentifier>
     </msIdentifier>
 
-## Document abstract and summary
+### Document abstract and summary
 
 The TEI `summary` element contains a long form description of the
 document.
@@ -825,7 +814,7 @@ Example:
       given. Stored rolled in an early bamboo case.
     </summary>
 
-## Language information
+### Language information
 
 The TEI `textLang` element contains information about the document's
 languages.
@@ -838,7 +827,7 @@ Example:
 
     <textLang>Spanish</textLang>
 
-## Content information
+### Content information
 
 The description's first TEI `msContents/msItem` element contains
 detailed description of the contents of the document as a whole. This
@@ -870,7 +859,7 @@ Example:
         </respStmt>
     </msItem>
 
-## Subdivision content information
+### Subdivision content information
 
 TEI `msItem` elements *after* the first `msItem` contain section and
 chapter titles.  These elements can be distinguished from the general
@@ -897,11 +886,11 @@ Example:
 The `msItem/@n` attribute corresponds to the `facsimile/surface`
 element with the same `@n` attribute.
 
-## Document support description
+### Document support description
 
 The TEI `supportDesc` element contains information about the
-document's support, including collation information, extent, foliation
-(or pagination), support material, and watermark.
+document's support, including support material, collation information,
+extent, foliation (or pagination), and watermark.
 
 Elements:
 
@@ -924,7 +913,7 @@ Example:
         </collation>
     </supportDesc>
 
-## Layout information
+### Layout information
 
 The TEI `layoutDesc` contains a description of the document's layout.
 
@@ -943,7 +932,7 @@ Example:
         </layout>
     </layoutDesc>
 
-## Script and palaeographic information
+### Script and palaeographic information
 
 The TEI `scriptNote` element contains a description of the document's
 script.
@@ -958,7 +947,7 @@ Example:
         <scriptNote>Written in Italian semi-cursive Hebrew script.</scriptNote>
     </scriptDesc>
 
-## Decorations
+### Decorations
 
 Elements:
 
@@ -984,7 +973,7 @@ Example:
         <!-- ... -->
     </decoDesc>
 
-## Binding
+### Binding
 
 The TEI `bindingDesc` element contains a description of the document's
 binding.
@@ -1001,7 +990,7 @@ Example:
         </binding>
     </bindingDesc>
 
-## Document history
+### Document history
 
 The TEI `history` element contains information about the document's
 history including its date and place of origin and provenance history.
@@ -1026,7 +1015,7 @@ Example:
         <provenance>Deposit by Lawrence J. Schoenberg and Barbara Brizdle, 2013.</provenance>
     </history>
 
-## Keywords and genre
+### Keywords and genre
 
 TEI `keywords` elements contain genre and subject information about
 the document.
@@ -1053,7 +1042,7 @@ Example:
         </textClass>
     </profileDesc>
 
-## Structural metadata
+### Structural metadata
 
 The TEI `facsimile` element lists the imaged parts of the document, in
 order, with their names, linked to the document's images.  The
@@ -1109,27 +1098,6 @@ Example:
             <graphic height="1800px" url="web/0102_0011_web.jpg" width="1421px"/>
         </surface>
         <!-- ... -->
-        <surface n="131r">
-            <graphic height="3594px" url="master/0102_0270.tif" width="2837px"/>
-            <graphic height="190px" url="thumb/0102_0270_thumb.jpg" width="150px"/>
-            <graphic height="1800px" url="web/0102_0270_web.jpg" width="1421px"/>
-        </surface>
-        <surface n="131v">
-            <graphic height="3594px" url="master/0102_0271.tif" width="2837px"/>
-            <graphic height="190px" url="thumb/0102_0271_thumb.jpg" width="150px"/>
-            <graphic height="1800px" url="web/0102_0271_web.jpg" width="1421px"/>
-        </surface>
-        <surface n="Flyleaf 1 recto">
-            <graphic height="3594px" url="master/0102_0272.tif" width="2837px"/>
-            <graphic height="190px" url="thumb/0102_0272_thumb.jpg" width="150px"/>
-            <graphic height="1800px" url="web/0102_0272_web.jpg" width="1421px"/>
-        </surface>
-        <surface n="Flyleaf 1 verso">
-            <graphic height="3594px" url="master/0102_0273.tif" width="2837px"/>
-            <graphic height="190px" url="thumb/0102_0273_thumb.jpg" width="150px"/>
-            <graphic height="1800px" url="web/0102_0273_web.jpg" width="1421px"/>
-        </surface>
-        <!-- ... -->
         <surface n="Inside back cover">
             <graphic height="3594px" url="master/0102_0276.tif" width="2837px"/>
             <graphic height="190px" url="thumb/0102_0276_thumb.jpg" width="150px"/>
@@ -1148,38 +1116,47 @@ Example:
     </facsimile>
 
 
-# Standards
+## Standards
 
 OPenn data and metadata adhere to international standards. The
 following is a list of the most important of those.
 
 - Dublin Core: each image includes descriptive Dublin Core metadata
-  (see Dublin Core in the Read Me file for details)
+  based on the Dublin Core Metadata Elements (DCME);
+  for more information on DCME, see the [Dublin Core site][DCME]
 
 - TEI P5: manuscript description information is encoded according to
-  Text Encoding Initiative (TEI) P5 guidelines (see the Manuscript
-  Description file) BagIt: images are packaged and delivered using the
-  BagIt protocol (see above)
+  [Text Encoding Initiative (TEI) P5 guidelines][teip5]
 
-- TIFF: when available TIFF images are used for master images
+- TIFF: when available TIFF images are used for master images; the
+  [TIFF specification][TIFF] is available as PDF from the Adobe
+  website
 
 - Unicode: text information in XML files and other text documents is
-  in Unicode, typically with UTF-8 encoding
+  in Unicode, typically with UTF-8 encoding; visit
+  [Unicode.org][Unicode] for information on the Unicode standard
 
-- XMP: Extensible Metadata Platform
+- XMP: [Extensible Metadata Platform][XMP]; all images have
+  XMP-encoded metadata in their headers and are accompanied by XMP
+  sidecar files
 
-# Appendix: Downloading files with wget
+[DCME]: http://dublincore.org/documents/dces/ "Dublin Core Metadata Elements"
+[TIFF]: https://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf "TIFF Revision 6.0"
+[Unicode]: http://www.unicode.org "Unicode.org"
+[XMP]: http://www.adobe.com/devnet/xmp.html "XMP Development Center (adobe.com)"
+
+## Appendix: Downloading files with wget
 
 This section provides instructions for using wget to download files
 from OPenn. Wget is a command-line utility available for Linux, Mac
 OS, and Windows.
 
 
-## Installing wget
+### Installing wget
 
 First, you’ll need to install wget on your computer.
 
-### Mac OS
+#### Mac OS
 
 On a Mac you can install wget directly --
 [Install and configure wget on OS X][icwosx] -- or if you already have
@@ -1188,17 +1165,19 @@ On a Mac you can install wget directly --
 [icwosx]: http://coolestguidesontheplanet.com/install-and-configure-wget-on-os-x/ "Coolest Guides on the Planet: Install wget on OS X Yosemite"
 [homebrew]: http://brew.sh "Homebrew home page"
 
-### Windows
+#### Windows
 
 Download the appropriate setup*.exe file from
 <http://cygwin.com/install.html>. Double-click `setup*.exe` and choose
-"Install from Internet".  Follow the prompts until you get to the
-"Select Packages" page.  Click the **+** next to Web (you may need to
-scroll down), then select the first box next to "wget: Utility to
+"Install from Internet".  Follow the prompts until you are asked to
+choose a download site for cygwin. Choose any site and continue.
+Follow the prompts again, until you get to the "Select Packages" page.
+Click the **+** next to Web (you may need to scroll down), then click
+directly on "Skip" and select the first box next to "wget: Utility to
 retrieve files from the WWW via HTTP and FTP".  Click next, accept any
 dependencies. Download and installation may take a few minutes.
 
-### Navigating the command line
+#### Navigating the command line
 
 Cygwin will install its own folders. Wget will download files into
 these folders, and you can move the files later.
@@ -1206,7 +1185,7 @@ these folders, and you can move the files later.
 On a Mac, open your Terminal program. It will probably open in your
 Documents directory. On Windows, open the Cygwin terminal.
 
-Your command prompt will look something like this, ending with a $:
+Your command prompt will look something like this, ending with a `$`:
 
     abc123:Documents user$
 
@@ -1233,7 +1212,7 @@ More information about these commands and others can be found on this
 
 Now on to wget.
 
-### Using wget
+#### Using wget
 
 The basic `wget` command will download a single file into the directory
 you are in. So
@@ -1247,9 +1226,9 @@ manuscripts. There are a number of different commands that will allow
 you to control what exactly gets downloaded, and where those files are
 placed on your computer.
 
-### Wget Recipes
+#### wget Recipes
 
-#### Download a single file
+##### Download a single file
 
 I want to download a single image for a specific manuscript:
 
@@ -1260,7 +1239,7 @@ same command to download the XML manuscript description:
 
     wget http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs16/data/ljs16_TEI.xml
 
-#### Download multiple files
+##### Download multiple files
 
 You can also use wget to bulk-download files.
 

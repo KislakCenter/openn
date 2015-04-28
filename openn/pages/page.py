@@ -18,7 +18,12 @@ class Page(object):
         self.template_name = template_name
         self.template      = get_template(self.template_name)
         self.outdir        = outdir
+        self._title        = kwargs['title'] if 'title' in kwargs else None
         self.outfile       = kwargs['outfile'] if 'outfile' in kwargs else None
+
+    @property
+    def title(self):
+        return self._title
 
     def source_path(self):
         for tdir in settings.TEMPLATE_DIRS:
@@ -66,8 +71,7 @@ class Page(object):
         else:
             return True
 
-
     def get_context(self):
         """By default context is empty. Child classes should override this
         method."""
-        return Context({})
+        return Context({ 'title': self.title })

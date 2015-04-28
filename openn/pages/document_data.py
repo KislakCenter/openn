@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from django.conf import settings
+
 from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.pages.document_page import DocumentPage
@@ -19,6 +21,20 @@ class DocumentData:
     @property
     def document(self):
         return self._document
+
+    @property
+    def collection_config(self):
+        return settings.COLLECTIONS[self.document.collection]
+
+    @property
+    def collection_name(self):
+        return self.collection_config['name']
+
+    @property
+    def toc_path(self):
+        toc_dir = settings.TOC_DIR
+        toc_file = self.collection_config['toc_file']
+        return "/%s/%s" % (toc_dir, toc_file)
 
     @property
     def pages(self):

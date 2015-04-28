@@ -29,11 +29,15 @@ class Browse(Page):
 
     def get_context(self):
         # items = Document.objects.filter(collection=self.collection)
-        return Context({ 'doc': self.data })
+        return Context({ 'doc': self.data, 'title': self.title })
 
     @property
     def data(self):
         return self._data
+
+    @property
+    def title(self):
+        return "%s %s" % (self.document.call_number, self.document.title)
 
     @property
     def document(self):

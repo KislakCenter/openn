@@ -77,8 +77,9 @@ DERIVS = {
 
 TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
-README_TEMPLATES = [ '0_ReadMe.html', '1_TechnicalReadMe.html' ]
-COLLECTIONS_TEMPLATE = '3_Collections.html'
+README_TEMPLATES = [ { 'file': 'ReadMe.html', 'title': 'Read Me' },
+                     { 'file': 'TechnicalReadMe.html', 'title': 'Technical Read Me' } ]
+COLLECTIONS_TEMPLATE = 'Collections.html'
 
 STAGING_DIR = os.environ['OPENN_STAGING_DIR']
 PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
@@ -91,7 +92,7 @@ COLLECTIONS = {
         'tag': 'medren',
         'name': 'Penn Manuscripts',
         'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with the permission of their owners.',
-        'toc_file': 'TOC_PennManuscripts.html',
+        'toc_file': 'PennManuscripts.html',
         'include_file': 'PennManuscripts.html',
         'web_dir': 'Data/PennManuscripts',
         'html_dir': 'Data/PennManuscripts/html',
@@ -118,7 +119,7 @@ COLLECTIONS = {
                     },
                     'metadata': {
                         'url': 'http://creativecommons.org/licenses/by/4.0/',
-                        'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
+                        'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>). For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
                     },
                 },
             },
@@ -127,7 +128,7 @@ COLLECTIONS = {
                 'tag': 'ljs',
                 'name': 'Lawrence J. Schoenberg Manuscripts',
                 'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
-                'toc_file': 'TOC_LJSchoenbergManuscripts.html',
+                'toc_file': 'LJSchoenbergManuscripts.html',
                 'include_file': 'LJSchoenbergManuscripts.html',
                 'web_dir': 'Data/LJSchoenbergManuscripts',
                 'html_dir': 'Data/LJSchoenbergManuscripts/html',

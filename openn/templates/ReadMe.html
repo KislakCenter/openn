@@ -4,6 +4,12 @@
 
 {% block content %}
 
+<div class="breadcrumb"><p>
+    <span><a href="/">Home</a>&nbsp;</span>
+</p></div>
+
+
+
 {% load markdown_deux_tags %}
 {% markdown "readme" %}
 
@@ -51,11 +57,13 @@ collection web page on OPenn.
 Unless otherwise stated, all manuscript descriptions and other
 cataloging metadata are copyright by the holding institution and
 licensed for use under a Creative Commons Attribution Licensed version
-4.0 (CC-BY-4.0
-<https://creativecommons.org/licenses/by/4.0/legalcode>).
+4.0 (CC-BY-4.0):
 
-For a description of the terms of use see the Creative Commons Deed
-<https://creativecommons.org/licenses/by/4.0/>.
+- <https://creativecommons.org/licenses/by/4.0/legalcode>
+
+For a description of the terms of use see the Creative Commons Deed:
+
+- <https://creativecommons.org/licenses/by/4.0/>.
 
 ## Citation style
 
@@ -83,10 +91,10 @@ information when citing images from its collection.
 
 ## Sponsorship
 
-The digitization of many of the manuscripts on OPenn were digitized
-through grants and awards from public and private donors.  See each
-collection's page for information about the sponsorship and support
-that made possible the wealth of materials available through OPenn.
+Many of the manuscripts on OPenn were digitized through grants and
+awards from public and private donors.  See each collection's page for
+information about the sponsorship and support that made possible the
+wealth of materials available through OPenn.
 
 ## Intended audiences
 
@@ -177,11 +185,11 @@ structure access are described below.
 ### HTML access
 
 To ease human navigation of the site, a series of web pages is
-provided. The entry point is the
-[3_Collections.html](/3_Collections.html) file, which lists all of the
-collections currently on the site. There links can be found to
-collection-specific manuscript listings (files like
-[TOC_LJSchoenberg_Manuscripts.html](/TOC_LJSchoenbergManuscripts.html)). The
+provided. The entry point is the [Collections.html](/Collections.html)
+file, which lists all of the collections currently on the site. There
+links can be found to collection-specific manuscript listings (files
+like
+[LJSchoenbergManuscripts.html](/Collections/LJSchoenbergManuscripts.html)). The
 amount of detail for each manuscript varies, based on the manuscript's
 catalog record.
 
@@ -199,6 +207,13 @@ A typical entry for a manuscript will look something like this:
 
 {% markdown %}
 
+### Alternate access methods and other technical stuff
+
+We also provide access via anonymous FTP and anonymous RSYNC.  For
+information on access data from OPenn using those methods and the
+command-line tool `wget`, as well as detailed information on OPenn
+descriptive and structural metadata, the [technical readme
+document](/TechnicalReadMe.html).
 
 {% endmarkdown %}
 {% endblock %}

@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% load openn_filters %}
 
-{% block title %}{{ doc.document.call_number }}{% endblock %}
-
 {% block content %}
+
+<div class="breadcrumb">
+  <p>
+    <span><a href="/">Home</a></span> |
+    <span><a href="/Collections.html">Collections</a></span> |
+    <span><a href="{{ doc.toc_path }}">{{ doc.collection_name }}</a></span>
+  </p>
+</div>
+
 
 <h1>{{ doc.document.call_number }} {{ doc.document.title }}</h1>
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ doc.document.call_number }}</h3>
-      </div>
-      <div class="panel-body">
 
         <div>
           <h4>Title</h4>
@@ -89,7 +89,7 @@
 
         <div>
           <h4>Summary</h4>
-           <span>{{ doc.tei.summary }}</span>
+          <p><span>{{ doc.tei.summary }}</span></p>
         </div>
 
         {% if doc.tei.notes %}
@@ -163,7 +163,7 @@
         {% if doc.tei.decoration %}
         <div>
           <h4>Decoration</h4>
-          <span>{{ doc.tei.decoration }}</span>
+          <p><span>{{ doc.tei.decoration }}</span></p>
         </div>
         {% endif %}
 
@@ -271,46 +271,26 @@
         {% endwith %}
         {% endif %}
 
-      </div>
-    </div>
-  </div>
-</div>
+<h4>Images</h4>
+<div id="divthumbs">
 
-<div class="row">
-  <div class="col-md-6">
-    <ul class="list-unstyled">
       {% for page in doc.pages %}
-      <li>
+      <div class="divthumb">
+        <hr />
         <a name="{{ page.image.label|aname }}"></a>
-        <h4><span class="label label-default">{{ page.image.display_label|capfirst }}</span></h3>
-        <div class="row">
-          <table class="table">
-            <tr>
-              <td>
-                {% with thumb=page.image.thumb %}
-                {% if thumb %}
-                <span><a href="{{ page.image.web.url }}"><img src="{{ thumb.url }}" height="{{ thumb.height }}" width="{{ thumb.width }}" /></a></span>
-                {% endif %}
-                {% endwith %}
-              </td>
-              <td>
-                <ul class="list-unstyled">
-                {% for deriv in page.image.derivative_set.all %}
-                <li>
-                  <a href="{{ deriv.url }}">{{ deriv.path|basename }}</a>
-                  <span>({{ deriv.bytes|filesizeformat }}, {{ deriv.bytes }} bytes)</span>
-                </li>
-                {% endfor %}
-                </ul>
-                {% for title in  page.titles %} <span>Section: {{ title }}</span><br/> {% endfor %}
-                {% for note in page.deco_notes %}<span>Decoration: {{ note }}</span><br/>{% endfor %}
-              </td>
-            </tr>
-          </table>
-        </div>
-      </li>
+        {% with thumb=page.image.thumb %}
+        {% if thumb %}
+        <a href="{{ page.image.web.url }}"><img src="{{ thumb.url }}" height="{{ thumb.height }}" width="{{ thumb.width }}" /></a>
+        {% endif %}
+        {% endwith %}
+        <p></p>
+        <span class="label">{{ page.image.display_label|capfirst }}</span><br />
+        {% for deriv in page.image.derivative_set.all %}
+          <a href="{{ deriv.url }}">{{ deriv.path|basename }}</a> ({{ deriv.bytes|filesizeformat }}) <br />
+        {% endfor %}
+          {% for title in  page.titles %} <span>Section: {{ title }}</span><br /> {% endfor %}
+          {% for note in page.deco_notes %}<span>Decoration: {{ note }}</span><br />{% endfor %}
+      </div>
       {% endfor %}
-    </ul>
-  </div>
 </div>
 {% endblock %}

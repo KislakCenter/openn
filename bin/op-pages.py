@@ -13,6 +13,7 @@ import os
 import sys
 import logging
 import copy
+import traceback
 from distutils.dir_util import copy_tree
 from optparse import OptionParser
 from datetime import datetime
@@ -39,6 +40,19 @@ def cmd():
 
 def staging_dir():
     return settings.STAGING_DIR
+
+def handle_exc():
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    traceback.print_exception(exc_type, exc_value, exc_traceback,
+                              file=sys.stdout)
+
+def find_readme(file_name):
+    for x in settings.README_TEMPLATES:
+        if x['file'] == file_name:
+            return x
+
+def readme_files():
+    return [ x['file'] for x in settings.README_TEMPLATES ]
 
 def setup_logger():
     ch = logging.StreamHandler(sys.stdout)
@@ -99,7 +113,8 @@ def make_toc_html(coll_name, force=False, dry_run=False):
 
 def make_readme_html(readme, force=False, dry_run=False):
     try:
-        page = Page(readme, staging_dir())
+        readme_dict = find_readme(readme)
+        page = Page(readme, staging_dir(), title=readme_dict['title'])
         make_page = page.is_makeable() if force else page.is_needed()
 
         if make_page:
@@ -163,7 +178,7 @@ def document(docid, opts):
 
 def readme(opts):
     for readme in settings.README_TEMPLATES:
-        readme_file(readme, opts)
+        readme_file(readme['file'], opts)
 
 def readme_file(filename,opts):
     make_readme_html(filename, opts.force, opts.dry_run)
@@ -251,9 +266,11 @@ def main(cmdline=None):
             logging.warn("DRY RUN COMPLETE; displayed actions approximate")
 
     except OPennException as ex:
+        handle_exc()
         parser.error(str(ex))
         status = 4
     except Exception as ex:
+        handle_exc()
         parser.error(str(ex))
         status = 4
 
@@ -394,7 +411,7 @@ skipped TOC creation for files that would be generated for an actual run.
 
     parser.add_option('-m', '--readme-file', dest='readme_file', default=None,
                       help=("Process ReadMe HTML for README; one of:\n  %s" % (
-                          ', '.join(settings.README_TEMPLATES), )),
+                          ', '.join(readme_files()),)),
                       metavar="README")
 
     parser.add_option('-i', '--toc-collection', dest='collection_tag', default=None,

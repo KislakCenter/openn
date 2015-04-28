@@ -13,7 +13,11 @@ class Collections(Page):
     def get_context(self):
         collections = [ settings.COLLECTIONS[x] for x in settings.COLLECTIONS ]
         collections.sort(key=itemgetter('name'))
-        return Context({ 'collections': collections })
+        return Context({ 'collections': collections, 'title': self.title })
+
+    @property
+    def title(self):
+        return 'Collections'
 
     def is_needed(self):
         """If the collections template exits; we always say it's needed.

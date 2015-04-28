@@ -26,11 +26,15 @@ class TableOfContents(Page):
         docs = Document.objects.filter(collection=self.collection, is_online=True)
         items = [ DocumentData(x) for x in docs ]
         return Context({ 'collection': settings.COLLECTIONS[self.collection],
-                         'items': items })
+                         'items': items, 'title': self.title })
 
     @property
     def collection_config(self):
         return settings.COLLECTIONS[self.collection]
+
+    @property
+    def title(self):
+        return self.collection_config['name']
 
     def toc_path(self):
         toc_file = self.collection_config['toc_file']
@@ -60,10 +64,10 @@ class TableOfContents(Page):
         if not os.path.exists(self.outfile_path()):
             return True
 
-        html_dir = os.path.join(staging_dir(), self.collection_config['html_dir'])
+        html_dir = os.path.join(self.outdir, self.collection_config['html_dir'])
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         newest_html = max([os.path.getmtime(x) for x in html_files])
-        if os.path.getmtime(self.outfile_path) > newest_html:
+        if os.path.getmtime(self.outfile_path()) > newest_html:
             logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.collection))
             return False
 
