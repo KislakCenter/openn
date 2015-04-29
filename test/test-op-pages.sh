@@ -6,10 +6,11 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
-suite() {
-    suite_addTest testRun
-    # suite_addTest testBrowse
-}
+# suite() {
+#     suite_addTest testReadMeFileFailure
+#     # suite_addTest testRun
+#     # suite_addTest testBrowse
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -22,7 +23,7 @@ setUp() {
 
 tearDown() {
     clear_tables
-    # rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
 stagePages() {
@@ -179,7 +180,7 @@ testReadMeFileFailure() {
     status=$?
     if [ $status != 2 ]; then echo "$output"; fi
     assertEquals 2 $status
-    assertMatch "$output" "Could not find template.*ReadMe"
+    assertMatch "$output" "Unknown readme file"
 }
 
 # test TOC for collection

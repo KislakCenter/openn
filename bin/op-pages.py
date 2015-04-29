@@ -114,6 +114,8 @@ def make_toc_html(coll_name, force=False, dry_run=False):
 def make_readme_html(readme, force=False, dry_run=False):
     try:
         readme_dict = find_readme(readme)
+        if readme_dict == None:
+            raise OPennException("Unknown readme file: %s" % (readme,))
         page = Page(readme, staging_dir(), title=readme_dict['title'])
         make_page = page.is_makeable() if force else page.is_needed()
 
