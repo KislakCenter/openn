@@ -28,7 +28,7 @@ class TableOfContents(Page):
             collection=self.collection, is_online=True)
         items = [ DocumentData(x) for x in docs ]
         ctx = { 'collection': settings.COLLECTIONS[self.collection],
-                'item': items }
+                'items': items }
         ctx.update(ctx_dict={})
         return super(TableOfContents, self).get_context(ctx)
 
