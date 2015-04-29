@@ -10,10 +10,12 @@ from openn.pages.page import Page
 
 class Collections(Page):
 
-    def get_context(self):
+    def get_context(self, ctx_dict={}):
         collections = [ settings.COLLECTIONS[x] for x in settings.COLLECTIONS ]
         collections.sort(key=itemgetter('name'))
-        return Context({ 'collections': collections, 'title': self.title })
+        ctx = { 'collections': collections }
+        ctx.update(ctx_dict)
+        return super(Collections, self).get_context(ctx)
 
     @property
     def title(self):

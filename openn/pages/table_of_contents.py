@@ -22,11 +22,15 @@ class TableOfContents(Page):
         updated_kwargs = kwargs.update({'outfile':self.toc_path()})
         super(TableOfContents,self).__init__(**kwargs)
 
-    def get_context(self):
-        docs = Document.objects.filter(collection=self.collection, is_online=True)
+
+    def get_context(self,ctx_dict={}):
+        docs = Document.objects.filter(
+            collection=self.collection, is_online=True)
         items = [ DocumentData(x) for x in docs ]
-        return Context({ 'collection': settings.COLLECTIONS[self.collection],
-                         'items': items, 'title': self.title })
+        ctx = { 'collection': settings.COLLECTIONS[self.collection],
+                'item': items }
+        ctx.update(ctx_dict={})
+        return super(TableOfContents, self).get_context(ctx)
 
     @property
     def collection_config(self):

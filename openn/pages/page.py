@@ -71,7 +71,9 @@ class Page(object):
         else:
             return True
 
-    def get_context(self):
+    def get_context(self,ctx_dict={}):
         """By default context is empty. Child classes should override this
         method."""
-        return Context({ 'title': self.title })
+        ctx = { 'title': self.title, 'settings': settings  }
+        ctx.update(ctx_dict)
+        return Context(ctx)

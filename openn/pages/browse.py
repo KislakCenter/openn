@@ -27,9 +27,10 @@ class Browse(Page):
                                         'outfile':self.document.browse_path})
         super(Browse,self).__init__(**kwargs)
 
-    def get_context(self):
-        # items = Document.objects.filter(collection=self.collection)
-        return Context({ 'doc': self.data, 'title': self.title })
+    def get_context(self,ctx_dict={}):
+        ctx = { 'doc': self.data }
+        ctx.update(ctx_dict)
+        return super(Browse, self).get_context(ctx)
 
     @property
     def data(self):
