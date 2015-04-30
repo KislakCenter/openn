@@ -91,7 +91,7 @@ COLLECTIONS = {
     'medren': {
         'tag': 'medren',
         'name': 'Penn Manuscripts',
-        'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with the permission of their owners.',
+        'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with the permission of with the permission of their owners.  Penn holds over 2,000 Western manuscripts produced before the 19th century; medieval and Renaissance manuscripts comprise approximately 900 items, the earliest dating from 1000 A.D. The medieval manuscripts, now a collection of approximately 250 items, have been considered and used as a research collection since the private library of church historian Henry Charles Lea came to the University in the early 20th century. Most of the manuscripts are in Latin, but the medieval vernacular languages of Middle English, Middle French, Italian, Spanish, German, Dutch, and Judaeo-Arabic are each represented by one or more manuscripts. The collection is particularly strong in the fields of church history and history of science, with secondary strengths in liturgy and liturgical chant, theology and philosophy, and legal documents.',
         'toc_file': 'PennManuscripts.html',
         'include_file': 'PennManuscripts.html',
         'web_dir': 'Data/PennManuscripts',
@@ -127,7 +127,7 @@ COLLECTIONS = {
             'ljs': {
                 'tag': 'ljs',
                 'name': 'Lawrence J. Schoenberg Manuscripts',
-                'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
+                'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylavania.  With its emphasis on the history of science and the transmission of knowledge across time and geography, the Schoenberg Collection of nearly 300 manuscripts brings together many of the great scientific and philosophical traditions of the ancient and medieval worlds.',
                 'toc_file': 'LJSchoenbergManuscripts.html',
                 'include_file': 'LJSchoenbergManuscripts.html',
                 'web_dir': 'Data/LJSchoenbergManuscripts',
@@ -161,4 +161,22 @@ COLLECTIONS = {
         },
 
     },
+}
+
+
+MARKDOWN_DEUX_STYLES = {
+    "default": {
+        "extras": {
+            "code-friendly": None,
+            'fenced-code-blocks': None,
+            'toc': None,
+        },
+        "safe_mode": "escape",
+    },
+    "trusted": {
+        "extras": {
+            "code-friendly": None,
+        },
+        "safe_mode": False,
+    }
 }
