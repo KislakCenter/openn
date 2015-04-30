@@ -1344,7 +1344,7 @@ want to download.
 
 ## Appendix: Downloading files with rsync
 
-Rsync is a command-line Remote SYNChronization designed to maintaining
+Rsync is a command-line Remote SYNChronization designed to maintain
 duplicate copies of data on remote machines.  It is also a very
 powerful tool for the bulk downloading of files.  The instructions
 below show how to install rsync and use it to download files from
@@ -1441,8 +1441,8 @@ rsync like OPenn will list a directory's contents:
     drwxrwxr-x          70 2015/04/29 10:36:59 Data
     drwxrwxr-x        4096 2015/04/29 15:13:13 html
 
-Adding a subfolder to the above command will show give a list of items
-in that folder:
+Adding a subfolder to the above command will give a list of items in
+that folder:
 
     $ rsync rsync://openn.library.upenn.edu/OPenn/Data/
 
@@ -1508,7 +1508,7 @@ simple copy of all of OPenn to another file system:
 Here the `--delete` option will delete any files `/var/www/html` not
 found on OPenn.  This command can be run regularly to keep an
 up-to-date local copy of OPenn on your system.  In production, you
-would want to fine tune this command your situation.
+would want to fine tune this command to your situation.
 
 As noted above, rsync is extremely powerful and flexible.  Experiment
 with rsync and look among the many resources on rsync on the Web to
