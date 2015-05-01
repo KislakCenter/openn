@@ -127,7 +127,7 @@ COLLECTIONS = {
             'ljs': {
                 'tag': 'ljs',
                 'name': 'Lawrence J. Schoenberg Manuscripts',
-                'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylavania.  With its emphasis on the history of science and the transmission of knowledge across time and geography, the Schoenberg Collection of nearly 300 manuscripts brings together many of the great scientific and philosophical traditions of the ancient and medieval worlds.',
+                'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.  With its emphasis on the history of science and the transmission of knowledge across time and geography, the Schoenberg Collection of nearly 300 manuscripts brings together many of the great scientific and philosophical traditions of the ancient and medieval worlds.',
                 'toc_file': 'LJSchoenbergManuscripts.html',
                 'include_file': 'LJSchoenbergManuscripts.html',
                 'web_dir': 'Data/LJSchoenbergManuscripts',
