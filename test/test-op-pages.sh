@@ -7,8 +7,9 @@ TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
 # suite() {
-#     suite_addTest testRun
-#     suite_addTest testBrowse
+#     suite_addTest testReadMeFileFailure
+#     # suite_addTest testRun
+#     # suite_addTest testBrowse
 # }
 
 setUp() {
@@ -157,7 +158,7 @@ testReadMeShortOpt() {
 
 # test readme-file
 testReadMeFile() {
-    output=`op-pages --readme-file 0_ReadMe.html --show-options`
+    output=`op-pages --readme-file ReadMe.html --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -166,7 +167,7 @@ testReadMeFile() {
 
 # test readme-file
 testReadMeFileShortOpt() {
-    output=`op-pages -m 0_ReadMe.html --show-options`
+    output=`op-pages -m ReadMe.html --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -179,14 +180,14 @@ testReadMeFileFailure() {
     status=$?
     if [ $status != 2 ]; then echo "$output"; fi
     assertEquals 2 $status
-    assertMatch "$output" "Could not find template.*ReadMe"
+    assertMatch "$output" "Unknown readme file"
 }
 
 # test TOC for collection
 testTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES -name TOC_\*.html -delete
+    find $STAGED_PAGES/site/Collections -name \*.html -delete
     output=`op-pages --toc-collection ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
@@ -198,7 +199,7 @@ testTocFile() {
 testTocFileShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES -name TOC_\*.html -delete
+    find $STAGED_PAGES/site/Collections -name \*.html -delete
     output=`op-pages -i ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
@@ -210,7 +211,7 @@ testTocFileShortOpt() {
 testCollections() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES -name TOC_\*.html -delete
+    find $STAGED_PAGES/site/Collections -name \*.html -delete
     output=`op-pages --collections --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
@@ -222,7 +223,7 @@ testCollections() {
 testCollectionsShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES -name TOC_\*.html -delete
+    find $STAGED_PAGES/site/Collections -name \*.html -delete
     output=`op-pages -c --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi

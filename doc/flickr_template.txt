@@ -1,0 +1,21 @@
+# Image Title
+# ============
+
+Image of FOLIO_OR_PAGE_NO from University of Pennsylvania Libraries
+CALL_NUMBER, TITLE
+
+# Image Description
+# =================
+
+<b>Call number</b>: CALL_NUMBER
+
+<b>Title</b>: TITLE
+
+<b>Document location</b>: FOLIO_OR_PAGE_NO
+
+<b>Summary</b>: SUMMARY
+
+<b>Origin</b>: ORIGIN
+
+See images of this and other pages of this object on OPenn:
+<a href=“OPENN_BROWSE_URL”>CALL_NUMBER</a>.

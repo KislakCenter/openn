@@ -39,6 +39,8 @@ clear_tables
 
 sources="mscodex1223:medren mscodex1589:medren ljs454:ljs"
 
+[[ -d $TEST_STAGING_DIR ]] || mkdir $TEST_STAGING_DIR
+
 # load the test database with real data
 for src in $sources
 do

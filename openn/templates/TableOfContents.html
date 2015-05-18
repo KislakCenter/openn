@@ -3,8 +3,20 @@
 {% block title %}{{ collection.name }}{% endblock %}
 
 {% block content %}
+
+<div class="breadcrumb">
+  <p>
+    <span><a href="/">Home</a></span>&nbsp;|&nbsp;<span><a href="/Collections.html">Collections</a><span>
+  </p>
+</div>
+
 <h1>{{ collection.name }}</h1>
-<ul>
+
+{% include collection.include_file %}
+
+<h2>The documents on OPenn</h2>
+
+<ul class="ul_documents">
   {% for item in items %}
   <li>
     <span class="item-id">{{ item.document.call_number }}:</span>

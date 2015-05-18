@@ -3,11 +3,16 @@
 {% block title %}OPenn: Hosted collections{% endblock %}
 
 {% block content %}
+
+<div class="breadcrumb"><p>
+    <span><a href="/">Home</a>&nbsp;</span>
+</p></div>
+
 <h1>OPenn: Hosted Collections</h1>
-<ul>
+<ul class="ul_documents">
 {% for collection in collections %}
    <li>
-     <span class="coll-name"><a href="/{{ collection.toc_file }}">{{ collection.name }}</a></span><br/>
+     <span class="coll-name"><a href="/{{ settings.TOC_DIR}}/{{ collection.toc_file }}">{{ collection.name }}</a></span><br/>
      <span>{{ collection.blurb }}</span>
    </li>
 {% endfor %}

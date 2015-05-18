@@ -15,17 +15,19 @@ from openn.xml.openn_tei import OPennTEI
 class TestOPennTEI(TestCase):
 
 
-    test_partial_tei = os.path.join(os.path.dirname(__file__), 'data/xml/ms1223_PARTIAL_TEI.xml')
-    ljs270_tei       = os.path.join(os.path.dirname(__file__), 'data/xml/ljs270_TEI.xml')
-    ljs454_tei       = os.path.join(os.path.dirname(__file__), 'data/xml/ljs454_TEI.xml')
-    ljs471_tei       = os.path.join(os.path.dirname(__file__), 'data/xml/ljs471_TEI.xml')
-    ljs498_tei       = os.path.join(os.path.dirname(__file__), 'data/xml/ljs498_TEI.xml')
-    mscodex1589_tei  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1589_TEI.xml')
-    mscodex218_tei   = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex218_TEI.xml')
-    mscodex52_tei    = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex52_TEI.xml')
-    mscodex75_tei    = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex75_TEI.xml')
-    mscodex906_tei   = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex906_TEI.xml')
-    mscodex83_tei    = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex83_TEI.xml')
+    test_partial_tei         = os.path.join(os.path.dirname(__file__), 'data/xml/ms1223_PARTIAL_TEI.xml')
+    ljs270_tei               = os.path.join(os.path.dirname(__file__), 'data/xml/ljs270_TEI.xml')
+    mscodex1589_tei_no_idno  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1589_TEI_no_idno.xml')
+    mscodex1589_tei_no_title = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1589_TEI_no_title.xml')
+    ljs454_tei               = os.path.join(os.path.dirname(__file__), 'data/xml/ljs454_TEI.xml')
+    ljs471_tei               = os.path.join(os.path.dirname(__file__), 'data/xml/ljs471_TEI.xml')
+    ljs498_tei               = os.path.join(os.path.dirname(__file__), 'data/xml/ljs498_TEI.xml')
+    mscodex1589_tei          = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1589_TEI.xml')
+    mscodex218_tei           = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex218_TEI.xml')
+    mscodex52_tei            = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex52_TEI.xml')
+    mscodex75_tei            = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex75_TEI.xml')
+    mscodex906_tei           = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex906_TEI.xml')
+    mscodex83_tei            = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex83_TEI.xml')
 
 
     def setUp(self):
@@ -85,6 +87,18 @@ class TestOPennTEI(TestCase):
     def test_resource(self):
         openn_tei = OPennTEI(open(self.mscodex906_tei))
         self.assertEqual(u'http://hdl.library.upenn.edu/1017/d/medren/3559152', openn_tei.resource)
+
+    def test_no_title(self):
+        openn_tei = OPennTEI(open(self.mscodex1589_tei_no_title))
+        with self.assertRaises(OPennException) as oe:
+            openn_tei.validate()
+        self.assertIn('title', str(oe.exception))
+
+    def test_no_idno(self):
+        openn_tei = OPennTEI(open(self.mscodex1589_tei_no_idno))
+        with self.assertRaises(OPennException) as oe:
+            openn_tei.validate()
+        self.assertIn('Call number', str(oe.exception))
 
 
 if __name__ == '__main__':

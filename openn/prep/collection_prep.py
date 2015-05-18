@@ -68,7 +68,8 @@ class CollectionPrep(OPennSettings,Status):
             f.write(xml)
             # try to read it
             f.seek(0)
-            OPennTEI(f)
+            tei = OPennTEI(f)
+            tei.validate()
         except Exception as ex:
             # TODO: rename outfile if error
             raise OPennException("Error creating TEI: %s" % str(ex))

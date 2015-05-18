@@ -77,20 +77,23 @@ DERIVS = {
 
 TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
-README_TEMPLATES = [ '0_ReadMe.html', '1_TechnicalReadMe.html' ]
-COLLECTIONS_TEMPLATE = '3_Collections.html'
+README_TEMPLATES = [ { 'file': 'ReadMe.html', 'title': 'Read Me' },
+                     { 'file': 'TechnicalReadMe.html', 'title': 'Technical Read Me' } ]
+COLLECTIONS_TEMPLATE = 'Collections.html'
 
 STAGING_DIR = os.environ['OPENN_STAGING_DIR']
 PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
 
+TOC_DIR = 'html'
 
 
 COLLECTIONS = {
     'medren': {
         'tag': 'medren',
         'name': 'Penn Manuscripts',
-        'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with the permission of their owners.',
-        'toc_file': 'TOC_PennManuscripts.html',
+        'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with the permission of their owners.  Penn holds over 2,000 Western manuscripts produced before the 19th century; medieval and Renaissance manuscripts comprise approximately 900 items, the earliest dating from 1000 A.D. The medieval manuscripts, now a collection of approximately 250 items, have been considered and used as a research collection since the private library of church historian Henry Charles Lea came to the University in the early 20th century. Most of the manuscripts are in Latin, but the medieval vernacular languages of Middle English, Middle French, Italian, Spanish, German, Dutch, and Judaeo-Arabic are each represented by one or more manuscripts. The collection is particularly strong in the fields of church history and history of science, with secondary strengths in liturgy and liturgical chant, theology and philosophy, and legal documents.',
+        'toc_file': 'PennManuscripts.html',
+        'include_file': 'PennManuscripts.html',
         'web_dir': 'Data/PennManuscripts',
         'html_dir': 'Data/PennManuscripts/html',
         'prep_class': 'openn.prep.medren_prep.MedrenPrep',
@@ -356,4 +359,22 @@ spreadsheet_fields = {
         'required': False,
         'repeating': False,
     },
+}
+
+
+MARKDOWN_DEUX_STYLES = {
+    "default": {
+        "extras": {
+            "code-friendly": None,
+            'fenced-code-blocks': None,
+            'toc': None,
+        },
+        "safe_mode": "escape",
+    },
+    "trusted": {
+        "extras": {
+            "code-friendly": None,
+        },
+        "safe_mode": False,
+    }
 }
