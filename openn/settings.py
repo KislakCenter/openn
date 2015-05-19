@@ -186,181 +186,244 @@ COLLECTIONS = {
             },
         },
     },
+    'haverford' : {
+        'tag': 'haverford',
+        'name': 'HaverfordCollege',
+        'blurb': 'Documentsw from the Haverford College Special Collections.',
+        'toc_file': 'TOC_HaverfordCollege.html',
+        'web_dir': 'Data/HaverfordCollege',
+        'html_dir': 'Data/HaverfordCollege/html',
+        'prep_class': 'openn.prep.medren_prep.SpreadsheetPrep',
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'image_rights': {
+                'dynamic': 'True',
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': 'True',
+                },
+                'metadata': {
+                    'dynamic': 'True',
+                },
+            },
+        },
+    },
+
 }
 
-spreadsheet_fields = {
+SPREADSHEET_FIELDS = {
+  'fields': {
     'administrative_contact': {
-        'field_name': 'Administrative Contact',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Administrative Contact',
+      'required': True,
+      'repeating': True,
+      'data_type': 'string'
     },
     'administrative_contact_email': {
-        'field_name': 'Administrative Contact Email',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Administrative Contact email',
+      'required': True,
+      'repeating': True,
+      'data_type': 'email'
     },
-    'pacscl_diaries_project_id': {
-        'field_name': 'PACSCL Diaries Project ID',
-        'required': True,
-        'repeating': False,
-    },
+    # 'pacscl_diaries_project_id': {
+    #   'field_name': 'PACSCL Diaries Project ID',
+    #   'required': True,
+    #   'repeating': False,
+    #   'data_type': 'string'
+    # },
     'volume_number': {
-        'field_name': 'Volume number',
-        'required': False,
-        'repeating': False,
+      'field_name': 'Volume number',
+      'required': False,
+      'repeating': False,
+      'data_type': 'string'
     },
     'metadata_creator': {
-        'field_name': 'Metadata Creator',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Metadata Creator',
+      'required': True,
+      'repeating': True,
+      'data_type': 'string'
     },
     'metadata_creator_email': {
-        'field_name': 'Metadata Creator Email',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Metadata Creator email',
+      'required': True,
+      'repeating': True,
+      'data_type': 'email'
     },
     'repository_city': {
-        'field_name': 'Repository City',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Repository City',
+      'required': True,
+      'repeating': False,
+      'data_type': 'string'
     },
     'repository_name': {
-        'field_name': 'Repository Name',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Repository Name',
+      'required': True,
+      'repeating': False,
+      'data_type': 'string'
     },
     'source_collection': {
-        'field_name': 'Source collection',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Source collection',
+      'required': False,
+      'repeating': True,
+      'data_type': 'string'
     },
     'call_numberid': {
-        'field_name': 'Call Number/ID',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Call Number/ID',
+      'required': True,
+      'repeating': True,
+      'data_type': 'string'
     },
     'title': {
-        'field_name': 'Title',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Title',
+      'required': True,
+      'repeating': True,
+      'data_type': 'string'
     },
     'creator_name': {
-        'field_name': 'Creator name',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Creator name',
+      'required': True,
+      'repeating': True,
+      'data_type': 'string'
     },
     'creator_uri': {
-        'field_name': 'Creator URI',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Creator URI',
+      'required': False,
+      'repeating': True,
+      'data_type': 'uri'
     },
     'date_single': {
-        'field_name': 'Date (single)',
-        'required': False,
-        'repeating': False,
+      'field_name': 'Date (single)',
+      'required': False,
+      'repeating': False,
+      'data_type': 'year'
     },
     'date_range_start': {
-        'field_name': 'Date (range) start',
-        'required': False,
-        'repeating': False,
+      'field_name': 'Date (range) start',
+      'required': False,
+      'repeating': False,
+      'data_type': 'year'
     },
     'date_range_end': {
-        'field_name': 'Date (range) end',
-        'required': False,
-        'repeating': False,
+      'field_name': 'Date (range) end',
+      'required': False,
+      'repeating': False,
+      'data_type': 'year'
     },
     'description': {
-        'field_name': 'Description',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Description',
+      'required': False,
+      'repeating': True,
+      'data_type': 'string'
     },
     'language': {
-        'field_name': 'Language',
-        'required': True,
-        'repeating': True,
+      'field_name': 'Language',
+      'required': True,
+      'repeating': True,
+      'data_type': 'lang'
     },
     'related_resource': {
-        'field_name': 'Related resource',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Related resource',
+      'required': False,
+      'repeating': True,
+      'data_type': 'string'
     },
     'related_resource_url': {
-        'field_name': 'Related resource URL',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Related resource URL',
+      'required': False,
+      'repeating': True,
+      'data_type': 'uri'
     },
     'subject_names': {
-        'field_name': 'Subject: names',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Subject: names',
+      'required': False,
+      'repeating': True,
+      'data_type': 'string'
     },
     'subject_names_uri': {
-        'field_name': 'Subject: names URI [?]',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Subject: names URI [?]',
+      'required': False,
+      'repeating': True,
+      'data_type': 'uri'
     },
     'subject_topical': {
-        'field_name': 'Subject: topical',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Subject: topical',
+      'required': False,
+      'repeating': True,
+      'data_type': 'string'
     },
     'subject_topical_uri': {
-        'field_name': 'Subject: topical URI [?]',
-        'required': False,
-        'repeating': True,
+      'field_name': 'Subject: topical URI [?]',
+      'required': False,
+      'repeating': True,
+      'data_type': 'uri'
     },
     'subject_geographic': {
-        'field_name': 'Subject: geographic',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Subject: geographic',
+      'required': True,
+      'repeating': False,
+      'data_type': 'string'
     },
     'subject_geographic_uri': {
-        'field_name': 'Subject: geographic URI [?]',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Subject: geographic URI [?]',
+      'required': True,
+      'repeating': False,
+      'data_type': 'uri'
     },
     'subject_genreform': {
-        'field_name': 'Subject: genre/form',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Subject: genre/form',
+      'required': True,
+      'repeating': False,
+      'data_type': 'string'
     },
     'subject_genreform_uri': {
-        'field_name': 'Subject: genre/form URI [?]',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Subject: genre/form URI [?]',
+      'required': True,
+      'repeating': False,
+      'data_type': 'uri'
     },
     'image_rights': {
-        'field_name': 'Image rights',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Image rights',
+      'required': True,
+      'repeating': False,
+      'data_type': 'string'
     },
     'image_copyright_holder': {
-        'field_name': 'Image copyright holder',
-        'required': False,
-        'repeating': False,
+      'field_name': 'Image copyright holder',
+      'required': False,
+      'repeating': False,
+      'data_type': 'string'
     },
     'image_copyright_year': {
-        'field_name': 'Image copyright year',
-        'required': False,
-        'repeating': False,
+      'field_name': 'Image copyright year',
+      'required': False,
+      'repeating': False,
+      'data_type': 'year'
     },
     'metadata_rights': {
-        'field_name': 'Metadata rights',
-        'required': True,
-        'repeating': False,
+      'field_name': 'Metadata rights',
+      'required': True,
+      'repeating': False,
+      'data_type': 'string'
     },
     'metadata_copyright_holder': {
-        'field_name': 'Metadata copyright holder',
-        'required': False,
-        'repeating': False,
+      'field_name': 'Metadata copyright holder',
+      'required': False,
+      'repeating': False,
+      'data_type': 'string'
     },
     'metadata_copyright_year': {
-        'field_name': 'Metadata copyright year',
-        'required': False,
-        'repeating': False,
-    },
+      'field_name': 'Metadata copyright year',
+      'required': False,
+      'repeating': False,
+      'data_type': 'year'
+    }
+  }
 }
-
 
 MARKDOWN_DEUX_STYLES = {
     "default": {
