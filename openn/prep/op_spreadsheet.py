@@ -71,14 +71,23 @@ class OPSpreadsheet:
         for attr in self.fields:
             self.validate_field(attr)
 
-    def extract_values(self, heading_locus):
+    def values(self, attr):
+        details = self.fields[attr]
+        if details.get('cell_values') is None:
+            details['cell_values'] = self.extract_values(attr)
+        return details.get('cell_values')
+
+    def extract_values(self, attr):
         vals = []
-        row = heading_locus['row']
+
+        details = self.fields[attr]
+        locus = details['locus']
+        row = locus['row']
         # read the first 20 columns past the heading locus
-        data_col = heading_locus['col'] + self.FIELD_COLUMN_OFFSET
+        data_col = locus['col'] + self.FIELD_COLUMN_OFFSET
         for col in xrange(data_col, data_col + 21):
             cell = self.description_sheet.cell(column=col,row=row)
-            if cell is not None and cell.value != '':
+            if cell.value is not None and str(cell.value).strip() != '':
                 vals.append(cell.value)
             else:
                 vals.append(None)
@@ -106,6 +115,49 @@ class OPSpreadsheet:
     def is_valid_lang(val):
         return langs.is_valid_lang(val)
 
+    def validate_conditional(self, attr, required):
+        ifclause    = required['if']
+        other_attr  = ifclause['field']
+        condition   = ifclause['is']
+        if condition == 'BLANK':
+            if self.is_blank(other_attr):
+                if self.is_blank(attr):
+                    msg = "%s must have a value if %s is blank" % (
+                        self.field_name(attr), self.field_name(other_attr))
+                    self.validation_errors.append(msg)
+        elif condition == 'NONBLANK':
+            if self.is_present(other_attr):
+                if self.is_blank(attr):
+                    msg = "%s cannot be  blank if %s has a value" % (
+                        self.field_name(attr), self.field_name(other_attr))
+                    self.validation_errors.append(msg)
+        elif isinstance(condition, list):
+            for val in self.values(other_attr):
+                if val in condition and self.is_blank(attr):
+                    msg = "%s cannot be blank if %s is %s" % (
+                        self.field_name(attr), self.field_name(other_attr), val)
+                    self.validation_errors.append(msg)
+        else:
+            raise OPennException("Unknown condition type: %s" % (condition,))
+
+    def validate_requirement(self, attr):
+        details = self.fields[attr]
+        field_name = details['field_name']
+        required = details['required']
+        # print required
+        if required == True and self.is_blank(attr):
+            msg = '%s cannot be blank' % (details['field_name'],)
+            self.validation_errors.append(msg)
+        elif isinstance(required, dict):
+            self.validate_conditional(attr, required)
+
+    def is_blank(self, field):
+        values = self.values(field)
+        return len(values) == 0
+
+    def is_present(self, field):
+        return not self.is_blank(field)
+
     def validate_field(self, attr):
         # first see if the field is missing and required
         details = self.fields[attr]
@@ -122,20 +174,15 @@ class OPSpreadsheet:
             # not present and not required; add no errors and return
             return
 
-        values = self.extract_values(details['locus'])
-        if details['required'] and len(values) == 0:
-            # required field is blank; add error and return
-            msg = '%s cannot be blank' % (field_name,)
-            self.validation_errors.append(msg)
-            return
+        self.validate_requirement(attr)
 
         # check repeating
+        values = self.values(attr)
         if details['repeating'] == False and len(values) > 1:
             extras = [x for x in values[1:] if x is not None]
-            for v in values[1:]:
-                if v is not None:
-                    msg = "Extra value found in non-repeating field %s: %s" % (field_name, v)
-                    self.validation_errors.append(msg)
+            msg = "Extra value(s) found in non-repeating field %s: %s" % (
+                field_name, ', '.join(extras))
+            self.validation_errors.append(msg)
 
         for val in values:
             self.validate_data_type(val, details)
@@ -172,16 +219,15 @@ class OPSpreadsheet:
     def fields(self):
         return self.config['fields']
 
-    # @property
-    # def field_column_offset(self):
-    #     return self._field_column_offset
+    def field_name(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr]['field_name']
 
     def find_heading_locus(self, field_name):
         locus = []
         sheet = self.description_sheet
-        for row in xrange(1, sheet.max_row):
-            # look at this crap: min_col, but max_column
-            for col in xrange(1, 20):
+        for row in xrange(1, sheet.max_row+1):
+            for col in xrange(1, 21):
                 cell = self.description_sheet.cell(column=col, row=row)
                 value = cell.value if cell is not None else ''
                 if self.normalize(value) == self.normalize(field_name):
@@ -193,14 +239,6 @@ class OPSpreadsheet:
             field_name       = details['field_name']
             locus            = self.find_heading_locus(field_name)
             details['locus'] = locus
-
-    # def set_column_offset(self):
-    #     locus = self.find_heading_locus('Entry 1')
-    #     if locus is None:
-    #         raise OPennException("Cannot find column heading for Entry 1")
-    #     col = locus['col']
-    #     self._field_column_offset = col - 1
-    #     print "_field_column_offset=%d" % self._field_column_offset
 
     def normalize(self, s):
         if s is not None:
