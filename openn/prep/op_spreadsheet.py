@@ -5,6 +5,8 @@ import sys
 import simplejson
 import re
 
+from copy import deepcopy
+
 from openn.prep import langs
 
 from openpyxl import load_workbook
@@ -43,13 +45,12 @@ class OPSpreadsheet:
     FIELD_COLUMN_OFFSET = 2
 
     def __init__(self, xlsx_file, config):
-        self.config              = config
+        self.config              = deepcopy(config)
         self.xlsx_path           = xlsx_file
         self.workbook            = load_workbook(self.xlsx_path)
         self.validation_errors   = []
         self.validation_warnings = []
         self.set_headings()
-        # self.set_column_offset()
 
     def has_description_errors(self):
         return len(self.validation_errors) > 0
