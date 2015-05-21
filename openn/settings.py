@@ -286,6 +286,12 @@ SPREADSHEET_FIELDS = {
                     'is': 'NONBLANK',
                 }
             },
+            'blank': {
+                'if': {
+                    'field': 'alternate_id',
+                    'is': 'BLANK'
+                }
+            },
             'repeating': False,
             'data_type': 'string'
         },
@@ -321,6 +327,12 @@ SPREADSHEET_FIELDS = {
                     'is': 'BLANK'
                 }
             },
+            'blank': {
+                'if': {
+                    'field': 'date_range_start',
+                    'is': 'NONBLANK'
+                }
+            },
             'repeating': False,
             'data_type': 'year',
         },
@@ -329,12 +341,14 @@ SPREADSHEET_FIELDS = {
             'required': {
                 'if': {
                     'field': 'date_single',
-                    'is': 'BLANK',
+                    'is': 'BLANK'
                 }
             },
-            'blank_if': {
-                'field': 'date_single',
-                'is':    'NONBLANK'
+            'blank': {
+                'if': {
+                    'field': 'date_single',
+                    'is': 'NONBLANK'
+                }
             },
             'repeating': False,
             'data_type': 'year'
@@ -343,8 +357,14 @@ SPREADSHEET_FIELDS = {
             'field_name': 'Date (range) end',
             'required': {
                 'if': {
-                    'field': 'date_single',
-                    'is': 'BLANK',
+                    'field': 'date_range_start',
+                    'is': 'NONBLANK'
+                }
+            },
+            'blank': {
+                'if': {
+                    'field': 'date_range_start',
+                    'is': 'BLANK'
                 }
             },
             'repeating': False,
@@ -463,7 +483,7 @@ SPREADSHEET_FIELDS = {
             'required': True,
             'repeating': False,
             'data_type': 'string',
-            'values': [ 'CC-BY', 'CC0', 'PD' ]
+            'value_list': [ 'CC-BY', 'CC0', 'PD' ]
         },
         'image_copyright_holder': {
             'field_name': 'Image copyright holder',
@@ -471,6 +491,12 @@ SPREADSHEET_FIELDS = {
                 'if': {
                     'field': 'image_rights',
                     'is': [ 'CC-BY', 'CC0' ]
+                }
+            },
+            'blank': {
+                'if': {
+                    'field': 'image_rights',
+                    'is': [ 'PD' ]
                 }
             },
             'repeating': False,
@@ -484,6 +510,12 @@ SPREADSHEET_FIELDS = {
                     'is': [ 'CC-BY', 'CC0' ]
                 }
             },
+            'blank': {
+                'if': {
+                    'field': 'image_rights',
+                    'is': [ 'PD' ]
+                }
+            },
             'repeating': False,
             'data_type': 'year'
         },
@@ -492,14 +524,20 @@ SPREADSHEET_FIELDS = {
             'required': True,
             'repeating': False,
             'data_type': 'string',
-            'values': [ 'CC-BY', 'CC0', 'PD' ]
+            'value_list': [ 'CC-BY', 'CC0', 'PD' ]
         },
         'metadata_copyright_holder': {
             'field_name': 'Metadata copyright holder',
             'required':  {
                 'if': {
-                    'field': 'image_rights',
+                    'field': 'metadata_rights',
                     'is': [ 'CC-BY', 'CC0' ]
+                }
+            },
+            'blank': {
+                'if': {
+                    'field': 'metadata_rights',
+                    'is': [ 'PD' ]
                 }
             },
             'repeating': False,
@@ -509,8 +547,14 @@ SPREADSHEET_FIELDS = {
             'field_name': 'Metadata copyright year',
             'required':  {
                 'if': {
-                    'field': 'image_rights',
+                    'field': 'metadata_rights',
                     'is': [ 'CC-BY', 'CC0' ]
+                }
+            },
+            'blank': {
+                'if': {
+                    'field': 'metadata_rights',
+                    'is': [ 'PD' ]
                 }
             },
             'repeating': False,

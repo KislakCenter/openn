@@ -123,19 +123,19 @@ class OPSpreadsheet:
         if condition == 'BLANK':
             if self.is_blank(other_attr):
                 if self.is_blank(attr):
-                    msg = "%s must have a value if %s is blank" % (
+                    msg = '"%s" cannot be blank if "%s" is blank' % (
                         self.field_name(attr), self.field_name(other_attr))
                     self.validation_errors.append(msg)
         elif condition == 'NONBLANK':
             if self.is_present(other_attr):
                 if self.is_blank(attr):
-                    msg = "%s cannot be  blank if %s has a value" % (
+                    msg = '"%s" cannot be blank if "%s" has a value' % (
                         self.field_name(attr), self.field_name(other_attr))
                     self.validation_errors.append(msg)
         elif isinstance(condition, list):
             for val in self.values(other_attr):
                 if val in condition and self.is_blank(attr):
-                    msg = "%s cannot be blank if %s is %s" % (
+                    msg = '"%s" cannot be blank if "%s" is "%s"' % (
                         self.field_name(attr), self.field_name(other_attr), val)
                     self.validation_errors.append(msg)
         else:
