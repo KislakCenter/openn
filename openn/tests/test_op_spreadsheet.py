@@ -21,6 +21,14 @@ class TestOpSpreadsheet(TestCase):
     # Alternate ID type
     invalid_missing_required = os.path.join(sheets_dir, 'invalid_missing_required.xlsx')
 
+    # Date (single)
+    # Date (range) start
+    # Date (range) end
+    # Image copyright holder
+    # Image copyright year
+    # Alternate ID type
+    invalid_nonblanks        = os.path.join(sheets_dir, 'invalid_values_should_be_blank.xlsx')
+
     helen_griffith           = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
     mary_ayer                = os.path.join(diaries_dir, 'bryn_mawr/MaryAyer_Diary.xlsx')
     mww_diary_vol10          = os.path.join(diaries_dir, 'bryn_mawr/MWW_Diary_Vol10.xlsx')
@@ -89,6 +97,34 @@ class TestOpSpreadsheet(TestCase):
         sheet.validate_requirement('alternate_id_type')
         self.assertEqual(len(sheet.validation_errors), 1)
         self.assertRegexpMatches(sheet.validation_errors[0], r'Alternate ID type.* cannot be blank.*Alternate ID')
+
+    # Date (single)
+    def test_must_be_blank_with_nonblank_error(self):
+        sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
+        sheet.validate_blank('date_single')
+        self.assertEqual(len(sheet.validation_errors), 1)
+        self.assertRegexpMatches(sheet.validation_errors[0], r'Date \(single\).* must be blank.*start')
+
+    # Date (range) start
+    def test_must_be_blank_with_nonblank_error2(self):
+        sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
+        sheet.validate_blank('date_range_start')
+        self.assertEqual(len(sheet.validation_errors), 1)
+        self.assertRegexpMatches(sheet.validation_errors[0], r'Date \(range\) start.* must be blank.*single')
+
+    # Image copyright holder
+    def test_must_be_blank_with_value_error(self):
+        sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
+        sheet.validate_blank('image_copyright_holder')
+        self.assertEqual(len(sheet.validation_errors), 1)
+        self.assertRegexpMatches(sheet.validation_errors[0], r'Image copyright holder.* must be blank.*PD')
+
+    # Alternate ID type
+    def test_must_be_blank_with_blank_error(self):
+        sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
+        sheet.validate_blank('alternate_id_type')
+        self.assertEqual(len(sheet.validation_errors), 1)
+        self.assertRegexpMatches(sheet.validation_errors[0], r'Alternate ID type.* must be blank.*Alternate ID.*blank')
 
     def test_is_valid_uri(self):
         for url in [ self.url1, self.url2, self.url3, self.url4, self.url5 ]:

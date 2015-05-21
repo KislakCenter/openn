@@ -116,6 +116,38 @@ class OPSpreadsheet:
     def is_valid_lang(val):
         return langs.is_valid_lang(val)
 
+    def validate_blank(self, attr):
+        if self.is_blank(attr): return
+        blankrule  = self.fields[attr]['blank']
+        ifclause   = blankrule['if']
+        other_attr = ifclause['field']
+        condition  = ifclause['is']
+
+        if condition == 'BLANK':
+            if self.is_blank(other_attr):
+                msg = '"%s" must be blank if "%s" is blank; found: %s' % (
+                    self.field_name(attr), self.field_name(other_attr),
+                    ', '.join(self.values_quoted(attr)))
+                self.validation_errors.append(msg)
+        elif condition == 'NONBLANK':
+            if self.is_present(other_attr):
+                msg = '"%s" must be blank if "%s" has a value; found: %s' % (
+                    self.field_name(attr), self.field_name(other_attr),
+                    ', '.join(self.values_quoted(attr)))
+                self.validation_errors.append(msg)
+        elif isinstance(condition,list):
+            for val in self.values(other_attr):
+                if val in condition and self.is_present(attr):
+                    msg = '"%s" must be blank if "%s" is "%s"; found: %s' % (
+                        self.field_name(attr), self.field_name(other_attr), val,
+                        ', '.join(self.values_quoted(attr)))
+                    self.validation_errors.append(msg)
+        else:
+            raise OPennException('Unknown condition type: "%s"' % (condition,))
+
+    def values_quoted(self, attr, quote='"'):
+        return [ "%s%s%s" % (quote,x,quote) for x in self.values(attr) ]
+
     def validate_conditional(self, attr, required):
         ifclause    = required['if']
         other_attr  = ifclause['field']
@@ -176,6 +208,8 @@ class OPSpreadsheet:
             return
 
         self.validate_requirement(attr)
+        if 'blank' in details:
+           self.validate_blank(attr)
 
         # check repeating
         values = self.values(attr)
