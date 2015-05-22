@@ -46,18 +46,18 @@ class OPSpreadsheet:
     FIELD_COLUMN_OFFSET = 2
 
     def __init__(self, xlsx_file, config):
-        self.config              = deepcopy(config)
-        self.xlsx_path           = xlsx_file
-        self.workbook            = load_workbook(self.xlsx_path)
-        self.errors              = []
-        self.validation_warnings = []
+        self.config    = deepcopy(config)
+        self.xlsx_path = xlsx_file
+        self.workbook  = load_workbook(self.xlsx_path)
+        self.errors    = []
+        self.warnings  = []
         self.set_headings()
 
     def has_description_errors(self):
         return len(self.errors) > 0
 
     def has_description_warnings(self):
-        return len(self.validation_warnings) > 0
+        return len(self.warnings) > 0
 
     def validate_description(self):
         self.check_required_headings()
@@ -247,7 +247,7 @@ class OPSpreadsheet:
                 self.errors.append(self.format_error(field, value, data_type))
         elif data_type == 'email':
             if not OPSpreadsheet.is_valid_email(value):
-                self.validation_warnings.append(
+                self.warnings.append(
                     self.format_error(field, value, data_type))
         elif data_type == 'string':
             pass
