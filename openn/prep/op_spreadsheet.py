@@ -361,8 +361,7 @@ class OPSpreadsheet:
                     return {'col': col,'row': row }
 
     def _extract_values(self, attr):
-        """Based on the locus of attr's field's header.
-        """
+        """Based on the locus of attr's field's header."""
         vals = []
 
         details = self.fields[attr]
