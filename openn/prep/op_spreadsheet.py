@@ -362,13 +362,14 @@ class OPSpreadsheet:
 
     def _extract_values(self, attr):
         """Based on the locus of attr's field's header."""
-        vals = []
+        if self.locus(attr) is None: return
 
-        details = self.fields[attr]
-        locus   = details['locus']
+        locus   = self.locus(attr)
         row     = locus['row']
         # read the first 20 columns past the heading locus
         data_col = locus['col'] + self.FIELD_COLUMN_OFFSET
+
+        vals = []
         for col in xrange(data_col, data_col + 21):
             cell = self.description_sheet.cell(column=col,row=row)
             if cell.value is not None and str(cell.value).strip() != '':

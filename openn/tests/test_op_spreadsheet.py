@@ -181,7 +181,6 @@ class TestOpSpreadsheet(TestCase):
     def test_validate_sheet_missing_optional_fields(self):
         sheet = OPSpreadsheet(self.missing_field_workbook, self.field_missing_config)
         sheet.validate_description()
-        print sheet.errors
         self.assertFalse(sheet.has_description_errors())
 
     # Date (range) end
@@ -312,7 +311,6 @@ class TestOpSpreadsheet(TestCase):
     def test_is_not_valid_lang(self):
         for x in ('engx', 'x ', ' e ', 'enx'):
             self.assertFalse(OPSpreadsheet.is_valid_lang(x), ('%s should not be a valid lang' % x))
-
 
 if __name__ == '__main__':
     unittest2.main()
