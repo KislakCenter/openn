@@ -199,6 +199,12 @@ class OPSpreadsheet:
                     self.field_name(attr), val, ', '.join(self.list_quoted(value_list)))
                 self.validation_errors.append(msg)
 
+    def validate_repeating(self, attr):
+        if not self.repeating(attr) and len(self.values(attr)) > 1:
+            msg = "More than one value found in non-repeating field %s: %s" % (
+                self.field_name(attr), ', '.join(self.values_quoted(attr)))
+            self.validation_errors.append(msg)
+
     def is_blank(self, field):
         values = self.values(field)
         return len(values) == 0
@@ -210,22 +216,15 @@ class OPSpreadsheet:
         return self.locus(attr) is None
 
     def validate_field(self, attr):
-        # first see if the field is missing and required
+        # first see if the field is missing
         if self.is_field_missing(attr): return
 
         self.validate_requirement(attr)
         self.validate_blank(attr)
-
         self.validate_value_list(attr)
-        # check repeating
-        values = self.values(attr)
-        if self.repeating(attr) == False and len(values) > 1:
-            extras = [x for x in values[1:] if x is not None]
-            msg = "Extra value(s) found in non-repeating field %s: %s" % (
-                self.field_name(attr), ', '.join(extras))
-            self.validation_errors.append(msg)
+        self.validate_repeating(attr)
 
-        for val in values:
+        for val in self.values(attr):
             self.validate_data_type(val, self.fields[attr])
 
     def format_error(self, field_name, value, data_type):

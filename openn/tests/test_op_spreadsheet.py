@@ -29,7 +29,9 @@ class TestOpSpreadsheet(TestCase):
     # Alternate ID type
     invalid_nonblanks        = os.path.join(sheets_dir, 'invalid_values_should_be_blank.xlsx')
 
-    value_lists_workbook = os.path.join(sheets_dir, 'value_lists.xlsx')
+    value_lists_workbook     = os.path.join(sheets_dir, 'value_lists.xlsx')
+    repeating_workbook       = os.path.join(sheets_dir, 'repeating_and_nonrepeating.xlsx')
+
 
     helen_griffith           = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
     mary_ayer                = os.path.join(diaries_dir, 'bryn_mawr/MaryAyer_Diary.xlsx')
@@ -90,6 +92,35 @@ class TestOpSpreadsheet(TestCase):
                 'repeating': False,
                 'data_type': 'string',
                 'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            }
+        }
+    }
+
+    repeating_config = {
+        'fields': {
+            'non_repeating_field_valid': {
+                'field_name': 'Non-repeating field valid',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string'
+            },
+            'non_repeating_field_invalid': {
+                'field_name': 'Non-repeating field invalid',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string'
+            },
+            'repeating_field_one_value': {
+                'field_name': 'Repeating field one value',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'repeating_field_multiple_values': {
+                'field_name': 'Repeating field multiple values',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
             }
         }
     }
@@ -193,6 +224,27 @@ class TestOpSpreadsheet(TestCase):
         sheet.validate_value_list('rights_pd_with_space')
         self.assertEqual(len(sheet.validation_errors), 1)
         self.assertRegexpMatches(sheet.validation_errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
+
+    def test_repeating_false_one_value(self):
+        sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
+        sheet.validate_repeating('non_repeating_field_valid')
+        self.assertEqual(len(sheet.validation_errors), 0)
+
+    def test_repeating_false_more_than_one_value(self):
+        sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
+        sheet.validate_repeating('non_repeating_field_invalid')
+        self.assertEqual(len(sheet.validation_errors), 1)
+        self.assertRegexpMatches(sheet.validation_errors[0], r'More than one.*Non-repeating field invalid.*value1.*value2')
+
+    def test_repeating_true_one_value(self):
+        sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
+        sheet.validate_repeating('repeating_field_one_value')
+        self.assertEqual(len(sheet.validation_errors), 0)
+
+    def test_repeating_true_more_than_one_value(self):
+        sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
+        sheet.validate_repeating('repeating_field_multiple_values')
+        self.assertEqual(len(sheet.validation_errors), 0)
 
     def test_is_valid_uri(self):
         for url in [ self.url1, self.url2, self.url3, self.url4, self.url5 ]:
