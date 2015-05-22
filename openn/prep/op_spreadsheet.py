@@ -117,7 +117,9 @@ class OPSpreadsheet:
         return langs.is_valid_lang(val)
 
     def validate_blank(self, attr):
-        if self.is_blank(attr): return
+        if (self.blank_rule(attr) is None or self.is_blank(attr)):
+            return
+
         blankrule  = self.fields[attr]['blank']
         ifclause   = blankrule['if']
         other_attr = ifclause['field']
@@ -204,37 +206,27 @@ class OPSpreadsheet:
     def is_present(self, field):
         return not self.is_blank(field)
 
+    def is_field_missing(self, attr):
+        return self.locus(attr) is None
+
     def validate_field(self, attr):
         # first see if the field is missing and required
-        details = self.fields[attr]
-        field_name = details['field_name']
-        if details['locus']:
-            # the field is present; keep going
-            pass
-        elif details['required']:
-            # not present, but required; add an error and return
-            msg = 'Required field is missing: %s' % (field_name,)
-            self.validation_errors.append(msg)
-            return
-        else:
-            # not present and not required; add no errors and return
-            return
+        if self.is_field_missing(attr): return
 
         self.validate_requirement(attr)
-        if 'blank' in details:
-           self.validate_blank(attr)
+        self.validate_blank(attr)
 
         self.validate_value_list(attr)
         # check repeating
         values = self.values(attr)
-        if details['repeating'] == False and len(values) > 1:
+        if self.repeating(attr) == False and len(values) > 1:
             extras = [x for x in values[1:] if x is not None]
             msg = "Extra value(s) found in non-repeating field %s: %s" % (
-                field_name, ', '.join(extras))
+                self.field_name(attr), ', '.join(extras))
             self.validation_errors.append(msg)
 
         for val in values:
-            self.validate_data_type(val, details)
+            self.validate_data_type(val, self.fields[attr])
 
     def format_error(self, field_name, value, data_type):
         return "%s is not a valid %s: %s" % (field_name, data_type, value)
