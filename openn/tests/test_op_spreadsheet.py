@@ -31,7 +31,7 @@ class TestOpSpreadsheet(TestCase):
 
     value_lists_workbook     = os.path.join(sheets_dir, 'value_lists.xlsx')
     repeating_workbook       = os.path.join(sheets_dir, 'repeating_and_nonrepeating.xlsx')
-
+    missing_field_workbook    = os.path.join(sheets_dir, 'missing_optional_fields.xlsx')
 
     helen_griffith           = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
     mary_ayer                = os.path.join(diaries_dir, 'bryn_mawr/MaryAyer_Diary.xlsx')
@@ -125,6 +125,41 @@ class TestOpSpreadsheet(TestCase):
         }
     }
 
+    field_missing_config = {
+        'fields' : {
+            'field1': {
+                'field_name': 'Field1',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'field2': {
+                'field_name': 'Field2',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'field3': {
+                'field_name': 'Field3',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'field4': {
+                'field_name': 'Field4',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'field5': {
+                'field_name': 'Field5',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            }
+        }
+    }
+
     def setUp(self):
         pass
 
@@ -141,6 +176,12 @@ class TestOpSpreadsheet(TestCase):
     def test_validate_description(self):
         sheet = OPSpreadsheet(self.helen_griffith, self.get_config())
         sheet.validate_description()
+        self.assertFalse(sheet.has_description_errors())
+
+    def test_validate_sheet_missing_optional_fields(self):
+        sheet = OPSpreadsheet(self.missing_field_workbook, self.field_missing_config)
+        sheet.validate_description()
+        print sheet.errors
         self.assertFalse(sheet.has_description_errors())
 
     # Date (range) end
