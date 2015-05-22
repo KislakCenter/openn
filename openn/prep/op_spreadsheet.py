@@ -197,9 +197,6 @@ class OPSpreadsheet:
                     self.field_name(attr), val, ', '.join(self.list_quoted(value_list)))
                 self.validation_errors.append(msg)
 
-    def value_list(self, attr):
-        return self.fields[attr].get('value_list')
-
     def is_blank(self, field):
         values = self.values(field)
         return len(values) == 0
@@ -271,9 +268,34 @@ class OPSpreadsheet:
     def fields(self):
         return self.config['fields']
 
+    # Field details
     def field_name(self, attr):
         if self.fields.get(attr):
             return self.fields[attr]['field_name']
+
+    def locus(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr].get('locus')
+
+    def value_list(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr].get('value_list')
+
+    def requirement(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr].get('required')
+
+    def blank_rule(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr].get('blank')
+
+    def repeating(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr].get('repeating')
+
+    def data_type(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr].get('data_type')
 
     def find_heading_locus(self, field_name):
         locus = []
