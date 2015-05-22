@@ -171,26 +171,26 @@ class TestOpSpreadsheet(TestCase):
     # Rights PD
     def test_value_list_valid(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
-        sheet.validate_list('rights_pd')
+        sheet.validate_value_list('rights_pd')
         self.assertEqual(len(sheet.validation_errors), 0)
 
     # Rights CC-X (not in list)
     def test_value_list_value_not_in_list(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
-        sheet.validate_list('rights_cc_x_not_in_list')
+        sheet.validate_value_list('rights_cc_x_not_in_list')
         self.assertEqual(len(sheet.validation_errors), 1)
         self.assertRegexpMatches(sheet.validation_errors[0], r'Rights CC-X.*not valid.*expected.*')
 
     # Rights 4 (blank)
     def test_value_list_with_value_blank(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
-        sheet.validate_list('rights_4_blank')
+        sheet.validate_value_list('rights_4_blank')
         self.assertEqual(len(sheet.validation_errors), 0)
 
     # Rights PD with space
     def test_value_list_valid_value_plus_space(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
-        sheet.validate_list('rights_pd_with_space')
+        sheet.validate_value_list('rights_pd_with_space')
         self.assertEqual(len(sheet.validation_errors), 1)
         self.assertRegexpMatches(sheet.validation_errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
 

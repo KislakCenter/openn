@@ -187,14 +187,18 @@ class OPSpreadsheet:
         elif isinstance(required, dict):
             self.validate_conditional(attr, required)
 
-    def validate_list(self, attr):
-        details = self.fields[attr]
-        value_list= details['value_list']
+    def validate_value_list(self, attr):
+        value_list = self.value_list(attr)
+        if value_list is None: return
+
         for val in self.values(attr):
             if val not in value_list:
                 msg = '"%s" value "%s" not valid; expected one of: %s' % (
                     self.field_name(attr), val, ', '.join(self.list_quoted(value_list)))
                 self.validation_errors.append(msg)
+
+    def value_list(self, attr):
+        return self.fields[attr].get('value_list')
 
     def is_blank(self, field):
         values = self.values(field)
@@ -223,6 +227,7 @@ class OPSpreadsheet:
         if 'blank' in details:
            self.validate_blank(attr)
 
+        self.validate_value_list(attr)
         # check repeating
         values = self.values(attr)
         if details['repeating'] == False and len(values) > 1:
