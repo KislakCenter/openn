@@ -45,13 +45,63 @@ class OPSpreadsheet:
     #
     FIELD_COLUMN_OFFSET = 2
 
+    ######################################################################
+    # Static methods
+    ######################################################################
+
+    @staticmethod
+    def is_valid_uri(val):
+        return OPSpreadsheet.URI_RE.match(val) is not None
+
+    @staticmethod
+    def is_valid_year(val):
+        return OPSpreadsheet.YEAR_RE.match(str(val)) and \
+            int(val) in xrange(OPSpreadsheet.MIN_YEAR, OPSpreadsheet.MAX_YEAR + 1)
+
+    @staticmethod
+    def is_valid_email(val):
+        return OPSpreadsheet.EMAIL_RE.match(val) is not None
+
+    @staticmethod
+    def is_valid_lang(val):
+        return langs.is_valid_lang(val)
+
+
+    ######################################################################
+    # Instance methods
+    ######################################################################
+
     def __init__(self, xlsx_file, config):
         self.config    = deepcopy(config)
         self.xlsx_path = xlsx_file
         self.workbook  = load_workbook(self.xlsx_path)
         self.errors    = []
         self.warnings  = []
-        self.set_headings()
+        self._set_headings()
+
+    # --------------------------------------------------------------------
+    # Properties
+    # --------------------------------------------------------------------
+
+    @property
+    def required_fields(self):
+        """
+        Return details dict for all fields with:
+                'required': True.
+        """
+        return [ x for x in self.fields.itervalues() if x['required'] ]
+
+    @property
+    def description_sheet(self):
+	return self.workbook.get_sheet_by_name('Description')
+
+    @property
+    def fields(self):
+        return self.config['fields']
+
+    # --------------------------------------------------------------------
+    # Validation
+    # --------------------------------------------------------------------
 
     def has_description_errors(self):
         return len(self.errors) > 0
@@ -73,51 +123,11 @@ class OPSpreadsheet:
         for attr in self.fields:
             self.validate_field(attr)
 
-    def values(self, attr):
-        details = self.fields[attr]
-        if details.get('cell_values') is None:
-            details['cell_values'] = self.extract_values(attr)
-        return details.get('cell_values')
-
-    def extract_values(self, attr):
-        vals = []
-
-        details = self.fields[attr]
-        locus = details['locus']
-        row = locus['row']
-        # read the first 20 columns past the heading locus
-        data_col = locus['col'] + self.FIELD_COLUMN_OFFSET
-        for col in xrange(data_col, data_col + 21):
-            cell = self.description_sheet.cell(column=col,row=row)
-            if cell.value is not None and str(cell.value).strip() != '':
-                vals.append(cell.value)
-            else:
-                vals.append(None)
-
-        # strip off trailing Nones
-        while len(vals) > 0 and vals[-1] is None:
-            del vals[-1]
-
-        return vals
-
-    @staticmethod
-    def is_valid_uri(val):
-        return OPSpreadsheet.URI_RE.match(val) is not None
-
-    @staticmethod
-    def is_valid_year(val):
-        return OPSpreadsheet.YEAR_RE.match(str(val)) and \
-            int(val) in xrange(OPSpreadsheet.MIN_YEAR, OPSpreadsheet.MAX_YEAR + 1)
-
-    @staticmethod
-    def is_valid_email(val):
-        return OPSpreadsheet.EMAIL_RE.match(val) is not None
-
-    @staticmethod
-    def is_valid_lang(val):
-        return langs.is_valid_lang(val)
-
     def validate_blank(self, attr):
+        """If 'attr' has a blank rule and field is not blank, validate
+        whether field may have a value.
+
+        """
         if (self.blank_rule(attr) is None or self.is_blank(attr)):
             return
 
@@ -130,31 +140,28 @@ class OPSpreadsheet:
             if self.is_blank(other_attr):
                 msg = '"%s" must be blank if "%s" is blank; found: %s' % (
                     self.field_name(attr), self.field_name(other_attr),
-                    ', '.join(self.values_quoted(attr)))
+                    ', '.join(self._values_quoted(attr)))
                 self.errors.append(msg)
         elif condition == 'NONBLANK':
             if self.is_present(other_attr):
                 msg = '"%s" must be blank if "%s" has a value; found: %s' % (
                     self.field_name(attr), self.field_name(other_attr),
-                    ', '.join(self.values_quoted(attr)))
+                    ', '.join(self._values_quoted(attr)))
                 self.errors.append(msg)
         elif isinstance(condition,list):
             for val in self.values(other_attr):
                 if val in condition and self.is_present(attr):
                     msg = '"%s" must be blank if "%s" is "%s"; found: %s' % (
                         self.field_name(attr), self.field_name(other_attr), val,
-                        ', '.join(self.values_quoted(attr)))
+                        ', '.join(self._values_quoted(attr)))
                     self.errors.append(msg)
         else:
             raise OPennException('Unknown condition type: "%s"' % (condition,))
 
-    def values_quoted(self, attr, q='"'):
-        return self.list_quoted(self.values(attr), q=q)
-
-    def list_quoted(self, strings, q='"'):
-        return [ "%s%s%s" % (q,s,q) for s in strings ]
-
     def validate_conditional(self, attr, required):
+        """Validate a conditional requirement rule.
+
+        """
         ifclause    = required['if']
         other_attr  = ifclause['field']
         condition   = ifclause['is']
@@ -180,6 +187,10 @@ class OPSpreadsheet:
             raise OPennException("Unknown condition type: %s" % (condition,))
 
     def validate_requirement(self, attr):
+        """Validate required or conditionally required field if 'required' is
+        present and non-False.
+
+        """
         details = self.fields[attr]
         field_name = details['field_name']
         required = details['required']
@@ -191,32 +202,32 @@ class OPSpreadsheet:
             self.validate_conditional(attr, required)
 
     def validate_value_list(self, attr):
+        """Validate field whose values must come from a list if 'value_list'
+        present.
+
+        """
         value_list = self.value_list(attr)
         if value_list is None: return
 
         for val in self.values(attr):
             if val not in value_list:
                 msg = '"%s" value "%s" not valid; expected one of: %s' % (
-                    self.field_name(attr), val, ', '.join(self.list_quoted(value_list)))
+                    self.field_name(attr), val, ', '.join(self._list_quoted(value_list)))
                 self.errors.append(msg)
 
     def validate_repeating(self, attr):
+        """Validate non-repeating fields if 'repeating' set to False.
+
+        """
         if not self.repeating(attr) and len(self.values(attr)) > 1:
             msg = "More than one value found in non-repeating field %s: %s" % (
-                self.field_name(attr), ', '.join(self.values_quoted(attr)))
+                self.field_name(attr), ', '.join(self._values_quoted(attr)))
             self.errors.append(msg)
 
-    def is_blank(self, field):
-        values = self.values(field)
-        return len(values) == 0
-
-    def is_present(self, field):
-        return not self.is_blank(field)
-
-    def is_field_missing(self, attr):
-        return self.locus(attr) is None
-
     def validate_field(self, attr):
+        """Perform all validations for field.
+
+        """
         # first see if the field is missing
         if self.is_field_missing(attr): return
 
@@ -226,47 +237,44 @@ class OPSpreadsheet:
         self.validate_repeating(attr)
         self.validate_data_type(attr)
 
-    def format_error(self, field_name, value, data_type):
-        return "%s is not a valid %s: %s" % (field_name, data_type, value)
-
     def validate_data_type(self, attr):
+        """Validate all values for field against configured 'data_type'.
+
+        """
         data_type = self.data_type(attr)
         field_name = self.field_name(attr)
         for val in self.values(attr):
             self._do_type_validation(field_name, val, self.data_type(attr))
 
-    def _do_type_validation(self, field, value, data_type):
-        if data_type == 'year':
-            if not OPSpreadsheet.is_valid_year(value):
-                self.errors.append(self.format_error(field, value, data_type))
-        elif data_type == 'uri':
-            if not OPSpreadsheet.is_valid_uri(value):
-                self.errors.append(self.format_error(field, value, data_type))
-        elif data_type == 'lang':
-            if not OPSpreadsheet.is_valid_lang(value):
-                self.errors.append(self.format_error(field, value, data_type))
-        elif data_type == 'email':
-            if not OPSpreadsheet.is_valid_email(value):
-                self.warnings.append(
-                    self.format_error(field, value, data_type))
-        elif data_type == 'string':
-            pass
-        else:
-            raise OPennException('Unknown data type: "%s"' % (data_type,))
+    # --------------------------------------------------------------------
+    # Field accessors
+    # --------------------------------------------------------------------
 
-    @property
-    def description_sheet(self):
-	return self.workbook.get_sheet_by_name('Description')
+    def is_blank(self, field):
+        """Return True if the field has no value present.
 
-    @property
-    def required_fields(self):
-        return [ x for x in self.fields.itervalues() if x['required'] ]
+        """
+        values = self.values(field)
+        return len(values) == 0
 
-    @property
-    def fields(self):
-        return self.config['fields']
+    def is_present(self, field):
+        """Return True if the field has one or more values.
 
-    # Field details
+        """
+        return not self.is_blank(field)
+
+    def is_field_missing(self, attr):
+        """Return True if the field is not on the description sheet.
+
+        """
+        return self.locus(attr) is None
+
+    def values(self, attr):
+        details = self.fields[attr]
+        if details.get('cell_values') is None:
+            details['cell_values'] = self._extract_values(attr)
+        return details.get('cell_values')
+
     def field_name(self, attr):
         if self.fields.get(attr):
             return self.fields[attr]['field_name']
@@ -295,23 +303,76 @@ class OPSpreadsheet:
         if self.fields.get(attr):
             return self.fields[attr].get('data_type')
 
-    def find_heading_locus(self, field_name):
+    ######################################################################
+    # _ methods
+    ######################################################################
+
+    def _values_quoted(self, attr, q='"'):
+        return self._list_quoted(self.values(attr), q=q)
+
+    def _list_quoted(self, strings, q='"'):
+        return [ "%s%s%s" % (q,s,q) for s in strings ]
+
+    def _normalize(self, s):
+        if s is not None:
+            return re.sub(r'\W+', '', str(s)).lower()
+
+    def _do_type_validation(self, field, value, data_type):
+        if data_type == 'year':
+            if not OPSpreadsheet.is_valid_year(value):
+                self.errors.append(self._format_error(field, value, data_type))
+        elif data_type == 'uri':
+            if not OPSpreadsheet.is_valid_uri(value):
+                self.errors.append(self._format_error(field, value, data_type))
+        elif data_type == 'lang':
+            if not OPSpreadsheet.is_valid_lang(value):
+                self.errors.append(self._format_error(field, value, data_type))
+        elif data_type == 'email':
+            if not OPSpreadsheet.is_valid_email(value):
+                self.warnings.append(
+                    self._format_error(field, value, data_type))
+        elif data_type == 'string':
+            pass
+        else:
+            raise OPennException('Unknown data type: "%s"' % (data_type,))
+
+    def _set_headings(self):
+        for attr in self.fields:
+            details          = self.fields[attr]
+            field_name       = details['field_name']
+            locus            = self._find_heading_locus(field_name)
+            details['locus'] = locus
+
+    def _find_heading_locus(self, field_name):
         locus = []
         sheet = self.description_sheet
         for row in xrange(1, sheet.max_row+1):
             for col in xrange(1, 21):
                 cell = self.description_sheet.cell(column=col, row=row)
                 value = cell.value if cell is not None else ''
-                if self.normalize(value) == self.normalize(field_name):
+                if self._normalize(value) == self._normalize(field_name):
                     return {'col': col,'row': row }
 
-    def set_headings(self):
-        for attr in self.fields:
-            details          = self.fields[attr]
-            field_name       = details['field_name']
-            locus            = self.find_heading_locus(field_name)
-            details['locus'] = locus
+    def _extract_values(self, attr):
+        vals = []
 
-    def normalize(self, s):
-        if s is not None:
-            return re.sub(r'\W+', '', str(s)).lower()
+        details = self.fields[attr]
+        locus = details['locus']
+        row = locus['row']
+        # read the first 20 columns past the heading locus
+        data_col = locus['col'] + self.FIELD_COLUMN_OFFSET
+        for col in xrange(data_col, data_col + 21):
+            cell = self.description_sheet.cell(column=col,row=row)
+            if cell.value is not None and str(cell.value).strip() != '':
+                vals.append(cell.value)
+            else:
+                vals.append(None)
+
+        # strip off trailing Nones
+        while len(vals) > 0 and vals[-1] is None:
+            del vals[-1]
+
+        return vals
+
+    def _format_error(self, field_name, value, data_type):
+        return "%s is not a valid %s: %s" % (field_name, data_type, value)
