@@ -29,6 +29,8 @@ class TestOpSpreadsheet(TestCase):
     # Alternate ID type
     invalid_nonblanks        = os.path.join(sheets_dir, 'invalid_values_should_be_blank.xlsx')
 
+    value_lists_workbook = os.path.join(sheets_dir, 'value_lists.xlsx')
+
     helen_griffith           = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
     mary_ayer                = os.path.join(diaries_dir, 'bryn_mawr/MaryAyer_Diary.xlsx')
     mww_diary_vol10          = os.path.join(diaries_dir, 'bryn_mawr/MWW_Diary_Vol10.xlsx')
@@ -51,6 +53,46 @@ class TestOpSpreadsheet(TestCase):
     url3 = 'http://id.loc.gov/authorities/subjects/sh85060757'
     url4 = 'http://id.loc.gov/authorities/subjects/sh2010118889'
     url5 = 'https://openpyxl.readthedocs.org/en/latest/api/openpyxl.worksheet.html?highlight=min_col#openpyxl.worksheet.worksheet.Worksheet.min_col'
+
+    value_lists_test_config = {
+        'fields': {
+            'rights_pd' : {
+                'field_name': 'Rights PD',
+                'required' : True,
+                'repeating' : False,
+                'data_type' : 'string',
+                'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            },
+            'rights_cc_by': {
+                'field_name': 'Rights CC-BY',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string',
+                'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            },
+            'rights_cc_x_not_in_list': {
+                'field_name': 'Rights CC-X (not in list)',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string',
+                'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            },
+            'rights_4_blank': {
+                'field_name': 'Rights 4 (blank)',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string',
+                'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            },
+            'rights_pd_with_space': {
+                'field_name': 'Rights PD with space',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string',
+                'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            }
+        }
+    }
 
     def setUp(self):
         pass
@@ -125,6 +167,32 @@ class TestOpSpreadsheet(TestCase):
         sheet.validate_blank('alternate_id_type')
         self.assertEqual(len(sheet.validation_errors), 1)
         self.assertRegexpMatches(sheet.validation_errors[0], r'Alternate ID type.* must be blank.*Alternate ID.*blank')
+
+    # Rights PD
+    def test_value_list_valid(self):
+        sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
+        sheet.validate_list('rights_pd')
+        self.assertEqual(len(sheet.validation_errors), 0)
+
+    # Rights CC-X (not in list)
+    def test_value_list_value_not_in_list(self):
+        sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
+        sheet.validate_list('rights_cc_x_not_in_list')
+        self.assertEqual(len(sheet.validation_errors), 1)
+        self.assertRegexpMatches(sheet.validation_errors[0], r'Rights CC-X.*not valid.*expected.*')
+
+    # Rights 4 (blank)
+    def test_value_list_with_value_blank(self):
+        sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
+        sheet.validate_list('rights_4_blank')
+        self.assertEqual(len(sheet.validation_errors), 0)
+
+    # Rights PD with space
+    def test_value_list_valid_value_plus_space(self):
+        sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
+        sheet.validate_list('rights_pd_with_space')
+        self.assertEqual(len(sheet.validation_errors), 1)
+        self.assertRegexpMatches(sheet.validation_errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
 
     def test_is_valid_uri(self):
         for url in [ self.url1, self.url2, self.url3, self.url4, self.url5 ]:

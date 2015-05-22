@@ -145,8 +145,11 @@ class OPSpreadsheet:
         else:
             raise OPennException('Unknown condition type: "%s"' % (condition,))
 
-    def values_quoted(self, attr, quote='"'):
-        return [ "%s%s%s" % (quote,x,quote) for x in self.values(attr) ]
+    def values_quoted(self, attr, q='"'):
+        return self.list_quoted(self.values(attr), q=q)
+
+    def list_quoted(self, strings, q='"'):
+        return [ "%s%s%s" % (q,s,q) for s in strings ]
 
     def validate_conditional(self, attr, required):
         ifclause    = required['if']
@@ -183,6 +186,15 @@ class OPSpreadsheet:
             self.validation_errors.append(msg)
         elif isinstance(required, dict):
             self.validate_conditional(attr, required)
+
+    def validate_list(self, attr):
+        details = self.fields[attr]
+        value_list= details['value_list']
+        for val in self.values(attr):
+            if val not in value_list:
+                msg = '"%s" value "%s" not valid; expected one of: %s' % (
+                    self.field_name(attr), val, ', '.join(self.list_quoted(value_list)))
+                self.validation_errors.append(msg)
 
     def is_blank(self, field):
         values = self.values(field)
