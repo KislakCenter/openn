@@ -147,104 +147,104 @@ class TestOpSpreadsheet(TestCase):
     def test_required_with_blank_error(self):
         sheet = OPSpreadsheet(self.invalid_missing_required, self.get_config())
         sheet.validate_requirement('date_range_end')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Date \(range\) end.* cannot be blank.*Date \(range\) start')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) end.* cannot be blank.*Date \(range\) start')
 
     # Place of origin
     def test_required_field_error(self):
         sheet = OPSpreadsheet(self.invalid_missing_required, self.get_config())
         sheet.validate_requirement('place_of_origin')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Place of origin.* cannot be blank')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Place of origin.* cannot be blank')
 
     # Metadata copyright year
     def test_required_with_value_error(self):
         sheet = OPSpreadsheet(self.invalid_missing_required, self.get_config())
         sheet.validate_requirement('metadata_copyright_year')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Metadata copyright year.* cannot be blank.*CC-BY')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Metadata copyright year.* cannot be blank.*CC-BY')
 
     # Alternate ID type
     def test_required_with_nonblank_error(self):
         sheet = OPSpreadsheet(self.invalid_missing_required, self.get_config())
         sheet.validate_requirement('alternate_id_type')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Alternate ID type.* cannot be blank.*Alternate ID')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* cannot be blank.*Alternate ID')
 
     # Date (single)
     def test_must_be_blank_with_nonblank_error(self):
         sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
         sheet.validate_blank('date_single')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Date \(single\).* must be blank.*start')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(single\).* must be blank.*start')
 
     # Date (range) start
     def test_must_be_blank_with_nonblank_error2(self):
         sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
         sheet.validate_blank('date_range_start')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Date \(range\) start.* must be blank.*single')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) start.* must be blank.*single')
 
     # Image copyright holder
     def test_must_be_blank_with_value_error(self):
         sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
         sheet.validate_blank('image_copyright_holder')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Image copyright holder.* must be blank.*PD')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Image copyright holder.* must be blank.*PD')
 
     # Alternate ID type
     def test_must_be_blank_with_blank_error(self):
         sheet = OPSpreadsheet(self.invalid_nonblanks, self.get_config())
         sheet.validate_blank('alternate_id_type')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Alternate ID type.* must be blank.*Alternate ID.*blank')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* must be blank.*Alternate ID.*blank')
 
     # Rights PD
     def test_value_list_valid(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
         sheet.validate_value_list('rights_pd')
-        self.assertEqual(len(sheet.validation_errors), 0)
+        self.assertEqual(len(sheet.errors), 0)
 
     # Rights CC-X (not in list)
     def test_value_list_value_not_in_list(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
         sheet.validate_value_list('rights_cc_x_not_in_list')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Rights CC-X.*not valid.*expected.*')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Rights CC-X.*not valid.*expected.*')
 
     # Rights 4 (blank)
     def test_value_list_with_value_blank(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
         sheet.validate_value_list('rights_4_blank')
-        self.assertEqual(len(sheet.validation_errors), 0)
+        self.assertEqual(len(sheet.errors), 0)
 
     # Rights PD with space
     def test_value_list_valid_value_plus_space(self):
         sheet = OPSpreadsheet(self.value_lists_workbook, self.value_lists_test_config)
         sheet.validate_value_list('rights_pd_with_space')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
 
     def test_repeating_false_one_value(self):
         sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
         sheet.validate_repeating('non_repeating_field_valid')
-        self.assertEqual(len(sheet.validation_errors), 0)
+        self.assertEqual(len(sheet.errors), 0)
 
     def test_repeating_false_more_than_one_value(self):
         sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
         sheet.validate_repeating('non_repeating_field_invalid')
-        self.assertEqual(len(sheet.validation_errors), 1)
-        self.assertRegexpMatches(sheet.validation_errors[0], r'More than one.*Non-repeating field invalid.*value1.*value2')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'More than one.*Non-repeating field invalid.*value1.*value2')
 
     def test_repeating_true_one_value(self):
         sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
         sheet.validate_repeating('repeating_field_one_value')
-        self.assertEqual(len(sheet.validation_errors), 0)
+        self.assertEqual(len(sheet.errors), 0)
 
     def test_repeating_true_more_than_one_value(self):
         sheet = OPSpreadsheet(self.repeating_workbook, self.repeating_config)
         sheet.validate_repeating('repeating_field_multiple_values')
-        self.assertEqual(len(sheet.validation_errors), 0)
+        self.assertEqual(len(sheet.errors), 0)
 
     def test_is_valid_uri(self):
         for url in [ self.url1, self.url2, self.url3, self.url4, self.url5 ]:

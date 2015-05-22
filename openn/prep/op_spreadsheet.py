@@ -49,12 +49,12 @@ class OPSpreadsheet:
         self.config              = deepcopy(config)
         self.xlsx_path           = xlsx_file
         self.workbook            = load_workbook(self.xlsx_path)
-        self.validation_errors   = []
+        self.errors              = []
         self.validation_warnings = []
         self.set_headings()
 
     def has_description_errors(self):
-        return len(self.validation_errors) > 0
+        return len(self.errors) > 0
 
     def has_description_warnings(self):
         return len(self.validation_warnings) > 0
@@ -67,7 +67,7 @@ class OPSpreadsheet:
         for field in self.required_fields:
             if not field['locus']:
                 msg = 'Required field is missing: %s' % (field['field_name'],)
-                self.validation_errors.append(msg)
+                self.errors.append(msg)
 
     def check_description_values(self):
         for attr in self.fields:
@@ -131,20 +131,20 @@ class OPSpreadsheet:
                 msg = '"%s" must be blank if "%s" is blank; found: %s' % (
                     self.field_name(attr), self.field_name(other_attr),
                     ', '.join(self.values_quoted(attr)))
-                self.validation_errors.append(msg)
+                self.errors.append(msg)
         elif condition == 'NONBLANK':
             if self.is_present(other_attr):
                 msg = '"%s" must be blank if "%s" has a value; found: %s' % (
                     self.field_name(attr), self.field_name(other_attr),
                     ', '.join(self.values_quoted(attr)))
-                self.validation_errors.append(msg)
+                self.errors.append(msg)
         elif isinstance(condition,list):
             for val in self.values(other_attr):
                 if val in condition and self.is_present(attr):
                     msg = '"%s" must be blank if "%s" is "%s"; found: %s' % (
                         self.field_name(attr), self.field_name(other_attr), val,
                         ', '.join(self.values_quoted(attr)))
-                    self.validation_errors.append(msg)
+                    self.errors.append(msg)
         else:
             raise OPennException('Unknown condition type: "%s"' % (condition,))
 
@@ -163,19 +163,19 @@ class OPSpreadsheet:
                 if self.is_blank(attr):
                     msg = '"%s" cannot be blank if "%s" is blank' % (
                         self.field_name(attr), self.field_name(other_attr))
-                    self.validation_errors.append(msg)
+                    self.errors.append(msg)
         elif condition == 'NONBLANK':
             if self.is_present(other_attr):
                 if self.is_blank(attr):
                     msg = '"%s" cannot be blank if "%s" has a value' % (
                         self.field_name(attr), self.field_name(other_attr))
-                    self.validation_errors.append(msg)
+                    self.errors.append(msg)
         elif isinstance(condition, list):
             for val in self.values(other_attr):
                 if val in condition and self.is_blank(attr):
                     msg = '"%s" cannot be blank if "%s" is "%s"' % (
                         self.field_name(attr), self.field_name(other_attr), val)
-                    self.validation_errors.append(msg)
+                    self.errors.append(msg)
         else:
             raise OPennException("Unknown condition type: %s" % (condition,))
 
@@ -186,7 +186,7 @@ class OPSpreadsheet:
         # print required
         if required == True and self.is_blank(attr):
             msg = '%s cannot be blank' % (details['field_name'],)
-            self.validation_errors.append(msg)
+            self.errors.append(msg)
         elif isinstance(required, dict):
             self.validate_conditional(attr, required)
 
@@ -198,13 +198,13 @@ class OPSpreadsheet:
             if val not in value_list:
                 msg = '"%s" value "%s" not valid; expected one of: %s' % (
                     self.field_name(attr), val, ', '.join(self.list_quoted(value_list)))
-                self.validation_errors.append(msg)
+                self.errors.append(msg)
 
     def validate_repeating(self, attr):
         if not self.repeating(attr) and len(self.values(attr)) > 1:
             msg = "More than one value found in non-repeating field %s: %s" % (
                 self.field_name(attr), ', '.join(self.values_quoted(attr)))
-            self.validation_errors.append(msg)
+            self.errors.append(msg)
 
     def is_blank(self, field):
         values = self.values(field)
@@ -235,23 +235,20 @@ class OPSpreadsheet:
         for val in self.values(attr):
             self._do_type_validation(field_name, val, self.data_type(attr))
 
-    def _do_type_validation(self, field_name, value, data_type):
+    def _do_type_validation(self, field, value, data_type):
         if data_type == 'year':
             if not OPSpreadsheet.is_valid_year(value):
-                self.validation_errors.append(
-                    self.format_error(field_name, value, data_type))
+                self.errors.append(self.format_error(field, value, data_type))
         elif data_type == 'uri':
             if not OPSpreadsheet.is_valid_uri(value):
-                self.validation_errors.append(
-                    self.format_error(field_name, value, data_type))
+                self.errors.append(self.format_error(field, value, data_type))
         elif data_type == 'lang':
             if not OPSpreadsheet.is_valid_lang(value):
-                self.validation_errors.append(
-                    self.format_error(field_name, value, data_type))
+                self.errors.append(self.format_error(field, value, data_type))
         elif data_type == 'email':
             if not OPSpreadsheet.is_valid_email(value):
                 self.validation_warnings.append(
-                    self.format_error(field_name, value, data_type))
+                    self.format_error(field, value, data_type))
         elif data_type == 'string':
             pass
         else:
