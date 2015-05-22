@@ -8,6 +8,7 @@ import re
 from copy import deepcopy
 
 from openn.prep import langs
+from openn.openn_exception import OPennException
 
 from openpyxl import load_workbook
 from openpyxl.workbook import Workbook
@@ -223,29 +224,38 @@ class OPSpreadsheet:
         self.validate_blank(attr)
         self.validate_value_list(attr)
         self.validate_repeating(attr)
-
-        for val in self.values(attr):
-            self.validate_data_type(val, self.fields[attr])
+        self.validate_data_type(attr)
 
     def format_error(self, field_name, value, data_type):
         return "%s is not a valid %s: %s" % (field_name, data_type, value)
 
-    def validate_data_type(self, value, details):
-        data_type  = details['data_type']
-        field_name = details['data_type']
+    def validate_data_type(self, attr):
+        data_type = self.data_type(attr)
+        field_name = self.field_name(attr)
+        for val in self.values(attr):
+            self._do_type_validation(field_name, val, self.data_type(attr))
 
-        if data_type == 'year' and not OPSpreadsheet.is_valid_year(value):
-            self.validation_errors.append(
-                self.format_error(field_name, value, data_type))
-        elif data_type == 'uri' and not OPSpreadsheet.is_valid_uri(value):
-            self.validation_errors.append(
-                self.format_error(field_name, value, data_type))
-        elif data_type == 'lang' and not OPSpreadsheet.is_valid_lang(value):
-            self.validation_errors.append(
-                self.format_error(field_name, value, data_type))
-        elif data_type == 'email' and not OPSpreadsheet.is_valid_email(value):
-            self.validation_warnings.append(
-                self.format_error(field_name, value, data_type))
+    def _do_type_validation(self, field_name, value, data_type):
+        if data_type == 'year':
+            if not OPSpreadsheet.is_valid_year(value):
+                self.validation_errors.append(
+                    self.format_error(field_name, value, data_type))
+        elif data_type == 'uri':
+            if not OPSpreadsheet.is_valid_uri(value):
+                self.validation_errors.append(
+                    self.format_error(field_name, value, data_type))
+        elif data_type == 'lang':
+            if not OPSpreadsheet.is_valid_lang(value):
+                self.validation_errors.append(
+                    self.format_error(field_name, value, data_type))
+        elif data_type == 'email':
+            if not OPSpreadsheet.is_valid_email(value):
+                self.validation_warnings.append(
+                    self.format_error(field_name, value, data_type))
+        elif data_type == 'string':
+            pass
+        else:
+            raise OPennException('Unknown data type: "%s"' % (data_type,))
 
     @property
     def description_sheet(self):
