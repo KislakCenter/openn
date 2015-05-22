@@ -72,6 +72,9 @@ class OPSpreadsheet:
     ######################################################################
 
     def __init__(self, xlsx_file, config):
+        """Create a new OPSpreadsheet and find all description sheet headings.
+
+        """
         self.config    = deepcopy(config)
         self.xlsx_path = xlsx_file
         self.workbook  = load_workbook(self.xlsx_path)
@@ -85,9 +88,8 @@ class OPSpreadsheet:
 
     @property
     def required_fields(self):
-        """
-        Return details dict for all fields with:
-                'required': True.
+        """Return details dict for all fields where 'required' is True.
+
         """
         return [ x for x in self.fields.itervalues() if x['required'] ]
 
@@ -159,9 +161,7 @@ class OPSpreadsheet:
             raise OPennException('Unknown condition type: "%s"' % (condition,))
 
     def validate_conditional(self, attr, required):
-        """Validate a conditional requirement rule.
-
-        """
+        """Validate a conditional requirement rule."""
         ifclause    = required['if']
         other_attr  = ifclause['field']
         condition   = ifclause['is']
@@ -225,9 +225,7 @@ class OPSpreadsheet:
             self.errors.append(msg)
 
     def validate_field(self, attr):
-        """Perform all validations for field.
-
-        """
+        """Perform all validations for field."""
         # first see if the field is missing
         if self.is_field_missing(attr): return
 
@@ -251,55 +249,57 @@ class OPSpreadsheet:
     # --------------------------------------------------------------------
 
     def is_blank(self, field):
-        """Return True if the field has no value present.
-
-        """
+        """Return True if the field has no value present."""
         values = self.values(field)
         return len(values) == 0
 
     def is_present(self, field):
-        """Return True if the field has one or more values.
-
-        """
+        """Return True if the field has one or more values."""
         return not self.is_blank(field)
 
     def is_field_missing(self, attr):
-        """Return True if the field is not on the description sheet.
-
-        """
+        """Return True if the field is not on the description sheet."""
         return self.locus(attr) is None
 
     def values(self, attr):
+        """Return all values for attr's field."""
         details = self.fields[attr]
         if details.get('cell_values') is None:
             details['cell_values'] = self._extract_values(attr)
         return details.get('cell_values')
 
     def field_name(self, attr):
+        """Return the 'field_name' for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr]['field_name']
 
     def locus(self, attr):
+        """Return the header 'locus' for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr].get('locus')
 
     def value_list(self, attr):
+        """If present, return the 'value_list' for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr].get('value_list')
 
     def requirement(self, attr):
+        """Return the 'require' value for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr].get('required')
 
     def blank_rule(self, attr):
+        """If present, return the 'blank' rule for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr].get('blank')
 
     def repeating(self, attr):
+        """Return the 'repeating' value for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr].get('repeating')
 
     def data_type(self, attr):
+        """Return the 'data_type' for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr].get('data_type')
 
@@ -337,6 +337,7 @@ class OPSpreadsheet:
             raise OPennException('Unknown data type: "%s"' % (data_type,))
 
     def _set_headings(self):
+        """Find and set the headings locus for each field in config."""
         for attr in self.fields:
             details          = self.fields[attr]
             field_name       = details['field_name']
@@ -344,6 +345,12 @@ class OPSpreadsheet:
             details['locus'] = locus
 
     def _find_heading_locus(self, field_name):
+        """Find the heading locus for 'field_name'. Field name is compared to
+        cell values by normalizing both strings and comparing.
+        Normalization removes all non-word characaters and converts
+        the remaining characters to lower case.
+
+        """
         locus = []
         sheet = self.description_sheet
         for row in xrange(1, sheet.max_row+1):
@@ -354,11 +361,13 @@ class OPSpreadsheet:
                     return {'col': col,'row': row }
 
     def _extract_values(self, attr):
+        """Based on the locus of attr's field's header.
+        """
         vals = []
 
         details = self.fields[attr]
-        locus = details['locus']
-        row = locus['row']
+        locus   = details['locus']
+        row     = locus['row']
         # read the first 20 columns past the heading locus
         data_col = locus['col'] + self.FIELD_COLUMN_OFFSET
         for col in xrange(data_col, data_col + 21):
