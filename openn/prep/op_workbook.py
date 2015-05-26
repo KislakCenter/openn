@@ -11,10 +11,10 @@ from openn.prep import langs
 from openn.openn_exception import OPennException
 
 from openpyxl import load_workbook
-from openpyxl.workbook import Workbook
+from openpyxl.workbook import workbook
 
 
-class OPSpreadsheet:
+class OPWorkbook:
 
     MIN_YEAR = -5000
     MAX_YEAR = 3000
@@ -51,16 +51,16 @@ class OPSpreadsheet:
 
     @staticmethod
     def is_valid_uri(val):
-        return OPSpreadsheet.URI_RE.match(val) is not None
+        return OPWorkbook.URI_RE.match(val) is not None
 
     @staticmethod
     def is_valid_year(val):
-        return OPSpreadsheet.YEAR_RE.match(str(val)) and \
-            int(val) in xrange(OPSpreadsheet.MIN_YEAR, OPSpreadsheet.MAX_YEAR + 1)
+        return OPWorkbook.YEAR_RE.match(str(val)) and \
+            int(val) in xrange(OPWorkbook.MIN_YEAR, OPWorkbook.MAX_YEAR + 1)
 
     @staticmethod
     def is_valid_email(val):
-        return OPSpreadsheet.EMAIL_RE.match(val) is not None
+        return OPWorkbook.EMAIL_RE.match(val) is not None
 
     @staticmethod
     def is_valid_lang(val):
@@ -72,7 +72,7 @@ class OPSpreadsheet:
     ######################################################################
 
     def __init__(self, xlsx_file, config):
-        """Create a new OPSpreadsheet and find all description sheet headings.
+        """Create a new OPWorkbook and find all description sheet headings.
 
         """
         self.config      = deepcopy(config)
@@ -124,7 +124,7 @@ class OPSpreadsheet:
         self.check_description_values()
 
     def validate_pages(self):
-        pass
+        self.pages_sheet
 
     def check_required_headings(self):
         for field in self.required_fields:
@@ -336,16 +336,16 @@ class OPSpreadsheet:
 
     def _do_type_validation(self, field, value, data_type):
         if data_type == 'year':
-            if not OPSpreadsheet.is_valid_year(value):
+            if not OPWorkbook.is_valid_year(value):
                 self.errors.append(self._format_error(field, value, data_type))
         elif data_type == 'uri':
-            if not OPSpreadsheet.is_valid_uri(value):
+            if not OPWorkbook.is_valid_uri(value):
                 self.errors.append(self._format_error(field, value, data_type))
         elif data_type == 'lang':
-            if not OPSpreadsheet.is_valid_lang(value):
+            if not OPWorkbook.is_valid_lang(value):
                 self.errors.append(self._format_error(field, value, data_type))
         elif data_type == 'email':
-            if not OPSpreadsheet.is_valid_email(value):
+            if not OPWorkbook.is_valid_email(value):
                 self.warnings.append(
                     self._format_error(field, value, data_type))
         elif data_type == 'string':

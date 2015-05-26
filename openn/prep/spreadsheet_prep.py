@@ -9,7 +9,7 @@ import sys
 import codecs
 from lxml import etree
 from openn.prep.collection_prep import CollectionPrep
-from openn.prep.op_spreadsheet import OPSpreadsheet
+from openn.prep.op_workbook import OPWorkbook
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.xml.openn_tei import OPennTEI
