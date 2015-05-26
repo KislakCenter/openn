@@ -229,11 +229,15 @@ class OPSpreadsheet:
         # first see if the field is missing
         if self.is_field_missing(attr): return
 
-        self.validate_requirement(attr)
-        self.validate_blank(attr)
-        self.validate_value_list(attr)
-        self.validate_repeating(attr)
-        self.validate_data_type(attr)
+        try:
+            self.validate_requirement(attr)
+            self.validate_blank(attr)
+            self.validate_value_list(attr)
+            self.validate_repeating(attr)
+            self.validate_data_type(attr)
+        except Exception as ex:
+            msg = u'Error validating "%s"' % (attr,)
+            raise OPennException(msg, ex)
 
     def validate_data_type(self, attr):
         """Validate all values for field against configured 'data_type'.
@@ -242,7 +246,9 @@ class OPSpreadsheet:
         data_type = self.data_type(attr)
         field_name = self.field_name(attr)
         for val in self.values(attr):
-            self._do_type_validation(field_name, val, self.data_type(attr))
+            # don't try to validate data type if None
+            if val is not None:
+                self._do_type_validation(field_name, val, self.data_type(attr))
 
     # --------------------------------------------------------------------
     # Field accessors

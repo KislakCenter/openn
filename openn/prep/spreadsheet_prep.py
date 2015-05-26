@@ -9,6 +9,7 @@ import sys
 import codecs
 from lxml import etree
 from openn.prep.collection_prep import CollectionPrep
+from openn.prep.op_spreadsheet import OPSpreadsheet
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.xml.openn_tei import OPennTEI
@@ -24,6 +25,7 @@ class SpreadsheetPrep(CollectionPrep):
         CollectionPrep.__init__(self,source_dir,collection, document)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir = os.path.join(self.source_dir, 'data')
+        self._sheet = None
 
     def add_file_list(self,file_list):
         # file_list = self.get_file_list(pih_xml)
@@ -49,6 +51,24 @@ class SpreadsheetPrep(CollectionPrep):
         tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
         for x in tiffs:
            shutil.move(x, self.data_dir)
+
+    @property
+    def sheet_path(self):
+        return os.path.join(self.source_dir, 'openn_metadata.xlsx')
+
+    def spreadsheet(self):
+        if self._sheet is None:
+            self._sheet = OPSpreadsheet(
+                self.sheet_path, self.spreadsheet_config)
+        return self._sheet
+
+    def validate_spreadsheet(self):
+        if not os.path.exists(self.sheet_path):
+            msg = 'Cannot find required metadata spreadsheet: %s' % (
+                self.sheet_path)
+            raise OPennException(msg)
+
+        self.spreadsheet().validate_description()
 
     def build_file_list(self,pih_xml):
         """Build a list of files using the pih_xml file.
@@ -117,7 +137,7 @@ class SpreadsheetPrep(CollectionPrep):
             self.logger.warning("[%s] Metadata alreaady validated" % (self.basedir, ))
         else:
             self.logger.info("[%s] Validating metadata" % (self.basedir, ))
-            pass
+            self.validate_spreadsheet()
             self.write_status(self.COLLECTION_PREP_MD_VALIDATED)
 
         if self.get_status() > self.COLLECTION_PREP_FILES_VALIDATED:

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+
 import os
+from copy import deepcopy
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 from openn.openn_exception import OPennException
 from django.conf import settings
@@ -59,6 +61,10 @@ class OPennSettings(object):
 
         """
         return settings.COLLECTIONS[self._coll_name]
+
+    @property
+    def spreadsheet_config(self):
+        return deepcopy(settings.SPREADSHEET_FIELDS)
 
     @property
     def known_colls(self):
