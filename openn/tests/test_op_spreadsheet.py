@@ -173,6 +173,11 @@ class TestOpSpreadsheet(TestCase):
         sheet = OPSpreadsheet(self.helen_griffith, self.get_config())
         self.assertIsInstance(sheet,OPSpreadsheet)
 
+    def test_validate_pages(self):
+        sheet = OPSpreadsheet(self.helen_griffith, self.get_config())
+        sheet.validate_pages()
+        self.assertFalse(sheet.has_page_errors())
+
     def test_validate_description(self):
         sheet = OPSpreadsheet(self.helen_griffith, self.get_config())
         sheet.validate_description()

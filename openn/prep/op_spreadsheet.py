@@ -75,11 +75,12 @@ class OPSpreadsheet:
         """Create a new OPSpreadsheet and find all description sheet headings.
 
         """
-        self.config    = deepcopy(config)
-        self.xlsx_path = xlsx_file
-        self.workbook  = load_workbook(self.xlsx_path)
-        self.errors    = []
-        self.warnings  = []
+        self.config      = deepcopy(config)
+        self.xlsx_path   = xlsx_file
+        self.workbook    = load_workbook(self.xlsx_path)
+        self.errors      = []
+        self.page_errors = []
+        self.warnings    = []
         self._set_headings()
 
     # --------------------------------------------------------------------
@@ -98,6 +99,10 @@ class OPSpreadsheet:
 	return self.workbook.get_sheet_by_name('Description')
 
     @property
+    def pages_sheet(self):
+        return self.workbook.get_sheet_by_name('Pages')
+
+    @property
     def fields(self):
         return self.config['fields']
 
@@ -111,9 +116,15 @@ class OPSpreadsheet:
     def has_description_warnings(self):
         return len(self.warnings) > 0
 
+    def has_page_errors(self):
+        return len(self.page_errors) > 0
+
     def validate_description(self):
         self.check_required_headings()
         self.check_description_values()
+
+    def validate_pages(self):
+        pass
 
     def check_required_headings(self):
         for field in self.required_fields:
