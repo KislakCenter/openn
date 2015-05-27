@@ -58,7 +58,7 @@ class SpreadsheetPrep(CollectionPrep):
 
     def spreadsheet(self):
         if self._sheet is None:
-            self._sheet = OPSpreadsheet(
+            self._sheet = OPWorkbook(
                 self.sheet_path, self.spreadsheet_config)
         return self._sheet
 

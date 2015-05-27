@@ -64,7 +64,7 @@ class OPennSettings(object):
 
     @property
     def spreadsheet_config(self):
-        return deepcopy(settings.SPREADSHEET_FIELDS)
+        return deepcopy(settings.SPREADSHEET_CONFIG)
 
     @property
     def known_colls(self):

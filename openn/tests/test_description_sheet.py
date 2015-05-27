@@ -9,6 +9,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from openn.prep.op_workbook import OPWorkbook
+from openn.prep.description_sheet import DescriptionSheet
+from openn.prep.validatable_sheet import ValidatableSheet
 
 class TestOPWorkbook(TestCase):
     this_dir                = os.path.dirname(__file__)
@@ -179,18 +181,135 @@ class TestOPWorkbook(TestCase):
         return settings.SPREADSHEET_CONFIG
 
     def test_init(self):
-        sheet = OPWorkbook(self.helen_griffith, self.get_config())
-        self.assertIsInstance(sheet,OPWorkbook)
+        sheet = OPWorkbook(self.helen_griffith, self.get_config()).description
+        self.assertIsInstance(sheet, DescriptionSheet)
+        self.assertIsInstance(sheet, ValidatableSheet)
 
-    def test_validate_description(self):
-        sheet = OPWorkbook(self.helen_griffith, self.get_config())
-        sheet.validate_description()
-        self.assertFalse(sheet.has_description_errors())
+    # Date (range) end
+    def test_required_with_blank_error(self):
+        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
+        sheet.validate_requirement('date_range_end')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) end.* cannot be blank.*Date \(range\) start')
 
-    def test_validate_sheet_missing_optional_fields(self):
-        sheet = OPWorkbook(self.missing_field_workbook, self.field_missing_config)
-        sheet.validate_description()
-        self.assertFalse(sheet.has_description_errors())
+    # Place of origin
+    def test_required_field_error(self):
+        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
+        sheet.validate_requirement('place_of_origin')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Place of origin.* cannot be blank')
 
-if __name__ == '__main__':
-    unittest2.main()
+    # Metadata copyright year
+    def test_required_with_value_error(self):
+        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
+        sheet.validate_requirement('metadata_copyright_year')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Metadata copyright year.* cannot be blank.*CC-BY')
+
+    # Alternate ID type
+    def test_required_with_nonblank_error(self):
+        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
+        sheet.validate_requirement('alternate_id_type')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* cannot be blank.*Alternate ID')
+
+    # Date (single)
+    def test_must_be_blank_with_nonblank_error(self):
+        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
+        sheet.validate_blank('date_single')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(single\).* must be blank.*start')
+
+    # Date (range) start
+    def test_must_be_blank_with_nonblank_error2(self):
+        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
+        sheet.validate_blank('date_range_start')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) start.* must be blank.*single')
+
+    # Image copyright holder
+    def test_must_be_blank_with_value_error(self):
+        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
+        sheet.validate_blank('image_copyright_holder')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Image copyright holder.* must be blank.*PD')
+
+    # Alternate ID type
+    def test_must_be_blank_with_blank_error(self):
+        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
+        sheet.validate_blank('alternate_id_type')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* must be blank.*Alternate ID.*blank')
+
+    # Rights PD
+    def test_value_list_valid(self):
+        sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
+        sheet.validate_value_list('rights_pd')
+        self.assertEqual(len(sheet.errors), 0)
+
+    # Rights CC-X (not in list)
+    def test_value_list_value_not_in_list(self):
+        sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
+        sheet.validate_value_list('rights_cc_x_not_in_list')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Rights CC-X.*not valid.*expected.*')
+
+    # Rights 4 (blank)
+    def test_value_list_with_value_blank(self):
+        sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
+        sheet.validate_value_list('rights_4_blank')
+        self.assertEqual(len(sheet.errors), 0)
+
+    # Rights PD with space
+    def test_value_list_valid_value_plus_space(self):
+        sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
+        sheet.validate_value_list('rights_pd_with_space')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
+
+    def test_repeating_false_one_value(self):
+        sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
+        sheet.validate_repeating('non_repeating_field_valid')
+        self.assertEqual(len(sheet.errors), 0)
+
+    def test_repeating_false_more_than_one_value(self):
+        sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
+        sheet.validate_repeating('non_repeating_field_invalid')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'More than one.*Non-repeating field invalid.*value1.*value2')
+
+    def test_repeating_true_one_value(self):
+        sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
+        sheet.validate_repeating('repeating_field_one_value')
+        self.assertEqual(len(sheet.errors), 0)
+
+    def test_repeating_true_more_than_one_value(self):
+        sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
+        sheet.validate_repeating('repeating_field_multiple_values')
+        self.assertEqual(len(sheet.errors), 0)
+
+    def test_is_valid_uri(self):
+        for url in [ self.url1, self.url2, self.url3, self.url4, self.url5 ]:
+            self.assertTrue(ValidatableSheet.is_valid_uri(url))
+
+    def test_is_not_valid_uri(self):
+        self.assertFalse(ValidatableSheet.is_valid_uri("car money"))
+
+    def test_is_valid_year(self):
+        for year in (2013, 013, 3000, -5000, 2):
+            self.assertTrue(ValidatableSheet.is_valid_year(year), ("%d should be a valid year" % (year,)))
+
+    def test_is_not_valid_year(self):
+        for year in (2013.3, 'car', 3001, -5001):
+            self.assertFalse(ValidatableSheet.is_valid_year(year), ("%s should not be a valid year" % (str(year),)))
+
+    def test_is_valid_email(self):
+        self.assertTrue(ValidatableSheet.is_valid_email('joe@example.com'))
+
+    def test_is_valid_lang(self):
+        for x in ('eng', 'eng ', ' eng ', 'en'):
+            self.assertTrue(ValidatableSheet.is_valid_lang(x), ('%s should be a valid lang' % x))
+
+    def test_is_not_valid_lang(self):
+        for x in ('engx', 'x ', ' e ', 'enx'):
+            self.assertFalse(ValidatableSheet.is_valid_lang(x), ('%s should not be a valid lang' % x))

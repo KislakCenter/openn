@@ -216,349 +216,352 @@ COLLECTIONS = {
 
 }
 
-SPREADSHEET_FIELDS = {
-    'fields': {
-        'administrative_contact': {
-            'field_name': 'Administrative Contact',
-            'required': True,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'administrative_contact_email': {
-            'field_name': 'Administrative Contact email',
-            'required': True,
-            'repeating': True,
-            'data_type': 'email'
-        },
-        'pacscl_diaries_project_id': {
-            'field_name': 'PACSCL Diaries Project ID',
-            'required': False,
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'metadata_creator': {
-            'field_name': 'Metadata Creator',
-            'required': True,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'metadata_creator_email': {
-            'field_name': 'Metadata Creator Email',
-            'required': True,
-            'repeating': True,
-            'data_type': 'email'
-        },
-        'repository_city': {
-            'field_name': 'Repository City',
-            'required': True,
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'repository_name': {
-            'field_name': 'Repository Name',
-            'required': True,
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'source_collection': {
-            'field_name': 'Source collection',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'call_numberid': {
-            'field_name': 'Call Number/ID',
-            'required': True,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'alternate_id': {
-            'field_name': 'Alternate ID',
-            'required': False,
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'alternate_id_type': {
-            'field_name': 'Alternate ID type',
-            'required':  {
-                'if': {
-                    'field': 'alternate_id',
-                    'is': 'NONBLANK',
-                }
+SPREADSHEET_CONFIG = {
+    'description': {
+        'sheet_name': 'Description',
+        'fields': {
+            'administrative_contact': {
+                'field_name': 'Administrative Contact',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
             },
-            'blank': {
-                'if': {
-                    'field': 'alternate_id',
-                    'is': 'BLANK'
-                }
+            'administrative_contact_email': {
+                'field_name': 'Administrative Contact email',
+                'required': True,
+                'repeating': True,
+                'data_type': 'email'
             },
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'title': {
-            'field_name': 'Title',
-            'required': True,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'volume_number': {
-            'field_name': 'Volume number',
-            'required': False,
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'creator_name': {
-            'field_name': 'Creator name',
-            'required': True,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'creator_uri': {
-            'field_name': 'Creator URI',
-            'required': False,
-            'repeating': True,
-            'data_type': 'uri'
-        },
-        'date_single': {
-            'field_name': 'Date (single)',
-            'required': {
-                'if': {
-                    'field': 'date_range_start',
-                    'is': 'BLANK'
-                }
+            'pacscl_diaries_project_id': {
+                'field_name': 'PACSCL Diaries Project ID',
+                'required': False,
+                'repeating': False,
+                'data_type': 'string'
             },
-            'blank': {
-                'if': {
-                    'field': 'date_range_start',
-                    'is': 'NONBLANK'
-                }
+            'metadata_creator': {
+                'field_name': 'Metadata Creator',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
             },
-            'repeating': False,
-            'data_type': 'year',
-        },
-        'date_range_start': {
-            'field_name': 'Date (range) start',
-            'required': {
-                'if': {
-                    'field': 'date_single',
-                    'is': 'BLANK'
-                }
+            'metadata_creator_email': {
+                'field_name': 'Metadata Creator Email',
+                'required': True,
+                'repeating': True,
+                'data_type': 'email'
             },
-            'blank': {
-                'if': {
-                    'field': 'date_single',
-                    'is': 'NONBLANK'
-                }
+            'repository_city': {
+                'field_name': 'Repository City',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string'
             },
-            'repeating': False,
-            'data_type': 'year'
-        },
-        'date_range_end': {
-            'field_name': 'Date (range) end',
-            'required': {
-                'if': {
-                    'field': 'date_range_start',
-                    'is': 'NONBLANK'
-                }
+            'repository_name': {
+                'field_name': 'Repository Name',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string'
             },
-            'blank': {
-                'if': {
-                    'field': 'date_range_start',
-                    'is': 'BLANK'
-                }
+            'source_collection': {
+                'field_name': 'Source collection',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
             },
-            'repeating': False,
-            'data_type': 'year'
-        },
-        'date_narrative': {
-            'field_name': 'Date (narrative)',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'place_of_origin': {
-            'field_name': 'Place of origin',
-            'required': True,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'description': {
-            'field_name': 'Description',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'language': {
-            'field_name': 'Language',
-            'required': True,
-            'repeating': True,
-            'data_type': 'lang'
-        },
-        'page_count': {
-            'field_name': 'Number of physical pages',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'page_gaps_in_images': {
-            'field_name': 'Gaps',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'page_dimensions': {
-            'field_name': 'Page dimensions',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'bound_dimensions': {
-            'field_name': 'Bound dimensions',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'related_resource': {
-            'field_name': 'Related resource',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'related_resource_url': {
-            'field_name': 'Related resource URL',
-            'required': False,
-            'repeating': True,
-            'data_type': 'uri'
-        },
-        'subject_names': {
-            'field_name': 'Subject: names',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'subject_names_uri': {
-            'field_name': 'Subject: names URI [?]',
-            'required': False,
-            'repeating': True,
-            'data_type': 'uri'
-        },
-        'subject_topical': {
-            'field_name': 'Subject: topical',
-            'required': False,
-            'repeating': True,
-            'data_type': 'string'
-        },
-        'subject_topical_uri': {
-            'field_name': 'Subject: topical URI [?]',
-            'required': False,
-            'repeating': True,
-            'data_type': 'uri'
-        },
-        'subject_geographic': {
-            'field_name': 'Subject: geographic',
-            'required': True,
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'subject_geographic_uri': {
-            'field_name': 'Subject: geographic URI [?]',
-            'required': True,
-            'repeating': False,
-            'data_type': 'uri'
-        },
-        'subject_genreform': {
-            'field_name': 'Subject: genre/form',
-            'required': True,
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'subject_genreform_uri': {
-            'field_name': 'Subject: genre/form URI [?]',
-            'required': True,
-            'repeating': False,
-            'data_type': 'uri'
-        },
-        'image_rights': {
-            'field_name': 'Image rights',
-            'required': True,
-            'repeating': False,
-            'data_type': 'string',
-            'value_list': [ 'CC-BY', 'CC0', 'PD' ]
-        },
-        'image_copyright_holder': {
-            'field_name': 'Image copyright holder',
-            'required': {
-                'if': {
-                    'field': 'image_rights',
-                    'is': [ 'CC-BY', 'CC0' ]
-                }
+            'call_numberid': {
+                'field_name': 'Call Number/ID',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
             },
-            'blank': {
-                'if': {
-                    'field': 'image_rights',
-                    'is': [ 'PD' ]
-                }
+            'alternate_id': {
+                'field_name': 'Alternate ID',
+                'required': False,
+                'repeating': False,
+                'data_type': 'string'
             },
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'image_copyright_year': {
-            'field_name': 'Image copyright year',
-            'required': {
-                'if': {
-                    'field': 'image_rights',
-                    'is': [ 'CC-BY', 'CC0' ]
-                }
+            'alternate_id_type': {
+                'field_name': 'Alternate ID type',
+                'required':  {
+                    'if': {
+                        'field': 'alternate_id',
+                        'is': 'NONBLANK',
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'alternate_id',
+                        'is': 'BLANK'
+                    }
+                },
+                'repeating': False,
+                'data_type': 'string'
             },
-            'blank': {
-                'if': {
-                    'field': 'image_rights',
-                    'is': [ 'PD' ]
-                }
+            'title': {
+                'field_name': 'Title',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
             },
-            'repeating': False,
-            'data_type': 'year'
-        },
-        'metadata_rights': {
-            'field_name': 'Metadata rights',
-            'required': True,
-            'repeating': False,
-            'data_type': 'string',
-            'value_list': [ 'CC-BY', 'CC0', 'PD' ]
-        },
-        'metadata_copyright_holder': {
-            'field_name': 'Metadata copyright holder',
-            'required':  {
-                'if': {
-                    'field': 'metadata_rights',
-                    'is': [ 'CC-BY', 'CC0' ]
-                }
+            'volume_number': {
+                'field_name': 'Volume number',
+                'required': False,
+                'repeating': False,
+                'data_type': 'string'
             },
-            'blank': {
-                'if': {
-                    'field': 'metadata_rights',
-                    'is': [ 'PD' ]
-                }
+            'creator_name': {
+                'field_name': 'Creator name',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
             },
-            'repeating': False,
-            'data_type': 'string'
-        },
-        'metadata_copyright_year': {
-            'field_name': 'Metadata copyright year',
-            'required':  {
-                'if': {
-                    'field': 'metadata_rights',
-                    'is': [ 'CC-BY', 'CC0' ]
-                }
+            'creator_uri': {
+                'field_name': 'Creator URI',
+                'required': False,
+                'repeating': True,
+                'data_type': 'uri'
             },
-            'blank': {
-                'if': {
-                    'field': 'metadata_rights',
-                    'is': [ 'PD' ]
-                }
+            'date_single': {
+                'field_name': 'Date (single)',
+                'required': {
+                    'if': {
+                        'field': 'date_range_start',
+                        'is': 'BLANK'
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'date_range_start',
+                        'is': 'NONBLANK'
+                    }
+                },
+                'repeating': False,
+                'data_type': 'year',
             },
-            'repeating': False,
-            'data_type': 'year'
+            'date_range_start': {
+                'field_name': 'Date (range) start',
+                'required': {
+                    'if': {
+                        'field': 'date_single',
+                        'is': 'BLANK'
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'date_single',
+                        'is': 'NONBLANK'
+                    }
+                },
+                'repeating': False,
+                'data_type': 'year'
+            },
+            'date_range_end': {
+                'field_name': 'Date (range) end',
+                'required': {
+                    'if': {
+                        'field': 'date_range_start',
+                        'is': 'NONBLANK'
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'date_range_start',
+                        'is': 'BLANK'
+                    }
+                },
+                'repeating': False,
+                'data_type': 'year'
+            },
+            'date_narrative': {
+                'field_name': 'Date (narrative)',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'place_of_origin': {
+                'field_name': 'Place of origin',
+                'required': True,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'description': {
+                'field_name': 'Description',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'language': {
+                'field_name': 'Language',
+                'required': True,
+                'repeating': True,
+                'data_type': 'lang'
+            },
+            'page_count': {
+                'field_name': 'Number of physical pages',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'page_gaps_in_images': {
+                'field_name': 'Gaps',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'page_dimensions': {
+                'field_name': 'Page dimensions',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'bound_dimensions': {
+                'field_name': 'Bound dimensions',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'related_resource': {
+                'field_name': 'Related resource',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'related_resource_url': {
+                'field_name': 'Related resource URL',
+                'required': False,
+                'repeating': True,
+                'data_type': 'uri'
+            },
+            'subject_names': {
+                'field_name': 'Subject: names',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'subject_names_uri': {
+                'field_name': 'Subject: names URI [?]',
+                'required': False,
+                'repeating': True,
+                'data_type': 'uri'
+            },
+            'subject_topical': {
+                'field_name': 'Subject: topical',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'subject_topical_uri': {
+                'field_name': 'Subject: topical URI [?]',
+                'required': False,
+                'repeating': True,
+                'data_type': 'uri'
+            },
+            'subject_geographic': {
+                'field_name': 'Subject: geographic',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string'
+            },
+            'subject_geographic_uri': {
+                'field_name': 'Subject: geographic URI [?]',
+                'required': True,
+                'repeating': False,
+                'data_type': 'uri'
+            },
+            'subject_genreform': {
+                'field_name': 'Subject: genre/form',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string'
+            },
+            'subject_genreform_uri': {
+                'field_name': 'Subject: genre/form URI [?]',
+                'required': True,
+                'repeating': False,
+                'data_type': 'uri'
+            },
+            'image_rights': {
+                'field_name': 'Image rights',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string',
+                'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            },
+            'image_copyright_holder': {
+                'field_name': 'Image copyright holder',
+                'required': {
+                    'if': {
+                        'field': 'image_rights',
+                        'is': [ 'CC-BY', 'CC0' ]
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'image_rights',
+                        'is': [ 'PD' ]
+                    }
+                },
+                'repeating': False,
+                'data_type': 'string'
+            },
+            'image_copyright_year': {
+                'field_name': 'Image copyright year',
+                'required': {
+                    'if': {
+                        'field': 'image_rights',
+                        'is': [ 'CC-BY', 'CC0' ]
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'image_rights',
+                        'is': [ 'PD' ]
+                    }
+                },
+                'repeating': False,
+                'data_type': 'year'
+            },
+            'metadata_rights': {
+                'field_name': 'Metadata rights',
+                'required': True,
+                'repeating': False,
+                'data_type': 'string',
+                'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+            },
+            'metadata_copyright_holder': {
+                'field_name': 'Metadata copyright holder',
+                'required':  {
+                    'if': {
+                        'field': 'metadata_rights',
+                        'is': [ 'CC-BY', 'CC0' ]
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'metadata_rights',
+                        'is': [ 'PD' ]
+                    }
+                },
+                'repeating': False,
+                'data_type': 'string'
+            },
+            'metadata_copyright_year': {
+                'field_name': 'Metadata copyright year',
+                'required':  {
+                    'if': {
+                        'field': 'metadata_rights',
+                        'is': [ 'CC-BY', 'CC0' ]
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'metadata_rights',
+                        'is': [ 'PD' ]
+                    }
+                },
+                'repeating': False,
+                'data_type': 'year'
+            }
         }
     }
 }
