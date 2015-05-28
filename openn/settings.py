@@ -189,7 +189,7 @@ COLLECTIONS = {
     'haverford' : {
         'tag': 'haverford',
         'name': 'HaverfordCollege',
-        'blurb': 'Documentsw from the Haverford College Special Collections.',
+        'blurb': 'Documents from Haverford College Special Collections.',
         'toc_file': 'TOC_HaverfordCollege.html',
         'web_dir': 'Data/HaverfordCollege',
         'html_dir': 'Data/HaverfordCollege/html',
