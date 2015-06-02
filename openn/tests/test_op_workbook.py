@@ -59,6 +59,8 @@ class TestOPWorkbook(TestCase):
     value_lists_test_config = {
         'description' : {
             'sheet_name': 'Description',
+            'data_offset': 2,
+            'heading_type': 'row',
             'fields': {
                 'rights_pd' : {
                     'field_name': 'Rights PD',
@@ -102,6 +104,8 @@ class TestOPWorkbook(TestCase):
     repeating_config = {
         'description' : {
             'sheet_name': 'Description',
+            'data_offset': 2,
+            'heading_type': 'row',
             'fields': {
                 'non_repeating_field_valid': {
                     'field_name': 'Non-repeating field valid',
@@ -134,6 +138,8 @@ class TestOPWorkbook(TestCase):
     field_missing_config = {
         'description' : {
             'sheet_name': 'Description',
+            'data_offset': 2,
+            'heading_type': 'row',
             'fields' : {
                 'field1': {
                     'field_name': 'Field1',

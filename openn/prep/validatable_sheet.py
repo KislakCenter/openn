@@ -32,14 +32,6 @@ class ValidatableSheet(object):
     #
     EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b', re.I)
 
-    # The offset to use to find the first value column; the data
-    # starts 2 columns past the column the headering is in:
-    #
-    # Field          | Req't | Entry 1
-    # ---------------|-------|--------
-    # Call number    |   R   | MS ABC 123
-    #
-    FIELD_COLUMN_OFFSET = 2
 
     ######################################################################
     # Static methods
@@ -101,66 +93,123 @@ class ValidatableSheet(object):
     def sheet_name(self):
         return self.config['sheet_name']
 
+    @property
+    def data_offset(self):
+        """The offset from the heading row or column to find first value.  By
+        default this value is 1.  If the data starts more than one row
+        below or column after the heading, the offset must be in the
+        sheet's configuration as 'data_offset'.
+
+        In the example below, with row headings, the data begins the
+        field name is in column 1 and the data in column 3.
+        Therefore, the offset is 2:
+
+        Field          | Req't | Entry 1
+        ---------------|-------|--------
+        Call number    |   R   | MS ABC 123
+
+        """
+        return self.config.get('data_offset', 1)
+
+    @property
+    def heading_type(self):
+        return self.config.get('heading_type', 'column')
+
     # --------------------------------------------------------------------
     # Validation
     # --------------------------------------------------------------------
 
     def validate_blank(self, attr):
-        """If 'attr' has a blank rule and field is not blank, validate
+        """If 'attr' has a blank rule and field is non-empty, validate
         whether field may have a value.
 
         """
-        if (self.blank_rule(attr) is None or self.is_blank(attr)):
+        if (self.blank_rule(attr) is None or self.is_empty(attr)):
             return
 
-        blankrule  = self.fields[attr]['blank']
-        ifclause   = blankrule['if']
-        other_attr = ifclause['field']
-        condition  = ifclause['is']
+        blankrule    = self.fields[attr]['blank']
+        ifclause     = blankrule['if']
+        other_attr   = ifclause['field']
+        condition    = ifclause['is']
+        values       = self.values(attr)
+        other_values = self.values(other_attr)
 
-        if condition == 'BLANK':
-            if self.is_blank(other_attr):
-                msg = '"%s" must be blank if "%s" is blank; found: %s' % (
-                    self.field_name(attr), self.field_name(other_attr),
-                    ', '.join(self._values_quoted(attr)))
-                self.errors.append(msg)
-        elif condition == 'NONBLANK':
-            if self.is_present(other_attr):
-                msg = '"%s" must be blank if "%s" has a value; found: %s' % (
-                    self.field_name(attr), self.field_name(other_attr),
-                    ', '.join(self._values_quoted(attr)))
-                self.errors.append(msg)
+        if condition == 'EMPTY':
+            for i in xrange(len(values)):
+                if (self.is_nonempty_value(values[i]) and
+                    (len(other_values) < i+1 or
+                     self.is_empty_value(other_values[i]))):
+                    msg = '"%s" must be empty if "%s" is empty; found: %s' % (
+                        self.field_name(attr), self.field_name(other_attr),
+                        values[i])
+                    self.errors.append(msg)
+        elif condition == 'NONEMPTY':
+            for i in xrange(len(values)):
+                if (self.is_nonempty_value(values[i]) and
+                    (len(other_values) > i and
+                     self.is_nonempty_value(other_values[i]))):
+                    msg = '"%s" must be empty if "%s" has a value; found: %s' % (
+                        self.field_name(attr), self.field_name(other_attr),
+                        values[i])
+                    self.errors.append(msg)
         elif isinstance(condition,list):
-            for val in self.values(other_attr):
-                if val in condition and self.is_present(attr):
-                    msg = '"%s" must be blank if "%s" is "%s"; found: %s' % (
-                        self.field_name(attr), self.field_name(other_attr), val,
-                        ', '.join(self._values_quoted(attr)))
+            for i in xrange(len(values)):
+                if (self.is_nonempty_value(values[i]) and
+                    (len(other_values) > i and other_values[i] in condition)):
+                    msg = '"%s" must be empty if "%s" is "%s"; found: %s' % (
+                        self.field_name(attr), self.field_name(other_attr),
+                        other_values[i], values[i])
                     self.errors.append(msg)
         else:
             raise OPennException('Unknown condition type: "%s"' % (condition,))
 
+    def validate_required_if_other_empty(self, attr, other_attr):
+        field_name = self.field_name(attr)
+        other_name = self.field_name(other_attr)
+        if self.is_empty(attr) and self.is_empty(other_attr):
+            msg = '"%s" cannot be empty if "%s" is empty' % (
+                field_name, other_name)
+            self.errors.append(msg)
+        elif self.is_empty(other_attr):
+            values, others = self.value_matrix(attr, other_attr)
+
+            for i in xrange(len(values)):
+                if (self.is_empty_value(values[i]) and (
+                        len(others) <= i or self.is_empty_value(others[i]))):
+                    msg = '"%s" cannot be empty if "%s" is empty' % (
+                        field_name, other_name)
+                    self.errors.append(msg)
+
+    def validate_required_if_other_nonempty(self, attr, other_attr):
+        field_name = self.field_name(attr)
+        other_name = self.field_name(other_attr)
+        if self.is_empty(attr) and self.is_empty(other_attr):
+            return
+        elif self.is_present(other_attr):
+            values, others = self.value_matrix(attr, other_attr)
+            for i in xrange(len(values)):
+                if (self.is_empty_value(values[i]) and
+                    self.is_nonempty_value(others[i])):
+                    msg = '"%s" cannot be empty if "%s" has a value' % (
+                        field_name, other_name)
+                    self.errors.append(msg)
+
     def validate_conditional(self, attr, required):
         """Validate a conditional requirement rule."""
-        ifclause    = required['if']
-        other_attr  = ifclause['field']
-        condition   = ifclause['is']
-        if condition == 'BLANK':
-            if self.is_blank(other_attr):
-                if self.is_blank(attr):
-                    msg = '"%s" cannot be blank if "%s" is blank' % (
-                        self.field_name(attr), self.field_name(other_attr))
-                    self.errors.append(msg)
-        elif condition == 'NONBLANK':
-            if self.is_present(other_attr):
-                if self.is_blank(attr):
-                    msg = '"%s" cannot be blank if "%s" has a value' % (
-                        self.field_name(attr), self.field_name(other_attr))
-                    self.errors.append(msg)
+        ifclause     = required['if']
+        other_attr   = ifclause['field']
+        condition    = ifclause['is']
+        values       = self.values(attr)
+        other_values = self.values(other_attr)
+
+        if condition == 'EMPTY':
+            self.validate_required_if_other_empty(attr,other_attr)
+        elif condition == 'NONEMPTY':
+            self.validate_required_if_other_nonempty(attr, other_attr)
         elif isinstance(condition, list):
             for val in self.values(other_attr):
-                if val in condition and self.is_blank(attr):
-                    msg = '"%s" cannot be blank if "%s" is "%s"' % (
+                if val in condition and self.is_empty(attr):
+                    msg = '"%s" cannot be empty if "%s" is "%s"' % (
                         self.field_name(attr), self.field_name(other_attr), val)
                     self.errors.append(msg)
         else:
@@ -174,9 +223,8 @@ class ValidatableSheet(object):
         details = self.fields[attr]
         field_name = details['field_name']
         required = details['required']
-        # print required
-        if required == True and self.is_blank(attr):
-            msg = '%s cannot be blank' % (details['field_name'],)
+        if required == True and self.is_empty(attr):
+            msg = '%s cannot be empty' % (details['field_name'],)
             self.errors.append(msg)
         elif isinstance(required, dict):
             self.validate_conditional(attr, required)
@@ -234,14 +282,20 @@ class ValidatableSheet(object):
     # Field accessors
     # --------------------------------------------------------------------
 
-    def is_blank(self, field):
+    def is_empty_value(self, value):
+        return value is None or len(str(value).strip()) == 0
+
+    def is_nonempty_value(self, value):
+        return not self.is_empty_value(value)
+
+    def is_empty(self, attr):
         """Return True if the field has no value present."""
-        values = self.values(field)
+        values = self.values(attr)
         return len(values) == 0
 
     def is_present(self, field):
         """Return True if the field has one or more values."""
-        return not self.is_blank(field)
+        return not self.is_empty(field)
 
     def is_field_missing(self, attr):
         """Return True if the field is not on the description sheet."""
@@ -253,6 +307,17 @@ class ValidatableSheet(object):
         if details.get('cell_values') is None:
             details['cell_values'] = self._extract_values(attr)
         return details.get('cell_values')
+
+    def value_matrix(self, attr, other_attr):
+        vs = deepcopy(self.values(attr))
+        os = deepcopy(self.values(other_attr))
+        if len(os) > len(vs):
+            for i in xrange(len(os) - len(vs)):
+                vs.append(None)
+        elif len(vs) > len(os):
+            for i in xrange(len(vs) - len(os)):
+                os.append(None)
+        return [ vs, os ]
 
     def field_name(self, attr):
         """Return the 'field_name' for attr's field."""
@@ -321,10 +386,37 @@ class ValidatableSheet(object):
         """Based on the locus of attr's field's header."""
         if self.locus(attr) is None: return
 
+        if self.heading_type.lower() == 'row':
+            return self._extract_row(attr)
+        else:
+            return self._extract_column(attr)
+
+    def _extract_column(self, attr):
+        if self.locus(attr) is None: return
+
+        locus    = self.locus(attr)
+        col      = locus['col']
+        # read the first 20 columns past the heading locus
+        data_row = locus['row'] + self.data_offset
+
+        vals     = []
+        for row in xrange(data_row, self.sheet.max_row + 1):
+            cell = self.sheet.cell(column=col,row=row)
+            if cell.value is not None and str(cell.value).strip() != '':
+                vals.append(cell.value)
+            else:
+                vals.append(None)
+
+        return vals
+
+    def _extract_row(self, attr):
+        if self.locus(attr) is None: return
+
         locus   = self.locus(attr)
         row     = locus['row']
         # read the first 20 columns past the heading locus
-        data_col = locus['col'] + self.FIELD_COLUMN_OFFSET
+        data_col = locus['col'] + self.data_offset
+
 
         vals = []
         for col in xrange(data_col, self.sheet.max_column + 1):
@@ -339,6 +431,7 @@ class ValidatableSheet(object):
             del vals[-1]
 
         return vals
+
 
     def _values_quoted(self, attr, q='"'):
         return self._list_quoted(self.values(attr), q=q)

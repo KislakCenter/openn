@@ -219,6 +219,8 @@ COLLECTIONS = {
 SPREADSHEET_CONFIG = {
     'description': {
         'sheet_name': 'Description',
+        'data_offset': 2,
+        'heading_type': 'row', # headings on left, data read left-to-right
         'fields': {
             'administrative_contact': {
                 'field_name': 'Administrative Contact',
@@ -285,13 +287,13 @@ SPREADSHEET_CONFIG = {
                 'required':  {
                     'if': {
                         'field': 'alternate_id',
-                        'is': 'NONBLANK',
+                        'is': 'NONEMPTY',
                     }
                 },
                 'blank': {
                     'if': {
                         'field': 'alternate_id',
-                        'is': 'BLANK'
+                        'is': 'EMPTY'
                     }
                 },
                 'repeating': False,
@@ -326,13 +328,13 @@ SPREADSHEET_CONFIG = {
                 'required': {
                     'if': {
                         'field': 'date_range_start',
-                        'is': 'BLANK'
+                        'is': 'EMPTY'
                     }
                 },
                 'blank': {
                     'if': {
                         'field': 'date_range_start',
-                        'is': 'NONBLANK'
+                        'is': 'NONEMPTY'
                     }
                 },
                 'repeating': False,
@@ -343,13 +345,13 @@ SPREADSHEET_CONFIG = {
                 'required': {
                     'if': {
                         'field': 'date_single',
-                        'is': 'BLANK'
+                        'is': 'EMPTY'
                     }
                 },
                 'blank': {
                     'if': {
                         'field': 'date_single',
-                        'is': 'NONBLANK'
+                        'is': 'NONEMPTY'
                     }
                 },
                 'repeating': False,
@@ -360,13 +362,13 @@ SPREADSHEET_CONFIG = {
                 'required': {
                     'if': {
                         'field': 'date_range_start',
-                        'is': 'NONBLANK'
+                        'is': 'NONEMPTY'
                     }
                 },
                 'blank': {
                     'if': {
                         'field': 'date_range_start',
-                        'is': 'BLANK'
+                        'is': 'EMPTY'
                     }
                 },
                 'repeating': False,
@@ -563,8 +565,147 @@ SPREADSHEET_CONFIG = {
                 'data_type': 'year'
             }
         }
+    },
+    'pages': {
+        'sheet_name': 'Pages',
+        'data_offset': 1,
+        'heading_type': 'column',
+        'fields': {
+            'object_id': {
+                'field_name': 'OBJECT_ID',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'serial_num': {
+                'field_name': 'SERIAL_NUM',
+                'repeating': True,
+                'data_type': 'integer',
+                'required': {
+                    'if': {
+                        'field': 'file_name',
+                        'is': 'NONEMPTY'
+                    }
+                },
+            },
+            'display_page': {
+                'field_name': 'DISPLAY PAGE',
+                'required': {
+                    'if': {
+                        'field': 'file_name',
+                        'is': 'NONEMPTY'
+                    }
+                 },
+                 'repeating': True,
+                 'data_type': 'string'
+            },
+            'file_name': {
+                'field_name': 'FILE_NAME',
+                'required': {
+                    'if': {
+                        'field': 'display_page',
+                        'is': 'NONEMPTY'
+                    }
+                 },
+                 'repeating': True,
+                'data_type': 'string'
+            },
+            'tag1': {
+                'field_name': 'TAG1',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'value1': {
+                'field_name': 'VALUE1',
+                'required': {
+                    'if': {
+                        'field': 'tag1',
+                        'is': [ 'TOC1', 'TOC2', 'TOC3', 'ILL' ]
+                    }
+                 },
+                 'blank': {
+                     'if': {
+                         'field': 'tag1',
+                         'is': 'EMPTY'
+                     }
+                 },
+                 'repeating': True,
+                'data_type': 'string'
+            },
+            'tag2': {
+                'field_name': 'TAG2',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'value2': {
+                'field_name': 'VALUE2',
+                'required': {
+                    'if': {
+                        'field': 'tag2',
+                        'is': [ 'TOC1', 'TOC2', 'TOC3', 'ILL' ]
+                    }
+                 },
+                 'blank': {
+                     'if': {
+                         'field': 'tag2',
+                         'is': 'EMPTY'
+                     }
+                 },
+                 'repeating': True,
+                'data_type': 'string'
+            },
+            'tag3': {
+                'field_name': 'TAG3',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'value3': {
+                'field_name': 'VALUE3',
+                'required': {
+                    'if': {
+                        'field': 'tag3',
+                        'is': [ 'TOC1', 'TOC2', 'TOC3', 'ILL' ]
+                    }
+                 },
+                 'blank': {
+                     'if': {
+                         'field': 'tag3',
+                         'is': 'EMPTY'
+                     }
+                 },
+                 'repeating': True,
+                'data_type': 'string'
+            },
+            'tag4': {
+                'field_name': 'TAG4',
+                'required': False,
+                'repeating': True,
+                'data_type': 'string'
+            },
+            'value4': {
+                'field_name': 'VALUE4',
+                'required': {
+                    'if': {
+                        'field': 'tag4',
+                        'is': [ 'TOC1', 'TOC2', 'TOC3', 'ILL' ]
+                    }
+                },
+                'blank': {
+                    'if': {
+                        'field': 'tag4',
+                        'is': 'EMPTY'
+                    }
+                },
+                'repeating': True,
+                'data_type': 'string'
+            }
+        }
     }
 }
+
 
 MARKDOWN_DEUX_STYLES = {
     "default": {

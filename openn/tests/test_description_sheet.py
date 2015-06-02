@@ -12,16 +12,23 @@ from openn.prep.op_workbook import OPWorkbook
 from openn.prep.description_sheet import DescriptionSheet
 from openn.prep.validatable_sheet import ValidatableSheet
 
-class TestOPWorkbook(TestCase):
-    this_dir                = os.path.dirname(__file__)
-    diaries_dir             = os.path.join(this_dir, 'data/diaries')
-    sheets_dir              = os.path.join(this_dir, 'data/sheets')
+class TestDescriptionSheet(TestCase):
+    this_dir                 = os.path.dirname(__file__)
+    diaries_dir              = os.path.join(this_dir, 'data/diaries')
+    sheets_dir               = os.path.join(this_dir, 'data/sheets')
 
-    # Date (range) end
-    # Place of origin
-    # Metadata copyright year
-    # Alternate ID type
-    invalid_missing_required = os.path.join(sheets_dir, 'invalid_missing_required.xlsx')
+    # Field 1
+    # Required if field 1 empty (invalid)
+    # Required if field 1 empty (valid)
+    #
+    # Field 2 (repeating)
+    # Required if field 2 nonempty (first and third missing)
+    #
+    # Field 3 (required, invalid)
+    # Field 4 (required, valid)
+    # Field 5 (not required, no value)
+    # Field 6 (not required, value)
+    required_values_workbook = os.path.join(sheets_dir, 'required_values.xlsx')
 
     # Date (single)
     # Date (range) start
@@ -33,7 +40,7 @@ class TestOPWorkbook(TestCase):
 
     value_lists_workbook     = os.path.join(sheets_dir, 'value_lists.xlsx')
     repeating_workbook       = os.path.join(sheets_dir, 'repeating_and_nonrepeating.xlsx')
-    missing_field_workbook    = os.path.join(sheets_dir, 'missing_optional_fields.xlsx')
+    missing_field_workbook   = os.path.join(sheets_dir, 'missing_optional_fields.xlsx')
 
     helen_griffith           = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
     mary_ayer                = os.path.join(diaries_dir, 'bryn_mawr/MaryAyer_Diary.xlsx')
@@ -61,6 +68,8 @@ class TestOPWorkbook(TestCase):
     value_lists_test_config = {
         'description' : {
             'sheet_name': 'Description',
+            'data_offset': 2,
+            'heading_type': 'row',
             'fields': {
                 'rights_pd' : {
                     'field_name': 'Rights PD',
@@ -104,6 +113,8 @@ class TestOPWorkbook(TestCase):
     repeating_config = {
         'description' : {
             'sheet_name': 'Description',
+            'data_offset': 2,
+            'heading_type': 'row',
             'fields': {
                 'non_repeating_field_valid': {
                     'field_name': 'Non-repeating field valid',
@@ -136,6 +147,8 @@ class TestOPWorkbook(TestCase):
     field_missing_config = {
         'description' : {
             'sheet_name': 'Description',
+            'data_offset': 2,
+            'heading_type': 'row',
             'fields' : {
                 'field1': {
                     'field_name': 'Field1',
@@ -171,6 +184,85 @@ class TestOPWorkbook(TestCase):
         }
     }
 
+    requirements_config = {
+        'description': {
+            'sheet_name': 'Description',
+            'heading_type': 'row',
+            'data_offset': 2,
+            'fields': {
+                'field_1': {
+                    'field_name': 'Field 1',
+                    'required': False,
+                    'repeating': False,
+                    'data_type': 'string'
+                },
+                'required_if_field_1_empty_invalid': {
+                    'field_name': 'Required if field 1 empty (invalid)',
+                    'required': {
+                        'if': {
+                            'field': 'field_1',
+                            'is': 'EMPTY'
+                        }
+                    },
+                    'repeating': False,
+                    'data_type': 'string'
+                },
+                'required_if_field_1_empty_valid': {
+                    'field_name': 'Required if field 1 empty (valid)',
+                    'required': {
+                        'if': {
+                            'field': 'field_1',
+                            'is': 'EMPTY'
+                        }
+                    },
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'field_2_repeating': {
+                    'field_name': 'Field 2 (repeating)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'required_if_field_2_nonempty_first_and_third_missing': {
+                    'field_name': 'Required if field 2 nonempty (first and third missing)',
+                    'required': {
+                        'if': {
+                            'field': 'field_2_repeating',
+                            'is': 'NONEMPTY'
+                        }
+                    },
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'field_3_required_invalid': {
+                    'field_name': 'Field 3 (required, invalid)',
+                    'required': True,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'field_4_required_valid': {
+                    'field_name': 'Field 4 (required, valid)',
+                    'required': True,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'field_5_not_required_no_value': {
+                    'field_name': 'Field 5 (not required, no value)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'field_6_not_required_value': {
+                    'field_name': 'Field 6 (not required, value)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                }
+            }
+        }
+    }
+
     def setUp(self):
         pass
 
@@ -185,61 +277,67 @@ class TestOPWorkbook(TestCase):
         self.assertIsInstance(sheet, DescriptionSheet)
         self.assertIsInstance(sheet, ValidatableSheet)
 
-    # Date (range) end
+    # Field 1
+    # Required if field 1 empty (invalid)
     def test_required_with_blank_error(self):
-        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
-        sheet.validate_requirement('date_range_end')
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('required_if_field_1_empty_invalid')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) end.* cannot be blank.*Date \(range\) start')
+        self.assertRegexpMatches(sheet.errors[0], r'Required if field 1.* cannot be empty.*Field 1')
 
-    # Place of origin
+    # Field 1
+    # Required if field 1 empty (valid)
+    def test_required_with_blank_valid(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('required_if_field_1_empty_valid')
+        self.assertEqual(len(sheet.errors), 0)
+
+    #
+    # Field 2 (repeating)
+    # Required if field 2 nonempty (first and third missing)
+    def test_required_with_value_repeating(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('required_if_field_2_nonempty_first_and_third_missing')
+        self.assertEqual(len(sheet.errors), 2)
+
+    # Field 3 (required, invalid)
     def test_required_field_error(self):
-        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
-        sheet.validate_requirement('place_of_origin')
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('field_3_required_invalid')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Place of origin.* cannot be blank')
+        self.assertRegexpMatches(sheet.errors[0], r'Field 3.* cannot be empty')
 
-    # Metadata copyright year
-    def test_required_with_value_error(self):
-        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
-        sheet.validate_requirement('metadata_copyright_year')
-        self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Metadata copyright year.* cannot be blank.*CC-BY')
-
-    # Alternate ID type
-    def test_required_with_nonblank_error(self):
-        sheet = OPWorkbook(self.invalid_missing_required, self.get_config()).description
-        sheet.validate_requirement('alternate_id_type')
-        self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* cannot be blank.*Alternate ID')
+    # Field 4 (required, valid)
+    # Field 5 (not required, no value)
+    # Field 6 (not required, value)
 
     # Date (single)
-    def test_must_be_blank_with_nonblank_error(self):
+    def test_must_be_empty_with_nonempty_error(self):
         sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
         sheet.validate_blank('date_single')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Date \(single\).* must be blank.*start')
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(single\).* must be empty.*start')
 
     # Date (range) start
-    def test_must_be_blank_with_nonblank_error2(self):
+    def test_must_be_empty_with_nonempty_error2(self):
         sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
         sheet.validate_blank('date_range_start')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) start.* must be blank.*single')
+        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) start.* must be empty.*single')
 
     # Image copyright holder
-    def test_must_be_blank_with_value_error(self):
+    def test_must_be_empty_with_value_error(self):
         sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
         sheet.validate_blank('image_copyright_holder')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Image copyright holder.* must be blank.*PD')
+        self.assertRegexpMatches(sheet.errors[0], r'Image copyright holder.* must be empty.*PD')
 
     # Alternate ID type
-    def test_must_be_blank_with_blank_error(self):
+    def test_must_be_empty_with_empty_error(self):
         sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
         sheet.validate_blank('alternate_id_type')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* must be blank.*Alternate ID.*blank')
+        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* must be empty.*Alternate ID.*empty')
 
     # Rights PD
     def test_value_list_valid(self):
@@ -254,8 +352,8 @@ class TestOPWorkbook(TestCase):
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Rights CC-X.*not valid.*expected.*')
 
-    # Rights 4 (blank)
-    def test_value_list_with_value_blank(self):
+    # Rights 4 (empty)
+    def test_value_list_with_value_empty(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_4_blank')
         self.assertEqual(len(sheet.errors), 0)
