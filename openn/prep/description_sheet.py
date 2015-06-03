@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import simplejson
 import re
 
 from copy import deepcopy
