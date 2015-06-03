@@ -258,6 +258,69 @@ class TestDescriptionSheet(TestCase):
                     'required': False,
                     'repeating': True,
                     'data_type': 'string'
+                },
+                'field_7': {
+                    'field_name': 'Field 7',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'required_if_7_is_CAT_valid': {
+                    'field_name': 'Required if 7 is CAT (valid)',
+                    'required': {
+                        'if': {
+                            'field': 'field_7',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    },
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'required_if_7_is_CAT_invalid': {
+                    'field_name': 'Required if 7 is CAT (invalid)',
+                    'required': False,
+                    'required': {
+                        'if': {
+                            'field': 'field_7',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    },
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'field_8_a_is_lower_case': {
+                    'field_name': 'Field 8 (cat is lower case)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'require_if_field_8_is_CAT_valid': {
+                    'field_name': 'Require if field 8 is CAT (valid)',
+                    'required': {
+                        'if': {
+                            'field': 'field_8_a_is_lower_case',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    },
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'field_9_repeating': {
+                    'field_name': 'Field 9 (repeating)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'required_if_9_is_CAT': {
+                    'field_name': 'Required if 9 is CAT',
+                    'required': {
+                        'if': {
+                            'field': 'field_9_repeating',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    },
+                    'repeating': True,
+                    'data_type': 'string'
                 }
             }
         }
@@ -308,8 +371,53 @@ class TestDescriptionSheet(TestCase):
         self.assertRegexpMatches(sheet.errors[0], r'Field 3.* cannot be empty')
 
     # Field 4 (required, valid)
+    def test_required_field_valid(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('field_4_required_valid')
+        self.assertEqual(len(sheet.errors), 0)
+
     # Field 5 (not required, no value)
+    def test_not_required_field_no_value(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('field_5_not_required_no_value')
+        self.assertEqual(len(sheet.errors), 0)
+
     # Field 6 (not required, value)
+    def test_not_required_field_with_value(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('field_6_not_required_value')
+        self.assertEqual(len(sheet.errors), 0)
+
+    # Field 7
+    # Required if 7 is CAT (valid)
+    def test_require_if_other_in_list_valid(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('required_if_7_is_CAT_valid')
+        self.assertEqual(len(sheet.errors), 0)
+
+
+    # Field 7
+    # Required if 7 is CAT (invalid)
+    def test_require_if_other_in_list_invalid(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('required_if_7_is_CAT_invalid')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Required.* cannot be empty.*if.*CAT')
+
+    # Field 8 (cat is lower case)
+    # Require if field 8 is CAT (valid)
+    def test_require_if_other_in_list_valid_differing_case(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('require_if_field_8_is_CAT_valid')
+        self.assertEqual(len(sheet.errors), 0)
+
+    # Field 9 (repeating)
+    # Required if 9 is CAT
+    def test_require_if_other_in_list_repeating(self):
+        sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
+        sheet.validate_requirement('required_if_9_is_CAT')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'Required.* cannot be empty.*if.*CAT')
 
     # Date (single)
     def test_must_be_empty_with_nonempty_error(self):

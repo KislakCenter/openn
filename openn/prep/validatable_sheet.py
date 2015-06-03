@@ -193,6 +193,20 @@ class ValidatableSheet(object):
                         field_name, other_name)
                     self.errors.append(msg)
 
+    def validate_required_if_other_in_list(self, attr, other_attr, val_list):
+        the_list = [ x.lower() for x in val_list ]
+        if self.is_empty(other_attr):
+            return
+        else:
+            values, others = self.value_matrix(attr, other_attr)
+            for i in xrange(len(values)):
+                if (self.is_empty_value(values[i]) and
+                    others[i] is not None and
+                    str(others[i]).lower() in the_list):
+                    msg = '"%s" cannot be empty if "%s" is "%s"' % (
+                        self.field_name(attr), self.field_name(other_attr), others[i])
+                    self.errors.append(msg)
+
     def validate_conditional(self, attr, required):
         """Validate a conditional requirement rule."""
         ifclause     = required['if']
@@ -206,11 +220,7 @@ class ValidatableSheet(object):
         elif condition == 'NONEMPTY':
             self.validate_required_if_other_nonempty(attr, other_attr)
         elif isinstance(condition, list):
-            for val in self.values(other_attr):
-                if val in condition and self.is_empty(attr):
-                    msg = '"%s" cannot be empty if "%s" is "%s"' % (
-                        self.field_name(attr), self.field_name(other_attr), val)
-                    self.errors.append(msg)
+            self.validate_required_if_other_in_list(attr, other_attr, condition)
         else:
             raise OPennException("Unknown condition type: %s" % (condition,))
 
