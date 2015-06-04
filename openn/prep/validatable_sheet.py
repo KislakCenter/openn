@@ -314,7 +314,7 @@ class ValidatableSheet(object):
         if value_list is None: return
 
         for val in self.values(attr):
-            if val not in value_list:
+            if val is not None and val not in value_list:
                 msg = '"%s" value "%s" not valid; expected one of: %s' % (
                     self.field_name(attr), val, ', '.join(self._list_quoted(value_list)))
                 self.errors.append(msg)
