@@ -9,6 +9,7 @@ from copy import deepcopy
 from openn.prep import langs
 from openn.openn_exception import OPennException
 from openn.prep.description_sheet import DescriptionSheet
+from openn.prep.pages_sheet import PagesSheet
 
 from openpyxl import load_workbook
 from openpyxl.workbook import workbook
@@ -31,6 +32,7 @@ class OPWorkbook:
         self.page_errors = []
         self.warnings    = []
         self.description = DescriptionSheet(self,self.config['description'])
+        self.pages       = PagesSheet(self,self.config['pages'])
 
     # --------------------------------------------------------------------
     # Validation

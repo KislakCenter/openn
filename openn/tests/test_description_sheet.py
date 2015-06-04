@@ -119,6 +119,13 @@ class TestDescriptionSheet(TestCase):
                     'value_list': [ 'CC-BY', 'CC0', 'PD' ]
                 }
             }
+        },
+        'pages': {
+            'sheet_name': 'Pages',
+            'data_offset': 1,
+            'heading_type': 'column',
+            'fields': { }
+
         }
     }
 
@@ -153,6 +160,12 @@ class TestDescriptionSheet(TestCase):
                     'data_type': 'string'
                 }
             }
+        },
+        'pages': {
+            'sheet_name': 'Pages',
+            'data_offset': 1,
+            'heading_type': 'column',
+            'fields': { }
         }
     }
 
@@ -193,6 +206,13 @@ class TestDescriptionSheet(TestCase):
                     'data_type': 'string'
                 }
             }
+        },
+        'pages': {
+            'sheet_name': 'Pages',
+            'data_offset': 1,
+            'heading_type': 'column',
+            'fields': { }
+
         }
     }
 
@@ -335,6 +355,13 @@ class TestDescriptionSheet(TestCase):
                     'data_type': 'string'
                 }
             }
+        },
+        'pages': {
+            'sheet_name': 'Pages',
+            'data_offset': 1,
+            'heading_type': 'column',
+            'fields': { }
+
         }
     }
 
@@ -459,6 +486,13 @@ class TestDescriptionSheet(TestCase):
                     }
                 }
             }
+        },
+        'pages': {
+            'sheet_name': 'Pages',
+            'data_offset': 1,
+            'heading_type': 'column',
+            'fields': { }
+
         }
     }
 
