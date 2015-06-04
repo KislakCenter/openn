@@ -658,6 +658,10 @@ class TestDescriptionSheet(TestCase):
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Rights CC-X.*not valid.*expected.*')
 
+    def test_value_list_case_insensitive(self):
+        # TODO: test that validate_value_list() is case insensitive
+        pass
+
     # Rights 4 (empty)
     def test_value_list_with_value_empty(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
