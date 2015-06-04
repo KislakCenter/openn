@@ -49,6 +49,12 @@ class TestPagesSheet(TestCase):
                             'is': 'NONEMPTY'
                         }
                     },
+                    'blank': {
+                        'if': {
+                            'field': 'file_name',
+                            'is': 'EMPTY'
+                        }
+                    }
                 },
                 'display_page': {
                     'field_name': 'DISPLAY PAGE',
@@ -57,26 +63,33 @@ class TestPagesSheet(TestCase):
                             'field': 'file_name',
                             'is': 'NONEMPTY'
                         }
-                     },
-                     'repeating': True,
-                     'data_type': 'string'
+                    },
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'file_name',
+                            'is': 'EMPTY'
+                        }
+                    }
                 },
                 'file_name': {
                     'field_name': 'FILE_NAME',
-                    'required': {
-                        'if': {
-                            'field': 'display_page',
-                            'is': 'NONEMPTY'
-                        }
-                     },
-                     'repeating': True,
+                    'required': True,   # Must have at least one file name
+                    'repeating': True,
                     'data_type': 'string'
                 },
                 'tag1': {
                     'field_name': 'TAG1',
                     'required': False,
                     'repeating': True,
-                    'data_type': 'string'
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'file_name',
+                            'is': 'EMPTY'
+                        }
+                    }
                 },
                 'value1': {
                     'field_name': 'VALUE1',
@@ -99,7 +112,13 @@ class TestPagesSheet(TestCase):
                     'field_name': 'TAG2',
                     'required': False,
                     'repeating': True,
-                    'data_type': 'string'
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'file_name',
+                            'is': 'EMPTY'
+                        }
+                    }
                 },
                 'value2': {
                     'field_name': 'VALUE2',
@@ -122,7 +141,13 @@ class TestPagesSheet(TestCase):
                     'field_name': 'TAG3',
                     'required': False,
                     'repeating': True,
-                    'data_type': 'string'
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'file_name',
+                            'is': 'EMPTY'
+                        }
+                    }
                 },
                 'value3': {
                     'field_name': 'VALUE3',
@@ -131,21 +156,27 @@ class TestPagesSheet(TestCase):
                             'field': 'tag3',
                             'is': [ 'TOC1', 'TOC2', 'TOC3', 'ILL' ]
                         }
-                     },
-                     'blank': {
-                         'if': {
-                             'field': 'tag3',
-                             'is': 'EMPTY'
-                         }
-                     },
-                     'repeating': True,
+                    },
+                    'blank': {
+                        'if': {
+                            'field': 'tag3',
+                            'is': 'EMPTY'
+                        }
+                    },
+                    'repeating': True,
                     'data_type': 'string'
                 },
                 'tag4': {
                     'field_name': 'TAG4',
                     'required': False,
                     'repeating': True,
-                    'data_type': 'string'
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'file_name',
+                            'is': 'EMPTY'
+                        }
+                    }
                 },
                 'value4': {
                     'field_name': 'VALUE4',
