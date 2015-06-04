@@ -313,15 +313,11 @@ class ValidatableSheet(object):
         # first see if the field is missing
         if self.is_field_missing(attr): return
 
-        try:
-            self.validate_requirement(attr)
-            self.validate_blank(attr)
-            self.validate_value_list(attr)
-            self.validate_repeating(attr)
-            self.validate_data_type(attr)
-        except Exception as ex:
-            msg = u'Error validating "%s"' % (attr,)
-            raise OPennException(msg, ex)
+        self.validate_requirement(attr)
+        self.validate_blank(attr)
+        self.validate_value_list(attr)
+        self.validate_repeating(attr)
+        self.validate_data_type(attr)
 
     def validate_data_type(self, attr):
         """Validate all values for field against configured 'data_type'.
