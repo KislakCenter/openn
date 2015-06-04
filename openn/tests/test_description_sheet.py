@@ -30,6 +30,24 @@ class TestDescriptionSheet(TestCase):
     # Field 6 (not required, value)
     required_values_workbook = os.path.join(sheets_dir, 'required_values.xlsx')
 
+    # Field 1
+    # Empty if field 1 empty (invalid)
+    # Empty if field 1 empty (valid)
+
+    # Field 2 (repeating)
+    # Empty if field 2 nonempty (first and third present)
+
+    # Field 3
+    # Empty if 3 is CAT (valid)
+    # Empty if 3 is CAT (invalid)
+
+    # Field 4 (cat is lower case)
+    # Empty if field 4 is CAT (valid)
+
+    # Field 5 (repeating)
+    # Empty if 5 is CAT
+    empty_if_workbook = os.path.join(sheets_dir, 'empty_if.xlsx')
+
     # Date (single)
     # Date (range) start
     # Date (range) end
@@ -326,6 +344,130 @@ class TestDescriptionSheet(TestCase):
         }
     }
 
+    empty_if_config = {
+        'description': {
+            'sheet_name': 'Description',
+            'heading_type': 'row',
+            'data_offset': 2,
+            'fields': {
+                'field_1': {
+                    'field_name': 'Field 1',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'empty_if_field_1_empty_invalid': {
+                    'field_name': 'Empty if field 1 empty (invalid)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'field_1',
+                            'is': 'EMPTY'
+                        }
+                    }
+                },
+                'empty_if_field_1_empty_valid': {
+                    'field_name': 'Empty if field 1 empty (valid)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'field_1',
+                            'is': 'EMPTY'
+                        }
+                    }
+                },
+                'field_2_repeating': {
+                    'field_name': 'Field 2 (repeating)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'empty_if_field_2_nonempty_first_and_third_present': {
+                    'field_name': 'Empty if field 2 nonempty (first and third present)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'field_2_repeating',
+                            'is': 'NONEMPTY'
+                        }
+                    }
+                },
+                'field_3': {
+                    'field_name': 'Field 3',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'empty_if_3_is_cat_valid': {
+                    'field_name': 'Empty if 3 is CAT (valid)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'field_3',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    }
+                },
+                'empty_if_3_is_cat_invalid': {
+                    'field_name': 'Empty if 3 is CAT (invalid)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'field_3',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    }
+                },
+                'field_4_cat_is_lower_case': {
+                    'field_name': 'Field 4 (cat is lower case)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'empty_if_field_4_is_cat_invalid': {
+                    'field_name': 'Empty if field 4 is CAT (invalid)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'field_4_cat_is_lower_case',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    }
+                },
+                'field_5_repeating': {
+                    'field_name': 'Field 5 (repeating)',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string'
+                },
+                'empty_if_5_is_cat': {
+                    'field_name': 'Empty if 5 is CAT',
+                    'required': False,
+                    'repeating': True,
+                    'data_type': 'string',
+                    'blank': {
+                        'if': {
+                            'field': 'field_5_repeating',
+                            'is': [ 'AARDARK', 'CAT', 'DINGO' ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     def setUp(self):
         pass
 
@@ -419,33 +561,61 @@ class TestDescriptionSheet(TestCase):
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Required.* cannot be empty.*if.*CAT')
 
-    # Date (single)
+    # Field 2 (repeating)
+    # Empty if field 2 nonempty (first and third present)
     def test_must_be_empty_with_nonempty_error(self):
-        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
-        sheet.validate_blank('date_single')
-        self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Date \(single\).* must be empty.*start')
+        sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
+        sheet.validate_blank('empty_if_field_2_nonempty_first_and_third_present')
+        self.assertEqual(len(sheet.errors), 2)
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*has a value; found')
+        self.assertRegexpMatches(sheet.errors[1], r'.* must be empty if.*has a value; found')
 
-    # Date (range) start
-    def test_must_be_empty_with_nonempty_error2(self):
-        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
-        sheet.validate_blank('date_range_start')
-        self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Date \(range\) start.* must be empty.*single')
-
-    # Image copyright holder
-    def test_must_be_empty_with_value_error(self):
-        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
-        sheet.validate_blank('image_copyright_holder')
-        self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Image copyright holder.* must be empty.*PD')
-
-    # Alternate ID type
+    # Field 1
+    # Empty if field 1 empty (invalid)
     def test_must_be_empty_with_empty_error(self):
-        sheet = OPWorkbook(self.invalid_nonblanks, self.get_config()).description
-        sheet.validate_blank('alternate_id_type')
+        sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
+        sheet.validate_blank('empty_if_field_1_empty_invalid')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Alternate ID type.* must be empty.*Alternate ID.*empty')
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is empty; found.*')
+
+    # Field 1
+    # Empty if field 1 empty (valid)
+    def test_must_be_empty_with_empty_valid(self):
+        sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
+        sheet.validate_blank('empty_if_field_1_empty_valid')
+        self.assertEqual(len(sheet.errors), 0)
+
+
+    # Field 3
+    # Empty if 3 is CAT (invalid)
+    def test_must_be_empty_with_value_error(self):
+        sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
+        sheet.validate_blank('empty_if_3_is_cat_invalid')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is "CAT"; found:')
+
+    # Field 3
+    # Empty if 3 is CAT (valid)
+    def test_must_be_empty_with_value(self):
+        sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
+        sheet.validate_blank('empty_if_3_is_cat_valid')
+        self.assertEqual(len(sheet.errors), 0)
+
+    # Field 4 (cat is lower case)
+    # Empty if field 4 is CAT (invalid)
+    def test_must_be_empty_with_value_is_case_insensitive(self):
+        sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
+        sheet.validate_blank('empty_if_field_4_is_cat_invalid')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is "cat"; found:')
+
+    # Field 5 (repeating)
+    # Empty if 5 is CAT
+    def test_must_be_empty_with_value_repeating(self):
+        sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
+        sheet.validate_blank('empty_if_5_is_cat')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is "CAT"; found: "value 2"')
 
     # Rights PD
     def test_value_list_valid(self):

@@ -118,47 +118,62 @@ class ValidatableSheet(object):
     # Validation
     # --------------------------------------------------------------------
 
+    def validate_blank_if_other_nonempty(self, attr, other_attr):
+        if self.is_empty(other_attr): return
+
+        values, others = self.paired_values(attr, other_attr)
+        for i in xrange(len(values)):
+            if (self.is_nonempty_value(values[i]) and
+                self.is_nonempty_value(others[i])):
+                msg = '"%s" must be empty if "%s" has a value; found: "%s"' % (
+                    self.field_name(attr), self.field_name(other_attr),
+                    values[i])
+                self.errors.append(msg)
+
+    def validate_blank_if_other_empty(self, attr, other_attr):
+        if self.is_empty(attr): return
+
+        values, others = self.paired_values(attr, other_attr)
+        for i in xrange(len(values)):
+            if (self.is_nonempty_value(values[i]) and
+                self.is_empty_value(others[i])):
+                msg = '"%s" must be empty if "%s" is empty; found: "%s"' % (
+                    self.field_name(attr), self.field_name(other_attr),
+                    values[i])
+                self.errors.append(msg)
+
+    def validate_blank_if_other_in_list(self, attr, other_attr, val_list):
+        if self.is_empty(attr): return
+
+        the_list = [ x.strip().lower() for x in val_list ]
+        values, others = self.paired_values(attr, other_attr)
+        for i in xrange(len(values)):
+            if (self.is_nonempty_value(values[i]) and
+                others[i] is not None and
+                str(others[i]).strip().lower() in the_list):
+                msg = '"%s" must be empty if "%s" is "%s"; found: "%s"' % (
+                    self.field_name(attr), self.field_name(other_attr),
+                    others[i], values[i])
+                self.errors.append(msg)
+
     def validate_blank(self, attr):
         """If 'attr' has a blank rule and field is non-empty, validate
         whether field may have a value.
 
         """
-        if (self.blank_rule(attr) is None or self.is_empty(attr)):
-            return
+        if self.blank_rule(attr) is None or self.is_empty(attr): return
 
         blankrule    = self.fields[attr]['blank']
         ifclause     = blankrule['if']
         other_attr   = ifclause['field']
         condition    = ifclause['is']
-        values       = self.values(attr)
-        other_values = self.values(other_attr)
 
         if condition == 'EMPTY':
-            for i in xrange(len(values)):
-                if (self.is_nonempty_value(values[i]) and
-                    (len(other_values) < i+1 or
-                     self.is_empty_value(other_values[i]))):
-                    msg = '"%s" must be empty if "%s" is empty; found: %s' % (
-                        self.field_name(attr), self.field_name(other_attr),
-                        values[i])
-                    self.errors.append(msg)
+            self.validate_blank_if_other_empty(attr, other_attr)
         elif condition == 'NONEMPTY':
-            for i in xrange(len(values)):
-                if (self.is_nonempty_value(values[i]) and
-                    (len(other_values) > i and
-                     self.is_nonempty_value(other_values[i]))):
-                    msg = '"%s" must be empty if "%s" has a value; found: %s' % (
-                        self.field_name(attr), self.field_name(other_attr),
-                        values[i])
-                    self.errors.append(msg)
+            self.validate_blank_if_other_nonempty(attr, other_attr)
         elif isinstance(condition,list):
-            for i in xrange(len(values)):
-                if (self.is_nonempty_value(values[i]) and
-                    (len(other_values) > i and other_values[i] in condition)):
-                    msg = '"%s" must be empty if "%s" is "%s"; found: %s' % (
-                        self.field_name(attr), self.field_name(other_attr),
-                        other_values[i], values[i])
-                    self.errors.append(msg)
+            self.validate_blank_if_other_in_list(attr, other_attr, condition)
         else:
             raise OPennException('Unknown condition type: "%s"' % (condition,))
 
@@ -170,7 +185,7 @@ class ValidatableSheet(object):
                 field_name, other_name)
             self.errors.append(msg)
         elif self.is_empty(other_attr):
-            values, others = self.value_matrix(attr, other_attr)
+            values, others = self.paired_values(attr, other_attr)
 
             for i in xrange(len(values)):
                 if (self.is_empty_value(values[i]) and (
@@ -180,40 +195,36 @@ class ValidatableSheet(object):
                     self.errors.append(msg)
 
     def validate_required_if_other_nonempty(self, attr, other_attr):
-        field_name = self.field_name(attr)
-        other_name = self.field_name(other_attr)
-        if self.is_empty(attr) and self.is_empty(other_attr):
-            return
-        elif self.is_present(other_attr):
-            values, others = self.value_matrix(attr, other_attr)
-            for i in xrange(len(values)):
-                if (self.is_empty_value(values[i]) and
-                    self.is_nonempty_value(others[i])):
-                    msg = '"%s" cannot be empty if "%s" has a value' % (
-                        field_name, other_name)
-                    self.errors.append(msg)
+        if self.is_empty(other_attr): return
+
+        values, others = self.paired_values(attr, other_attr)
+        for i in xrange(len(values)):
+            if (self.is_empty_value(values[i]) and
+                self.is_nonempty_value(others[i])):
+                field_name = self.field_name(attr)
+                other_name = self.field_name(other_attr)
+                msg = '"%s" cannot be empty if "%s" has a value' % (
+                    field_name, other_name)
+                self.errors.append(msg)
 
     def validate_required_if_other_in_list(self, attr, other_attr, val_list):
+        if self.is_empty(other_attr): return
+
         the_list = [ x.lower() for x in val_list ]
-        if self.is_empty(other_attr):
-            return
-        else:
-            values, others = self.value_matrix(attr, other_attr)
-            for i in xrange(len(values)):
-                if (self.is_empty_value(values[i]) and
-                    others[i] is not None and
-                    str(others[i]).lower() in the_list):
-                    msg = '"%s" cannot be empty if "%s" is "%s"' % (
-                        self.field_name(attr), self.field_name(other_attr), others[i])
-                    self.errors.append(msg)
+        values, others = self.paired_values(attr, other_attr)
+        for i in xrange(len(values)):
+            if (self.is_empty_value(values[i]) and
+                others[i] is not None and
+                str(others[i]).lower() in the_list):
+                msg = '"%s" cannot be empty if "%s" is "%s"' % (
+                    self.field_name(attr), self.field_name(other_attr), others[i])
+                self.errors.append(msg)
 
     def validate_conditional(self, attr, required):
         """Validate a conditional requirement rule."""
         ifclause     = required['if']
         other_attr   = ifclause['field']
         condition    = ifclause['is']
-        values       = self.values(attr)
-        other_values = self.values(other_attr)
 
         if condition == 'EMPTY':
             self.validate_required_if_other_empty(attr,other_attr)
@@ -317,7 +328,7 @@ class ValidatableSheet(object):
             details['cell_values'] = self._extract_values(attr)
         return details.get('cell_values')
 
-    def value_matrix(self, attr, other_attr):
+    def paired_values(self, attr, other_attr):
         vs = deepcopy(self.values(attr))
         os = deepcopy(self.values(other_attr))
         if len(os) > len(vs):
@@ -470,6 +481,3 @@ class ValidatableSheet(object):
 
     def _format_error(self, field_name, value, data_type):
         return "%s is not a valid %s: %s" % (field_name, data_type, value)
-
-if __name__ == '__main__':
-    unittest2.main()
