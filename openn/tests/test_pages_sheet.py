@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import pprint
 
 from django.utils import unittest
 from django.test import TestCase
@@ -173,6 +174,10 @@ class TestPagesSheet(TestCase):
     def tearDown(self):
         pass
 
+    def pp(self,val):
+        printer = pprint.PrettyPrinter(indent=4)
+        printer.pprint(val)
+
     def get_config(self):
         return settings.SPREADSHEET_CONFIG
 
@@ -184,3 +189,5 @@ class TestPagesSheet(TestCase):
     def test_validate(self):
         sheet = OPWorkbook(self.pages_workbook, self.pages_config).pages
         sheet.validate()
+        if len(sheet.errors) > 0: self.pp(sheet.errors)
+        self.assertEqual(len(sheet.errors), 0)
