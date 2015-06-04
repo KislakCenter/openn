@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import re
-
 from copy import deepcopy
 
 from openn.prep import langs
@@ -94,24 +92,62 @@ class ValidatableSheet(object):
 
     @property
     def data_offset(self):
-        """The offset from the heading row or column to find first value.  By
-        default this value is 1.  If the data starts more than one row
-        below or column after the heading, the offset must be in the
-        sheet's configuration as 'data_offset'.
+        """The offset from the heading row or column to find first value.  The
+        offset must be in the sheet's configuration as 'data_offset':
 
-        In the example below, with row headings, the data begins the
-        field name is in column 1 and the data in column 3.
-        Therefore, the offset is 2:
+            'description': {
+                'sheet_name': 'Description',
+                'heading_type': 'row',
+                'data_offset': 2,
+                'fields': {
+                    'field_1': {
+                        'field_name': 'Field 1',
+                        'required': False,
+                        'repeating': True,
+                        'data_type': 'string'
+                    },
+             ...
 
-        Field          | Req't | Entry 1
-        ---------------|-------|--------
+
+        In the example below, with row headings, the field names
+        'Repository' and 'Call number' are in column 1 and the data in
+        column 3 ('Penn Libraries' and 'MS ABC 123').  Therefore, the
+        offset is 2.
+
+        ---------------|-------|-----------------
+        Repository     |   R   | Penn Libraries
+        ---------------|-------|-----------------
         Call number    |   R   | MS ABC 123
+        ---------------|-------|-----------------
+        ...            |       |
+        ---------------|-------|-----------------
 
         """
         return self.config.get('data_offset', 1)
 
     @property
     def heading_type(self):
+        """The heading type is either 'row' or 'column'.  By default, 'column'
+        is used.  The meaning is straightforward.  If headings label
+        rows, the sheet's 'heading_type' is 'row'; if they label
+        columns then the value is 'column'.
+
+
+            'description': {
+                'sheet_name': 'Description',
+                'heading_type': 'row',
+                'data_offset': 2,
+                'fields': {
+                    'field_1': {
+                        'field_name': 'Field 1',
+                        'required': False,
+                        'repeating': True,
+                        'data_type': 'string'
+                    },
+             ...
+
+
+        """
         return self.config.get('heading_type', 'column')
 
     # --------------------------------------------------------------------

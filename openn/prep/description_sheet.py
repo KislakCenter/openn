@@ -1,13 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
-import re
-
-from copy import deepcopy
-
-from openn.prep import langs
-from openn.openn_exception import OPennException
 from openn.prep.validatable_sheet import ValidatableSheet
 
 class DescriptionSheet(ValidatableSheet):
