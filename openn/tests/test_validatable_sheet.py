@@ -59,3 +59,11 @@ class TestValidatableSheet(TestCase):
     def test_is_not_valid_lang(self):
         for x in ('engx', 'x ', ' e ', 'enx'):
             self.assertFalse(ValidatableSheet.is_valid_lang(x), ('%s should not be a valid lang' % x))
+
+    def test_is_valid_integer(self):
+        for x in (1, 4, '4', ' 4 ', 300, '', '    ', None, 999999999999999):
+            self.assertTrue(ValidatableSheet.is_valid_integer(x), ('%r should be a valid integer' % x))
+
+    def test_is_not_valid_integer(self):
+        for x in (1.1, 4.0, '4x', ' dog ', 'None'):
+            self.assertFalse(ValidatableSheet.is_valid_integer(x), ('%r should not be a valid integer' % x))

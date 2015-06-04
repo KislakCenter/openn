@@ -17,6 +17,7 @@ class ValidatableSheet(object):
     URI_RE = re.compile(ur'(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
 
     YEAR_RE = re.compile(ur'^-?\d{1,4}$')
+    INTEGER_RE = re.compile(ur'^\d+$')
     # this an imperfect regex for this purpose and can only be assumed
     # to match most email address
     # It's taken from here:
@@ -40,8 +41,27 @@ class ValidatableSheet(object):
 
     @staticmethod
     def is_valid_year(val):
-        return ValidatableSheet.YEAR_RE.match(str(val)) and \
+        return ValidatableSheet.YEAR_RE.match(str(val).strip()) and \
             int(val) in xrange(ValidatableSheet.MIN_YEAR, ValidatableSheet.MAX_YEAR + 1)
+
+    @staticmethod
+    def is_empty_value(value):
+        return value is None or len(str(value).strip()) == 0
+
+    @staticmethod
+    def is_nonempty_value(value):
+        return not ValidatableSheet.is_empty_value(value)
+
+    @staticmethod
+    def is_valid_integer(val):
+        # Don't parse empty values
+        if ValidatableSheet.is_empty_value(val): return True
+
+        try:
+            return (int(val) + 0 == int(val)) and \
+                ValidatableSheet.INTEGER_RE.match(str(val).strip())
+        except (TypeError, ValueError):
+            return False
 
     @staticmethod
     def is_valid_email(val):
@@ -334,12 +354,6 @@ class ValidatableSheet(object):
     # Field accessors
     # --------------------------------------------------------------------
 
-    def is_empty_value(self, value):
-        return value is None or len(str(value).strip()) == 0
-
-    def is_nonempty_value(self, value):
-        return not self.is_empty_value(value)
-
     def is_empty(self, attr):
         """Return True if the field has no value present."""
         values = self.values(attr)
@@ -504,6 +518,10 @@ class ValidatableSheet(object):
         elif data_type == 'email':
             if not self.is_valid_email(value):
                 self.warnings.append(
+                    self._format_error(field, value, data_type))
+        elif data_type == 'integer':
+            if not self.is_valid_integer(value):
+                self.errors.append(
                     self._format_error(field, value, data_type))
         elif data_type == 'string':
             pass
