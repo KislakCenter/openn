@@ -117,7 +117,15 @@ class TestDescriptionSheet(TestCase):
                     'repeating': False,
                     'data_type': 'string',
                     'value_list': [ 'CC-BY', 'CC0', 'PD' ]
+                },
+                'rights_pd_lower_case': { # Rights PD (lower case)
+                    'field_name': 'Rights PD (lower case)',
+                    'required': True,
+                    'repeating': False,
+                    'data_type': 'string',
+                    'value_list': [ 'CC-BY', 'CC0', 'PD' ]
                 }
+
             }
         },
         'pages': {
@@ -525,7 +533,6 @@ class TestDescriptionSheet(TestCase):
         sheet.validate_requirement('required_if_field_1_empty_valid')
         self.assertEqual(len(sheet.errors), 0)
 
-    #
     # Field 2 (repeating)
     # Required if field 2 nonempty (first and third missing)
     def test_required_with_value_repeating(self):
@@ -564,8 +571,6 @@ class TestDescriptionSheet(TestCase):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('required_if_7_is_CAT_valid')
         self.assertEqual(len(sheet.errors), 0)
-
-
     # Field 7
     # Required if 7 is CAT (invalid)
     def test_require_if_other_in_list_invalid(self):
@@ -658,10 +663,6 @@ class TestDescriptionSheet(TestCase):
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Rights CC-X.*not valid.*expected.*')
 
-    def test_value_list_case_insensitive(self):
-        # TODO: test that validate_value_list() is case insensitive
-        pass
-
     # Rights 4 (empty)
     def test_value_list_with_value_empty(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
@@ -674,6 +675,12 @@ class TestDescriptionSheet(TestCase):
         sheet.validate_value_list('rights_pd_with_space')
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
+
+    # Rights PD with space
+    def test_value_list_valid_value_lower_case(self):
+        sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
+        sheet.validate_value_list('rights_pd_lower_case')
+        self.assertEqual(len(sheet.errors), 0)
 
     def test_repeating_false_one_value(self):
         sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description

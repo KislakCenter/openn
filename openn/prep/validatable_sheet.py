@@ -72,6 +72,13 @@ class ValidatableSheet(object):
         return langs.is_valid_lang(val)
 
     @staticmethod
+    def is_value_in_list(value, val_list, case_senstive=False):
+        if case_senstive:
+            return value in val_list
+        else:
+            return str(value).lower() in [ str(x).lower() for x in val_list ]
+
+    @staticmethod
     def normalize(s):
         if s is not None:
             return re.sub(r'\W+', '', str(s)).lower()
@@ -201,12 +208,11 @@ class ValidatableSheet(object):
     def validate_blank_if_other_in_list(self, attr, other_attr, val_list):
         if self.is_empty(attr): return
 
-        the_list = [ x.strip().lower() for x in val_list ]
         values, others = self.paired_values(attr, other_attr)
         for i in xrange(len(values)):
             if (self.is_nonempty_value(values[i]) and
                 others[i] is not None and
-                str(others[i]).strip().lower() in the_list):
+                self.is_value_in_list(others[i], val_list)):
                 msg = '"%s" must be empty if "%s" is "%s"; found: "%s"' % (
                     self.field_name(attr), self.field_name(other_attr),
                     others[i], values[i])
@@ -266,12 +272,11 @@ class ValidatableSheet(object):
     def validate_required_if_other_in_list(self, attr, other_attr, val_list):
         if self.is_empty(other_attr): return
 
-        the_list = [ x.lower() for x in val_list ]
         values, others = self.paired_values(attr, other_attr)
         for i in xrange(len(values)):
             if (self.is_empty_value(values[i]) and
                 others[i] is not None and
-                str(others[i]).lower() in the_list):
+                self.is_value_in_list(others[i], val_list)):
                 msg = '"%s" cannot be empty if "%s" is "%s"' % (
                     self.field_name(attr), self.field_name(other_attr), others[i])
                 self.errors.append(msg)
@@ -314,7 +319,9 @@ class ValidatableSheet(object):
         if value_list is None: return
 
         for val in self.values(attr):
-            if val is not None and val not in value_list:
+            if val is None or self.is_value_in_list(val, value_list):
+                pass
+            else:
                 msg = '"%s" value "%s" not valid; expected one of: %s' % (
                     self.field_name(attr), val, ', '.join(self._list_quoted(value_list)))
                 self.errors.append(msg)
@@ -498,7 +505,6 @@ class ValidatableSheet(object):
 
         return vals
 
-
     def _values_quoted(self, attr, q='"'):
         return self._list_quoted(self.values(attr), q=q)
 
@@ -527,7 +533,6 @@ class ValidatableSheet(object):
             pass
         else:
             raise OPennException('Unknown data type: "%s"' % (data_type,))
-
 
     def _format_error(self, field_name, value, data_type):
         return "%s is not a valid %s: %s" % (field_name, data_type, value)
