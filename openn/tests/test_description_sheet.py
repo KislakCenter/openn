@@ -520,7 +520,7 @@ class TestDescriptionSheet(TestCase):
 
     # Field 1
     # Required if field 1 empty (invalid)
-    def test_required_with_blank_error(self):
+    def test_validate_required_if_other_empty_invalid(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('required_if_field_1_empty_invalid')
         self.assertEqual(len(sheet.errors), 1)
@@ -528,52 +528,52 @@ class TestDescriptionSheet(TestCase):
 
     # Field 1
     # Required if field 1 empty (valid)
-    def test_required_with_blank_valid(self):
+    def test_validate_required_if_other_empty_valid(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('required_if_field_1_empty_valid')
         self.assertEqual(len(sheet.errors), 0)
 
     # Field 2 (repeating)
     # Required if field 2 nonempty (first and third missing)
-    def test_required_with_value_repeating(self):
+    def test_validate_required_if_other_empty_valid_repeating(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('required_if_field_2_nonempty_first_and_third_missing')
         self.assertEqual(len(sheet.errors), 2)
 
     # Field 3 (required, invalid)
-    def test_required_field_error(self):
+    def test_validate_requirement_invalid(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('field_3_required_invalid')
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Field 3.* cannot be empty')
 
     # Field 4 (required, valid)
-    def test_required_field_valid(self):
+    def test_validate_requirement_valid(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('field_4_required_valid')
         self.assertEqual(len(sheet.errors), 0)
 
     # Field 5 (not required, no value)
-    def test_not_required_field_no_value(self):
+    def test_validate_requirement_not_required_no_value(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('field_5_not_required_no_value')
         self.assertEqual(len(sheet.errors), 0)
 
     # Field 6 (not required, value)
-    def test_not_required_field_with_value(self):
+    def test_validate_requirement_not_required_with_value(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('field_6_not_required_value')
         self.assertEqual(len(sheet.errors), 0)
 
     # Field 7
     # Required if 7 is CAT (valid)
-    def test_require_if_other_in_list_valid(self):
+    def test_validate_required_if_other_in_list_valid(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('required_if_7_is_CAT_valid')
         self.assertEqual(len(sheet.errors), 0)
     # Field 7
     # Required if 7 is CAT (invalid)
-    def test_require_if_other_in_list_invalid(self):
+    def test_validate_required_if_other_in_list_invalid(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('required_if_7_is_CAT_invalid')
         self.assertEqual(len(sheet.errors), 1)
@@ -581,14 +581,14 @@ class TestDescriptionSheet(TestCase):
 
     # Field 8 (cat is lower case)
     # Require if field 8 is CAT (valid)
-    def test_require_if_other_in_list_valid_differing_case(self):
+    def test_validate_required_if_other_in_list_differing_case(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('require_if_field_8_is_CAT_valid')
         self.assertEqual(len(sheet.errors), 0)
 
     # Field 9 (repeating)
     # Required if 9 is CAT
-    def test_require_if_other_in_list_repeating(self):
+    def test_validate_required_if_other_in_list_repeating(self):
         sheet = OPWorkbook(self.required_values_workbook, self.requirements_config).description
         sheet.validate_requirement('required_if_9_is_CAT')
         self.assertEqual(len(sheet.errors), 1)
@@ -596,7 +596,7 @@ class TestDescriptionSheet(TestCase):
 
     # Field 2 (repeating)
     # Empty if field 2 nonempty (first and third present)
-    def test_must_be_empty_with_nonempty_error(self):
+    def test_validate_blank_if_other_nonempty_invalid(self):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_field_2_nonempty_first_and_third_present')
         self.assertEqual(len(sheet.errors), 2)
@@ -605,7 +605,7 @@ class TestDescriptionSheet(TestCase):
 
     # Field 1
     # Empty if field 1 empty (invalid)
-    def test_must_be_empty_with_empty_error(self):
+    def test_validate_blank_if_other_empty_invalid(self):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_field_1_empty_invalid')
         self.assertEqual(len(sheet.errors), 1)
@@ -613,7 +613,7 @@ class TestDescriptionSheet(TestCase):
 
     # Field 1
     # Empty if field 1 empty (valid)
-    def test_must_be_empty_with_empty_valid(self):
+    def test_validate_blank_if_other_empty_valid(self):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_field_1_empty_valid')
         self.assertEqual(len(sheet.errors), 0)
@@ -621,7 +621,7 @@ class TestDescriptionSheet(TestCase):
 
     # Field 3
     # Empty if 3 is CAT (invalid)
-    def test_must_be_empty_with_value_error(self):
+    def test_validate_blank_if_other_in_list_invalid(self):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_3_is_cat_invalid')
         self.assertEqual(len(sheet.errors), 1)
@@ -629,14 +629,14 @@ class TestDescriptionSheet(TestCase):
 
     # Field 3
     # Empty if 3 is CAT (valid)
-    def test_must_be_empty_with_value(self):
+    def test_validate_blank_if_other_in_list_valid(self):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_3_is_cat_valid')
         self.assertEqual(len(sheet.errors), 0)
 
     # Field 4 (cat is lower case)
     # Empty if field 4 is CAT (invalid)
-    def test_must_be_empty_with_value_is_case_insensitive(self):
+    def test_validate_blank_if_other_in_list_case_insensitive_invalid(self):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_field_4_is_cat_invalid')
         self.assertEqual(len(sheet.errors), 1)
@@ -644,61 +644,61 @@ class TestDescriptionSheet(TestCase):
 
     # Field 5 (repeating)
     # Empty if 5 is CAT
-    def test_must_be_empty_with_value_repeating(self):
+    def test_validate_blank_if_other_in_list_repeating(self):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_5_is_cat')
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is "CAT"; found: "value 2"')
 
     # Rights PD
-    def test_value_list_valid(self):
+    def test_validate_value_list_valid(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_pd')
         self.assertEqual(len(sheet.errors), 0)
 
     # Rights CC-X (not in list)
-    def test_value_list_value_not_in_list(self):
+    def test_validate_value_list_invalid(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_cc_x_not_in_list')
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Rights CC-X.*not valid.*expected.*')
 
     # Rights 4 (empty)
-    def test_value_list_with_value_empty(self):
+    def test_validate_value_list_with_value_empty(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_4_blank')
         self.assertEqual(len(sheet.errors), 0)
 
     # Rights PD with space
-    def test_value_list_valid_value_plus_space(self):
+    def test_validate_value_list_valid_value_plus_space(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_pd_with_space')
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
 
     # Rights PD with space
-    def test_value_list_valid_value_lower_case(self):
+    def test_validate_value_list_valid_value_lower_case(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_pd_lower_case')
         self.assertEqual(len(sheet.errors), 0)
 
-    def test_repeating_false_one_value(self):
+    def test_validate_repeating_false_one_value(self):
         sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
         sheet.validate_repeating('non_repeating_field_valid')
         self.assertEqual(len(sheet.errors), 0)
 
-    def test_repeating_false_more_than_one_value(self):
+    def test_validate_repeating_false_more_than_one_value(self):
         sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
         sheet.validate_repeating('non_repeating_field_invalid')
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r'More than one.*Non-repeating field invalid.*value1.*value2')
 
-    def test_repeating_true_one_value(self):
+    def test_validate_repeating_true_one_value(self):
         sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
         sheet.validate_repeating('repeating_field_one_value')
         self.assertEqual(len(sheet.errors), 0)
 
-    def test_repeating_true_more_than_one_value(self):
+    def test_validate_repeating_true_more_than_one_value(self):
         sheet = OPWorkbook(self.repeating_workbook, self.repeating_config).description
         sheet.validate_repeating('repeating_field_multiple_values')
         self.assertEqual(len(sheet.errors), 0)
