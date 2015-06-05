@@ -9,7 +9,6 @@ from django.utils import unittest
 from django.test import TestCase
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from pprint import PrettyPrinter
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
@@ -18,6 +17,7 @@ from openn.prep.file_list import FileList
 from openn.prep.prep_setup import PrepSetup
 from openn.xml.openn_tei import OPennTEI
 from openn.models import *
+from openn.tests.helpers import *
 
 class TestCommonPrep(TestCase):
 
@@ -31,7 +31,6 @@ class TestCommonPrep(TestCase):
     dir_extra_images = os.path.join(os.path.dirname(__file__), 'data/mscodex1589_prepped')
     staged_w_extra   = os.path.join(staging_dir, 'mscodex1589')
     medren_coll      = 'medren'
-    pp               = PrettyPrinter(indent=2)
 
     def setUp(self):
         if not os.path.exists(TestCommonPrep.staging_dir):
@@ -40,13 +39,6 @@ class TestCommonPrep(TestCase):
     def tearDown(self):
         if os.path.exists(TestCommonPrep.staging_dir):
             shutil.rmtree(TestCommonPrep.staging_dir)
-
-    def touch(self, filename, times=None):
-        with(open(filename,'a')):
-            os.utime(filename, times)
-
-    def pprint(self,thing):
-        TestCommonPrep.pp.pprint(thing)
 
     def stage_template(self):
         shutil.copytree(TestCommonPrep.template_dir, TestCommonPrep.staged_source)
@@ -72,8 +64,8 @@ class TestCommonPrep(TestCase):
     def test_no_data_dir(self):
         # setup
         os.mkdir(TestCommonPrep.staged_source)
-        self.touch(TestCommonPrep.staged_tei)
-        self.touch(TestCommonPrep.staged_file_list)
+        touch(TestCommonPrep.staged_tei)
+        touch(TestCommonPrep.staged_file_list)
 
         # run
         with self.assertRaises(OPennException) as oe:
@@ -86,7 +78,7 @@ class TestCommonPrep(TestCase):
         # setup
         os.mkdir(TestCommonPrep.staged_source)
         os.mkdir(TestCommonPrep.staged_data)
-        self.touch(TestCommonPrep.staged_file_list)
+        touch(TestCommonPrep.staged_file_list)
 
         # run
         with self.assertRaises(OPennException) as oe:
@@ -99,7 +91,7 @@ class TestCommonPrep(TestCase):
         # setup
         os.mkdir(TestCommonPrep.staged_source)
         os.mkdir(TestCommonPrep.staged_data)
-        self.touch(TestCommonPrep.staged_tei)
+        touch(TestCommonPrep.staged_tei)
 
         # run
         with self.assertRaises(OPennException) as oe:
