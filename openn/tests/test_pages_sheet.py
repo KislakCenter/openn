@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import pprint
 
 from django.utils import unittest
 from django.test import TestCase
@@ -12,6 +11,7 @@ from django.core.exceptions import ValidationError
 from openn.prep.op_workbook import OPWorkbook
 from openn.prep.pages_sheet import PagesSheet
 from openn.prep.validatable_sheet import ValidatableSheet
+from openn.tests.helpers import *
 
 class TestPagesSheet(TestCase):
     this_dir                 = os.path.dirname(__file__)
@@ -21,6 +21,29 @@ class TestPagesSheet(TestCase):
     helen_griffith_workbook  = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
     pages_workbook           = os.path.join(sheets_dir, 'pages.xlsx')
     pages_invalid_workbook   = os.path.join(sheets_dir, 'pages_invalid.xlsx')
+
+    dummy_files = ( 'HelenGriffith_BMC_fc.tif',
+                    'HelenGriffith_BMC_fpd.tif',
+                    'HelenGriffith_BMC_0001.tif',
+                    'HelenGriffith_BMC_0002.tif',
+                    'HelenGriffith_BMC_0003.tif',
+                    'HelenGriffith_BMC_0004.tif',
+                    'HelenGriffith_BMC_0005.tif',
+                    'HelenGriffith_BMC_0006.tif',
+                    'HelenGriffith_BMC_0007.tif',
+                    'HelenGriffith_BMC_0008.tif',
+                    'HelenGriffith_BMC_0009.tif',
+                    'HelenGriffith_BMC_0010.tif',
+                    'HelenGriffith_BMC_0011.tif',
+                    'HelenGriffith_BMC_0012.tif',
+                    'HelenGriffith_BMC_0013.tif',
+                    'HelenGriffith_BMC_0014.tif',
+                    'HelenGriffith_BMC_0015.tif',
+                    'HelenGriffith_BMC_0016.tif',
+                    'HelenGriffith_BMC_0017.tif',
+                    'HelenGriffith_BMC_0018.tif' )
+
+    dummy_paths = [ os.path.join(sheets_dir, x) for x in dummy_files ]
 
     pages_config = {
         'description': {
@@ -208,24 +231,23 @@ class TestPagesSheet(TestCase):
         pass
 
     def tearDown(self):
-        pass
-
-    def pp(self,val):
-        printer = pprint.PrettyPrinter(indent=4)
-        printer.pprint(val)
+        for path in self.dummy_paths:
+            if os.path.exists(path):
+                os.remove(path)
 
     def get_config(self):
         return settings.SPREADSHEET_CONFIG
 
     def test_init(self):
-        sheet = OPWorkbook(self.helen_griffith_workbook, self.get_config()).pages
+        sheet = OPWorkbook(self.pages_workbook, self.pages_config).pages
         self.assertIsInstance(sheet, PagesSheet)
         self.assertIsInstance(sheet, ValidatableSheet)
 
     def test_validate(self):
+        for path in self.dummy_paths: touch(path)
         sheet = OPWorkbook(self.pages_workbook, self.pages_config).pages
         sheet.validate()
-        if len(sheet.errors) > 0: self.pp(sheet.errors)
+        if len(sheet.errors) > 0: pp(sheet.errors)
         self.assertEqual(len(sheet.errors), 0)
 
     def test_required_if_other_nonempty(self):

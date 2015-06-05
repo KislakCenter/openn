@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import re
 from copy import deepcopy
 
@@ -246,6 +247,21 @@ class ValidatableSheet(object):
     def add_error(self, attr, index, msg):
         msg += (" (cell %s)" % self.cell_address_for_value(attr, index))
         self.errors.append(msg)
+
+    def validate_file_list(self, attr, directory, allow_blank=True):
+        values = self.values(attr)
+        for i in xrange(len(values)):
+            fname  = values[i]
+            if self.is_empty_value(fname):
+                if not allow_blank:
+                    msg = "File list cannot have empty values"
+                    self.add_error('file_name', i, msg)
+            else:
+                path = os.path.join(directory, fname)
+                if not os.path.exists(path):
+                    msg = "Could not find expected file: %s" % (path,)
+                    self.add_error('file_name', i, msg)
+
 
     def validate_blank_if_other_nonempty(self, attr, other_attr):
         if self.is_empty(other_attr): return
