@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys
 import re
 
@@ -52,3 +53,11 @@ class OPWorkbook:
 
     def get_sheet(self, sheet_name):
         return self.workbook.get_sheet_by_name(sheet_name)
+
+    # --------------------------------------------------------------------
+    # Properties
+    # --------------------------------------------------------------------
+
+    @property
+    def workbook_dir(self):
+        return os.path.dirname(self.xlsx_path)
