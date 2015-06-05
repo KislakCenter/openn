@@ -30,6 +30,57 @@ class ValidatableSheet(object):
     #
     EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b', re.I)
 
+    # openpyxl numbers colunms starting at 1; put None at 0 index;
+    # this is the first 520 columns.  Wish Python had Ruby's
+    # String#succ! method.
+    COLUMNS = ( None,
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK',
+                'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV',
+                'AW', 'AX', 'AY', 'AZ', 'BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG',
+                'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR',
+                'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ', 'CA', 'CB', 'CC',
+                'CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ', 'CK', 'CL', 'CM', 'CN',
+                'CO', 'CP', 'CQ', 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY',
+                'CZ', 'DA', 'DB', 'DC', 'DD', 'DE', 'DF', 'DG', 'DH', 'DI', 'DJ',
+                'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS', 'DT', 'DU',
+                'DV', 'DW', 'DX', 'DY', 'DZ', 'EA', 'EB', 'EC', 'ED', 'EE', 'EF',
+                'EG', 'EH', 'EI', 'EJ', 'EK', 'EL', 'EM', 'EN', 'EO', 'EP', 'EQ',
+                'ER', 'ES', 'ET', 'EU', 'EV', 'EW', 'EX', 'EY', 'EZ', 'FA', 'FB',
+                'FC', 'FD', 'FE', 'FF', 'FG', 'FH', 'FI', 'FJ', 'FK', 'FL', 'FM',
+                'FN', 'FO', 'FP', 'FQ', 'FR', 'FS', 'FT', 'FU', 'FV', 'FW', 'FX',
+                'FY', 'FZ', 'GA', 'GB', 'GC', 'GD', 'GE', 'GF', 'GG', 'GH', 'GI',
+                'GJ', 'GK', 'GL', 'GM', 'GN', 'GO', 'GP', 'GQ', 'GR', 'GS', 'GT',
+                'GU', 'GV', 'GW', 'GX', 'GY', 'GZ', 'HA', 'HB', 'HC', 'HD', 'HE',
+                'HF', 'HG', 'HH', 'HI', 'HJ', 'HK', 'HL', 'HM', 'HN', 'HO', 'HP',
+                'HQ', 'HR', 'HS', 'HT', 'HU', 'HV', 'HW', 'HX', 'HY', 'HZ', 'IA',
+                'IB', 'IC', 'ID', 'IE', 'IF', 'IG', 'IH', 'II', 'IJ', 'IK', 'IL',
+                'IM', 'IN', 'IO', 'IP', 'IQ', 'IR', 'IS', 'IT', 'IU', 'IV', 'IW',
+                'IX', 'IY', 'IZ', 'JA', 'JB', 'JC', 'JD', 'JE', 'JF', 'JG', 'JH',
+                'JI', 'JJ', 'JK', 'JL', 'JM', 'JN', 'JO', 'JP', 'JQ', 'JR', 'JS',
+                'JT', 'JU', 'JV', 'JW', 'JX', 'JY', 'JZ', 'KA', 'KB', 'KC', 'KD',
+                'KE', 'KF', 'KG', 'KH', 'KI', 'KJ', 'KK', 'KL', 'KM', 'KN', 'KO',
+                'KP', 'KQ', 'KR', 'KS', 'KT', 'KU', 'KV', 'KW', 'KX', 'KY', 'KZ',
+                'LA', 'LB', 'LC', 'LD', 'LE', 'LF', 'LG', 'LH', 'LI', 'LJ', 'LK',
+                'LL', 'LM', 'LN', 'LO', 'LP', 'LQ', 'LR', 'LS', 'LT', 'LU', 'LV',
+                'LW', 'LX', 'LY', 'LZ', 'MA', 'MB', 'MC', 'MD', 'ME', 'MF', 'MG',
+                'MH', 'MI', 'MJ', 'MK', 'ML', 'MM', 'MN', 'MO', 'MP', 'MQ', 'MR',
+                'MS', 'MT', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NB', 'NC',
+                'ND', 'NE', 'NF', 'NG', 'NH', 'NI', 'NJ', 'NK', 'NL', 'NM', 'NN',
+                'NO', 'NP', 'NQ', 'NR', 'NS', 'NT', 'NU', 'NV', 'NW', 'NX', 'NY',
+                'NZ', 'OA', 'OB', 'OC', 'OD', 'OE', 'OF', 'OG', 'OH', 'OI', 'OJ',
+                'OK', 'OL', 'OM', 'ON', 'OO', 'OP', 'OQ', 'OR', 'OS', 'OT', 'OU',
+                'OV', 'OW', 'OX', 'OY', 'OZ', 'PA', 'PB', 'PC', 'PD', 'PE', 'PF',
+                'PG', 'PH', 'PI', 'PJ', 'PK', 'PL', 'PM', 'PN', 'PO', 'PP', 'PQ',
+                'PR', 'PS', 'PT', 'PU', 'PV', 'PW', 'PX', 'PY', 'PZ', 'QA', 'QB',
+                'QC', 'QD', 'QE', 'QF', 'QG', 'QH', 'QI', 'QJ', 'QK', 'QL', 'QM',
+                'QN', 'QO', 'QP', 'QQ', 'QR', 'QS', 'QT', 'QU', 'QV', 'QW', 'QX',
+                'QY', 'QZ', 'RA', 'RB', 'RC', 'RD', 'RE', 'RF', 'RG', 'RH', 'RI',
+                'RJ', 'RK', 'RL', 'RM', 'RN', 'RO', 'RP', 'RQ', 'RR', 'RS', 'RT',
+                'RU', 'RV', 'RW', 'RX', 'RY', 'RZ', 'SA', 'SB', 'SC', 'SD', 'SE',
+                'SF', 'SG', 'SH', 'SI', 'SJ', 'SK', 'SL', 'SM', 'SN', 'SO', 'SP',
+                'SQ', 'SR', 'SS', 'ST', 'SU', 'SV', 'SW', 'SX', 'SY', 'SZ' )
 
     ######################################################################
     # Static methods
@@ -77,6 +128,17 @@ class ValidatableSheet(object):
             return value in val_list
         else:
             return str(value).lower() in [ str(x).lower() for x in val_list ]
+
+    @staticmethod
+    def column_letter(colindex):
+        if colindex < len(ValidatableSheet.COLUMNS):
+            return ValidatableSheet.COLUMNS[colindex]
+        else:
+            return "%d-" % (colindex,)
+
+    @staticmethod
+    def cell_address(col, row):
+        return ''.join([ ValidatableSheet.column_letter(col), str(row) ])
 
     @staticmethod
     def normalize(s):
@@ -181,6 +243,10 @@ class ValidatableSheet(object):
     # Validation
     # --------------------------------------------------------------------
 
+    def add_error(self, attr, index, msg):
+        msg += (" (cell %s)" % self.cell_address_for_value(attr, index))
+        self.errors.append(msg)
+
     def validate_blank_if_other_nonempty(self, attr, other_attr):
         if self.is_empty(other_attr): return
 
@@ -191,7 +257,7 @@ class ValidatableSheet(object):
                 msg = '"%s" must be empty if "%s" has a value; found: "%s"' % (
                     self.field_name(attr), self.field_name(other_attr),
                     values[i])
-                self.errors.append(msg)
+                self.add_error(attr, i, msg)
 
     def validate_blank_if_other_empty(self, attr, other_attr):
         if self.is_empty(attr): return
@@ -203,7 +269,7 @@ class ValidatableSheet(object):
                 msg = '"%s" must be empty if "%s" is empty; found: "%s"' % (
                     self.field_name(attr), self.field_name(other_attr),
                     values[i])
-                self.errors.append(msg)
+                self.add_error(attr, i, msg)
 
     def validate_blank_if_other_in_list(self, attr, other_attr, val_list):
         if self.is_empty(attr): return
@@ -216,7 +282,7 @@ class ValidatableSheet(object):
                 msg = '"%s" must be empty if "%s" is "%s"; found: "%s"' % (
                     self.field_name(attr), self.field_name(other_attr),
                     others[i], values[i])
-                self.errors.append(msg)
+                self.add_error(attr, i, msg)
 
     def validate_blank(self, attr):
         """If 'attr' has a blank rule and field is non-empty, validate
@@ -245,7 +311,7 @@ class ValidatableSheet(object):
         if self.is_empty(attr) and self.is_empty(other_attr):
             msg = '"%s" cannot be empty if "%s" is empty' % (
                 field_name, other_name)
-            self.errors.append(msg)
+            self.add_error(attr, 0, msg)
         elif self.is_empty(other_attr):
             values, others = self.paired_values(attr, other_attr)
 
@@ -254,7 +320,7 @@ class ValidatableSheet(object):
                         len(others) <= i or self.is_empty_value(others[i]))):
                     msg = '"%s" cannot be empty if "%s" is empty' % (
                         field_name, other_name)
-                    self.errors.append(msg)
+                    self.add_error(attr, i, msg)
 
     def validate_required_if_other_nonempty(self, attr, other_attr):
         if self.is_empty(other_attr): return
@@ -267,7 +333,7 @@ class ValidatableSheet(object):
                 other_name = self.field_name(other_attr)
                 msg = '"%s" cannot be empty if "%s" has a value' % (
                     field_name, other_name)
-                self.errors.append(msg)
+                self.add_error(attr, i, msg)
 
     def validate_required_if_other_in_list(self, attr, other_attr, val_list):
         if self.is_empty(other_attr): return
@@ -279,7 +345,7 @@ class ValidatableSheet(object):
                 self.is_value_in_list(others[i], val_list)):
                 msg = '"%s" cannot be empty if "%s" is "%s"' % (
                     self.field_name(attr), self.field_name(other_attr), others[i])
-                self.errors.append(msg)
+                self.add_error(attr, i, msg)
 
     def validate_conditional(self, attr, required):
         """Validate a conditional requirement rule."""
@@ -306,7 +372,7 @@ class ValidatableSheet(object):
         required = details['required']
         if required == True and self.is_empty(attr):
             msg = '%s cannot be empty' % (details['field_name'],)
-            self.errors.append(msg)
+            self.add_error(attr, 0, msg)
         elif isinstance(required, dict):
             self.validate_conditional(attr, required)
 
@@ -324,7 +390,7 @@ class ValidatableSheet(object):
             else:
                 msg = '"%s" value "%s" not valid; expected one of: %s' % (
                     self.field_name(attr), val, ', '.join(self._list_quoted(value_list)))
-                self.errors.append(msg)
+                self.add_error(attr, 0, msg)
 
     def validate_repeating(self, attr):
         """Validate non-repeating fields if 'repeating' set to False.
@@ -333,7 +399,7 @@ class ValidatableSheet(object):
         if not self.repeating(attr) and len(self.values(attr)) > 1:
             msg = "More than one value found in non-repeating field %s: %s" % (
                 self.field_name(attr), ', '.join(self._values_quoted(attr)))
-            self.errors.append(msg)
+            self.add_error(attr, 0, msg)
 
     def validate_field(self, attr):
         """Perform all validations for field."""
@@ -400,7 +466,7 @@ class ValidatableSheet(object):
     def locus(self, attr):
         """Return the header 'locus' for attr's field."""
         if self.fields.get(attr):
-            return self.fields[attr].get('locus')
+            return deepcopy(self.fields[attr].get('locus'))
 
     def value_list(self, attr):
         """If present, return the 'value_list' for attr's field."""
@@ -426,6 +492,20 @@ class ValidatableSheet(object):
         """Return the 'data_type' for attr's field."""
         if self.fields.get(attr):
             return self.fields[attr].get('data_type')
+
+    def cell_address_for_value(self, attr, index):
+        locus = self.locus(attr)
+        if locus is None: return ''
+
+        row = locus['row']
+        col = locus['col']
+
+        if self.heading_type == 'column':
+            row += (self.data_offset + index)
+        else:
+            col += (self.data_offset + index)
+
+        return self.cell_address(col, row)
 
 
     ######################################################################
