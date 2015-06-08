@@ -1,0 +1,524 @@
+{
+    "description": {
+        "sheet_name": "Description",
+        "data_offset": 2,
+        "heading_type": "row",
+        "fields": {
+            "administrative_contact": {
+                "field_name": "Administrative Contact",
+                "required": true,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "administrative_contact_email": {
+                "field_name": "Administrative Contact email",
+                "required": true,
+                "repeating": true,
+                "data_type": "email"
+            },
+            "pacscl_diaries_project_id": {
+                "field_name": "PACSCL Diaries Project ID",
+                "required": false,
+                "repeating": false,
+                "data_type": "string"
+            },
+            "metadata_creator": {
+                "field_name": "Metadata Creator",
+                "required": true,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "metadata_creator_email": {
+                "field_name": "Metadata Creator Email",
+                "required": true,
+                "repeating": true,
+                "data_type": "email"
+            },
+            "repository_city": {
+                "field_name": "Repository City",
+                "required": true,
+                "repeating": false,
+                "data_type": "string"
+            },
+            "repository_name": {
+                "field_name": "Repository Name",
+                "required": true,
+                "repeating": false,
+                "data_type": "string"
+            },
+            "source_collection": {
+                "field_name": "Source collection",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "call_numberid": {
+                "field_name": "Call Number/ID",
+                "required": true,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "alternate_id": {
+                "field_name": "Alternate ID",
+                "required": false,
+                "repeating": false,
+                "data_type": "string"
+            },
+            "alternate_id_type": {
+                "field_name": "Alternate ID type",
+                "required":  {
+                    "if": {
+                        "field": "alternate_id",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "alternate_id",
+                        "is": "EMPTY"
+                    }
+                },
+                "repeating": false,
+                "data_type": "string"
+            },
+            "title": {
+                "field_name": "Title",
+                "required": true,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "volume_number": {
+                "field_name": "Volume number",
+                "required": false,
+                "repeating": false,
+                "data_type": "string"
+            },
+            "creator_name": {
+                "field_name": "Creator name",
+                "required": true,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "creator_uri": {
+                "field_name": "Creator URI",
+                "required": false,
+                "repeating": true,
+                "data_type": "uri"
+            },
+            "date_single": {
+                "field_name": "Date (single)",
+                "required": {
+                    "if": {
+                        "field": "date_range_start",
+                        "is": "EMPTY"
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "date_range_start",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "repeating": false,
+                "data_type": "year"
+            },
+            "date_range_start": {
+                "field_name": "Date (range) start",
+                "required": {
+                    "if": {
+                        "field": "date_single",
+                        "is": "EMPTY"
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "date_single",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "repeating": false,
+                "data_type": "year"
+            },
+            "date_range_end": {
+                "field_name": "Date (range) end",
+                "required": {
+                    "if": {
+                        "field": "date_range_start",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "date_range_start",
+                        "is": "EMPTY"
+                    }
+                },
+                "repeating": false,
+                "data_type": "year"
+            },
+            "date_narrative": {
+                "field_name": "Date (narrative)",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "place_of_origin": {
+                "field_name": "Place of origin",
+                "required": true,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "description": {
+                "field_name": "Description",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "language": {
+                "field_name": "Language",
+                "required": true,
+                "repeating": true,
+                "data_type": "lang"
+            },
+            "page_count": {
+                "field_name": "Number of physical pages",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "page_gaps_in_images": {
+                "field_name": "Gaps",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "page_dimensions": {
+                "field_name": "Page dimensions",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "bound_dimensions": {
+                "field_name": "Bound dimensions",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "related_resource": {
+                "field_name": "Related resource",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "related_resource_url": {
+                "field_name": "Related resource URL",
+                "required": false,
+                "repeating": true,
+                "data_type": "uri"
+            },
+            "subject_names": {
+                "field_name": "Subject: names",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "subject_names_uri": {
+                "field_name": "Subject: names URI [?]",
+                "required": false,
+                "repeating": true,
+                "data_type": "uri"
+            },
+            "subject_topical": {
+                "field_name": "Subject: topical",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "subject_topical_uri": {
+                "field_name": "Subject: topical URI [?]",
+                "required": false,
+                "repeating": true,
+                "data_type": "uri"
+            },
+            "subject_geographic": {
+                "field_name": "Subject: geographic",
+                "required": true,
+                "repeating": false,
+                "data_type": "string"
+            },
+            "subject_geographic_uri": {
+                "field_name": "Subject: geographic URI [?]",
+                "required": true,
+                "repeating": false,
+                "data_type": "uri"
+            },
+            "subject_genreform": {
+                "field_name": "Subject: genre/form",
+                "required": true,
+                "repeating": false,
+                "data_type": "string"
+            },
+            "subject_genreform_uri": {
+                "field_name": "Subject: genre/form URI [?]",
+                "required": true,
+                "repeating": false,
+                "data_type": "uri"
+            },
+            "image_rights": {
+                "field_name": "Image rights",
+                "required": true,
+                "repeating": false,
+                "data_type": "string",
+                "value_list": [ "CC-BY", "CC0", "PD" ]
+            },
+            "image_copyright_holder": {
+                "field_name": "Image copyright holder",
+                "required": {
+                    "if": {
+                        "field": "image_rights",
+                        "is": [ "CC-BY", "CC0" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "image_rights",
+                        "is": [ "PD" ]
+                    }
+                },
+                "repeating": false,
+                "data_type": "string"
+            },
+            "image_copyright_year": {
+                "field_name": "Image copyright year",
+                "required": {
+                    "if": {
+                        "field": "image_rights",
+                        "is": [ "CC-BY", "CC0" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "image_rights",
+                        "is": [ "PD" ]
+                    }
+                },
+                "repeating": false,
+                "data_type": "year"
+            },
+            "metadata_rights": {
+                "field_name": "Metadata rights",
+                "required": true,
+                "repeating": false,
+                "data_type": "string",
+                "value_list": [ "CC-BY", "CC0", "PD" ]
+            },
+            "metadata_copyright_holder": {
+                "field_name": "Metadata copyright holder",
+                "required":  {
+                    "if": {
+                        "field": "metadata_rights",
+                        "is": [ "CC-BY", "CC0" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "metadata_rights",
+                        "is": [ "PD" ]
+                    }
+                },
+                "repeating": false,
+                "data_type": "string"
+            },
+            "metadata_copyright_year": {
+                "field_name": "Metadata copyright year",
+                "required":  {
+                    "if": {
+                        "field": "metadata_rights",
+                        "is": [ "CC-BY", "CC0" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "metadata_rights",
+                        "is": [ "PD" ]
+                    }
+                },
+                "repeating": false,
+                "data_type": "year"
+            }
+        }
+    },
+    "pages": {
+        "sheet_name": "Pages",
+        "data_offset": 1,
+        "heading_type": "column",
+        "fields": {
+            "object_id": {
+                "field_name": "OBJECT_ID",
+                "required": false,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "serial_num": {
+                "field_name": "SERIAL_NUM",
+                "repeating": true,
+                "data_type": "integer",
+                "required": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "EMPTY"
+                    }
+                }
+            },
+            "display_page": {
+                "field_name": "DISPLAY PAGE",
+                "required": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "string",
+                "blank": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "EMPTY"
+                    }
+                }
+            },
+            "file_name": {
+                "field_name": "FILE_NAME",
+                "required": true,
+                "repeating": true,
+                "data_type": "string"
+            },
+            "tag1": {
+                "field_name": "TAG1",
+                "required": false,
+                "repeating": true,
+                "data_type": "string",
+                "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                "blank": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "EMPTY"
+                    }
+                }
+            },
+            "value1": {
+                "field_name": "VALUE1",
+                "required": {
+                    "if": {
+                        "field": "tag1",
+                        "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "tag1",
+                        "is": "EMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "string"
+            },
+            "tag2": {
+                "field_name": "TAG2",
+                "required": false,
+                "repeating": true,
+                "data_type": "string",
+                "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                "blank": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "EMPTY"
+                    }
+                }
+            },
+            "value2": {
+                "field_name": "VALUE2",
+                "required": {
+                    "if": {
+                        "field": "tag2",
+                        "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "tag2",
+                        "is": "EMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "string"
+            },
+            "tag3": {
+                "field_name": "TAG3",
+                "required": false,
+                "repeating": true,
+                "data_type": "string",
+                "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                "blank": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "EMPTY"
+                    }
+                }
+            },
+            "value3": {
+                "field_name": "VALUE3",
+                "required": {
+                    "if": {
+                        "field": "tag3",
+                        "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "tag3",
+                        "is": "EMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "string"
+            },
+            "tag4": {
+                "field_name": "TAG4",
+                "required": false,
+                "repeating": true,
+                "data_type": "string",
+                "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                "blank": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "EMPTY"
+                    }
+                }
+            },
+            "value4": {
+                "field_name": "VALUE4",
+                "required": {
+                    "if": {
+                        "field": "tag4",
+                        "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                    }
+                },
+                "blank": {
+                    "if": {
+                        "field": "tag4",
+                        "is": "EMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "string"
+            }
+        }
+    }
+}

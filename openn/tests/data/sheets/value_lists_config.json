@@ -1,0 +1,81 @@
+{
+    "description": {
+        "fields": {
+            "rights_pd_with_space": {
+                "value_list": [
+                    "CC-BY",
+                    "CC0",
+                    "PD"
+                ],
+                "repeating": false,
+                "required": true,
+                "field_name": "Rights PD with space",
+                "data_type": "string"
+            },
+            "rights_pd": {
+                "value_list": [
+                    "CC-BY",
+                    "CC0",
+                    "PD"
+                ],
+                "repeating": false,
+                "required": true,
+                "field_name": "Rights PD",
+                "data_type": "string"
+            },
+            "rights_4_blank": {
+                "value_list": [
+                    "CC-BY",
+                    "CC0",
+                    "PD"
+                ],
+                "repeating": false,
+                "required": true,
+                "field_name": "Rights 4 (blank)",
+                "data_type": "string"
+            },
+            "rights_pd_lower_case": {
+                "value_list": [
+                    "CC-BY",
+                    "CC0",
+                    "PD"
+                ],
+                "repeating": false,
+                "required": true,
+                "field_name": "Rights PD (lower case)",
+                "data_type": "string"
+            },
+            "rights_cc_by": {
+                "value_list": [
+                    "CC-BY",
+                    "CC0",
+                    "PD"
+                ],
+                "repeating": false,
+                "required": true,
+                "field_name": "Rights CC-BY",
+                "data_type": "string"
+            },
+            "rights_cc_x_not_in_list": {
+                "value_list": [
+                    "CC-BY",
+                    "CC0",
+                    "PD"
+                ],
+                "repeating": false,
+                "required": true,
+                "field_name": "Rights CC-X (not in list)",
+                "data_type": "string"
+            }
+        },
+        "heading_type": "row",
+        "data_offset": 2,
+        "sheet_name": "Description"
+    },
+    "pages": {
+        "fields": {},
+        "heading_type": "column",
+        "data_offset": 1,
+        "sheet_name": "Pages"
+    }
+}

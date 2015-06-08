@@ -18,7 +18,7 @@ class SpreadsheetPrep(CollectionPrep):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, source_dir, collection, document):
+    def __init__(self, source_dir, collection, document, config):
         """
         Create a new SpreadsheetPrep for the given source_dir, collection and document.
         """
@@ -26,6 +26,7 @@ class SpreadsheetPrep(CollectionPrep):
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir = os.path.join(self.source_dir, 'data')
         self._sheet = None
+        self._config = config
 
     def add_file_list(self,file_list):
         # file_list = self.get_file_list(pih_xml)
@@ -59,7 +60,7 @@ class SpreadsheetPrep(CollectionPrep):
     def spreadsheet(self):
         if self._sheet is None:
             self._sheet = OPWorkbook(
-                self.sheet_path, self.spreadsheet_config)
+                self.sheet_path, self._config)
         return self._sheet
 
     def validate_spreadsheet(self):

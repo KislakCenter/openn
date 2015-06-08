@@ -63,10 +63,6 @@ class OPennSettings(object):
         return settings.COLLECTIONS[self._coll_name]
 
     @property
-    def spreadsheet_config(self):
-        return deepcopy(settings.SPREADSHEET_CONFIG)
-
-    @property
     def known_colls(self):
         """ A list of all configured collections. """
         return settings.COLLECTIONS.keys()

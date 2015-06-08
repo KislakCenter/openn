@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import json
 
 from django.utils import unittest
 from django.test import TestCase
@@ -21,6 +22,8 @@ class TestValidatableSheet(TestCase):
     url4 = 'http://id.loc.gov/authorities/subjects/sh2010118889'
     url5 = 'https://openpyxl.readthedocs.org/en/latest/api/openpyxl.worksheet.html?highlight=min_col#openpyxl.worksheet.worksheet.Worksheet.min_col'
 
+    pacscl_diairies_config    = json.load(open(os.path.join(this_dir, '../prep/pacscl_diaries.json')))
+
     def setUp(self):
         pass
 
@@ -28,7 +31,7 @@ class TestValidatableSheet(TestCase):
         pass
 
     def get_config(self):
-        return settings.SPREADSHEET_CONFIG
+        return self.pacscl_diairies_config
 
     def test_init(self):
         sheet = OPWorkbook(self.helen_griffith, self.get_config()).description

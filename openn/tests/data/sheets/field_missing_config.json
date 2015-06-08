@@ -1,0 +1,45 @@
+{
+    "description": {
+        "fields": {
+            "field2": {
+                "repeating": true,
+                "required": false,
+                "field_name": "Field2",
+                "data_type": "string"
+            },
+            "field3": {
+                "repeating": true,
+                "required": false,
+                "field_name": "Field3",
+                "data_type": "string"
+            },
+            "field1": {
+                "repeating": true,
+                "required": false,
+                "field_name": "Field1",
+                "data_type": "string"
+            },
+            "field4": {
+                "repeating": true,
+                "required": false,
+                "field_name": "Field4",
+                "data_type": "string"
+            },
+            "field5": {
+                "repeating": true,
+                "required": false,
+                "field_name": "Field5",
+                "data_type": "string"
+            }
+        },
+        "heading_type": "row",
+        "data_offset": 2,
+        "sheet_name": "Description"
+    },
+    "pages": {
+        "fields": {},
+        "heading_type": "column",
+        "data_offset": 1,
+        "sheet_name": "Pages"
+    }
+}

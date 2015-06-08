@@ -1,0 +1,39 @@
+{
+    "description": {
+        "fields": {
+            "non_repeating_field_valid": {
+                "repeating": false,
+                "required": true,
+                "field_name": "Non-repeating field valid",
+                "data_type": "string"
+            },
+            "non_repeating_field_invalid": {
+                "repeating": false,
+                "required": true,
+                "field_name": "Non-repeating field invalid",
+                "data_type": "string"
+            },
+            "repeating_field_one_value": {
+                "repeating": true,
+                "required": true,
+                "field_name": "Repeating field one value",
+                "data_type": "string"
+            },
+            "repeating_field_multiple_values": {
+                "repeating": true,
+                "required": true,
+                "field_name": "Repeating field multiple values",
+                "data_type": "string"
+            }
+        },
+        "heading_type": "row",
+        "data_offset": 2,
+        "sheet_name": "Description"
+    },
+    "pages": {
+        "fields": {},
+        "heading_type": "column",
+        "data_offset": 1,
+        "sheet_name": "Pages"
+    }
+}

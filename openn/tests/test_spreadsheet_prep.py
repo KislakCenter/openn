@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import json
 import re
 import shutil
 import sys
@@ -22,6 +23,9 @@ from openn.prep.prep_setup import PrepSetup
 from openn.models import *
 
 class TestSpreadsheetPrep(TestCase):
+
+    this_dir                 = os.path.dirname(__file__)
+    pacscl_diairies_config   = json.load(open(os.path.join(this_dir, '../prep/pacscl_diaries.json')))
 
     staging_dir              = os.path.join(os.path.dirname(__file__), 'staging')
     diaries_dir              = os.path.join(os.path.dirname(__file__), 'data/diaries')
@@ -69,8 +73,12 @@ class TestSpreadsheetPrep(TestCase):
     def test_run(self):
         # setup
         self.stage_template()
-        doc = PrepSetup().prep_document(TestSpreadsheetPrep.haverford_coll, 'JournalsAndDiaries_975')
-        prep = SpreadsheetPrep(TestSpreadsheetPrep.staged_source, TestSpreadsheetPrep.haverford_coll, doc)
+        doc = PrepSetup().prep_document(TestSpreadsheetPrep.haverford_coll,
+                                        'JournalsAndDiaries_975')
+        prep = SpreadsheetPrep(TestSpreadsheetPrep.staged_source,
+                               TestSpreadsheetPrep.haverford_coll,
+                               doc,
+                               self.pacscl_diairies_config)
         # run
         prep.prep_dir()
 

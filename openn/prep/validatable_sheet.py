@@ -244,6 +244,9 @@ class ValidatableSheet(object):
     # Validation
     # --------------------------------------------------------------------
 
+    def has_errors(self, ):
+        return self.errors is not None and len(self.errors) > 0
+
     def add_error(self, attr, index, msg):
         msg += (" (cell %s)" % self.cell_address_for_value(attr, index))
         self.errors.append(msg)
