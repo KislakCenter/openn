@@ -21,36 +21,45 @@ from openn.prep.file_list import FileList
 from openn.xml.openn_tei import OPennTEI
 from openn.prep.prep_setup import PrepSetup
 from openn.models import *
+from openn.tests.helpers import *
 
 class TestSpreadsheetPrep(TestCase):
 
-    this_dir                 = os.path.dirname(__file__)
-    pacscl_diairies_config   = json.load(open(os.path.join(this_dir, '../prep/pacscl_diaries.json')))
+    this_dir               = os.path.dirname(__file__)
+    data_dir               = os.path.join(this_dir, 'data')
+    sheets_dir             = os.path.join(data_dir, 'sheets')
+    staging_dir            = os.path.join(os.path.dirname(__file__), 'staging')
 
-    staging_dir              = os.path.join(os.path.dirname(__file__), 'staging')
-    diaries_dir              = os.path.join(os.path.dirname(__file__), 'data/diaries')
-    bryn_mawr_dir            = os.path.join(diaries_dir, 'bryn_mawr')
-    haverford_dir            = os.path.join(diaries_dir, 'haverford')
-    swarthmore_dir           = os.path.join(diaries_dir, 'swarthmore')
+    pacscl_diairies_config = json.load(open(os.path.join(sheets_dir, 'pacscl_diaries.json')))
+    valid_workbook         = os.path.join(sheets_dir, 'valid_workbook.xlsx')
 
-    haverfordcollege_975_dir = os.path.join(diaries_dir, 'haverford/JournalsAndDiaries_975')
-
-    template_dir             = haverfordcollege_975_dir
-    staged_source            = os.path.join(staging_dir, 'JournalsAndDiaries_975')
-    haverford_coll           = 'haverford'
-    pp                       = PrettyPrinter(indent=2)
+    template_image_names   = """HelenGriffith_BMC_fc.tif
+                                 HelenGriffith_BMC_fpd.tif
+                                 HelenGriffith_BMC_0001.tif
+                                 HelenGriffith_BMC_0002.tif
+                                 HelenGriffith_BMC_0003.tif
+                                 HelenGriffith_BMC_0004.tif
+                                 HelenGriffith_BMC_0005.tif
+                                 HelenGriffith_BMC_0006.tif
+                                 HelenGriffith_BMC_0007.tif
+                                 HelenGriffith_BMC_0008.tif
+                                 HelenGriffith_BMC_0009.tif
+                                 HelenGriffith_BMC_0010.tif
+                                """
+    bad_description        = os.path.join(sheets_dir, 'template_bad_description')
+    bad_pages              = os.path.join(sheets_dir, 'template_bad_pages')
+    template_tiff          = os.path.join(data_dir, 'images/template_image.tif')
+    template_dir           = os.path.join(sheets_dir, 'valid_template')
+    staged_source          = os.path.join(staging_dir, 'XYZ_ABC_1')
+    haverford_coll         = 'haverford'
 
     def setUp(self):
-        if not os.path.exists(TestSpreadsheetPrep.staging_dir):
-            os.mkdir(TestSpreadsheetPrep.staging_dir)
+        if not os.path.exists(self.staging_dir):
+            os.mkdir(self.staging_dir)
 
     def tearDown(self):
-        if os.path.exists(TestSpreadsheetPrep.staging_dir):
-            shutil.rmtree(TestSpreadsheetPrep.staging_dir)
-
-    def touch(self, filename, times=None):
-        with(open(filename,'a')):
-            os.utime(filename, times)
+        if os.path.exists(self.staging_dir):
+            shutil.rmtree(self.staging_dir)
 
     def assertHasFile(self,file_list, group, path):
         for info in file_list[group]:
@@ -63,24 +72,58 @@ class TestSpreadsheetPrep(TestCase):
             if info['filename'] == path:
                 raise AssertionError("Should not have file: '%s' in group: '%s'" % (path,group))
 
-    def pprint(self,thing):
-        TestSpreadsheetPrep.pp.pprint(thing)
-
-    def stage_template(self):
-        shutil.copytree(TestSpreadsheetPrep.template_dir, TestSpreadsheetPrep.staged_source)
-        self.touch(os.path.join(TestSpreadsheetPrep.staged_source, 'somefile.tif'))
+    def stage_template(self, template=None):
+        if template is None: template = self.template_dir
+        shutil.copytree(template, self.staged_source)
+        for fname in self.template_image_names.split():
+            destfile = os.path.join(self.staged_source, fname)
+            shutil.copyfile(self.template_tiff, destfile)
 
     def test_run(self):
         # setup
         self.stage_template()
-        doc = PrepSetup().prep_document(TestSpreadsheetPrep.haverford_coll,
-                                        'JournalsAndDiaries_975')
-        prep = SpreadsheetPrep(TestSpreadsheetPrep.staged_source,
-                               TestSpreadsheetPrep.haverford_coll,
-                               doc,
-                               self.pacscl_diairies_config)
+        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+
         # run
-        prep.prep_dir()
+        try:
+            prep.prep_dir()
+        except OPennException as oe:
+            self.fail("Prep should raise no exception; got: %s" % (oe,))
+
+    def test_prep_dir_bad_description(self):
+        self.stage_template(template=self.bad_description)
+        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+
+        with self.assertRaises(OPennException) as oe:
+            prep.prep_dir()
+
+        self.assertIn('Language', str(oe.exception))
+
+    def test_prep_dir_bad_pages(self):
+        self.stage_template(template=self.bad_pages)
+        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+
+        with self.assertRaises(OPennException) as oe:
+            prep.prep_dir()
+
+        self.assertIn('FILE_NAME', str(oe.exception))
+
+    def test_prep_dir_missing_file(self):
+        self.stage_template()
+        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+        tiffs = glob.glob(os.path.join(self.staged_source, '*.tif'))
+        # pp(len(tiffs))
+        os.remove(tiffs[0])
+        # tiffs = glob.glob(os.path.join(self.staged_source, '*.tif'))
+        # pp(len(tiffs))
+        with self.assertRaises(OPennException) as oe:
+            prep.prep_dir()
+
+        self.assertIn('FILE_NAME', str(oe.exception))
 
 if __name__ == '__main__':
     unittest.main()

@@ -87,7 +87,8 @@
                 "repeating": true,
                 "required": true,
                 "field_name": "FILE_NAME",
-                "data_type": "string"
+                "data_type": "string",
+                "file_list": true
             },
             "display_page": {
                 "repeating": true,

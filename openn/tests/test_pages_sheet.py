@@ -19,7 +19,6 @@ class TestPagesSheet(TestCase):
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')
 
-    helen_griffith_workbook  = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
     pages_workbook           = os.path.join(sheets_dir, 'pages.xlsx')
     pages_invalid_workbook   = os.path.join(sheets_dir, 'pages_invalid.xlsx')
 
@@ -55,9 +54,6 @@ class TestPagesSheet(TestCase):
         for path in self.dummy_paths:
             if os.path.exists(path):
                 os.remove(path)
-
-    def get_config(self):
-        return settings.SPREADSHEET_CONFIG
 
     def test_init(self):
         sheet = OPWorkbook(self.pages_workbook, self.pages_config).pages

@@ -57,28 +57,12 @@ class TestDescriptionSheet(TestCase):
     # Alternate ID type
     invalid_nonblanks        = os.path.join(sheets_dir, 'invalid_values_should_be_blank.xlsx')
 
+    valid_workbook           = os.path.join(sheets_dir, 'valid_workbook.xlsx')
     value_lists_workbook     = os.path.join(sheets_dir, 'value_lists.xlsx')
     repeating_workbook       = os.path.join(sheets_dir, 'repeating_and_nonrepeating.xlsx')
     missing_field_workbook   = os.path.join(sheets_dir, 'missing_optional_fields.xlsx')
 
-    helen_griffith           = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
-    mary_ayer                = os.path.join(diaries_dir, 'bryn_mawr/MaryAyer_Diary.xlsx')
-    mww_diary_vol10          = os.path.join(diaries_dir, 'bryn_mawr/MWW_Diary_Vol10.xlsx')
-    mww_diary_vol11          = os.path.join(diaries_dir, 'bryn_mawr/MWW_Diary_Vol11.xlsx')
-    mww_diary_vol12          = os.path.join(diaries_dir, 'bryn_mawr/MWW_Diary_Vol12.xlsx')
-    mww_diary_vol9           = os.path.join(diaries_dir, 'bryn_mawr/MWW_Diary_Vol9.xlsx')
-    pacscl_coates_sharpless  = os.path.join(diaries_dir, 'haverford/Account of Coates, Shapless, etc/PACSCL metadata.xlsx')
-    william_allinson_v1      = os.path.join(diaries_dir, 'haverford/Allinson, William/PACSCL metadata v1.xlsx')
-    william_allinson_v2      = os.path.join(diaries_dir, 'haverford/Allinson, William/PACSCL metadata v2.xlsx')
-    william_allinson_v3      = os.path.join(diaries_dir, 'haverford/Allinson, William/PACSCL metadata v3.xlsx')
-    david_bacon              = os.path.join(diaries_dir, 'haverford/Bacon, David/PACSCL metadata.xlsx')
-    joseph_sampson           = os.path.join(diaries_dir, 'haverford/Sansom, Joseph/PACSCL metadata.xlsx')
-    swayne                   = os.path.join(diaries_dir, 'haverford/Swayne/PACSCL metadata.xlsx')
-    xls_cooper               = os.path.join(diaries_dir, 'swarthmore/Cooper/PACSCL_Cooper.xls')
-    xls_pierce               = os.path.join(diaries_dir, 'swarthmore/Pierce/PACSCL_Pierce.xls')
-    xls_sharpless            = os.path.join(diaries_dir, 'swarthmore/Sharpless/PACSCL_Sharpless.xls')
-
-    pacscl_diairies_json    = os.path.join(this_dir, '../prep/pacscl_diaries.json')
+    pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
     value_lists_test_config = json.load(open(os.path.join(sheets_dir, 'value_lists_config.json')))
     repeating_config        = json.load(open(os.path.join(sheets_dir, 'repeating_config.json')))
     field_missing_config    = json.load(open(os.path.join(sheets_dir, 'field_missing_config.json')))
@@ -95,7 +79,7 @@ class TestDescriptionSheet(TestCase):
         return json.load(open(self.pacscl_diairies_json))
 
     def test_init(self):
-        sheet = OPWorkbook(self.helen_griffith, self.get_config()).description
+        sheet = OPWorkbook(self.valid_workbook, self.get_config()).description
         self.assertIsInstance(sheet, DescriptionSheet)
         self.assertIsInstance(sheet, ValidatableSheet)
 

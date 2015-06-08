@@ -69,7 +69,10 @@ class SpreadsheetPrep(CollectionPrep):
                 self.sheet_path)
             raise OPennException(msg)
 
-        self.spreadsheet().validate_description()
+        self.spreadsheet().validate()
+
+    def validate_file_names(self):
+        self.spreadsheet().validate_file_lists()
 
     def build_file_list(self,pih_xml):
         """Build a list of files using the pih_xml file.
@@ -145,7 +148,7 @@ class SpreadsheetPrep(CollectionPrep):
             self.logger.warning("[%s] Files alreaady validated" % (self.basedir, ))
         else:
             self.logger.info("[%s] Validating files" % (self.basedir, ))
-            pass
+            self.validate_file_names()
             self.write_status(self.COLLECTION_PREP_FILES_VALIDATED)
 
         if self.get_status() > self.COLLECTION_PREP_FILES_STAGED:

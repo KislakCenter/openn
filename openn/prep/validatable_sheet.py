@@ -153,6 +153,7 @@ class ValidatableSheet(object):
     def __init__(self, op_workbook, config={}):
         self.op_workbook = op_workbook
         self.config      = deepcopy(config)
+        self.file_errors = []
         self.errors      = []
         self.warnings    = []
         self._set_headings()
@@ -167,6 +168,14 @@ class ValidatableSheet(object):
 
         """
         return [ x for x in self.fields.itervalues() if x['required'] ]
+
+    @property
+    def workbook_dir(self):
+        return self.op_workbook.workbook_dir
+
+    @property
+    def file_lists(self):
+        return [ x for x in self.fields if self.is_file_list(x) ]
 
     @property
     def fields(self):
@@ -247,9 +256,39 @@ class ValidatableSheet(object):
     def has_errors(self, ):
         return self.errors is not None and len(self.errors) > 0
 
+    def has_file_errors(self):
+        return self.file_errors is not None and len(self.file_errors) > 0
+
     def add_error(self, attr, index, msg):
         msg += (" (cell %s)" % self.cell_address_for_value(attr, index))
         self.errors.append(msg)
+
+    def add_file_error(self, attr, index, msg):
+        msg += (" (cell %s)" % self.cell_address_for_value(attr, index))
+        self.file_errors.append(msg)
+
+    def validate(self):
+        self.check_required_headings()
+        self.check_field_values()
+
+    def check_field_values(self):
+        for attr in self.fields:
+            self.validate_field(attr)
+
+    def check_required_headings(self):
+        for field in self.required_fields:
+            if not field['locus']:
+                msg = 'Required field is missing: %s' % (field['field_name'],)
+                self.errors.append(msg)
+
+    def validate_file_lists(self):
+        for attr in self.file_lists:
+            if not self.locus(attr):
+                pass
+            else:
+                wdir = self.workbook_dir
+                allow_blank=self.is_optional(attr)
+                self.validate_file_list(attr, wdir, allow_blank)
 
     def validate_file_list(self, attr, directory, allow_blank=True):
         values = self.values(attr)
@@ -257,14 +296,13 @@ class ValidatableSheet(object):
             fname  = values[i]
             if self.is_empty_value(fname):
                 if not allow_blank:
-                    msg = "File list cannot have empty values"
-                    self.add_error('file_name', i, msg)
+                    msg = "%s: File list cannot have empty values" % (self.field_name(attr),)
+                    self.add_file_error(attr, i, msg)
             else:
-                path = os.path.join(directory, fname)
+                path = os.path.join(directory, str(fname))
                 if not os.path.exists(path):
-                    msg = "Could not find expected file: %s" % (path,)
-                    self.add_error('file_name', i, msg)
-
+                    msg = "%s: Could not find expected file: %s" % (self.field_name(attr), path)
+                    self.add_file_error(attr, i, msg)
 
     def validate_blank_if_other_nonempty(self, attr, other_attr):
         if self.is_empty(other_attr): return
@@ -458,6 +496,17 @@ class ValidatableSheet(object):
     def is_field_missing(self, attr):
         """Return True if the field is not on the description sheet."""
         return self.locus(attr) is None
+
+    def is_required(self, attr):
+        if self.fields.get(attr):
+            return self.fields[attr].get('required', False)
+
+    def is_optional(self, attr):
+        return not self.is_required(attr)
+
+    def is_file_list(self, attr):
+        if self.fields.get(attr, None):
+            return self.fields[attr].get('file_list', False)
 
     def values(self, attr):
         """Return all values for attr's field."""

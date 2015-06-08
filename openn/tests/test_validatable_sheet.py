@@ -14,7 +14,8 @@ from openn.prep.validatable_sheet import ValidatableSheet
 class TestValidatableSheet(TestCase):
     this_dir                 = os.path.dirname(__file__)
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
-    helen_griffith           = os.path.join(diaries_dir, 'bryn_mawr/HelenGriffith_Diary.xlsx')
+    sheets_dir               = os.path.join(this_dir, 'data/sheets')
+    valid_workbook           = os.path.join(sheets_dir, 'valid_workbook.xlsx')
 
     url1 = 'http://id.loc.gov/authorities/names/n50049445.html'
     url2 = 'http://id.loc.gov/authorities/subjects/sh99002320.html'
@@ -22,7 +23,7 @@ class TestValidatableSheet(TestCase):
     url4 = 'http://id.loc.gov/authorities/subjects/sh2010118889'
     url5 = 'https://openpyxl.readthedocs.org/en/latest/api/openpyxl.worksheet.html?highlight=min_col#openpyxl.worksheet.worksheet.Worksheet.min_col'
 
-    pacscl_diairies_config    = json.load(open(os.path.join(this_dir, '../prep/pacscl_diaries.json')))
+    pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
 
     def setUp(self):
         pass
@@ -31,10 +32,10 @@ class TestValidatableSheet(TestCase):
         pass
 
     def get_config(self):
-        return self.pacscl_diairies_config
+        return json.load(open(self.pacscl_diairies_json))
 
     def test_init(self):
-        sheet = OPWorkbook(self.helen_griffith, self.get_config()).description
+        sheet = OPWorkbook(self.valid_workbook, self.get_config()).description
         self.assertIsInstance(sheet, ValidatableSheet)
 
     def test_is_valid_uri(self):
