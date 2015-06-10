@@ -190,7 +190,7 @@ class TestDescriptionSheet(TestCase):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_3_is_cat_invalid')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is "CAT"; found:')
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is.*CAT.*; found:')
 
     # Field 3
     # Empty if 3 is CAT (valid)
@@ -205,7 +205,7 @@ class TestDescriptionSheet(TestCase):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_field_4_is_cat_invalid')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is "cat"; found:')
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is.*cat.*; found:')
 
     # Field 5 (repeating)
     # Empty if 5 is CAT
@@ -213,7 +213,7 @@ class TestDescriptionSheet(TestCase):
         sheet = OPWorkbook(self.empty_if_workbook, self.empty_if_config).description
         sheet.validate_blank('empty_if_5_is_cat')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is "CAT"; found: "value 2"')
+        self.assertRegexpMatches(sheet.errors[0], r'.* must be empty if.*is.*CAT.*; found:.*value 2.*')
 
     # Rights PD
     def test_validate_value_list_valid(self):
@@ -239,7 +239,7 @@ class TestDescriptionSheet(TestCase):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_pd_with_space')
         self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r'Rights PD with space.*"PD ".*not valid.*expected.*')
+        self.assertRegexpMatches(sheet.errors[0], r"Rights PD with space.*'PD '.*not valid.*expected.*")
 
     # Rights PD with space
     def test_validate_value_list_valid_value_lower_case(self):

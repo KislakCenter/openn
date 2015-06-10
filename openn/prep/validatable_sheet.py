@@ -260,12 +260,12 @@ class ValidatableSheet(object):
         return self.file_errors is not None and len(self.file_errors) > 0
 
     def add_error(self, attr, index, msg):
-        msg += (" (cell %s)" % self.cell_address_for_value(attr, index))
-        self.errors.append(msg)
+        self._add_error(attr=attr, index=index, msg=msg,
+                        error_list=self.errors)
 
     def add_file_error(self, attr, index, msg):
-        msg += (" (cell %s)" % self.cell_address_for_value(attr, index))
-        self.file_errors.append(msg)
+        self._add_error(attr=attr, index=index, msg=msg,
+                        error_list=self.file_errors)
 
     def validate(self):
         self.check_required_headings()
@@ -296,12 +296,12 @@ class ValidatableSheet(object):
             fname  = values[i]
             if self.is_empty_value(fname):
                 if not allow_blank:
-                    msg = "%s: File list cannot have empty values" % (self.field_name(attr),)
+                    msg = '%s: File list cannot have empty values' % (self.field_name(attr),)
                     self.add_file_error(attr, i, msg)
             else:
                 path = os.path.join(directory, str(fname))
                 if not os.path.exists(path):
-                    msg = "%s: Could not find expected file: %s" % (self.field_name(attr), path)
+                    msg = '%s: Could not find expected file: %s' % (self.field_name(attr), path)
                     self.add_file_error(attr, i, msg)
 
     def validate_blank_if_other_nonempty(self, attr, other_attr):
@@ -311,7 +311,7 @@ class ValidatableSheet(object):
         for i in xrange(len(values)):
             if (self.is_nonempty_value(values[i]) and
                 self.is_nonempty_value(others[i])):
-                msg = '"%s" must be empty if "%s" has a value; found: "%s"' % (
+                msg = "'%s' must be empty if '%s' has a value; found: '%s'" % (
                     self.field_name(attr), self.field_name(other_attr),
                     values[i])
                 self.add_error(attr, i, msg)
@@ -323,7 +323,7 @@ class ValidatableSheet(object):
         for i in xrange(len(values)):
             if (self.is_nonempty_value(values[i]) and
                 self.is_empty_value(others[i])):
-                msg = '"%s" must be empty if "%s" is empty; found: "%s"' % (
+                msg = "'%s' must be empty if '%s' is empty; found: '%s'" % (
                     self.field_name(attr), self.field_name(other_attr),
                     values[i])
                 self.add_error(attr, i, msg)
@@ -336,7 +336,7 @@ class ValidatableSheet(object):
             if (self.is_nonempty_value(values[i]) and
                 others[i] is not None and
                 self.is_value_in_list(others[i], val_list)):
-                msg = '"%s" must be empty if "%s" is "%s"; found: "%s"' % (
+                msg = "'%s' must be empty if '%s' is '%s'; found: '%s'" % (
                     self.field_name(attr), self.field_name(other_attr),
                     others[i], values[i])
                 self.add_error(attr, i, msg)
@@ -360,13 +360,13 @@ class ValidatableSheet(object):
         elif isinstance(condition,list):
             self.validate_blank_if_other_in_list(attr, other_attr, condition)
         else:
-            raise OPennException('Unknown condition type: "%s"' % (condition,))
+            raise OPennException("Unknown condition type: '%s'" % (condition,))
 
     def validate_required_if_other_empty(self, attr, other_attr):
         field_name = self.field_name(attr)
         other_name = self.field_name(other_attr)
         if self.is_empty(attr) and self.is_empty(other_attr):
-            msg = '"%s" cannot be empty if "%s" is empty' % (
+            msg = "'%s' cannot be empty if '%s' is empty" % (
                 field_name, other_name)
             self.add_error(attr, 0, msg)
         elif self.is_empty(other_attr):
@@ -375,7 +375,7 @@ class ValidatableSheet(object):
             for i in xrange(len(values)):
                 if (self.is_empty_value(values[i]) and (
                         len(others) <= i or self.is_empty_value(others[i]))):
-                    msg = '"%s" cannot be empty if "%s" is empty' % (
+                    msg = "'%s' cannot be empty if '%s' is empty" % (
                         field_name, other_name)
                     self.add_error(attr, i, msg)
 
@@ -388,7 +388,7 @@ class ValidatableSheet(object):
                 self.is_nonempty_value(others[i])):
                 field_name = self.field_name(attr)
                 other_name = self.field_name(other_attr)
-                msg = '"%s" cannot be empty if "%s" has a value' % (
+                msg = "'%s' cannot be empty if '%s' has a value" % (
                     field_name, other_name)
                 self.add_error(attr, i, msg)
 
@@ -400,7 +400,7 @@ class ValidatableSheet(object):
             if (self.is_empty_value(values[i]) and
                 others[i] is not None and
                 self.is_value_in_list(others[i], val_list)):
-                msg = '"%s" cannot be empty if "%s" is "%s"' % (
+                msg = "'%s' cannot be empty if '%s' is '%s'" % (
                     self.field_name(attr), self.field_name(other_attr), others[i])
                 self.add_error(attr, i, msg)
 
@@ -417,7 +417,7 @@ class ValidatableSheet(object):
         elif isinstance(condition, list):
             self.validate_required_if_other_in_list(attr, other_attr, condition)
         else:
-            raise OPennException("Unknown condition type: %s" % (condition,))
+            raise OPennException('Unknown condition type: %s' % (condition,))
 
     def validate_requirement(self, attr):
         """Validate required or conditionally required field if 'required' is
@@ -445,7 +445,7 @@ class ValidatableSheet(object):
             if val is None or self.is_value_in_list(val, value_list):
                 pass
             else:
-                msg = '"%s" value "%s" not valid; expected one of: %s' % (
+                msg = "'%s' value '%s' not valid; expected one of: %s" % (
                     self.field_name(attr), val, ', '.join(self._list_quoted(value_list)))
                 self.add_error(attr, 0, msg)
 
@@ -454,7 +454,7 @@ class ValidatableSheet(object):
 
         """
         if not self.repeating(attr) and len(self.values(attr)) > 1:
-            msg = "More than one value found in non-repeating field %s: %s" % (
+            msg = 'More than one value found in non-repeating field %s: %s' % (
                 self.field_name(attr), ', '.join(self._values_quoted(attr)))
             self.add_error(attr, 0, msg)
 
@@ -579,6 +579,11 @@ class ValidatableSheet(object):
     ######################################################################
     # _ methods
     ######################################################################
+
+    def _add_error(self, attr, index, msg, error_list):
+        address = self.cell_address_for_value(attr, index)
+        msg = "[Sheet: %s - %s] %s" % (self.sheet_name, address, msg)
+        error_list.append(msg)
 
     def _set_headings(self):
         """Find and set the headings locus for each field in config."""
