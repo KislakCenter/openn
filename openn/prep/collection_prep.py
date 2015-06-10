@@ -2,6 +2,8 @@
 import os
 import logging
 import subprocess
+import shutil
+import glob
 
 from openn.openn_settings import OPennSettings
 from openn.prep.status import Status
@@ -52,6 +54,14 @@ class CollectionPrep(OPennSettings,Status):
         for f in self.removals:
             if os.path.exists(f):
                 os.remove(f)
+
+    def stage_tiffs(self):
+        """Move the TIFF files into the data directory"""
+        if not os.path.exists(self.data_dir):
+            os.mkdir(self.data_dir)
+        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
+        for x in tiffs:
+           shutil.move(x, self.data_dir)
 
     def validate(self):
         errors = []

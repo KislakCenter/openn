@@ -160,14 +160,6 @@ class MedrenPrep(CollectionPrep):
                                         space_re.sub('_', basename))
                 shutil.move(tiff, new_name)
 
-    def stage_tiffs(self):
-        """Move the TIFF files into the data directory"""
-        if not os.path.exists(self.data_dir):
-            os.mkdir(self.data_dir)
-        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
-        for x in tiffs:
-           shutil.move(x, self.data_dir)
-
     def prep_label(self,label):
         if label is None:
             return 'Unlabeled'
