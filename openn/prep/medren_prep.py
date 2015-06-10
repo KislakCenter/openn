@@ -150,16 +150,6 @@ class MedrenPrep(CollectionPrep):
         f.write(json.dumps(file_list))
         f.close()
 
-    def fix_tiff_names(self):
-        space_re = re.compile('\s+')
-        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
-        for tiff in tiffs:
-            basename = os.path.basename(tiff)
-            if space_re.search(basename):
-                new_name = os.path.join(self.source_dir,
-                                        space_re.sub('_', basename))
-                shutil.move(tiff, new_name)
-
     def prep_label(self,label):
         if label is None:
             return 'Unlabeled'

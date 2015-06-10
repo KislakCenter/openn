@@ -4,6 +4,7 @@ import logging
 import subprocess
 import shutil
 import glob
+import re
 
 from openn.openn_settings import OPennSettings
 from openn.prep.status import Status
@@ -62,6 +63,16 @@ class CollectionPrep(OPennSettings,Status):
         tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
         for x in tiffs:
            shutil.move(x, self.data_dir)
+
+    def fix_tiff_names(self):
+        space_re = re.compile('\s+')
+        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
+        for tiff in tiffs:
+            basename = os.path.basename(tiff)
+            if space_re.search(basename):
+                new_name = os.path.join(self.source_dir,
+                                        space_re.sub('_', basename))
+                shutil.move(tiff, new_name)
 
     def validate(self):
         errors = []
