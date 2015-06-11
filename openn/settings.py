@@ -86,6 +86,7 @@ PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
 
 TOC_DIR = 'html'
 
+IMAGE_TYPES = ( '*.tif', '*.jpg' )
 
 COLLECTIONS = {
     'medren': {

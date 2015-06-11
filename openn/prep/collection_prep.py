@@ -56,23 +56,28 @@ class CollectionPrep(OPennSettings,Status):
             if os.path.exists(f):
                 os.remove(f)
 
-    def stage_tiffs(self):
+    @property
+    def image_files(self):
+        images = []
+        for g in self.IMAGE_TYPES:
+            images.extend(glob.glob(os.path.join(self.source_dir, g)))
+        return images
+
+    def stage_images(self):
         """Move the TIFF files into the data directory"""
         if not os.path.exists(self.data_dir):
             os.mkdir(self.data_dir)
-        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
-        for x in tiffs:
+        for x in self.image_files:
            shutil.move(x, self.data_dir)
 
-    def fix_tiff_names(self):
+    def fix_image_names(self):
         space_re = re.compile('\s+')
-        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
-        for tiff in tiffs:
-            basename = os.path.basename(tiff)
+        for x in self.image_files:
+            basename = os.path.basename(x)
             if space_re.search(basename):
                 new_name = os.path.join(self.source_dir,
                                         space_re.sub('_', basename))
-                shutil.move(tiff, new_name)
+                shutil.move(x, new_name)
 
     def validate(self):
         errors = []

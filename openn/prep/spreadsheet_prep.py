@@ -35,24 +35,6 @@ class SpreadsheetPrep(CollectionPrep):
         f.write(json.dumps(file_list))
         f.close()
 
-    def fix_tiff_names(self):
-        space_re = re.compile('\s+')
-        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
-        for tiff in tiffs:
-            basename = os.path.basename(tiff)
-            if space_re.search(basename):
-                new_name = os.path.join(self.source_dir,
-                                        space_re.sub('_', basename))
-                shutil.move(tiff, new_name)
-
-    def stage_tiffs(self):
-        """Move the TIFF files into the data directory"""
-        if not os.path.exists(self.data_dir):
-            os.mkdir(self.data_dir)
-        tiffs = glob.glob(os.path.join(self.source_dir, '*.tif'))
-        for x in tiffs:
-           shutil.move(x, self.data_dir)
-
     @property
     def sheet_path(self):
         return os.path.join(self.source_dir, 'openn_metadata.xlsx')

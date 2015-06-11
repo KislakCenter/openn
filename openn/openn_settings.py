@@ -38,6 +38,9 @@ class OPennSettings(object):
         """
         return settings.DERIVS
 
+    def __getattr__(self, name):
+        return getattr(settings, name)
+
     @property
     def coll(self):
         """
