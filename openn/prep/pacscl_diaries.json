@@ -397,7 +397,8 @@
                 "field_name": "FILE_NAME",
                 "required": true,
                 "repeating": true,
-                "data_type": "string"
+                "data_type": "string",
+                "file_list": true
             },
             "tag1": {
                 "field_name": "TAG1",

@@ -150,12 +150,13 @@ class ValidatableSheet(object):
     # Instance methods
     ######################################################################
 
-    def __init__(self, op_workbook, config={}):
-        self.op_workbook = op_workbook
-        self.config      = deepcopy(config)
-        self.file_errors = []
-        self.errors      = []
-        self.warnings    = []
+    def __init__(self, worksheet, xlsx_path, config={}):
+        self.xlsx_path = xlsx_path
+        self.worksheet     = worksheet
+        self.config        = deepcopy(config)
+        self.file_errors   = []
+        self.errors        = []
+        self.warnings      = []
         self._set_headings()
 
     # --------------------------------------------------------------------
@@ -171,7 +172,7 @@ class ValidatableSheet(object):
 
     @property
     def workbook_dir(self):
-        return self.op_workbook.workbook_dir
+        return os.path.dirname(self.xlsx_path)
 
     @property
     def file_lists(self):
@@ -183,7 +184,7 @@ class ValidatableSheet(object):
 
     @property
     def sheet(self):
-        return self.op_workbook.get_sheet(self.sheet_name)
+        return self.worksheet
 
     @property
     def sheet_name(self):

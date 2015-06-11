@@ -9,5 +9,5 @@ class DescriptionSheet(ValidatableSheet):
     # Instance methods
     ######################################################################
 
-    def __init__(self, op_workbook, config={}):
-        super(DescriptionSheet, self).__init__(op_workbook, config)
+    def __init__(self, worksheet, workbook_path, config={}):
+        super(DescriptionSheet, self).__init__(worksheet, workbook_path, config)

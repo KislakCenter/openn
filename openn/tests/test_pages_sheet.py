@@ -57,7 +57,6 @@ class TestPagesSheet(TestCase):
 
     def test_init(self):
         sheet = OPWorkbook(self.pages_workbook, self.pages_config).pages
-        self.assertIsInstance(sheet, PagesSheet)
         self.assertIsInstance(sheet, ValidatableSheet)
 
     def test_validate(self):

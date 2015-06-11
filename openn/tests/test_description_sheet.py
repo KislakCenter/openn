@@ -80,7 +80,6 @@ class TestDescriptionSheet(TestCase):
 
     def test_init(self):
         sheet = OPWorkbook(self.valid_workbook, self.get_config()).description
-        self.assertIsInstance(sheet, DescriptionSheet)
         self.assertIsInstance(sheet, ValidatableSheet)
 
     # Field 1
