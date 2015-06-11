@@ -137,7 +137,8 @@ class SpreadsheetPrep(CollectionPrep):
             self.logger.warning("[%s] Files already staged" % (self.basedir, ))
         else:
             self.logger.info("[%s] Staging files" % (self.basedir, ))
-            pass
+            self.fix_image_names()
+            self.stage_images()
             self.write_status(self.COLLECTION_PREP_FILES_STAGED)
 
         if self.get_status() > self.COLLECTION_PREP_FILE_LIST_WRITTEN:

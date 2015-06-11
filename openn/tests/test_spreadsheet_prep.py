@@ -91,6 +91,9 @@ class TestSpreadsheetPrep(TestCase):
         except OPennException as oe:
             self.fail("Prep should raise no exception; got: %s" % (oe,))
 
+        image0 = os.path.join(self.staged_source,'data', self.template_image_names.split()[0])
+        self.assertTrue(os.path.exists(image0), "File should exist: %s" % (image0, ))
+
     def test_prep_dir_bad_description(self):
         self.stage_template(template=self.bad_description)
         doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
@@ -116,10 +119,7 @@ class TestSpreadsheetPrep(TestCase):
         doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
         prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
         tiffs = glob.glob(os.path.join(self.staged_source, '*.tif'))
-        # pp(len(tiffs))
         os.remove(tiffs[0])
-        # tiffs = glob.glob(os.path.join(self.staged_source, '*.tif'))
-        # pp(len(tiffs))
         with self.assertRaises(OPennException) as oe:
             prep.prep_dir()
 
