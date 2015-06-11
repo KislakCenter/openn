@@ -25,7 +25,7 @@ class SpreadsheetPrep(CollectionPrep):
         CollectionPrep.__init__(self,source_dir,collection, document)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir = os.path.join(self.source_dir, 'data')
-        self._sheet = None
+        self._workbook = None
         self._config = config
 
     def add_file_list(self,file_list):
@@ -36,25 +36,25 @@ class SpreadsheetPrep(CollectionPrep):
         f.close()
 
     @property
-    def sheet_path(self):
+    def xslx_path(self):
         return os.path.join(self.source_dir, 'openn_metadata.xlsx')
 
-    def spreadsheet(self):
-        if self._sheet is None:
-            self._sheet = OPWorkbook(
-                self.sheet_path, self._config)
-        return self._sheet
+    def workbook(self):
+        if self._workbook is None:
+            self._workbook = OPWorkbook(
+                self.xslx_path, self._config)
+        return self._workbook
 
-    def validate_spreadsheet(self):
-        if not os.path.exists(self.sheet_path):
-            msg = 'Cannot find required metadata spreadsheet: %s' % (
-                self.sheet_path)
+    def validate_workbook(self):
+        if not os.path.exists(self.xslx_path):
+            msg = 'Cannot find required metadata workbook: %s' % (
+                self.xslx_path)
             raise OPennException(msg)
 
-        self.spreadsheet().validate()
+        self.workbook().validate()
 
     def validate_file_names(self):
-        self.spreadsheet().validate_file_lists()
+        self.workbook().validate_file_lists()
 
     def build_file_list(self,pih_xml):
         """Build a list of files using the pih_xml file.
@@ -105,7 +105,7 @@ class SpreadsheetPrep(CollectionPrep):
 
     def prep_file_list(self, expected):
         """" Create a list of files; only including those listed in the
-        spreadsheet.
+        workbook.
         """
         files = glob.glob(os.path.join(self.data_dir, '*.tif'))
         files = [ self.source_dir_re.sub('', x) for x in files ]
@@ -123,7 +123,7 @@ class SpreadsheetPrep(CollectionPrep):
             self.logger.warning("[%s] Metadata alreaady validated" % (self.basedir, ))
         else:
             self.logger.info("[%s] Validating metadata" % (self.basedir, ))
-            self.validate_spreadsheet()
+            self.validate_workbook()
             self.write_status(self.COLLECTION_PREP_MD_VALIDATED)
 
         if self.get_status() > self.COLLECTION_PREP_FILES_VALIDATED:
@@ -155,4 +155,4 @@ class SpreadsheetPrep(CollectionPrep):
             self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
 
         # files to cleanup
-        # TODO: remove spreadsheet ????
+        # TODO: remove workbook ????
