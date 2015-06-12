@@ -517,15 +517,15 @@ class ValidatableSheet(object):
         return details.get('cell_values')
 
     def paired_values(self, attr, other_attr):
-        vs = deepcopy(self.values(attr))
-        os = deepcopy(self.values(other_attr))
-        if len(os) > len(vs):
-            for i in xrange(len(os) - len(vs)):
-                vs.append(None)
-        elif len(vs) > len(os):
-            for i in xrange(len(vs) - len(os)):
-                os.append(None)
-        return [ vs, os ]
+        return self.value_matrix(attr, other_attr)
+
+    def value_matrix(self, *attrs):
+        matrix = [ deepcopy(self.values(x)) for x in attrs ]
+        max_len = len(max(matrix))
+        for values in matrix:
+            if len(values) < max_len:
+                values.extend([ None ] * (max_len - len(values)))
+        return matrix
 
     def field_name(self, attr):
         """Return the 'field_name' for attr's field."""
