@@ -27,7 +27,7 @@ class OPWorkbook:
         """Create a new OPWorkbook and find all description sheet headings.
 
         """
-        self.config      = deepcopy(config)
+        self.config      = deepcopy(config['sheet_config'])
         self.xlsx_path   = xlsx_file
         self.workbook    = load_workbook(self.xlsx_path)
         self.errors      = []

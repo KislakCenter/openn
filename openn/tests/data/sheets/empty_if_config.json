@@ -1,145 +1,147 @@
 {
-    "description": {
-        "fields": {
-            "empty_if_field_1_empty_invalid": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Empty if field 1 empty (invalid)",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "field_1",
-                        "is": "EMPTY"
+    "sheet_config": {
+        "description": {
+            "fields": {
+                "empty_if_field_1_empty_invalid": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Empty if field 1 empty (invalid)",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "field_1",
+                            "is": "EMPTY"
+                        }
                     }
+                },
+                "field_5_repeating": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Field 5 (repeating)",
+                    "data_type": "string"
+                },
+                "empty_if_field_4_is_cat_invalid": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Empty if field 4 is CAT (invalid)",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "field_4_cat_is_lower_case",
+                            "is": [
+                                "AARDARK",
+                                "CAT",
+                                "DINGO"
+                            ]
+                        }
+                    }
+                },
+                "empty_if_3_is_cat_valid": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Empty if 3 is CAT (valid)",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "field_3",
+                            "is": [
+                                "AARDARK",
+                                "CAT",
+                                "DINGO"
+                            ]
+                        }
+                    }
+                },
+                "empty_if_field_1_empty_valid": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Empty if field 1 empty (valid)",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "field_1",
+                            "is": "EMPTY"
+                        }
+                    }
+                },
+                "field_4_cat_is_lower_case": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Field 4 (cat is lower case)",
+                    "data_type": "string"
+                },
+                "empty_if_5_is_cat": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Empty if 5 is CAT",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "field_5_repeating",
+                            "is": [
+                                "AARDARK",
+                                "CAT",
+                                "DINGO"
+                            ]
+                        }
+                    }
+                },
+                "empty_if_3_is_cat_invalid": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Empty if 3 is CAT (invalid)",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "field_3",
+                            "is": [
+                                "AARDARK",
+                                "CAT",
+                                "DINGO"
+                            ]
+                        }
+                    }
+                },
+                "empty_if_field_2_nonempty_first_and_third_present": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Empty if field 2 nonempty (first and third present)",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "field_2_repeating",
+                            "is": "NONEMPTY"
+                        }
+                    }
+                },
+                "field_2_repeating": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Field 2 (repeating)",
+                    "data_type": "string"
+                },
+                "field_3": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Field 3",
+                    "data_type": "string"
+                },
+                "field_1": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "Field 1",
+                    "data_type": "string"
                 }
             },
-            "field_5_repeating": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Field 5 (repeating)",
-                "data_type": "string"
-            },
-            "empty_if_field_4_is_cat_invalid": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Empty if field 4 is CAT (invalid)",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "field_4_cat_is_lower_case",
-                        "is": [
-                            "AARDARK",
-                            "CAT",
-                            "DINGO"
-                        ]
-                    }
-                }
-            },
-            "empty_if_3_is_cat_valid": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Empty if 3 is CAT (valid)",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "field_3",
-                        "is": [
-                            "AARDARK",
-                            "CAT",
-                            "DINGO"
-                        ]
-                    }
-                }
-            },
-            "empty_if_field_1_empty_valid": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Empty if field 1 empty (valid)",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "field_1",
-                        "is": "EMPTY"
-                    }
-                }
-            },
-            "field_4_cat_is_lower_case": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Field 4 (cat is lower case)",
-                "data_type": "string"
-            },
-            "empty_if_5_is_cat": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Empty if 5 is CAT",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "field_5_repeating",
-                        "is": [
-                            "AARDARK",
-                            "CAT",
-                            "DINGO"
-                        ]
-                    }
-                }
-            },
-            "empty_if_3_is_cat_invalid": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Empty if 3 is CAT (invalid)",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "field_3",
-                        "is": [
-                            "AARDARK",
-                            "CAT",
-                            "DINGO"
-                        ]
-                    }
-                }
-            },
-            "empty_if_field_2_nonempty_first_and_third_present": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Empty if field 2 nonempty (first and third present)",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "field_2_repeating",
-                        "is": "NONEMPTY"
-                    }
-                }
-            },
-            "field_2_repeating": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Field 2 (repeating)",
-                "data_type": "string"
-            },
-            "field_3": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Field 3",
-                "data_type": "string"
-            },
-            "field_1": {
-                "repeating": true,
-                "required": false,
-                "field_name": "Field 1",
-                "data_type": "string"
-            }
+            "data_offset": 2,
+            "heading_type": "row",
+            "sheet_name": "Description"
         },
-        "data_offset": 2,
-        "heading_type": "row",
-        "sheet_name": "Description"
-    },
-    "pages": {
-        "fields": {},
-        "heading_type": "column",
-        "data_offset": 1,
-        "sheet_name": "Pages"
+        "pages": {
+            "fields": {},
+            "heading_type": "column",
+            "data_offset": 1,
+            "sheet_name": "Pages"
+        }
     }
 }

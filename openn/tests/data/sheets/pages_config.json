@@ -1,226 +1,228 @@
 {
-    "description": {
-        "fields": {},
-        "heading_type": "row",
-        "data_offset": 2,
-        "sheet_name": "Description"
-    },
-    "pages": {
-        "fields": {
-            "tag4": {
-                "data_type": "string",
-                "value_list": [
-                    "TOC1",
-                    "TOC2",
-                    "TOC3",
-                    "ILL",
-                    "BLANK"
-                ],
-                "required": false,
-                "blank": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "EMPTY"
-                    }
-                },
-                "repeating": true,
-                "field_name": "TAG4"
-            },
-            "tag1": {
-                "data_type": "string",
-                "value_list": [
-                    "TOC1",
-                    "TOC2",
-                    "TOC3",
-                    "ILL",
-                    "BLANK"
-                ],
-                "required": false,
-                "blank": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "EMPTY"
-                    }
-                },
-                "repeating": true,
-                "field_name": "TAG1"
-            },
-            "tag2": {
-                "data_type": "string",
-                "value_list": [
-                    "TOC1",
-                    "TOC2",
-                    "TOC3",
-                    "ILL",
-                    "BLANK"
-                ],
-                "required": false,
-                "blank": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "EMPTY"
-                    }
-                },
-                "repeating": true,
-                "field_name": "TAG2"
-            },
-            "tag3": {
-                "data_type": "string",
-                "value_list": [
-                    "TOC1",
-                    "TOC2",
-                    "TOC3",
-                    "ILL",
-                    "BLANK"
-                ],
-                "required": false,
-                "blank": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "EMPTY"
-                    }
-                },
-                "repeating": true,
-                "field_name": "TAG3"
-            },
-            "file_name": {
-                "repeating": true,
-                "required": true,
-                "field_name": "FILE_NAME",
-                "data_type": "string",
-                "file_list": true
-            },
-            "display_page": {
-                "repeating": true,
-                "required": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "NONEMPTY"
-                    }
-                },
-                "field_name": "DISPLAY PAGE",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "EMPTY"
-                    }
-                }
-            },
-            "object_id": {
-                "repeating": true,
-                "required": false,
-                "field_name": "OBJECT_ID",
-                "data_type": "string"
-            },
-            "serial_num": {
-                "repeating": true,
-                "required": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "NONEMPTY"
-                    }
-                },
-                "field_name": "SERIAL_NUM",
-                "data_type": "integer",
-                "blank": {
-                    "if": {
-                        "field": "file_name",
-                        "is": "EMPTY"
-                    }
-                }
-            },
-            "value4": {
-                "repeating": true,
-                "required": {
-                    "if": {
-                        "field": "tag4",
-                        "is": [
-                            "TOC1",
-                            "TOC2",
-                            "TOC3",
-                            "ILL"
-                        ]
-                    }
-                },
-                "field_name": "VALUE4",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "tag4",
-                        "is": "EMPTY"
-                    }
-                }
-            },
-            "value3": {
-                "repeating": true,
-                "required": {
-                    "if": {
-                        "field": "tag3",
-                        "is": [
-                            "TOC1",
-                            "TOC2",
-                            "TOC3",
-                            "ILL"
-                        ]
-                    }
-                },
-                "field_name": "VALUE3",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "tag3",
-                        "is": "EMPTY"
-                    }
-                }
-            },
-            "value2": {
-                "repeating": true,
-                "required": {
-                    "if": {
-                        "field": "tag2",
-                        "is": [
-                            "TOC1",
-                            "TOC2",
-                            "TOC3",
-                            "ILL"
-                        ]
-                    }
-                },
-                "field_name": "VALUE2",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "tag2",
-                        "is": "EMPTY"
-                    }
-                }
-            },
-            "value1": {
-                "repeating": true,
-                "required": {
-                    "if": {
-                        "field": "tag1",
-                        "is": [
-                            "TOC1",
-                            "TOC2",
-                            "TOC3",
-                            "ILL"
-                        ]
-                    }
-                },
-                "field_name": "VALUE1",
-                "data_type": "string",
-                "blank": {
-                    "if": {
-                        "field": "tag1",
-                        "is": "EMPTY"
-                    }
-                }
-            }
+    "sheet_config": {
+        "description": {
+            "fields": {},
+            "heading_type": "row",
+            "data_offset": 2,
+            "sheet_name": "Description"
         },
-        "heading_type": "column",
-        "data_offset": 1,
-        "sheet_name": "Pages"
+        "pages": {
+            "fields": {
+                "tag4": {
+                    "data_type": "string",
+                    "value_list": [
+                        "TOC1",
+                        "TOC2",
+                        "TOC3",
+                        "ILL",
+                        "BLANK"
+                    ],
+                    "required": false,
+                    "blank": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "EMPTY"
+                        }
+                    },
+                    "repeating": true,
+                    "field_name": "TAG4"
+                },
+                "tag1": {
+                    "data_type": "string",
+                    "value_list": [
+                        "TOC1",
+                        "TOC2",
+                        "TOC3",
+                        "ILL",
+                        "BLANK"
+                    ],
+                    "required": false,
+                    "blank": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "EMPTY"
+                        }
+                    },
+                    "repeating": true,
+                    "field_name": "TAG1"
+                },
+                "tag2": {
+                    "data_type": "string",
+                    "value_list": [
+                        "TOC1",
+                        "TOC2",
+                        "TOC3",
+                        "ILL",
+                        "BLANK"
+                    ],
+                    "required": false,
+                    "blank": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "EMPTY"
+                        }
+                    },
+                    "repeating": true,
+                    "field_name": "TAG2"
+                },
+                "tag3": {
+                    "data_type": "string",
+                    "value_list": [
+                        "TOC1",
+                        "TOC2",
+                        "TOC3",
+                        "ILL",
+                        "BLANK"
+                    ],
+                    "required": false,
+                    "blank": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "EMPTY"
+                        }
+                    },
+                    "repeating": true,
+                    "field_name": "TAG3"
+                },
+                "file_name": {
+                    "repeating": true,
+                    "required": true,
+                    "field_name": "FILE_NAME",
+                    "data_type": "string",
+                    "file_list": true
+                },
+                "display_page": {
+                    "repeating": true,
+                    "required": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "NONEMPTY"
+                        }
+                    },
+                    "field_name": "DISPLAY PAGE",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "EMPTY"
+                        }
+                    }
+                },
+                "object_id": {
+                    "repeating": true,
+                    "required": false,
+                    "field_name": "OBJECT_ID",
+                    "data_type": "string"
+                },
+                "serial_num": {
+                    "repeating": true,
+                    "required": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "NONEMPTY"
+                        }
+                    },
+                    "field_name": "SERIAL_NUM",
+                    "data_type": "integer",
+                    "blank": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "EMPTY"
+                        }
+                    }
+                },
+                "value4": {
+                    "repeating": true,
+                    "required": {
+                        "if": {
+                            "field": "tag4",
+                            "is": [
+                                "TOC1",
+                                "TOC2",
+                                "TOC3",
+                                "ILL"
+                            ]
+                        }
+                    },
+                    "field_name": "VALUE4",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "tag4",
+                            "is": "EMPTY"
+                        }
+                    }
+                },
+                "value3": {
+                    "repeating": true,
+                    "required": {
+                        "if": {
+                            "field": "tag3",
+                            "is": [
+                                "TOC1",
+                                "TOC2",
+                                "TOC3",
+                                "ILL"
+                            ]
+                        }
+                    },
+                    "field_name": "VALUE3",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "tag3",
+                            "is": "EMPTY"
+                        }
+                    }
+                },
+                "value2": {
+                    "repeating": true,
+                    "required": {
+                        "if": {
+                            "field": "tag2",
+                            "is": [
+                                "TOC1",
+                                "TOC2",
+                                "TOC3",
+                                "ILL"
+                            ]
+                        }
+                    },
+                    "field_name": "VALUE2",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "tag2",
+                            "is": "EMPTY"
+                        }
+                    }
+                },
+                "value1": {
+                    "repeating": true,
+                    "required": {
+                        "if": {
+                            "field": "tag1",
+                            "is": [
+                                "TOC1",
+                                "TOC2",
+                                "TOC3",
+                                "ILL"
+                            ]
+                        }
+                    },
+                    "field_name": "VALUE1",
+                    "data_type": "string",
+                    "blank": {
+                        "if": {
+                            "field": "tag1",
+                            "is": "EMPTY"
+                        }
+                    }
+                }
+            },
+            "heading_type": "column",
+            "data_offset": 1,
+            "sheet_name": "Pages"
+        }
     }
 }
