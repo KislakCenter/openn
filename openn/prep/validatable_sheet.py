@@ -519,7 +519,25 @@ class ValidatableSheet(object):
     def paired_values(self, attr, other_attr):
         return self.value_matrix(attr, other_attr)
 
+    def values_dict(self, *attrs):
+        """Return a dict of filled value lists, one for each column in attrs
+        and keyed by the corresponding attribute.  All lists will the
+        same length, each list shorter than the longest list having
+        been filled in with None.
+
+        """
+        matrix = self.value_matrix(*attrs)
+        vdict = {}
+        for i in xrange(len(attrs)):
+            vdict[attrs[i]] = matrix[i]
+        return vdict
+
     def value_matrix(self, *attrs):
+        """Return a list containing a filled value list for each column in
+        attrs; each list will have the same number of elements, lists
+        shorter than the longest list having been filled in with None.
+
+        """
         matrix = [ deepcopy(self.values(x)) for x in attrs ]
         max_len = len(max(matrix))
         for values in matrix:
