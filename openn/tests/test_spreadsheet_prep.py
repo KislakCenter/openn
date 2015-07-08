@@ -94,16 +94,16 @@ class TestSpreadsheetPrep(TestCase):
 
         file_path = os.path.join(self.staged_source,'data', self.template_image_names.split()[0])
         self.assertTrue(os.path.exists(file_path), "File should exist: %s" % (file_path, ))
+
         file_path = os.path.join(self.staged_source, 'openn_metadata.xml')
-        # copy_name = '/Users/emeryr/Desktop/openn_metadata.xml'
-        # shutil.copyfile(file_path, copy_name)
-        # from subprocess import call
-        # call(["open", "-a", "Oxygen XML Editor", copy_name])
         self.assertFalse(os.path.exists(file_path), "File should should have been removed: %s" % (file_path, ))
+
         file_path = os.path.join(self.staged_source, 'openn_metadata.xlsx')
         self.assertFalse(os.path.exists(file_path), "File should should have been removed: %s" % (file_path, ))
+
         file_path = os.path.join(self.staged_source, 'file_list.json')
         self.assertTrue(os.path.exists(file_path), "File should exist: %s" % (file_path, ))
+
         file_path = os.path.join(self.staged_source, 'PARTIAL_TEI.xml')
         self.assertTrue(os.path.exists(file_path), "File should exist: %s" % (file_path, ))
 
