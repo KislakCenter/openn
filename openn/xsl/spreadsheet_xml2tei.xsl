@@ -266,9 +266,20 @@
                                         <xsl:when test="$date_to">
                                         </xsl:when>
                                       </xsl:choose>
-                                      <xsl:if test="$date_string">
-                                        <xsl:value-of select="$date_string"/>
-                                      </xsl:if>
+                                      <xsl:choose>
+                                        <xsl:when test="$date_string">
+                                          <xsl:value-of select="$date_string"/>
+                                        </xsl:when>
+                                        <xsl:when test="$date_when">
+                                          <xsl:value-of select="$date_when"/>
+                                        </xsl:when>
+                                        <xsl:when test="$date_from and $date_to">
+                                          <xsl:text>From </xsl:text>
+                                          <xsl:value-of select="$date_from"/>
+                                          <xsl:text> to </xsl:text>
+                                          <xsl:value-of select="$date_to"/>
+                                        </xsl:when>
+                                      </xsl:choose>
                                     </origDate>
                                   </xsl:if>
                                   <xsl:if test="$orig_place">
