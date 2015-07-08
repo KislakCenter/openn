@@ -225,6 +225,7 @@
                                      <xsl:attribute name="n">
                                        <xsl:value-of select="ancestor::page/display_page/text()"/>
                                      </xsl:attribute>
+                                     <xsl:value-of select="ancestor::tag/value"/>
                                    </decoNote>
                                 </xsl:for-each>
                               </decoDesc>
