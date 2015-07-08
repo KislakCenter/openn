@@ -7,6 +7,7 @@ from copy import deepcopy
 
 from openn.prep import langs
 from openn.openn_exception import OPennException
+from openn.prep.sheet_data import SheetData
 
 class ValidatableSheet(object):
 
@@ -484,6 +485,27 @@ class ValidatableSheet(object):
     # --------------------------------------------------------------------
     # Field accessors
     # --------------------------------------------------------------------
+    def sheet_data(self):
+        """
+        Return all the data values from this sheet.
+        """
+        return SheetData(self.sheet_name, self.data_dict())
+
+    def data_dict(self):
+        data = {}
+        for attr in self.fields:
+            data[attr] = deepcopy(self.values(attr))
+
+        return data
+
+    def composite_values(self, *attrs):
+        values = []
+        mtx = self.value_matrix(*attrs)
+        for row in zip(*mtx):
+            v = [ x for x in row if x ]
+            values.append(' '.join(v))
+
+        return values
 
     def is_empty(self, attr):
         """Return True if the field has no value present."""

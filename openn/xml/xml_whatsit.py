@@ -18,3 +18,7 @@ class XMLWhatsit:
 
     def _all_the_strings(self,xpath):
         return [n.text for n in self._get_nodes(xpath) ]
+
+    @property
+    def ns(self):
+        return {}

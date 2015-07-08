@@ -4,6 +4,7 @@ export PATH=`dirname $0`/../bin:$PATH
 
 export TEST_DATA_DIR=`dirname $0`/../openn/tests/data
 export TEST_STAGING_DIR=`dirname $0`/../openn/tests/staging
+export TEST_IMAGE_DIR=$TEST_DATA_DIR/images
 
 # test ENV
 export OPENN_DB_NAME=openn_test
@@ -11,6 +12,7 @@ export OPENN_DB_USER=openn
 export OPENN_DB_HOST=localhost
 export OPENN_PACKAGE_DIR=$TEST_STAGING_DIR/openn/packages
 export OPENN_STAGING_DIR=$TEST_STAGING_DIR/openn/site
+export OPENN_ARCHIVE_DIR=$TEST_STAGING_DIR/openn/archive
 
 TABLES_TO_DELETE="openn_derivative openn_image openn_version openn_prepstatus openn_document"
 

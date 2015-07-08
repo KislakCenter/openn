@@ -53,8 +53,20 @@ class OPennTEI(XMLWhatsit):
         return self._get_text('//t:msIdentifier/t:idno')
 
     @property
+    def inst_repo(self):
+        a = [ self.institution, self.repository ]
+        s = [ x for x in a if x ]
+        return ' '.join(s).strip()
+
+    @property
+    def full_call_number(self):
+        a = [ self.inst_repo, self.call_number ]
+        s = [ x for x in a if x ]
+        return ' '.join(s).strip()
+
+    @property
     def formal_title(self):
-        return "%s %s: %s" % (self.institution, self.call_number, self.title)
+        return "%s, %s" % (self.full_call_number, self.title)
 
     @property
     def tei_title(self):

@@ -24,14 +24,22 @@ A Document records:
     - `updated`: the date-time the record was last updated
 """
 class Document(models.Model):
-    call_number   = models.CharField(max_length = 255, null = True, default = None, blank = True)
-    collection    = models.CharField(max_length = 30, null = False, default = None, blank = False)
-    base_dir      = models.CharField(max_length = 30, null = False, default = None, blank = False)
-    is_online     = models.BooleanField(default = False)
-    title         = models.TextField(null = True, default = None, blank = True)
-    created       = models.DateTimeField(auto_now_add = True)
-    updated       = models.DateTimeField(auto_now = True)
-    tei_xml       = models.TextField(null = True, default = None, blank = True)
+    call_number               = models.CharField(max_length = 255, null = True, default = None, blank = True)
+    collection                = models.CharField(max_length = 30, null = False, default = None, blank = False)
+    base_dir                  = models.CharField(max_length = 30, null = False, default = None, blank = False)
+    image_licence             = models.CharField(max_length = 10, null = True, default = 'PD', blank = True)
+    metadata_licence          = models.CharField(max_length = 10, null = True, default = 'CC-BY', blank = True)
+    is_online                 = models.BooleanField(default = False)
+    title                     = models.TextField(null = True, default = None, blank = True)
+    created                   = models.DateTimeField(auto_now_add = True)
+    updated                   = models.DateTimeField(auto_now = True)
+    tei_xml                   = models.TextField(null = True, default = None, blank = True)
+    image_copyright_holder    = models.CharField(max_length = 255, null = True, default = None, blank = True)
+    image_copyright_year      = models.IntegerField(null = True, default = None, blank = True)
+    image_rights_more_info    = models.TextField(null = True, default = None, blank = True)
+    metadata_copyright_holder = models.CharField(max_length = 255, null = True, default = None, blank = True)
+    metadata_copyright_year   = models.IntegerField(null = True, default = None, blank = True)
+    metadata_rights_more_info = models.TextField(null = True, default = None, blank = True)
 
     @property
     def collection_config(self):
@@ -176,6 +184,10 @@ class Image(OrderedModel):
 
     def __unicode__(self):
         return u"label: %s, filename: %s" % (self.label, self.filename)
+
+    def full_name(self):
+        return u'%s %s, %s' % (
+            self.document.call_number, self.document.title, self.label)
 
     def deriv(self, type_name):
         derivs = self.derivative_set.filter(deriv_type=type_name)

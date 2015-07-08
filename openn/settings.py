@@ -83,8 +83,34 @@ COLLECTIONS_TEMPLATE = 'Collections.html'
 
 STAGING_DIR = os.environ['OPENN_STAGING_DIR']
 PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
+ARCHIVE_DIR = os.environ['OPENN_ARCHIVE_DIR']
 
 TOC_DIR = 'html'
+
+LICENCES = {
+    'CC-BY': {
+        'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+        'image': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+        'single_image': u'This image of {title} is ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+
+        'legalcode_url': 'https://creativecommons.org/licenses/by/4.0/legalcode',
+        'deed_url': 'https://creativecommons.org/licenses/by/4.0/'
+        },
+    'CC0': {
+        'metadata': 'To the extent possible under law, {holder} has waived all copyright and related or neighboring rights to this metadata about {title}. This work is published from: United States. For a summary of CC0, see https://creativecommons.org/publicdomain/zero/1.0/. Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode.  {more_information}',
+        'image': 'To the extent possible under law, {holder} has waived all copyright and related or neighboring rights to these images and the content of {title}. This work is published from: United States. For a summary of CC0, see https://creativecommons.org/publicdomain/zero/1.0/. Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode. {more_information}',
+        'single_image': 'To the extent possible under law, {holder} has waived all copyright and related or neighboring rights to this image and the content of {title}. This work is published from: United States. For a summary of CC0, see https://creativecommons.org/publicdomain/zero/1.0/. Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode. {more_information}',
+        'legalcode_url': 'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+        'deed_url': 'https://creativecommons.org/publicdomain/zero/1.0/'
+    },
+    'PD': {
+        'metadata': 'This metadata about {title} is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
+        'image':  'These images and the content of {title} are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
+        'single_image':  'This image and the content of {title} are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
+        'legalcode_url': 'http://creativecommons.org/publicdomain/mark/1.0/',
+        'deed_url': 'http://creativecommons.org/publicdomain/mark/1.0/'
+    },
+}
 
 IMAGE_TYPES = ( '*.tif', '*.jpg' )
 
@@ -109,7 +135,7 @@ COLLECTIONS = {
             'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
             'image_rights': {
                 'Marked': 'False',
-                'WebStatment': 'http://creativecommons.org/publicdomain/mark/1.0/',
+                'WebStatement': 'http://creativecommons.org/publicdomain/mark/1.0/',
                 'UsageTerms': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
                 'rights': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
             },
@@ -167,22 +193,23 @@ COLLECTIONS = {
         'toc_file': 'TOC_BrynMawrCollege.html',
         'web_dir': 'Data/BrynMawrCollege',
         'html_dir': 'Data/BrynMawrCollege/html',
-        'prep_class': 'openn.prep.medren_prep.SpreadsheetPrep',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
         'package_validation': {
             'valid_names': ['*.tif', '*.xlsx' ],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.tif', '*.xlsx'],
         },
         'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
             'image_rights': {
-                'dynamic': 'True',
+                'dynamic': True,
             },
             'rights_statements': {
                 'images': {
-                    'dynamic': 'True',
+                    'dynamic': True,
                 },
                 'metadata': {
-                    'dynamic': 'True',
+                    'dynamic': True,
                 },
             },
         },
@@ -194,22 +221,26 @@ COLLECTIONS = {
         'toc_file': 'TOC_HaverfordCollege.html',
         'web_dir': 'Data/HaverfordCollege',
         'html_dir': 'Data/HaverfordCollege/html',
-        'prep_class': 'openn.prep.medren_prep.SpreadsheetPrep',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
         'package_validation': {
             'valid_names': ['*.tif', '*.xlsx' ],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.tif', '*.xlsx'],
         },
         'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
             'image_rights': {
-                'dynamic': 'True',
+                'dynamic': True,
             },
             'rights_statements': {
                 'images': {
-                    'dynamic': 'True',
+                    'dynamic': True,
                 },
                 'metadata': {
-                    'dynamic': 'True',
+                    'dynamic': True,
                 },
             },
         },

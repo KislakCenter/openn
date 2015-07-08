@@ -30,6 +30,7 @@ class TestSpreadsheetPrep(TestCase):
     sheets_dir             = os.path.join(data_dir, 'sheets')
     staging_dir            = os.path.join(os.path.dirname(__file__), 'staging')
 
+    pacscl_diairies_json   = os.path.join(sheets_dir, 'pacscl_diaries.json')
     pacscl_diairies_config = json.load(open(os.path.join(sheets_dir, 'pacscl_diaries.json')))
     valid_workbook         = os.path.join(sheets_dir, 'valid_workbook.xlsx')
 
@@ -83,7 +84,7 @@ class TestSpreadsheetPrep(TestCase):
         # setup
         self.stage_template()
         doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
 
         # run
         try:
@@ -91,13 +92,25 @@ class TestSpreadsheetPrep(TestCase):
         except OPennException as oe:
             self.fail("Prep should raise no exception; got: %s" % (oe,))
 
-        image0 = os.path.join(self.staged_source,'data', self.template_image_names.split()[0])
-        self.assertTrue(os.path.exists(image0), "File should exist: %s" % (image0, ))
+        file_path = os.path.join(self.staged_source,'data', self.template_image_names.split()[0])
+        self.assertTrue(os.path.exists(file_path), "File should exist: %s" % (file_path, ))
+        file_path = os.path.join(self.staged_source, 'openn_metadata.xml')
+        # copy_name = '/Users/emeryr/Desktop/openn_metadata.xml'
+        # shutil.copyfile(file_path, copy_name)
+        # from subprocess import call
+        # call(["open", "-a", "Oxygen XML Editor", copy_name])
+        self.assertFalse(os.path.exists(file_path), "File should should have been removed: %s" % (file_path, ))
+        file_path = os.path.join(self.staged_source, 'openn_metadata.xlsx')
+        self.assertFalse(os.path.exists(file_path), "File should should have been removed: %s" % (file_path, ))
+        file_path = os.path.join(self.staged_source, 'file_list.json')
+        self.assertTrue(os.path.exists(file_path), "File should exist: %s" % (file_path, ))
+        file_path = os.path.join(self.staged_source, 'PARTIAL_TEI.xml')
+        self.assertTrue(os.path.exists(file_path), "File should exist: %s" % (file_path, ))
 
     def test_prep_dir_bad_description(self):
         self.stage_template(template=self.bad_description)
         doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
 
         with self.assertRaises(OPennException) as oe:
             prep.prep_dir()
@@ -107,7 +120,7 @@ class TestSpreadsheetPrep(TestCase):
     def test_prep_dir_bad_pages(self):
         self.stage_template(template=self.bad_pages)
         doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
 
         with self.assertRaises(OPennException) as oe:
             prep.prep_dir()
@@ -117,7 +130,7 @@ class TestSpreadsheetPrep(TestCase):
     def test_prep_dir_missing_file(self):
         self.stage_template()
         doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_config)
+        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
         tiffs = glob.glob(os.path.join(self.staged_source, '*.tif'))
         os.remove(tiffs[0])
         with self.assertRaises(OPennException) as oe:

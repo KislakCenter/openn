@@ -12,6 +12,7 @@ from openn.openn_exception import OPennException
 from openn.prep.description_sheet import DescriptionSheet
 from openn.prep.pages_sheet import PagesSheet
 from openn.prep.validatable_sheet import ValidatableSheet
+from openn.prep.workbook_data import WorkbookData
 
 from openpyxl import load_workbook
 from openpyxl.workbook import workbook
@@ -27,7 +28,7 @@ class OPWorkbook:
         """Create a new OPWorkbook and find all description sheet headings.
 
         """
-        self.config      = deepcopy(config['sheet_config'])
+        self.config      = config['sheet_config']
         self.xlsx_path   = xlsx_file
         self.workbook    = load_workbook(self.xlsx_path)
         self.errors      = []
@@ -49,6 +50,18 @@ class OPWorkbook:
     @property
     def pages(self):
         return self.get_sheet('pages')
+
+    def data(self):
+        """Return a dict containing SheetData objects for all configured
+        sheets.  Dict keys are sheet attr names ('pages',
+        'description').
+
+        """
+        data = WorkbookData()
+        for sheet in self.sheets():
+            data.add_sheet_data(sheet.sheet_data())
+
+        return data
 
     def validate_pages(self):
         self.pages.validate()

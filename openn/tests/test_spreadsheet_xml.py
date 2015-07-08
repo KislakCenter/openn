@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import json
 
 from django.utils import unittest
@@ -42,6 +43,14 @@ class TestSpreadsheetXML(TestCase):
         {
             'sheet_attr': 'description',
             'sheet_root': 'description',
+            'composite_fields': {
+                'full_title': [
+                    'repository_name',
+                    'call_numberid',
+                    'title',
+                    'volume_number'
+                ]
+            },
             'field_groups': [
                 {
                     'xml_attr': 'administrative',
@@ -186,13 +195,11 @@ class TestSpreadsheetXML(TestCase):
         return json.load(open(self.pacscl_diairies_json))
 
     def test_init(self):
-        self.assertIsInstance(SpreadsheetXML(), SpreadsheetXML)
+        self.assertIsInstance(SpreadsheetXML(settings.LICENCES), SpreadsheetXML)
 
     def test_run(self):
         config = self.get_config()
         workbook = OPWorkbook(self.valid_workbook, config)
-        sp_xml = SpreadsheetXML()
+        sp_xml = SpreadsheetXML(settings.LICENCES)
 
-        # pp(sp_xml.build_dict(workbook, self.xml_config))
-        xml = sp_xml.build_xml(workbook, config['xml_config'])
-        print xml
+        xml = sp_xml.build_xml(workbook.data(), config['xml_config'])

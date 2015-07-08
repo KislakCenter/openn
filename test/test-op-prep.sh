@@ -4,6 +4,7 @@ source `dirname $0`/shunit_helper
 
 DIR_EXTRA_IMAGES=$TEST_DATA_DIR/ljs454
 PREPPED_DIR=$TEST_DATA_DIR/mscodex1223_prepped
+TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -14,6 +15,7 @@ setUp() {
 }
 
 # suite() {
+#     # suite_addTest testSpreadsheetPrep
 #     suite_addTest testRun
 #     # suite_addTest testBloodyUnicode
 #     # suite_addTest testStatusFlags
@@ -22,6 +24,38 @@ setUp() {
 tearDown() {
     clear_tables
     rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+}
+
+dummy_files="HelenGriffith_BMC_fc.tif
+    HelenGriffith_BMC_fpd.tif
+    HelenGriffith_BMC_0001.tif
+    HelenGriffith_BMC_0002.tif
+    HelenGriffith_BMC_0003.tif
+    HelenGriffith_BMC_0004.tif
+    HelenGriffith_BMC_0005.tif
+    HelenGriffith_BMC_0006.tif
+    HelenGriffith_BMC_0007.tif
+    HelenGriffith_BMC_0008.tif
+    HelenGriffith_BMC_0009.tif
+    HelenGriffith_BMC_0010.tif
+    HelenGriffith_BMC_0011.tif
+    HelenGriffith_BMC_0012.tif
+    HelenGriffith_BMC_0013.tif
+    HelenGriffith_BMC_0014.tif
+    HelenGriffith_BMC_0015.tif
+    HelenGriffith_BMC_0016.tif
+    HelenGriffith_BMC_0017.tif
+    HelenGriffith_BMC_0018.tif"
+
+create_dummy_files() {
+    cdf_dest_dir=$1
+    if [[ -z "$cdf_dest_dir" ]] || [[ ! -d $cdf_dest_dir ]]; then
+        echo "[create_dummy_files] Dir ain't a dir: '$cdf_dest_dir'; quitting"
+        exit 1
+    fi
+    for x in $dummy_files; do
+        cp $TEMPLATE_TIFF "$cdf_dest_dir/$x"
+    done
 }
 
 testRun() {
@@ -37,7 +71,12 @@ testRun() {
     # cp -r $TEST_DATA_DIR/ljs454 $source_dir
     # output=`op-prep ljs $source_dir`
 
+    # source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
+    # cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
+    # create_dummy_files $source_dir
+    # output=`op-prep haverford $source_dir`
     status=$?
+
     if [ $status != 0 ]
     then
         echo "$output"
@@ -49,6 +88,16 @@ testRun() {
     assertFalse "Should not find PIH XML in $source_dir found: `ls $source_dir/pih*.xml 2>/dev/null`" "ls $source_dir/pih*.xml"
     assertFalse "Should not find file_list.json in $source_dir; found: `ls $source_dir/*.json 2>/dev/null`" "ls $source_dir/*.json"
     assertFalse "Should find PARTIAL_TEI.xml in $source_dir; found `ls $source_dir/PARTIAL_TEI.xml 2>/dev/null`" "ls $source_dir/PARTIAL_TEI.xml"
+}
+
+testSpreadsheetPrep() {
+    source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
+    cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
+    create_dummy_files $source_dir
+    output=`op-prep haverford $source_dir`
+    status=$?
+    if [ "$status" != 0 ]; then echo "$output"; fi
+    assertEquals 0 "$status"
 }
 
 testResume() {

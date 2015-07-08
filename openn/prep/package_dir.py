@@ -3,11 +3,13 @@ import logging
 import os
 import re
 import hashlib
+from copy import deepcopy
 
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
 from openn.prep.exif_manager import ExifManager
 from openn.md.image_dc import ImageDC
+from openn.md.image_rights import ImageRights
 from openn.logging.count_logger import CountLogger
 import openn.prep.image_deriv as image_deriv
 
@@ -307,7 +309,16 @@ class PackageDir:
         exman.serialize_xmp(files)
         exman.stop()
 
-    def add_image_metadata(self,doc,md_dict):
+    def add_image_metadata(self,doc,image_rights,licence_config):
+        """Add metadata to all images; parameters: ``doc`` -- the document
+        object, ``image_rights`` -- from settings, collection's
+        ``images_rights`` dict.
+
+        """
+        # TODO Need to have information to handle dynamic rights MD:
+        # licence configs (including single image licence text); the
+        # appropriate 'single_image' licence type (PD, CC-BY,
+        # CC-BY-SA, or CC0) for this doc.
         images = []
         files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]
         exman = ExifManager()
@@ -315,10 +326,13 @@ class PackageDir:
         cntr = CountLogger(self.logger,all_images)
         cntr.count(msg='Adding metadata', inc=False)
         for image in all_images:
+            rights = ImageRights(image, image_rights, licence_config)
+            rights_dict = rights.rights_properties()
+
             for deriv in image.derivative_set.all():
                 fpath = os.path.join(self.source_dir, deriv.path)
                 deriv_md = ImageDC(deriv).to_dict()
-                deriv_md.update(md_dict)
+                deriv_md.update(rights_dict)
                 exman.add_md_one_file(fpath, deriv_md, overwrite_original=True, keep_open=True)
             cntr.count("Added metadata to derivatives for %s %s" % (image.master().basename(), image.label))
         exman.stop()

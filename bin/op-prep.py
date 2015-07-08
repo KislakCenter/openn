@@ -87,7 +87,8 @@ def get_collection_prep(source_dir, collection, document):
     if config is None:
         raise OPennException("Configuration not found for collection: '%s'" % collection)
     cls = get_class(config['prep_class'])
-    return cls(source_dir, collection, document)
+    kwargs = config.get('prep_class_kwargs', {})
+    return cls(source_dir, collection, document, **kwargs)
 
 def fix_perms(source_dir):
     for root, dirs, files in os.walk(source_dir):

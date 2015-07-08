@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
+import os
+import errno
 
 def get_class(kls):
     parts = kls.split('.')
@@ -27,3 +29,14 @@ def warning(cmd, str):
 
 def error_no_exit(cmd, str):
     print_message('ERROR', cmd, str)
+
+def tstamptz():
+    return time.strftime('%Y%m%dT%H%M%S%z', time.localtime())
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as ex:
+        if ex.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else: raise

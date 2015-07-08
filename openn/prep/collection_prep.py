@@ -11,6 +11,7 @@ from openn.prep.status import Status
 from openn.openn_exception import OPennException
 from openn.xml.openn_tei import OPennTEI
 from openn.prep.package_validation import PackageValidation
+from openn.openn_functions import *
 
 """
 Parent of collection-specific Prep classes.
@@ -54,25 +55,28 @@ class CollectionPrep(OPennSettings,Status):
     def _cleanup(self):
         for f in self.removals:
             if os.path.exists(f):
+                self.logger.debug("[%s] Cleanup: removing \'%s\'" % (
+                    self.basedir,f))
                 os.remove(f)
 
-    @property
-    def image_files(self):
+    def image_files(self,image_dir=None):
         images = []
+
+        image_dir = image_dir if image_dir else self.source_dir
         for g in self.IMAGE_TYPES:
-            images.extend(glob.glob(os.path.join(self.source_dir, g)))
+            images.extend(glob.glob(os.path.join(image_dir, g)))
         return images
 
     def stage_images(self):
         """Move the TIFF files into the data directory"""
         if not os.path.exists(self.data_dir):
             os.mkdir(self.data_dir)
-        for x in self.image_files:
+        for x in self.image_files():
            shutil.move(x, self.data_dir)
 
     def fix_image_names(self):
         space_re = re.compile('\s+')
-        for x in self.image_files:
+        for x in self.image_files():
             basename = os.path.basename(x)
             if space_re.search(basename):
                 new_name = os.path.join(self.source_dir,

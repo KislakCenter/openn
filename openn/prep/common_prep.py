@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import logging
+import glob
 
 from openn.models import *
 from openn import openn_db
@@ -59,9 +60,11 @@ class CommonPrep(OPennSettings,Status):
     def __init__(self,source_dir,collection,document):
         OPennSettings.__init__(self,collection)
         Status.__init__(self,source_dir)
+        self.source_dir    = source_dir
         self.package_dir   = PackageDir(source_dir)
         self.collection    = collection
         self.document      = document
+        self._removals      = []
 
     @property
     def tei(self):
@@ -78,6 +81,16 @@ class CommonPrep(OPennSettings,Status):
         if getattr(self, 'file_list', None) is None:
             self.file_list= FileList(self.package_dir.file_list_path)
         return self.file_list
+
+    def add_default_removals(self):
+        for x in glob.glob(os.path.join(self.source_dir, '~*')):
+            self.add_removal(x)
+
+    def add_removal(self, removal):
+        self._removals.append(removal)
+
+    def reset_removals(self):
+        self._removals = []
 
     def save_version(self,doc,attrs={}):
         attrs.setdefault('major_version', 1)
@@ -139,7 +152,8 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Image metadata already added" % (basedir,))
         else:
             self.logger.info("[%s] Add metadata" % (basedir,))
-            self.package_dir.add_image_metadata(self.document,self.coll_config.get('image_rights'))
+            image_rights = self.coll_config.get('image_rights')
+            self.package_dir.add_image_metadata(self.document,image_rights,self.LICENCES)
             self.write_status(self.IMAGE_METADATA_ADDED)
 
         # serialize_xmp
@@ -174,14 +188,15 @@ class CommonPrep(OPennSettings,Status):
             self.logger.info("[%s] Marking common prep COMPLETED" % (basedir,))
             self.write_status(self.COMMON_PREP_COMPLETED)
 
+        self.add_default_removals()
+        self.add_removal(self.package_dir.partial_tei_path)
+        self.add_removal(self.package_dir.file_list_path)
+        self.add_removal(self.status_file_path)
+
         self._cleanup()
 
     def _cleanup(self):
-        removals = []
-        removals.append(self.package_dir.partial_tei_path)
-        removals.append(self.package_dir.file_list_path)
-        removals.append(self.status_file_path)
-        for r in removals:
+        for r in self._removals:
             if os.path.exists(r):
                 self.logger.debug("[%s] Cleanup: removing \'%s\'" % (
                     self.package_dir.basedir,r))

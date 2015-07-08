@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from copy import deepcopy
 
 class Status(object):
     PREP_BEGUN                          = 0
@@ -45,6 +46,15 @@ class Status(object):
     def __init__(self, source_dir):
         self._source_dir = source_dir
 
+    @staticmethod
+    def build_status_names(other_statuses={}):
+        local_dict = deepcopy(Status.STATUS_NAMES)
+        local_dict.update(other_statuses)
+        return local_dict
+
+    def status_name(self, status_code):
+        return self.STATUS_NAMES[status_code]
+
     @property
     def status_file_name(self):
         if getattr(self, '_status_file_name', None):
@@ -66,7 +76,7 @@ class Status(object):
 
     def write_status(self,code):
         with open(self.status_file_path, 'w+') as f:
-            f.write("%d %s" % (code, self.STATUS_NAMES[code]))
+            f.write("%d %s" % (code, self.status_name(code)))
 
     def get_status(self):
         code = 0

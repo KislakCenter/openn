@@ -30,7 +30,7 @@ class ImageDC(CommonDC):
         return '%d.%d' % (self.document.id, self.image.id)
 
     def dc_relation(self):
-        rels = [ '%s %s' % (self.tei.institution, self.document.call_number) ]
+        rels = [ self.tei.full_call_number ]
         rels += super(ImageDC, self).dc_relation()
         return rels
 
@@ -60,7 +60,7 @@ class ImageDC(CommonDC):
             s += ', from %s' % (self.tei.orig_place, )
 
         if self.tei.orig_date:
-            s += ', dated to %s' % (self.tei.orig_date, )
+            s += ', dated %s' % (self.tei.orig_date, )
 
         if not s.endswith('.'):
             s += '.'
@@ -72,9 +72,7 @@ class ImageDC(CommonDC):
         return path and mimetypes.guess_type(path)[0]
 
     def dc_source(self):
-        vals = (self.tei.institution, self.tei.call_number,
-                self.image.display_label())
-        return "%s %s, %s" % vals
+        return "%s, %s" % (self.tei.full_call_number, self.image.display_label())
 
     def dc_type(self):
         return 'image'
