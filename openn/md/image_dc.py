@@ -70,7 +70,7 @@ class ImageDC(CommonDC):
 
         origin = self.origin()
         if origin:
-            s += ' %s' % (origin)
+            s += ' %s' % (origin,)
 
         if not s.endswith('.'):
             s += '.'
