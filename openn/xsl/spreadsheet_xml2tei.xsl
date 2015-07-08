@@ -160,12 +160,12 @@
                                       <xsl:variable name="page_count" select="//page_info/page_count"/>
                                       <xsl:variable name="page_dimensions" select="//dimensions/page_dimensions"/>
                                       <xsl:variable name="bound_dimensions" select="//dimensions/bound_dimensions"/>
-                                      <xsl:variable name="extent-values">
+                                      <xsl:variable name="extent-values" as="element()*">
                                         <xsl:if test="$page_count">
                                           <x><xsl:value-of select="$page_count"/></x>
                                         </xsl:if>
                                         <xsl:if test="$page_dimensions">
-                                          <x><xsl:text>page dimensions </xsl:text>
+                                          <x><xsl:text>page dimensions: </xsl:text>
                                           <xsl:value-of select="$page_dimensions"/></x>
                                         </xsl:if>
                                         <xsl:if test="$bound_dimensions">
@@ -432,7 +432,7 @@
         <xsl:for-each select="$items">
           <xsl:value-of select="."/>
           <xsl:if test="position() != last()">
-            <xsl:value-of select="'; '"/>
+            <xsl:value-of select="$sep"/>
           </xsl:if>
         </xsl:for-each>
   </xsl:template>
