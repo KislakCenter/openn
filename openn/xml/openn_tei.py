@@ -120,6 +120,26 @@ class OPennTEI(XMLWhatsit):
         return self._get_text('//t:history/t:origin/t:origDate')
 
     @property
+    def date_from(self):
+        return self._get_attr('//t:history/t:origin/t:origDate', 'from')
+
+    @property
+    def date_to(self):
+        return self._get_attr('//t:history/t:origin/t:origDate', 'to')
+
+    @property
+    def date_when(self):
+        return self._get_attr('//t:history/t:origin/t:origDate', 'when')
+
+    @property
+    def date_notAfter(self):
+        return self._get_attr('//t:history/t:origin/t:origDate', 'notAfter')
+
+    @property
+    def date_notBefore(self):
+        return self._get_attr('//t:history/t:origin/t:origDate', 'notBefore')
+
+    @property
     def orig_place(self):
         return self._get_text('//t:history/t:origin/t:origPlace')
 

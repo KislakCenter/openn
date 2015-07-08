@@ -26,6 +26,18 @@ class ImageDC(CommonDC):
     def image(self):
         return self.derivative.image
 
+    def short_date(self):
+        if self.tei.date_when:
+            return self.tei.date_when
+        elif self.tei.date_from:
+            return ' - '.join([self.tei.date_from, self.tei.date_to ])
+        elif self.tei.date_notBefore:
+            return ' - '.join([self.tei.date_notBefore, self.tei.date_notAfter ])
+
+    def origin(self):
+        parts = [ x for x in ( self.tei.orig_place, self.short_date() ) if x ]
+        return '(%s)' % (', '.join(parts),)
+
     def dc_identifier(self):
         return '%d.%d' % (self.document.id, self.image.id)
 
@@ -56,11 +68,9 @@ class ImageDC(CommonDC):
         if self.tei.authors:
             s += ', by %s' % (', '.join(self.tei.authors), )
 
-        if self.tei.orig_place:
-            s += ', from %s' % (self.tei.orig_place, )
-
-        if self.tei.orig_date:
-            s += ', dated %s' % (self.tei.orig_date, )
+        origin = self.origin()
+        if origin:
+            s += ' %s' % (origin)
 
         if not s.endswith('.'):
             s += '.'
