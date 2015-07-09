@@ -39,7 +39,7 @@ class SheetData:
 
     def value_matrix(self, *attrs):
         matrix = [ deepcopy(self.values(x)) for x in attrs ]
-        max_len = len(max(matrix))
+        max_len = len(max(matrix, key=lambda x: len(x)))
         for values in matrix:
             if len(values) < max_len:
                 values.extend([ None ] * (max_len - len(values)))
