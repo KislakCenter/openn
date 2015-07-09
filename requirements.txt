@@ -18,3 +18,4 @@ sh==1.09
 six==1.8.0
 virtualenv==1.5.1
 wsgiref==0.1.2
+dict2xml==1.3
