@@ -10,9 +10,9 @@
             <xd:p><xd:b>Author:</xd:b> emeryr</xd:p>
         </xd:desc>
     </xd:doc>
-    
+
     <xsl:output indent="yes"/>
-    
+
     <xsl:variable name="repository">
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text"
@@ -23,6 +23,10 @@
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text" select="//description/identification/call_numberid"/>
         </xsl:call-template>
+      <xsl:if test="//identification/volume_number">
+        <xsl:text> v</xsl:text>
+        <xsl:value-of select="//identification/volume_number"></xsl:value-of>
+      </xsl:if>
     </xsl:variable>
     <xsl:variable name="volume_number">
       <xsl:call-template name="clean-up-text">
@@ -35,16 +39,20 @@
             <xsl:with-param name="some-text"
                 select="//description/title/title"/>
         </xsl:call-template>
+      <xsl:if test="//identification/volume_number">
+        <xsl:text>, vol. </xsl:text>
+        <xsl:value-of select="//identification/volume_number"></xsl:value-of>
+      </xsl:if>
     </xsl:variable>
     <xsl:template match="/">
-        
+
         <TEI xmlns="http://www.tei-c.org/ns/1.0">
             <teiHeader>
                 <fileDesc>
                     <titleStmt>
                         <title>
                             <xsl:value-of
-                                select="normalize-space(concat('Description of ', $repository, ' ', $call_number, ' ', $volume_number, ': ', $ms_title))"
+                                select="normalize-space(concat('Description of ', $repository, ', ', $call_number, ': ', $ms_title))"
                             />
                         </title>
                     </titleStmt>
@@ -65,7 +73,7 @@
                             </licence>
                          </availability>
                     </publicationStmt>
-                    
+
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
                     <xsl:if test="//notes">
                       <notesStmt>
@@ -75,7 +83,7 @@
                       </notesStmt>
                     </xsl:if>
                     <!-- END DOT MOD -->
-                    
+
                     <sourceDesc>
                         <msDesc>
                             <msIdentifier>
@@ -88,6 +96,9 @@
                                 <repository>
                                     <xsl:value-of select="$repository"/>
                                 </repository>
+                                <xsl:for-each select="//identification/source_collection">
+                                  <collection><xsl:value-of select="."/></collection>
+                                </xsl:for-each>
                                 <idno type="call-number">
                                     <xsl:value-of select="$call_number"/>
                                 </idno>
@@ -200,7 +211,7 @@
                                               <xsl:value-of select="."/>
                                             </signatures>
                                           </p>
-                                        </xsl:for-each>                                           
+                                        </xsl:for-each>
                                       </collation>
                                     </xsl:if>
                                   </supportDesc>
@@ -215,7 +226,7 @@
                               </xsl:if>
                               <xsl:if test="//decoration | //tags/tag/name = 'ILL'">
                               <decoDesc>
-                                <xsl:if test="//decoration">  
+                                <xsl:if test="//decoration">
                                   <decoNote>
                                     <xsl:value-of select="//decoration"/>
                                   </decoNote>
@@ -301,7 +312,7 @@
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-                
+
                 <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
               <profileDesc>
                 <textClass>
@@ -315,7 +326,9 @@
                               <xsl:value-of select="./subject_topical_uri"/>
                             </xsl:attribute>
                           </xsl:if>
-                          <xsl:value-of select="./subject_topical"/>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_topical"/>
+                          </xsl:call-template>
                         </term>
                       </xsl:for-each>
                     </keywords>
@@ -329,7 +342,9 @@
                               <xsl:value-of select="./subject_genreform_uri"/>
                             </xsl:attribute>
                           </xsl:if>
-                          <xsl:value-of select="./subject_genreform"/>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_genreform"/>
+                          </xsl:call-template>
                         </term>
                       </xsl:for-each>
                     </keywords>
@@ -343,7 +358,9 @@
                               <xsl:value-of select="./subject_names_uri"/>
                             </xsl:attribute>
                           </xsl:if>
-                          <xsl:value-of select="./subject_names"/>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_names"/>
+                          </xsl:call-template>
                         </term>
                       </xsl:for-each>
                     </keywords>
@@ -357,16 +374,18 @@
                               <xsl:value-of select="./subject_geographic_uri"/>
                             </xsl:attribute>
                           </xsl:if>
-                          <xsl:value-of select="./subject_geographic"/>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_geographic"/>
+                          </xsl:call-template>
                         </term>
                       </xsl:for-each>
                     </keywords>
                   </xsl:if>
-                  
+
                 </textClass>
               </profileDesc>
               <!-- DOT MOD ENDS HERE -->
-                
+
             </teiHeader>
             <facsimile>
                 <!--
@@ -387,17 +406,17 @@
             </facsimile>
         </TEI>
     </xsl:template>
-    
+
     <xsl:template name="clean-up-text">
         <xsl:param name="some-text"/>
         <xsl:value-of select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))" />
     </xsl:template>
-    
+
     <xsl:template name="chomp-period">
         <xsl:param name="string"/>
         <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
     </xsl:template>
-    
+
     <xsl:template name="join-keywords">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -411,7 +430,7 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+
     <xsl:template name="join-genre">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -425,7 +444,7 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+
   <xsl:template name="join-text">
     <xsl:param name="items"/>
     <xsl:param name="sep"/>
@@ -436,7 +455,7 @@
           </xsl:if>
         </xsl:for-each>
   </xsl:template>
-  
+
   <!-- Extract personal names, employing the date if present. -->
     <xsl:template name="extract-pn">
         <xsl:param name="datafield"/>
@@ -451,7 +470,7 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+
     <xsl:template name="other-langs">
         <xsl:param name="tags"/>
         <xsl:for-each select="$tags">
