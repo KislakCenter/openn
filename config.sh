@@ -21,8 +21,12 @@
 this_dir=`dirname $0`
 this_dir=$( cd $this_dir; pwd )
 cmd=`basename $0`
+vendor_dir=$this_dir/vendor
 
 PYEXIFTOOL_GIT=https://github.com/demery/pyexiftool.git
+JING_URL=https://jing-trang.googlecode.com/files/jing-20091111.zip
+JING_ZIP=$this_dir/`echo $JING_URL | sed 's/^.*\///'`
+JING_DIR=$vendor_dir/`basename $JING_ZIP .zip`
 
 usage() {
     echo "Usage: $cmd [OPTIONS]"
@@ -116,6 +120,16 @@ done
 
 shift $((OPTIND-1))
 
+if [ -d $vendor_dir ]; then
+    echo "[$cmd] Sweet! Found vendor directory: $vendor_dir"
+else
+    echo "[$cmd] No vendor dir found; creating: $vendor_dir"
+    if ! mkdir $vendor_dir ; then
+        echo "[$cmd] ERROR creating: $vendor_dir; quitting"
+        exit 1
+    fi
+fi
+
 venv_dir=$this_dir/venv
 if [[ $UPDATE ]]; then
     echo "[$cmd] User requestd update; attempting update" >&2
@@ -123,7 +137,6 @@ elif [[ -d $venv_dir ]]; then
     echo "[$cmd] Virtualenv dir exists ($venv_dir); attempting update" >&2
     UPDATE=true
 fi
-
 
 if [[ "$UPDATE" ]]; then
     # if UPDATE, assume that virtual env is set up
@@ -267,6 +280,53 @@ then
 else
     echo "[$cmd] Creating secret file: $secret_txt"
     LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 50 | xargs > $secret_txt
+fi
+
+# Install Jing
+# remove anything called jing in the vendor dir
+echo "[$cmd] Installing Jing for RelaxNG XML validation."
+if [[ -f $JING_ZIP ]]; then
+    echo "[$cmd] Found previous $JING_ZIP; deleting"
+    rm $JING_ZIP
+fi
+
+#  for x in $(shopt -s nullglob; echo vendor/jing*); do echo $x; done
+for x in $(shopt -s nullglob; echo $vendor_dir/jing*);
+do
+    echo "[$cmd] Removing previous Jing directory $x"
+    rm -rf $x
+done
+
+# Download Jing
+echo "[$cmd] Downloading Jing from $JING_URL"
+curl -o $JING_ZIP $JING_URL
+if [[ $? -ne 0 ]] || [[ ! -f $JING_ZIP ]]; then
+    echo "[$cmd] Error downloading $JING_URL"
+    exit 1
+fi
+
+# Unzip
+echo "[$cmd] Unzipping $JING_ZIP to $vendor_dir"
+unzip -q $JING_ZIP -d $vendor_dir
+if [[ $? -ne 0 ]]; then
+    echo "[$cmd] Error unzipping $JING_ZIP"
+    exit 1
+fi
+
+jing_dir=$vendor_dir/`basename $JING_ZIP .zip`
+if [[ -d $jing_dir ]]; then
+    echo "[$cmd] Jing unzipped to $jing_dir; removing $JING_ZIP"
+    rm -rf $JING_ZIP
+else
+    echo "[$cmd] Error unzipping $JING_ZIP; expected dir: $jing_dir"
+    exit 1
+fi
+
+echo "[$cmd] Linkng $jing_dir to $vendor_dir/jing"
+ln -s $jing_dir $vendor_dir/jing
+if [[ $? -ne 0 ]]; then
+    echo "[$cmd] Error linking $jing_dir to $vendor_dir/jing"
+    exit 1
 fi
 
 #
