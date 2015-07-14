@@ -174,3 +174,11 @@ is_a_content_line() {
     return 0
   fi
 }
+
+realpath() {
+    rp_dir=`dirname "$1"`
+    rp_dir=$(cd "$rp_dir"; pwd)
+    rp_base=`basename "$1"`
+
+    echo "$rp_dir/$rp_base"
+}
