@@ -75,3 +75,6 @@ shunit2*
 
 # ignore jar files
 *.jar
+
+# ignore stuff in vendor
+vendor/*
