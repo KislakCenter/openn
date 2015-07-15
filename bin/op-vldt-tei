@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+
+
+read -r -d '' HELP <<-'EOF'
+HELP TEXT HERE
+
+EOF
+
+################################################################################
+### TEMPFILES
+# From:
+#   http://stackoverflow.com/questions/430078/shell-script-templates
+# create a default tmp file name
+tmp=${TMPDIR:-/tmp}/prog.$$
+# delete any existing temp files
+trap "rm -f $tmp.?; exit 1" 0 1 2 3 13 15
+# then do
+#   ...real work that creates temp files $tmp.1, $tmp.2, ...
+
+################################################################################
+### CONFIG
+
+################################################################################
+#### USAGE AND ERRORS
+COMMAND=`basename $0`
+THIS_DIR=`dirname $0`
+# Load basic functions; primarily messaging functions
+# Rename file name here to match actual functions
+funcs="$THIS_DIR/op-functions"
+# source "`dirname $0`/op-functions"
+if [ -f "$funcs" ]; then
+  source "$funcs"
+  message "Loaded functions: $funcs" >&2
+else
+  echo  "ERROR: Can't load functions from: $funcs"
+  echo "\$THIS_DIR is $THIS_DIR"
+  exit 1
+fi
+
+# APPLICATION VARS
+APP_DIR=$(cd `dirname $0`; cd ..; pwd)
+VENDOR_DIR=$THIS_DIR/../vendor
+JING_FOLDER=$VENDOR_DIR/jing
+JING_JAR=$JING_FOLDER/bin/jing.jar
+SCHEMA=`realpath $THIS_DIR/../openn/xml/schema/openn_tei.rng`
+
+# Note that LOGFILE is used by functions for log commands: log_message,
+# log_warning, log_error, etc.
+#
+# replace log file with another value if you want
+LOGFILE=LOG_${COMMAND}_`tstamp`.log
+
+usage() {
+   echo "Usage: $cmd [OPTIONS] XML"
+   echo ""
+   echo "Given a Penn in Hand XML file generate OPenn TEI."
+   echo ""
+   echo "OPTIONS"
+   echo "       -h        Help"
+   echo "       -j PATH   Path to the Jing jar file."
+   echo "                 Default: $JING_JAR"
+   echo "       -s PATH   Path to the RelaxNG schema."
+   echo "                 Default: $SCHEMA"
+   echo ""
+}
+
+print_help() {
+  echo "$HELP"
+}
+
+################################################################################
+### OPTIONS
+while getopts "hj:s:" opt; do
+  case $opt in
+    h)
+      usage
+      print_help
+      exit 1
+      ;;
+    j)
+      JING_JAR=$OPTARG
+      ;;
+    s)
+      SCHEMA=$OPTARG
+      ;;
+    \?)
+      echo "ERROR Invalid option: -$OPTARG" >&2
+      echo "" >&2
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+
+################################################################################
+### THESCRIPT
+
+XML="$1"
+if file_exists "$XML" XML ; then
+  message "Using XML: $XML" >&2
+else
+  error "Error finding XML"
+fi
+
+# if user has specified OPENN_SAXON_JAR, use that
+if file_exists "$JING_JAR" "Jing jar" ; then
+    message "Using Jing jar file: $JING_JAR" >&2
+else
+    error "Unable to find Jing jar file: '$JING_JAR'"
+fi
+
+if file_exists "$SCHEMA" "Relaxing schema"; then
+    message "Using schema: $SCHEMA" >&2
+else
+    error "Unable to find schema file: '$SCHEMA'"
+fi
+
+java -jar $JING_JAR $SCHEMA $XML >&2
+status=$?
+if [[ $status != 0 ]]; then
+    exit $status
+fi
+
+################################################################################
+### EXIT
+# http://stackoverflow.com/questions/430078/shell-script-templates
+rm -f $tmp.?
+trap 0
+exit 0
