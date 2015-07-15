@@ -90,6 +90,7 @@ class TestSpreadsheetPrep(TestCase):
         try:
             prep.prep_dir()
         except OPennException as oe:
+            print "The exception cause is: %s" % (oe.cause_text,)
             self.fail("Prep should raise no exception; got: %s" % (oe,))
 
         file_path = os.path.join(self.staged_source,'data', self.template_image_names.split()[0])
