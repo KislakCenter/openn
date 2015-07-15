@@ -203,7 +203,7 @@ class SpreadsheetPrep(CollectionPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
-        raise NotImplementedError
+        raise NotImplementedError, "TEI regeneration not available for spreadsheet preparation"
 
     def archive_xlsx(self):
         coll_dir = os.path.join(self.ARCHIVE_DIR, self._coll_name)
@@ -268,6 +268,7 @@ class SpreadsheetPrep(CollectionPrep):
             partial_tei = self.gen_partial_tei()
             # print partial_tei
             self.write_partial_tei(self.source_dir, partial_tei)
+            self.validate_partial_tei()
             self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
             self.add_removal(self.openn_xml_path())
             self.archive_xlsx()
