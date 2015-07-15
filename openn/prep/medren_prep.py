@@ -317,6 +317,7 @@ class MedrenPrep(CollectionPrep):
             self.logger.info("[%s] Writing partial TEI" % (self.basedir, ))
             partial_tei_xml = self.gen_partial_tei()
             self.write_partial_tei(self.source_dir, partial_tei_xml)
+            self.validate_partial_tei()
             self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
 
         # files to cleanup
