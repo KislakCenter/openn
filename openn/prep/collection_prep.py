@@ -114,6 +114,18 @@ class CollectionPrep(OPennSettings,Status):
     def regen_partial_tei(self, doc, **kwargs):
         raise NotImplementedError
 
+    def validate_partial_tei(self):
+        partial_tei_file = os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
+        validate_cmd = 'op-vldt-tei'
+        p = subprocess.Popen([validate_cmd, partial_tei_file],
+                             stderr=subprocess.PIPE,
+                             stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        if p.returncode != 0:
+            raise OPennException(u"TEI validation failed: %s; returncode: %d" % (err.decode('utf-8'),p.returncode))
+
+        return out
+
     def prep_dir(self):
 
         if self.get_status() >= self.COLLECTION_PREP_COMPLETED:
