@@ -119,7 +119,19 @@
                               </xsl:if>
                                 <xsl:if test="//language">
                                     <textLang>
-                                      <xsl:attribute name="mainLang" select="//language/language"/>
+                                      <xsl:attribute name="mainLang" select="//description/language[1]/language"/>
+                                      <xsl:if test="count(//description/language) &gt; 1">
+                                        <xsl:attribute name="otherLangs">
+                                          <xsl:for-each select="//description/language">
+                                            <xsl:if test="position() &gt; 1">
+                                              <xsl:value-of select="language"/>
+                                              <xsl:if test="position() != last()">
+                                                <xsl:text> </xsl:text>
+                                              </xsl:if>
+                                            </xsl:if>
+                                          </xsl:for-each>
+                                        </xsl:attribute>
+                                      </xsl:if>
 <!--                                      TODO Add language name-->
                                     </textLang>
                                 </xsl:if>
