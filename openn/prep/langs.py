@@ -522,3 +522,12 @@ LANG_MAP.update(dict([(x.short_code, x) for x in LANG_LIST]))
 
 def is_valid_lang(val):
     return str(val).strip() in LANG_MAP
+
+
+def lang_english_name(code):
+    lang = lang_by_code(code)
+    if lang: return lang.english_name
+
+
+def lang_by_code(code):
+    return LANG_MAP.get(code.lower())
