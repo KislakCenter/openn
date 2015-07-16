@@ -181,6 +181,14 @@
                     "repeating": true,
                     "data_type": "lang"
                 },
+                "language_name": {
+                    "field_name": "",
+                    "required": false,
+                    "repeating": true,
+                    "data_type": "string",
+                    "class": "openn.prep.language_name_field.LanguageNameField",
+                    "arg_fields": [ "language" ]
+                },
                 "page_count": {
                     "field_name": "Number of physical pages",
                     "required": false,
@@ -624,7 +632,8 @@
 
                     "xml_attr": "language",
                     "columns": [
-                        "language"
+                        "language",
+                        "language_name"
                     ]
                 },
                 {

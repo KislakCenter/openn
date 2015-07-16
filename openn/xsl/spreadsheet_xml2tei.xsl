@@ -132,6 +132,9 @@
                                           </xsl:for-each>
                                         </xsl:attribute>
                                       </xsl:if>
+                                      <xsl:call-template name="lang-names">
+                                        <xsl:with-param name="langs" select="//description/language"/>
+                                      </xsl:call-template>
 <!--                                      TODO Add language name-->
                                     </textLang>
                                 </xsl:if>
@@ -427,6 +430,32 @@
     <xsl:template name="chomp-period">
         <xsl:param name="string"/>
         <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
+    </xsl:template>
+  
+    <xsl:template name="lang-names">
+        <xsl:param name="langs" as="node()*"/>
+          <xsl:if test="count($langs) &gt; 0"> 
+            <xsl:text>Primary language: </xsl:text>
+            <xsl:value-of select="normalize-space($langs[1]/language_name)"/>
+            <xsl:choose>
+              <xsl:when test="count($langs) = 2">
+                <xsl:text>. Secondary language: </xsl:text>
+                <xsl:value-of select="normalize-space($langs[2]/language_name)"/>
+              </xsl:when>
+              <xsl:when test="count($langs) &gt; 2">
+                <xsl:text>. Secondary languages: </xsl:text>
+                <xsl:for-each select="$langs">
+                  <xsl:if test="position() &gt; 1">
+                    <xsl:value-of select="language_name"/>
+                    <xsl:if test="position() != last()">
+                      <xsl:text>; </xsl:text>
+                    </xsl:if>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:when>
+            </xsl:choose>
+            <xsl:text>.</xsl:text>
+          </xsl:if>
     </xsl:template>
 
     <xsl:template name="join-keywords">

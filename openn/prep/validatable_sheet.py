@@ -8,6 +8,7 @@ from copy import deepcopy
 from openn.prep import langs
 from openn.openn_exception import OPennException
 from openn.prep.sheet_data import SheetData
+from openn.openn_functions import *
 
 class ValidatableSheet(object):
 
@@ -535,7 +536,10 @@ class ValidatableSheet(object):
         """Return all values for attr's field."""
         details = self.fields[attr]
         if details.get('cell_values') is None:
-            details['cell_values'] = self._extract_values(attr)
+            if details.get('class'):
+                details['cell_values'] = self._extract_virtual_values(details)
+            else:
+                details['cell_values'] = self._extract_values(attr)
         return details.get('cell_values')
 
     def paired_values(self, attr, other_attr):
@@ -648,6 +652,11 @@ class ValidatableSheet(object):
                 value = cell.value if cell is not None else ''
                 if self.normalize(value) == self.normalize(field_name):
                     return {'col': col,'row': row }
+
+    def _extract_virtual_values(self, details):
+        cls = get_class(details.get('class'))
+        obj = cls()
+        return obj.values(self, details.get('arg_fields', []))
 
     def _extract_values(self, attr):
         """Based on the locus of attr's field's header."""
