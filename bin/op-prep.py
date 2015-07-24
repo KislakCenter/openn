@@ -61,6 +61,9 @@ def setup_logger():
     ch.setFormatter(formatter)
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
+    global logger
+    logger = logging.getLogger(__name__)
+
 
 def setup_prepstatus(doc):
     # destroy the associate prep if it exists
@@ -104,9 +107,35 @@ def clean_dir(source_dir, clobber_pattern):
                 path = os.path.join(root, name)
                 os.remove(path)
 
+def clobber_document(params):
+    doc = get_doc(params)
+    logger.info(
+        "Preparing to clobber document id: %d, collection: %s, base_dir: %s" % (
+            doc.id, doc.collection, doc.base_dir))
+    if doc.is_online:
+        msg = "Clobber requested, but refusing to delete record "
+        msg += "for document on-line at: %s" % (doc.package_dir,)
+        raise OPennException(msg)
+    else:
+        s = None
+        while s is None:
+            s = raw_input("Proceed? (Type: Yes or No): ")
+            s = s.strip().lower()
+            if s is not None:
+                if s.lower() in ('yes', 'no'):
+                    continue
+            print "Please enter 'Yes' or 'No'. I don't understand: %r" % (s,)
+        if s == 'yes':
+            logger.info("OK. Deleting existing document.")
+            doc.delete()
+        elif s == 'no':
+            raise OPennException("User canceled clobber; no changes made")
+
 def main(cmdline=None):
     """op-prep main
     """
+    setup_logger()
+
     status = 0
     parser = make_parser()
 
@@ -122,9 +151,12 @@ def main(cmdline=None):
         parser.error("SOURCE_DIR does not exist: %s" % source_dir)
 
     base_dir = os.path.basename(source_dir)
+    doc_params = { 'base_dir': base_dir, 'collection': collection }
 
-    if doc_exists({ 'base_dir': base_dir, 'collection': collection }):
+    if doc_exists(doc_params):
         if opts.resume:
+            pass
+        elif opts.clobber:
             pass
         elif opts.update:
             parser.error('Update function not yet implemented')
@@ -139,8 +171,14 @@ def main(cmdline=None):
         else:
             parser.error('Cannot resume prep without expected status file:\n %s' % (status_txt, ))
 
-    setup_logger()
-    logger = logging.getLogger(__name__)
+    if opts.clobber:
+        if doc_exists(doc_params):
+            try:
+                clobber_document(doc_params)
+            except OPennException as ex:
+                parser.error(str(ex))
+        else:
+            parser.error('`op-prep --clobber` called for nonexistent document')
 
     try:
         # mark that prep has begun
@@ -184,6 +222,9 @@ Update: Note that this function has not yet been implemented.
 Resume: Resume will fail if the source directory does not have a
 `status.txt` file.
 
+Clobber: Use clobber to replace an existing document that did not
+prepare correctly the first time. Will fail if document is on-line.
+
 """
     # usage = "%prog COLLECTION SOURCE_DIR"
 
@@ -195,6 +236,10 @@ Resume: Resume will fail if the source directory does not have a
     parser.add_option('-r', '--resume',
                       action='store_true', dest='resume', default=False,
                       help='resume processing of document [default: %default]')
+
+    parser.add_option('-x', '--clobber',
+                      action='store_true', dest='clobber', default=False,
+                      help='if it exists, delete document from database')
 
     return parser
 
