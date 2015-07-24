@@ -188,12 +188,15 @@ COLLECTIONS = {
     },
     'bryn_mawr' : {
         'tag': 'brynmawr',
-        'name': 'BrynMawrCollege',
+        'name': 'Bryn Mawr College',
         'blurb': 'Diaries from the Bryn Mawr College Special Collections.',
         'toc_file': 'TOC_BrynMawrCollege.html',
         'web_dir': 'Data/BrynMawrCollege',
         'html_dir': 'Data/BrynMawrCollege/html',
         'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
         'package_validation': {
             'valid_names': ['*.tif', '*.xlsx' ],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
@@ -216,7 +219,7 @@ COLLECTIONS = {
     },
     'haverford' : {
         'tag': 'haverford',
-        'name': 'HaverfordCollege',
+        'name': 'Haverford College',
         'blurb': 'Documents from Haverford College Special Collections.',
         'toc_file': 'TOC_HaverfordCollege.html',
         'web_dir': 'Data/HaverfordCollege',
