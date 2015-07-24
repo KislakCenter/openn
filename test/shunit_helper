@@ -25,6 +25,11 @@ clear_tables() {
     done
 }
 
+loadDb() {
+    this_dir=`dirname $0`
+    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $this_dir/fixtures/test.sql
+}
+
 print_output() {
   echo "\n====\n$output"
 }
