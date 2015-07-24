@@ -12,6 +12,10 @@ def save_document(attrs={}):
 def doc_exists(params={}):
     return Document.objects.filter(**params).count() > 0
 
+def get_doc(params={}):
+    if doc_exists(params):
+        return Document.objects.get(**params)
+
 def save_version(doc,attrs={}):
     return doc.version_set.create(**attrs)
 
