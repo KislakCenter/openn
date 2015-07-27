@@ -217,6 +217,37 @@ COLLECTIONS = {
             },
         },
     },
+    'drexel' : {
+        'tag': 'drexel',
+        'name': 'Drexel University Archives and Special Collections',
+        'blurb': 'Diaries from the Drexel University Archives and Special Collections.',
+        'toc_file': 'TOC_DrexelUniversity.html',
+        'web_dir': 'Data/DrexelUniversity',
+        'html_dir': 'Data/DrexelUniversity/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
     'haverford' : {
         'tag': 'haverford',
         'name': 'Haverford College',
