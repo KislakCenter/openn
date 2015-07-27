@@ -66,6 +66,12 @@ class PackageValidation(object):
 
     def validate(self, pkgdir):
         errors = []
+
+        # don't validate if pkg is already being processed
+        status_txt = os.path.join(pkgdir, 'status.txt')
+        if os.path.exists(status_txt):
+            return errors
+
         names = self.check_valid_names(pkgdir)
         if len(names) > 0:
             errors.append('VALID NAME CHECK: The following not found in valid name list: %s' % ('; '.join(names),))

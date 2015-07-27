@@ -36,6 +36,7 @@ from openn.openn_functions import *
 # from openn.prep import medren_prep
 from openn.prep.common_prep import CommonPrep
 from openn.prep.prep_setup import PrepSetup
+from openn.prep.package_validation import PackageValidation
 from openn.prep.status import Status
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
@@ -85,10 +86,15 @@ def failure_status(prepstatus, ex):
     prepstatus.error     = str(ex)
     prepstatus.save()
 
-def get_collection_prep(source_dir, collection, document):
+def get_collection_config(collection):
     config = settings.COLLECTIONS.get(collection.lower(), None)
     if config is None:
         raise OPennException("Configuration not found for collection: '%s'" % collection)
+    return config
+
+
+def get_collection_prep(source_dir, collection, document):
+    config = get_collection_config(collection)
     cls = get_class(config['prep_class'])
     kwargs = config.get('prep_class_kwargs', {})
     return cls(source_dir, collection, document, **kwargs)
@@ -98,6 +104,17 @@ def fix_perms(source_dir):
         os.chmod(root, 0775)
         for name in files:
             os.chmod(os.path.join(root, name), 0664)
+
+def validate_source_dir(collection, source_dir):
+    config = get_collection_config(collection)
+    validation_params = config.get('package_validation', None)
+    if validation_params is None:
+        return
+    validator = PackageValidation(**validation_params)
+    errors = validator.validate(source_dir)
+    if len(errors) > 0:
+        msg = 'Invalid package directory: %s' % (source_dir,)
+        raise(OPennException('\n'.join([msg] + errors)))
 
 def clean_dir(source_dir, clobber_pattern):
     clobber_re = re.compile(clobber_pattern)
@@ -152,6 +169,8 @@ def main(cmdline=None):
 
     if not os.path.exists(source_dir):
         parser.error("SOURCE_DIR does not exist: %s" % source_dir)
+
+    validate_source_dir(collection, source_dir)
 
     base_dir = os.path.basename(source_dir)
     doc_params = { 'base_dir': base_dir, 'collection': collection }

@@ -20,9 +20,10 @@ setUp() {
 #     # suite_addTest testBloodyUnicode
 #     # suite_addTest testStatusFlags
 #     # suite_addTest testDocumentClobber
-#     suite_addTest testDocumentClobberCancel
-#     suite_addTest testDocumentClobberNoDocYet
-#     suite_addTest testDocumentClobberDocOnline
+#     # suite_addTest testDocumentClobberCancel
+#     # suite_addTest testDocumentClobberNoDocYet
+#     # suite_addTest testDocumentClobberDocOnline
+#     suite_addTest testResume
 # }
 
 insert_document() {
@@ -128,15 +129,22 @@ testResume() {
     cp -r $TEST_DATA_DIR/mscodex1223 $source_dir
 
     # make sure we fail
-    touch $source_dir/somebadilfe.txt
+    # move some required files
+
+    test_file=`ls $source_dir/*.tif | head -n 1`
+    test_base=`basename $test_file`
+    tmpdir=${TMPDIR:-/tmp}
+    mv $test_file $tmpdir
+    if [[ $? -ne 0 ]]; then
+        exit 1
+    fi
     output=`op-prep ljs $source_dir 2>&1`
     status=$?
     if [ $status = 0 ]; then echo "$output"; fi
     assertNotEquals 0 $status
-    assertMatch "$output" "VALID NAME CHECK"
 
     # fix the problem and resume
-    rm $source_dir/somebadilfe.txt
+    mv $tmpdir/$test_base $source_dir
     output=`op-prep -r ljs $source_dir 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
