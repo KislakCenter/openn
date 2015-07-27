@@ -147,6 +147,9 @@ def main(cmdline=None):
     collection = args[0]
     source_dir = args[1]
 
+    if source_dir.strip().endswith('/'):
+        source_dir = source_dir[-1]
+
     if not os.path.exists(source_dir):
         parser.error("SOURCE_DIR does not exist: %s" % source_dir)
 
