@@ -182,3 +182,25 @@ realpath() {
 
     echo "$rp_dir/$rp_base"
 }
+
+valid_for_opget() {
+    vfo_source_dir=$1
+    if [[ ! -d "$vfo_source_dir" ]]; then
+        error_no_exit "Could not find source directory: $vfo_source_dir"
+        return 1
+    fi
+
+    vfo_subdir_count=`find "$vfo_source_dir" -maxdepth 1 -type d | wc -l`
+    # $vfo_source_dir will be one of the counted dirs; remove it
+    vfo_subdir_count=$(( $vfo_subdir_count - 1))
+    if [[ $vfo_subdir_count -gt 0 ]]; then
+        error_no_exit "Source directory cannot have subdirectories; found: $vfo_subdir_count"
+        return 1
+    fi
+
+    vfo_image_count=`find "$vfo_source_dir" -maxdepth 1 -name \*.tif -o -name \*.jpg | wc -l`
+    if [[ $vfo_image_count = 0 ]]; then
+        error_no_exit "Source directory contains no images"
+        return 1
+    fi
+}

@@ -4,7 +4,10 @@ usage() {
     echo "Usage: $0 [-b bibid ] SOURCE_DIR [DEST_DIR=.]"
 }
 
+source `dirname $0`/op-functions
+
 cmd=`basename $0`
+COMMAND=$cmd
 
 ### OPTIONS
 while getopts "hb:" opt; do
@@ -51,9 +54,9 @@ echo "[$cmd] Using DEST_DIR: $DEST_DIR"
 
 base=`basename $SOURCE_DIR`
 
-if ! [[ $base =~ ^[a-z].*[0-9]$ ]]; then
-    echo "ERROR: Whoa! No. I'm not copying '$SOURCE_DIR'. I expected something like 'ljs472' or 'mscodex1223'" >&2
-    exit 1
+# if ! [[ $base =~ ^[a-z].*[0-9]$ ]]; then
+if ! valid_for_opget "$SOURCE_DIR" ; then
+    error "ERROR: Whoa! No. I'm not copying '$SOURCE_DIR'."
 fi
 
 ### DO STUFF

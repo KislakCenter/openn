@@ -120,16 +120,16 @@ def clobber_document(params):
         s = None
         while s is None:
             s = raw_input("Proceed? (Type: Yes or No): ")
-            s = s.strip().lower()
+            s = s.strip()
             if s is not None:
-                if s.lower() in ('yes', 'no'):
-                    continue
-            print "Please enter 'Yes' or 'No'. I don't understand: %r" % (s,)
-        if s == 'yes':
-            logger.info("OK. Deleting existing document.")
-            doc.delete()
-        elif s == 'no':
-            raise OPennException("User canceled clobber; no changes made")
+                if s.lower() == 'yes':
+                    logger.info("OK. Deleting existing document.")
+                    doc.delete()
+                elif s.lower() == 'no':
+                    raise OPennException("User canceled clobber; no changes made")
+                else:
+                    print "Please enter 'Yes' or 'No'. I don't understand: %r" % (s,)
+                    s = None
 
 def main(cmdline=None):
     """op-prep main
