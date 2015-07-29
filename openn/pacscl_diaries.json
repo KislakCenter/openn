@@ -371,6 +371,7 @@
                 "serial_num": {
                     "field_name": "SERIAL_NUM",
                     "repeating": true,
+                    "unique": true,
                     "data_type": "integer",
                     "required": {
                         "if": {
@@ -406,6 +407,7 @@
                     "field_name": "FILE_NAME",
                     "required": true,
                     "repeating": true,
+                    "unique": true,
                     "data_type": "string",
                     "file_list": true
                 },

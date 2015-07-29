@@ -3,6 +3,7 @@
 
 import os
 import re
+import itertools
 from copy import deepcopy
 
 from openn.prep import langs
@@ -483,6 +484,23 @@ class ValidatableSheet(object):
             if val is not None:
                 self._do_type_validation(field_name, val, self.data_type(attr))
 
+    def validate_uniqueness(self, attr):
+        # don't validate non-existent field
+        if self.fields.get(attr, None) is None: return
+        # don't validate if no uniqueness constraint
+        if not self.fields[attr].get('unique', False): return
+
+        values = self._extract_values(attr)
+        unique_values = set(values)
+        # don't validate if all values unique
+        if len(values) == len(unique_values): return
+
+        dups = self._get_dups(values)
+        specs = [ "%s (%dx)" % (x[0], x[1]) for x in dups ]
+        msg = "'%s' cannot have duplicate values; found: %s" % (
+            self.field_name(attr), '; '.join(specs))
+        self.add_error(attr, 0, msg)
+
     # --------------------------------------------------------------------
     # Field accessors
     # --------------------------------------------------------------------
@@ -744,3 +762,13 @@ class ValidatableSheet(object):
 
     def _format_error(self, field_name, value, data_type):
         return "%s is not a valid %s: %s" % (field_name, data_type, value)
+
+    def _get_dups(self, values):
+        vsorted = sorted(values)
+        dups = []
+        for g in itertools.groupby(sorted(values)):
+            val = g[0]
+            size = len(list(g[1]))
+            if size > 1:
+                dups.append((val,size))
+        return dups

@@ -87,6 +87,7 @@
                 "file_name": {
                     "repeating": true,
                     "required": true,
+                    "unique": true,
                     "field_name": "FILE_NAME",
                     "data_type": "string",
                     "file_list": true

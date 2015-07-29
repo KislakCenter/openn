@@ -124,3 +124,9 @@ class TestPagesSheet(TestCase):
         sheet.validate_requirement('value3')
         self.assertEqual(len(sheet.errors), 1)
         self.assertRegexpMatches(sheet.errors[0], r"'VALUE3' cannot be empty.* 'TAG3'.*'TOC3'")
+
+    def test_validate_uniqueness(self):
+        sheet = OPWorkbook(self.pages_invalid_workbook, self.pages_config).pages
+        sheet.validate_uniqueness('file_name')
+        self.assertEqual(len(sheet.errors), 1)
+        self.assertRegexpMatches(sheet.errors[0], r"'FILE_NAME' cannot have duplicate values; found:.*(2x)")
