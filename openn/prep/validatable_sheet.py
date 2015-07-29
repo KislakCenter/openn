@@ -667,6 +667,15 @@ class ValidatableSheet(object):
         else:
             return self._extract_column(attr)
 
+    def _get_cell_value(self, cell):
+        value = cell.value
+        if value is None or str(value).strip() == '':
+            return None
+        elif isinstance(value, basestring):
+            return str(value).strip()
+        else:
+            return value
+
     def _extract_column(self, attr):
         if self.locus(attr) is None: return
 
@@ -678,10 +687,8 @@ class ValidatableSheet(object):
         vals     = []
         for row in xrange(data_row, self.sheet.max_row + 1):
             cell = self.sheet.cell(column=col,row=row)
-            if cell.value is not None and str(cell.value).strip() != '':
-                vals.append(cell.value)
-            else:
-                vals.append(None)
+            val  = self._get_cell_value(cell)
+            vals.append(val)
 
         return vals
 
@@ -697,10 +704,8 @@ class ValidatableSheet(object):
         vals = []
         for col in xrange(data_col, self.sheet.max_column + 1):
             cell = self.sheet.cell(column=col,row=row)
-            if cell.value is not None and str(cell.value).strip() != '':
-                vals.append(cell.value)
-            else:
-                vals.append(None)
+            val  = self._get_cell_value(cell)
+            vals.append(val)
 
         # strip off trailing Nones
         while len(vals) > 0 and vals[-1] is None:

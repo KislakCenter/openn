@@ -237,8 +237,7 @@ class TestDescriptionSheet(TestCase):
     def test_validate_value_list_valid_value_plus_space(self):
         sheet = OPWorkbook(self.value_lists_workbook, self.value_lists_test_config).description
         sheet.validate_value_list('rights_pd_with_space')
-        self.assertEqual(len(sheet.errors), 1)
-        self.assertRegexpMatches(sheet.errors[0], r"Rights PD with space.*'PD '.*not valid.*expected.*")
+        self.assertEqual(len(sheet.errors), 0)
 
     # Rights PD with space
     def test_validate_value_list_valid_value_lower_case(self):
