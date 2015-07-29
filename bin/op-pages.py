@@ -73,10 +73,6 @@ def update_online_statuses():
         logging.info("Is document online: %s/%s? %s" % (
             doc.collection, doc.base_dir, str(doc.is_online)))
 
-def collection_tags():
-    return [ x for x in settings.COLLECTIONS ]
-
-
 def make_browse_html(docid, force=False, dry_run=False):
     try:
         page = Browse(docid, **{ 'outdir': staging_dir() })
@@ -418,7 +414,7 @@ skipped TOC creation for files that would be generated for an actual run.
 
     parser.add_option('-i', '--toc-collection', dest='collection_tag', default=None,
                       help=("Process table of contents for COLLECTION_TAG; one of: %s" % (
-                          ', '.join(collection_tags()))),
+                          ', '.join(collection_tags(settings)))),
                       metavar="COLLECTION_TAG")
 
     parser.add_option('-d', '--document', dest='document', default=None,
@@ -428,7 +424,6 @@ skipped TOC creation for files that would be generated for an actual run.
     parser.add_option('-c', '--collections',
                       action='store_true', dest='collections', default=False,
                       help='Process Collections list HTML as needed')
-
 
     parser.add_option('-n', '--dry-run',
                       action='store_true', dest='dry_run', default=False,

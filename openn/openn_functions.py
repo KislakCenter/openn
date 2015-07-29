@@ -40,3 +40,6 @@ def mkdir_p(path):
         if ex.errno == errno.EEXIST and os.path.isdir(path):
             pass
         else: raise
+
+def collection_tags(settings):
+    return [ x for x in settings.COLLECTIONS ]
