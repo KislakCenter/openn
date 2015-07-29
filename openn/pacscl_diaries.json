@@ -251,26 +251,26 @@
                 },
                 "subject_geographic": {
                     "field_name": "Subject: geographic",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "string"
                 },
                 "subject_geographic_uri": {
                     "field_name": "Subject: geographic URI [?]",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "uri"
                 },
                 "subject_genreform": {
                     "field_name": "Subject: genre/form",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "string"
                 },
                 "subject_genreform_uri": {
                     "field_name": "Subject: genre/form URI [?]",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "uri"
                 },
                 "image_rights": {
