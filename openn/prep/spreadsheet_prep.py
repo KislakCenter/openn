@@ -184,7 +184,8 @@ class SpreadsheetPrep(CollectionPrep):
 
 
         for img in expected:
-            all_images.remove(img)
+            if img in all_images:
+                all_images.remove(img)
             doc_images.append( { 'filename': img, 'image_type': 'document' } )
 
         extras = [ { 'filename': x, 'image_type': 'extra', 'label': 'None' } for x in all_images ]
