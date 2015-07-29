@@ -468,6 +468,7 @@ class ValidatableSheet(object):
         if self.is_field_missing(attr): return
 
         self.validate_requirement(attr)
+        self.validate_uniqueness(attr)
         self.validate_blank(attr)
         self.validate_value_list(attr)
         self.validate_repeating(attr)
