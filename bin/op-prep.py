@@ -235,6 +235,8 @@ def make_parser():
     epilog = """
 Prepare the given source diretory for OPenn.
 
+Known collections are: %s.
+
 SOURCE_DIR contains a set of document image TIFF files and a file
 named bibid.txt which contains the bibid for the given book or
 manuscript.
@@ -247,7 +249,7 @@ Resume: Resume will fail if the source directory does not have a
 Clobber: Use clobber to replace an existing document that did not
 prepare correctly the first time. Will fail if document is on-line.
 
-"""
+""" % (', '.join(collection_tags(settings)))
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)
