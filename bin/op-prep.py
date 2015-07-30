@@ -148,12 +148,44 @@ def clobber_document(params):
                     print "Please enter 'Yes' or 'No'. I don't understand: %r" % (s,)
                     s = None
 
+def fs_prep(source_dir):
+    fix_perms(source_dir)
+    os.umask(0002)
+    if hasattr(settings, 'CLOBBER_PATTERN'):
+        clean_dir(source_dir, settings.CLOBBER_PATTERN)
+
+def prep_dir(collection, source_dir):
+    status = 0
+    try:
+        base_dir = os.path.basename(source_dir)
+        # mark that prep has begun
+        status_txt = os.path.join(source_dir, 'status.txt')
+        if not os.path.exists(status_txt):
+            Status(source_dir).write_status(Status.PREP_BEGUN)
+
+        setup = PrepSetup()
+        doc = setup.prep_document(collection, base_dir)
+        prepstatus = setup_prepstatus(doc)
+        collection_prep = get_collection_prep(source_dir, collection, doc)
+        fs_prep(source_dir)
+        collection_prep.prep_dir()
+        common_prep = CommonPrep(source_dir, collection, doc)
+        common_prep.prep_dir()
+        success_status(prepstatus)
+    except OPennException as ex:
+        # error_no_exit(cmd(), str(ex))
+        failure_status(prepstatus, ex)
+        status = 4
+        parser.error(str(ex))
+
+    return status
+
+
 def main(cmdline=None):
     """op-prep main
     """
     setup_logger()
 
-    status = 0
     parser = make_parser()
 
     opts, args = parser.parse_args(cmdline)
@@ -202,31 +234,7 @@ def main(cmdline=None):
         else:
             parser.error('`op-prep --clobber` called for nonexistent document')
 
-    try:
-        # mark that prep has begun
-        if not os.path.exists(status_txt):
-            Status(source_dir).write_status(Status.PREP_BEGUN)
-
-        setup = PrepSetup()
-        doc = setup.prep_document(collection, base_dir)
-        prepstatus = setup_prepstatus(doc)
-        collection_prep = get_collection_prep(source_dir, collection, doc)
-        fix_perms(source_dir)
-        os.umask(0002)
-        if hasattr(settings, 'CLOBBER_PATTERN'):
-            clean_dir(source_dir, settings.CLOBBER_PATTERN)
-        collection_prep.prep_dir()
-        common_prep = CommonPrep(source_dir, collection, doc)
-        common_prep.prep_dir()
-        success_status(prepstatus)
-    except OPennException as ex:
-        # error_no_exit(cmd(), str(ex))
-        failure_status(prepstatus, ex)
-        status = 4
-        parser.error(str(ex))
-
-    return status
-
+    return prep_dir(collection, source_dir)
 
 def make_parser():
     """get_xml option parser"""
