@@ -59,6 +59,30 @@
                     "repeating": true,
                     "data_type": "string"
                 },
+                "archival_drawer": {
+                    "field_name": "Archival Drawer",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string"
+                },
+                "archival_box": {
+                    "field_name": "Archival Box",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string"
+                },
+                "archival_folder": {
+                    "field_name": "Archival Folder",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string"
+                },
+                "archival_item": {
+                    "field_name": "Archival Item",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string"
+                },
                 "alternate_id": {
                     "field_name": "Alternate ID",
                     "required": false,
