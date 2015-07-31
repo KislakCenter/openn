@@ -39,6 +39,10 @@ class SheetData:
 
     def value_matrix(self, *attrs):
         matrix = [ deepcopy(self.values(x)) for x in attrs ]
+        # Find each None item in the list; replace with []
+        for i in xrange(len(matrix)):
+            if matrix[i] is None:
+                matrix[i] = []
         max_len = len(max(matrix, key=lambda x: len(x)))
         for values in matrix:
             if len(values) < max_len:

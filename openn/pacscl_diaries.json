@@ -83,6 +83,18 @@
                     "repeating": false,
                     "data_type": "string"
                 },
+                "full_call_number": {
+                    "field_name": "",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string",
+                    "class": "openn.prep.call_number_field.CallNumberField",
+                    "arg_fields": [ "call_numberid",
+                                    "archival_drawer",
+                                    "archival_box",
+                                    "archival_folder",
+                                    "archival_item" ]
+                },
                 "alternate_id": {
                     "field_name": "Alternate ID",
                     "required": false,
@@ -587,7 +599,7 @@
             "composite_fields": {
                 "full_title": [
                     "repository_name",
-                    "call_numberid",
+                    "full_call_number",
                     "title",
                     "volume_number"
                 ]
@@ -614,6 +626,11 @@
                         "repository_name",
                         "source_collection",
                         "call_numberid",
+                        "archival_drawer",
+                        "archival_box",
+                        "archival_folder",
+                        "archival_item",
+                        "full_call_number",
                         "volume_number"
                     ]
                 },

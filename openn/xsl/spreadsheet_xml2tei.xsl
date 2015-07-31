@@ -21,12 +21,8 @@
     </xsl:variable>
     <xsl:variable name="call_number">
         <xsl:call-template name="clean-up-text">
-            <xsl:with-param name="some-text" select="//description/identification/call_numberid"/>
+            <xsl:with-param name="some-text" select="//description/identification/full_call_number"/>
         </xsl:call-template>
-      <xsl:if test="//identification/volume_number">
-        <xsl:text> v</xsl:text>
-        <xsl:value-of select="//identification/volume_number"></xsl:value-of>
-      </xsl:if>
     </xsl:variable>
     <xsl:variable name="volume_number">
       <xsl:call-template name="clean-up-text">

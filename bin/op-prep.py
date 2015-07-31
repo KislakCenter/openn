@@ -155,17 +155,16 @@ def fs_prep(source_dir):
         clean_dir(source_dir, settings.CLOBBER_PATTERN)
 
 def prep_dir(collection, source_dir):
-    status = 0
-    try:
-        base_dir = os.path.basename(source_dir)
-        # mark that prep has begun
-        status_txt = os.path.join(source_dir, 'status.txt')
-        if not os.path.exists(status_txt):
-            Status(source_dir).write_status(Status.PREP_BEGUN)
+    base_dir = os.path.basename(source_dir)
+    # mark that prep has begun
+    status_txt = os.path.join(source_dir, 'status.txt')
+    if not os.path.exists(status_txt):
+        Status(source_dir).write_status(Status.PREP_BEGUN)
 
-        setup = PrepSetup()
-        doc = setup.prep_document(collection, base_dir)
-        prepstatus = setup_prepstatus(doc)
+    setup = PrepSetup()
+    doc = setup.prep_document(collection, base_dir)
+    prepstatus = setup_prepstatus(doc)
+    try:
         collection_prep = get_collection_prep(source_dir, collection, doc)
         fs_prep(source_dir)
         collection_prep.prep_dir()
@@ -173,17 +172,15 @@ def prep_dir(collection, source_dir):
         common_prep.prep_dir()
         success_status(prepstatus)
     except OPennException as ex:
-        # error_no_exit(cmd(), str(ex))
         failure_status(prepstatus, ex)
-        status = 4
-        parser.error(str(ex))
-
-    return status
+        raise
 
 
 def main(cmdline=None):
     """op-prep main
     """
+    status = 0
+
     setup_logger()
 
     parser = make_parser()
@@ -234,7 +231,15 @@ def main(cmdline=None):
         else:
             parser.error('`op-prep --clobber` called for nonexistent document')
 
-    return prep_dir(collection, source_dir)
+    try:
+        prep_dir(collection, source_dir)
+    except OPennException as ex:
+        # error_no_exit(cmd(), str(ex))
+        status = 4
+        parser.error(str(ex))
+
+    return status
+
 
 def make_parser():
     """get_xml option parser"""
