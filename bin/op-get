@@ -84,7 +84,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Delete junk
-echo "[$cmd] Deleting junk files from $dest"
+echo "[$cmd] Deleting junk files from $dest: $junk_files"
 find_opts=
 for x in $junk_files;
 do
@@ -94,7 +94,7 @@ do
         find_opts="-iname $x"
     fi
 done
-find $dest $find_opts -delete
+find $dest \( $find_opts \) -delete
 
 # Write bibid.txt
 bibid_file=$dest/bibid.txt
