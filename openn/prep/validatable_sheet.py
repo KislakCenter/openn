@@ -147,7 +147,7 @@ class ValidatableSheet(object):
     @staticmethod
     def normalize(s):
         if s is not None:
-            return re.sub(r'\W+', '', str(s)).lower()
+            return re.sub(r'\W+', '', unicode(s)).lower()
 
     ######################################################################
     # Instance methods
@@ -688,10 +688,10 @@ class ValidatableSheet(object):
 
     def _get_cell_value(self, cell):
         value = cell.value
-        if value is None or str(value).strip() == '':
+        if value is None or unicode(value).strip() == '':
             return None
         elif isinstance(value, basestring):
-            return str(value).strip()
+            return unicode(value).strip()
         else:
             return value
 

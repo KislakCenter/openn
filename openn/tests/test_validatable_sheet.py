@@ -16,6 +16,7 @@ class TestValidatableSheet(TestCase):
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')
     valid_workbook           = os.path.join(sheets_dir, 'valid_workbook.xlsx')
+    valid_workbook_unicode   = os.path.join(sheets_dir, 'valid_with_unicode.xlsx')
 
     url1 = 'http://id.loc.gov/authorities/names/n50049445.html'
     url2 = 'http://id.loc.gov/authorities/subjects/sh99002320.html'
@@ -71,3 +72,9 @@ class TestValidatableSheet(TestCase):
     def test_is_not_valid_integer(self):
         for x in (1.1, 4.0, '4x', ' dog ', 'None'):
             self.assertFalse(ValidatableSheet.is_valid_integer(x), ('%r should not be a valid integer' % x))
+
+    def test_handles_unicode(self):
+        workbook = OPWorkbook(self.valid_workbook_unicode, self.get_config())
+
+        workbook.validate_description()
+        workbook.validate_pages()
