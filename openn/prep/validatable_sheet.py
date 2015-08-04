@@ -16,6 +16,30 @@ class ValidatableSheet(object):
     MIN_YEAR = -5000
     MAX_YEAR = 3000
 
+    # No-break space
+    NO_BREAK_SPACE = '\u00A0'
+    # Match non-breaking space followed or proceeded by one or zero
+    # spaces
+    NO_BREAK_SPACE_RE = re.compile(" ?%s ?" % (NO_BREAK_SPACE,), re.UNICODE)
+    # For stray right-to-left and left-to-right characters
+    RTL = '\u200F'.decode( 'unicode-escape' )
+    LTR = '\u200E'.decode( 'unicode-escape' )
+    BIDI_RE = re.compile("[%s%s]+" % (RTL, LTR), re.UNICODE)
+    # Fixing MS `smart` quotes
+    # ‘ (U+2018) LEFT SINGLE QUOTATION MARK
+    LEFT_SINGLE_QUOTATION_MARK = '\u2018'.decode('unicode-escape')
+    # ’ (U+2019) RIGHT SINGLE QUOTATION MARK
+    RIGHT_SINGLE_QUOTATION_MARK  = '\u2019'.decode('unicode-escape')
+    SINGLE_QUOTE_RE = re.compile("[%s%s]" % (
+        RIGHT_SINGLE_QUOTATION_MARK, LEFT_SINGLE_QUOTATION_MARK), re.UNICODE)
+
+    # “ (U+201C) LEFT DOUBLE QUOTATION MARK
+    LEFT_DOUBLE_QUOTATION_MARK = '\u201C'.decode('unicode-escape')
+    # ” (U+201D) RIGHT DOUBLE QUOTATION MARK
+    RIGHT_DOUBLE_QUOTATION_MARK = '\u201D'.decode('unicode-escape')
+    DOUBLE_QUOTE_RE = re.compile("[%s%s]" % (
+        RIGHT_DOUBLE_QUOTATION_MARK, LEFT_DOUBLE_QUOTATION_MARK), re.UNICODE)
+
     # conversion of John Gruber's URI RE adapted from:
     #   https://gist.github.com/uogbuji/705383
     URI_RE = re.compile(ur'(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
@@ -96,12 +120,12 @@ class ValidatableSheet(object):
 
     @staticmethod
     def is_valid_year(val):
-        return ValidatableSheet.YEAR_RE.match(str(val).strip()) and \
+        return ValidatableSheet.YEAR_RE.match(unicode(val).strip()) and \
             int(val) in xrange(ValidatableSheet.MIN_YEAR, ValidatableSheet.MAX_YEAR + 1)
 
     @staticmethod
     def is_empty_value(value):
-        return value is None or len(str(value).strip()) == 0
+        return value is None or len(unicode(value).strip()) == 0
 
     @staticmethod
     def is_nonempty_value(value):
@@ -114,7 +138,7 @@ class ValidatableSheet(object):
 
         try:
             return (int(val) + 0 == int(val)) and \
-                ValidatableSheet.INTEGER_RE.match(str(val).strip())
+                ValidatableSheet.INTEGER_RE.match(unicode(val).strip())
         except (TypeError, ValueError):
             return False
 
@@ -131,7 +155,7 @@ class ValidatableSheet(object):
         if case_senstive:
             return value in val_list
         else:
-            return str(value).lower() in [ str(x).lower() for x in val_list ]
+            return unicode(value).lower() in [ unicode(x).lower() for x in val_list ]
 
     @staticmethod
     def column_letter(colindex):
@@ -142,12 +166,22 @@ class ValidatableSheet(object):
 
     @staticmethod
     def cell_address(col, row):
-        return ''.join([ ValidatableSheet.column_letter(col), str(row) ])
+        return ''.join([ ValidatableSheet.column_letter(col), unicode(row) ])
 
     @staticmethod
     def normalize(s):
         if s is not None:
-            return re.sub(r'\W+', '', unicode(s)).lower()
+            u = ValidatableSheet.fix_unicode(s)
+            return re.sub(r'\W+', '', u).lower()
+
+    @staticmethod
+    def fix_unicode(val):
+        u = ValidatableSheet.BIDI_RE.sub(u'', unicode(val).strip())
+        u = ValidatableSheet.SINGLE_QUOTE_RE.sub(u"'", u)
+        u = ValidatableSheet.DOUBLE_QUOTE_RE.sub(u'"', u)
+        u = ValidatableSheet.NO_BREAK_SPACE_RE.sub(u' ', u)
+        return u
+
 
     ######################################################################
     # Instance methods
@@ -672,6 +706,7 @@ class ValidatableSheet(object):
                 if self.normalize(value) == self.normalize(field_name):
                     return {'col': col,'row': row }
 
+
     def _extract_virtual_values(self, details):
         cls = get_class(details.get('class'))
         obj = cls()
@@ -691,7 +726,7 @@ class ValidatableSheet(object):
         if value is None or unicode(value).strip() == '':
             return None
         elif isinstance(value, basestring):
-            return unicode(value).strip()
+            return self.fix_unicode(value)
         else:
             return value
 
