@@ -280,14 +280,21 @@ class PackageDir:
         for deriv_type in deriv_configs:
             self.create_image_dir(deriv_type)
             dconf = deriv_configs[deriv_type]
+            cntr = CountLogger(self.logger, self.file_list.document_files)
+            cntr.count(msg="Generating %s derivatives for document images" % (deriv_type,), inc=False)
             for fdata in self.file_list.document_files:
                 master = fdata.get_deriv_path(FileList.FileData.MASTER)
+                cntr.count("Generating %s derivative for %s" % (deriv_type,master))
                 deriv = self.deriv_name(master, deriv_type, dconf['ext'])
                 details = image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
                 fdata.add_deriv(deriv, deriv_type, details=details)
+
+            cntr = CountLogger(self.logger, self.file_list.extra_files)
+            cntr.count(msg="Generating %s derivatives for extra images" % (deriv_type,), inc=False)
             for fdata in self.file_list.extra_files:
                 extra_dir = os.path.join('extra', deriv_type)
                 master = fdata.get_deriv_path(FileList.FileData.MASTER)
+                cntr.count("Generating %s derivative for %s" % (deriv_type,master))
                 deriv = self.deriv_name(master, deriv_type, dconf['ext'], deriv_dir=extra_dir)
                 details = image_deriv.generate(self.source_dir, master, deriv, dconf['max_side'])
                 fdata.add_deriv(deriv, deriv_type, details=details)
