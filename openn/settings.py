@@ -186,10 +186,10 @@ COLLECTIONS = {
             },
         },
     },
-    'bryn_mawr' : {
+    'brynmawr' : {
         'tag': 'brynmawr',
-        'name': 'Bryn Mawr College',
-        'blurb': 'Diaries from the Bryn Mawr College Special Collections.',
+        'name': 'Special Collections, Bryn Mawr College',
+        'blurb': 'Diaries from Special Collections, Bryn Mawr College.',
         'toc_file': 'TOC_BrynMawrCollege.html',
         'web_dir': 'Data/BrynMawrCollege',
         'html_dir': 'Data/BrynMawrCollege/html',
@@ -217,10 +217,10 @@ COLLECTIONS = {
             },
         },
     },
-    'drexel' : {
-        'tag': 'drexel',
-        'name': 'Drexel University Archives and Special Collections',
-        'blurb': 'Diaries from the Drexel University Archives and Special Collections.',
+    'drexarc' : {
+        'tag': 'drexarc',
+        'name': 'Drexel University Archives',
+        'blurb': 'Diaries from Drexel University Archives.',
         'toc_file': 'TOC_DrexelUniversity.html',
         'web_dir': 'Data/DrexelUniversity',
         'html_dir': 'Data/DrexelUniversity/html',
@@ -248,13 +248,168 @@ COLLECTIONS = {
             },
         },
     },
+    'drexmed' : {
+        'tag': 'drexmed',
+        'name': 'Legacy Center Archives & Special Collection, Drexel University College of Medicine.',
+        'blurb': 'Diaries from the Legacy Center Archives & Special Collection, Drexel University College of Medicine.',
+        'toc_file': 'TOC_DrexelMedicine.html',
+        'web_dir': 'Data/DrexelMedicine',
+        'html_dir': 'Data/DrexelMedicine/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
     'haverford' : {
         'tag': 'haverford',
-        'name': 'Haverford College',
-        'blurb': 'Documents from Haverford College Special Collections.',
+        'name': 'Quaker and Special Collections, Haverford College',
+        'blurb': 'Documents from Quaker and Special Collections, Haverford College.',
         'toc_file': 'TOC_HaverfordCollege.html',
         'web_dir': 'Data/HaverfordCollege',
         'html_dir': 'Data/HaverfordCollege/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
+    'lehigh' : {
+        'tag': 'lehigh',
+        'name': 'Special Collections, Lehigh University',
+        'blurb': 'Documents from Special Collections, Lehigh University.',
+        'toc_file': 'TOC_SpecialCollectionsLehighUniversity.html',
+        'web_dir': 'Data/SpecialCollectionsLehighUniversity',
+        'html_dir': 'Data/HaverfordCollege/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
+    'tlc' : {
+        'tag': 'tlc',
+        'name': 'The Library Company of Philadelphia',
+        'blurb': 'Documents from the Library Company of Philadelphia.',
+        'toc_file': 'TOC_LibraryCompany.html',
+        'web_dir': 'Data/LibraryCompany',
+        'html_dir': 'Data/LibraryCompany/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
+    'libpa' : {
+        'tag': 'libpa',
+        'name': 'Rare Collections Library, State Library of Pennsylvania',
+        'blurb': 'Documents from the Rare Collections Library, State Library of Pennsylvania',
+        'toc_file': 'TOC_StateLibraryOfPennsylvania.html',
+        'web_dir': 'Data/StateLibraryOfPennsylvania',
+        'html_dir': 'Data/StateLibraryOfPennsylvania/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
+    'friendshl' : {
+        'tag': 'friendshl',
+        'name': 'Friends Historical Library, Swarthmare College',
+        'blurb': 'Documents from the Friends Historical Library, Swarthmare College.',
+        'toc_file': 'TOC_FriendsHistoricalLibrary.html',
+        'web_dir': 'Data/FriendsHistoricalLibrary',
+        'html_dir': 'Data/FriendsHistoricalLibrary/html',
         'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
         'prep_class_kwargs': {
             'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
