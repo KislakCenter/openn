@@ -66,7 +66,8 @@ fi
 ### DO STUFF
 # Copying
 echo "[$cmd] Copying $SOURCE_DIR to $DEST_DIR"
-rsync -rltDhv --delete --progress "$SOURCE_DIR" $DEST_DIR
+# sync from source to dest: --no-p --no-g --chmod=ugo=rwX => Use umask
+rsync -rltDhv --delete --progress --no-p --no-g --chmod=ugo=rwX "$SOURCE_DIR" $DEST_DIR
 
 if [ $? -ne 0 ]; then
     echo "[$cmd] ERROR: Error copying $SOURCE_DIR to $DEST_DIR" >&2
