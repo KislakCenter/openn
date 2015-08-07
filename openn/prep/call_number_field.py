@@ -3,7 +3,8 @@ from openn.prep.virtual_field import VirtualField
 class CallNumberField(VirtualField):
     def values(self, validatable_sheet, arg_fields=[]):
         values = self.build_values(validatable_sheet, arg_fields)
-        return [ ', '.join(values) ]
+        vals = [ unicode(x) for x in values ]
+        return [ ', '.join(vals) ]
 
     def build_values(self, validatable_sheet, arg_fields):
         d = self.extract_values(validatable_sheet, arg_fields)
