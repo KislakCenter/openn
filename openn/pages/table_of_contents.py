@@ -46,6 +46,11 @@ class TableOfContents(Page):
 
 
     def is_makeable(self):
+        if not self.collection_is_live():
+            self.logger.info("TOC not makeable; collection not set to 'live' (collection: %s)" % (
+                self.collection))
+            return False
+
         html_dir = os.path.join(self.outdir, self.collection_config['html_dir'])
         if not os.path.exists(html_dir):
             self.logger.info("TOC not makeable; no HTML dir found: %s (collection: %s)" % (
@@ -60,6 +65,9 @@ class TableOfContents(Page):
 
         return True
 
+    def collection_is_live(self):
+        coll_dict = settings.COLLECTIONS[self.collection]
+        return coll_dict.get('live', False)
 
     def is_needed(self):
         if not self.is_makeable():

@@ -11,7 +11,8 @@ from openn.pages.page import Page
 class Collections(Page):
 
     def get_context(self, ctx_dict={}):
-        collections = [ settings.COLLECTIONS[x] for x in settings.COLLECTIONS ]
+        collections = self.live_collections()
+
         collections.sort(key=itemgetter('name'))
         ctx = { 'collections': collections }
         ctx.update(ctx_dict)
@@ -20,6 +21,15 @@ class Collections(Page):
     @property
     def title(self):
         return 'Collections'
+
+    def live_collections(self, ):
+        collections = []
+        for tag in settings.COLLECTIONS:
+            coll = settings.COLLECTIONS[tag]
+            if coll.get('live', False):
+                collections.append(coll)
+
+        return collections
 
     def is_needed(self):
         """If the collections template exits; we always say it's needed.
