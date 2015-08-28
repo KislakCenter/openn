@@ -17,6 +17,7 @@ class TestSpreadsheetXML(TestCase):
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')
     valid_workbook           = os.path.join(sheets_dir, 'valid_workbook.xlsx')
+    unicode_workbook         = os.path.join(sheets_dir, 'unicode_workbook.xlsx')
 
     url1 = 'http://id.loc.gov/authorities/names/n50049445.html'
     url2 = 'http://id.loc.gov/authorities/subjects/sh99002320.html'
@@ -202,4 +203,10 @@ class TestSpreadsheetXML(TestCase):
         workbook = OPWorkbook(self.valid_workbook, config)
         sp_xml = SpreadsheetXML(settings.LICENCES)
 
+        xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
+
+    def test_unicode(self):
+        config = self.get_config()
+        workbook = OPWorkbook(self.unicode_workbook, config)
+        sp_xml = SpreadsheetXML(settings.LICENCES)
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
