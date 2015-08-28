@@ -53,7 +53,7 @@ class SheetData:
         values = []
         mtx = self.value_matrix(*attrs)
         for row in zip(*mtx):
-            v = [ str(x) for x in row if x ]
+            v = [ unicode(x) for x in row if x ]
             values.append(' '.join(v))
 
         return values
