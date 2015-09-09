@@ -444,8 +444,106 @@ COLLECTIONS = {
             },
         },
     },
-
+    'hsp' : {
+        'tag': 'hsp',
+        'name': 'Historical Society of Pennsylvania',
+        'live': False,
+        'blurb': 'Documents from the Historical Society of Pennsylvania.',
+        'toc_file': 'HistoricalSocietyOfPennsylvania.html',
+        'web_dir': 'Data/HistoricalSocietyOfPennsylvania',
+        'html_dir': 'Data/HistoricalSocietyOfPennsylvania/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
+    'lts' : {
+        'tag': 'lts',
+        'name': 'Lutheran Theological Seminary',
+        'live': False,
+        'blurb': 'Documents from Lutheran Theological Seminary.',
+        'toc_file': 'LutheranTheologicalSeminary.html',
+        'web_dir': 'Data/LutheranTheologicalSeminary',
+        'html_dir': 'Data/LutheranTheologicalSeminary/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
+    'ulp' : {
+        'tag': 'ulp',
+        'name': 'Union League of Philadelphia',
+        'live': False,
+        'blurb': 'Documents from the Union League of Philadelphia.',
+        'toc_file': 'UnionLeagueOfPhiladelphia.html',
+        'web_dir': 'Data/UnionLeagueOfPhiladelphia',
+        'html_dir': 'Data/UnionLeagueOfPhiladelphia/html',
+        'prep_class': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+        'prep_class_kwargs': {
+            'config_json': os.path.join(SITE_ROOT, 'pacscl_diaries.json')
+        },
+        'package_validation': {
+            'valid_names': ['*.tif', '*.xlsx' ],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', '*.xlsx'],
+        },
+        'config' : {
+            'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
 }
+
+    # Kislak
+
 
 MARKDOWN_DEUX_STYLES = {
     "default": {
