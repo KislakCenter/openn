@@ -50,14 +50,6 @@ if [ -n "$2" ]; then
 else
     DEST_DIR=.
 fi
-
-base=`basename $SOURCE_DIR`
-if [[ "$base" == data ]]; then
-    ms_dir=`dirname $SOURCE_DIR`
-    base=`basename $ms_dir`
-    DEST_DIR=$DEST_DIR/$base
-fi
-
 echo "[$cmd] Using DEST_DIR: $DEST_DIR"
 
 junk_files="Thumbs.db sha1manifest.txt .DS_Store"
@@ -65,7 +57,21 @@ if [[ -n "$OPENN_JUNK_FILES" ]]; then
     junk_files="$junk_files $OPENN_JUNK_FILES"
 fi
 
-# if ! [[ $base =~ ^[a-z].*[0-9]$ ]]; then
+# If the user has provided a path ending in a data dir, like
+# "/mnt/managedmasters/kislak/mscoll591_f1/data/", strip off data at
+# the end for now.
+if [[ "$SOURCE_DIR" =~ /data/?$ ]]; then
+    SOURCE_DIR=`dirname $source_dir`
+fi
+
+# Check to see if SOURCE_DIR is a managed masters directory.
+if is_managed_masters_dir "$SOURCE_DIR"; then
+    SOURCE_DIR=$SOURCE_DIR/data
+    base=`basename $SOURCE_DIR`
+    DEST_DIR=$DEST_DIR/$base
+fi
+
+# Now see if SOURCE_DIR is valid.
 if ! valid_for_opget "$SOURCE_DIR" ; then
     error "ERROR: Whoa! No. I'm not copying '$SOURCE_DIR'."
 fi
