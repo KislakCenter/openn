@@ -204,3 +204,28 @@ valid_for_opget() {
         return 1
     fi
 }
+
+is_managed_masters_dir() {
+    imdd__source_dir=$1
+
+    # An object in Managed Masters has these files in its directory:
+    #
+    #  - 'data' directory
+    #  - 'MM_Metadata.xlsx'
+    #  - 'sha1manifest.txt'
+
+    # Fail if data dir is not present
+    if [[ ! -d $imdd__source_dir/data ]]; then
+        return 1
+    fi
+
+    # Fail if either of these files is not present
+    for f in MM_Metadata.xlsx sha1manifest.txt
+    do
+        if [[ ! -f $imdd__source_dir/$f ]]; then
+            return 1
+        fi
+    done
+
+    return 0
+}
