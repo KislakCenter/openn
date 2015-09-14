@@ -61,14 +61,16 @@ fi
 # "/mnt/managedmasters/kislak/mscoll591_f1/data/", strip off data at
 # the end for now.
 if [[ "$SOURCE_DIR" =~ /data/?$ ]]; then
-    SOURCE_DIR=`dirname $source_dir`
+    echo "SOURCE_DIR has data directory"
+    SOURCE_DIR=`dirname $SOURCE_DIR`
 fi
+
+base=`basename "$SOURCE_DIR"`
 
 # Check to see if SOURCE_DIR is a managed masters directory.
 if is_managed_masters_dir "$SOURCE_DIR"; then
-    SOURCE_DIR=$SOURCE_DIR/data
-    base=`basename $SOURCE_DIR`
-    DEST_DIR=$DEST_DIR/$base
+    echo "SOURCE_DIR $SOURCE_DIR is a Managed Masters directory"
+    SOURCE_DIR="$SOURCE_DIR/data"
 fi
 
 # Now see if SOURCE_DIR is valid.
@@ -76,20 +78,22 @@ if ! valid_for_opget "$SOURCE_DIR" ; then
     error "ERROR: Whoa! No. I'm not copying '$SOURCE_DIR'."
 fi
 
+# The dest is a the DEST_DIR (e.g., '.') + the base (e.g.,
+# 'mscodex123')
+dest=$DEST_DIR/$base
+
 ### DO STUFF
 # Copying
-echo "[$cmd] Copying $SOURCE_DIR to $DEST_DIR"
+echo "[$cmd] Copying $SOURCE_DIR to $dest"
 # sync from source to dest: --no-p --no-g --chmod=ugo=rwX => Use umask
-rsync -rltDhv --progress --no-p --no-g --chmod=ugo=rwX "$SOURCE_DIR" $DEST_DIR
+rsync -rltDhv --progress --no-p --no-g --chmod=ugo=rwX "$SOURCE_DIR"/* $dest
 
 if [ $? -ne 0 ]; then
-    echo "[$cmd] ERROR: Error copying $SOURCE_DIR to $DEST_DIR" >&2
+    echo "[$cmd] ERROR: Error copying $SOURCE_DIR to $dest" >&2
     exit 1
 fi
 
 # Fixing perms
-base=`basename $SOURCE_DIR`
-dest=$DEST_DIR/$base
 echo "[$cmd] Fixing permissions on $dest"
 chmod 775 $dest && find $dest -type d -exec chmod 775 {} \; && find $dest -type f -exec chmod 664 {} \;
 if [ $? -ne 0 ]; then
