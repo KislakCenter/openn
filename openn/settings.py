@@ -158,6 +158,7 @@ COLLECTIONS = {
         'live': True,
         'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
         'toc_file': 'LJSchoenbergManuscripts.html',
+        'include_file': 'LJSchoenbergManuscripts.html',
         'web_dir': 'Data/LJSchoenbergManuscripts',
         'html_dir': 'Data/LJSchoenbergManuscripts/html',
         'prep_class': 'openn.prep.medren_prep.MedrenPrep',
