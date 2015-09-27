@@ -2,6 +2,7 @@
 import time
 import os
 import errno
+import re
 
 def get_class(kls):
     parts = kls.split('.')
@@ -42,4 +43,9 @@ def mkdir_p(path):
         else: raise
 
 def collection_tags(settings):
-    return [ x for x in settings.COLLECTIONS ]
+    return [ x['tag'] for x in settings.COLLECTIONS ]
+
+def sort_str(s):
+    """Remove 'the ', 'a ', 'an ' from the begining of strings for purpose
+    of alphabetization."""
+    return re.sub(r'^(the|an?) +', '', s.lower())

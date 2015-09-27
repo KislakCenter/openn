@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+#
+# Wrapper script to run op-prep.py in this directory.
+#
+
+this_dir=`dirname $0`
+wrapper=$this_dir/op-wrapper.sh
+script=${this_dir}/op-coll.py
+
+$wrapper -C $script $@

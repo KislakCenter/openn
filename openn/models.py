@@ -6,6 +6,31 @@ import httplib
 import os
 import re
 
+class OPennCollection(models.Model):
+    """OPennCollection is a collection to which a document belongs.
+
+    """
+    tag = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
+    metadata_type = models.CharField(
+        max_length = 50, null = False, default = None, blank = False,
+        choices = (('tei','TEI'), ('ead', 'EAD')))
+
+    class Meta:
+        ordering = ('tag',)
+
+    def long_id(self):
+        return "%04d" % (self.id,)
+
+    def folder(self):
+        self.long_id()
+
+    def __str__(self):
+        return ("OPennCollection: id={id:d}, tag={tag}").format(
+                        id=self.id, tag=self.tag)
+
+    def __repr__(self):
+        return self.__str__
+
 """
 Document corresponds to a set of OPenn images and metadata.
 
@@ -40,6 +65,7 @@ class Document(models.Model):
     metadata_copyright_holder = models.CharField(max_length = 255, null = True, default = None, blank = True)
     metadata_copyright_year   = models.IntegerField(null = True, default = None, blank = True)
     metadata_rights_more_info = models.TextField(null = True, default = None, blank = True)
+    openn_collection          = models.ForeignKey(OPennCollection, default = None)
 
     @property
     def collection_config(self):
