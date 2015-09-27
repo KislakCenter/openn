@@ -78,3 +78,6 @@ shunit2*
 
 # ignore stuff in vendor
 vendor/*
+
+# ignore MySQL dumps
+*.dmp
