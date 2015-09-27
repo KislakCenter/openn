@@ -1,4 +1,4 @@
-jcon{
+{
     "validations": {
         "unique_fields": [
             "tag",
