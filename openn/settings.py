@@ -729,7 +729,7 @@ COLLECTIONS = {
 PREP_CONFIGS = {
     'penn-pih': {
         'collection': {
-            'tag': 'medren',
+            'tag': 'pennmss',
         },
         'prep_method': {
             'tag': 'pih',

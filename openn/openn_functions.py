@@ -3,6 +3,10 @@ import time
 import os
 import errno
 import re
+import sys
+import traceback
+
+from openn.openn_exception import OPennException
 
 def get_class(kls):
     parts = kls.split('.')
@@ -11,6 +15,11 @@ def get_class(kls):
     for comp in parts[1:]:
         m = getattr(m, comp)
     return m
+
+def print_exc():
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    traceback.print_exception(exc_type, exc_value, exc_traceback,
+                              file=sys.stdout)
 
 def get_by_key(dicts, key_name, key_value):
     """From a list of list of dicts, get the all dicts with value ==

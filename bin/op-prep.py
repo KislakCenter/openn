@@ -38,13 +38,15 @@ from openn.prep.common_prep import CommonPrep
 from openn.prep.prep_setup import PrepSetup
 from openn.prep.package_validation import PackageValidation
 from openn.prep.status import Status
+from openn.prep.prep_config_factory import PrepConfigFactory
+from openn.collections.configs import Configs
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
 # Import your models for use in your script
 from openn.models import *
 # database access functions
-from openn.openn_db import *
+from openn import openn_db
 from django.core import serializers
 from django.conf import settings
 
@@ -64,6 +66,9 @@ def setup_logger():
     logging.getLogger().setLevel(logging.DEBUG)
     global logger
     logger = logging.getLogger(__name__)
+
+def collection_configs():
+    return Configs(settings.COLLECTIONS)
 
 
 def setup_prepstatus(doc):
@@ -105,9 +110,9 @@ def fix_perms(source_dir):
         for name in files:
             os.chmod(os.path.join(root, name), 0664)
 
-def validate_source_dir(collection, source_dir):
-    config = get_collection_config(collection)
-    validation_params = config.get('package_validation', None)
+def validate_source_dir(prep_method, source_dir):
+    validation_params = prep_method.package_validations()
+
     if validation_params is None:
         return
     validator = PackageValidation(**validation_params)
@@ -175,6 +180,24 @@ def prep_dir(collection, source_dir):
         failure_status(prepstatus, ex)
         raise
 
+def prep_source_dir_arg(source_dir):
+    if source_dir.strip().endswith('/'):
+        source_dir = source_dir[:-1]
+
+    if not os.path.exists(source_dir):
+        raise OPennException("SOURCE_DIR does not exist: %s" % source_dir)
+
+    return source_dir
+
+def get_prep_config(prep_config_tag):
+    prep_config_factory = PrepConfigFactory(
+        prep_configs_dict=settings.PREP_CONFIGS,
+        prep_methods=settings.PREPARATION_METHODS,
+        collection_configs=settings.COLLECTIONS)
+
+    return prep_config_factory.create_prep_config(prep_config_tag)
+
+
 def main(cmdline=None):
     """op-prep main
     """
@@ -189,22 +212,22 @@ def main(cmdline=None):
     if len(args) != 2:
         parser.error('Wrong number of arguments')
 
-    prep_config_tag = args[0]
-    source_dir = args[1]
-
     try:
-        if source_dir.strip().endswith('/'):
-            source_dir = source_dir[:-1]
+        prep_config_tag = args[0]
+        source_dir = prep_source_dir_arg(args[1])
 
-        if not os.path.exists(source_dir):
-            raise OPennException("SOURCE_DIR does not exist: %s" % source_dir)
+        prep_config = get_prep_config(prep_config_tag)
+        collection  = prep_config.collection()
+        prep_method = prep_config.prep_method()
+        # we're done with the prep_config; destroy it
+        del(prep_config)
 
-        validate_source_dir(collection, source_dir)
+        validate_source_dir(prep_method, source_dir)
 
         base_dir = os.path.basename(source_dir)
         doc_params = { 'base_dir': base_dir, 'collection': collection }
 
-        if doc_exists(doc_params):
+        if openn_db.doc_exists(doc_params):
             if opts.resume:
                 pass
             elif opts.clobber:
@@ -233,8 +256,8 @@ def main(cmdline=None):
 
         prep_dir(collection, source_dir)
     except OPennException as ex:
-        # error_no_exit(cmd(), str(ex))
         status = 4
+        print_exc()
         parser.error(str(ex))
 
     return status
@@ -261,7 +284,7 @@ Resume: Resume will fail if the source directory does not have a
 Clobber: Use clobber to replace an existing document that did not
 prepare correctly the first time. Will fail if document is on-line.
 
-""" % (', '.join(collection_tags(settings)))
+""" % (', '.join(collection_configs().tags()))
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)
