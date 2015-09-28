@@ -29,7 +29,6 @@ class TestCollectionConfigs(TestCase):
     config_file            = os.path.join(collections_dir, 'collections.json')
     config_data            = json.load(open(config_file))
     valid_collections      = config_data['valid_collections']
-    validations            = config_data['validations']
     duplicate_tag          = config_data['duplicate_tag']
     duplicate_name         = config_data['duplicate_name']
     duplicate_include_file = config_data['duplicate_include_file']
@@ -50,39 +49,39 @@ class TestCollectionConfigs(TestCase):
     def test_init(self):
         # self.clear_openn_collections_table()
         try:
-            configs = Configs(self.valid_collections, self.validations)
+            configs = Configs(self.valid_collections)
         except Exception as ex:
             self.fail("Init should succeed; got error: %s" % (unicode(ex),))
 
     def test_valid_collections(self):
         # self.clear_openn_collections_table()
         try:
-            configs = Configs(self.valid_collections, self.validations)
+            configs = Configs(self.valid_collections)
             configs.validate()
         except OPennException as oe:
             self.fail("Configs for 'valid_collections' should be valid: got error: %s" % (unicode(oe),))
 
     def test_duplicate_tag(self):
-        configs = Configs(self.duplicate_tag, self.validations)
+        configs = Configs(self.duplicate_tag)
         with self.assertRaises(OPennException) as oe:
             configs.validate()
         self.assertIn('tag', str(oe.exception))
 
     def test_duplicate_name(self):
-        configs = Configs(self.duplicate_name, self.validations)
+        configs = Configs(self.duplicate_name)
         with self.assertRaises(OPennException) as oe:
             configs.validate()
         self.assertIn('name', str(oe.exception))
 
     def test_duplicate_include_file(self):
-        configs = Configs(self.duplicate_include_file, self.validations)
+        configs = Configs(self.duplicate_include_file)
         with self.assertRaises(OPennException) as oe:
             configs.validate()
         self.assertIn('include_file', str(oe.exception))
         self.assertIn('2x', str(oe.exception))
 
     def test_missing_name(self):
-        configs = Configs(self.missing_name, self.validations)
+        configs = Configs(self.missing_name)
         with self.assertRaises(OPennException) as oe:
             configs.validate()
         self.assertRegexpMatches(str(oe.exception), r'\bspace\b')
@@ -91,14 +90,14 @@ class TestCollectionConfigs(TestCase):
         self.assertRegexpMatches(str(oe.exception), r'\bname\b')
 
     def test_missing_tag(self):
-        configs = Configs(self.missing_tag, self.validations)
+        configs = Configs(self.missing_tag)
         with self.assertRaises(OPennException) as oe:
             configs.validate()
         self.assertRegexpMatches(str(oe.exception), r'\bNOTAG\b')
         self.assertRegexpMatches(str(oe.exception), r'\btag\b')
 
     def test_missing_live(self):
-        configs = Configs(self.missing_live, self.validations)
+        configs = Configs(self.missing_live)
         with self.assertRaises(OPennException) as oe:
             configs.validate()
         self.assertRegexpMatches(str(oe.exception), r'\blive\b')

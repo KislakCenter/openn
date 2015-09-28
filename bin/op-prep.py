@@ -175,7 +175,6 @@ def prep_dir(collection, source_dir):
         failure_status(prepstatus, ex)
         raise
 
-
 def main(cmdline=None):
     """op-prep main
     """
@@ -190,48 +189,48 @@ def main(cmdline=None):
     if len(args) != 2:
         parser.error('Wrong number of arguments')
 
-    collection = args[0]
+    prep_config_tag = args[0]
     source_dir = args[1]
 
-    if source_dir.strip().endswith('/'):
-        source_dir = source_dir[:-1]
-
-    if not os.path.exists(source_dir):
-        parser.error("SOURCE_DIR does not exist: %s" % source_dir)
-
-    validate_source_dir(collection, source_dir)
-
-    base_dir = os.path.basename(source_dir)
-    doc_params = { 'base_dir': base_dir, 'collection': collection }
-
-    if doc_exists(doc_params):
-        if opts.resume:
-            pass
-        elif opts.clobber:
-            pass
-        elif opts.update:
-            parser.error('Update function not yet implemented')
-        else:
-            parser.error("Document already exists with base_dir"
-                         " '%s' and collection '%s'" % (base_dir, collection))
-
-    status_txt = os.path.join(source_dir, 'status.txt')
-    if opts.resume:
-        if os.path.exists(status_txt):
-            pass
-        else:
-            parser.error('Cannot resume prep without expected status file:\n %s' % (status_txt, ))
-
-    if opts.clobber:
-        if doc_exists(doc_params):
-            try:
-                clobber_document(doc_params)
-            except OPennException as ex:
-                parser.error(str(ex))
-        else:
-            parser.error('`op-prep --clobber` called for nonexistent document')
-
     try:
+        if source_dir.strip().endswith('/'):
+            source_dir = source_dir[:-1]
+
+        if not os.path.exists(source_dir):
+            raise OPennException("SOURCE_DIR does not exist: %s" % source_dir)
+
+        validate_source_dir(collection, source_dir)
+
+        base_dir = os.path.basename(source_dir)
+        doc_params = { 'base_dir': base_dir, 'collection': collection }
+
+        if doc_exists(doc_params):
+            if opts.resume:
+                pass
+            elif opts.clobber:
+                pass
+            elif opts.update:
+                parser.error('Update function not yet implemented')
+            else:
+                parser.error("Document already exists with base_dir"
+                             " '%s' and collection '%s'" % (base_dir, collection))
+
+        status_txt = os.path.join(source_dir, 'status.txt')
+        if opts.resume:
+            if os.path.exists(status_txt):
+                pass
+            else:
+                parser.error('Cannot resume prep without expected status file:\n %s' % (status_txt, ))
+
+        if opts.clobber:
+            if doc_exists(doc_params):
+                try:
+                    clobber_document(doc_params)
+                except OPennException as ex:
+                    parser.error(str(ex))
+            else:
+                parser.error('`op-prep --clobber` called for nonexistent document')
+
         prep_dir(collection, source_dir)
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))

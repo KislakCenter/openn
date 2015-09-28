@@ -14,17 +14,17 @@ setUp() {
     clear_tables
 }
 
-# suite() {
-#     # suite_addTest testSpreadsheetPrep
-#     # suite_addTest testRun
-#     # suite_addTest testBloodyUnicode
-#     # suite_addTest testStatusFlags
-#     # suite_addTest testDocumentClobber
-#     # suite_addTest testDocumentClobberCancel
-#     # suite_addTest testDocumentClobberNoDocYet
-#     # suite_addTest testDocumentClobberDocOnline
-#     suite_addTest testResume
-# }
+suite() {
+    suite_addTest testRun
+    # suite_addTest testSpreadsheetPrep
+    # suite_addTest testBloodyUnicode
+    # suite_addTest testStatusFlags
+    # suite_addTest testDocumentClobber
+    # suite_addTest testDocumentClobberCancel
+    # suite_addTest testDocumentClobberNoDocYet
+    # suite_addTest testDocumentClobberDocOnline
+    # suite_addTest testResume
+}
 
 insert_document() {
     today=`date "+%Y-%m-%d"`
@@ -84,7 +84,7 @@ create_dummy_files() {
 testRun() {
     source_dir=$TEST_STAGING_DIR/mscodex1223
     cp -r $TEST_DATA_DIR/mscodex1223 $source_dir
-    output=`op-prep medren $source_dir`
+    output=`op-prep penn-pih $source_dir`
 
     # source_dir=$TEST_STAGING_DIR/mscodex1589
     # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir

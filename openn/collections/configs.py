@@ -7,9 +7,8 @@ from openn.openn_exception import OPennException
 class Configs(object):
     logger = logging.getLogger(__name__)
 
-    def __init__(self, coll_configs, validations):
-        self._configs     = deepcopy(coll_configs)
-        self._validations = deepcopy(validations)
+    def __init__(self, coll_configs_dict):
+        self._collections_config = deepcopy(coll_configs_dict)
 
     def tags(self):
         return self.all_values('tag')
@@ -109,3 +108,19 @@ class Configs(object):
         dupes = [ (v, cts[v]) for v in cts if cts[v] > 1 ]
 
         return dupes
+
+    @property
+    def _configs(self):
+        try:
+            return self._collections_config['configs']
+        except KeyError:
+            msg = "COLLECTIONS config should have key 'configs']"
+            raise OPennException(msg)
+
+    @property
+    def _validations(self):
+        try:
+            return self._collections_config['validations']
+        except KeyError:
+            msg = "COLLECTIONS config should have key 'validations']"
+            raise OPennException(msg)

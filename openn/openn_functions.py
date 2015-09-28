@@ -12,6 +12,18 @@ def get_class(kls):
         m = getattr(m, comp)
     return m
 
+def get_by_key(dicts, key_name, key_value):
+    """From a list of list of dicts, get the all dicts with value ==
+key_value for key == key_name.
+
+    Arguments:
+    - `dicts`: a list of dicts
+    - `key_name`:  the name of the dictionary key
+    - `key_value`: the value of the key
+
+    """
+    return [ x for x in dicts if x.get(key_name, None) == key_value ]
+
 def tstamp():
     return time.strftime('%Y%m%dT%H%M%S')
 
