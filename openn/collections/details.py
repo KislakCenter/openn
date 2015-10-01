@@ -33,7 +33,7 @@ class Details(object):
         """
         colls = self.collections()
         # create a list of tuples using the key
-        tups = [ (self.sort_key(cfg,sort_by), cfg) for cfg in self.collections() ]
+        tups = [ (self.sort_key(x,sort_by), x) for x in self.collections() ]
         ordered = sorted(tups, key=lambda x: x[0])
 
         return [ x[1] for x in ordered ]
@@ -48,8 +48,9 @@ class Details(object):
         details = { 'tag': tag }
         # get information from the database
         try:
-            coll = OPennCollection.objects.get(tag=tag)
-            doc_count = Document.objects.filter(openn_collection_id = coll.pk).count()
+           coll = OPennCollection.objects.get(tag=tag)
+            doc_count = Document.objects.filter(
+                openn_collection_id = coll.pk).count()
             details.update({ 'collection_id': coll.long_id(),
                              'metadata_type': coll.metadata_type,
                              'documents': doc_count})

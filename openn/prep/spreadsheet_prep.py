@@ -31,14 +31,15 @@ class SpreadsheetPrep(CollectionPrep):
     logger = logging.getLogger(__name__)
     BLANK_RE = re.compile('blank', re.IGNORECASE)
 
-    def __init__(self, source_dir, collection, document, config_json):
+    def __init__(self, source_dir, document, prep_config):
         """
         Create a new SpreadsheetPrep for the given source_dir, collection and document.
         """
-        CollectionPrep.__init__(self,source_dir,collection, document)
+        CollectionPrep.__init__(self,source_dir,document,prep_config)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir = os.path.join(self.source_dir, 'data')
         self._workbook = None
+        config_json = prep_config.prep_class_parameter('config_json')
         self._config = json.load(open(config_json))
 
     def add_file_list(self,file_list):

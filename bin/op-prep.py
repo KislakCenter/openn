@@ -12,10 +12,12 @@
         check list of files in XML
     - build list of filenames with labels
 
-  copy master TIFFs (with correct names to destination) to destination folder
+  copy master TIFFs (with correct names to destination) to destination
+     folder
   generate derivatives
   create manifest
   create TEI with new filenames and paths
+
 """
 
 # optparse is both easy to use and produces clean code
@@ -29,7 +31,8 @@ import os
 import sys
 import logging
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..')))
 from openn.openn_settings import OPennSettings
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
@@ -60,7 +63,8 @@ def cmd():
 def setup_logger():
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)-15s - %(levelname)s - %(message)s')
+    fmt = '%(asctime)s - %(name)-15s - %(levelname)s - %(message)s'
+    formatter = logging.Formatter(fmt)
     ch.setFormatter(formatter)
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
@@ -69,7 +73,6 @@ def setup_logger():
 
 def collection_configs():
     return Configs(settings.COLLECTIONS)
-
 
 def setup_prepstatus(doc):
     # destroy the associate prep if it exists
@@ -91,14 +94,7 @@ def failure_status(prepstatus, ex):
     prepstatus.error     = str(ex)
     prepstatus.save()
 
-def get_collection_config(collection):
-    config = settings.COLLECTIONS.get(collection.lower(), None)
-    if config is None:
-        raise OPennException("Configuration not found for collection: '%s'" % collection)
-    return config
-
-
-def get_collection_prep(source_dir, collection, document):
+def get_collection_prep(source_dir, prep_method, collection, document):
     config = get_collection_config(collection)
     cls = get_class(config['prep_class'])
     kwargs = config.get('prep_class_kwargs', {})
@@ -131,12 +127,16 @@ def clean_dir(source_dir, clobber_pattern):
 
 def clobber_document(params):
     doc = get_doc(params)
-    logger.info(
-        "Preparing to clobber document id: %d, collection: %s, base_dir: %s" % (
-            doc.id, doc.collection, doc.base_dir))
+
+    if logger.getLogger().getEffectiveLevel() >= logger.INFO:
+        msg = "Preparing to clobber document id: %d,"
+        msg += " collection: %s, base_dir: %s"
+        logger.info(msg % doc.id, doc.collection, doc.base_dir)
+
     if doc.is_online:
         msg = "Clobber requested, but refusing to delete record "
         msg += "for document on-line at: %s" % (doc.package_dir,)
+        msg = msg
         raise OPennException(msg)
     else:
         s = None
@@ -148,9 +148,11 @@ def clobber_document(params):
                     logger.info("OK. Deleting existing document.")
                     doc.delete()
                 elif s.lower() == 'no':
-                    raise OPennException("User canceled clobber; no changes made")
+                    msg = "User canceled clobber; no changes made"
+                    raise OPennException(msg)
                 else:
-                    print "Please enter 'Yes' or 'No'. I don't understand: %r" % (s,)
+                    msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
+                    print msg % (s,)
                     s = None
 
 def fs_prep(source_dir):
@@ -159,7 +161,7 @@ def fs_prep(source_dir):
     if hasattr(settings, 'CLOBBER_PATTERN'):
         clean_dir(source_dir, settings.CLOBBER_PATTERN)
 
-def prep_dir(collection, source_dir):
+def prep_dir(collection, prep_method, source_dir):
     base_dir = os.path.basename(source_dir)
     # mark that prep has begun
     status_txt = os.path.join(source_dir, 'status.txt')
@@ -170,7 +172,10 @@ def prep_dir(collection, source_dir):
     doc = setup.prep_document(collection, base_dir)
     prepstatus = setup_prepstatus(doc)
     try:
-        collection_prep = get_collection_prep(source_dir, collection, doc)
+        collection_prep = get_collection_prep(source_dir=source_dir,
+                                              collection=collection,
+                                              prep_method=prep_method,
+                                              doc=doc)
         fs_prep(source_dir)
         collection_prep.prep_dir()
         common_prep = CommonPrep(source_dir, collection, doc)
@@ -185,7 +190,8 @@ def prep_source_dir_arg(source_dir):
         source_dir = source_dir[:-1]
 
     if not os.path.exists(source_dir):
-        raise OPennException("SOURCE_DIR does not exist: %s" % source_dir)
+        msg = "SOURCE_DIR does not exist: %s" % source_dir
+        raise OPennException(msg)
 
     return source_dir
 
@@ -235,15 +241,17 @@ def main(cmdline=None):
             elif opts.update:
                 parser.error('Update function not yet implemented')
             else:
-                parser.error("Document already exists with base_dir"
-                             " '%s' and collection '%s'" % (base_dir, collection))
+                msg = "Document already exists with base_dir"
+                msg += " '%s' and collection '%s'"
+                parser.error(msg % (base_dir, collection))
 
         status_txt = os.path.join(source_dir, 'status.txt')
         if opts.resume:
             if os.path.exists(status_txt):
                 pass
             else:
-                parser.error('Cannot resume prep without expected status file:\n %s' % (status_txt, ))
+                msg = 'Cannot resume prep without expected status file:\n %s'
+                parser.error(msg % (status_txt, ))
 
         if opts.clobber:
             if doc_exists(doc_params):
@@ -252,9 +260,11 @@ def main(cmdline=None):
                 except OPennException as ex:
                     parser.error(str(ex))
             else:
-                parser.error('`op-prep --clobber` called for nonexistent document')
+                msg = '`op-prep --clobber` called for nonexistent document'
+                parser.error(msg)
 
-        prep_dir(collection, source_dir)
+        print "collection: %r" % (collection,)
+        prep_dir(collection=collection, prep_method=prep_method, source_dir=source_dir)
     except OPennException as ex:
         status = 4
         print_exc()
@@ -288,17 +298,21 @@ prepare correctly the first time. Will fail if document is on-line.
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)
+    update_help = 'update db if doc exists [default: %default]'
+    update_help += ' NOT YET IMPLEMENTED'
     parser.add_option('-u', '--update',
                       action='store_true', dest='update', default=False,
-                      help='update db if doc exists [default: %default]; NOT YET IMPLEMENTED')
+                      help=update_help)
 
+    resume_help = 'resume processing of document [default: %default]'
     parser.add_option('-r', '--resume',
                       action='store_true', dest='resume', default=False,
-                      help='resume processing of document [default: %default]')
+                      help=resume_help)
 
+    clobber_help = 'if it exists, delete document from database'
     parser.add_option('-x', '--clobber',
                       action='store_true', dest='clobber', default=False,
-                      help='if it exists, delete document from database')
+                      help=clobber_help)
 
     return parser
 

@@ -3,6 +3,7 @@ import logging
 from copy import deepcopy
 
 from openn.openn_exception import OPennException
+from openn.collections.collection import Collection
 
 class Configs(object):
     logger = logging.getLogger(__name__)
@@ -18,13 +19,17 @@ class Configs(object):
 
         return [ x for x in vals if x is not None ]
 
+    def get_collection(self, tag):
+        return Collection(self.get_config(tag))
+
     def get_config(self, tag):
         configlist = [ x for x in self._configs if x['tag'] == tag ]
 
         if len(configlist) == 1:
             return configlist[0]
         elif len(configlist) > 1:
-            raise OPennException("Invalid collections config: more than one has tag: '%s'" % (tag,))
+            msg = "Invalid collections config: more than one has tag '%s'"
+            raise OPennException(msg % (tag,))
         else:
             raise OPennException("Unknown tag: '%s'" % (tag,))
 

@@ -62,7 +62,7 @@ CREATE TABLE `openn_document` (
   `updated` datetime NOT NULL,
   `is_online` tinyint(1) NOT NULL,
   `base_dir` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `collection` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `collection` varchar(30) COLLATE utf8_unicode_ci,
   `title` longtext COLLATE utf8_unicode_ci,
   `tei_xml` longtext COLLATE utf8_unicode_ci,
   `image_licence` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE `openn_document` (
   `metadata_rights_more_info` longtext COLLATE utf8_unicode_ci,
   `openn_collection_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `openn_document_collection_5ae7b0030dd7c35f_uniq` (`collection`,`base_dir`),
+  UNIQUE KEY `openn_document_openn_collection_id_7553d73c4cdd9185_uniq` (`openn_collection_id`,`base_dir`),
   KEY `openn_document_a7dffeff` (`openn_collection_id`),
   CONSTRAINT `openn_collection_id_refs_id_f79e4898` FOREIGN KEY (`openn_collection_id`) REFERENCES `openn_openncollection` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -255,7 +255,7 @@ CREATE TABLE `south_migrationhistory` (
   `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +264,7 @@ CREATE TABLE `south_migrationhistory` (
 
 LOCK TABLES `south_migrationhistory` WRITE;
 /*!40000 ALTER TABLE `south_migrationhistory` DISABLE KEYS */;
-INSERT INTO `south_migrationhistory` VALUES (1,'openn','0001_initial','2015-01-28 14:27:56'),(2,'openn','0002_auto__add_field_document_is_online','2015-01-28 14:27:56'),(3,'openn','0003_auto__add_field_document_base_dir__add_field_document_tei_file_name','2015-01-28 14:27:56'),(4,'openn','0004_auto__add_field_document_colletion__chg_field_document_base_dir','2015-01-28 14:27:57'),(5,'openn','0005_auto__del_field_document_colletion__add_field_document_collection__add','2015-01-28 14:27:57'),(6,'openn','0006_auto__del_unique_document_collection_call_number__add_unique_document_','2015-01-28 14:27:57'),(7,'openn','0007_auto__add_image__add_derivative','2015-01-28 14:27:57'),(8,'openn','0008_auto__del_field_derivative_component__add_field_derivative_image','2015-01-28 14:27:57'),(9,'openn','0009_auto__add_field_document_title','2015-01-28 14:27:57'),(10,'openn','0010_auto__add_field_document_tei_xml','2015-01-28 14:27:57'),(11,'openn','0011_auto__chg_field_image_image_type','2015-01-28 14:27:57'),(12,'openn','0012_auto__add_field_image_created__add_field_image_updated__add_field_deri','2015-01-28 14:27:57'),(13,'openn','0013_auto__add_version__add_unique_version_document_major_version_minor_ver','2015-01-28 14:27:58'),(14,'openn','0014_auto__add_field_version_created__add_field_version_updated','2015-01-28 14:27:58'),(15,'openn','0015_auto__chg_field_document_call_number__chg_field_document_title','2015-01-28 14:27:58'),(16,'openn','0016_auto__add_prepstatus','2015-01-28 14:27:58'),(17,'openn','0017_auto__del_field_document_tei_file_name','2015-01-28 14:27:58'),(18,'django_extensions','0001_empty','2015-01-28 14:27:58'),(19,'openn','0018_auto__add_field_document_image_licence__add_field_document_metadata_li','2015-07-02 14:16:26'),(20,'openn','0019_auto__add_field_document_image_copyright_holder__add_field_document_im','2015-07-06 13:20:20'),(21,'openn','0020_auto__add_openncollection__add_field_document_openn_collection','2015-09-28 13:58:40'),(22,'openn','0021_add_collections','2015-09-28 13:58:40'),(23,'openn','0022_document_change_medren_to_pennmss','2015-09-28 13:58:40'),(24,'openn','0023_set_document_openncollection_ids','2015-09-28 13:58:40'),(25,'openn','0024_auto__chg_field_document_openn_collection','2015-09-28 13:58:40'),(26,'openn','0025_auto__add_field_openncollection_metadata_type','2015-09-28 13:58:40');
+INSERT INTO `south_migrationhistory` VALUES (1,'openn','0001_initial','2015-01-28 14:27:56'),(2,'openn','0002_auto__add_field_document_is_online','2015-01-28 14:27:56'),(3,'openn','0003_auto__add_field_document_base_dir__add_field_document_tei_file_name','2015-01-28 14:27:56'),(4,'openn','0004_auto__add_field_document_colletion__chg_field_document_base_dir','2015-01-28 14:27:57'),(5,'openn','0005_auto__del_field_document_colletion__add_field_document_collection__add','2015-01-28 14:27:57'),(6,'openn','0006_auto__del_unique_document_collection_call_number__add_unique_document_','2015-01-28 14:27:57'),(7,'openn','0007_auto__add_image__add_derivative','2015-01-28 14:27:57'),(8,'openn','0008_auto__del_field_derivative_component__add_field_derivative_image','2015-01-28 14:27:57'),(9,'openn','0009_auto__add_field_document_title','2015-01-28 14:27:57'),(10,'openn','0010_auto__add_field_document_tei_xml','2015-01-28 14:27:57'),(11,'openn','0011_auto__chg_field_image_image_type','2015-01-28 14:27:57'),(12,'openn','0012_auto__add_field_image_created__add_field_image_updated__add_field_deri','2015-01-28 14:27:57'),(13,'openn','0013_auto__add_version__add_unique_version_document_major_version_minor_ver','2015-01-28 14:27:58'),(14,'openn','0014_auto__add_field_version_created__add_field_version_updated','2015-01-28 14:27:58'),(15,'openn','0015_auto__chg_field_document_call_number__chg_field_document_title','2015-01-28 14:27:58'),(16,'openn','0016_auto__add_prepstatus','2015-01-28 14:27:58'),(17,'openn','0017_auto__del_field_document_tei_file_name','2015-01-28 14:27:58'),(18,'django_extensions','0001_empty','2015-01-28 14:27:58'),(19,'openn','0018_auto__add_field_document_image_licence__add_field_document_metadata_li','2015-07-02 14:16:26'),(20,'openn','0019_auto__add_field_document_image_copyright_holder__add_field_document_im','2015-07-06 13:20:20'),(21,'openn','0020_auto__add_openncollection__add_field_document_openn_collection','2015-09-28 13:58:40'),(22,'openn','0021_add_collections','2015-09-28 13:58:40'),(23,'openn','0022_document_change_medren_to_pennmss','2015-09-28 13:58:40'),(24,'openn','0023_set_document_openncollection_ids','2015-09-28 13:58:40'),(25,'openn','0024_auto__chg_field_document_openn_collection','2015-09-28 13:58:40'),(26,'openn','0025_auto__add_field_openncollection_metadata_type','2015-09-28 13:58:40'),(27,'openn','0026_auto__chg_field_document_collection','2015-09-28 19:40:31'),(28,'openn','0027_auto__del_unique_document_collection_base_dir__add_unique_document_ope','2015-09-28 19:40:31');
 /*!40000 ALTER TABLE `south_migrationhistory` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -277,4 +277,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-28 14:59:58
+-- Dump completed on 2015-09-28 20:40:47
