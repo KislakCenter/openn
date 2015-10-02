@@ -71,6 +71,20 @@ base=`basename "$SOURCE_DIR"`
 if is_managed_masters_dir "$SOURCE_DIR"; then
     echo "SOURCE_DIR $SOURCE_DIR is a Managed Masters directory"
     SOURCE_DIR="$SOURCE_DIR/data"
+    mm_bibid=`unzip -p "$SOURCE_DIR"/MM_Metadata.xlsx xl/sharedStrings.xml | tr '\r' '\n' | egrep '<t>[0-9]+</t>' | sed 's!.*<t>\([0-9][0-9]*\)</t>.*!\1!'`
+fi
+
+if [[ -n "$mm_bibid" ]]; then
+    echo "[$cmd] MM_Metadata.xlsx has BibID: $mm_bibid"
+    if [[ -n "$BIBID" ]] ; then
+        if [[ "$BIBID" == "$mm_bibid" ]]; then
+            echo "[$cmd] OK:    BibID ($BIBID) equals MM_Metadata.xlsx BibID ($mm_bibid)"
+        else
+            echo "[$cmd] ERROR: BibID ($BIBID) does not match MM_Metadata.xlsx BibID ($mm_bibid)"
+        fi
+    else
+        echo "[$cmd] WARNING: User did not provide bibid; confirm BibID from MM_Metadata.xlsx: $mm_bibid"
+    fi
 fi
 
 # Now see if SOURCE_DIR is valid.
@@ -115,11 +129,14 @@ done
 find $dest \( $find_opts \) -delete
 
 # Write bibid.txt
-bibid_file=$dest/bibid.txt
+bibid_file="$dest"/bibid.txt
 if [ -n "$BIBID" ]; then
     echo "[$cmd] BibID provided ($BIBID)"
     echo "[$cmd] Writing $BIBID to $bibid_file"
-    echo $BIBID > $bibid_file
+    echo $BIBID > "$bibid_file"
+elif [[ -n "$mm_bibid" ]]; then
+    echo "[$cmd] WARNING: Creating $bibid_file with BibID from MM_Metadata.xlsx: $mm_bibid"
+    echo $mm_bibid > "$bibid_file"
 else
     echo "[$cmd] WARNING: No bibid provided; $bibid_file not created!"
 fi
