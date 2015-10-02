@@ -15,3 +15,11 @@ class Collection:
 
     def tag(self):
         return self._config['tag']
+
+    def folder(self):
+        opcoll = self.openn_collection()
+        if opcoll is not None:
+            return opcoll.long_id()
+        else:
+            msg = "Collection with tag '%s' is not in db; has no folder"
+            raise OPennException(msg % self.tag)

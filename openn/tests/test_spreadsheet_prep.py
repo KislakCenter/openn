@@ -57,7 +57,7 @@ class TestSpreadsheetPrep(TestCase):
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
         collection_configs=settings.COLLECTIONS,
-        license_configs=settings.LICENCES)
+        prep_context=settings.PREP_CONTEXT)
     haverford_prep_config  = prep_cfg_factory.create_prep_config(
         'haverford-diaries')
 

@@ -7,7 +7,7 @@ from openn.collections.configs import Configs
 
 class PrepConfigFactory(object):
     def __init__(self, prep_configs_dict, prep_methods, collection_configs,
-                 license_configs):
+                 prep_context):
         """Create a new PrepConfigFactory with dict `prep_configs_dict`, and
 list `prep_methods` and list of collection_configs.
 
@@ -15,7 +15,7 @@ list `prep_methods` and list of collection_configs.
         self._prep_configs       = deepcopy(prep_configs_dict)
         self._prep_methods       = PrepMethods(prep_methods)
         self._collection_configs = Configs(collection_configs)
-        self._license_configs    = license_configs
+        self._prep_context       = deepcopy(prep_context)
 
     def create_prep_config(self, prep_config_tag):
         """For the given PREP_CONFIG tag `tag`, return a PrepConfig.
@@ -28,7 +28,7 @@ list `prep_methods` and list of collection_configs.
             'coll_prep_dict': prep_config_dict,
             'coll_dict': coll_config,
             'prep_dict': method_config,
-            'license_configs': self._license_configs,
+            'prep_context': self._prep_context,
         })
 
     def prep_config_tags(self):

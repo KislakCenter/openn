@@ -382,6 +382,13 @@ PREP_CONFIGS = {
     }
 }
 
+PREP_CONTEXT = {
+    'archive_dir': ARCHIVE_DIR,
+    'package_dir': PACKAGE_DIR,
+    'staging_dir': STAGING_DIR,
+    'licences': LICENCES,
+}
+
 MARKDOWN_DEUX_STYLES = {
     "default": {
         "extras": {

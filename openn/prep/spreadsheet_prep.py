@@ -39,6 +39,7 @@ class SpreadsheetPrep(CollectionPrep):
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir = os.path.join(self.source_dir, 'data')
         self._workbook = None
+        self._xsl = prep_config.prep_class_parameter('xsl')
         config_json = prep_config.prep_class_parameter('config_json')
         self._config = json.load(open(config_json))
 
@@ -58,7 +59,7 @@ class SpreadsheetPrep(CollectionPrep):
             os.remove(outfile)
         with open(outfile, 'w+') as f:
 
-            sp_xml = SpreadsheetXML(self.LICENCES)
+            sp_xml = SpreadsheetXML(self.prep_config.context_var('licences'))
             xml = sp_xml.build_xml(self.workbook().data(), self._config['xml_config'])
             f.write(xml.encode('utf-8'))
 
@@ -195,7 +196,7 @@ class SpreadsheetPrep(CollectionPrep):
 
     def gen_partial_tei(self):
         xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, self.openn_xml_path(), self.coll_config['xsl']],
+        p = subprocess.Popen([xsl_command, self.openn_xml_path(), self._xsl],
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()
@@ -208,11 +209,14 @@ class SpreadsheetPrep(CollectionPrep):
         raise NotImplementedError, "TEI regeneration not available for spreadsheet preparation"
 
     def archive_xlsx(self):
-        coll_dir = os.path.join(self.ARCHIVE_DIR, self._coll_name)
+        collection = self.prep_config.collection()
+        coll_dir = os.path.join(self.prep_config.context_var('archive_dir'),
+                                collection.folder())
         mkdir_p(coll_dir)
 
         archive_xlsx = "%s_%s.xlsx" % (self.basedir, tstamptz())
-        archive_path = os.path.join(self.ARCHIVE_DIR, archive_xlsx)
+        archive_path = os.path.join(self.prep_config.context_var('archive_dir'),
+                                    archive_xlsx)
         self.logger.info("[%s] Archiving %s as %s" % (
             self.basedir, self.xlsx_path, archive_path))
         os.rename(self.xlsx_path, archive_path)

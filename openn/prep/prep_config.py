@@ -7,13 +7,16 @@ from openn.openn_exception import OPennException
 
 class PrepConfig:
     def __init__(self, prep_config_tag, coll_prep_dict, coll_dict, prep_dict,
-                 license_configs):
+                 prep_context):
         "docstring"
         self._prep_config_tag = prep_config_tag
         self._coll_prep_dict  = deepcopy(coll_prep_dict)
         self._collection      = Collection(coll_dict)
         self._prep_method     = PrepMethod(prep_dict)
-        self._license_configs = deepcopy(license_configs)
+        self._context         = deepcopy(prep_context)
+
+    def context_var(self, name):
+        return self._context[name]
 
     def collection(self):
         return self._collection
