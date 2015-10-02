@@ -81,30 +81,32 @@ base=`basename "$SOURCE_DIR"`
 # Check to see if SOURCE_DIR is a managed masters directory.
 if is_managed_masters_dir "$SOURCE_DIR"; then
     echo "SOURCE_DIR $SOURCE_DIR is a Managed Masters directory"
-    SOURCE_DIR="$SOURCE_DIR/data"
+    # First, grab the BibID from MM_Metadata.xlsx
     mm_bibid=`unzip -p "$SOURCE_DIR"/MM_Metadata.xlsx xl/sharedStrings.xml | tr '\r' '\n' | egrep '<t>[0-9]+</t>' | sed 's!.*<t>\([0-9][0-9]*\)</t>.*!\1!'`
     [[ ! -n "$mm_bibid" ]] && mm_bibid=BIBID_NOT_FOUND
+    # Second, change SOURCE_DIR to `/path/to/msXXXX/data`
+    SOURCE_DIR="$SOURCE_DIR/data"
 fi
 
 if [[ "$FORCE" ]]; then
-    echo "[$cmd] WARNING: Force option selected; ignoring MM_Metadata.xlsx BibID: $mm_bibid"
+    echo "[$cmd] WARNING: Force option selected; ignoring MM_Metadata.xlsx BibID: '$mm_bibid'."
     unset $mm_bibid
 elif [[ "$mm_bibid" = "BIBID_NOT_FOUND" ]]; then
-    echo "[$cmd] ERROR: Found MM_Metadata.xlsx but could not detect BibID; please check manually"
-    echo "[$cmd] ERROR: Use force option '-f' to run anyway"
+    echo "[$cmd] ERROR: Found MM_Metadata.xlsx but could not detect BibID; please check manually."
+    echo "[$cmd] ERROR: Use force option '-f' to run anyway."
     exit 1
 elif [[ -n "$mm_bibid" ]]; then
-    echo "[$cmd] MM_Metadata.xlsx has BibID: $mm_bibid"
+    echo "[$cmd] MM_Metadata.xlsx has BibID '$mm_bibid'."
     if [[ -n "$BIBID" ]] ; then
         if [[ "$BIBID" == "$mm_bibid" ]]; then
-            echo "[$cmd] OK:    BibID ($BIBID) equals MM_Metadata.xlsx BibID ($mm_bibid)"
+            echo "[$cmd] OK:    BibID '$BIBID' equals MM_Metadata.xlsx BibID '$mm_bibid'."
         else
-            echo "[$cmd] ERROR: BibID ($BIBID) does not match MM_Metadata.xlsx BibID ($mm_bibid)" >&2
-            echo "[$cmd] ERROR: Use force option '-f' to run anyway"
+            echo "[$cmd] ERROR: BibID you provided '$BIBID' does not match MM_Metadata.xlsx BibID '$mm_bibid'." >&2
+            echo "[$cmd] ERROR: Use force option '-f' to run anyway."
             exit 1
         fi
     else
-        echo "[$cmd] WARNING: User did not provide bibid; confirm BibID from MM_Metadata.xlsx: $mm_bibid"
+        echo "[$cmd] WARNING: User did not provide bibid; confirm BibID from MM_Metadata.xlsx: '$mm_bibid'."
     fi
 fi
 
