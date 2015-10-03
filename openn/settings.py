@@ -63,7 +63,7 @@ OPENN_HOST = 'openn.library.upenn.edu'
 # put the openn/bin dir in the path
 os.environ['PATH'] = os.path.join(PROJECT_PATH, 'bin') + os.pathsep + os.environ['PATH']
 
-DERIVS = {
+DERIV_CONFIGS = {
         'web': {
             'ext': 'jpg',
             'max_side': 1800,
@@ -387,6 +387,7 @@ PREP_CONTEXT = {
     'package_dir': PACKAGE_DIR,
     'staging_dir': STAGING_DIR,
     'licences': LICENCES,
+    'deriv_configs': DERIV_CONFIGS,
 }
 
 MARKDOWN_DEUX_STYLES = {

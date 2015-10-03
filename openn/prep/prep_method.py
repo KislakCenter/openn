@@ -16,8 +16,9 @@ class PrepMethod(object):
     def grab_prep_class_param(self, name):
         return self.prep_class_dict[name]
 
-    def get_collection_prep(self, source_dir, doc):
+    def get_prep_class(self):
         class_name = self.get_class_name()
+        return opfunc.get_class(class_name)
 
     def get_class_name(self):
         prep_class_dict = self.get_prep_class_config()

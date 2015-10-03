@@ -15,6 +15,9 @@ class PrepConfig:
         self._prep_method     = PrepMethod(prep_dict)
         self._context         = deepcopy(prep_context)
 
+    def image_rights(self):
+        return self._coll_prep_dict['common_prep']['image_rights']
+
     def context_var(self, name):
         return self._context[name]
 
@@ -24,8 +27,10 @@ class PrepConfig:
     def prep_method(self):
         return self._prep_method
 
-    def get_collection_prep(self, source_dir, doc):
-        return self._prep_method.get_collection_prep(source_dir, doc)
+    def get_prep_class(self):
+        prep_class = self._prep_method.get_prep_class()
+
+        return prep_class
 
     def prep_class_params(self):
         return self._prep_method.prep_class_params()

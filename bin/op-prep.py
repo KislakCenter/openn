@@ -43,6 +43,7 @@ from openn.prep.package_validation import PackageValidation
 from openn.prep.status import Status
 from openn.prep.prep_config_factory import PrepConfigFactory
 from openn.collections.configs import Configs
+from openn.prep.openn_prep import OPennPrep
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 
@@ -161,29 +162,25 @@ def fs_prep(source_dir):
     if hasattr(settings, 'CLOBBER_PATTERN'):
         clean_dir(source_dir, settings.CLOBBER_PATTERN)
 
-def prep_dir(collection, prep_method, source_dir):
-    base_dir = os.path.basename(source_dir)
-    # mark that prep has begun
-    status_txt = os.path.join(source_dir, 'status.txt')
-    if not os.path.exists(status_txt):
-        Status(source_dir).write_status(Status.PREP_BEGUN)
-
-    setup = PrepSetup()
-    doc = setup.prep_document(collection, base_dir)
-    prepstatus = setup_prepstatus(doc)
-    try:
-        collection_prep = get_collection_prep(source_dir=source_dir,
-                                              collection=collection,
-                                              prep_method=prep_method,
-                                              doc=doc)
-        fs_prep(source_dir)
-        collection_prep.prep_dir()
-        common_prep = CommonPrep(source_dir, collection, doc)
-        common_prep.prep_dir()
-        success_status(prepstatus)
-    except OPennException as ex:
-        failure_status(prepstatus, ex)
-        raise
+# def prep_dir(prep_config, source_dir):
+#     base_dir = os.path.basename(source_dir)
+#     # mark that prep has begun
+#     status_txt = os.path.join(source_dir, 'status.txt')
+#     if not os.path.exists(status_txt):
+#         Status(source_dir).write_status(Status.PREP_BEGUN)
+#
+#     setup = PrepSetup()
+#     doc = setup.prep_document(collection, base_dir)
+#     prepstatus = setup_prepstatus(doc)
+#     try:
+#         fs_prep(source_dir)
+#         collection_prep.prep_dir()
+#         common_prep = CommonPrep(source_dir, collection, doc)
+#         common_prep.prep_dir()
+#         success_status(prepstatus)
+#     except OPennException as ex:
+#         failure_status(prepstatus, ex)
+#         raise
 
 def prep_source_dir_arg(source_dir):
     if source_dir.strip().endswith('/'):
@@ -199,7 +196,8 @@ def get_prep_config(prep_config_tag):
     prep_config_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
-        collection_configs=settings.COLLECTIONS)
+        collection_configs=settings.COLLECTIONS,
+        prep_context=settings.PREP_CONTEXT)
 
     return prep_config_factory.create_prep_config(prep_config_tag)
 
@@ -225,8 +223,6 @@ def main(cmdline=None):
         prep_config = get_prep_config(prep_config_tag)
         collection  = prep_config.collection()
         prep_method = prep_config.prep_method()
-        # we're done with the prep_config; destroy it
-        del(prep_config)
 
         validate_source_dir(prep_method, source_dir)
 
@@ -264,7 +260,7 @@ def main(cmdline=None):
                 parser.error(msg)
 
         print "collection: %r" % (collection,)
-        prep_dir(collection=collection, prep_method=prep_method, source_dir=source_dir)
+        OPennPrep().prep_dir(source_dir, prep_config)
     except OPennException as ex:
         status = 4
         print_exc()
