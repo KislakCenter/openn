@@ -315,7 +315,6 @@ PREP_CONFIGS = {
         "image_types": [ '*.tif' ],
         'collection_prep': {
             'tag': 'pih',
-            }
         },
         'common_prep': {
             'image_rights': {
@@ -334,7 +333,7 @@ PREP_CONFIGS = {
                     'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
                 },
             },
-
+        },
     },
     'brynmawr-diaries': {
         'collection': {

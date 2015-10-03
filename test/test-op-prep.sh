@@ -14,22 +14,28 @@ setUp() {
     clear_tables
 }
 
-suite() {
-    suite_addTest testRun
-    # suite_addTest testSpreadsheetPrep
-    # suite_addTest testBloodyUnicode
-    # suite_addTest testStatusFlags
-    # suite_addTest testDocumentClobber
-    # suite_addTest testDocumentClobberCancel
-    # suite_addTest testDocumentClobberNoDocYet
-    # suite_addTest testDocumentClobberDocOnline
-    # suite_addTest testResume
-}
+# suite() {
+#     suite_addTest testRun
+#     suite_addTest testSpreadsheetPrep
+#     suite_addTest testBloodyUnicode
+#     suite_addTest testStatusFlags
+#     suite_addTest testDocumentClobber
+#     suite_addTest testDocumentClobberCancel
+#     suite_addTest testDocumentClobberNoDocYet
+#     suite_addTest testDocumentClobberDocOnline
+#     suite_addTest testResume
+# }
 
 insert_document() {
     today=`date "+%Y-%m-%d"`
-    sql="insert into openn_document (collection, base_dir, is_online, created, updated)"
-    sql="$sql values ('haverford', 'MS_XYZ_1.2', 0, '$today', '$today')"
+    haverford_id=`mysql --batch --skip-column-names -u openn openn -e "select id from openn_openncollection where tag = 'haverford'"`
+    if [[ -z "$haverford_id" ]]; then
+        echo "ERROR: haverford not in collections table"
+        exit 1
+    fi
+    sql="insert into openn_document"
+    sql="$sql (openn_collection_id, base_dir, is_online, created, updated)"
+    sql="$sql values ($haverford_id, 'MS_XYZ_1.2', 0, '$today', '$today')"
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "$sql"
 }
 
@@ -117,7 +123,7 @@ testSpreadsheetPrep() {
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
     create_dummy_files $source_dir
-    output=`op-prep haverford $source_dir`
+    output=`op-prep haverford-diaries $source_dir`
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
     assertEquals 0 "$status"
@@ -138,14 +144,14 @@ testResume() {
     if [[ $? -ne 0 ]]; then
         exit 1
     fi
-    output=`op-prep ljs $source_dir 2>&1`
+    output=`op-prep ljs-pih $source_dir 2>&1`
     status=$?
     if [ $status = 0 ]; then echo "$output"; fi
     assertNotEquals 0 $status
 
     # fix the problem and resume
     mv $tmpdir/$test_base $source_dir
-    output=`op-prep -r ljs $source_dir 2>&1`
+    output=`op-prep -r ljs-pih $source_dir 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -154,7 +160,7 @@ testResume() {
 testBloodyUnicode() {
     source_dir=$TEST_STAGING_DIR/ljs454
     cp -r $TEST_DATA_DIR/ljs454 $source_dir
-    output=`op-prep ljs $source_dir`
+    output=`op-prep ljs-pih $source_dir`
     status=$?
     if [ $status != 0 ]
     then
@@ -171,7 +177,7 @@ testImagesNotInPIH() {
 
     package_dir=$TEST_STAGING_DIR/ljs454
     cp -r $DIR_EXTRA_IMAGES $package_dir
-    output=`op-prep ljs $package_dir`
+    output=`op-prep ljs-pih $package_dir`
     status=$?
     if [ $status != 0 ]
     then
@@ -184,7 +190,7 @@ testImagesNotInPIH() {
 testStatusFlags() {
     package_dir=$TEST_STAGING_DIR/mscodex1223
     cp -r $PREPPED_DIR $package_dir
-    output=`op-prep medren $package_dir`
+    output=`op-prep penn-pih $package_dir`
     status=$?
     if [ $status != 0 ]
     then
@@ -198,12 +204,13 @@ testStatusFlags() {
 testDocumentClobber() {
     # set up the document
     insert_document
+
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
     create_dummy_files $source_dir
 
     # now run clobber; should succeed
-    output=`echo 'Yes' | op-prep --clobber haverford $source_dir 2>&1`
+    output=`echo 'Yes' | op-prep --clobber haverford-diaries $source_dir 2>&1`
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
     assertEquals 0 "$status"
@@ -214,7 +221,7 @@ testDocumentClobberNoDocYet() {
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
     touch_dummy_files $source_dir
-    output=`op-prep --clobber haverford $source_dir 2>&1`
+    output=`op-prep --clobber haverford-diaries $source_dir 2>&1`
     status=$?
     if [ "$status" = 0 ]; then echo "$output"; fi
     assertEquals 2 "$status"
@@ -229,7 +236,7 @@ testDocumentClobberCancel() {
     touch_dummy_files $source_dir
 
     # now cancel the clobber operation
-    output=`echo 'No' | op-prep --clobber haverford $source_dir 2>&1`
+    output=`echo 'No' | op-prep --clobber haverford-diaries $source_dir 2>&1`
     status=$?
     if [ "$status" = 0 ]; then echo "$output"; fi
     assertNotEquals 0 "$status"
@@ -248,7 +255,7 @@ testDocumentClobberDocOnline() {
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "$sql"
 
     # now it should break
-    output=`op-prep --clobber haverford $source_dir 2>&1`
+    output=`op-prep --clobber haverford-diaries $source_dir 2>&1`
     status=$?
     if [ "$status" = 0 ]; then echo "$output"; fi
     assertNotEquals 0 "$status"

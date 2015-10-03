@@ -30,6 +30,7 @@ from datetime import datetime
 import os
 import sys
 import logging
+import json
 
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
@@ -95,12 +96,6 @@ def failure_status(prepstatus, ex):
     prepstatus.error     = str(ex)
     prepstatus.save()
 
-def get_collection_prep(source_dir, prep_method, collection, document):
-    config = get_collection_config(collection)
-    cls = get_class(config['prep_class'])
-    kwargs = config.get('prep_class_kwargs', {})
-    return cls(source_dir, collection, document, **kwargs)
-
 def fix_perms(source_dir):
     for root, dirs, files in os.walk(source_dir):
         os.chmod(root, 0775)
@@ -127,9 +122,9 @@ def clean_dir(source_dir, clobber_pattern):
                 os.remove(path)
 
 def clobber_document(params):
-    doc = get_doc(params)
+    doc = openn_db.get_doc(params)
 
-    if logger.getLogger().getEffectiveLevel() >= logger.INFO:
+    if logger.getEffectiveLevel() >= logging.INFO:
         msg = "Preparing to clobber document id: %d,"
         msg += " collection: %s, base_dir: %s"
         logger.info(msg % doc.id, doc.collection, doc.base_dir)
@@ -155,32 +150,6 @@ def clobber_document(params):
                     msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
                     print msg % (s,)
                     s = None
-
-def fs_prep(source_dir):
-    fix_perms(source_dir)
-    os.umask(0002)
-    if hasattr(settings, 'CLOBBER_PATTERN'):
-        clean_dir(source_dir, settings.CLOBBER_PATTERN)
-
-# def prep_dir(prep_config, source_dir):
-#     base_dir = os.path.basename(source_dir)
-#     # mark that prep has begun
-#     status_txt = os.path.join(source_dir, 'status.txt')
-#     if not os.path.exists(status_txt):
-#         Status(source_dir).write_status(Status.PREP_BEGUN)
-#
-#     setup = PrepSetup()
-#     doc = setup.prep_document(collection, base_dir)
-#     prepstatus = setup_prepstatus(doc)
-#     try:
-#         fs_prep(source_dir)
-#         collection_prep.prep_dir()
-#         common_prep = CommonPrep(source_dir, collection, doc)
-#         common_prep.prep_dir()
-#         success_status(prepstatus)
-#     except OPennException as ex:
-#         failure_status(prepstatus, ex)
-#         raise
 
 def prep_source_dir_arg(source_dir):
     if source_dir.strip().endswith('/'):
@@ -217,17 +186,18 @@ def main(cmdline=None):
         parser.error('Wrong number of arguments')
 
     try:
-        prep_config_tag = args[0]
-        source_dir = prep_source_dir_arg(args[1])
+        prep_config_tag  = args[0]
+        source_dir       = prep_source_dir_arg(args[1])
 
-        prep_config = get_prep_config(prep_config_tag)
-        collection  = prep_config.collection()
-        prep_method = prep_config.prep_method()
+        prep_config      = get_prep_config(prep_config_tag)
+        openn_collection = prep_config.openn_collection()
+        prep_method      = prep_config.prep_method()
 
         validate_source_dir(prep_method, source_dir)
 
-        base_dir = os.path.basename(source_dir)
-        doc_params = { 'base_dir': base_dir, 'collection': collection }
+        base_dir         = os.path.basename(source_dir)
+        doc_params       = { 'base_dir': base_dir,
+                             'openn_collection': openn_collection }
 
         if openn_db.doc_exists(doc_params):
             if opts.resume:
@@ -238,8 +208,8 @@ def main(cmdline=None):
                 parser.error('Update function not yet implemented')
             else:
                 msg = "Document already exists with base_dir"
-                msg += " '%s' and collection '%s'"
-                parser.error(msg % (base_dir, collection))
+                msg += " '%s' and primary collection '%s'"
+                parser.error(msg % (base_dir, openn_collection))
 
         status_txt = os.path.join(source_dir, 'status.txt')
         if opts.resume:
@@ -250,7 +220,7 @@ def main(cmdline=None):
                 parser.error(msg % (status_txt, ))
 
         if opts.clobber:
-            if doc_exists(doc_params):
+            if openn_db.doc_exists(doc_params):
                 try:
                     clobber_document(doc_params)
                 except OPennException as ex:
@@ -259,7 +229,6 @@ def main(cmdline=None):
                 msg = '`op-prep --clobber` called for nonexistent document'
                 parser.error(msg)
 
-        print "collection: %r" % (collection,)
         OPennPrep().prep_dir(source_dir, prep_config)
     except OPennException as ex:
         status = 4

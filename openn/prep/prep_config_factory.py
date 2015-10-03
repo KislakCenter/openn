@@ -1,4 +1,5 @@
 from copy import deepcopy
+import json
 
 from openn.openn_functions import *
 from openn.prep.prep_config import PrepConfig
@@ -56,7 +57,6 @@ list `prep_methods` and list of collection_configs.
 
     def _get_prep_method_dict(self, prep_config_tag):
         prep_config_dict = self._get_prep_config_dict(prep_config_tag)
-        # print "prep_config_dict: %r" % (prep_config_dict,)
         method_tag = None
         try:
             method_tag = prep_config_dict['collection_prep']['tag']
