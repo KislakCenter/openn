@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.template import Context, Template
-from django.conf import settings
 from django.template.loader import get_template
 
 from operator import itemgetter
@@ -10,10 +9,14 @@ from openn.pages.page import Page
 
 class Collections(Page):
 
+    def __init__(self, template_name, outdir, coll_configs,**kwargs):
+        self._coll_configs = coll_configs
+        super(Collections,self).__init__(template_name, outdir, **kwargs)
+
     def get_context(self, ctx_dict={}):
         collections = self.live_collections()
 
-        collections.sort(key=itemgetter('name'))
+        collections.sort(key=lambda x: x.name())
         ctx = { 'collections': collections }
         ctx.update(ctx_dict)
         return super(Collections, self).get_context(ctx)
@@ -23,13 +26,7 @@ class Collections(Page):
         return 'Collections'
 
     def live_collections(self, ):
-        collections = []
-        for tag in settings.COLLECTIONS:
-            coll = settings.COLLECTIONS[tag]
-            if coll.get('live', False):
-                collections.append(coll)
-
-        return collections
+        return [x for x in self._coll_configs.all_collections() if x.is_live()]
 
     def is_needed(self):
         """If the collections template exits; we always say it's needed.

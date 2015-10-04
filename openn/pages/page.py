@@ -2,9 +2,9 @@
 
 import os
 import logging
+from copy import deepcopy
 
 from django.template import Context, Template
-from django.conf import settings
 from django.template.loader import get_template
 from operator import itemgetter
 
@@ -20,6 +20,7 @@ class Page(object):
         self.outdir        = outdir
         self._title        = kwargs['title'] if 'title' in kwargs else None
         self.outfile       = kwargs['outfile'] if 'outfile' in kwargs else None
+        self.context       = deepcopy(kwargs)
 
     @property
     def title(self):
@@ -74,6 +75,6 @@ class Page(object):
     def get_context(self,ctx_dict={}):
         """By default context is empty. Child classes should override this
         method."""
-        ctx = { 'title': self.title, 'settings': settings  }
+        ctx = { 'title': self.title, 'context': self.context  }
         ctx.update(ctx_dict)
         return Context(ctx)

@@ -4,10 +4,7 @@
 
 Script to generate HTML files for OPenn.
 
-
-
 """
-
 import glob
 import os
 import sys
@@ -26,8 +23,9 @@ from django.conf import settings
 from django.template.base import TemplateDoesNotExist
 
 from openn.openn_exception import OPennException
-from openn.openn_functions import *
+import openn.openn_functions as opfunc
 from openn.pages.page import Page
+from openn.collections.configs import Configs
 from openn.pages.collections import Collections
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
@@ -37,6 +35,12 @@ logger = None
 
 def cmd():
     return os.path.basename(__file__)
+
+def collection_configs():
+    return Configs(settings.COLLECTIONS)
+
+def get_coll_wrapper(tag):
+    return collection_configs().get_collection(tag)
 
 def staging_dir():
     return settings.STAGING_DIR
@@ -74,38 +78,36 @@ def update_online_statuses():
             doc.collection, doc.base_dir, str(doc.is_online)))
 
 def make_browse_html(docid, force=False, dry_run=False):
-    try:
-        page = Browse(docid, **{ 'outdir': staging_dir() })
-        make_page = page.is_makeable() if force else page.is_needed()
+    doc = Document.objects.get(pk=docid)
+    coll_tag = doc.openn_collection.tag
+    coll_wrapper = get_coll_wrapper(coll_tag)
+    page = Browse(document=doc, collection_wrapper=coll_wrapper,
+                  toc_dir = settings.TOC_DIR,
+                  **{ 'outdir': staging_dir() })
+    make_page = page.is_makeable() if force else page.is_needed()
 
-        if make_page:
-            logging.info("Creating page: %s" % (page.outfile_path(), ))
-            if not dry_run:
-                page.create_pages()
-        else:
-            logging.info("Skipping page: %s" % (page.outfile_path(), ))
-    except Exception as ex:
-        msg = "Error creating browse HTML for docid: '%s'; error: %s" % (
-            str(docid), str(ex))
-        raise OPennException(msg)
+    if make_page:
+        logging.info("Creating page: %s" % (page.outfile_path(), ))
+        if not dry_run:
+            page.create_pages()
+    else:
+        logging.info("Skipping page: %s" % (page.outfile_path(), ))
 
-def make_toc_html(coll_name, force=False, dry_run=False):
-    toc = TableOfContents(coll_name, **{ 'template_name': 'TableOfContents.html',
-                                         'outdir': staging_dir() })
-    try:
-        make_page = toc.is_makeable() if force else toc.is_needed()
+def make_toc_html(collwrap, force=False, dry_run=False):
+    toc = TableOfContents(
+        collwrap, toc_dir=settings.TOC_DIR,
+        **{ 'template_name': 'TableOfContents.html', 'outdir': staging_dir() })
 
-        if make_page:
-            logging.info("Creating TOC for collection %s: %s" % (
-                coll_name, toc.outfile_path()))
-            if not dry_run:
-                toc.create_pages()
-        else:
-            logging.info("Skipping TOC for collection %s: %s" % (
-                coll_name, toc.outfile_path()))
-    except Exception as ex:
-        msg = "Error creating TOC for: '%s'; error: %s" % (coll_name, str(ex))
-        raise OPennException(msg)
+    make_page = toc.is_makeable() if force else toc.is_needed()
+
+    if make_page:
+        logging.info("Creating TOC for collection %s: %s" % (
+            collwrap.tag(), toc.outfile_path()))
+        if not dry_run:
+            toc.create_pages()
+    else:
+        logging.info("Skipping TOC for collection %s: %s" % (
+            collwrap.tag(), toc.outfile_path()))
 
 def make_readme_html(readme, force=False, dry_run=False):
     try:
@@ -124,13 +126,11 @@ def make_readme_html(readme, force=False, dry_run=False):
     except TemplateDoesNotExist as ex:
         msg = "Could not find template: %s" % (readme,)
         raise OPennException(msg)
-    except Exception as ex:
-        msg = "Error creating ReadMe file: '%s'; error: %s" % (readme, str(ex))
-        raise OPennException(msg)
 
 def make_collections(opts, force=False, dry_run=False):
     try:
-        page = Collections(settings.COLLECTIONS_TEMPLATE, staging_dir())
+        page = Collections(settings.COLLECTIONS_TEMPLATE, staging_dir(),
+                           collection_configs(), toc_dir=settings.TOC_DIR)
 
         make_page = page.is_makeable() if force else page.is_needed()
 
@@ -142,10 +142,6 @@ def make_collections(opts, force=False, dry_run=False):
             logging.info("Skipping page: %s" % (page.outfile_path(), ))
     except TemplateDoesNotExist as ex:
         msg = "Could not find template: %s" % (settings.COLLECTIONS_TEMPLATE,)
-        raise OPennException(msg)
-    except Exception as ex:
-        msg = "Error creating ReadMe file: '%s'; error: %s" % (
-            settings.COLLECTIONS_TEMPLATE, str(ex))
         raise OPennException(msg)
 
 # ------------------------------------------------------------------------------
@@ -165,11 +161,12 @@ def browse(opts):
         document(docid, opts)
 
 def toc(opts):
-    for coll in settings.COLLECTIONS:
-        toc_collection(coll, opts)
+    for tag in opfunc.get_coll_tags():
+        toc_collection(tag, opts)
 
-def toc_collection(collection_tag, opts):
-    make_toc_html(collection_tag, opts.force, opts.dry_run)
+def toc_collection(coll_tag, opts):
+    coll_wrapper = opfunc.get_coll_wrapper(coll_tag)
+    make_toc_html(coll_wrapper, opts.force, opts.dry_run)
 
 def document(docid, opts):
     make_browse_html(docid, opts.force, opts.dry_run)
@@ -414,7 +411,7 @@ skipped TOC creation for files that would be generated for an actual run.
 
     parser.add_option('-i', '--toc-collection', dest='collection_tag', default=None,
                       help=("Process table of contents for COLLECTION_TAG; one of: %s" % (
-                          ', '.join(collection_tags(settings)))),
+                          ', '.join(opfunc.get_coll_tags()),)),
                       metavar="COLLECTION_TAG")
 
     parser.add_option('-d', '--document', dest='document', default=None,

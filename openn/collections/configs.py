@@ -19,6 +19,9 @@ class Configs(object):
 
         return [ x for x in vals if x is not None ]
 
+    def all_collections(self):
+        return [ self.get_collection(tag) for tag in self.tags() ]
+
     def get_collection(self, tag):
         return Collection(self.get_config(tag))
 

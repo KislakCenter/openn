@@ -6,11 +6,28 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
-# suite() {
-#     suite_addTest testReadMeFileFailure
-#     # suite_addTest testRun
-#     # suite_addTest testBrowse
-# }
+suite() {
+    suite_addTest testRun
+    # suite_addTest testDryRun
+    # suite_addTest testDryRunShortOpt
+    # suite_addTest testForce
+    # suite_addTest testForceShortOpt
+    # suite_addTest testBrowse
+    # suite_addTest testBrowseShortOpt
+    # suite_addTest testToc
+    # suite_addTest testTocShortOpt
+    # suite_addTest testReadMe
+    # suite_addTest testReadMeShortOpt
+    # suite_addTest testReadMeFile
+    # suite_addTest testReadMeFileShortOpt
+    # suite_addTest testReadMeFileFailure
+    # suite_addTest testTocFile
+    # suite_addTest testTocFileShortOpt
+    # suite_addTest testCollections
+    # suite_addTest testCollectionsShortOpt
+    # suite_addTest testDocument
+    # suite_addTest testDocumentShortOpt
+}
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -23,7 +40,7 @@ setUp() {
 
 tearDown() {
     clear_tables
-    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+    # rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
 stagePages() {
@@ -36,6 +53,7 @@ testRun() {
     output=`op-pages --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+    echo "$output"
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
     assertMatch "$output" "Creating TOC"
@@ -192,7 +210,7 @@ testTocFile() {
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "Creating TOC.*LJS"
+    assertMatch "$output" "Creating TOC.*ljs"
 }
 
 # test TOC for collection
@@ -204,7 +222,7 @@ testTocFileShortOpt() {
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "Creating TOC.*LJS"
+    assertMatch "$output" "Creating TOC.*ljs"
 }
 
 # test collections

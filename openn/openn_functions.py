@@ -7,6 +7,8 @@ import sys
 import traceback
 
 from openn.openn_exception import OPennException
+from openn.collections.configs import Configs
+import openn.app as op_app
 
 def get_class(kls):
     parts = kls.split('.')
@@ -63,10 +65,19 @@ def mkdir_p(path):
             pass
         else: raise
 
-def collection_tags(settings):
-    return [ x['tag'] for x in settings.COLLECTIONS ]
-
 def sort_str(s):
     """Remove 'the ', 'a ', 'an ' from the begining of strings for purpose
     of alphabetization."""
     return re.sub(r'^(the|an?) +', '', s.lower())
+
+def get_coll_configs():
+    return Configs(op_app.COLLECTIONS)
+
+def get_coll_tags():
+    return get_coll_configs().tags()
+
+def get_coll_config(tag):
+    return get_coll_configs().get_config(tag)
+
+def get_coll_wrapper(tag):
+    return get_coll_configs().get_collection(tag)
