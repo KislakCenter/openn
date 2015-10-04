@@ -25,6 +25,7 @@ class OPennPrep:
 
         common_prep = CommonPrep(source_dir, doc, prep_config)
         common_prep.prep_dir()
+        return doc
 
     def _setup_prepstatus(self,doc):
         # destroy the associate prep if it exists

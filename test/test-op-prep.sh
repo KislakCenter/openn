@@ -5,6 +5,7 @@ source `dirname $0`/shunit_helper
 DIR_EXTRA_IMAGES=$TEST_DATA_DIR/ljs454
 PREPPED_DIR=$TEST_DATA_DIR/mscodex1223_prepped
 TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
+STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -26,13 +27,35 @@ setUp() {
 #     suite_addTest testResume
 # }
 
+get_collection_id() {
+    gci_tag=${1?get_collection_id - tag required}
+    gci_id=`mysql --batch --skip-column-names -u openn openn -e "select id from openn_openncollection where tag = '$gci_tag'"`
+    [[ -z "$gci_id" ]] && return 1
+    echo $gci_id
+    return 0
+}
+
+get_collection_folder() {
+    gcf_id=`get_collection_id $1`
+    [[ -z "$gcf_id" ]] && return 1
+    printf "%04d\n" $gcf_id
+    return 0
+}
+
+get_staging_destination() {
+    gsd_folder=`get_collection_folder $1`
+    gsd_source_dir=$2
+    [[ -z "$gsd_folder" ]] && return 1
+    [[ -z "$gsd_source_dir" ]] && return 1
+    echo $STAGING_DATA_DIR/$gsd_folder/`basename $gsd_source_dir`
+    return 0
+}
+
 insert_document() {
     today=`date "+%Y-%m-%d"`
-    haverford_id=`mysql --batch --skip-column-names -u openn openn -e "select id from openn_openncollection where tag = 'haverford'"`
-    if [[ -z "$haverford_id" ]]; then
-        echo "ERROR: haverford not in collections table"
-        exit 1
-    fi
+    haverford_id=`get_collection_id  haverford` || {
+        echo  "ERROR: haverford not in collections table";
+        exit 1; }
     sql="insert into openn_document"
     sql="$sql (openn_collection_id, base_dir, is_online, created, updated)"
     sql="$sql values ($haverford_id, 'MS_XYZ_1.2', 0, '$today', '$today')"
@@ -105,18 +128,19 @@ testRun() {
     # create_dummy_files $source_dir
     # output=`op-prep haverford $source_dir`
     status=$?
-
     if [ $status != 0 ]
     then
         echo "$output"
     fi
     assertEquals 0 $status
-    assertTrue "Expected TEI file in $source_dir/data; found: `ls $source_dir/data 2>/dev/null`" "ls $source_dir/data/*[0-9]_TEI.xml"
-    assertTrue "Expected manifest in $source_dir" "[ -f $source_dir/manifest-sha1.txt ]"
-    assertTrue "Expected version.txt file in $source_dir" "[ -f $source_dir/version.txt ]"
-    assertFalse "Should not find PIH XML in $source_dir found: `ls $source_dir/pih*.xml 2>/dev/null`" "ls $source_dir/pih*.xml"
-    assertFalse "Should not find file_list.json in $source_dir; found: `ls $source_dir/*.json 2>/dev/null`" "ls $source_dir/*.json"
-    assertFalse "Should find PARTIAL_TEI.xml in $source_dir; found `ls $source_dir/PARTIAL_TEI.xml 2>/dev/null`" "ls $source_dir/PARTIAL_TEI.xml"
+    destdir=`get_staging_destination pennmss $source_dir`
+    assertTrue "Expected TEI file in $destdir/data; found: `ls $destdir/data 2>/dev/null`" "ls $destdir/data/*[0-9]_TEI.xml"
+    assertTrue "Expected manifest in $destdir" "[ -f $destdir/manifest-sha1.txt ]"
+    assertTrue "Expected version.txt file in $destdir" "[ -f $destdir/version.txt ]"
+    assertFalse "Should not find PIH XML in $destdir found: `ls $destdir/pih*.xml 2>/dev/null`" "ls $destdir/pih*.xml"
+    assertFalse "Should not find file_list.json in $destdir; found: `ls $destdir/*.json 2>/dev/null`" "ls $destdir/*.json"
+    assertFalse "Should find PARTIAL_TEI.xml in $destdir; found `ls $destdir/PARTIAL_TEI.xml 2>/dev/null`" "ls $destdir/PARTIAL_TEI.xml"
+
 }
 
 testSpreadsheetPrep() {
@@ -127,6 +151,10 @@ testSpreadsheetPrep() {
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
     assertEquals 0 "$status"
+    destdir=`get_staging_destination haverford $source_dir`
+    assertTrue "Expected destination dir $destdir" "[ -d $destdir ]"
+    assertTrue "Expected TEI file in $destdir/data; found: `ls $destdir/data 2>/dev/null`" "ls $destdir/data/*_TEI.xml"
+    assertTrue "Expected manifest in $destdir" "[ -f $destdir/manifest-sha1.txt ]"
 }
 
 testResume() {

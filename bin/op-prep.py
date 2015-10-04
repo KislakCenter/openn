@@ -31,6 +31,7 @@ import os
 import sys
 import logging
 import json
+import shutil
 
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
@@ -61,6 +62,21 @@ class OpOptParser(OptionParser):
 
 def cmd():
     return os.path.basename(__file__)
+
+def stage_doc(source_dir, doc):
+    staging_dir = os.environ['OPENN_STAGING_DIR']
+    coll_folder = doc.openn_collection.long_id()
+    dest_dir    = os.path.join(staging_dir, 'Data', coll_folder, doc.base_dir)
+    source      = os.path.abspath(source_dir)
+    dest        = os.path.abspath(dest_dir)
+
+    if os.path.exists(dest):
+        msg = "Deleting previously staged document: %s"
+        logger.warning(msg % (dest,))
+        shutil.rmtree(dest)
+
+    shutil.move(source, dest)
+    logger.info("Document '%s' staged at %s" % (doc.call_number, dest))
 
 def setup_logger():
     ch = logging.StreamHandler(sys.stdout)
@@ -229,7 +245,8 @@ def main(cmdline=None):
                 msg = '`op-prep --clobber` called for nonexistent document'
                 parser.error(msg)
 
-        OPennPrep().prep_dir(source_dir, prep_config)
+        doc = OPennPrep().prep_dir(source_dir, prep_config)
+        stage_doc(source_dir, doc)
     except OPennException as ex:
         status = 4
         print_exc()
