@@ -27,6 +27,16 @@ class OPennPrep:
         common_prep.prep_dir()
         return doc
 
+    def update_tei(self, source_dir, document, prep_config):
+        coll_prep_class = prep_config.get_prep_class()
+        coll_prep = coll_prep_class(source_dir, document, prep_config)
+        coll_prep.regen_partial_tei(document)
+        coll_prep._cleanup()
+
+        common_prep = CommonPrep(source_dir, document, prep_config)
+        common_prep.update_tei()
+        common_prep._cleanup()
+
     def _setup_prepstatus(self,doc):
         # destroy the associate prep if it exists
         if hasattr(doc, 'prepstatus'):

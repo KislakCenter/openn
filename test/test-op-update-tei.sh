@@ -30,7 +30,7 @@ tearDown() {
 testRun() {
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select id from openn_document where base_dir = 'mscodex1223'"`
-    output=`op-update-tei -o $TEST_STAGING_DIR $doc_id 2>&1`
+    output=`op-update-tei -o $TEST_STAGING_DIR penn-pih $doc_id 2>&1`
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
@@ -48,7 +48,7 @@ testOverWrite() {
     cp $STAGED_TEI $control_tei
     assertTrue "Control and staged TEI should be the same" "cmp $STAGED_TEI $control_tei"
 
-    output=`op-update-tei -o $STAGED_DATA $doc_id 2>&1`
+    output=`op-update-tei -o $STAGED_DATA penn-pih $doc_id 2>&1`
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status

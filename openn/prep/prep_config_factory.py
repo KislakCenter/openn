@@ -1,7 +1,6 @@
 from copy import deepcopy
 import json
 
-from openn.openn_functions import *
 from openn.prep.prep_config import PrepConfig
 from openn.prep.prep_methods import PrepMethods
 from openn.collections.configs import Configs

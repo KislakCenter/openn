@@ -6,9 +6,13 @@ from openn.models import *
 class Collection:
     def __init__(self, collection_config):
         self._config = deepcopy(collection_config)
+        self._openn_collection = None
 
     def openn_collection(self):
-        return OPennCollection.objects.get(tag=self.tag())
+        if self._openn_collection is None:
+            self._openn_collection = OPennCollection.objects.get(tag=self.tag())
+
+        return self._openn_collection
 
     def config(self):
         return self._config
@@ -24,6 +28,9 @@ class Collection:
 
     def blurb(self):
         return self._config['blurb']
+
+    def metadata_type(self):
+        return self.openn_collection().metadata_type
 
     def long_id(self):
         return self.openn_collection().long_id()

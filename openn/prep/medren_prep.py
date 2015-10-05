@@ -269,7 +269,7 @@ class MedrenPrep(CollectionPrep):
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid
         if bibid is None:
-            raise Exception("Whoah now. bibid is none. That ain't right.")
+            raise OPennException("Whoah now. bibid is none. That ain't right.")
         self.write_xml(bibid,self.pih_filename)
         p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
                 stderr=subprocess.PIPE,
