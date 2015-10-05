@@ -276,7 +276,7 @@ Resume: Resume will fail if the source directory does not have a
 Clobber: Use clobber to replace an existing document that did not
 prepare correctly the first time. Will fail if document is on-line.
 
-""" % (', '.join(coll_tags(settings.COLLECTIONS)),)
+""" % (', '.join(get_coll_tags()),)
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)
