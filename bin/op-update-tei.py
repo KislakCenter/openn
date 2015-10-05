@@ -12,11 +12,11 @@ import codecs
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from openn.openn_exception import OPennException
-from openn.openn_functions import *
 from openn.prep import medren_prep
 from openn.prep.common_prep import CommonPrep
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
+from openn.openn_functions import *
 
 # Import your models for use in your script
 from openn.models import *
