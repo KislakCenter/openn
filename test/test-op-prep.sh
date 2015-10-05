@@ -17,14 +17,14 @@ setUp() {
 
 # suite() {
 #     suite_addTest testRun
-#     suite_addTest testSpreadsheetPrep
-#     suite_addTest testBloodyUnicode
-#     suite_addTest testStatusFlags
-#     suite_addTest testDocumentClobber
-#     suite_addTest testDocumentClobberCancel
-#     suite_addTest testDocumentClobberNoDocYet
-#     suite_addTest testDocumentClobberDocOnline
-#     suite_addTest testResume
+#     # suite_addTest testSpreadsheetPrep
+#     # suite_addTest testBloodyUnicode
+#     # suite_addTest testStatusFlags
+#     # suite_addTest testDocumentClobber
+#     # suite_addTest testDocumentClobberCancel
+#     # suite_addTest testDocumentClobberNoDocYet
+#     # suite_addTest testDocumentClobberDocOnline
+#     # suite_addTest testResume
 # }
 
 get_collection_id() {
