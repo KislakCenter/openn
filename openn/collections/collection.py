@@ -30,7 +30,7 @@ class Collection:
         return self._config['blurb']
 
     def metadata_type(self):
-        return self.openn_collection().metadata_type
+        return self.openn_collection().get_metadata_type_display()
 
     def long_id(self):
         return self.openn_collection().long_id()

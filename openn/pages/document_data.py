@@ -25,8 +25,8 @@ class DocumentData:
         return self._document
 
     @property
-    def collection_name(self):
-        return self._collection.name()
+    def collection(self):
+        return self._collection
 
     @property
     def toc_path(self):

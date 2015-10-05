@@ -7,13 +7,18 @@
   <p>
     <span><a href="/">Home</a></span> |
     <span><a href="/Collections.html">Collections</a></span> |
-    <span><a href="{{ doc.toc_path }}">{{ doc.collection_name }}</a></span>
+    <span><a href="{{ doc.toc_path }}">{{ doc.collection.name }}</a></span>
   </p>
 </div>
 
+<div>
+  <p>
+    <span class="collection_info">Collection ID: {{ doc.collection.long_id }}</span> |
+    <span class="collection_info">Metadata type: {{ doc.collection.metadata_type }}</span>
+  </p>
+</div>
 
 <h1>{{ doc.document.call_number }} {{ doc.document.title }}</h1>
-
 
         <div>
           <h4>Title</h4>

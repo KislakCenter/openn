@@ -193,8 +193,28 @@ COLLECTIONS = {
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
             'live': False,
-            'name': 'Special Collections, Bryn Mawr College',
-            'blurb': 'Documents from Special Collections, Bryn Mawr College.',
+            'name': 'Bryn Mawr College Library Special Collections',
+            'blurb': """The Bryn Mawr College Special Collections includes rare books,
+manuscripts, the college archives, works of art on paper, and
+ethnographic and archaeological objects.  The rare book collection
+contains approximately 50,000 volumes, and includes extensive
+collections of late medieval and early modern works, among them more
+than 100 medieval manuscript volumes and more than 1000 15th century
+printed books.  In addition, there are strong collections on the
+history of women, European interaction with Asia, Africa and the
+Americas, and British and American literature.<br /><br />
+
+The manuscript collections are particularly strong in women's history,
+including the papers of Bryn Mawr president and early women's rights
+activist M. Carey Thomas; papers of many prominent women associated
+with Bryn Mawr, including poet Marianne Moore, New Yorker editor
+Katharine Sergeant White, artist Anne Truitt, and archaeologists Lucy
+Shoe Meritt and Dorothy Burr Thompson; and extensive collections of
+letters and diaries written by Bryn Mawr students from the time of its
+founding in the 1880s.  These collections are supported by a graphics
+collection ranging from the 15th century to the present, including
+7,300 prints, 3,500 drawings, and 13,000 vintage photographs.Documents
+from Special Collections, Bryn Mawr College.""",
             'include_file': 'BrynMawrCollege.html',
         },
         {
@@ -210,7 +230,23 @@ COLLECTIONS = {
             'name': 'Legacy Center Archives & Special Collection, Drexel University College of Medicine.',
             'metadata_type': 'TEI',
             'live': False,
-            'blurb': 'Documents from the Legacy Center Archives & Special Collection, Drexel University College of Medicine.',
+            'blurb': """
+The Drexel University College of Medicine Legacy Center supports
+research and investigation of the history of women in medicine,
+history of homeopathic medicine in the United States, and the history
+of women's health. Our collections are accessible online and in our
+reading room in Philadelphia. We work regularly with K-12 students and
+teachers, graduate and undergraduate students, scholars, and
+genealogists.<br /><br />
+
+The Center is the repository for records documenting the history of
+the College and its predecessor institutions, including Woman's
+Medical College of Pennsylvania and Hahnemann University. Special
+collections emerging from these institutions' unique and original
+missions to educate women physicians and to teach homeopathy reflect
+the activity of individuals, institutions, and organizations. Over
+4,000 linear feet of materials date from 1502 to the present, with the
+            bulk of the materials ranging from 1848-1990.  """,
             'include_file': 'DrexelMedicine.html',
         },
         {
@@ -218,7 +254,27 @@ COLLECTIONS = {
             'name': 'Quaker and Special Collections, Haverford College',
             'metadata_type': 'TEI',
             'live': False,
-            'blurb': 'Documents from Quaker and Special Collections, Haverford College.',
+            'blurb':  """ Quaker & Special Collections contains Haverford College's include
+the world-renowned Quaker Collection, College archives, rare books and
+manuscripts, and fine art. We seek to collect, preserve, and make
+available materials which serve the research and teaching needs of the
+Haverford community as well as the wider scholarly community. Our
+world-renowned Quaker collections, which illuminate Quaker life,
+faith, and practice from the earliest days of the Society of Friends
+to the present day in many parts of the world. Materials include early
+books and pamphlets, meeting records, organization and family papers,
+journals and diaries, English and American Quaker serials, and
+audio-visual materials. Archival holdings document the history and
+operations of Haverford College from its founding in 1833 to
+present. Other strengths include literature (particularly Shakespeare
+and the work that influenced him), natural history, science, American
+History, and a small but interesting collection of 13th- through
+19th-century illuminated manuscripts in Hebrew, Latin, Arabic. Our
+photographic holdings document the history of photography and
+photographic technology, and include prints by many of the greatest
+19th and 20th century photographers, while prints, paintings, and
+artifacts complete the art collections. The collections are open to
+all.  """,
             'include_file': 'HaverfordCollege.html',
         },
         {
@@ -226,8 +282,23 @@ COLLECTIONS = {
             'name': 'Special Collections, Lehigh University',
             'metadata_type': 'TEI',
             'live': False,
-            'blurb': 'Documents from Special Collections, Lehigh University.',
-            'include_file': 'SpecialCollectionsLehighUniversity.html',
+            'blurb': """Lehigh University Special Collections serves as the repository for the
+University's collections of rare books and manuscripts, and for
+holdings relating to its own history. It encompasses a rare book
+collection of over 25,000 volumes, with first editions of English and
+American literature from the 17th to the 19th centuries, strengths in
+travel and exploration, natural history and ornithology, and works of
+historical significance in science and technology. Materials relating
+to the University include documents and publications of the
+University, papers of faculty members, and memorabilia from the
+University's history. In addition, Special Collections is the
+repository for Lehigh theses and dissertations. Holdings in the
+history of technology concentrate on large scale construction,
+including a number of classic and seminal works on bridge building and
+design, and construction with iron and steel. Special Collections also
+holds manuscripts and personal papers, in addition to papers relating
+to the University's history.""",
+            'include_file': 'LehighUniversity.html',
         },
         {
             'tag': 'tlc',

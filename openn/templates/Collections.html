@@ -13,7 +13,7 @@
 {% for collection in collections %}
    <li>
      <span class="coll-name"><a href="/{{context.toc_dir}}/{{collection.toc_file}}">{{collection.name}}</a><br />
-       Collection: {{collection.long_id}} | Metadata format: {{ collection.metadata_type }} </span><br />
+       Collection ID: {{collection.long_id}} | Metadata format: {{ collection.metadata_type }} </span><br />
      <span>{{ collection.blurb }}</span>
    </li>
 {% endfor %}

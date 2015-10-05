@@ -12,7 +12,7 @@
 
 <h1>{{ collection.name }}</h1>
 
-<p class="collection_id">Collection ID: {{ collection.long_id }}</p>
+<p><span class="collection_info">Collection ID: {{ collection.long_id }} </span> | <span class="collection_info">Metadata type: {{ collection.metadata_type }}</span></p>
 
 {% include collection.include_file %}
 
