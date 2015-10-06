@@ -52,7 +52,7 @@ def setup_logger():
     logger = logging.getLogger(__name__)
 
 def get_configs():
-    return Configs(settings.COLLECTIONS, settings.COLLECTION_VALIDATIONS)
+    return Configs(settings.COLLECTIONS)
 
 def get_updater():
     configs = get_configs()
