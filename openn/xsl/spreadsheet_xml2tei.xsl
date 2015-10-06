@@ -345,7 +345,7 @@
                     </keywords>
                   </xsl:if>
                   <xsl:if test="//subjects_genreform">
-                    <keywords n="genre/form">
+                    <keywords n="form/genre">
                       <xsl:for-each select="//subjects_genreform">
                         <term>
                           <xsl:if test="./subject_genreform_uri">

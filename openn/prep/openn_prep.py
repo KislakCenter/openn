@@ -11,6 +11,7 @@ class OPennPrep:
 
     def prep_dir(self, source_dir, prep_config):
         try:
+            prepstatus = None
             base_dir = os.path.basename(source_dir)
             status_txt = os.path.join(source_dir, 'status.txt')
             if not os.path.exists(status_txt):
@@ -30,7 +31,8 @@ class OPennPrep:
             self._success_status(prepstatus)
             return doc
         except Exception as ex:
-            self._failure_status(prepstatus, ex)
+            if prepstatus is not None:
+                self._failure_status(prepstatus, ex)
             raise
 
     def update_tei(self, source_dir, document, prep_config):

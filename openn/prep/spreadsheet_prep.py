@@ -276,7 +276,7 @@ class SpreadsheetPrep(CollectionPrep):
             self.write_partial_tei(self.source_dir, partial_tei)
             self.validate_partial_tei()
             self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
-            self.add_removal(self.openn_xml_path())
+            # self.add_removal(self.openn_xml_path())
             self.archive_xlsx()
         # files to cleanup
         # TODO: remove workbook ????

@@ -1,11 +1,25 @@
 #!/usr/bin/env sh
 
-source `dirname $0`/shunit_helper
+THIS_DIR=`dirname $0`
+source $THIS_DIR/shunit_helper
 
 DIR_EXTRA_IMAGES=$TEST_DATA_DIR/ljs454
 PREPPED_DIR=$TEST_DATA_DIR/mscodex1223_prepped
 TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
 STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
+
+# suite() {
+#     # suite_addTest testRun
+#     # suite_addTest testSpreadsheetPrep
+#     suite_addTest testHaverfordExample
+#     # suite_addTest testBloodyUnicode
+#     # suite_addTest testStatusFlags
+#     # suite_addTest testDocumentClobber
+#     # suite_addTest testDocumentClobberCancel
+#     # suite_addTest testDocumentClobberNoDocYet
+#     # suite_addTest testDocumentClobberDocOnline
+#     # suite_addTest testResume
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -15,17 +29,10 @@ setUp() {
     clear_tables
 }
 
-# suite() {
-#     suite_addTest testRun
-#     # suite_addTest testSpreadsheetPrep
-#     # suite_addTest testBloodyUnicode
-#     # suite_addTest testStatusFlags
-#     # suite_addTest testDocumentClobber
-#     # suite_addTest testDocumentClobberCancel
-#     # suite_addTest testDocumentClobberNoDocYet
-#     # suite_addTest testDocumentClobberDocOnline
-#     # suite_addTest testResume
-# }
+tearDown() {
+    clear_tables
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+}
 
 get_collection_id() {
     gci_tag=${1?get_collection_id - tag required}
@@ -62,10 +69,6 @@ insert_document() {
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "$sql"
 }
 
-tearDown() {
-    clear_tables
-    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
-}
 
 dummy_files="HelenGriffith_BMC_fc.tif
     HelenGriffith_BMC_fpd.tif
@@ -88,24 +91,65 @@ dummy_files="HelenGriffith_BMC_fc.tif
     HelenGriffith_BMC_0017.tif
     HelenGriffith_BMC_0018.tif"
 
+mc_968_11_4_v03_files="968_William_Allinson_v3_1.tif
+    968_William_Allinson_v3_2.tif
+    968_William_Allinson_v3_3.tif
+    968_William_Allinson_v3_4.tif
+    968_William_Allinson_v3_5.tif
+    968_William_Allinson_v3_6.tif
+    968_William_Allinson_v3_7.tif
+    968_William_Allinson_v3_8.tif
+    968_William_Allinson_v3_9.tif
+    968_William_Allinson_v3_10.tif
+    968_William_Allinson_v3_11.tif
+    968_William_Allinson_v3_12.tif
+    968_William_Allinson_v3_13.tif
+    968_William_Allinson_v3_14.tif
+    968_William_Allinson_v3_15.tif
+    968_William_Allinson_v3_16.tif
+    968_William_Allinson_v3_17.tif
+    968_William_Allinson_v3_18.tif
+    968_William_Allinson_v3_19.tif
+    968_William_Allinson_v3_20.tif
+    968_William_Allinson_v3_21.tif
+    968_William_Allinson_v3_22.tif
+    968_William_Allinson_v3_23.tif
+    968_William_Allinson_v3_24.tif
+    968_William_Allinson_v3_25.tif
+    968_William_Allinson_v3_26.tif
+    968_William_Allinson_v3_27.tif
+    968_William_Allinson_v3_28.tif
+    968_William_Allinson_v3_29.tif
+    968_William_Allinson_v3_30.tif
+    968_William_Allinson_v3_31.tif
+    968_William_Allinson_v3_32.tif
+    968_William_Allinson_v3_33.tif
+    968_William_Allinson_v3_34.tif
+    968_William_Allinson_v3_35.tif
+    968_William_Allinson_v3_36.tif
+    968_William_Allinson_v3_37.tif
+    968_William_Allinson_v3_38.tif"
+
 touch_dummy_files() {
     tdf_dest_dir=$1
+    tdf_file_list=$2
     if [[ -z "$tdf_dest_dir" ]] || [[ ! -d $tdf_dest_dir ]]; then
         echo "[create_dummy_files] Directory not found: '$tdf_dest_dir'; quitting"
         exit 1
     fi
-    for x in $dummy_files; do
+    for x in ${!tdf_file_list}; do
         touch "$tdf_dest_dir/$x"
     done
 }
 
 create_dummy_files() {
     cdf_dest_dir=$1
+    cdf_file_list=$2
     if [[ -z "$cdf_dest_dir" ]] || [[ ! -d $cdf_dest_dir ]]; then
         echo "[create_dummy_files] Directory not found: '$cdf_dest_dir'; quitting"
         exit 1
     fi
-    for x in $dummy_files; do
+    for x in ${!cdf_file_list}; do
         cp $TEMPLATE_TIFF "$cdf_dest_dir/$x"
     done
 }
@@ -143,10 +187,26 @@ testRun() {
 
 }
 
+testHaverfordExample() {
+    # mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
+    source_dir=$TEST_STAGING_DIR/MC_968_11_4_v03
+    cp -r $TEST_DATA_DIR/diaries/haverford/MC_968_11_4_v03 $source_dir
+    create_dummy_files $source_dir mc_968_11_4_v03_files
+    output=`op-prep haverford-diaries $source_dir`
+    status=$?
+    if [ "$status" != 0 ]; then echo "$output"; fi
+    assertEquals 0 "$status"
+    destdir=`get_staging_destination haverford $source_dir`
+    assertTrue "Expected destination dir $destdir" "[ -d $destdir ]"
+    assertTrue "Expected TEI file in $destdir/data; found: `ls $destdir/data 2>/dev/null`" "ls $destdir/data/*_TEI.xml"
+    assertTrue "Expected manifest in $destdir" "[ -f $destdir/manifest-sha1.txt ]"
+
+}
+
 testSpreadsheetPrep() {
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    create_dummy_files $source_dir
+    create_dummy_files $source_dir dummy_files
     output=`op-prep haverford-diaries $source_dir`
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
@@ -235,7 +295,7 @@ testDocumentClobber() {
 
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    create_dummy_files $source_dir
+    create_dummy_files $source_dir dummy_files
 
     # now run clobber; should succeed
     output=`echo 'Yes' | op-prep --clobber haverford-diaries $source_dir 2>&1`
@@ -248,7 +308,7 @@ testDocumentClobberNoDocYet() {
     # set up the document
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    touch_dummy_files $source_dir
+    touch_dummy_files $source_dir dummy_files
     output=`op-prep --clobber haverford-diaries $source_dir 2>&1`
     status=$?
     if [ "$status" = 0 ]; then echo "$output"; fi
@@ -261,7 +321,7 @@ testDocumentClobberCancel() {
     insert_document
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    touch_dummy_files $source_dir
+    touch_dummy_files $source_dir dummy_files
 
     # now cancel the clobber operation
     output=`echo 'No' | op-prep --clobber haverford-diaries $source_dir 2>&1`
@@ -276,7 +336,7 @@ testDocumentClobberDocOnline() {
     insert_document
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    touch_dummy_files $source_dir
+    touch_dummy_files $source_dir dummy_files
 
     # set online flag to true
     sql="update openn_document set is_online = 1 where base_dir = 'MS_XYZ_1.2'"

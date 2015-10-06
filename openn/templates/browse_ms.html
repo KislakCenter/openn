@@ -198,12 +198,34 @@
         </div>
         {% endif %}
 
+        {% if doc.tei.namesubjects %}
+        <div>
+          <h4>Subjects names</h4>
+          <ul class="list-unstyled">
+          {% for namesubject in doc.tei.namesubjects %}
+             <li>{{ namesubject }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
         {% if doc.tei.subjects %}
         <div>
-          <h4>Subjects</h4>
+          <h4>Subjects topical</h4>
           <ul class="list-unstyled">
           {% for subject in doc.tei.subjects %}
              <li>{{ subject }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.geosubjects %}
+        <div>
+          <h4>Subjects geographic</h4>
+          <ul class="list-unstyled">
+          {% for geosubject in doc.tei.geosubjects %}
+             <li>{{ geosubject }}</li>
            {% endfor %}
           </ul>
         </div>

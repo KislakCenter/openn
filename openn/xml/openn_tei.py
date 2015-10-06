@@ -172,6 +172,20 @@ class OPennTEI(XMLWhatsit):
         return self._subjects
 
     @property
+    def geosubjects(self):
+        if not getattr(self, '_geosubjects', None):
+            xpath = '//t:keywords[@n="subjects/geographic"]/t:term'
+            self._geosubjects = self._all_the_strings(xpath)
+        return self._geosubjects
+
+    @property
+    def namesubjects(self):
+        if not getattr(self, '_namesubjects', None):
+            xpath = '//t:keywords[@n="subjects/names"]/t:term'
+            self._namesubjects = self._all_the_strings(xpath)
+        return self._namesubjects
+
+    @property
     def support(self):
         return self._get_text('//t:supportDesc/t:support')
 

@@ -600,8 +600,7 @@
                 "full_title": [
                     "repository_name",
                     "full_call_number",
-                    "title",
-                    "volume_number"
+                    "title"
                 ]
             },
             "field_groups": [
@@ -701,7 +700,7 @@
                     ]
                 },
                 {
-                    "xml_attr": "subjects",
+                    "xml_attr": "subjects_names",
                     "columns": [
                         "subject_names",
                         "subject_names_uri"
