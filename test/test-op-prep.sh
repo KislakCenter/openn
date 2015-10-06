@@ -8,18 +8,18 @@ PREPPED_DIR=$TEST_DATA_DIR/mscodex1223_prepped
 TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
 STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
 
-suite() {
-    # suite_addTest testRun
-    # suite_addTest testSpreadsheetPrep
-    suite_addTest testHaverfordExample
-    # suite_addTest testBloodyUnicode
-    # suite_addTest testStatusFlags
-    # suite_addTest testDocumentClobber
-    # suite_addTest testDocumentClobberCancel
-    # suite_addTest testDocumentClobberNoDocYet
-    # suite_addTest testDocumentClobberDocOnline
-    # suite_addTest testResume
-}
+# suite() {
+#     # suite_addTest testRun
+#     # suite_addTest testSpreadsheetPrep
+#     suite_addTest testHaverfordExample
+#     # suite_addTest testBloodyUnicode
+#     # suite_addTest testStatusFlags
+#     # suite_addTest testDocumentClobber
+#     # suite_addTest testDocumentClobberCancel
+#     # suite_addTest testDocumentClobberNoDocYet
+#     # suite_addTest testDocumentClobberDocOnline
+#     # suite_addTest testResume
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -31,7 +31,7 @@ setUp() {
 
 tearDown() {
     clear_tables
-    # rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
 get_collection_id() {

@@ -216,7 +216,22 @@ class SpreadsheetPrep(CollectionPrep):
             msg += " to generate partial TEI."
             raise OPennException(msg)
 
-        raise NotImplementedError, "TEI regeneration not available for spreadsheet preparation"
+        # copy the xlsx file into the source_dir as
+        # openn_metadata.xlsx
+        xlsx_path = os.path.abspath(xlsx_path)
+        dest = os.path.abspath(self.xlsx_path)
+        if xlsx_path == dest:
+            pass
+        else:
+            shutil.copyfile(xlsx_path, dest)
+
+        self.write_openn_xml(self.openn_xml_path())
+        partial_tei = self.gen_partial_tei()
+        # xxxxx
+        self.write_partial_tei(self.source_dir, partial_tei)
+        self.validate_partial_tei()
+        self.add_removal(self.openn_xml_path())
+        self.add_removal(self.xlsx_path)
 
     def archive_xlsx(self):
         collection = self.prep_config.collection()
@@ -286,7 +301,7 @@ class SpreadsheetPrep(CollectionPrep):
             self.write_partial_tei(self.source_dir, partial_tei)
             self.validate_partial_tei()
             self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
-            # self.add_removal(self.openn_xml_path())
+            self.add_removal(self.openn_xml_path())
             self.archive_xlsx()
         # files to cleanup
         # TODO: remove workbook ????

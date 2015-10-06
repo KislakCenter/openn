@@ -178,7 +178,21 @@ COLLECTIONS = {
             'metadata_type': 'TEI',
             'live': True,
             'name': 'Penn Manuscripts',
-            'blurb': 'These manuscripts are from the collections of the Rare Books and Manuscripts Library at the University of Pennsylvania or are hosted by Penn with the permission of their owners.  Penn holds over 2,000 Western manuscripts produced before the 19th century; medieval and Renaissance manuscripts comprise approximately 900 items, the earliest dating from 1000 A.D. The medieval manuscripts, now a collection of approximately 250 items, have been considered and used as a research collection since the private library of church historian Henry Charles Lea came to the University in the early 20th century. Most of the manuscripts are in Latin, but the medieval vernacular languages of Middle English, Middle French, Italian, Spanish, German, Dutch, and Judaeo-Arabic are each represented by one or more manuscripts. The collection is particularly strong in the fields of church history and history of science, with secondary strengths in liturgy and liturgical chant, theology and philosophy, and legal documents.',
+            'blurb': """These documents are from the collections of the Rare Books and
+Manuscripts Library at the University of Pennsylvania or are hosted by
+Penn with the permission of their owners.  Penn holds over 2,000
+Western manuscripts produced before the 19th century; medieval and
+Renaissance manuscripts comprise approximately 900 items, the earliest
+dating from 1000 A.D. The medieval manuscripts, now a collection of
+approximately 250 items, have been considered and used as a research
+collection since the private library of church historian Henry Charles
+Lea came to the University in the early 20th century. Most of the
+manuscripts are in Latin, but the medieval vernacular languages of
+Middle English, Middle French, Italian, Spanish, German, Dutch, and
+Judaeo-Arabic are each represented by one or more manuscripts. The
+collection is particularly strong in the fields of church history and
+history of science, with secondary strengths in liturgy and liturgical
+chant, theology and philosophy, and legal documents.""",
             'include_file': 'PennManuscripts.html',
         },
         {
@@ -192,7 +206,7 @@ COLLECTIONS = {
         {
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'name': 'Bryn Mawr College Library Special Collections',
             'blurb': """The Bryn Mawr College Special Collections includes rare books,
 manuscripts, the college archives, works of art on paper, and
@@ -221,7 +235,7 @@ from Special Collections, Bryn Mawr College.""",
             'tag': 'drexarc',
             'name': 'Drexel University Archives',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb': 'Documents from Drexel University Archives.',
             'include_file': 'DrexelUniversity.html',
         },
@@ -229,7 +243,7 @@ from Special Collections, Bryn Mawr College.""",
             'tag': 'drexmed',
             'name': 'Legacy Center Archives & Special Collection, Drexel University College of Medicine.',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb': """
 The Drexel University College of Medicine Legacy Center supports
 research and investigation of the history of women in medicine,
@@ -301,27 +315,17 @@ to the University's history.""",
             'include_file': 'LehighUniversity.html',
         },
         {
-            'tag': 'tlc',
-            'name': 'The Library Company of Philadelphia',
-            'metadata_type': 'TEI',
-            'live': False,
-            'blurb': 'Documents from the Library Company of Philadelphia.',
-            'include_file': 'LibraryCompany.html',
-        },
-        {
-            'tag': 'libpa',
-            'name': 'Rare Collections Library, State Library of Pennsylvania',
-            'metadata_type': 'TEI',
-            'live': False,
-            'blurb': 'Documents from the Rare Collections Library, State Library of Pennsylvania.',
-            'include_file': 'StateLibraryOfPennsylvania.html',
-        },
-        {
             'tag': 'friendshl',
             'name': 'Friends Historical Library, Swarthmare College',
             'metadata_type': 'TEI',
-            'live': False,
-            'blurb': 'Documents from the Friends Historical Library, Swarthmare College.',
+            'live': True,
+            'blurb': """Friends Historical Library was established at Swarthmore College
+in 1871, two years after the College opened. Its collections document
+the history of the Society of Friends (Quakers) and the testimonies of
+Friends from the 17th century to the present. It is the largest Quaker
+library in the world and it includes materials on women's suffrage,
+the rights of Native Americans, the anti-slavery movement, social
+activism, and the peace movement.""",
             'include_file': 'FriendsHistoricalLibrary.html',
         },
         {
@@ -336,7 +340,7 @@ to the University's history.""",
             'tag': 'lts',
             'name': 'Lutheran Theological Seminary',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb': 'Documents from Lutheran Theological Seminary.',
             'include_file': 'LutheranTheologicalSeminary.html',
         },
@@ -344,10 +348,55 @@ to the University's history.""",
             'tag': 'ulp',
             'name': 'Union League of Philadelphia',
             'metadata_type': 'TEI',
-            'live': False,
-            'blurb': 'Documents from the Union League of Philadelphia.',
+            'live': True,
+            'blurb': """The Abraham Lincoln Foundation of The Union League of Philadelphia
+(ALF) is the steward of an important collection of art, archives,
+manuscripts, books, pamphlets, objects and other historic documents
+related to both the Union League and the Civil War.  The collections
+include not only the ALF's collection, but also those owned by The
+Union League of Philadelphia, The Civil War Museum of Philadelphia,
+The Military Order of The Loyal Legion of the United States and The
+Dames of the Loyal Legion of the United States.  The collections are
+available for research through The Heritage Center of the Union
+League.  Additional collections of books related to American and
+European history, World Wars I and II, regional history, biographies
+and early 20th century travel are also available. """,
             'include_file': 'UnionLeagueOfPhiladelphia.html',
         },
+# TLC does not conform to OPenn licensing terms
+#         {
+#             'tag': 'tlc',
+#             'name': 'The Library Company of Philadelphia',
+#             'metadata_type': 'TEI',
+#             'live': False,
+#             'blurb': 'Documents from the Library Company of Philadelphia.',
+#             'include_file': 'LibraryCompany.html',
+#         },
+#         {
+
+# State Library of Pennsylvania does not conform to OPenn licensing terms
+#             'tag': 'libpa',
+#             'name': 'Rare Collections Library, State Library of Pennsylvania',
+#             'metadata_type': 'TEI',
+#             'live': False,
+#             'blurb': """The State Library of Pennsylvania collects and preserves the
+# written heritage of the Commonwealth through materials published for,
+# by, and about Pennsylvania. The strengths of the Rare Collections
+# Library include Pennsylvania imprints, government documents, original
+# newspapers, pamphlets, maps and atlases, and rare works of
+# Pennsylvania religion, natural history, and genealogy.<br /><br />
+
+# The core of the Rare Collections Library is the Assembly Collection,
+# numbering over 400 volumes.  These books were purchased by
+# Pennsylvania's legislators beginning in 1745 to serve their needs in
+# crafting legislation and governing the Commonwealth. Comprised largely
+# of law books, the Assembly Collection also contains dictionaries,
+# books on architecture, philosophy, history and religion. At the center
+# of the Assembly Collection is the 1739 Assembly Bible, upon which
+# generations of Pennsylvania's elected leaders have taken their oaths
+# of office.""",
+#             'include_file': 'StateLibraryOfPennsylvania.html',
+#         },
     ],
 }
 
@@ -428,6 +477,50 @@ PREP_CONFIGS = {
             },
         }
     },
+    'drexarc-diaries': {
+        'collection': {
+            'tag': 'drexarc'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'drexmed-diaries': {
+        'collection': {
+            'tag': 'drexmed'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
     'haverford-diaries': {
         'collection': {
             'tag': 'haverford'
@@ -449,7 +542,118 @@ PREP_CONFIGS = {
                 },
             },
         }
+    },
+    'lehigh-diaries': {
+        'collection': {
+            'tag': 'lehigh'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'friendshl-diaries': {
+        'collection': {
+            'tag': 'friendshl'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'hsp-diaries': {
+        'collection': {
+            'tag': 'hsp'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'lts-diaries': {
+        'collection': {
+            'tag': 'lts'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'ulp-diaries': {
+        'collection': {
+            'tag': 'ulp'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
     }
+
 }
 
 PREP_CONTEXT = {

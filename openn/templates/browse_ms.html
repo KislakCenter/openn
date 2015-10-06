@@ -88,7 +88,11 @@
             <dd>{{ doc.tei.orig_date }}</dd>
 
             <dt>Place</dt>
-            <dd>{{ doc.tei.orig_place }}</dd>
+            <dd>
+              {% for place in doc.tei.orig_places %}
+              {{ place }}<br />
+              {% endfor %}
+            </dd>
           </dl>
         </div>
 

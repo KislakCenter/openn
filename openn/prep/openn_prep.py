@@ -35,10 +35,10 @@ class OPennPrep:
                 self._failure_status(prepstatus, ex)
             raise
 
-    def update_tei(self, source_dir, document, prep_config):
+    def update_tei(self, source_dir, document, prep_config, **kwargs):
         coll_prep_class = prep_config.get_prep_class()
         coll_prep = coll_prep_class(source_dir, document, prep_config)
-        coll_prep.regen_partial_tei(document)
+        coll_prep.regen_partial_tei(document, **kwargs)
         coll_prep._cleanup()
 
         common_prep = CommonPrep(source_dir, document, prep_config)

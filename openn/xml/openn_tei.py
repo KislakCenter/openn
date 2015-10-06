@@ -144,6 +144,10 @@ class OPennTEI(XMLWhatsit):
         return self._get_text('//t:history/t:origin/t:origPlace')
 
     @property
+    def orig_places(self):
+        return self._all_the_strings('//t:origPlace')
+
+    @property
     def ms_items(self):
         if not getattr(self, '_ms_items', None):
             xpath = '//t:msContents/t:msItem'

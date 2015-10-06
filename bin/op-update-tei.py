@@ -51,6 +51,17 @@ def get_prep_config(prep_config_tag):
 
     return prep_config_factory.create_prep_config(prep_config_tag)
 
+def get_keywords(opts):
+    kws = {}
+    if opts.keywords is None:
+        pass
+    else:
+        for pair in opts.keywords.split(':'):
+            k, v = pair.split('=')
+            kws[k] = v
+
+    return kws
+
 def main(cmdline=None):
     """op-prep main
     """
@@ -73,8 +84,9 @@ def main(cmdline=None):
     try:
         prep_config = get_prep_config(prep_config_tag)
         doc = Document.objects.get(pk=doc_id)
+        kwargs = get_keywords(opts)
 
-        OPennPrep().update_tei(opts.out_dir, doc, prep_config)
+        OPennPrep().update_tei(opts.out_dir, doc, prep_config, **kwargs)
         # collection_prep = get_collection_prep(opts.out_dir, doc.collection, doc)
         # collection_prep.regen_partial_tei(doc)
         # collection_prep._cleanup()
@@ -109,8 +121,11 @@ regenerated.
 
     parser = OpOptParser(usage=usage,epilog=epilog)
     parser.add_option('-o', '--out-dir', dest='out_dir', default='.',
-                      help="output TEI file to OUT_DIR [default=%default]",
+                      help="Output TEI file to OUT_DIR [default=%default]",
                       metavar="OUT_DIR")
+    parser.add_option('-k', '--keywords', dest='keywords',
+                      help="""Optional colon-separated name-value pairs as required by TEI update
+procedure (e.g. '-k "n1=val1:n2=val two"')""")
 
     return parser
 
