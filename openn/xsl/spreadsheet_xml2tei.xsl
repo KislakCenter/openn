@@ -306,9 +306,11 @@
                                     </origDate>
                                   </xsl:if>
                                   <xsl:if test="$orig_place">
+                                    <xsl:for-each select="//place_of_origin">
                                     <origPlace>
-                                      <xsl:value-of select="$orig_place"/>
+                                      <xsl:value-of select="."/>
                                     </origPlace>
+                                    </xsl:for-each>
                                   </xsl:if>
                                 </origin>
                               </xsl:if>
@@ -345,7 +347,7 @@
                     </keywords>
                   </xsl:if>
                   <xsl:if test="//subjects_genreform">
-                    <keywords n="genre/form">
+                    <keywords n="form/genre">
                       <xsl:for-each select="//subjects_genreform">
                         <term>
                           <xsl:if test="./subject_genreform_uri">

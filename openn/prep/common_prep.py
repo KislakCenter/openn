@@ -23,7 +23,7 @@ preparation and to conform to its input requirements, which are described
 below.
 """
 
-class CommonPrep(OPennSettings,Status):
+class CommonPrep(Status):
     """
     Perform common preparation of OPenn data packages, including:
          - Create image directory structure
@@ -57,12 +57,11 @@ class CommonPrep(OPennSettings,Status):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self,source_dir,collection,document):
-        OPennSettings.__init__(self,collection)
+    def __init__(self,source_dir, document, prep_config):
         Status.__init__(self,source_dir)
         self.source_dir    = source_dir
         self.package_dir   = PackageDir(source_dir)
-        self.collection    = collection
+        self.prep_config   = prep_config
         self.document      = document
         self._removals      = []
 
@@ -134,7 +133,8 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Derivatives already created" % (basedir,))
         else:
             self.logger.info("[%s] Generate derivatives" % (basedir,))
-            self.package_dir.create_derivs(self.deriv_configs)
+            self.package_dir.create_derivs(
+                self.prep_config.context_var('deriv_configs'))
             openn_db.save_image_data(self.document,self.package_dir.file_list.data)
             self.write_status(self.DERIVS_CREATED)
 
@@ -152,8 +152,10 @@ class CommonPrep(OPennSettings,Status):
             self.logger.warning("[%s] Image metadata already added" % (basedir,))
         else:
             self.logger.info("[%s] Add metadata" % (basedir,))
-            image_rights = self.coll_config.get('image_rights')
-            self.package_dir.add_image_metadata(self.document,image_rights,self.LICENCES)
+            image_rights = self.prep_config.image_rights()
+            licences = self.prep_config.context_var('licences')
+            self.package_dir.add_image_metadata(
+                self.document,image_rights,licences)
             self.write_status(self.IMAGE_METADATA_ADDED)
 
         # serialize_xmp

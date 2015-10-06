@@ -31,14 +31,16 @@ class SpreadsheetPrep(CollectionPrep):
     logger = logging.getLogger(__name__)
     BLANK_RE = re.compile('blank', re.IGNORECASE)
 
-    def __init__(self, source_dir, collection, document, config_json):
+    def __init__(self, source_dir, document, prep_config):
         """
         Create a new SpreadsheetPrep for the given source_dir, collection and document.
         """
-        CollectionPrep.__init__(self,source_dir,collection, document)
+        CollectionPrep.__init__(self,source_dir,document,prep_config)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir = os.path.join(self.source_dir, 'data')
         self._workbook = None
+        self._xsl = prep_config.prep_class_parameter('xsl')
+        config_json = prep_config.prep_class_parameter('config_json')
         self._config = json.load(open(config_json))
 
     def add_file_list(self,file_list):
@@ -57,7 +59,7 @@ class SpreadsheetPrep(CollectionPrep):
             os.remove(outfile)
         with open(outfile, 'w+') as f:
 
-            sp_xml = SpreadsheetXML(self.LICENCES)
+            sp_xml = SpreadsheetXML(self.prep_config.context_var('licences'))
             xml = sp_xml.build_xml(self.workbook().data(), self._config['xml_config'])
             f.write(xml.encode('utf-8'))
 
@@ -194,7 +196,7 @@ class SpreadsheetPrep(CollectionPrep):
 
     def gen_partial_tei(self):
         xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, self.openn_xml_path(), self.coll_config['xsl']],
+        p = subprocess.Popen([xsl_command, self.openn_xml_path(), self._xsl],
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()
@@ -204,14 +206,42 @@ class SpreadsheetPrep(CollectionPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
-        raise NotImplementedError, "TEI regeneration not available for spreadsheet preparation"
+        xsl_command = 'op-gen-tei'
+        xlsx_path = None
+
+        try:
+            xlsx_path = kwargs['xlsx']
+        except KeyError:
+            msg = "Must have option xlsx=/path/to/file.xlsx"
+            msg += " to generate partial TEI."
+            raise OPennException(msg)
+
+        # copy the xlsx file into the source_dir as
+        # openn_metadata.xlsx
+        xlsx_path = os.path.abspath(xlsx_path)
+        dest = os.path.abspath(self.xlsx_path)
+        if xlsx_path == dest:
+            pass
+        else:
+            shutil.copyfile(xlsx_path, dest)
+
+        self.write_openn_xml(self.openn_xml_path())
+        partial_tei = self.gen_partial_tei()
+        # xxxxx
+        self.write_partial_tei(self.source_dir, partial_tei)
+        self.validate_partial_tei()
+        self.add_removal(self.openn_xml_path())
+        self.add_removal(self.xlsx_path)
 
     def archive_xlsx(self):
-        coll_dir = os.path.join(self.ARCHIVE_DIR, self._coll_name)
+        collection = self.prep_config.collection()
+        coll_dir = os.path.join(self.prep_config.context_var('archive_dir'),
+                                collection.folder())
         mkdir_p(coll_dir)
 
         archive_xlsx = "%s_%s.xlsx" % (self.basedir, tstamptz())
-        archive_path = os.path.join(self.ARCHIVE_DIR, archive_xlsx)
+        archive_path = os.path.join(self.prep_config.context_var('archive_dir'),
+                                    archive_xlsx)
         self.logger.info("[%s] Archiving %s as %s" % (
             self.basedir, self.xlsx_path, archive_path))
         os.rename(self.xlsx_path, archive_path)

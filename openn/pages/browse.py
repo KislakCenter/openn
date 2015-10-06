@@ -4,7 +4,6 @@ import logging
 from datetime import datetime
 
 from django.template import Context, Template
-from django.conf import settings
 from django.template.loader import get_template
 
 from operator import itemgetter
@@ -18,10 +17,8 @@ class Browse(Page):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self,doc_id,**kwargs):
-        self._doc_id = doc_id
-        self._document = Document.objects.get(id=self._doc_id)
-        self._data = DocumentData(self.document)
+    def __init__(self,document, collection_wrapper, toc_dir,**kwargs):
+        self._data = DocumentData(document, collection_wrapper, toc_dir)
 
         updated_kwargs = kwargs.update({'template_name': 'browse_ms.html',
                                         'outfile':self.document.browse_path})
@@ -42,11 +39,11 @@ class Browse(Page):
 
     @property
     def document(self):
-        return self._document
+        return self._data.document
 
     def log_msg(self, msg_type, msg):
         msg = "%s; %s: %s/%s" % (
-            msg_type, msg, self.document.collection, self.document.base_dir)
+            msg_type, msg, self.document.openn_collection.tag, self.document.base_dir)
         self.logger.info(msg)
 
 

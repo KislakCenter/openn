@@ -144,6 +144,10 @@ class OPennTEI(XMLWhatsit):
         return self._get_text('//t:history/t:origin/t:origPlace')
 
     @property
+    def orig_places(self):
+        return self._all_the_strings('//t:origPlace')
+
+    @property
     def ms_items(self):
         if not getattr(self, '_ms_items', None):
             xpath = '//t:msContents/t:msItem'
@@ -170,6 +174,20 @@ class OPennTEI(XMLWhatsit):
             xpath = '//t:keywords[@n="subjects"]/t:term'
             self._subjects = self._all_the_strings(xpath)
         return self._subjects
+
+    @property
+    def geosubjects(self):
+        if not getattr(self, '_geosubjects', None):
+            xpath = '//t:keywords[@n="subjects/geographic"]/t:term'
+            self._geosubjects = self._all_the_strings(xpath)
+        return self._geosubjects
+
+    @property
+    def namesubjects(self):
+        if not getattr(self, '_namesubjects', None):
+            xpath = '//t:keywords[@n="subjects/names"]/t:term'
+            self._namesubjects = self._all_the_strings(xpath)
+        return self._namesubjects
 
     @property
     def support(self):

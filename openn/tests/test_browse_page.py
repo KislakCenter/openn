@@ -12,10 +12,12 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.pages.browse import Browse
 from openn.models import *
+from openn.collections.configs import Configs
 
 class TestBrowsePage(TestCase):
     fixtures = [ 'test.json' ]
 
+    configs          = Configs(settings.COLLECTIONS)
     staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
     ljs270_tei       = os.path.join(os.path.dirname(__file__), 'data/xml/ljs270_TEI.xml')
     ljs454_tei       = os.path.join(os.path.dirname(__file__), 'data/xml/ljs454_TEI.xml')
@@ -39,15 +41,19 @@ class TestBrowsePage(TestCase):
 
     def test_init(self):
         doc = Document.objects.all()[0]
-        self.assertIsInstance(Browse(doc.id, outdir=self.staging_dir), Browse)
+        coll_tag = doc.openn_collection.tag
+        coll_wrapper = self.configs.get_collection(coll_tag)
+        self.assertIsInstance(Browse(doc, coll_wrapper, toc_dir='html', outdir=self.staging_dir), Browse)
 
 
     def test_browse_page(self):
-        Document(base_dir='mscodex52', collection='medren', tei_xml=open(self.mscodex52_tei).read()).save()
-        Document(base_dir='mscodex83', collection='medren', tei_xml=open(self.mscodex83_tei).read()).save()
-        Document(base_dir='mscodex75', collection='medren', tei_xml=open(self.mscodex75_tei).read()).save()
+        wrapper = self.configs.get_collection('pennmss')
+        medren = wrapper.openn_collection()
+        Document(base_dir='mscodex52', openn_collection=medren, tei_xml=open(self.mscodex52_tei).read()).save()
+        Document(base_dir='mscodex83', openn_collection=medren, tei_xml=open(self.mscodex83_tei).read()).save()
+        Document(base_dir='mscodex75', openn_collection=medren, tei_xml=open(self.mscodex75_tei).read()).save()
         for doc in Document.objects.all():
-            page = Browse(doc.id, outdir=self.staging_dir)
+            page = Browse(doc, wrapper, toc_dir='html', outdir=self.staging_dir)
             page.create_pages()
 
 

@@ -16,15 +16,16 @@ from openn.openn_functions import *
 """
 Parent of collection-specific Prep classes.
 """
-class CollectionPrep(OPennSettings,Status):
+class CollectionPrep(Status):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, source_dir, collection, document):
+    def __init__(self, source_dir, document, prep_config):
         self.source_dir = source_dir
         self.document = document
-        self._package_validation = None
-        OPennSettings.__init__(self,collection)
+        self.prep_config = prep_config
+        self._package_validation = PackageValidation(
+            **self.prep_config.source_dir_validations())
         Status.__init__(self,source_dir)
         self._removals = []
 
@@ -38,8 +39,6 @@ class CollectionPrep(OPennSettings,Status):
 
     @property
     def package_validation(self):
-        if not self._package_validation and self.coll.get('package_validation', None):
-            self._package_validation =  PackageValidation(**self.coll['package_validation'])
         return self._package_validation
 
     def add_removals(self, removals):
@@ -63,7 +62,7 @@ class CollectionPrep(OPennSettings,Status):
         images = []
 
         image_dir = image_dir if image_dir else self.source_dir
-        for g in self.IMAGE_TYPES:
+        for g in self.prep_config.image_types():
             images.extend(glob.glob(os.path.join(image_dir, g)))
         return images
 

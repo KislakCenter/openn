@@ -6,6 +6,40 @@ import httplib
 import os
 import re
 
+class OPennCollection(models.Model):
+    """OPennCollection is a collection to which a document belongs.
+
+    """
+    tag = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
+    metadata_type = models.CharField(
+        max_length = 50, null = False, default = None, blank = False,
+        choices = (('tei','TEI'), ('ead', 'EAD'), ('custom', 'Custom')))
+
+    class Meta:
+        ordering = ('tag',)
+
+    def long_id(self):
+        return "%04d" % (self.id,)
+
+    def folder(self):
+        self.long_id()
+
+    def toc_file(self):
+        return "%s.html" % (self.long_id(),)
+
+    def web_dir(self):
+        return "Data/%s" % (self.long_id(),)
+
+    def html_dir(self):
+        return "Data/%s/html" % (self.long_id(),)
+
+    def __str__(self):
+        return ("OPennCollection: id={id:d}, tag={tag}").format(
+                        id=self.id, tag=self.tag)
+
+    def __repr__(self):
+        return self.__str__
+
 """
 Document corresponds to a set of OPenn images and metadata.
 
@@ -25,7 +59,7 @@ A Document records:
 """
 class Document(models.Model):
     call_number               = models.CharField(max_length = 255, null = True, default = None, blank = True)
-    collection                = models.CharField(max_length = 30, null = False, default = None, blank = False)
+    collection                = models.CharField(max_length = 30, null = True, default = None, blank = True)
     base_dir                  = models.CharField(max_length = 30, null = False, default = None, blank = False)
     image_licence             = models.CharField(max_length = 10, null = True, default = 'PD', blank = True)
     metadata_licence          = models.CharField(max_length = 10, null = True, default = 'CC-BY', blank = True)
@@ -40,18 +74,7 @@ class Document(models.Model):
     metadata_copyright_holder = models.CharField(max_length = 255, null = True, default = None, blank = True)
     metadata_copyright_year   = models.IntegerField(null = True, default = None, blank = True)
     metadata_rights_more_info = models.TextField(null = True, default = None, blank = True)
-
-    @property
-    def collection_config(self):
-        return settings.COLLECTIONS[self.collection]
-
-    @property
-    def html_dir(self):
-        return self.collection_config['html_dir']
-
-    @property
-    def web_dir(self):
-        return self.collection_config['web_dir']
+    openn_collection          = models.ForeignKey(OPennCollection, default = None)
 
     @property
     def browse_basename(self):
@@ -59,11 +82,11 @@ class Document(models.Model):
 
     @property
     def browse_path(self):
-        return '{0}/{1}'.format(self.html_dir, self.browse_basename)
+        return '{0}/{1}'.format(self.openn_collection.html_dir(), self.browse_basename)
 
     @property
     def package_dir(self):
-        return '{0}/{1}'.format(self.web_dir, self.base_dir)
+        return '{0}/{1}'.format(self.openn_collection.web_dir(), self.base_dir)
 
     @property
     def data_dir(self):
@@ -95,8 +118,8 @@ class Document(models.Model):
     # While the collection + call_number should be unique, the collection +
     # base_dir must be unique to prevent filesystem collisions on the host.
     class Meta:
-        ordering        = ['collection', 'base_dir', 'call_number' ]
-        unique_together = ('collection', 'base_dir')
+        ordering        = ['openn_collection', 'base_dir', 'call_number' ]
+        unique_together = ('openn_collection', 'base_dir')
 
 
     def __str__(self):
@@ -219,8 +242,9 @@ class Derivative(models.Model):
         ordering = [ 'deriv_type' ]
 
     def url(self):
-        collection = settings.COLLECTIONS[self.image.document.collection]
-        return "/%s/%s/%s" % (collection['web_dir'], self.image.document.base_dir, self.path)
+        collection = self.image.document.openn_collection
+        return "/Data/%s/%s/%s" % (
+            collection.long_id(), self.image.document.base_dir, self.path)
 
     def basename(self):
         return os.path.splitext(os.path.basename(self.path))[0]

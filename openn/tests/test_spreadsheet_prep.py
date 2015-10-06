@@ -22,6 +22,7 @@ from openn.xml.openn_tei import OPennTEI
 from openn.prep.prep_setup import PrepSetup
 from openn.models import *
 from openn.tests.helpers import *
+from openn.prep.prep_config_factory import PrepConfigFactory
 
 class TestSpreadsheetPrep(TestCase):
 
@@ -52,7 +53,13 @@ class TestSpreadsheetPrep(TestCase):
     template_tiff          = os.path.join(data_dir, 'images/template_image.tif')
     template_dir           = os.path.join(sheets_dir, 'valid_template')
     staged_source          = os.path.join(staging_dir, 'XYZ_ABC_1')
-    haverford_coll         = 'haverford'
+    prep_cfg_factory       = PrepConfigFactory(
+        prep_configs_dict=settings.PREP_CONFIGS,
+        prep_methods=settings.PREPARATION_METHODS,
+        collection_configs=settings.COLLECTIONS,
+        prep_context=settings.PREP_CONTEXT)
+    haverford_prep_config  = prep_cfg_factory.create_prep_config(
+        'haverford-diaries')
 
     def setUp(self):
         if not os.path.exists(self.staging_dir):
@@ -83,8 +90,9 @@ class TestSpreadsheetPrep(TestCase):
     def test_run(self):
         # setup
         self.stage_template()
-        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
+        collection = self.haverford_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
 
         # run
         try:
@@ -110,8 +118,9 @@ class TestSpreadsheetPrep(TestCase):
 
     def test_prep_dir_bad_description(self):
         self.stage_template(template=self.bad_description)
-        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
+        collection = self.haverford_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
 
         with self.assertRaises(OPennException) as oe:
             prep.prep_dir()
@@ -120,8 +129,9 @@ class TestSpreadsheetPrep(TestCase):
 
     def test_prep_dir_bad_pages(self):
         self.stage_template(template=self.bad_pages)
-        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
+        collection = self.haverford_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
 
         with self.assertRaises(OPennException) as oe:
             prep.prep_dir()
@@ -130,8 +140,9 @@ class TestSpreadsheetPrep(TestCase):
 
     def test_prep_dir_missing_file(self):
         self.stage_template()
-        doc = PrepSetup().prep_document(self.haverford_coll, 'XYZ_ABC_1')
-        prep = SpreadsheetPrep(self.staged_source, self.haverford_coll, doc, self.pacscl_diairies_json)
+        collection = self.haverford_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
         tiffs = glob.glob(os.path.join(self.staged_source, '*.tif'))
         os.remove(tiffs[0])
         with self.assertRaises(OPennException) as oe:

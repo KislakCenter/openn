@@ -24,27 +24,31 @@ class MedrenPrep(CollectionPrep):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, source_dir, collection, document):
-        """
-        Create a new MedrenPrep for the given source_dir with config dictionary `config`.
-        Config should have:
+    def __init__(self, source_dir, document, prep_config):
+        """Create a new MedrenPrep for the given 'source_dir' and document,
+        and PrepConfig 'prep_config'.  'prep_config.prep_class_params()'
+        must include:
 
-            host  the XML source URL host
+            'pih_host'  the XML source URL host
 
-            path  a formattable string for the URL path for the metadata; e.g.,
-                    /dla/medren/pageturn.xml?id=MEDREN_{0}
+            'pih_path'  a formattable string for the URL path for the
+                        metadata; e.g.,
+                        /dla/medren/pageturn.xml?id=MEDREN_{0}
 
-            xsl   absolute path to the XSL to transform the XML to TEI
+            'xsl'       absolute path to the XSL to transform the XML to TEI
 
         """
         # TODO: break if SAXON_JAR not set; see bin/op-gen-tei
-        CollectionPrep.__init__(self,source_dir,collection, document)
+        CollectionPrep.__init__(self,source_dir,document, prep_config)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
-        self.data_dir = os.path.join(self.source_dir, 'data')
+        self.data_dir      = os.path.join(self.source_dir, 'data')
+        self.pih_host      = prep_config.prep_class_parameter('pih_host')
+        self.pih_path      = prep_config.prep_class_parameter('pih_path')
+        self.xsl           = prep_config.prep_class_parameter('xsl')
 
     @property
     def host(self):
-        return self.coll_config['host']
+        return self.pih_host
 
     @property
     def document_image_patterns(self):
@@ -75,7 +79,7 @@ class MedrenPrep(CollectionPrep):
 
     @property
     def url_path(self):
-        return self.coll_config['path']
+        return self.pih_path
 
     def bibid_filename(self):
         if not os.path.exists(self.source_dir):
@@ -251,7 +255,7 @@ class MedrenPrep(CollectionPrep):
         # xsl_command = os.path.join(os.path.dirname(__file__), 'op-gen-tei')
         bibid = self.get_bibid()
         xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, self.pih_filename, self.coll_config['xsl']],
+        p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()
@@ -265,9 +269,9 @@ class MedrenPrep(CollectionPrep):
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid
         if bibid is None:
-            raise Exception("Whoah now. bibid is none. That ain't right.")
+            raise OPennException("Whoah now. bibid is none. That ain't right.")
         self.write_xml(bibid,self.pih_filename)
-        p = subprocess.Popen([xsl_command, self.pih_filename, self.coll_config['xsl']],
+        p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()

@@ -9,9 +9,13 @@ ORIGINAL_TEI=$MS_COMPLETE/data/mscodex1223_TEI.xml
 STAGED_DATA=$TEST_STAGING_DIR/mscodex1223
 STAGED_TEI=$STAGED_DATA/data/mscodex1223_TEI.xml
 
+SPREADSHEET_DATA_DIR=$TEST_DATA_DIR/diaries/haverford/MC_968_11_4_v03
+SPREADSHEET_DATA_XLSX=$SPREADSHEET_DATA_DIR/openn_metadata.xlsx
+
 # suite() {
-#     # suite_addTest testRun
-#     suite_addTest testOverWrite
+#     suite_addTest testRun
+#     # suite_addTest testSpreadsheet
+#     # suite_addTest testOverWrite
 # }
 
 setUp() {
@@ -30,7 +34,18 @@ tearDown() {
 testRun() {
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select id from openn_document where base_dir = 'mscodex1223'"`
-    output=`op-update-tei -o $TEST_STAGING_DIR $doc_id 2>&1`
+    output=`op-update-tei -o $TEST_STAGING_DIR penn-pih $doc_id 2>&1`
+    status=$?
+    [[ "$status" = 0 ]] || echo "$output"
+    assertEquals 0 $status
+}
+
+testSpreadsheet() {
+    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select id from openn_document where base_dir = 'MC_968_11_4_v03'"`
+    # create the staging directory if needed
+    [[ ! -d $TEST_STAGING_DIR ]] && mkdir $TEST_STAGING_DIR
+    output=`op-update-tei -o $TEST_STAGING_DIR -k xlsx=$SPREADSHEET_DATA_XLSX haverford-diaries $doc_id 2>&1`
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
@@ -48,7 +63,7 @@ testOverWrite() {
     cp $STAGED_TEI $control_tei
     assertTrue "Control and staged TEI should be the same" "cmp $STAGED_TEI $control_tei"
 
-    output=`op-update-tei -o $STAGED_DATA $doc_id 2>&1`
+    output=`op-update-tei -o $STAGED_DATA penn-pih $doc_id 2>&1`
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status

@@ -12,16 +12,18 @@ import codecs
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from openn.openn_exception import OPennException
-from openn.openn_functions import *
 from openn.prep import medren_prep
 from openn.prep.common_prep import CommonPrep
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
+import openn.openn_functions as opfunc
 
 # Import your models for use in your script
 from openn.models import *
 # database access functions
 from openn.openn_db import *
+from openn.prep.prep_config_factory import PrepConfigFactory
+from openn.prep.openn_prep import OPennPrep
 from django.core import serializers
 from django.conf import settings
 
@@ -40,26 +42,25 @@ def setup_logger():
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
 
-def get_collection_prep(source_dir, collection, document):
-    config = settings.COLLECTIONS.get(collection.lower(), None)
-    if config is None:
-        raise OPennException("Configuration not found for collection: '%s'" % collection)
-    cls = get_class(config['prep_class'])
-    return cls(source_dir, collection, document)
+def get_prep_config(prep_config_tag):
+    prep_config_factory = PrepConfigFactory(
+        prep_configs_dict=settings.PREP_CONFIGS,
+        prep_methods=settings.PREPARATION_METHODS,
+        collection_configs=settings.COLLECTIONS,
+        prep_context=settings.PREP_CONTEXT)
 
-def fix_perms(source_dir):
-    for root, dirs, files in os.walk(source_dir):
-        os.chmod(root, 0775)
-        for name in files:
-            os.chmod(os.path.join(root, name), 0664)
+    return prep_config_factory.create_prep_config(prep_config_tag)
 
-def clean_dir(source_dir, clobber_pattern):
-    clobber_re = re.compile(clobber_pattern)
-    for root, dirs, files, in os.walk(source_dir):
-        for name in files:
-            if clobber_re.search(name):
-                path = os.path.join(root, name)
-                os.remove(path)
+def get_keywords(opts):
+    kws = {}
+    if opts.keywords is None:
+        pass
+    else:
+        for pair in opts.keywords.split(':'):
+            k, v = pair.split('=')
+            kws[k] = v
+
+    return kws
 
 def main(cmdline=None):
     """op-prep main
@@ -69,25 +70,31 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
-    if len(args) != 1:
+    if len(args) != 2:
         parser.error('Wrong number of arguments')
 
-    document_id = args[0]
+    # Prep config is required, b/c only some prep methods implement
+    # TEI regeneration.
+    prep_config_tag = args[0]
+    doc_id          = args[1]
 
     setup_logger()
     logger = logging.getLogger(__name__)
 
     try:
-        doc = Document.objects.get(id=document_id)
-        # collection specific
-        collection_prep = get_collection_prep(opts.out_dir, doc.collection, doc)
-        collection_prep.regen_partial_tei(doc)
-        collection_prep._cleanup()
+        prep_config = get_prep_config(prep_config_tag)
+        doc = Document.objects.get(pk=doc_id)
+        kwargs = get_keywords(opts)
 
-        # common tei prep
-        common_prep = CommonPrep(opts.out_dir, doc.collection, doc)
-        common_prep.update_tei()
-        common_prep._cleanup()
+        OPennPrep().update_tei(opts.out_dir, doc, prep_config, **kwargs)
+        # collection_prep = get_collection_prep(opts.out_dir, doc.collection, doc)
+        # collection_prep.regen_partial_tei(doc)
+        # collection_prep._cleanup()
+
+        # # common tei prep
+        # common_prep = CommonPrep(opts.out_dir, doc.collection, doc)
+        # common_prep.update_tei()
+        # common_prep._cleanup()
     except OPennException as ex:
         # error_no_exit(cmd(), str(ex))
         status = 4
@@ -99,20 +106,26 @@ def main(cmdline=None):
 def make_parser():
     """op-update-tei option parser"""
 
-    usage = "%prog [OPTIONS] DOCUMENT_ID"
+    usage = "%prog [OPTIONS] PREP_CONFIG DOCUMENT_ID"
     epilog = """
 
-For a previously completed package for DOCUMENT_ID, recreate the TEI
-file outputting the TEI to OUTPUT_DIR [default:.].
+For a package previously completed document with DOCUMENT_ID using
+PREP_CONFIG, recreate the TEI file outputting the TEI to OUTPUT_DIR
+[default:.]; OUTPUT_DIR can be changed with the '--out-dir' option.
 
+NOTE: At present TEI for only PIH (Penn in Hand) documents can be
+regenerated.
 
 """
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)
     parser.add_option('-o', '--out-dir', dest='out_dir', default='.',
-                      help="output TEI file to OUT_DIR [default=%default]",
+                      help="Output TEI file to OUT_DIR [default=%default]",
                       metavar="OUT_DIR")
+    parser.add_option('-k', '--keywords', dest='keywords',
+                      help="""Optional colon-separated name-value pairs as required by TEI update
+procedure (e.g. '-k "n1=val1:n2=val two"')""")
 
     return parser
 

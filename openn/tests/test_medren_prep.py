@@ -18,6 +18,7 @@ from openn.prep.medren_prep import MedrenPrep
 from openn.prep.file_list import FileList
 from openn.xml.openn_tei import OPennTEI
 from openn.prep.prep_setup import PrepSetup
+from openn.prep.prep_config_factory import PrepConfigFactory
 from openn.models import *
 
 class TestMedrenPrep(TestCase):
@@ -27,21 +28,26 @@ class TestMedrenPrep(TestCase):
     # staged_source    = os.path.join(staging_dir, 'mscodex1589')
     template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
     staged_source    = os.path.join(staging_dir, 'mscodex1223')
-    medren_coll      = 'medren'
+    prep_cfg_factory = PrepConfigFactory(
+        prep_configs_dict=settings.PREP_CONFIGS,
+        prep_methods=settings.PREPARATION_METHODS,
+        collection_configs=settings.COLLECTIONS,
+        prep_context=settings.PREP_CONTEXT)
+    pennpih_prep_config = prep_cfg_factory.create_prep_config('penn-pih')
     complex_files    = os.path.join(os.path.dirname(__file__), 'data/ljs472')
     complex_pih_src  = os.path.join(os.path.dirname(__file__), 'data/xml/ljs472.xml')
     complex_staged   = os.path.join(staging_dir, 'ljs472')
     complex_pih_xml  = os.path.join(complex_staged, 'pih.xml')
-    ljs_coll         = 'ljs'
+    ljs_prep_config = prep_cfg_factory.create_prep_config('ljs-pih')
     pp               = PrettyPrinter(indent=2)
 
     def setUp(self):
-        if not os.path.exists(TestMedrenPrep.staging_dir):
-            os.mkdir(TestMedrenPrep.staging_dir)
+        if not os.path.exists(self.staging_dir):
+            os.mkdir(self.staging_dir)
 
     def tearDown(self):
-        if os.path.exists(TestMedrenPrep.staging_dir):
-            shutil.rmtree(TestMedrenPrep.staging_dir)
+        if os.path.exists(self.staging_dir):
+            shutil.rmtree(self.staging_dir)
 
     def touch(self, filename, times=None):
         with(open(filename,'a')):
@@ -59,17 +65,19 @@ class TestMedrenPrep(TestCase):
                 raise AssertionError("Should not have file: '%s' in group: '%s'" % (path,group))
 
     def pprint(self,thing):
-        TestMedrenPrep.pp.pprint(thing)
+        self.pp.pprint(thing)
 
     def stage_template(self):
-        shutil.copytree(TestMedrenPrep.template_dir, TestMedrenPrep.staged_source)
+        shutil.copytree(self.template_dir, self.staged_source)
 
     def test_run(self):
         # setup
         self.stage_template()
         doc_count = Document.objects.count()
-        doc = PrepSetup().prep_document(TestMedrenPrep.medren_coll, 'mscodex1223')
-        prep = MedrenPrep(TestMedrenPrep.staged_source, TestMedrenPrep.medren_coll, doc)
+        collection = self.pennpih_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'mscodex1223')
+        prep = MedrenPrep(source_dir=self.staged_source, document=doc,
+                          prep_config = self.pennpih_prep_config)
         # run
         prep.prep_dir()
 
@@ -83,10 +91,11 @@ class TestMedrenPrep(TestCase):
     # ljs472_wk1_body0196.tif     # 'blank' file not in PIH
     def test_complex_names(self):
         # setup
-        shutil.copytree(TestMedrenPrep.complex_files, TestMedrenPrep.complex_staged)
-        doc = PrepSetup().prep_document(TestMedrenPrep.ljs_coll, 'ljs472')
-        prep = MedrenPrep(TestMedrenPrep.complex_staged, TestMedrenPrep.ljs_coll, doc)
-        files = prep.build_file_list(TestMedrenPrep.complex_pih_xml)
+        shutil.copytree(self.complex_files, self.complex_staged)
+        collection = self.ljs_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'ljs472')
+        prep = MedrenPrep(self.complex_staged, doc, self.ljs_prep_config)
+        files = prep.build_file_list(self.complex_pih_xml)
         self.assertHasFile(files, 'document', 'data/ljs472_wk1_body0193.tif')
         self.assertHasFile(files, 'document', 'data/ljs472_wk1_body0194.tif')
         self.assertHasFile(files, 'document', 'data/ljs472_wk1_body0195.tif')

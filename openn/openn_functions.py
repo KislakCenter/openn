@@ -2,6 +2,13 @@
 import time
 import os
 import errno
+import re
+import sys
+import traceback
+
+from openn.openn_exception import OPennException
+from openn.collections.configs import Configs
+import openn.app as op_app
 
 def get_class(kls):
     parts = kls.split('.')
@@ -10,6 +17,23 @@ def get_class(kls):
     for comp in parts[1:]:
         m = getattr(m, comp)
     return m
+
+def print_exc():
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    traceback.print_exception(exc_type, exc_value, exc_traceback,
+                              file=sys.stdout)
+
+def get_by_key(dicts, key_name, key_value):
+    """From a list of list of dicts, get the all dicts with value ==
+key_value for key == key_name.
+
+    Arguments:
+    - `dicts`: a list of dicts
+    - `key_name`:  the name of the dictionary key
+    - `key_value`: the value of the key
+
+    """
+    return [ x for x in dicts if x.get(key_name, None) == key_value ]
 
 def tstamp():
     return time.strftime('%Y%m%dT%H%M%S')
@@ -41,5 +65,19 @@ def mkdir_p(path):
             pass
         else: raise
 
-def collection_tags(settings):
-    return [ x for x in settings.COLLECTIONS ]
+def sort_str(s):
+    """Remove 'the ', 'a ', 'an ' from the begining of strings for purpose
+    of alphabetization."""
+    return re.sub(r'^(the|an?) +', '', s.lower())
+
+def get_coll_configs():
+    return Configs(op_app.COLLECTIONS)
+
+def get_coll_tags():
+    return get_coll_configs().tags()
+
+def get_coll_config(tag):
+    return get_coll_configs().get_config(tag)
+
+def get_coll_wrapper(tag):
+    return get_coll_configs().get_collection(tag)

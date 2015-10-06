@@ -12,8 +12,11 @@ from django.conf import settings
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.models import *
+from openn.collections.configs import Configs
 
 class TestDocumentModel(TestCase):
+    configs = Configs(settings.COLLECTIONS)
+
     def setUp(self):
         pass
 
@@ -24,5 +27,7 @@ class TestDocumentModel(TestCase):
         self.assertIsInstance(Document(), Document)
 
     def test_is_live(self):
-        document = Document(collection = 'ljs', base_dir = 'ljs22')
+        ljs = self.configs.get_collection('ljs').openn_collection()
+
+        document = Document(openn_collection = ljs, base_dir = 'ljs22')
         self.assertTrue(document.is_live())

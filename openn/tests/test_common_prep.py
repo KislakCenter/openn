@@ -15,41 +15,52 @@ from openn.openn_exception import OPennException
 from openn.prep.common_prep import CommonPrep
 from openn.prep.file_list import FileList
 from openn.prep.prep_setup import PrepSetup
+from openn.prep.prep_config_factory import PrepConfigFactory
 from openn.xml.openn_tei import OPennTEI
 from openn.models import *
 from openn.tests.helpers import *
 
 class TestCommonPrep(TestCase):
 
-    staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
-    command          = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')
-    template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223_prepped')
-    staged_source    = os.path.join(staging_dir, 'mscodex1223')
-    staged_data      = os.path.join(staged_source, 'data')
-    staged_tei       = os.path.join(staged_source, 'PARTIAL_TEI.xml')
-    staged_file_list = os.path.join(staged_source, 'file_list.json')
-    dir_extra_images = os.path.join(os.path.dirname(__file__), 'data/mscodex1589_prepped')
-    staged_w_extra   = os.path.join(staging_dir, 'mscodex1589')
-    medren_coll      = 'medren'
+    staging_dir            = os.path.join(os.path.dirname(__file__), 'staging')
+    command                = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')
+    template_dir           = os.path.join(
+        os.path.dirname(__file__), 'data/mscodex1223_prepped')
+    staged_source          = os.path.join(staging_dir, 'mscodex1223')
+    staged_data            = os.path.join(staged_source, 'data')
+    staged_tei             = os.path.join(staged_source, 'PARTIAL_TEI.xml')
+    staged_file_list       = os.path.join(staged_source, 'file_list.json')
+    dir_extra_images       = os.path.join(
+        os.path.dirname(__file__), 'data/mscodex1589_prepped')
+    staged_w_extra         = os.path.join(staging_dir, 'mscodex1589')
+
+    prep_cfg_factory       = PrepConfigFactory(
+        prep_configs_dict=settings.PREP_CONFIGS,
+        prep_methods=settings.PREPARATION_METHODS,
+        collection_configs=settings.COLLECTIONS,
+        prep_context=settings.PREP_CONTEXT)
+    pennpih_prep_config    = prep_cfg_factory.create_prep_config('penn-pih')
+
 
     def setUp(self):
-        if not os.path.exists(TestCommonPrep.staging_dir):
-            os.mkdir(TestCommonPrep.staging_dir)
+        if not os.path.exists(self.staging_dir):
+            os.mkdir(self.staging_dir)
 
     def tearDown(self):
-        if os.path.exists(TestCommonPrep.staging_dir):
-            shutil.rmtree(TestCommonPrep.staging_dir)
+        if os.path.exists(self.staging_dir):
+            shutil.rmtree(self.staging_dir)
 
     def stage_template(self):
-        shutil.copytree(TestCommonPrep.template_dir, TestCommonPrep.staged_source)
+        shutil.copytree(self.template_dir, self.staged_source)
 
     def test_run(self):
         # setup
         self.stage_template()
+        collection = self.pennpih_prep_config.collection()
         doc_count = Document.objects.count()
-        doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
+        doc = PrepSetup().prep_document(collection, 'mscodex1223')
         doc_id = doc.id
-        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+        prep = CommonPrep(self.staged_source, doc, self.pennpih_prep_config)
         image_count = Image.objects.count()
         deriv_count = Derivative.objects.count()
         # run
@@ -63,48 +74,52 @@ class TestCommonPrep(TestCase):
 
     def test_no_data_dir(self):
         # setup
-        os.mkdir(TestCommonPrep.staged_source)
-        touch(TestCommonPrep.staged_tei)
-        touch(TestCommonPrep.staged_file_list)
+        os.mkdir(self.staged_source)
+        touch(self.staged_tei)
+        touch(self.staged_file_list)
 
         # run
         with self.assertRaises(OPennException) as oe:
-            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-            prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            collection = self.pennpih_prep_config.collection()
+            doc = PrepSetup().prep_document(collection, 'mscodex1223')
+            prep = CommonPrep(self.staged_source, doc, self.pennpih_prep_config)
             prep.prep_dir()
         self.assertIn('data directory', str(oe.exception))
 
     def test_no_partial_tei(self):
         # setup
-        os.mkdir(TestCommonPrep.staged_source)
-        os.mkdir(TestCommonPrep.staged_data)
-        touch(TestCommonPrep.staged_file_list)
+        os.mkdir(self.staged_source)
+        os.mkdir(self.staged_data)
+        touch(self.staged_file_list)
 
         # run
         with self.assertRaises(OPennException) as oe:
-            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-            prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            collection = self.pennpih_prep_config.collection()
+            doc = PrepSetup().prep_document(collection, 'mscodex1223')
+            prep = CommonPrep(self.staged_source, doc, self.pennpih_prep_config)
             prep.prep_dir()
         self.assertIn('PARTIAL_TEI.xml', str(oe.exception))
 
     def test_no_file_list(self):
         # setup
-        os.mkdir(TestCommonPrep.staged_source)
-        os.mkdir(TestCommonPrep.staged_data)
-        touch(TestCommonPrep.staged_tei)
+        os.mkdir(self.staged_source)
+        os.mkdir(self.staged_data)
+        touch(self.staged_tei)
 
         # run
         with self.assertRaises(OPennException) as oe:
-            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-            prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+            collection = self.pennpih_prep_config.collection()
+            doc = PrepSetup().prep_document(collection, 'mscodex1223')
+            prep = CommonPrep(self.staged_source, doc, self.pennpih_prep_config)
             prep.prep_dir()
         self.assertIn('file_list.json', str(oe.exception))
 
     def test_tei_present(self):
         # setup
         self.stage_template()
-        doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+        collection = self.pennpih_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'mscodex1223')
+        prep = CommonPrep(self.staged_source, doc, self.pennpih_prep_config)
 
         # run
         self.assertIsInstance(prep.tei, OPennTEI)
@@ -112,22 +127,12 @@ class TestCommonPrep(TestCase):
     def test_files_present(self):
         # setup
         self.stage_template()
-        doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-        prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll, doc)
+        collection = self.pennpih_prep_config.collection()
+        doc = PrepSetup().prep_document(collection, 'mscodex1223')
+        prep = CommonPrep(self.staged_source, doc, self.pennpih_prep_config)
 
         # run
         self.assertIsInstance(prep.files, FileList)
-
-    def test_collection_empty(self):
-        """ if the test collection is the empty string, the prep should fail when
-        it tries to create the CommonPrep instance.
-        """
-        # setup
-        self.stage_template()
-        with self.assertRaises(OPennException) as oe:
-            doc = PrepSetup().prep_document(TestCommonPrep.medren_coll, 'mscodex1223')
-            prep = CommonPrep(TestCommonPrep.staged_source, '', doc)
-        self.assertIn('collection', str(oe.exception))
 
     # TODO: Figure out under what circumstance duplicates should break things
     # def test_duplicate_document(self):
@@ -135,7 +140,7 @@ class TestCommonPrep(TestCase):
     #     with an error."""
     #     # setup
     #     self.stage_template()
-    #     prep = CommonPrep(TestCommonPrep.staged_source, TestCommonPrep.medren_coll)
+    #     prep = CommonPrep(self.staged_source, self.medren_coll)
     #     # run
     #     prep.prep_dir()
     #     with self.assertRaises(ValidationError) as ve:
