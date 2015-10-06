@@ -306,9 +306,11 @@
                                     </origDate>
                                   </xsl:if>
                                   <xsl:if test="$orig_place">
+                                    <xsl:for-each select="//place_of_origin">
                                     <origPlace>
-                                      <xsl:value-of select="$orig_place"/>
+                                      <xsl:value-of select="."/>
                                     </origPlace>
+                                    </xsl:for-each>
                                   </xsl:if>
                                 </origin>
                               </xsl:if>
