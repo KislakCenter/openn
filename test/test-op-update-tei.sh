@@ -38,6 +38,7 @@ testRun() {
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
+    assertFalse "Should find PARTIAL_TEI.xml in $destdir; found `ls $TEST_STAGING_DIR/PARTIAL_TEI.xml 2>/dev/null`" "ls $TEST_STAGING_DIR/PARTIAL_TEI.xml"
 }
 
 testSpreadsheet() {
@@ -49,6 +50,7 @@ testSpreadsheet() {
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
+    assertFalse "Should find PARTIAL_TEI.xml in $destdir; found `ls $TEST_STAGING_DIR/PARTIAL_TEI.xml 2>/dev/null`" "ls $TEST_STAGING_DIR/PARTIAL_TEI.xml"
 }
 
 testOverWrite() {
@@ -69,6 +71,7 @@ testOverWrite() {
     assertEquals 0 $status
     assertTrue "TEI file should exist: $STAGED_TEI" "[ -f $STAGED_TEI ]"
     assertFalse "TEI file should be different from original" "cmp $ORIGINAL_TEI $control_tei"
+    assertFalse "Should find PARTIAL_TEI.xml in $destdir; found `ls $TEST_STAGING_DIR/PARTIAL_TEI.xml 2>/dev/null`" "ls $TEST_STAGING_DIR/PARTIAL_TEI.xml"
 }
 
 
