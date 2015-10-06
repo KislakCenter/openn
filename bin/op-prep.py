@@ -258,11 +258,11 @@ def main(cmdline=None):
 def make_parser():
     """get_xml option parser"""
 
-    usage = "%prog [OPTIONS] COLLECTION SOURCE_DIR"
+    usage = "%prog [OPTIONS] COLL_PREP SOURCE_DIR"
     epilog = """
 Prepare the given source diretory for OPenn.
 
-Known collections are: %s.
+Known collection preps are: %s.
 
 SOURCE_DIR contains a set of document image TIFF files and a file
 named bibid.txt which contains the bibid for the given book or
@@ -276,7 +276,7 @@ Resume: Resume will fail if the source directory does not have a
 Clobber: Use clobber to replace an existing document that did not
 prepare correctly the first time. Will fail if document is on-line.
 
-""" % (', '.join(get_coll_tags()),)
+""" % (', '.join(prep_config_tags()),)
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)

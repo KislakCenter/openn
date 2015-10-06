@@ -112,6 +112,7 @@ class CommonPrep(Status):
         self.package_dir.save_tei(self.tei, self.document)
         self.document.tei_xml = self.tei.to_string()
         self.document.save()
+        self.add_removal(self.package_dir.partial_tei_path)
 
     def prep_dir(self):
         self.check_valid()

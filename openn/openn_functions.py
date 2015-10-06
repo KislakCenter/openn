@@ -70,6 +70,9 @@ def sort_str(s):
     of alphabetization."""
     return re.sub(r'^(the|an?) +', '', s.lower())
 
+def prep_config_tags():
+    return op_app.PREP_CONFIGS.keys()
+
 def get_coll_configs():
     return Configs(op_app.COLLECTIONS)
 
