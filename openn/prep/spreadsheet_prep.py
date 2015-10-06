@@ -206,6 +206,16 @@ class SpreadsheetPrep(CollectionPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
+        xsl_command = 'op-gen-tei'
+        xlsx_path = None
+
+        try:
+            xlsx_path = kwargs['xlsx']
+        except KeyError:
+            msg = "Must have option xlsx=/path/to/file.xlsx"
+            msg += " to generate partial TEI."
+            raise OPennException(msg)
+
         raise NotImplementedError, "TEI regeneration not available for spreadsheet preparation"
 
     def archive_xlsx(self):
