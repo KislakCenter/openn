@@ -49,11 +49,11 @@ class Details(object):
         # get information from the database
         try:
            coll = OPennCollection.objects.get(tag=tag)
-            doc_count = Document.objects.filter(
-                openn_collection_id = coll.pk).count()
-            details.update({ 'collection_id': coll.long_id(),
-                             'metadata_type': coll.metadata_type,
-                             'documents': doc_count})
+           doc_count = Document.objects.filter(
+               openn_collection_id = coll.pk).count()
+           details.update({ 'collection_id': coll.long_id(),
+                            'metadata_type': coll.metadata_type,
+                            'documents': doc_count})
 
         except OPennCollection.DoesNotExist:
             details.update({ 'collection_id': None,
