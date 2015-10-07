@@ -79,6 +79,9 @@ def get_coll_configs():
 def get_coll_tags():
     return get_coll_configs().tags()
 
+def get_coll_names():
+    return get_coll_configs().all_values('name')
+
 def get_coll_config(tag):
     return get_coll_configs().get_config(tag)
 

@@ -99,13 +99,24 @@ def print_detail(detail, params=DETAIL_PARAMS):
             print fmt % (k, detail[k])
     print
 
-def print_list(coll):
-    # coll_id = coll.get('collection_id', 'NIDB')
-
-
+def print_coll(coll, fmtstr, tag_width):
     coll.setdefault('collection_id', 'NIDB')
-    # print "%(collection_id)s  %-10(tag)s %5(documents)d %(name)s" % coll
-    print "%s  %-10s %5d %s" % (coll['collection_id'], coll['tag'], coll['documents'], coll['name'])
+    print fmtstr.format(coll_id=coll['collection_id'], tag=coll['tag'],
+                               width=tag_width, doc_count=coll['documents'],
+                               name=coll['name'])
+
+def print_list(colls):
+    tag_width = len(max(get_coll_tags(), key=len)) + 2
+    name_width = len(max(get_coll_names(), key=len))
+    fmtstr = "{coll_id:5}  {tag:%d}  {doc_count:9}  {name}" % (tag_width,)
+    print fmtstr.format(coll_id="ID", tag="Tag", doc_count="Doc count",
+                        name="Collection")
+
+    print fmtstr.format(coll_id="====", tag=("=" * tag_width),
+                        doc_count="=========", name=("=" * name_width))
+    for coll in colls:
+        print_coll(coll, fmtstr, tag_width)
+
 
 def list_collections(args):
     configs = get_configs()
@@ -113,8 +124,7 @@ def list_collections(args):
     lister = Lister(configs)
     tag = args.tag
     sort_by = get_sort_by_field(args.sort_by)
-    for coll in lister.list_all(sort_by):
-        print_list(coll)
+    print_list(lister.list_all(sort_by))
 
 def collection_details(args):
     configs = get_configs()
