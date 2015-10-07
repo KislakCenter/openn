@@ -50,19 +50,19 @@ class TableOfContents(Page):
     def is_makeable(self):
         if not self.collection.is_live():
             self.logger.info("TOC not makeable; collection not set to 'live' (collection: %s)" % (
-                self.collection))
+                self.collection.tag()))
             return False
 
         html_dir = os.path.join(self.outdir, self.collection.html_dir())
         if not os.path.exists(html_dir):
             self.logger.info("TOC not makeable; no HTML dir found: %s (collection: %s)" % (
-                html_dir, self.collection))
+                html_dir, self.collection.tag()))
             return False
 
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         if len(html_files) == 0:
             self.logger.info("TOC not makeable; no HTML files found in %s (collection %s)" % (
-                html_dir, self.collection))
+                html_dir, self.collection.tag()))
             return False
 
         return True
