@@ -177,7 +177,7 @@ COLLECTIONS = {
             'tag': 'pennmss',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Penn Manuscripts',
+            'name': 'University of Pennsylvania Books & Manuscripts',
             'blurb': """These documents are from the collections of the Rare Books and
 Manuscripts Library at the University of Pennsylvania or are hosted by
 Penn with the permission of their owners.  Penn holds over 2,000
@@ -241,7 +241,7 @@ from Special Collections, Bryn Mawr College.""",
         },
         {
             'tag': 'drexmed',
-            'name': 'Legacy Center Archives & Special Collection, Drexel University College of Medicine.',
+            'name': "Legacy Center, Drexel University College of Medicine",
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """
@@ -293,7 +293,7 @@ all.  """,
         },
         {
             'tag': 'lehigh',
-            'name': 'Special Collections, Lehigh University',
+            'name': 'Special Collections, Lehigh University Librari',
             'metadata_type': 'TEI',
             'live': False,
             'blurb': """Lehigh University Special Collections serves as the repository for the
@@ -316,7 +316,7 @@ to the University's history.""",
         },
         {
             'tag': 'friendshl',
-            'name': 'Friends Historical Library, Swarthmare College',
+            'name': 'Friends Historical Library, Swarthmore College',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Friends Historical Library was established at Swarthmore College
@@ -376,7 +376,7 @@ and early 20th century travel are also available. """,
 
 # State Library of Pennsylvania does not conform to OPenn licensing terms
 #             'tag': 'libpa',
-#             'name': 'Rare Collections Library, State Library of Pennsylvania',
+#             'name': 'Rare Collections Library of the State Library of Pennsylvania',
 #             'metadata_type': 'TEI',
 #             'live': False,
 #             'blurb': """The State Library of Pennsylvania collects and preserves the
