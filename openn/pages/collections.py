@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import logging
+import os
 
 from django.template import Context, Template
 from django.template.loader import get_template
@@ -8,6 +10,8 @@ from operator import itemgetter
 from openn.pages.page import Page
 
 class Collections(Page):
+
+    logger = logging.getLogger(__name__)
 
     def __init__(self, template_name, outdir, coll_configs,**kwargs):
         self._coll_configs = coll_configs
@@ -26,7 +30,27 @@ class Collections(Page):
         return 'Collections'
 
     def live_collections(self, ):
-        return [x for x in self._coll_configs.all_collections() if x.is_live()]
+        live_ones = []
+
+        for coll in self._coll_configs.all_collections():
+            if coll.is_live():
+                html_dir = os.path.join(self.outdir, coll.html_dir())
+                if os.path.exists(html_dir):
+                    msg = "Collection added to collections page (%s)"
+                    msg = msg % (coll.tag())
+                    live_ones.append(coll)
+                else:
+                    msg = "Collection not added to collections page (%s);"
+                    msg += " collection set to 'live',"
+                    msg += " but HTML directory does not exist: '%s'"
+                    msg = msg % (coll.tag(), html_dir,)
+            else:
+                msg = "Collection not added to collections page (%s);"
+                msg += " collection not set to 'live'"
+                msg = msg % (coll.tag(),)
+            self.logger.info(msg)
+
+        return live_ones
 
     def is_needed(self):
         """If the collections template exits; we always say it's needed.
