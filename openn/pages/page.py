@@ -6,6 +6,7 @@ from copy import deepcopy
 
 from django.template import Context, Template
 from django.template.loader import get_template
+from django.conf import settings
 from operator import itemgetter
 
 from openn.templatetags.openn_filters import *
