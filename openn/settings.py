@@ -267,7 +267,7 @@ the activity of individuals, institutions, and organizations. Over
             'tag': 'haverford',
             'name': 'Quaker and Special Collections, Haverford College',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb':  """ Quaker & Special Collections contains Haverford College's include
 the world-renowned Quaker Collection, College archives, rare books and
 manuscripts, and fine art. We seek to collect, preserve, and make
@@ -295,7 +295,7 @@ all.  """,
             'tag': 'lehigh',
             'name': 'Special Collections, Lehigh University Librari',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb': """Lehigh University Special Collections serves as the repository for the
 University's collections of rare books and manuscripts, and for
 holdings relating to its own history. It encompasses a rare book
@@ -332,7 +332,7 @@ activism, and the peace movement.""",
             'tag': 'hsp',
             'name': 'Historical Society of Pennsylvania',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb': 'Documents from the Historical Society of Pennsylvania.',
             'include_file': 'HistoricalSocietyOfPennsylvania.html',
         },
