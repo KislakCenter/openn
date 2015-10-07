@@ -74,7 +74,7 @@ class TableOfContents(Page):
         if not os.path.exists(self.outfile_path()):
             return True
 
-        html_dir = os.path.join(self.outdir, self.collection_config['html_dir'])
+        html_dir = os.path.join(self.outdir, self.collection.html_dir())
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         newest_html = max([os.path.getmtime(x) for x in html_files])
         if os.path.getmtime(self.outfile_path()) > newest_html:
