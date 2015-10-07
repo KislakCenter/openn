@@ -97,6 +97,16 @@ class ReportSegment:
         else:
             return val
 
+    def get_val(self, obj, attr):
+        item = obj
+        for a in attr.split('.'):
+            try:
+                item = getattr(item, a)
+            except AttributeError:
+                item = None
+
+        return item
+
     def line_val(self, obj):
         s = None
 
