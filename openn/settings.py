@@ -293,7 +293,7 @@ all.  """,
         },
         {
             'tag': 'lehigh',
-            'name': 'Special Collections, Lehigh University Librari',
+            'name': 'Special Collections, Lehigh University Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Lehigh University Special Collections serves as the repository for the
