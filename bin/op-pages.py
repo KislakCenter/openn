@@ -77,49 +77,55 @@ def update_online_statuses():
         logging.info("Is document online: %s/%s? %s" % (
             doc.collection, doc.base_dir, str(doc.is_online)))
 
-def make_browse_html(docid, force=False, dry_run=False):
+def is_makeable(page, opts):
+    make_page = False
+
+    if page.is_makeable() and (page.is_needed() or opts.force):
+        make_page = True
+    elif opts.reallyforce:
+        make_page = True
+
+    return make_page
+
+def make_browse_html(docid, opts):
     doc = Document.objects.get(pk=docid)
     coll_tag = doc.openn_collection.tag
     coll_wrapper = get_coll_wrapper(coll_tag)
     page = Browse(document=doc, collection_wrapper=coll_wrapper,
                   toc_dir = settings.TOC_DIR,
                   **{ 'outdir': staging_dir() })
-    make_page = page.is_makeable() if force else page.is_needed()
 
-    if make_page:
+    if is_makeable(page, opts):
         logging.info("Creating page: %s" % (page.outfile_path(), ))
-        if not dry_run:
+        if not opts.dry_run:
             page.create_pages()
     else:
         logging.info("Skipping page: %s" % (page.outfile_path(), ))
 
-def make_toc_html(collwrap, force=False, dry_run=False):
+def make_toc_html(collwrap, opts):
     toc = TableOfContents(
         collwrap, toc_dir=settings.TOC_DIR,
         **{ 'template_name': 'TableOfContents.html', 'outdir': staging_dir() })
 
-    make_page = toc.is_makeable() if force else toc.is_needed()
-
-    if make_page:
+    if is_makeable(toc, opts):
         logging.info("Creating TOC for collection %s: %s" % (
             collwrap.tag(), toc.outfile_path()))
-        if not dry_run:
+        if not opts.dry_run:
             toc.create_pages()
     else:
         logging.info("Skipping TOC for collection %s: %s" % (
             collwrap.tag(), toc.outfile_path()))
 
-def make_readme_html(readme, force=False, dry_run=False):
+def make_readme_html(readme, opts):
     try:
         readme_dict = find_readme(readme)
         if readme_dict == None:
             raise OPennException("Unknown readme file: %s" % (readme,))
         page = Page(readme, staging_dir(), title=readme_dict['title'])
-        make_page = page.is_makeable() if force else page.is_needed()
 
-        if make_page:
+        if is_makeable(page, opts):
             logging.info("Creating page: %s" % (page.outfile_path(), ))
-            if not dry_run:
+            if not opts.dry_run:
                 page.create_pages()
         else:
             logging.info("Skipping page: %s" % (page.outfile_path(), ))
@@ -127,16 +133,14 @@ def make_readme_html(readme, force=False, dry_run=False):
         msg = "Could not find template: %s" % (readme,)
         raise OPennException(msg)
 
-def make_collections(opts, force=False, dry_run=False):
+def make_collections(opts):
     try:
         page = Collections(settings.COLLECTIONS_TEMPLATE, staging_dir(),
                            collection_configs(), toc_dir=settings.TOC_DIR)
 
-        make_page = page.is_makeable() if force else page.is_needed()
-
-        if make_page:
+        if is_makeable(page, opts):
             logging.info("Creating list of collections: %s" % (page.outfile_path(), ))
-            if not dry_run:
+            if not opts.dry_run:
                 page.create_pages()
         else:
             logging.info("Skipping page: %s" % (page.outfile_path(), ))
@@ -166,20 +170,20 @@ def toc(opts):
 
 def toc_collection(coll_tag, opts):
     coll_wrapper = opfunc.get_coll_wrapper(coll_tag)
-    make_toc_html(coll_wrapper, opts.force, opts.dry_run)
+    make_toc_html(coll_wrapper, opts)
 
 def document(docid, opts):
-    make_browse_html(docid, opts.force, opts.dry_run)
+    make_browse_html(docid, opts)
 
 def readme(opts):
     for readme in settings.README_TEMPLATES:
         readme_file(readme['file'], opts)
 
 def readme_file(filename,opts):
-    make_readme_html(filename, opts.force, opts.dry_run)
+    make_readme_html(filename, opts)
 
 def collections(opts):
-    make_collections(opts, opts.force, opts.dry_run)
+    make_collections(opts)
 
 def print_options(opts):
     for k in vars(opts):
@@ -196,6 +200,9 @@ def check_options(opts):
     # remove force
     force = opt_dict['force']
     opt_dict['force'] = False
+    # remove reallyforce
+    reallyforce = opt_dict['reallyforce']
+    opt_dict['reallyforce'] = False
     # remove show-options
     show_options = opt_dict['show_options']
     opt_dict['show_options'] = False
@@ -428,6 +435,9 @@ skipped TOC creation for files that would be generated for an actual run.
     parser.add_option('-f', '--force',
                       action='store_true', dest='force', default=False,
                       help='Create all makeable files; not just as needed')
+    parser.add_option('--really-force',
+                      action='store_true', dest='reallyforce', default=False,
+                      help='Create files even if not makeable files [only use for testing]')
     parser.add_option('-o', '--show-options',
                       action='store_true', dest='show_options', default=False,
                       help='Print out the options at runtime')
