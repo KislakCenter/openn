@@ -452,7 +452,7 @@
                     "required": false,
                     "repeating": true,
                     "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                    "value_list": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL", "BLANK" ],
                     "blank": {
                         "if": {
                             "field": "file_name",
@@ -465,7 +465,7 @@
                     "required": {
                         "if": {
                             "field": "tag1",
-                            "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                            "is": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL" ]
                         }
                     },
                     "blank": {
@@ -482,7 +482,7 @@
                     "required": false,
                     "repeating": true,
                     "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                    "value_list": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL", "BLANK" ],
                     "blank": {
                         "if": {
                             "field": "file_name",
@@ -495,7 +495,7 @@
                     "required": {
                         "if": {
                             "field": "tag2",
-                            "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                            "is": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL" ]
                         }
                     },
                     "blank": {
@@ -512,7 +512,7 @@
                     "required": false,
                     "repeating": true,
                     "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                    "value_list": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL", "BLANK" ],
                     "blank": {
                         "if": {
                             "field": "file_name",
@@ -525,7 +525,7 @@
                     "required": {
                         "if": {
                             "field": "tag3",
-                            "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                            "is": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL" ]
                         }
                     },
                     "blank": {
@@ -542,7 +542,7 @@
                     "required": false,
                     "repeating": true,
                     "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "ILL", "BLANK" ],
+                    "value_list": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL", "BLANK" ],
                     "blank": {
                         "if": {
                             "field": "file_name",
@@ -555,7 +555,7 @@
                     "required": {
                         "if": {
                             "field": "tag4",
-                            "is": [ "TOC1", "TOC2", "TOC3", "ILL" ]
+                            "is": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL" ]
                         }
                     },
                     "blank": {
