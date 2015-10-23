@@ -437,7 +437,7 @@ skipped TOC creation for files that would be generated for an actual run.
                       help='Create all makeable files; not just as needed')
     parser.add_option('--really-force',
                       action='store_true', dest='reallyforce', default=False,
-                      help='Create files even if not makeable files [only use for testing]')
+                      help='Create files even if not makeable [only use for testing]')
     parser.add_option('-o', '--show-options',
                       action='store_true', dest='show_options', default=False,
                       help='Print out the options at runtime')
