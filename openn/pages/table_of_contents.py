@@ -28,7 +28,6 @@ class TableOfContents(Page):
         docs = Document.objects.filter(
             openn_collection=self.collection.openn_collection(),
             is_online=True)
-        print "DEBUG === len(docs) is %d" % len(docs)
         items = [ DocumentData(x, self.collection, self.toc_dir) for x in docs ]
         ctx = { 'collection': self.collection,
                 'items': items }
