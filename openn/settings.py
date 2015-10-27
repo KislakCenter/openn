@@ -455,6 +455,28 @@ PREP_CONFIGS = {
             },
         },
     },
+    'penn-diaries': {
+        'collection': {
+            'tag': 'penn'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
     'brynmawr-diaries': {
         'collection': {
             'tag': 'brynmawr'
