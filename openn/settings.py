@@ -454,7 +454,7 @@ PREP_CONFIGS = {
     },
     'penn-diaries': {
         'collection': {
-            'tag': 'penn'
+            'tag': 'pennmss'
         },
         "image_types": [ '*.tif' ],
         'collection_prep': {
