@@ -698,7 +698,7 @@ PREP_CONFIGS = {
         'collection': {
             'tag': 'libpa'
         },
-        "image_types": [ '*.tif' ],
+        "image_types": [ '*.tif', '*.jpg' ],
         'collection_prep': {
             'tag': 'diaries',
         },
