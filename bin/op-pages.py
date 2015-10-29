@@ -107,6 +107,11 @@ def make_toc_html(collwrap, opts):
         collwrap, toc_dir=settings.TOC_DIR,
         **{ 'template_name': 'TableOfContents.html', 'outdir': staging_dir() })
 
+    # TODO: have TOC is_needed() check the include file; fails to make
+    #       now b/c TableOfContents.html seldom changes
+    # For now, always force, and make them all:
+    opts.force = True
+
     if is_makeable(toc, opts):
         logging.info("Creating TOC for collection %s: %s" % (
             collwrap.tag(), toc.outfile_path()))
