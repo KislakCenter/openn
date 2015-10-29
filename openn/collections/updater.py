@@ -16,7 +16,7 @@ class Updater(object):
         self.find_or_create_collection(tag)
 
     def update_all(self):
-        for cfg in settings.COLLECTIONS:
+        for cfg in settings.COLLECTIONS['configs']:
             tag  = cfg['tag']
             self.update(tag)
 
