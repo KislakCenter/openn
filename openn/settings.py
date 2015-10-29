@@ -315,6 +315,37 @@ to the University's history.""",
             'include_file': 'LehighUniversity.html',
         },
         {
+            'tag': 'tlc',
+            'name': 'The Library Company of Philadelphia',
+            'metadata_type': 'TEI',
+            'live': False,
+            'blurb': 'Documents from the Library Company of Philadelphia.',
+            'include_file': 'LibraryCompany.html',
+        },
+        {
+            'tag': 'libpa',
+            'name': 'Rare Collections Library of the State Library of Pennsylvania',
+            'metadata_type': 'TEI',
+            'live': False,
+            'blurb': """The State Library of Pennsylvania collects and preserves the
+written heritage of the Commonwealth through materials published for,
+by, and about Pennsylvania. The strengths of the Rare Collections
+Library include Pennsylvania imprints, government documents, original
+newspapers, pamphlets, maps and atlases, and rare works of
+Pennsylvania religion, natural history, and genealogy.<br /><br />
+
+The core of the Rare Collections Library is the Assembly Collection,
+numbering over 400 volumes.  These books were purchased by
+Pennsylvania's legislators beginning in 1745 to serve their needs in
+crafting legislation and governing the Commonwealth. Comprised largely
+of law books, the Assembly Collection also contains dictionaries,
+books on architecture, philosophy, history and religion. At the center
+of the Assembly Collection is the 1739 Assembly Bible, upon which
+generations of Pennsylvania's elected leaders have taken their oaths
+of office.""",
+            'include_file': 'StateLibraryOfPennsylvania.html',
+        },
+        {
             'tag': 'friendshl',
             'name': 'Friends Historical Library, Swarthmore College',
             'metadata_type': 'TEI',
@@ -363,40 +394,6 @@ European history, World Wars I and II, regional history, biographies
 and early 20th century travel are also available. """,
             'include_file': 'UnionLeagueOfPhiladelphia.html',
         },
-# TLC does not conform to OPenn licensing terms
-#         {
-#             'tag': 'tlc',
-#             'name': 'The Library Company of Philadelphia',
-#             'metadata_type': 'TEI',
-#             'live': False,
-#             'blurb': 'Documents from the Library Company of Philadelphia.',
-#             'include_file': 'LibraryCompany.html',
-#         },
-#         {
-
-# State Library of Pennsylvania does not conform to OPenn licensing terms
-#             'tag': 'libpa',
-#             'name': 'Rare Collections Library of the State Library of Pennsylvania',
-#             'metadata_type': 'TEI',
-#             'live': False,
-#             'blurb': """The State Library of Pennsylvania collects and preserves the
-# written heritage of the Commonwealth through materials published for,
-# by, and about Pennsylvania. The strengths of the Rare Collections
-# Library include Pennsylvania imprints, government documents, original
-# newspapers, pamphlets, maps and atlases, and rare works of
-# Pennsylvania religion, natural history, and genealogy.<br /><br />
-
-# The core of the Rare Collections Library is the Assembly Collection,
-# numbering over 400 volumes.  These books were purchased by
-# Pennsylvania's legislators beginning in 1745 to serve their needs in
-# crafting legislation and governing the Commonwealth. Comprised largely
-# of law books, the Assembly Collection also contains dictionaries,
-# books on architecture, philosophy, history and religion. At the center
-# of the Assembly Collection is the 1739 Assembly Bible, upon which
-# generations of Pennsylvania's elected leaders have taken their oaths
-# of office.""",
-#             'include_file': 'StateLibraryOfPennsylvania.html',
-#         },
     ],
 }
 
@@ -674,7 +671,52 @@ PREP_CONFIGS = {
                 },
             },
         }
-    }
+    },
+    'tlc-diaries': {
+        'collection': {
+            'tag': 'tlc'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'libpa-diaries': {
+        'collection': {
+            'tag': 'libpa'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+
 
 }
 
