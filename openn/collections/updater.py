@@ -22,13 +22,14 @@ class Updater(object):
 
     def find_or_create_collection(self, tag):
         # confirm that the tag is valid
-        self._configs.get_config(tag)
+        cfg = self._configs.get_config(tag)
         attrs = { 'tag': tag }
         try:
             coll = OPennCollection.objects.get(**attrs)
             self.logger.info("Collection already exists: '%s'" % (coll.tag,))
         except OPennCollection.DoesNotExist:
-            coll = OPennCollection(tag = tag)
+            metadata_type = cfg['metadata_type']
+            coll = OPennCollection(tag = tag, metadata_type = metadata_type)
             self.logger.info("Creating collection: %s" % (coll.tag,))
             coll.save()
 
