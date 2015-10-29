@@ -84,6 +84,7 @@ COLLECTIONS_TEMPLATE = 'Collections.html'
 STAGING_DIR = os.environ['OPENN_STAGING_DIR']
 PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
 ARCHIVE_DIR = os.environ['OPENN_ARCHIVE_DIR']
+SITE_DIR = os.environ['OPENN_SITE_DIR']
 
 TOC_DIR = 'html'
 
