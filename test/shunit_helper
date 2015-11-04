@@ -12,6 +12,7 @@ export OPENN_DB_USER=openn
 export OPENN_DB_HOST=localhost
 export OPENN_PACKAGE_DIR=$TEST_STAGING_DIR/openn/packages
 export OPENN_STAGING_DIR=$TEST_STAGING_DIR/openn/site
+export OPENN_SITE_DIR=$TEST_STAGING_DIR/openn/site
 export OPENN_ARCHIVE_DIR=$TEST_STAGING_DIR/openn/archive
 
 TABLES_TO_DELETE="openn_derivative openn_image openn_version openn_prepstatus openn_document"

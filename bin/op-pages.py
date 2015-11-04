@@ -42,8 +42,8 @@ def collection_configs():
 def get_coll_wrapper(tag):
     return collection_configs().get_collection(tag)
 
-def staging_dir():
-    return settings.STAGING_DIR
+def site_dir():
+    return settings.SITE_DIR
 
 def handle_exc():
     exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -74,8 +74,8 @@ def update_online_statuses():
             if doc.is_live():
                 doc.is_online = True
                 doc.save()
-        logging.info("Is document online: %s/%s? %s" % (
-            doc.collection, doc.base_dir, str(doc.is_online)))
+        logging.info("Is document online? %-15s %-20s %s" % (
+            doc.openn_collection.tag, doc.base_dir, str(doc.is_online)))
 
 def is_makeable(page, opts):
     make_page = False
@@ -93,7 +93,7 @@ def make_browse_html(docid, opts):
     coll_wrapper = get_coll_wrapper(coll_tag)
     page = Browse(document=doc, collection_wrapper=coll_wrapper,
                   toc_dir = settings.TOC_DIR,
-                  **{ 'outdir': staging_dir() })
+                  **{ 'outdir': site_dir() })
 
     if is_makeable(page, opts):
         logging.info("Creating page: %s" % (page.outfile_path(), ))
@@ -105,7 +105,12 @@ def make_browse_html(docid, opts):
 def make_toc_html(collwrap, opts):
     toc = TableOfContents(
         collwrap, toc_dir=settings.TOC_DIR,
-        **{ 'template_name': 'TableOfContents.html', 'outdir': staging_dir() })
+        **{ 'template_name': 'TableOfContents.html', 'outdir': site_dir() })
+
+    # TODO: have TOC is_needed() check the include file; fails to make
+    #       now b/c TableOfContents.html seldom changes
+    # For now, always force, and make them all:
+    opts.force = True
 
     if is_makeable(toc, opts):
         logging.info("Creating TOC for collection %s: %s" % (
@@ -121,7 +126,7 @@ def make_readme_html(readme, opts):
         readme_dict = find_readme(readme)
         if readme_dict == None:
             raise OPennException("Unknown readme file: %s" % (readme,))
-        page = Page(readme, staging_dir(), title=readme_dict['title'])
+        page = Page(readme, site_dir(), title=readme_dict['title'])
 
         if is_makeable(page, opts):
             logging.info("Creating page: %s" % (page.outfile_path(), ))
@@ -135,7 +140,7 @@ def make_readme_html(readme, opts):
 
 def make_collections(opts):
     try:
-        page = Collections(settings.COLLECTIONS_TEMPLATE, staging_dir(),
+        page = Collections(settings.COLLECTIONS_TEMPLATE, site_dir(),
                            collection_configs(), toc_dir=settings.TOC_DIR)
 
         if is_makeable(page, opts):
@@ -329,7 +334,7 @@ WHERE ARE FILES CREATED?
 ========================
 
 Documents are staged according to parameters defined in `openn/settings`.  These
-include the STAGING_DIR, the local directory where pages are staged for pushing
+include the SITE_DIR, the local directory where pages are staged for pushing
 to OPenn; and collection-specific files and subdirectories as defined under
 COLLECTIONS[<COLLECTION_KEY>]:
 
@@ -437,7 +442,7 @@ skipped TOC creation for files that would be generated for an actual run.
                       help='Create all makeable files; not just as needed')
     parser.add_option('--really-force',
                       action='store_true', dest='reallyforce', default=False,
-                      help='Create files even if not makeable files [only use for testing]')
+                      help='Create files even if not makeable [only use for testing]')
     parser.add_option('-o', '--show-options',
                       action='store_true', dest='show_options', default=False,
                       help='Print out the options at runtime')
