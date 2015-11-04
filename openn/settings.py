@@ -236,7 +236,16 @@ from Special Collections, Bryn Mawr College.""",
             'name': 'Drexel University Archives and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': 'Documents from Drexel University Archives.',
+            'blurb': """
+The Drexel University Archives and Special Collections acquires,
+preserves and makes available records, manuscripts, visual materials
+and publications related to the history of Drexel University. The
+Archives has material related to Drexel's founders as well as Drexel
+students, faculty, academic departments, administrative offices, and
+campus organizations. The Special Collections house rare books and
+manuscript collections, with a focus on incunabula; the history of
+printing and fine press; the history of Philadelphia; the Drexel
+family; and the hsitory of education.""",
             'include_file': 'DrexelUniversity.html',
         },
         {
