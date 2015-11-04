@@ -355,7 +355,7 @@ activism, and the peace movement.""",
         },
         {
             'tag': 'ulp',
-            'name': 'Union League of Philadelphia',
+            'name': 'Abraham Lincoln Foundation of The Union League of Philadelphia',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Abraham Lincoln Foundation of The Union League of Philadelphia
