@@ -233,7 +233,7 @@ from Special Collections, Bryn Mawr College.""",
         },
         {
             'tag': 'drexarc',
-            'name': 'Drexel University Archives',
+            'name': 'Drexel University Archives and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': 'Documents from Drexel University Archives.',
