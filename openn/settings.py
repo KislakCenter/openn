@@ -234,10 +234,19 @@ from Special Collections, Bryn Mawr College.""",
         },
         {
             'tag': 'drexarc',
-            'name': 'Drexel University Archives',
+            'name': 'Drexel University Archives and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': 'Documents from Drexel University Archives.',
+            'blurb': """
+The Drexel University Archives and Special Collections acquires,
+preserves and makes available records, manuscripts, visual materials
+and publications related to the history of Drexel University. The
+Archives has material related to Drexel's founders as well as Drexel
+students, faculty, academic departments, administrative offices, and
+campus organizations. The Special Collections house rare books and
+manuscript collections, with a focus on incunabula; the history of
+printing and fine press; the history of Philadelphia; the Drexel
+family; and the hsitory of education.""",
             'include_file': 'DrexelUniversity.html',
         },
         {
@@ -319,7 +328,7 @@ to the University's history.""",
             'tag': 'tlc',
             'name': 'The Library Company of Philadelphia',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb': 'Documents from the Library Company of Philadelphia.',
             'include_file': 'LibraryCompany.html',
         },
@@ -327,7 +336,7 @@ to the University's history.""",
             'tag': 'libpa',
             'name': 'Rare Collections Library of the State Library of Pennsylvania',
             'metadata_type': 'TEI',
-            'live': False,
+            'live': True,
             'blurb': """The State Library of Pennsylvania collects and preserves the
 written heritage of the Commonwealth through materials published for,
 by, and about Pennsylvania. The strengths of the Rare Collections
@@ -378,7 +387,7 @@ activism, and the peace movement.""",
         },
         {
             'tag': 'ulp',
-            'name': 'Union League of Philadelphia',
+            'name': 'Abraham Lincoln Foundation of The Union League of Philadelphia',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Abraham Lincoln Foundation of The Union League of Philadelphia

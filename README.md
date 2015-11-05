@@ -106,3 +106,5 @@ export PATH
 ## Backing up
 
 `mysqldump -u DB_USER DB_NAME > /mnt/scratch01/openn/db_backups/openn_`date +%Y%m%dT%H%M%S%z`.dmp`
+
+test
