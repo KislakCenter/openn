@@ -179,21 +179,15 @@ COLLECTIONS = {
             'metadata_type': 'TEI',
             'live': True,
             'name': 'University of Pennsylvania Books & Manuscripts',
-            'blurb': """These documents are from the collections of the Rare Books and
-Manuscripts Library at the University of Pennsylvania or are hosted by
-Penn with the permission of their owners.  Penn holds over 2,000
-Western manuscripts produced before the 19th century; medieval and
-Renaissance manuscripts comprise approximately 900 items, the earliest
-dating from 1000 A.D. The medieval manuscripts, now a collection of
-approximately 250 items, have been considered and used as a research
-collection since the private library of church historian Henry Charles
-Lea came to the University in the early 20th century. Most of the
-manuscripts are in Latin, but the medieval vernacular languages of
-Middle English, Middle French, Italian, Spanish, German, Dutch, and
-Judaeo-Arabic are each represented by one or more manuscripts. The
-collection is particularly strong in the fields of church history and
-history of science, with secondary strengths in liturgy and liturgical
-chant, theology and philosophy, and legal documents.""",
+            'blurb': """With approximately 250,000 printed books and nearly ten million
+pieces of manuscript material, the Rare Book and Manuscript Library is
+a small part of the University's 5 million-volume library system.
+Special strengths include American literature, drama, and history;
+English, Spanish, Italian, and German literature; the Edgar Fahs Smith
+Memorial Collection in the history of chemistry; the Horace Howard
+Furness Memorial Library devoted to Shakespeare and his
+contemporaries; and the Henry Charles Lea Library with strengths in
+Church history, the Inquisition, magic, and witchcraft.""",
             'include_file': 'PennManuscripts.html',
         },
         {
@@ -201,7 +195,16 @@ chant, theology and philosophy, and legal documents.""",
             'metadata_type': 'TEI',
             'live': True,
             'name': 'Lawrence J. Schoenberg Manuscripts',
-            'blurb': 'These manuscripts are from the Lawrence J. Schoenberg collection in the Rare Books and Manuscripts Library at the University of Pennsylvania.',
+            'blurb': """These manuscripts are from the Lawrence J. Schoenberg collection in
+the Rare Books and Manuscripts Library at the University of
+Pennsylvania. With its emphasis on the history of science and the
+transmission of knowledge across time and geography, the Schoenberg
+Collection of about 300 manuscripts brings together many of the great
+scientific and philosophical traditions of the ancient and medieval
+worlds. Documenting the extraordinary achievements of scholars,
+philosophers, and scientists active in pre-modern Europe, Africa, and
+Asia, the collection illuminates the foundations of our shared
+intellectual heritage.""",
             'include_file': 'LJSchoenbergManuscripts.html',
         },
         {
@@ -211,25 +214,13 @@ chant, theology and philosophy, and legal documents.""",
             'name': 'Bryn Mawr College Library Special Collections',
             'blurb': """The Bryn Mawr College Special Collections includes rare books,
 manuscripts, the college archives, works of art on paper, and
-ethnographic and archaeological objects.  The rare book collection
+ethnographic and archaeological objects. The rare book collection
 contains approximately 50,000 volumes, and includes extensive
 collections of late medieval and early modern works, among them more
 than 100 medieval manuscript volumes and more than 1000 15th century
-printed books.  In addition, there are strong collections on the
-history of women, European interaction with Asia, Africa and the
-Americas, and British and American literature.<br /><br />
-
-The manuscript collections are particularly strong in women's history,
-including the papers of Bryn Mawr president and early women's rights
-activist M. Carey Thomas; papers of many prominent women associated
-with Bryn Mawr, including poet Marianne Moore, New Yorker editor
-Katharine Sergeant White, artist Anne Truitt, and archaeologists Lucy
-Shoe Meritt and Dorothy Burr Thompson; and extensive collections of
-letters and diaries written by Bryn Mawr students from the time of its
-founding in the 1880s.  These collections are supported by a graphics
+printed books. These collections are supported by a graphics
 collection ranging from the 15th century to the present, including
-7,300 prints, 3,500 drawings, and 13,000 vintage photographs.Documents
-from Special Collections, Bryn Mawr College.""",
+7,300 prints, 3,500 drawings, and 13,000 vintage photographs.""",
             'include_file': 'BrynMawrCollege.html',
         },
         {
@@ -246,7 +237,7 @@ students, faculty, academic departments, administrative offices, and
 campus organizations. The Special Collections house rare books and
 manuscript collections, with a focus on incunabula; the history of
 printing and fine press; the history of Philadelphia; the Drexel
-family; and the hsitory of education.""",
+family; and the history of education.""",
             'include_file': 'DrexelUniversity.html',
         },
         {
@@ -254,23 +245,15 @@ family; and the hsitory of education.""",
             'name': "Legacy Center, Drexel University College of Medicine",
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """
-The Drexel University College of Medicine Legacy Center supports
+            'blurb': """The Drexel University College of Medicine Legacy Center supports
 research and investigation of the history of women in medicine,
 history of homeopathic medicine in the United States, and the history
-of women's health. Our collections are accessible online and in our
-reading room in Philadelphia. We work regularly with K-12 students and
-teachers, graduate and undergraduate students, scholars, and
-genealogists.<br /><br />
-
-The Center is the repository for records documenting the history of
-the College and its predecessor institutions, including Woman's
-Medical College of Pennsylvania and Hahnemann University. Special
-collections emerging from these institutions' unique and original
-missions to educate women physicians and to teach homeopathy reflect
-the activity of individuals, institutions, and organizations. Over
-4,000 linear feet of materials date from 1502 to the present, with the
-            bulk of the materials ranging from 1848-1990.  """,
+of women's health. The Center is the repository for records
+documenting the history of the College and its predecessor
+institutions, including the Woman's Medical College of Pennsylvania
+and Hahnemann University. Over 4,000 linear feet of materials date
+from 1502 to the present, with the bulk of the materials ranging from
+1848-1990.""",
             'include_file': 'DrexelMedicine.html',
         },
         {
@@ -278,27 +261,17 @@ the activity of individuals, institutions, and organizations. Over
             'name': 'Quaker and Special Collections, Haverford College',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb':  """ Quaker & Special Collections contains Haverford College's include
-the world-renowned Quaker Collection, College archives, rare books and
-manuscripts, and fine art. We seek to collect, preserve, and make
-available materials which serve the research and teaching needs of the
-Haverford community as well as the wider scholarly community. Our
-world-renowned Quaker collections, which illuminate Quaker life,
-faith, and practice from the earliest days of the Society of Friends
-to the present day in many parts of the world. Materials include early
-books and pamphlets, meeting records, organization and family papers,
-journals and diaries, English and American Quaker serials, and
-audio-visual materials. Archival holdings document the history and
-operations of Haverford College from its founding in 1833 to
-present. Other strengths include literature (particularly Shakespeare
-and the work that influenced him), natural history, science, American
-History, and a small but interesting collection of 13th- through
-19th-century illuminated manuscripts in Hebrew, Latin, Arabic. Our
-photographic holdings document the history of photography and
-photographic technology, and include prints by many of the greatest
-19th and 20th century photographers, while prints, paintings, and
-artifacts complete the art collections. The collections are open to
-all.  """,
+            'blurb':  """Quaker & Special Collections contains Haverford College's
+world-renowned Quaker Collection, College archives, rare books and
+manuscripts, and fine art. The world-renowned Quaker collections
+illuminate Quaker life, faith, and practice from the earliest days of
+the Society of Friends to the present day and in many parts of the
+world. Archival holdings document the history and operations of
+Haverford College from its founding in 1833 to present. Other
+strengths include literature, natural history, science, American
+History, and a small but interesting collection of 13th through
+19th-century illuminated manuscripts in Hebrew, Latin, and Arabic. The
+collections are open to all.""",
             'include_file': 'HaverfordCollege.html',
         },
         {
@@ -315,13 +288,9 @@ travel and exploration, natural history and ornithology, and works of
 historical significance in science and technology. Materials relating
 to the University include documents and publications of the
 University, papers of faculty members, and memorabilia from the
-University's history. In addition, Special Collections is the
-repository for Lehigh theses and dissertations. Holdings in the
-history of technology concentrate on large scale construction,
-including a number of classic and seminal works on bridge building and
-design, and construction with iron and steel. Special Collections also
-holds manuscripts and personal papers, in addition to papers relating
-to the University's history.""",
+University's history. Special Collections also holds manuscripts and
+personal papers, in addition to papers relating to the University's
+history.""",
             'include_file': 'LehighUniversity.html',
         },
         {
@@ -329,7 +298,12 @@ to the University's history.""",
             'name': 'The Library Company of Philadelphia',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': 'Documents from the Library Company of Philadelphia.',
+            'blurb': """The Library Company of Philadelphia is an independent research library
+specializing in American history and culture from the 17th through the
+19th centuries. Open to the public free of charge, the Library Company
+houses an extensive non-circulating collection of rare books,
+manuscripts, broadsides, ephemera, prints, photographs, and works of
+art.""",
             'include_file': 'LibraryCompany.html',
         },
         {
@@ -342,17 +316,7 @@ written heritage of the Commonwealth through materials published for,
 by, and about Pennsylvania. The strengths of the Rare Collections
 Library include Pennsylvania imprints, government documents, original
 newspapers, pamphlets, maps and atlases, and rare works of
-Pennsylvania religion, natural history, and genealogy.<br /><br />
-
-The core of the Rare Collections Library is the Assembly Collection,
-numbering over 400 volumes.  These books were purchased by
-Pennsylvania's legislators beginning in 1745 to serve their needs in
-crafting legislation and governing the Commonwealth. Comprised largely
-of law books, the Assembly Collection also contains dictionaries,
-books on architecture, philosophy, history and religion. At the center
-of the Assembly Collection is the 1739 Assembly Bible, upon which
-generations of Pennsylvania's elected leaders have taken their oaths
-of office.""",
+Pennsylvania religion, natural history, and genealogy.""",
             'include_file': 'StateLibraryOfPennsylvania.html',
         },
         {
@@ -360,13 +324,13 @@ of office.""",
             'name': 'Friends Historical Library, Swarthmore College',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Friends Historical Library was established at Swarthmore College
-in 1871, two years after the College opened. Its collections document
-the history of the Society of Friends (Quakers) and the testimonies of
-Friends from the 17th century to the present. It is the largest Quaker
-library in the world and it includes materials on women's suffrage,
-the rights of Native Americans, the anti-slavery movement, social
-activism, and the peace movement.""",
+            'blurb': """Established in 1871 at Swarthmore College, two years after the College
+opened, the Friends Historical Library documents the history of the
+Religious Society of Friends (Quakers) from their mid-seventeenth
+century origins to the present. As the largest Quaker library in the
+world, it includes materials on women's suffrage, the rights of Native
+Americans, the anti-slavery movement, social activism, and the peace
+movement.""",
             'include_file': 'FriendsHistoricalLibrary.html',
         },
         {
@@ -374,7 +338,20 @@ activism, and the peace movement.""",
             'name': 'Historical Society of Pennsylvania',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': 'Documents from the Historical Society of Pennsylvania.',
+            'blurb': """The collections of Historical Society of Pennsylvania range from
+genealogical and family papers to business and organizational records
+to collections of items such as photographs, postcards, sheet music,
+menus, and trade cards.  HSP's library contains a wealth of published
+material, including books, pamphlets, serials, and newspapers.  Our
+collections span from the seventeenth through the twenty-first
+centuries, and they touch upon numerous topics, from social and
+economic issues during the nation's founding to the effects of the
+Industrial Revolution to the immigrant experience of recent decades.
+While our collections generally focus on Philadelphia, Eastern
+Pennsylvania, and the greater Delaware Valley, we also have books from
+other states East of the Mississippi River, maps from different parts
+of the world, and manuscripts from national and international
+leaders.""",
             'include_file': 'HistoricalSocietyOfPennsylvania.html',
         },
         {
@@ -382,7 +359,12 @@ activism, and the peace movement.""",
             'name': 'Lutheran Theological Seminary',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': 'Documents from Lutheran Theological Seminary.',
+            'blurb': """While the Krauth Memorial Library has over 193,000 volumes, the Rare
+Book Collection includes 8,000 volumes, fifteen incunabula, three
+Books of Hours, and twenty-five cuneiform tablets. Collection
+strengths are the 16th-century Lutheran Reformation, Continental
+Pietism, 18th-century works in theology ad philosophy, liturgical
+studies, and 19th-century American Lutheran periodicals.""",
             'include_file': 'LutheranTheologicalSeminary.html',
         },
         {
@@ -394,14 +376,12 @@ activism, and the peace movement.""",
 (ALF) is the steward of an important collection of art, archives,
 manuscripts, books, pamphlets, objects and other historic documents
 related to both the Union League and the Civil War.  The collections
-include not only the ALF's collection, but also those owned by The
+include materilas from the ALF, The
 Union League of Philadelphia, The Civil War Museum of Philadelphia,
 The Military Order of The Loyal Legion of the United States and The
-Dames of the Loyal Legion of the United States.  The collections are
+Dames of the Loyal Legion of the United States. The collections are
 available for research through The Heritage Center of the Union
-League.  Additional collections of books related to American and
-European history, World Wars I and II, regional history, biographies
-and early 20th century travel are also available. """,
+League. """,
             'include_file': 'UnionLeagueOfPhiladelphia.html',
         },
     ],
