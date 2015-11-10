@@ -55,7 +55,7 @@ def add_prep(doc):
 def add_missing_preps():
     for doc in Document.objects.all():
         if hasattr(doc, 'prepstatus'):
-            logging.info("Doc already has prep: %d: %s/%s" % (doc.id, doc.collection, doc.base_dir))
+            logging.info("Doc already has prep: %d: %s/%s" % (doc.id, doc.collection_tag, doc.base_dir))
         else:
             add_prep(doc)
 
@@ -64,7 +64,7 @@ def update_online_statuses():
         if doc.is_live():
             doc.is_online = True
             doc.save()
-        logging.info("Is document online: %s/%s? %s" % (doc.collection, doc.base_dir, str(doc.is_online)))
+        logging.info("Is document online: %s/%s? %s" % (doc.collection_tag, doc.base_dir, str(doc.is_online)))
 
 def print_options(opts):
     for k in vars(opts):
@@ -158,7 +158,7 @@ class Report:
 def show_all(opts):
     report = Report(colsep=' | ')
     report.add(ReportSegment(attr='id', fmt='d', width=4, head='ID'))
-    report.add(ReportSegment(attr='collection', fmt='s', width=20, head='Coll'))
+    report.add(ReportSegment(attr='collection_tag', fmt='s', width=20, head='Coll'))
     report.add(ReportSegment(attr='base_dir', fmt='s', width=20, head='Directory'))
     report.add(ReportSegment(attr='is_online', fmt='s', width=7, head='Online?'))
     report.add(ReportSegment(attr='is_prepped', fmt='s', width=8, head='Prepped?'))
