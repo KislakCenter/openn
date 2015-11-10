@@ -108,6 +108,14 @@ class Document(models.Model):
     def is_prepped(self):
         return (self.prepstatus and self.prepstatus.succeeded) or False
 
+    @property
+    def collection_tag(self):
+        if self.openn_collection is not None:
+            return self.openn_collection.tag
+        else:
+            return 'UNKNOWN'
+
+
     def is_live(self):
         c = httplib.HTTPConnection(settings.OPENN_HOST)
         path = '/%s' % (self.manifest_path, )
