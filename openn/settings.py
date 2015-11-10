@@ -356,15 +356,18 @@ leaders.""",
         },
         {
             'tag': 'lts',
-            'name': 'Lutheran Theological Seminary',
+            'name': 'Lutheran Archives Center at Philadelphia',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """While the Krauth Memorial Library has over 193,000 volumes, the Rare
-Book Collection includes 8,000 volumes, fifteen incunabula, three
-Books of Hours, and twenty-five cuneiform tablets. Collection
-strengths are the 16th-century Lutheran Reformation, Continental
-Pietism, 18th-century works in theology ad philosophy, liturgical
-studies, and 19th-century American Lutheran periodicals.""",
+            'blurb': """The Lutheran Archives Center at Philadelphia is the Northeast Regional
+Archives (Region 7) for the Evangelical Lutheran Church in America
+(ELCA). It carries on the work of its predecessors in the first
+Lutheran Church organization in America, the Evangelical Lutheran
+Ministerium of Pennsylvania and Adjacent States, founded on August 15,
+1748 by Henry Melchior Muhlenberg. The archives was recognized as a
+part of the church organization in 1792. Collections include personal
+papers of Lutheran clergy, theologians, and church workers; archives
+of church organizations; and records of congregations.""",
             'include_file': 'LutheranTheologicalSeminary.html',
         },
         {
@@ -376,7 +379,7 @@ studies, and 19th-century American Lutheran periodicals.""",
 (ALF) is the steward of an important collection of art, archives,
 manuscripts, books, pamphlets, objects and other historic documents
 related to both the Union League and the Civil War.  The collections
-include materilas from the ALF, The
+include materials from the ALF, The
 Union League of Philadelphia, The Civil War Museum of Philadelphia,
 The Military Order of The Loyal Legion of the United States and The
 Dames of the Loyal Legion of the United States. The collections are
