@@ -28,4 +28,14 @@ Then type `open /path/`
 
 Once things have been edited and are ready to go:
 
+1.  commit changes in SourceTree
+2.  push items to `jessie`
 
+pull request
+
+3.  go to bitbucket site in the OPenn directory
+4.  hover over three dots, click create pull request
+
+5.  pull master, merge master into jessie
+
+6.
