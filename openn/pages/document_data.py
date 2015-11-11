@@ -42,6 +42,12 @@ class DocumentData:
         return self._pages
 
     @property
+    def document_location(self):
+        parts = [self.tei.settlement, self.tei.institution, self.tei.repository]
+        parts = [ x for x in parts if x is not None ]
+        return ', '.join(parts)
+
+    @property
     def ms_item_pages(self):
         if self._ms_item_pages is None:
             self._ms_item_pages = [ p for p in self.pages if len(p.ms_items) > 0 ]
