@@ -44,24 +44,23 @@ shift $((OPTIND-1))
 ### Get the parameters
 if [ -d "$1" ]; then
     SOURCE_DIR=`echo $1 | sed 's/\/ *$//'`
-    echo "Using SOURCE_DIR: $SOURCE_DIR"
+    message "Using SOURCE_DIR: $SOURCE_DIR"
 else
-    echo "ERROR: Cannot find SOURCE_DIR: $1" >&2
-    echo "ERROR: Please provide a valid SOURCE_DIR" >&2
-    usage
-    exit 1
+    error_no_exit "Cannot find SOURCE_DIR: $1" >&2
+    error "Please provide a valid SOURCE_DIR" >&2
 fi
 
 if [ -n "$2" ]; then
     if [ -d "$2" ]; then
         DEST_DIR=`echo $2 | sed 's/\/ *$//'`
+        message "Using DEST_DIR: DEST_DIR"
     else
-        echo "ERROR: Cannot find DEST_DIR: $DEST_DIR" >&2
+        error "Cannot find DEST_DIR: $2" >&2
     fi
 else
     DEST_DIR=.
 fi
-echo "[$cmd] Using DEST_DIR: $DEST_DIR"
+message "[$cmd] Using DEST_DIR: $DEST_DIR"
 
 junk_files="Thumbs.db sha1manifest.txt .DS_Store"
 if [[ -n "$OPENN_JUNK_FILES" ]]; then
@@ -72,7 +71,7 @@ fi
 # "/mnt/managedmasters/kislak/mscoll591_f1/data/", strip off data at
 # the end for now.
 if [[ "$SOURCE_DIR" =~ /data/?$ ]]; then
-    echo "SOURCE_DIR has data directory"
+    message "SOURCE_DIR has data directory"
     SOURCE_DIR=`dirname $SOURCE_DIR`
 fi
 
@@ -80,7 +79,7 @@ base=`basename "$SOURCE_DIR"`
 
 # Check to see if SOURCE_DIR is a managed masters directory.
 if is_managed_masters_dir "$SOURCE_DIR"; then
-    echo "SOURCE_DIR $SOURCE_DIR is a Managed Masters directory"
+    message "SOURCE_DIR $SOURCE_DIR is a Managed Masters directory"
     # First, grab the BibID from MM_Metadata.xlsx
     mm_bibid=`unzip -p "$SOURCE_DIR"/MM_Metadata.xlsx xl/sharedStrings.xml | tr '\r' '\n' | egrep '<t>[0-9]+</t>' | sed 's!.*<t>\([0-9][0-9]*\)</t>.*!\1!'`
     [[ ! -n "$mm_bibid" ]] && mm_bibid=BIBID_NOT_FOUND
@@ -89,24 +88,22 @@ if is_managed_masters_dir "$SOURCE_DIR"; then
 fi
 
 if [[ "$FORCE" ]]; then
-    echo "[$cmd] WARNING: Force option selected; ignoring MM_Metadata.xlsx BibID: '$mm_bibid'."
+    warning "Force option selected; ignoring MM_Metadata.xlsx BibID: '$mm_bibid'."
     unset $mm_bibid
 elif [[ "$mm_bibid" = "BIBID_NOT_FOUND" ]]; then
-    echo "[$cmd] ERROR: Found MM_Metadata.xlsx but could not detect BibID; please check manually."
-    echo "[$cmd] ERROR: Use force option '-f' to run anyway."
-    exit 1
+    error_no_exit "Found MM_Metadata.xlsx but could not detect BibID; please check manually."
+    error "Use force option '-f' to run anyway."
 elif [[ -n "$mm_bibid" ]]; then
-    echo "[$cmd] MM_Metadata.xlsx has BibID '$mm_bibid'."
+    message "MM_Metadata.xlsx has BibID '$mm_bibid'."
     if [[ -n "$BIBID" ]] ; then
         if [[ "$BIBID" == "$mm_bibid" ]]; then
-            echo "[$cmd] OK:    BibID '$BIBID' equals MM_Metadata.xlsx BibID '$mm_bibid'."
+            message "OK:    BibID '$BIBID' equals MM_Metadata.xlsx BibID '$mm_bibid'."
         else
-            echo "[$cmd] ERROR: BibID you provided '$BIBID' does not match MM_Metadata.xlsx BibID '$mm_bibid'." >&2
-            echo "[$cmd] ERROR: Use force option '-f' to run anyway."
-            exit 1
+            error_no_exit "BibID you provided '$BIBID' does not match MM_Metadata.xlsx BibID '$mm_bibid'." >&2
+            error "Use force option '-f' to run anyway."
         fi
     else
-        echo "[$cmd] WARNING: User did not provide bibid; confirm BibID from MM_Metadata.xlsx: '$mm_bibid'."
+        warning "User did not provide bibid; confirm BibID from MM_Metadata.xlsx: '$mm_bibid'."
     fi
 fi
 
@@ -121,25 +118,23 @@ dest=$DEST_DIR/$base
 
 ### DO STUFF
 # Copying
-echo "[$cmd] Copying $SOURCE_DIR to $dest"
+message "Copying $SOURCE_DIR to $dest"
 # sync from source to dest: --no-p --no-g --chmod=ugo=rwX => Use umask
 rsync -rltDhv --progress --no-p --no-g --chmod=ugo=rwX "$SOURCE_DIR"/* $dest
 
 if [ $? -ne 0 ]; then
-    echo "[$cmd] ERROR: Error copying $SOURCE_DIR to $dest" >&2
-    exit 1
+    error "Error copying $SOURCE_DIR to $dest" >&2
 fi
 
 # Fixing perms
-echo "[$cmd] Fixing permissions on $dest"
+message "Fixing permissions on $dest"
 chmod 775 $dest && find $dest -type d -exec chmod 775 {} \; && find $dest -type f -exec chmod 664 {} \;
 if [ $? -ne 0 ]; then
-    echo "[$cmd] ERROR: Error setting permissions on $dest" >&2
-    exit 1
+    error "Error setting permissions on $dest" >&2
 fi
 
 # Delete junk
-echo "[$cmd] Deleting junk files from $dest: $junk_files"
+message "Deleting junk files from $dest: $junk_files"
 find_opts=
 for x in $junk_files;
 do
@@ -154,12 +149,12 @@ find $dest \( $find_opts \) -delete
 # Write bibid.txt
 bibid_file="$dest"/bibid.txt
 if [ -n "$BIBID" ]; then
-    echo "[$cmd] BibID provided ($BIBID)"
-    echo "[$cmd] Writing $BIBID to $bibid_file"
+    message "BibID provided ($BIBID)"
+    message "Writing $BIBID to $bibid_file"
     echo $BIBID > "$bibid_file"
 elif [[ -n "$mm_bibid" ]]; then
-    echo "[$cmd] WARNING: Creating $bibid_file with BibID from MM_Metadata.xlsx: $mm_bibid"
+    warning "Creating $bibid_file with BibID from MM_Metadata.xlsx: $mm_bibid"
     echo $mm_bibid > "$bibid_file"
 else
-    echo "[$cmd] WARNING: No bibid provided; $bibid_file not created!"
+    warning "No bibid provided; $bibid_file not created!"
 fi
