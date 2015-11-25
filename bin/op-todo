@@ -1,0 +1,166 @@
+#!/bin/sh
+
+# -ex:
+# bail on errors and show debugging stuff
+
+read -r -d '' HELP <<-'EOF'
+
+Create an OPenn todo file. Todo file has the following format:
+
+  source:  /path/to/document
+  coll_prep: <coll_prep>
+  bibid: <bibid>
+
+For example:
+
+  source: /mnt/managedmasters/kislak/mscodex1234
+  coll_prep: penn-pih
+  bibid: 1234567
+
+
+File is named after document folder; for example:
+
+  mscodex123.todo
+
+EOF
+
+################################################################################
+### ENV
+cmd=`basename $0`
+this_dir=`dirname $0`
+export COMMAND=$cmd
+export HELP
+
+### TEMPFILES
+# From:
+#   http://stackoverflow.com/questions/430078/shell-script-templates
+# create a default tmp file name
+tmp=${TMPDIR:-/tmp}/prog.$$
+# delete any existing temp files
+cleanup() {
+  rm -f $tmp.?
+}
+trap "cleanup; exit 1" 1 2 3 13 15
+# quit this controller
+
+trap "cleanup; exit" 0
+# then do
+#   ...real work that creates temp files $tmp.1, $tmp.2, ...
+
+#### USAGE AND ERRORS
+
+usage() {
+   echo "Usage: $cmd [OPTIONS] PATH_TO_DOC COLL_PREP BIBID"
+   echo ""
+}
+
+print_message() {
+    printf "[%s] %-10s %s\n" $cmd $1 "$2"
+}
+
+message() {
+    print_message INFO "$1"
+}
+
+error() {
+    print_message ERROR "$1" >&2
+    usage
+    exit 1
+}
+
+error_no_exit() {
+    print_message ERROR "$1" >&2
+}
+
+### OPTIONS
+while getopts "h" opt; do
+  case $opt in
+    h)
+      usage
+      version
+      mm_help
+      exit 1
+      ;;
+    \?)
+      echo "ERROR Invalid option: -$OPTARG" >&2
+      echo ""
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+if [[ -n "$OPENN_TODO_DIR" ]]; then
+    if [[ -d "$OPENN_TODO_DIR" ]]; then
+        message "Using todo directory: $OPENN_TODO_DIR"
+    else
+        error "OPenn todo directory not found: $OPENN_TODO_DIR"
+    fi
+else
+    OPENN_TODO_DIR=`pwd`
+    message "OPENN_TODO_DIR not set; using current directory: $OPENN_TODO_DIR"
+fi
+
+if [[ $# -ne 3 ]]
+then
+    error "Wrong number of arguments"
+fi
+
+DOC_DIR=$1
+COLL_PREP=$2
+BIBID=$3
+
+if [[ -d $DOC_DIR ]]
+then
+    DOC_BASE=`basename $DOC_DIR`
+    if [[ $DOC_BASE = "data" ]]
+    then
+        error "PATH_TO_DOC cannot be data directory: $DOC_DIR"
+    else
+        message "Using document from: $DOC_DIR"
+    fi
+else
+    error "Not a valid directory: $DOC_DIR"
+fi
+
+coll_preps=`${this_dir}/op-prep -l`
+if echo "$coll_preps" | grep -q "^${COLL_PREP}$"
+then
+    message "Using collection prep: $COLL_PREP"
+else
+    error_no_exit "Unknown collection prep: '$COLL_PREP'"
+    error "Use 'op-prep --list' to see valid values"
+fi
+
+if [[ $BIBID =~ ^[0-9]+$ ]]
+then
+    message "Using BibID: $BIBID"
+else
+    error "Invalid BibID: $BIBID"
+fi
+
+outfile=${OPENN_TODO_DIR}/${DOC_BASE}.todo
+if [[ -f $outfile ]]
+then
+    print_message WARN "Existing todo file '$outfile' will be overwritten"
+fi
+
+cat <<EOF > $outfile
+source: $DOC_DIR
+coll_prep: $COLL_PREP
+bibid: $BIBID
+EOF
+
+# echo "${DOC_DIR}:${COLL_PREP}:${BIBID}" > $outfile
+chmod 664 $outfile
+message "Wrote todo file: $outfile"
+message "Content:"
+cat $outfile | sed 's/^/    /'
+
+### EXIT
+# http://stackoverflow.com/questions/430078/shell-script-templates
+cleanup
+trap 0
+exit 0
