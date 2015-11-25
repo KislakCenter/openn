@@ -81,3 +81,5 @@ vendor/*
 
 # ignore MySQL dumps
 *.dmp
+
+*junk*
