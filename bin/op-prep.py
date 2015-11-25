@@ -198,6 +198,10 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
+    if opts.list_coll_preps:
+        print "%s" % ('\n'.join(sorted(prep_config_tags())),)
+        return status
+
     if len(args) != 2:
         parser.error('Wrong number of arguments')
 
@@ -262,7 +266,9 @@ def make_parser():
     epilog = """
 Prepare the given source diretory for OPenn.
 
-Known collection preps are: %s.
+Known collection preps are:
+
+    %s
 
 SOURCE_DIR contains a set of document image TIFF files and a file
 named bibid.txt which contains the bibid for the given book or
@@ -276,7 +282,7 @@ Resume: Resume will fail if the source directory does not have a
 Clobber: Use clobber to replace an existing document that did not
 prepare correctly the first time. Will fail if document is on-line.
 
-""" % (', '.join(prep_config_tags()),)
+""" % ('\n    '.join(sorted(prep_config_tags())),)
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)
@@ -285,6 +291,12 @@ prepare correctly the first time. Will fail if document is on-line.
     parser.add_option('-u', '--update',
                       action='store_true', dest='update', default=False,
                       help=update_help)
+
+    list_help = 'List all known collection preps and quit; no'
+    list_help += ' arguments required; any arguments ignored'
+    parser.add_option('-l', '--list',
+                      action='store_true', dest='list_coll_preps', default=False,
+                      help=list_help)
 
     resume_help = 'resume processing of document [default: %default]'
     parser.add_option('-r', '--resume',
