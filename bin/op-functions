@@ -2,6 +2,16 @@
 # Basic common functions; you should rename this file if you want to use it in
 # your app.
 
+# Log levels the bigger the number the more logging
+LEVEL_DEBUG=50
+LEVEL_INFO=40
+LEVEL_WARN=30
+LEVEL_ERROR=20
+LEVEL_FAIL=10
+LEVEL_SILENT=0
+
+LOG_LEVEL=${LOG_LEVEL:-$LEVEL_INFO}
+
 # ISO date format YYYY-mm-ddTHH:MM:SS+-OFFSET
 iso_date() {
   date +%FT%T%z
@@ -30,11 +40,24 @@ print_message() {
 }
 
 message() {
-  print_message INFO "$1"
+    if [[ $LOG_LEVEL -ge $LEVEL_INFO ]]
+    then
+        print_message INFO "$1"
+    fi
+}
+
+debug() {
+    if [[ $LOG_LEVEL -ge $LEVEL_DEBUG ]]
+    then
+        print_message DEBUG "$1"
+    fi
 }
 
 error_no_exit() {
-  print_message ERROR "$1"
+    if [[ $LOG_LEVEL -ge $LEVEL_ERROR ]]
+    then
+        print_message ERROR "$1"
+    fi
 }
 
 coded_error() {
@@ -44,13 +67,16 @@ coded_error() {
 }
 
 error() {
-  print_message ERROR "$1" >&2
-  # if there's a usage function; print usage
-  if type usage | grep "function" >/dev/null 2>&1 ; then
-    echo ""
-    usage
-  fi
-  exit 1
+    if [[ $LOG_LEVEL -ge $LEVEL_ERROR ]]
+    then
+        print_message ERROR "$1" >&2
+        # if there's a usage function; print usage
+        if type usage | grep "function" >/dev/null 2>&1 ; then
+            echo ""
+            usage
+        fi
+    fi
+    exit 1
 }
 
 invalid() {
@@ -62,8 +88,11 @@ valid() {
 }
 
 fail() {
-  print_message FAIL "$1"
-  exit 2
+    if [[ $LOG_LEVEL -ge $LEVEL_FAIL ]]
+    then
+        print_message FAIL "$1"
+    fi
+    exit 2
 }
 
 success() {
