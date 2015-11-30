@@ -65,6 +65,15 @@ else
     error "Please create $OPENN_RC or use an alternate set to var OPENN_RC" >&2
 fi
 
+# Add openn app bin and virtualenv to env
+export PATH=$PATH:$OPENN_PREFIX/bin
+source $OPENN_PREFIX/venv/bin/activate
+message "OPENN environment:"
+export | egrep "OPENN_|\bPATH\b" | sed -e "s/^ *export *//" | while read line
+do
+    message "   $line"
+done
+
 OPMM_PID_FILE=$OPENN_RUN_DIR/${cmd}.pid
 export OPMM_GET_PID_FILE=$OPENN_RUN_DIR/op-mm-get.pid
 export OPMM_PREP_PID_FILE=$OPENN_RUN_DIR/op-mm-prep.pid
