@@ -41,8 +41,6 @@ while getopts "hc:" opt; do
   case $opt in
     h)
       usage
-      version
-      mm_help
       exit 1
       ;;
     c)
