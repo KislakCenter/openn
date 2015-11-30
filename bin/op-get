@@ -81,7 +81,7 @@ base=`basename "$SOURCE_DIR"`
 if is_managed_masters_dir "$SOURCE_DIR"; then
     message "SOURCE_DIR $SOURCE_DIR is a Managed Masters directory"
     # First, grab the BibID from MM_Metadata.xlsx
-    mm_bibid=`unzip -p "$SOURCE_DIR"/MM_Metadata.xlsx xl/sharedStrings.xml | tr '\r' '\n' | egrep '<t>[0-9]+</t>' | sed 's!.*<t>\([0-9][0-9]*\)</t>.*!\1!'`
+    mm_bibid=`op-bibid $SOURCE_DIR"/MM_Metadata.xlsx`
     [[ ! -n "$mm_bibid" ]] && mm_bibid=BIBID_NOT_FOUND
     # Second, change SOURCE_DIR to `/path/to/msXXXX/data`
     SOURCE_DIR="$SOURCE_DIR/data"
