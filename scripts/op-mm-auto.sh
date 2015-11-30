@@ -15,14 +15,14 @@ EOF
 echo $$
 
 cmd=`basename $0`
-scripts_dir=`dirname $0`
-scripts_dir=`realpath $scripts_dir`
 
 export COMMAND=$cmd
 export HELP
 source `dirname $0`/../bin/op-functions
 source `dirname $0`/op-mm-functions
 export LOG_LEVEL=$LEVEL_DEBUG
+scripts_dir=`dirname $0`
+scripts_dir=`realpath $scripts_dir`
 
 usage() {
     cat <<EOF
