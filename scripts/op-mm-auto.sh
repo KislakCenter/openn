@@ -12,10 +12,16 @@ option to specify an alternate path, like $HOME/.opennrc.
 
 EOF
 
+echo $$
+
 cmd=`basename $0`
+scripts_dir=`dirname $0`
+scripts_dir=`realpath $scripts_dir`
+
 export COMMAND=$cmd
 export HELP
 source `dirname $0`/../bin/op-functions
+source `dirname $0`/op-mm-functions
 export LOG_LEVEL=$LEVEL_DEBUG
 
 usage() {
@@ -62,8 +68,8 @@ else
 fi
 
 OPMM_PID_FILE=$OPENN_RUN_DIR/${cmd}.pid
-OPGET_PID_FILE=$OPENN_RUN_DIR/op-get.pid
-OPPREP_PID_FILE=$OPENN_RUN_DIR/op-prep.pid
+export OPMM_GET_PID_FILE=$OPENN_RUN_DIR/op-mm-get.pid
+export OPMM_PREP_PID_FILE=$OPENN_RUN_DIR/op-mm-prep.pid
 
 # PIDS
 if [[ -n "$OPENN_RUN_DIR" ]] && [[ -d "$OPENN_RUN_DIR" ]] && [[ -w $OPENN_RUN_DIR ]];
@@ -90,88 +96,59 @@ fi
 tmp=${TMPDIR:-/tmp}/prog.$$
 
 cleanup() {
-  rm -f $tmp.?
-  rm -f $OPMM_PID_FILE
-}
-
-change_status() {
-    cs_currfile=$1
-    cs_newstatus=$2
-    cs_base=`echo $cs_currfile | sed 's/\.[-a-zA-Z_]*$//'`
-    cs_newfile=$cs_base.$cs_newstatus
-    mv -v $cs_currfile $cs_newfile 1>&2
-    if [[ $? -ne 0 ]]
-    then
-        echo "NOSUCHFILE"
-        return 1
-    else
-        echo $cs_newfile
-        return 0
-    fi
-}
-
-get_field() {
-    # path to the todo file
-    gf_todo=$1
-    # the field name
-    gf_field=$2
-    if [[ -f $gf_todo ]]
-    then
-        if grep -i $gf_field $gf_todo >/dev/null 2>&1
+    message "Cleaning up"
+    rm -f $tmp.?
+    for pidfile in $OPMM_PID_FILE $OPMM_PREP_PID_FILE $OPMM_GET_PID_FILE
+    do
+        if [[ -f $pidfile ]]
         then
-            grep $gf_field $gf_todo | awk -F ':' '{ print $2 }' | sed -e 's/^ *//' -e 's/ *$//'
-            return $?
-        else
-            error_no_exit "Cannot find field '$gf_field' in todo file '$gf_todo'" >&2
-            return 1
+            debug "Deleting PID file: $pidfile"
+            rm -f $pidfile
         fi
-    else
-        error_no_exit "Cannot find todo file '$gf_todo'" >&2
-        return 1
-    fi
-    return 0
+    done
 }
 
-# quit_op_mm_nicely() {
-#   # use 10 (SIGUSR1) if no argument
-#   qomn_sig=${1:-10}
-#   message "Received kill -${qomn_sig}"
-#   if [[ -f $OP ]]
-#   then
-#   fi
+quit_op_mm_nicely() {
+    # use 10 (SIGUSR1) if no argument
+    qomn_sig=${1:-10}
+    message "Received kill -${qomn_sig}"
+    if [[ -f $OPMM_GET_PID_FILE ]]
+    then
+        cpid=`cat $OPMM_GET_PID_FILE`
+        wait $cpid
+        message "op-mm-get process stopped"
+    fi
+    cpid=
+    if [[ -f $OPMM_PREP_PID_FILE ]]
+    then
+        cpid=`cat $OPMM_PREP_PID_FILE`
+        wait $cpid
+        qomn_exit=$?
+        message "op-mm-prep process stopped"
+    fi
+    sleep 2
+}
 
-#   if [ -f $MM_CTRL_PID ]; then
-#     the_pid=`cat $MM_CTRL_PID`
-#     kill -${qomn_sig} $the_pid
-#     message "Sent kill -${qomn_sig} to controller $the_pid"
-#     while [ -e /proc/$the_pid ]; do sleep 0.1; done
-#     message "Controller $the_pid has stopped"
-#   else
-#     warning "No MM_CTRL_PID found: $MM_CTRL_PID"
-#   fi
-#   sleep 2
-# }
+trap "quit_op_mm_nicely 10; cleanup; exit" 10
+trap "cleanup; exit 1" 1 2 3 13 15
+trap "cleanup; exit" 0
 
-if ls $OPENN_TODO_DIR/*.todo >/dev/null 2>&1; then
-    for todo in $OPENN_TODO_DIR/*.todo; do
-        # clear the vars
-        path=; prep=; bibid=; base=
-        path=`get_field $todo source`
-        if [[ $? -ne 0 ]]; then continue; fi
-        bibid=`get_field $todo bibid`
-        if [[ $? -ne 0 ]]; then continue; fi
-        todo=`change_status $todo getting`
-        op-get -b $bibid $path $OPENN_PACKAGE_DIR/Prep
-        status=$?
-        if [[ $status -ne 0 ]]; then
-            error_no_exit "Could not get $path with BibID $bibid"
-            error_no_exit "Marking $todo failed"
-            change_status $todo GET_FAILED
+if ls $OPENN_TODO_DIR/*.todo >/dev/null 2>&1
+then
+    total=0
+    count=0
+    total=`ls $OPENN_TODO_DIR/*.todo | wc -l`
+    for todo in $OPENN_TODO_DIR/*.todo
+    do
+        count=$(( count + 1 ))
+        curr=`printf "%3d/%d" $count $total`
+        message "TODO ${curr}; processing: $todo"
+        $scripts_dir/op-mm-get.sh -c $OPENN_RC $todo
+        if [[ $? -ne 0 ]]
+        then
+            error_no_exit "Get FAILED for: $todo"
         else
-            message "Retrieved $path"
-            todo=`change_status $todo retrieved`
-            base=`basename $path`
-            echo "prepsource: ${OPENN_PACKAGE_DIR}/Prep/${base}" >> $todo
+            message "Get SUCCEEDED for: $todo"
         fi
     done
 else
@@ -180,39 +157,25 @@ fi
 
 if ls $OPENN_TODO_DIR/*.retrieved >/dev/null 2>&1
 then
+    total=0
+    count=0
+    total=`ls $OPENN_TODO_DIR/*.retrieved | wc -l`
     for todo in $OPENN_TODO_DIR/*.retrieved
     do
-        message "Looking at todo file: $todo"
-        # clear the vars
-        path=; prep=; base=; prepsource=
-        prep=`get_field $todo coll_prep`
-        if [[ $? -ne 0 ]]; then continue; fi
-        message "Found coll_prep: $coll_prep"
-        prepsource=`get_field $todo prepsource`
-        if [[ $? -ne 0 ]]; then continue; fi
-        message "Found prepsource: $prepsource"
-        base=`basename $prepsource`
-
-        todo=`change_status $todo prepping`
-        op-prep $prep $prepsource
+        count=$(( count + 1 ))
+        curr=`printf "%3d/%d" $count $total`
+        message "TODO ${curr}; processing: $todo"
+        $scripts_dir/op-mm-prep.sh -c $OPENN_RC $todo
         if [[ $? -ne 0 ]]
         then
-            change_status $todo PREP_FAILED
-            error_no_exit "Unable to prep $source"
+            error_no_exit "Prep FAILED for: $todo"
         else
-            change_status $todo PREP_SUCCEEDED
+            message "Prep SUCCEEDED for: $todo"
         fi
     done
 else
     warning "No *.retrieved files found in $OPENN_TODO_DIR/"
 fi
-
-# trap "quit_op_mm_nicely 10; cleanup; exit" 10
-trap "cleanup; exit 1" 1 2 3 13 15
-trap "cleanup; exit" 0
-
-
-
 
 ### EXIT
 # http://stackoverflow.com/questions/430078/shell-script-templates
