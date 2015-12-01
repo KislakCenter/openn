@@ -51,7 +51,42 @@ trap "cleanup; exit" 0
 
 usage() {
    echo "Usage: $cmd [OPTIONS] PATH_TO_DOC COLL_PREP BIBID"
-   echo ""
+}
+
+op_todo_help() {
+    cat <<EOF
+
+Create an op-todo file in for the Managed Masters document at
+PATH_TO_DOC in the OPENN_TODO_DIR:
+
+    $OPENN_TODO_DIR
+
+Every night the 'op-mm-auto' script will process each '.todo' file in
+the OPENN_TODO_DIR.  Upon success the todo file will be renamed with a
+'.PREP_SUCCEEDED' exension.
+
+Other extensions are '.getting', '.retrieved', '.GET_FAILED',
+'.prepping', '.PREP_FAILED'.  They indicate the state of the current or
+last performed operation.
+
+EXAMPLE
+-------
+
+The following,
+
+    op-todo /mnt/managedmasters/kislak/mscodex1234 penn-pih 1234567
+
+will create the file
+
+    ${OPENN_TODO_DIR}/mscodex1234.todo
+
+with the content
+
+    source: /mnt/managedmasters/kislak/mscodex1234
+    coll_prep: penn-pih
+    bibid: 1234567
+
+EOF
 }
 
 print_message() {
@@ -77,6 +112,7 @@ while getopts "h" opt; do
   case $opt in
     h)
       usage
+      op_todo_help
       exit 1
       ;;
     \?)
