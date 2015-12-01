@@ -5,22 +5,33 @@
 
 read -r -d '' HELP <<-'EOF'
 
-Create an OPenn todo file. Todo file has the following format:
+Create an op-todo file in for the Managed Masters document at
+PATH_TO_DOC in the OPENN_TODO_DIR
 
-  source:  /path/to/document
-  coll_prep: <coll_prep>
-  bibid: <bibid>
+Every night the 'op-mm-auto' script will process each '.todo' file in
+the OPENN_TODO_DIR.  Upon success the todo file will be renamed with a
+'.PREP_SUCCEEDED' exension.
 
-For example:
+Other extensions are '.getting', '.retrieved', '.GET_FAILED',
+'.prepping', '.PREP_FAILED'.  They indicate the state of the current or
+last performed operation.
 
-  source: /mnt/managedmasters/kislak/mscodex1234
-  coll_prep: penn-pih
-  bibid: 1234567
+EXAMPLE
+-------
 
+The following,
 
-File is named after document folder; for example:
+    op-todo /mnt/managedmasters/kislak/mscodex1234 penn-pih 1234567
 
-  mscodex123.todo
+will create the file
+
+    ${OPENN_TODO_DIR}/mscodex1234.todo
+
+with the content
+
+    source: /mnt/managedmasters/kislak/mscodex1234
+    coll_prep: penn-pih
+    bibid: 1234567
 
 EOF
 
@@ -61,30 +72,9 @@ PATH_TO_DOC in the OPENN_TODO_DIR:
 
     $OPENN_TODO_DIR
 
-Every night the 'op-mm-auto' script will process each '.todo' file in
-the OPENN_TODO_DIR.  Upon success the todo file will be renamed with a
-'.PREP_SUCCEEDED' exension.
-
-Other extensions are '.getting', '.retrieved', '.GET_FAILED',
-'.prepping', '.PREP_FAILED'.  They indicate the state of the current or
-last performed operation.
-
-EXAMPLE
+OPTIONS
 -------
-
-The following,
-
-    op-todo /mnt/managedmasters/kislak/mscodex1234 penn-pih 1234567
-
-will create the file
-
-    ${OPENN_TODO_DIR}/mscodex1234.todo
-
-with the content
-
-    source: /mnt/managedmasters/kislak/mscodex1234
-    coll_prep: penn-pih
-    bibid: 1234567
+    -h  help, print this message and exit
 
 EOF
 }
@@ -126,6 +116,11 @@ done
 
 shift $((OPTIND-1))
 
+if [[ $# -ne 3 ]]
+then
+    error "Wrong number of arguments"
+fi
+
 if [[ -n "$OPENN_TODO_DIR" ]]; then
     if [[ -d "$OPENN_TODO_DIR" ]]; then
         message "Using todo directory: $OPENN_TODO_DIR"
@@ -135,11 +130,6 @@ if [[ -n "$OPENN_TODO_DIR" ]]; then
 else
     OPENN_TODO_DIR=`pwd`
     message "OPENN_TODO_DIR not set; using current directory: $OPENN_TODO_DIR"
-fi
-
-if [[ $# -ne 3 ]]
-then
-    error "Wrong number of arguments"
 fi
 
 DOC_DIR=$1
