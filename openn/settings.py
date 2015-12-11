@@ -154,7 +154,21 @@ PREPARATION_METHODS = [
                 'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
             },
         },
-    }
+    },
+    {
+        'tag': 'adhoc',
+        'description': "Simply adds the item to the database; requires a TEI file.",
+        'name': 'Ad hoc prep',
+        'package_validation': {
+            'skip': True,
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.adhoc_prep.AdHocPrep',
+            'params' : {
+            },
+        },
+    },
+
 ]
 
 COLLECTIONS = {
@@ -386,6 +400,14 @@ Dames of the Loyal Legion of the United States. The collections are
 available for research through The Heritage Center of the Union
 League. """,
             'include_file': 'UnionLeagueOfPhiladelphia.html',
+        },
+        {
+            'tag': 'private1',
+            'name': 'Private Collection A',
+            'metadata_type': 'custom',
+            'live': False,
+            'blurb': """Documents from a private collection: the Archimedes Palimpsest and the Galen Syriac Palimpsest. Data and metadata from both are available under a Creative Commons Attribution License.""",
+            'include_file': 'PrivateCollectionA.html',
         },
     ],
 }
@@ -709,8 +731,23 @@ PREP_CONFIGS = {
             },
         }
     },
-
-
+    'private1-adhoc': {
+        'collection': {
+            'tag': 'private1',
+        },
+        'common_prep': {
+            'image_rights': {
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        },
+    },
 }
 
 PREP_CONTEXT = {
