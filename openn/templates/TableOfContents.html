@@ -21,7 +21,9 @@
 <ul class="ul_documents">
   {% for item in items %}
   <li>
+    {% if item.document.call_number %}
     <span class="item-id">{{ item.document.call_number }}:</span>
+    {% endif %}
     <span class="item-name">{{ item.document.title }}</span>
     {% with origin=item.origin %}
     {% if origin|length > 0 %}
@@ -29,8 +31,10 @@
     {% endif %}
     {% endwith %}
     <br/>
+    {% if item.document.openn_collection.metadata_type|lower != 'custom' %}
     <span class="page-link"><a href="/{{ item.document.browse_path }}">Browse</a></span> |
     <span class="page-link"><a href="/{{ item.document.tei_path }}">TEI XML</a></span> |
+    {% endif %}
     <span class="page-link"><a href="/{{ item.document.package_dir }}">Data</a></span>
   </li>
   {% endfor %}
