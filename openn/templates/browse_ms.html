@@ -47,11 +47,13 @@
         </div>
         {% endif %}
 
+        {% if doc.tei.call_number %}
         <div>
           <h4>Call number</h4>
           <span>{{ doc.tei.call_number }}</span><br />
           ({{ doc.document_location }})
         </div>
+        {% endif %}
 
         {% if doc.tei.alt_identifiers %}
         <div>
@@ -64,16 +66,22 @@
         </div>
         {% endif %}
 
+
+        {% if doc.tei.publisher %}
         <div>
           <h4>Publisher</h4>
           <span>{{ doc.tei.publisher }}</span><br />
         </div>
+        {% endif %}
 
+        {% if doc.tei.text_lang %}
         <div>
           <h4>Language</h4>
            <span>{{ doc.tei.text_lang }}</span>
         </div>
+        {% endif %}
 
+        {% if doc.origin %}
         <div>
           <h4>Origin</h4>
 
@@ -84,22 +92,29 @@
           {% endif %}
 
           <dl>
+            {% if doc.tei.orig_date %}
             <dt>Date</dt>
             <dd>{{ doc.tei.orig_date }}</dd>
+            {% endif %}
 
+            {% if doc.tei.orig_places %}
             <dt>Place</dt>
             <dd>
               {% for place in doc.tei.orig_places %}
               {{ place }}<br />
               {% endfor %}
             </dd>
+            {% endif %}
           </dl>
         </div>
+        {% endif %}
 
+        {% if doc.tei.summary %}
         <div>
           <h4>Summary</h4>
           <p><span>{{ doc.tei.summary }}</span></p>
         </div>
+        {% endif %}
 
         {% if doc.tei.notes %}
         <div>
@@ -303,6 +318,7 @@
         {% endif %}
 
 <h4>Images</h4>
+{% if doc.pages %}
 <div id="divthumbs">
 
       {% for page in doc.pages %}
@@ -324,4 +340,9 @@
       </div>
       {% endfor %}
 </div>
+{% else %}
+<div>
+    <p>See <a href="{{ doc.package_dir }}">document directory</a> for images and metadata.</p>
+</div>
+{% endif %}
 {% endblock %}
