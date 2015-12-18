@@ -4,6 +4,7 @@ import json
 from openn.prep.prep_config import PrepConfig
 from openn.prep.prep_methods import PrepMethods
 from openn.collections.configs import Configs
+from openn.openn_exception import OPennException
 
 class PrepConfigFactory(object):
     def __init__(self, prep_configs_dict, prep_methods, collection_configs,
