@@ -156,14 +156,15 @@ PREPARATION_METHODS = [
         },
     },
     {
-        'tag': 'adhoc',
-        'description': "Simply adds the item to the database; requires a TEI file.",
-        'name': 'Ad hoc prep',
+        'tag': 'dirlesstei',
+        'description': """Directory-less TEI prep: Does not process a directory; add the
+folder name to the database; requires a TEI file.""",
+        'name': 'Directory-less TEI prep',
+        'process_directory': False,
         'package_validation': {
-            'skip': True,
         },
         'prep_class': {
-            'class_name': 'openn.prep.adhoc_prep.AdHocPrep',
+            'class_name': 'openn.prep.dirless_tei_prep.DirlessTEIPrep',
             'params' : {
             },
         },
@@ -405,7 +406,7 @@ League. """,
             'tag': 'private1',
             'name': 'Private Collection A',
             'metadata_type': 'custom',
-            'live': False,
+            'live': True,
             'blurb': """Documents from a private collection: the Archimedes Palimpsest and the Galen Syriac Palimpsest. Data and metadata from both are available under a Creative Commons Attribution License.""",
             'include_file': 'PrivateCollectionA.html',
         },
@@ -731,9 +732,12 @@ PREP_CONFIGS = {
             },
         }
     },
-    'private1-adhoc': {
+    'private1-dirlesstei': {
         'collection': {
             'tag': 'private1',
+        },
+        'collection_prep': {
+            'tag': 'dirlesstei',
         },
         'common_prep': {
             'image_rights': {

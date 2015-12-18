@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Description of the Archimedes Palimpsest</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>The owner of the Archimedes Palimpsest</publisher>
+        <availability>
+          <licence target="https://creativecommons.org/licenses/by/3.0/us/legalcode">
+            The Archimedes Palimpsest data is released with license for use under
+            Creative Commons Attribution 3.0 Unported Access Rights. It is 
+            requested that copies of any published articles based on the 
+            information in this data set be sent to The Curator of Manuscripts,
+            The Walters Art Museum, 600 North Charles Street, Baltimore MD 21201.
+          </licence>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <repository>Private collection</repository>
+            <!--<idno type="call-number">Archimedes Palimpsest</idno>-->
+          </msIdentifier>
+          <msContents>
+            <summary>Multi-spectral and XRF images of the Archimedes Palimpsest and transcriptions mapped to those images.</summary>
+            <textLang>Greek</textLang>
+            <msItem>
+              <title>The Archimedes Palimpsest</title>
+            </msItem>
+          </msContents>
+          <physDesc>
+            <objectDesc>
+              <supportDesc material="parchment">
+                <support>
+                  <p>parchment</p>
+                </support>
+              </supportDesc>
+            </objectDesc>
+          </physDesc>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text><body><p></p></body></text>
+</TEI>
