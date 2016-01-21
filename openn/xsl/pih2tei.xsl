@@ -92,7 +92,7 @@
                                 <xsl:variable name="test" select="marc:subfield[@code='a']"/>
                                 <xsl:choose>
                                     <xsl:when
-                                        test="not(starts-with($test,'Pagination:')) and not(starts-with($test,'Foliation:')) and not(starts-with($test,'Layout')) and not(starts-with($test,'Colophon:')) and not(starts-with($test,'Collation:')) and not(starts-with($test,'Script:')) and not(starts-with($test,'Decoration:')) and not(starts-with($test,'Binding:')) and not(starts-with($test,'Origin')) and not(starts-with($test,'Watermarks:')) and not(starts-with($test,'Watermark:')) and not(starts-with($test,'Signatures:'))">
+                                        test="not(starts-with($test,'Pagination:')) and not(starts-with($test,'Foliation:')) and not(starts-with($test,'Layout:')) and not(starts-with($test,'Colophon:')) and not(starts-with($test,'Collation:')) and not(starts-with($test,'Script:')) and not(starts-with($test,'Decoration:')) and not(starts-with($test,'Binding:')) and not(starts-with($test,'Origin:')) and not(starts-with($test,'Watermarks:')) and not(starts-with($test,'Watermark:')) and not(starts-with($test,'Signatures:'))">
                                         <note>
                                             <xsl:value-of
                                                 select="normalize-space(marc:subfield[@code='a'])"/>
@@ -344,7 +344,7 @@
                                         </xsl:for-each>
                                     </decoDesc>
                                 </xsl:if>
-                                <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Binding')]">
+                                <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Binding:')]">
                                     <bindingDesc>
                                         <binding>
                                             <p>
