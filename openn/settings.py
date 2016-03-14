@@ -11,6 +11,22 @@ if os.environ.get('OPENN_SECRET_KEY') is not None:
 elif os.path.exists(skey_file):
     SECRET_KEY = open(skey_file).read().strip()
 
+# From the docs:
+#
+#    The lifetime of a database connection, in seconds. Use 0 to close
+#    database connections at the end of each request — Django’s historical
+#    behavior — and None for unlimited persistent connections.
+#
+# Prevent MySQL error 2006:
+#
+#    (2006, 'MySQL server has gone away')
+#
+# See this SO question:
+#
+#     http://stackoverflow.com/questions/26958592/django-after-upgrade-mysql-server-has-gone-away
+#
+CONN_MAX_AGE = 0
+
 REQUIRED_ENV_VARS = [
     'OPENN_DB_NAME',
     'OPENN_DB_USER',
