@@ -1383,14 +1383,14 @@ placed on your computer.
 I want to download a single image for a specific manuscript:
 
 ```
-    $ wget http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs16/data/web/0284_0000_web.jpg
+    $ wget http://openn.library.upenn.edu/Data/0001/ljs16/data/web/0284_0000_web.jpg
 ```
 
 This will bring down only that image that you specify. You can use the
 same command to download the XML manuscript description:
 
 ```
-    $ wget http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs16/data/ljs16_TEI.xml
+    $ wget http://openn.library.upenn.edu/Data/0001/ljs16/data/ljs16_TEI.xml
 ```
 
 ##### Download multiple files
@@ -1402,17 +1402,17 @@ thumbnail, and web images, and XML manuscript descriptions, in the
 directory structure used on the OPenn site:
 
 ```
-    $ wget -np -r http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/
+    $ wget -np -r http://openn.library.upenn.edu/Data/0001/
 ```
 
 - `wget` = use the wget program
 - `-np` = "no parent", this means do not download any files that are
-  in the folders containing the LJSchoenbergManuscripts folder
+  in the folders containing the 0001 folder
 - `-r` = "recursive", this means download files directly in the
-  LJSchoenbergManuscripts folder, and also download any files that are
+  0001 folder, and also download any files that are
   in folders inside that folder (without this command, you would only
-  get those files directly inside the LJSchoenbergManuscripts folder)
-- `http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/` =
+  get those files directly inside the 0001 folder)
+- `http://openn.library.upenn.edu/Data/0001/` =
   start download from this location
 
 I want to download only the XML manuscript descriptions and jpeg files
@@ -1421,7 +1421,7 @@ saved in a folder named ljs225
 
 ```
     $ wget -nd -np -r -A.jpg -A.xml -P openn/ljs225 \
-        http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs225/
+        http://openn.library.upenn.edu/Data/0001/ljs225/
 ```
 
 - `wget` = use the wget program
@@ -1433,7 +1433,7 @@ saved in a folder named ljs225
 - `-A.jpg` = "accept list", accept only .jpg files
 - `-A.xml` = "accept list", accept only .xml files
 - `-P openn/ljs225` = "directory prefix", the folder to which all the files will be downloaded
-- `http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs225/` = start download from this location
+- `http://openn.library.upenn.edu/Data/0001/ljs225/` = start download from this location
 
 I want to download all the web JPEGs for *all* the manuscripts in
 OPenn to a folder called `data/web`.
@@ -1572,10 +1572,10 @@ that folder:
     $ rsync rsync://openn.library.upenn.edu/OPenn/Data/
 
     drwxrwxr-x          70 2015/04/29 10:36:59 .
-    drwxrwxr-x        8192 2015/04/29 10:26:53 LJSchoenbergManuscripts
-    drwxrwxr-x        4096 2015/04/29 10:36:59 PennManuscripts
+    drwxrwxr-x        8192 2015/04/29 10:26:53 0001
+    drwxrwxr-x        4096 2015/04/29 10:36:59 0002
 
-    $ rsync rsync://openn.library.upenn.edu/OPenn/Data/LJSchoenbergManuscripts/
+    $ rsync rsync://openn.library.upenn.edu/OPenn/Data/0001/
 
     drwxrwxr-x        8192 2015/04/29 10:26:53 .
     drwxrwxr-x        8192 2015/04/29 10:49:39 html
@@ -1586,7 +1586,7 @@ that folder:
 
 
 Note the trailing `/` character after `Data` and
-`LJSchoenbergManuscripts`.
+`0001`.
 
 
 #### Downloading an entire document
@@ -1597,7 +1597,7 @@ tom's Manuscripts directory:
 
 ```
     $ rsync -a \
-        rsync://openn.library.upenn.edu/OPenn/Data/LJSchoenbergManuscripts/ljs49/ \
+        rsync://openn.library.upenn.edu/OPenn/Data/0001/ljs49/ \
         /Users/tom/Manuscripts/
 ```
 
@@ -1612,7 +1612,7 @@ following:
 
 ```
     $ rsync -av --progress \
-        rsync://openn.library.upenn.edu/OPenn/Data/LJSchoenbergManuscripts/ljs49/ \
+        rsync://openn.library.upenn.edu/OPenn/Data/0001/ljs49/ \
         /Users/tom/Manuscripts/
 ```
 
@@ -1627,7 +1627,7 @@ command will retrieve all web JPEGs for manuscript LJS 49:
 
 ```
     $ rsync -av \
-        rsync://openn.library.upenn.edu/OPenn/Data/LJSchoenbergManuscripts/ljs49/data/web/ \
+        rsync://openn.library.upenn.edu/OPenn/Data/0001/ljs49/data/web/ \
         /Users/tom/Manuscripts/
 ```
 
