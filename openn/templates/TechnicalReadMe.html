@@ -57,25 +57,22 @@ pages should understand its directory structure.  The site's
 organization is:
 
 ```
-    0_IntroductionReadMe.html                # general site information
-    1_TechnicalHelpReadMe.html               # this file
-    2_OPennCollection.html                   # list of collections on OPenn
-    TablesOfContents/                        # individual collection listings
-      |---- TOC_LJSchoenbergManuscripts.html # list of L. J. Schoenberg manuscripts
-      |---- TOC_PennManuscripts.html         # list of Penn manuscripts
-    Data/                                    # core site data
-      |--- LJSchoenbergManuscripts/          # L. J. Schoenberg manuscript images
-      |      |--- ljs16/                     # Manuscript LJS 16
+    ReadMe.html                    # general site information
+    TechnicalReadMe.html           # this file
+    Collections.html               # list of collections on OPenn
+    Data/                          # core site data
+      |--- 0001/                   # L. J. Schoenberg manuscript images
+      |      |--- ljs16/           # Manuscript LJS 16
       |      |      |--- ...
       |      |--- ...
-      |--- PennManuscripts/                  # U. Penn manuscript images
-      |      |--- mscodex1048/               # Manuscript MS Codex 1048
+      |--- 0002/                   # U. Penn manuscript images
+      |      |--- mscodex1048/     # Manuscript MS Codex 1048
       |      |      |--- ...
       |      |--- ...
       |--- ...
 ```
 
-Within each manuscript directory, manuscript images and metadata are
+Within each document directory, document images and metadata are
 presented in a structured package, which is described below.
 
 ### HTTP Access
@@ -146,20 +143,20 @@ Image files have names like:
 
 ```
     0284_0000.tif
-    0284_0000_thumb.tif
-    0284_0000_web.tif
+    0284_0000_thumb.jpg
+    0284_0000_web.jpg
 
     0284_0001.tif
-    0284_0001_thumb.tif
-    0284_0001_web.tif
+    0284_0001_thumb.jpg
+    0284_0001_web.jpg
 
     0284_0002.tif
-    0284_0002_thumb.tif
-    0284_0002_web.tif
+    0284_0002_thumb.jpg
+    0284_0002_web.jpg
 
     0284_0003.tif
-    0284_0003_thumb.tif
-    0284_0003_web.tif
+    0284_0003_thumb.jpg
+    0284_0003_web.jpg
 ```
 
 Each image has a base name consisting of document identifier (e.g.,
@@ -202,8 +199,8 @@ for LJS 16, image serial number `0284`:
 
 ```
     0284_0000.tif
-    0284_0000_thumb.tif
-    0284_0000_web.tif
+    0284_0000_thumb.jpg
+    0284_0000_web.jpg
 ```
 
 #### XMP sidecar files
@@ -215,10 +212,10 @@ additional `.xmp` extension:
 ```
     0284_0000.tif
     0284_0000.tif.xmp
-    0284_0000_thumb.tif
-    0284_0000_thumb.tif.xmp
-    0284_0000_web.tif
-    0284_0000_web.tif.xmp
+    0284_0000_thumb.jpg
+    0284_0000_thumb.jpg.xmp
+    0284_0000_web.jpg
+    0284_0000_web.jpg.xmp
 ```
 
 See below for more information on the XMP metadata.
@@ -233,14 +230,14 @@ names ("folio 1a", "front flyleaf 1a", etc.) and associated file
 names, as can be seen here:
 
 
-- <http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/html/ljs168.html>
+- <http://openn.library.upenn.edu/Data/0001/html/ljs168.html>
 
 
 Second, each TEI manuscript description lists all images in order in
 the TEI file's `<facsimile>` section.  Note this fragment from
 [ljs168_TEI.xml][ljs168_TEI]:
 
-[ljs168_TEI]: http://openn.library.upenn.edu/Data/LJSchoenbergManuscripts/ljs168/data/ljs168_TEI.xml "LJS 268 TEI file"
+[ljs168_TEI]: http://openn.library.upenn.edu/Data/0001/ljs168/data/ljs168_TEI.xml "LJS 268 TEI file"
 
 ```xml
     <facsimile>
