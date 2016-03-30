@@ -137,7 +137,7 @@ class ExifManager(object):
             path = self._value_to_file(value)
             return "%s<=%s" % (self._tag(name), path)
         else:
-            return "%s=%s" % (self._tag(name), value)
+            return "%s=%s" % (self._tag(name), value.encode('utf-8'))
 
     def _tag(self,name):
         if ExifManager.xmp_re.search(name):
@@ -150,7 +150,7 @@ class ExifManager(object):
 
     def _value_to_file(self,value):
         f = tempfile.NamedTemporaryFile(delete=False)
-        f.write(value)
+        f.write(value.encode('utf-8'))
         f.flush()
         f.seek(0)
         name = f.name
