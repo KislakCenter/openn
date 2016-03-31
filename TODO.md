@@ -5,7 +5,9 @@ BibPhilly changes
   Cataloger</resp>, <resp>Inst'l cataloger</resp> --- language to be 
   determined
 - Add author to pages spreadsheet
+- Add author @ref to XSL
 - Creator name optional for BibPhilly
+- Create BibPhilly JSON for spreadsheet generation
 
 x Update browse HTML to incorporate new TEI values -- done
 x Update test DB fixtures to match new TEI -- done
