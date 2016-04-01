@@ -1,6 +1,6 @@
 Updating collection pages workflow ==================================
 
-Overall workflow ----------------
+I. Overall workflow ----------------
 
 1. Get latest code in `jessie` branch
     - Checkout branch `master`.
@@ -11,6 +11,11 @@ Overall workflow ----------------
 2. Make changes to `include_file` for collection.
 
 3. Test changes to collection page.
+
+    1. open terminal
+    2. run op-coll and validate and update if necessary
+    3. run op-pages -i coll tag [--really-force]
+    4. run open url
 
 4. Commit changes.
 
@@ -38,4 +43,10 @@ pull request
 
 5.  pull master, merge master into jessie
 
-6.
+
+II. Creating a new collection
+
+Check op-coll on dev server
+
+open up settings file
+

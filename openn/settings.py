@@ -426,6 +426,22 @@ League. """,
             'blurb': """Documents from a private collection: the Archimedes Palimpsest and the Galen Syriac Palimpsest. Data and metadata from both are available under a Creative Commons Attribution License.""",
             'include_file': 'PrivateCollectionA.html',
         },
+        {
+            'tag': 'ism',
+            'name': 'J. Welles Henderson Archives and Library of the Independence Seaport Museum',
+            'metadata_type': 'TEI',
+            'live': False,
+            'blurb': """Independence  Seaport Museum’s J. Welles Henderson Archives and Library is one of the nation's premier regional maritime research facilities. With a rich repository of regional documents, 12,000 ship plans, a significant collection of rare books and manuscripts; maps and charts; photographs, and a 15,000 volume research library, the J. Welles Henderson Archives and Library boasts an impressive range of materials. The collections are dedicated to a deeper understanding, appreciation, and experience of Philadelphia’s regional waterways and the Delaware watershed area for everyone. They carry national and international significance.""",
+            'include_file': 'IndependenceSeaportMuseum.html',
+        },
+        {
+            'tag': 'pennmuseum',
+            'name': 'University of Pennsylvania Museum of Archaeology and Anthropology',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Founded in 1887, the Penn Museum has always been one of the world’s great archaeology and anthropology research museums, and the largest university museum in the United States. With roughly one million objects in its care, the Penn Museum encapsulates and illustrates the human story.""",
+            'include_file': 'PennMuseum.html',
+        },
     ],
 }
 
@@ -476,6 +492,33 @@ PREP_CONFIGS = {
                 'images': {
                     'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
                     'text': 'Unless otherwise stated, all images and their content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
+                },
+                'metadata': {
+                    'url': 'http://creativecommons.org/licenses/by/4.0/',
+                    'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>). For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
+                },
+            },
+        },
+    },
+    'pennmuseum-pih': {
+        'collection': {
+            'tag': 'pennmuseum'
+        },
+        "image_types": [ '*.tif' ],
+        'collection_prep': {
+            'tag': 'pih',
+        },
+        'common_prep': {
+            'image_rights': {
+                'Marked': 'False',
+                'WebStatement': 'https://creativecommons.org/licenses/by-sa/2.0/',
+                'UsageTerms': 'This image is reproduced from the original with permission of the University of Pennsylvania Museum of Archaeology and Anthropology under a Creative Commons Attribution-ShareAlike 2.0 Generic (CC BY-SA 2.0) license, https://creativecommons.org/licenses/by-sa/2.0/.',
+                'rights': 'This image is reproduced from the original with permission of the University of Pennsylvania Museum of Archaeology and Anthropology under a Creative Commons Attribution-ShareAlike 2.0 Generic (CC BY-SA 2.0) license, https://creativecommons.org/licenses/by-sa/2.0/.',
+            },
+            'rights_statements': {
+                'images': {
+                    'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
+                    'text': 'All images are reproduced from the originals with permission of the University of Pennsylvania Museum of Archaeology and Anthropology under a Creative Commons Attribution-ShareAlike 2.0 Generic (CC BY-SA 2.0) license, <a href="https://creativecommons.org/licenses/by-sa/2.0/">https://creativecommons.org/licenses/by-sa/2.0/</a>.',
                 },
                 'metadata': {
                     'url': 'http://creativecommons.org/licenses/by/4.0/',
@@ -729,6 +772,28 @@ PREP_CONFIGS = {
     'libpa-diaries': {
         'collection': {
             'tag': 'libpa'
+        },
+        "image_types": [ '*.tif', '*.jpg' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'ism-diaries': {
+        'collection': {
+            'tag': 'ism'
         },
         "image_types": [ '*.tif', '*.jpg' ],
         'collection_prep': {
