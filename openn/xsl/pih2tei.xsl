@@ -242,7 +242,12 @@
                                 <xsl:if test="//marc:datafield[@tag='300']">
                                     <xsl:variable name="datafield" select="//marc:datafield[@tag='300']"/>
                                     <xsl:variable name="support" select="normalize-space(tokenize($datafield/marc:subfield[@code='b'], '[,;]')[1])"/>
-                                    <xsl:variable name="mixed" select="matches($support, 'parchment', 'i') and matches($support, 'paper', 'i')"/>
+                                    <xsl:variable name="mixed">
+                                      <xsl:call-template name="matches-two">
+                                        <xsl:with-param name="source" select="$support"/>
+                                        <xsl:with-param name="strings" select="'parch paper papyrus palm'"/>
+                                      </xsl:call-template>
+                                    </xsl:variable>
                                     <objectDesc>
                                         <supportDesc>
                                             <xsl:if test="$support">
@@ -252,7 +257,7 @@
                                                             <xsl:text>mixed</xsl:text>
                                                         </xsl:when>
                                                         <xsl:otherwise>
-                                                            <xsl:value-of select="normalize-space($support)"/>
+                                                            <xsl:value-of select="string-join(tokenize(normalize-space($support), '\s+'), '-')"/>
                                                         </xsl:otherwise>
                                                     </xsl:choose>
                                                 </xsl:attribute>
@@ -501,7 +506,21 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+  
+    <!--  Return true if two or more of the items in $strings match the source. -->
+    <xsl:template name="matches-two">
+      <xsl:param name="source"/> <!-- 'paper with parchment tags' -->
+      <xsl:param name="strings"/> <!-- 'paper parch papyrus palm'  -->
+      <xsl:variable name="matches" as="xs:string*">
+        <xsl:for-each select="tokenize($strings, '\s+')">
+          <xsl:if test="matches($source, ., 'i')">
+            <xsl:value-of select="."/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+      <xsl:value-of select="count($matches) &gt; 1"/>
+    </xsl:template>
+      
     <xsl:template name="other-langs">
         <xsl:param name="tags"/>
         <xsl:for-each select="$tags">
