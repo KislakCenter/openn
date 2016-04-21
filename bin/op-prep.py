@@ -254,7 +254,8 @@ def main(cmdline=None):
     except OPennException as ex:
         status = 4
         print_exc()
-        parser.error(str(ex))
+        u = unicode(ex).encode('utf8')
+        parser.error(u)
 
     return status
 

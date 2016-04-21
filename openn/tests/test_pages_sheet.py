@@ -22,6 +22,8 @@ class TestPagesSheet(TestCase):
     pages_workbook           = os.path.join(sheets_dir, 'pages.xlsx')
     pages_invalid_workbook   = os.path.join(sheets_dir, 'pages_invalid.xlsx')
 
+    ism_workbook             = os.path.join(diaries_dir, 'ism/openn_metadata.xlsx')
+
     dummy_files = ( 'HelenGriffith_BMC_fc.tif',
                     'HelenGriffith_BMC_fpd.tif',
                     'HelenGriffith_BMC_0001.tif',
@@ -62,6 +64,13 @@ class TestPagesSheet(TestCase):
     def test_validate(self):
         for path in self.dummy_paths: touch(path)
         sheet = OPWorkbook(self.pages_workbook, self.pages_config).pages
+        sheet.validate()
+        if len(sheet.errors) > 0: pp(sheet.errors)
+        self.assertEqual(len(sheet.errors), 0)
+
+    def test_validate_ism(self):
+        #  for path in self.dummy_paths: touch(path)
+        sheet = OPWorkbook(self.ism_workbook, self.pages_config).pages
         sheet.validate()
         if len(sheet.errors) > 0: pp(sheet.errors)
         self.assertEqual(len(sheet.errors), 0)
