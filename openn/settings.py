@@ -900,7 +900,6 @@ PREP_CONFIGS = {
             },
         },
     },
-}
     'pennmuseumarchives-diaries': {
         'collection': {
             'tag': 'pennmuseumarchives'
@@ -923,6 +922,7 @@ PREP_CONFIGS = {
             },
         }
     },
+}
 
 PREP_CONTEXT = {
     'archive_dir': ARCHIVE_DIR,
