@@ -21,7 +21,7 @@ I. Overall workflow ----------------
 
 5. Push changes.
 
-6. Create pull request.
+6. Create pull request on Bit Bucket.
 
 7. Notify Doug.
 
