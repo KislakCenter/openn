@@ -423,7 +423,9 @@ League. """,
             'name': 'Private Collection A',
             'metadata_type': 'custom',
             'live': True,
-            'blurb': """Documents from a private collection: the Archimedes Palimpsest and the Galen Syriac Palimpsest. Data and metadata from both are available under a Creative Commons Attribution License.""",
+            'blurb': """Documents from a private collection: the Archimedes Palimpsest and the
+Galen Syriac Palimpsest. Data and metadata from both are available
+under a Creative Commons Attribution License.""",
             'include_file': 'PrivateCollectionA.html',
         },
         {
@@ -431,15 +433,58 @@ League. """,
             'name': 'J. Welles Henderson Archives and Library of the Independence Seaport Museum',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Independence  Seaport Museum’s J. Welles Henderson Archives and Library is one of the nation's premier regional maritime research facilities. With a rich repository of regional documents, 12,000 ship plans, a significant collection of rare books and manuscripts; maps and charts; photographs, and a 15,000 volume research library, the J. Welles Henderson Archives and Library boasts an impressive range of materials. The collections are dedicated to a deeper understanding, appreciation, and experience of Philadelphia’s regional waterways and the Delaware watershed area for everyone. They carry national and international significance.""",
+            'blurb': """Independence  Seaport Museum’s J. Welles Henderson Archives and
+Library is one of the nation's premier regional maritime research
+facilities. With a rich repository of regional documents, 12,000 ship
+plans, a significant collection of rare books and manuscripts; maps
+and charts; photographs, and a 15,000 volume research library, the J.
+Welles Henderson Archives and Library boasts an impressive range of
+materials. The collections are dedicated to a deeper understanding,
+appreciation, and experience of Philadelphia’s regional waterways and
+the Delaware watershed area for everyone. They carry national and
+international significance.""",
             'include_file': 'IndependenceSeaportMuseum.html',
+        },
+        {
+            'tag': 'gsp',
+            'name': 'German Society of Pennsylvania',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Founded in 1764, The German Society of Pennsylvania is America’s
+oldest German organization. Its Joseph P. Horner Memorial Library,
+housed in a beautiful 19th century reading room, holds one of the
+largest private collections of German-language books in the U.S. The
+German American Collection contains a wealth of material documenting
+all aspects of German American life, beginning with the first settlers
+in Germantown in 1683. In addition to books, the library houses
+sizable collections of 19th century Philadelphia German newspapers,
+periodicals, pamphlets, and manuscripts.""",
+            'include_file': 'GermanSociety.html',
+        },
+        {
+            'tag': 'pennmuseumarchives',
+            'name': 'Penn Museum Archives',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Penn Museum Archives is the institutional repository of the Penn
+Museum and the work of its archaeologists and anthropologists. The
+collections include 2,500 feet of records; these records document the
+Museum's archaeological expeditions to every inhabited continent, the
+history of the Penn Museum, and the history of the practices of
+archaeology and anthropology. Further, we hold three-quarters of a
+million images and nearly one thousand reels of film.""",
+            'include_file': 'PennMuseumArchives.html',
         },
         {
             'tag': 'pennmuseum',
             'name': 'University of Pennsylvania Museum of Archaeology and Anthropology',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Founded in 1887, the Penn Museum has always been one of the world’s great archaeology and anthropology research museums, and the largest university museum in the United States. With roughly one million objects in its care, the Penn Museum encapsulates and illustrates the human story.""",
+            'blurb': """Founded in 1887, the Penn Museum has always been one of the world’s
+great archaeology and anthropology research museums, and the largest
+university museum in the United States. With roughly one million
+objects in its care, the Penn Museum encapsulates and illustrates the
+human story.""",
             'include_file': 'PennMuseum.html',
         },
     ],
@@ -813,6 +858,28 @@ PREP_CONFIGS = {
             },
         }
     },
+    'gsp-diaries': {
+        'collection': {
+            'tag': 'gsp'
+        },
+        "image_types": [ '*.tif', '*.jpg' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
     'private1-dirlesstei': {
         'collection': {
             'tag': 'private1',
@@ -832,6 +899,28 @@ PREP_CONFIGS = {
                 },
             },
         },
+    },
+    'pennmuseumarchives-diaries': {
+        'collection': {
+            'tag': 'pennmuseumarchives'
+        },
+        "image_types": [ '*.tif', '*.jpg' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
     },
 }
 
