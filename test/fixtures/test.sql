@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.26, for osx10.10 (x86_64)
 --
--- Host: localhost    Database: openn_test
+-- Host: localhost    Database: openn
 -- ------------------------------------------------------
 -- Server version	5.6.26
 
@@ -192,7 +192,7 @@ CREATE TABLE `openn_openncollection` (
   `metadata_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tag` (`tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,7 +201,7 @@ CREATE TABLE `openn_openncollection` (
 
 LOCK TABLES `openn_openncollection` WRITE;
 /*!40000 ALTER TABLE `openn_openncollection` DISABLE KEYS */;
-INSERT INTO `openn_openncollection` VALUES (1,'ljs','tei'),(2,'pennmss','tei'),(3,'brynmawr','tei'),(4,'drexarc','tei'),(5,'drexmed','tei'),(6,'haverford','tei'),(7,'lehigh','tei'),(8,'tlc','tei'),(9,'libpa','tei'),(10,'friendshl','tei'),(11,'hsp','tei'),(12,'lts','tei'),(13,'ulp','tei'),(14,'ulpx','tei'),(15,'private1','custom'),(16,'ism','TEI'),(17,'pennmuseum','TEI');
+INSERT INTO `openn_openncollection` VALUES (1,'ljs','tei'),(2,'pennmss','tei'),(3,'brynmawr','tei'),(4,'drexarc','tei'),(5,'drexmed','tei'),(6,'haverford','tei'),(7,'lehigh','tei'),(8,'tlc','tei'),(9,'libpa','tei'),(10,'friendshl','tei'),(11,'hsp','tei'),(12,'lts','tei'),(13,'ulp','tei'),(14,'ulpx','tei'),(15,'private1','custom'),(16,'ism','TEI'),(17,'pennmuseum','TEI'),(18,'gsp','TEI'),(19,'pennmuseumarchives','TEI');
 /*!40000 ALTER TABLE `openn_openncollection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-04  9:49:48
+-- Dump completed on 2016-04-22 17:19:38
