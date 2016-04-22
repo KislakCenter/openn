@@ -62,5 +62,5 @@ class OPennPrep:
     def _failure_status(self, prepstatus, ex):
         prepstatus.finished  = datetime.now()
         prepstatus.succeeded = False
-        prepstatus.error     = str(ex)
+        prepstatus.error     = unicode(ex)
         prepstatus.save()

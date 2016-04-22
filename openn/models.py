@@ -38,7 +38,7 @@ class OPennCollection(models.Model):
                         id=self.id, tag=self.tag)
 
     def __repr__(self):
-        return self.__str__
+        return self.__str__()
 
 """
 Document corresponds to a set of OPenn images and metadata.
