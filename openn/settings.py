@@ -105,6 +105,14 @@ SITE_DIR = os.environ['OPENN_SITE_DIR']
 TOC_DIR = 'html'
 
 LICENCES = {
+    'CC-BY-SA' : {
+        'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons Attribution ShareAlike License version 4.0 (CC-BY-SA-4.0 https://creativecommons.org/licenses/by-sa/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+        'image': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution ShareAlike License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+        'single_image': u'This image of {title} is ©{year} {holder} and licensed under a Creative Commons Attribution ShareAlike License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by-sa/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+
+        'legalcode_url': 'https://creativecommons.org/licenses/by-sa/4.0/legalcode',
+        'deed_url': 'https://creativecommons.org/licenses/by-sa/4.0/'
+    },
     'CC-BY': {
         'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
         'image': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
