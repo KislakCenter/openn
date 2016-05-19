@@ -1,0 +1,19 @@
+collection_id|collection_tag|collection_type|metadata_type|collection_name
+0001|ljs|primary|OPENN-TEI|Lawrence J. Schoenberg Manuscripts
+0002|pennmss|primary|OPENN-TEI|University of Pennsylvania Books & Manuscripts
+0003|brynmawr|primary|OPENN-TEI|Bryn Mawr College Library Special Collections
+0004|drexarc|primary|OPENN-TEI|Drexel University Archives and Special Collections
+0005|drexmed|primary|OPENN-TEI|Legacy Center, Drexel University College of Medicine
+0006|haverford|primary|OPENN-TEI|Quaker and Special Collections, Haverford College
+0007|lehigh|primary|OPENN-TEI|Special Collections, Lehigh University Library
+0008|friendshl|primary|OPENN-TEI|Friends Historical Library, Swarthmore College
+0009|hsp|primary|OPENN-TEI|Historical Society of Pennsylvania
+0010|lts|primary|OPENN-TEI|Lutheran Archives Center at Philadelphia
+0011|ulp|primary|OPENN-TEI|Abraham Lincoln Foundation of The Union League of Philadelphia
+0012|tlc|primary|OPENN-TEI|The Library Company of Philadelphia
+0013|libpa|primary|OPENN-TEI|Rare Collections Library of the State Library of Pennsylvania
+0014|private1|primary|CUSTOM|Private Collection A
+0015|ism|primary|OPENN-TEI|J. Welles Henderson Archives and Library of the Independence Seaport Museum
+0016|pennmuseum|primary|OPENN-TEI|University of Pennsylvania Museum of Archaeology and Anthropology
+0017|gsp|primary|OPENN-TEI|German Society of Pennsylvania
+0018|pennmuseumarchives|primary|OPENN-TEI|Penn Museum Archives
