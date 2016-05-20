@@ -475,7 +475,7 @@ periodicals, pamphlets, and manuscripts.""",
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Penn Museum Archives is the institutional repository of the Penn
-Museum and the work of its archaeologists and anthropologists. The
+Museum and the work for its archaeologists and anthropologists. The
 collections include 2,500 feet of records; these records document the
 Museum's archaeological expeditions to every inhabited continent, the
 history of the Penn Museum, and the history of the practices of
