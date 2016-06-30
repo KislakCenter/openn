@@ -13,7 +13,7 @@ class OPennCollection(models.Model):
     tag = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
     metadata_type = models.CharField(
         max_length = 50, null = False, default = None, blank = False,
-        choices = (('tei','TEI'), ('ead', 'EAD'), ('custom', 'Custom')))
+        choices = (('tei','TEI'), ('ead', 'EAD'), ('custom', 'Custom'), ('walters-tei', 'Walters TEI')))
 
     class Meta:
         ordering = ('tag',)

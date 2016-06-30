@@ -495,6 +495,14 @@ objects in its care, the Penn Museum encapsulates and illustrates the
 human story.""",
             'include_file': 'PennMuseum.html',
         },
+        {
+            'tag': 'tdw',
+            'name': 'The Digital Walters',
+            'metadata_type': 'walters-tei',
+            'live': False,
+            'blurb': """Digitized books and manuscripts from the Walters Art Museum.""",
+            'include_file': 'TheDigitalWalters.html',
+        },
     ],
 }
 
