@@ -475,13 +475,40 @@ periodicals, pamphlets, and manuscripts.""",
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Penn Museum Archives is the institutional repository of the Penn
-Museum and the work of its archaeologists and anthropologists. The
+Museum and the work for its archaeologists and anthropologists. The
 collections include 2,500 feet of records; these records document the
 Museum's archaeological expeditions to every inhabited continent, the
 history of the Penn Museum, and the history of the practices of
 archaeology and anthropology. Further, we hold three-quarters of a
 million images and nearly one thousand reels of film.""",
             'include_file': 'PennMuseumArchives.html',
+        },
+        {
+            'tag': 'uarc',
+            'name': 'University Archives and Records Center, University of Pennsylvania',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The University Archives and Records Center (UARC) serves the
+University community as a center for research, teaching and learning
+as well as center for the storage and management of inactive
+University records. The Trustees of the University of Pennsylvania
+established the University Archives and Records Center in 1945 and
+approved records management programs in 1954 and 1990. UARC's
+collections include a broad range of historically significant
+materials from the first paper records created by the Trustees in 1749
+to the millions of electronic records of the present. These materials
+document the University's corporate or organizational origin and
+development as well as the many activities and achievements of its
+officers, staff, faculty, students, alumni, and benefactors. UARC's
+collections policies also extend beyond the institution itself and
+embrace the history of prominent persons associated with the
+University; the history of institutions of higher learning in the
+United States; the history of American intellectual life generally;
+and the history of the Philadelphia community in which the University
+lives. The collections consist of more than 14,000 cubic feet of
+records in many different formats, including visual archives and
+three-dimensional memorabilia.""",
+            'include_file': 'UniversityArchives.html',
         },
         {
             'tag': 'pennmuseum',
@@ -855,6 +882,28 @@ PREP_CONFIGS = {
     'ism-diaries': {
         'collection': {
             'tag': 'ism'
+        },
+        "image_types": [ '*.tif', '*.jpg' ],
+        'collection_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'uarc-diaries': {
+        'collection': {
+            'tag': 'uarc'
         },
         "image_types": [ '*.tif', '*.jpg' ],
         'collection_prep': {
