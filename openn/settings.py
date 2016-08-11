@@ -526,7 +526,7 @@ human story.""",
             'tag': 'tdw',
             'name': 'The Digital Walters',
             'metadata_type': 'walters-tei',
-            'live': False,
+            'live': True,
             'blurb': """The Walters Art Museum in Baltimore, Maryland is internationally
 renowned for its collection of art. This collection presents an
 overview of world art from pre-dynastic Egypt to 20th-century Europe,
