@@ -524,7 +524,7 @@ human story.""",
         },
         {
             'tag': 'tdw',
-            'name': 'The Digital Walters',
+            'name': 'The Walters Art Museum',
             'metadata_type': 'walters-tei',
             'live': True,
             'blurb': """The Walters Art Museum in Baltimore, Maryland is internationally
@@ -534,13 +534,12 @@ and counts among its many treasures Greek sculpture and Roman
 sarcophagi; medieval ivories and Old Master paintings; Art Nouveau
 jewelry and 19th-century European and American masterpieces. With more
 than 900 illuminated manuscripts, this extraordinary collection
-chronicles the art of the book over more than 1,000 years. The Digital
-Walters is a collection of digitized books and manuscripts from The
-Walters Art Museum.  Items in the collection are from all over the
-world, and from ancient to modern times. It features deluxe Gospel
-books from Armenia, Ethiopia, Byzantium, and Ottonian Germany; French
-and Flemish books of hours; as well as masterpieces of Safavid, Mughal
-and Ottoman manuscript illumination.""",
+chronicles the art of the book over more than 1,000 years. Items in
+the collection are from all over the world, and from ancient to modern
+times. It features deluxe Gospel books from Armenia, Ethiopia,
+Byzantium, and Ottonian Germany; French and Flemish books of hours; as
+well as masterpieces of Safavid, Mughal and Ottoman manuscript
+illumination.""",
             'include_file': 'TheDigitalWalters.html',
         },
     ],
