@@ -52,6 +52,11 @@ class TableOfContents(Page):
                 self.collection.tag()))
             return False
 
+        # If this is a no-document collection, it is makeable; we don't have
+        # to look for an `html` dir or the files in it.
+        if self.collection.no_document():
+            return True
+
         html_dir = os.path.join(self.outdir, self.collection.html_dir())
         if not os.path.exists(html_dir):
             self.logger.info("TOC not makeable; no HTML dir found: %s (collection: %s)" % (

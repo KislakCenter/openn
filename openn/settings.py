@@ -196,6 +196,9 @@ folder name to the database; requires a TEI file.""",
 
 ]
 
+# On 'no-document' collections: These are collections for which OPenn lists no
+# documents. The Walters Art Museum is one such collection. Listing of
+# documents is handled by the site itself.
 COLLECTIONS = {
     'validations': {
         'unique_fields': [
@@ -541,6 +544,7 @@ Byzantium, and Ottonian Germany; French and Flemish books of hours; as
 well as masterpieces of Safavid, Mughal and Ottoman manuscript
 illumination.""",
             'include_file': 'TheDigitalWalters.html',
+            'no_document': True,
         },
     ],
 }

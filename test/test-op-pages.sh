@@ -27,6 +27,8 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testCollectionsShortOpt
 #     # suite_addTest testDocument
 #     # suite_addTest testDocumentShortOpt
+#     # suite_addTest testNoDocumentCollection
+#     # suite_addTest testNoDocumentTocFile
 # }
 
 setUp() {
@@ -138,6 +140,18 @@ testToc() {
     assertMatch "$output" "Skipping TOC"
 }
 
+# test TOC for collection
+testNoDocumentTocFile() {
+    stagePages
+    # delete all TOCs to force TOC generation
+    find $STAGED_PAGES/site/Collections -name \*.html -delete
+    output=`op-pages --toc-collection tdw --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Creating TOC.*tdw"
+}
+
 # test toc
 testTocShortOpt() {
     stagePages
@@ -234,6 +248,18 @@ testCollections() {
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating.*Collections"
+}
+
+# test no_document collection
+testNoDocumentCollection() {
+    stagePages
+    # delete all TOCs to force TOC generation
+    find $STAGED_PAGES/site/Collections -name \*.html -delete
+    output=`op-pages --collections --show-options 2>&1`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "tdw.*collection is live and is marked no_document"
 }
 
 # test collections

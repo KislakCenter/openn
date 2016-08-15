@@ -16,6 +16,7 @@
 
 {% include collection.include_file %}
 
+{% if items %}
 <h2>The documents on OPenn</h2>
 
 <ul class="ul_documents">
@@ -39,4 +40,5 @@
   </li>
   {% endfor %}
 </ul>
+{% endif %}
 {% endblock %}

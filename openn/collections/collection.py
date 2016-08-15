@@ -29,6 +29,9 @@ class Collection:
     def blurb(self):
         return self._config['blurb']
 
+    def no_document(self):
+        return self._config.get('no_document', False)
+
     def metadata_type(self):
         return self.openn_collection().get_metadata_type_display()
 

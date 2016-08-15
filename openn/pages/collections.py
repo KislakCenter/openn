@@ -37,6 +37,13 @@ class Collections(Page):
                 html_dir = os.path.join(self.outdir, coll.html_dir())
                 if os.path.exists(html_dir):
                     msg = "Collection added to collections page (%s)"
+                    msg += " (collection is live and has 'html' dir: %s)"
+                    msg = msg % (coll.tag(), html_dir)
+                    live_ones.append(coll)
+                elif coll.no_document():
+                    # if this is a no-document collection, add it
+                    msg = "Collection added to collections page (%s)"
+                    msg += " (collection is live and is marked no_document)"
                     msg = msg % (coll.tag())
                     live_ones.append(coll)
                 else:
