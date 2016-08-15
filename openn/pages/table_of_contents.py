@@ -80,9 +80,10 @@ class TableOfContents(Page):
 
         html_dir = os.path.join(self.outdir, self.collection.html_dir())
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
-        newest_html = max([os.path.getmtime(x) for x in html_files])
-        if os.path.getmtime(self.outfile_path()) > newest_html:
-            logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.collection))
-            return False
+        if html_files:
+            newest_html = max([os.path.getmtime(x) for x in html_files])
+            if os.path.getmtime(self.outfile_path()) > newest_html:
+                logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.collection))
+                return False
 
         return True
