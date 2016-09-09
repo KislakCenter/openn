@@ -112,7 +112,7 @@ if [[ $? -ne 0 ]]
 then
     error "Cannot retrieve field 'coll_prep' from $todo"
 fi
-message "Found coll_prep: $coll_prep"
+message "Found coll_prep: $prep"
 prepsource=`get_field $todo prepsource`
 if [[ $? -ne 0 ]]
 then
