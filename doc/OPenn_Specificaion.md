@@ -1,4 +1,4 @@
-iOPenn specifications
+OPenn specifications
 ====================
 
 OPenn is a website that provides HTTP access to image files and metadata for
