@@ -213,17 +213,17 @@ def check_options(opts):
     opt_dict['show_options'] = False
 
     # collect used options
-    os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
+    temp_os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
 
-    if len(os) > 1:
-        s = ', '.join(["%s=%s" % (k,str(v)) for k,v in os.iteritems()])
+    if len(temp_os) > 1:
+        s = ', '.join(["%s=%s" % (k,str(v)) for k,v in temp_os.iteritems()])
         raise OPennException("More than one option selected: %s" % (s,))
 
-    os['dry_run'] = dry_run
-    os['force'] = force
-    os['show_options'] = show_options
+    temp_os['dry_run'] = dry_run
+    temp_os['force'] = force
+    temp_os['show_options'] = show_options
 
-    return os
+    return temp_os
 
 def main(cmdline=None):
     """op-pages
