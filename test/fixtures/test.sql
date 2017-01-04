@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.26, for osx10.10 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.20, for osx10.9 (x86_64)
 --
 -- Host: localhost    Database: openn
 -- ------------------------------------------------------
--- Server version	5.6.26
+-- Server version	5.6.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -263,6 +263,71 @@ INSERT INTO `openn_prepstatus` VALUES (1,'2015-07-07 16:43:27','2015-07-07 16:43
 UNLOCK TABLES;
 
 --
+-- Table structure for table `openn_project`
+--
+
+DROP TABLE IF EXISTS `openn_project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `openn_project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `blurb` longtext COLLATE utf8_unicode_ci,
+  `csv_only` tinyint(1) NOT NULL,
+  `include_file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `live` tinyint(1) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag` (`tag`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `include_file` (`include_file`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `openn_project`
+--
+
+LOCK TABLES `openn_project` WRITE;
+/*!40000 ALTER TABLE `openn_project` DISABLE KEYS */;
+INSERT INTO `openn_project` VALUES (1,'bibliophilly','Bibliotheca Philadelphiensis','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet scelerisque tellus, ac dapibus neque. Vestibulum viverra mi odio, eu luctus elit volutpat nec. Vivamus sed nunc diam. Ut sed feugiat lectus. Curabitur cursus purus non ligula vulputate, vel porta lectus auctor. In magna velit, accumsan sed elit at, ultricies consequat dolor. Nullam at venenatis felis, cursus tristique ex. Nulla bibendum ante quis nisl placerat molestie. Morbi scelerisque non diam eget pharetra.\n\nInteger lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligula vitae suscipit. Morbi ultricies dolor et nunc euismod malesuada. Nullam sollicitudin neque imperdiet arcu pellentesque mattis. Aenean vitae urna et felis placerat rhoncus in ut libero. Vestibulum vel diam dui. Curabitur in mauris non dui pharetra aliquet nec nec quam. Nulla maximus ipsum nibh. Nulla bibendum, nunc at condimentum suscipit, nisl est sodales massa, quis faucibus odio neque ac nisl.',0,'BiblioPhilly.html',1,'2016-12-13 12:14:22','2016-12-14 08:43:23'),(2,'pacscl-diaries','PACSCL Diares','Lorem ipsum',0,'PACSCLDiaries.html',1,'2016-12-13 12:14:22','2016-12-13 12:14:22'),(3,'thai','Thai Manuscripts','Lorem ipsum',1,NULL,1,'2016-12-13 12:14:22','2016-12-13 12:14:22');
+/*!40000 ALTER TABLE `openn_project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `openn_projectmembership`
+--
+
+DROP TABLE IF EXISTS `openn_projectmembership`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `openn_projectmembership` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `document_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `openn_projectmembership_document_id_49fe68f38821ba30_uniq` (`document_id`,`project_id`),
+  KEY `openn_projectmembership_b7398729` (`document_id`),
+  KEY `openn_projectmembership_37952554` (`project_id`),
+  CONSTRAINT `document_id_refs_id_dd6d44a7` FOREIGN KEY (`document_id`) REFERENCES `openn_document` (`id`),
+  CONSTRAINT `project_id_refs_id_d524885d` FOREIGN KEY (`project_id`) REFERENCES `openn_project` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `openn_projectmembership`
+--
+
+LOCK TABLES `openn_projectmembership` WRITE;
+/*!40000 ALTER TABLE `openn_projectmembership` DISABLE KEYS */;
+/*!40000 ALTER TABLE `openn_projectmembership` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `openn_version`
 --
 
@@ -332,4 +397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-30 10:08:51
+-- Dump completed on 2016-12-15 11:13:48

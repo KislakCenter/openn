@@ -14,10 +14,13 @@ export OPENN_PACKAGE_DIR=$TEST_STAGING_DIR/openn/packages
 export OPENN_STAGING_DIR=$TEST_STAGING_DIR/openn/site
 export OPENN_SITE_DIR=$TEST_STAGING_DIR/openn/site
 export OPENN_ARCHIVE_DIR=$TEST_STAGING_DIR/openn/archive
+export TEMP_FILE=${TMPDIR:-/tmp}/prog$$
 
-TABLES_TO_DELETE="openn_derivative openn_image openn_version openn_prepstatus openn_document"
+TABLES_TO_DELETE="openn_projectmembership openn_project openn_derivative openn_image openn_version openn_prepstatus openn_document"
 
 shunit=`dirname $0`/../shunit2/src/shunit2
+
+
 
 clear_tables() {
     for table in $TABLES_TO_DELETE
@@ -75,5 +78,31 @@ assertNotMatch() {
 
   aNM_match=`echo "$aNM_string" | grep "$aNM_pattern"`
   assertNull "$aNM_msg" "$aNM_match"
+
+}
+
+assertNumberOfMatchingLines() {
+  aNoL_msg=
+  aNoL_string=
+  aNoL_pattern=
+  aNoL_count=
+  aNoL_actual_count=
+  aNoL_match=
+  if [ $# -eq 4 ]; then
+    aNoL_msg=$1
+    shift
+  fi
+  aNoL_string="$1"
+  aNoL_pattern="$2"
+  aNoL_count=$3
+
+  aNoL_actual_count=`echo "$aNoL_string" | grep "$aNoL_pattern" | wc -l | sed 's/ //g'`
+
+  # the default message
+  if [ "$aNoL_msg" = "" ]; then
+    aNoL_msg="Matching lines -- expected: $aNoL_count; found: $aNoL_actual_count; pattern: '$aNoL_pattern'; string:\n$aNoL_string"
+  fi
+
+  assertEquals "$aNoL_msg" $aNoL_count $aNoL_actual_count
 
 }

@@ -151,6 +151,69 @@ class ExtraImageManager(models.Manager):
     def get_query_set(self):
         return super(ExtraImageManager, self).get_query_set().filter(image_type=u'extra')
 
+
+class Project(models.Model):
+    """An OPenn Project is a secondary grouping of Documents from multiple
+    OPennCollections. Projects group Documents from one or more collections.
+
+    """
+    tag          = models.CharField(max_length = 50,  null = False, default = None, blank = False, unique = True)
+    name         = models.CharField(max_length = 255, null = False, default = None, blank = False, unique = True)
+    blurb        = models.TextField(null = True, default = None, blank = True)
+    csv_only     = models.BooleanField(default = True)
+    include_file = models.CharField(max_length = 255, null = True, default = None, blank = False, unique = True)
+    live         = models.BooleanField(default = False)
+    created      = models.DateTimeField(auto_now_add = True)
+    updated      = models.DateTimeField(auto_now = True)
+
+    def short_blurb(self):
+        if self.blurb is not None and len(self.blurb) > 25:
+            return self.blurb[:25] + '...'
+        else:
+            return self.blurb
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return ('Project: id={id:d}' +
+                ', tag="{tag}"' +
+                ', name="{name}"' +
+                ', blurb="{blurb}"' +
+                ", csv_only={csv_only}" +
+                ', include_file="{include_file}"' +
+                ", live={live}" +
+                ', created="{created}"' +
+                ', updated="{updated}"').format(
+                        id=self.id,
+                        tag=self.tag,
+                        name=self.name,
+                        blurb=self.short_blurb(),
+                        csv_only=self.csv_only,
+                        include_file=self.include_file,
+                        live=self.live,
+                        created=self.created,
+                        updated=self.updated)
+
+class ProjectMembership(models.Model):
+    """ A ProjectMembership links a Document to a Project.
+    """
+    document    = models.ForeignKey(Document, on_delete=models.CASCADE)
+    project     = models.ForeignKey(Project,  on_delete=models.CASCADE)
+    created     = models.DateTimeField(auto_now_add = True)
+    updated     = models.DateTimeField(auto_now = True)
+
+    class Meta:
+        unique_together = ('document', 'project',)
+
+    def __str__(self):
+        return ('ProjectMembership: id={id:d}' +
+                ', project_id={project_id:d}' +
+                ', document_id={document_id:d}').format(
+                        id=self.id,
+                        project_id=self.project_id,
+                        document_id=self.document_id)
+
 class PrepStatus(models.Model):
     document  = models.OneToOneField(Document, primary_key = True)
     started   = models.DateTimeField(auto_now_add = True)
