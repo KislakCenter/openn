@@ -187,106 +187,9 @@ def readme(opts):
 def readme_file(filename,opts):
     make_readme_html(filename, opts)
 
-def collections(opts):
-    make_collections(opts)
-
-def print_options(opts):
-    for k in vars(opts):
-        print "OPTION: %12s  %s" % (k, getattr(opts, k))
-
-
-def check_options(opts):
-    # get the options
-    opt_dict = copy.deepcopy(vars(opts))
-
-    # remove dry-run
-    dry_run = opt_dict['dry_run']
-    opt_dict['dry_run'] = False
-    # remove force
-    force = opt_dict['force']
-    opt_dict['force'] = False
-    # remove reallyforce
-    reallyforce = opt_dict['reallyforce']
-    opt_dict['reallyforce'] = False
-    # remove show-options
-    show_options = opt_dict['show_options']
-    opt_dict['show_options'] = False
-
-    # collect used options
-    temp_os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
-
-    if len(temp_os) > 1:
-        s = ', '.join(["%s=%s" % (k,str(v)) for k,v in temp_os.iteritems()])
-        raise OPennException("More than one option selected: %s" % (s,))
-
-    temp_os['dry_run'] = dry_run
-    temp_os['force'] = force
-    temp_os['show_options'] = show_options
-
-    return temp_os
-
-def main(cmdline=None):
-    """op-pages
-
-    """
-    status = 0
-    parser = make_parser()
-
-    opts, args = parser.parse_args(cmdline)
-    if opts.show_options:
-        print_options(opts)
-
-    setup_logger()
-    logger = logging.getLogger(__name__)
-
-    try:
-        check_options(opts)
-
-        if opts.dry_run:
-            logging.warn("Performing DRY RUN")
-
-        if opts.browse:
-            browse(opts)
-
-        elif opts.toc:
-            toc(opts)
-
-        elif opts.readme:
-            readme(opts)
-
-        elif opts.collection_tag:
-            toc_collection(opts.collection_tag, opts)
-
-        elif opts.collections:
-            collections(opts)
-
-        elif opts.document:
-            document(opts.document, opts)
-
-        elif opts.readme_file:
-            readme_file(opts.readme_file, opts)
-
-        else:
-            process_all(opts)
-
-        if opts.dry_run:
-            logging.warn("DRY RUN COMPLETE; displayed actions approximate")
-
-    except OPennException as ex:
-        handle_exc()
-        parser.error(str(ex))
-        status = 4
-    except Exception as ex:
-        handle_exc()
-        parser.error(str(ex))
-        status = 4
-
-    return status
-
-def make_parser():
-    """ option parser"""
-
-    usage = """%prog [OPTIONS]
+def detailed_help(opts):
+    print """
+%prog [OPTIONS]
 
 Create and stage HTML pages for OPenn.
 
@@ -399,6 +302,133 @@ Note that --dry-run may show inaccurate information for TOC files.  An actual
 run may create new browse files that would trigger TOC generation.  Dry runs
 don't create new or update browse files, so the TOC steps will likely report
 skipped TOC creation for files that would be generated for an actual run.
+    """.replace('%prog', cmd())
+
+def collections(opts):
+    make_collections(opts)
+
+def print_options(opts):
+    for k in vars(opts):
+        print "OPTION: %12s  %s" % (k, getattr(opts, k))
+
+
+def check_options(opts):
+    # get the options
+    opt_dict = copy.deepcopy(vars(opts))
+
+    # remove dry-run
+    dry_run = opt_dict['dry_run']
+    opt_dict['dry_run'] = False
+    # remove force
+    force = opt_dict['force']
+    opt_dict['force'] = False
+    # remove reallyforce
+    reallyforce = opt_dict['reallyforce']
+    opt_dict['reallyforce'] = False
+    # remove show-options
+    show_options = opt_dict['show_options']
+    opt_dict['show_options'] = False
+
+    # collect used options
+    temp_os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
+
+    if len(temp_os) > 1:
+        s = ', '.join(["%s=%s" % (k,str(v)) for k,v in temp_os.iteritems()])
+        raise OPennException("More than one option selected: %s" % (s,))
+
+    temp_os['dry_run'] = dry_run
+    temp_os['force'] = force
+    temp_os['show_options'] = show_options
+
+    return temp_os
+
+def main(cmdline=None):
+    """op-pages
+
+    """
+    status = 0
+    parser = make_parser()
+
+    opts, args = parser.parse_args(cmdline)
+    if opts.show_options:
+        print_options(opts)
+
+    setup_logger()
+    logger = logging.getLogger(__name__)
+
+    try:
+        check_options(opts)
+
+        if opts.dry_run:
+            logging.warn("Performing DRY RUN")
+
+        if opts.browse:
+            browse(opts)
+
+        elif opts.toc:
+            toc(opts)
+
+        elif opts.readme:
+            readme(opts)
+
+        elif opts.collection_tag:
+            toc_collection(opts.collection_tag, opts)
+
+        elif opts.collections:
+            collections(opts)
+
+        elif opts.document:
+            document(opts.document, opts)
+
+        elif opts.readme_file:
+            readme_file(opts.readme_file, opts)
+
+        elif opts.detailed_help:
+            detailed_help(opts)
+
+        else:
+            process_all(opts)
+
+        if opts.dry_run:
+            logging.warn("DRY RUN COMPLETE; displayed actions approximate")
+
+    except OPennException as ex:
+        handle_exc()
+        parser.error(str(ex))
+        status = 4
+    except Exception as ex:
+        handle_exc()
+        parser.error(str(ex))
+        status = 4
+
+    return status
+
+def make_parser():
+    """ option parser"""
+
+    usage = """%prog [OPTIONS]
+
+Create and stage HTML pages for OPenn.
+
+By default all HTML page types will be generated and staged as needed in this
+order:
+
+    1. browse pages for each document on-line
+    2. table of contents for each collection with documents on-line
+    3. all ReadMe files
+
+Use options for more granular behavior, to force creation of certain files, or
+to do a dry run of the script.
+
+OPTIONS
+=======
+
+Except for --dry-run and --force, options may not be combined.
+
+Note that --dry-run may show inaccurate information for TOC files.  An actual
+run may create new browse files that would trigger TOC generation.  Dry runs
+don't create new or update browse files, so the TOC steps will likely report
+skipped TOC creation for files that would be generated for an actual run.
 
 """
 
@@ -446,6 +476,10 @@ skipped TOC creation for files that would be generated for an actual run.
     parser.add_option('-o', '--show-options',
                       action='store_true', dest='show_options', default=False,
                       help='Print out the options at runtime')
+
+    parser.add_option('-H', '--detailed-help',
+                      action='store_true', dest='detailed_help', default=False,
+                      help='Print detailed help message')
 
     return parser
 
