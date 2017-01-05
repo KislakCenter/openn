@@ -39,10 +39,10 @@ class OPennCSV(object):
             self.writerow(row)
 
     def close(self):
-    """
-    If output file object exists and is not closed, close it; otherwise,
-    do nothing.
-    """
+        """
+        If output file object exists and is not closed, close it; otherwise,
+        do nothing.
+        """
 
         if self.csvfile is None:
             return
