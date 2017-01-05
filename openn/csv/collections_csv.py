@@ -24,24 +24,26 @@ class CollectionsCSV(OPennCSV):
         try:
             self.writerow(CollectionsCSV.HEADER)
             for coll_wrapper in self.coll_configs.all_collections():
-                row = [
-                    coll_wrapper.long_id(),
-                    coll_wrapper.tag(),
-                    'repository',
-                    coll_wrapper.metadata_type(),
-                    coll_wrapper.name(),
-                    ]
-                self.writerow(row)
+                if coll_wrapper.is_live():
+                    row = [
+                        coll_wrapper.long_id(),
+                        coll_wrapper.tag(),
+                        'repository',
+                        coll_wrapper.metadata_type(),
+                        coll_wrapper.name(),
+                        ]
+                    self.writerow(row)
 
             for project in Project.objects.all():
-                row = [
-                    'N/A',
-                    project.tag,
-                    'curated',
-                    'N/A',
-                    project.name,
-                    ]
-                self.writerow(row)
+                if project.live:
+                    row = [
+                        'N/A',
+                        project.tag,
+                        'curated',
+                        'N/A',
+                        project.name,
+                        ]
+                    self.writerow(row)
         finally:
             # make sure we close the file
             self.close()
