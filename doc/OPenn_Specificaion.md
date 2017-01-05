@@ -474,7 +474,7 @@ It has these columns:
 
 - `collection_tag`:   a mnemonic tag for the collection; e.g., `ljs`, `pennmss`
 
-- `collection_type`:  `primary` or `secondary`
+- `collection_type`:  `repository` or `curated`
 
 - `metadata_type`:    `OPENN-TEI`, `WALTERS-TEI`, etc.; secondary collections
                       may also have metadata type of `MIXED`
@@ -486,11 +486,11 @@ A sample file, with padding added for legibility, follows.
 
 ```
 collection_id,  collection_tag, collection_type,  metadata_type,  collection_name
-0001,           ljs,            primary,          OPENN-TEI,      Lawrence J. Schoenberg Manuscripts
-0002,           pennmss,        primary,          OPENN-TEI,      University of Pennsylvania Books & Manuscripts
-0003,           brynmawr,       primary,          OPENN-TEI,      Bryn Mawr College Library Special Collections
-0004,           drexarc,        primary,          OPENN-TEI,      Drexel University Archives and Special Collections
-N/A,            bibliophilly,   secondary,        OPENN-TEI,      Bibliotheca Philadelphiensis
+0001,           ljs,            repository,       OPENN-TEI,      Lawrence J. Schoenberg Manuscripts
+0002,           pennmss,        repository,       OPENN-TEI,      University of Pennsylvania Books & Manuscripts
+0003,           brynmawr,       repository,       OPENN-TEI,      Bryn Mawr College Library Special Collections
+0004,           drexarc,        repository,       OPENN-TEI,      Drexel University Archives and Special Collections
+N/A,            bibliophilly,   curated,          OPENN-TEI,      Bibliotheca Philadelphiensis
 ```
 
 ##### Primary Collections TOC
