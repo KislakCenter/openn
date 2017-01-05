@@ -177,6 +177,12 @@ def toc_collection(coll_tag, opts):
     coll_wrapper = opfunc.get_coll_wrapper(coll_tag)
     make_toc_html(coll_wrapper, opts)
 
+def csv_toc(opts):
+    raise NotImplementedError("TODO: csv_toc()")
+
+def csv_toc_collection(coll_tag, opts):
+    raise NotImplementedError("TODO: csv_toc_collection()")
+
 def document(docid, opts):
     make_browse_html(docid, opts)
 
@@ -186,6 +192,9 @@ def readme(opts):
 
 def readme_file(filename,opts):
     make_readme_html(filename, opts)
+
+def collections_csv(opts):
+    raise NotImplementedError("TODO: collections_csv")
 
 def detailed_help(opts):
     print """
@@ -383,6 +392,15 @@ def main(cmdline=None):
         elif opts.readme_file:
             readme_file(opts.readme_file, opts)
 
+        elif opts.collections_csv:
+            collections_csv(opts)
+
+        elif opts.csv_toc:
+            csv_toc(opts)
+
+        elif opts.csv_toc_collection_tag is not None:
+            csv_toc_collection(opts.csv_toc_collection_tag, opts)
+
         elif opts.detailed_help:
             detailed_help(opts)
 
@@ -476,6 +494,18 @@ skipped TOC creation for files that would be generated for an actual run.
     parser.add_option('-o', '--show-options',
                       action='store_true', dest='show_options', default=False,
                       help='Print out the options at runtime')
+
+    parser.add_option('-x', '--collections-csv',
+                      action='store_true', dest='collections_csv', default=False,
+                      help='Generate collections CSV')
+    parser.add_option('-y', '--csv-toc',
+                      action='store_true', dest='csv_toc', default=False,
+                      help="Generate CSV table of contents for all collections")
+    parser.add_option('-z', '--csv-toc-collection',
+                      dest='csv_toc_collection_tag', default=None,
+                      help=("Generate CSV table of contents for COLLECTION_TAG; one of: %s" % (
+                          ', '.join(opfunc.get_coll_tags()),)),
+                      metavar="COLLECTION_TAG")
 
     parser.add_option('-H', '--detailed-help',
                       action='store_true', dest='detailed_help', default=False,
