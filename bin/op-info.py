@@ -53,14 +53,14 @@ def add_prep(doc):
     prepstatus.save()
 
 def add_missing_preps():
-    for doc in Document.objects.all():
+    for doc in queryset_iterator(Document.objects.all()):
         if hasattr(doc, 'prepstatus'):
             logging.info("Doc already has prep: %d: %s/%s" % (doc.id, doc.collection_tag, doc.base_dir))
         else:
             add_prep(doc)
 
 def update_online_statuses():
-    for doc in Document.objects.filter(is_online=False):
+    for doc in queryset_iterator(Document.objects.filter(is_online=False)):
         if doc.is_live():
             doc.is_online = True
             doc.save()
@@ -167,7 +167,7 @@ def show_all(opts):
 
     print report.header()
     print report.divider()
-    for doc in Document.objects.all():
+    for doc in queryset_iterator(Document.objects.all(), chunksize=100):
         print report.row(doc)
 
 def collections(opts):
