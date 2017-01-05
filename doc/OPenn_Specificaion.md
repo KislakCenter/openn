@@ -490,7 +490,7 @@ collection_id,  collection_tag, collection_type,  metadata_type,  collection_nam
 0002,           pennmss,        repository,       OPENN-TEI,      University of Pennsylvania Books & Manuscripts
 0003,           brynmawr,       repository,       OPENN-TEI,      Bryn Mawr College Library Special Collections
 0004,           drexarc,        repository,       OPENN-TEI,      Drexel University Archives and Special Collections
-N/A,            bibliophilly,   curated,          OPENN-TEI,      Bibliotheca Philadelphiensis
+N/A,            bibliophilly,   curated,          N/A,            Bibliotheca Philadelphiensis
 ```
 
 ##### Primary Collections TOC
