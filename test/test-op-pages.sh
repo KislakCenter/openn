@@ -29,6 +29,7 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testDocumentShortOpt
 #     # suite_addTest testNoDocumentCollection
 #     # suite_addTest testNoDocumentTocFile
+#     suite_addTest testCollectionsCSV
 # }
 
 setUp() {
@@ -296,6 +297,16 @@ testDocumentShortOpt() {
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
+}
+
+testCollectionsCSV() {
+    stagePages
+    output=`op-pages --collections-csv --show-options`
+    status=$?
+    # cat ${STAGED_PAGES}/site/Data/collections.csv
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Wrote collections CSV file:"
 }
 
 # Run shunit

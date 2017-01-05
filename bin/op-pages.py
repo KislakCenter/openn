@@ -29,9 +29,9 @@ from openn.collections.configs import Configs
 from openn.pages.collections import Collections
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
+from openn.csv.collections_csv import CollectionsCSV
 
 logger = None
-
 
 def cmd():
     return os.path.basename(__file__)
@@ -67,7 +67,7 @@ def setup_logger():
     logging.getLogger().setLevel(logging.DEBUG)
 
 def update_online_statuses():
-    for doc in Document.objects.all():
+    for doc in opfunc.queryset_iterator(Document.objects.all()):
         if doc.is_online:
             pass
         else:
@@ -153,50 +153,74 @@ def make_collections(opts):
         msg = "Could not find template: %s" % (settings.COLLECTIONS_TEMPLATE,)
         raise OPennException(msg)
 
+def make_collections_csv(opts):
+    """Generate CSV table of contents for all collections. Looks like this (without padding):
+    """
+    data_dir = os.path.join(settings.SITE_DIR, 'Data')
+    csv = CollectionsCSV(outdir=data_dir, filename='collections.csv',
+        coll_configs=collection_configs())
+    csv.write_file()
+
+    logging.info("Wrote collections CSV file: %s" % (csv.outpath(),))
+
 # ------------------------------------------------------------------------------
 # ACTIONS
 # ------------------------------------------------------------------------------
 def process_all(opts):
+    """Default behavior, process all file types."""
     browse(opts)
     toc(opts)
     collections(opts)
     readme(opts)
+    # csv_toc(opts)
+    # collections_csv(opts)
 
 def browse(opts):
+    """Process browse HTML files as needed"""
     # update online statuses of the Documents first
     update_online_statuses()
-    docids = [doc.id for doc in Document.objects.filter(is_online = True)]
+    docids = [doc.id for doc in opfunc.queryset_iterator(Document.objects.filter(is_online = True))]
     for docid in docids:
         document(docid, opts)
 
 def toc(opts):
+    """Process TOC HTML files as needed"""
     for tag in opfunc.get_coll_tags():
         toc_collection(tag, opts)
 
 def toc_collection(coll_tag, opts):
+    """Process table of contents for coll_tag"""
     coll_wrapper = opfunc.get_coll_wrapper(coll_tag)
     make_toc_html(coll_wrapper, opts)
 
-def csv_toc(opts):
-    raise NotImplementedError("TODO: csv_toc()")
-
-def csv_toc_collection(coll_tag, opts):
-    raise NotImplementedError("TODO: csv_toc_collection()")
-
 def document(docid, opts):
+    """Process browse HTML for DOC_ID"""
     make_browse_html(docid, opts)
 
 def readme(opts):
+    """Process ReadMe files as needed"""
     for readme in settings.README_TEMPLATES:
         readme_file(readme['file'], opts)
 
 def readme_file(filename,opts):
+    """Process ReadMe HTML for filename"""
     make_readme_html(filename, opts)
 
 def collections_csv(opts):
-    raise NotImplementedError("TODO: collections_csv")
+    """Generate collections CSV"""
+    make_collections_csv(opts)
+
+def csv_toc(opts):
+    """Generate CSV table of contents for all collections.
+    """
+    raise NotImplementedError("TODO: csv_toc")
+
+def csv_toc_collection(coll_tag, opts):
+    """Generate CSV table of contents for all collections"""
+    raise NotImplementedError("TODO: csv_toc_collection()")
 
 def detailed_help(opts):
+    """Print detailed help message"""
     print """
 %prog [OPTIONS]
 
@@ -447,7 +471,6 @@ Note that --dry-run may show inaccurate information for TOC files.  An actual
 run may create new browse files that would trigger TOC generation.  Dry runs
 don't create new or update browse files, so the TOC steps will likely report
 skipped TOC creation for files that would be generated for an actual run.
-
 """
 
     parser = OptionParser(usage)
