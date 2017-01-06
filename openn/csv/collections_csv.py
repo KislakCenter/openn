@@ -47,3 +47,9 @@ class CollectionsCSV(OPennCSV):
         finally:
             # make sure we close the file
             self.close()
+
+    def is_makeable(self):
+        return true
+
+    def is_needed(self):
+        return self.is_makeable()
