@@ -511,11 +511,11 @@ The file has these columns:
 A sample follows, with padding added for legibility.
 
 ```
-document_id,  path,                   title,                              created,              updated
-1435,         0002/mscodex901         "Il finto Policare, tragicomedia",  2015-10-15 13:02:00,  2015-10-15 08:22:00
-1710,         0002/mscoll764_item84,  Some title,                         2016-02-21 16:13:11,  2016-02-23 09:55:38
-1711,         0002/mscoll764_item85,  Some title,                         2016-02-21 16:13:30,  2016-02-23 09:55:38
-1712,         0002/mscoll764_item86,  Some title,                         2016-02-21 16:13:55,  2016-02-23 09:55:38
+document_id,  path,                   title,                              metadata_type,  created,              updated
+1435,         0002/mscodex901         "Il finto Policare, tragicomedia",  TEI             2015-10-15 13:02:00,  2015-10-15 08:22:00
+1710,         0002/mscoll764_item84,  Some title,                         TEI             2016-02-21 16:13:11,  2016-02-23 09:55:38
+1711,         0002/mscoll764_item85,  Some title,                         TEI             2016-02-21 16:13:30,  2016-02-23 09:55:38
+1712,         0002/mscoll764_item86,  Some title,                         TEI             2016-02-21 16:13:55,  2016-02-23 09:55:38
 ```
 
 > **Implementation note:**
