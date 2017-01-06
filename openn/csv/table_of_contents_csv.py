@@ -6,6 +6,8 @@ import openn.openn_functions as opfunc
 from unidecode import unidecode
 import os
 import re
+import logging
+import glob
 
 
 class TableOfContentsCSV(OPennCSV):
@@ -20,11 +22,13 @@ class TableOfContentsCSV(OPennCSV):
         1712,         0002/mscoll764_item86,  Some title,                         TEI             2016-02-21 16:13:55,  2016-02-23 09:55:38
     """
 
-    HEADER = 'document_id,path,title,metadata_type,created,updated'.split(',')
+    logger = logging.getLogger(__name__)
+
+    HEADER      = 'document_id,path,title,metadata_type,created,updated'.split(',')
     REL_PATH_RE = re.compile('^/?Data/')
 
 
-    def __init__(self, outdir, filename, collection):
+    def __init__(self, collection, **kwargs):
         """
         Create a new TableOfContentsCSV object. Arguments:
 
@@ -38,7 +42,9 @@ class TableOfContentsCSV(OPennCSV):
 
         """
         self.collection = collection
-        super(TableOfContentsCSV, self).__init__(outdir=outdir, filename=filename)
+        outfile         = os.path.join('Data', collection.csv_toc_file())
+        kwargs.update({ 'outfile': outfile })
+        super(TableOfContentsCSV, self).__init__(**kwargs)
 
 
     def is_makeable(self):
@@ -54,7 +60,16 @@ class TableOfContentsCSV(OPennCSV):
         # NOTE: This is different from the regular TOC files; here, if there
         # are no documents, the CSV file will have no content.
         if self.collection.no_document():
-            self.logger.info("CSV TOC not makeable; no document collection: %s" % (html_dir,))
+            self.logger.info("CSV TOC not makeable; no document collection: %s" % (self.collection.tag(),))
+            return False
+
+        # Not makeable if no live documents are in the collection
+        doc_count = Document.objects.filter(
+            openn_collection=self.collection.openn_collection(),
+            is_online=True
+            ).count()
+        if doc_count == 0:
+            self.logger.info("CSV TOC not makeable; collection has no documents online: %s" % (self.collection.tag(),))
             return False
 
         # see if there are any HTML files for this collection
@@ -79,7 +94,7 @@ class TableOfContentsCSV(OPennCSV):
             return False
 
         # needed if it doesn't exist
-        if not self.path.exists(self.outfile_path()):
+        if not os.path.exists(self.outfile_path()):
             return True
 
         # see if it's out-of-date
@@ -100,7 +115,6 @@ class TableOfContentsCSV(OPennCSV):
             docs = Document.objects.filter(
                 openn_collection=self.collection.openn_collection(),
                 is_online=True)
-            print "number of docs is %d" % docs.count()
             for doc in opfunc.queryset_iterator(docs,chunksize=500):
                 rel_path = TableOfContentsCSV.REL_PATH_RE.sub('', doc.package_dir)
                 # Note that we use unidecode on the title to strip off

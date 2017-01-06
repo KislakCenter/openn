@@ -157,26 +157,26 @@ def make_collections(opts):
 def make_collections_csv(opts):
     """Generate collections.csv file listing all collections and projects.
     """
-    data_dir = os.path.join(settings.SITE_DIR, 'Data')
-    csv = CollectionsCSV(outdir=data_dir, filename='collections.csv',
-        coll_configs=collection_configs())
-    csv.write_file()
 
-    logging.info("Wrote collections CSV file: %s" % (csv.outpath(),))
+    csv = CollectionsCSV(outdir=site_dir(), coll_configs=collection_configs())
+    if is_makeable(csv, opts):
+        csv.write_file()
+        logging.info("Wrote collections CSV file: %s" % (csv.outpath(),))
+    else:
+        logging.info("Skipping page: %s" % (csv.outfile_path(),))
 
 def make_collection_toc_csv(coll_tag, opts):
     """
     Generate CSV Table of Contents for collection with tag ``coll_tag``.
     """
-
-    data_dir = os.path.join(settings.SITE_DIR, 'Data')
     coll_wrapper = collection_configs().get_collection(coll_tag)
-    filename = coll_wrapper.openn_collection().csv_toc_file()
-    csv = TableOfContentsCSV(outdir=data_dir, filename=filename,
-        collection=coll_wrapper)
-    csv.write_file()
+    csv          = TableOfContentsCSV(collection=coll_wrapper, outdir=site_dir())
 
-    logging.info("Wrote table of contents CSV file: %s" % (csv.outpath(),))
+    if is_makeable(csv, opts):
+        csv.write_file()
+        logging.info("Wrote table of contents CSV file: %s" % (csv.outfile_path(),))
+    else:
+        logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
 
 # ------------------------------------------------------------------------------
 # ACTIONS
@@ -229,7 +229,8 @@ def collections_csv(opts):
 def csv_toc(opts):
     """Generate CSV table of contents for all collections.
     """
-    raise NotImplementedError("TODO: csv_toc")
+    for tag in opfunc.get_coll_tags():
+        csv_toc_collection(tag, opts)
 
 def csv_toc_collection(coll_tag, opts):
     """Generate CSV table of contents for all collections"""

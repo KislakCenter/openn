@@ -16,9 +16,11 @@ class CollectionsCSV(OPennCSV):
     HEADER = 'collection_id,collection_tag,collection_type,metadata_type,collection_name'.split(',')
 
     """docstring for CollectionsCSV"""
-    def __init__(self, outdir, filename, coll_configs):
+    def __init__(self, coll_configs, **kwargs):
         self.coll_configs = coll_configs
-        super(CollectionsCSV, self).__init__(outdir=outdir, filename=filename)
+        outfile           = os.path.join('Data', 'collections.csv')
+        kwargs.update({ 'outfile': outfile })
+        super(CollectionsCSV, self).__init__(**kwargs)
 
     def write_file(self):
         try:
@@ -49,7 +51,7 @@ class CollectionsCSV(OPennCSV):
             self.close()
 
     def is_makeable(self):
-        return true
+        return True
 
     def is_needed(self):
         return self.is_makeable()

@@ -12,21 +12,37 @@ class OPennCSV(object):
 
     Typical usage:
 
-        csv = OPennCSV('path/to/dir', 'file.csv')
+        csv = OPennCSV('path/to/dir', 'data/file.csv')
         csv.writerow(['a', 'b', 'c'])
         csv.writerow([1, 2, 3])
         csv.close() # important; close the output file object
 
     """
-    def __init__(self, outdir, filename):
+    def __init__(self, outdir, outfile):
+        """
+        Create a new OPennCSV object. The arguments are:
+
+            :outdir:    full path to local directory to output file;
+                        e.g., ``/Users/name/openn/site/``
+
+            :outfile:   relative path to the file to output; e.g.,
+                        ``Data/somefile.csv``
+        """
         self.outdir    = outdir
-        self.filename  = filename
+        self.outfile   = outfile
         self.csvfile   = None
         self.csvwriter = None
         super(OPennCSV, self).__init__()
 
     def outpath(self):
-        return os.path.join(self.outdir, self.filename)
+        """
+        Return the full path to the file to output; e.g.,
+        ``/Users/name/openn/site/Data/somefile.css``.
+        """
+        return os.path.join(self.outdir, self.outfile)
+
+    # alias ``outfile_path`` to ``outpath``
+    outfile_path = outpath
 
     def writerow(self,row):
         if self.csvwriter is None:

@@ -6,32 +6,33 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
-# suite() {
-#     # suite_addTest testRun
-#     # suite_addTest testDryRun
-#     # suite_addTest testDryRunShortOpt
-#     # suite_addTest testForce
-#     # suite_addTest testForceShortOpt
-#     # suite_addTest testBrowse
-#     # suite_addTest testBrowseShortOpt
-#     # suite_addTest testToc
-#     # suite_addTest testTocShortOpt
-#     # suite_addTest testReadMe
-#     # suite_addTest testReadMeShortOpt
-#     # suite_addTest testReadMeFile
-#     # suite_addTest testReadMeFileShortOpt
-#     # suite_addTest testReadMeFileFailure
-#     # suite_addTest testTocFile
-#     # suite_addTest testTocFileShortOpt
-#     # suite_addTest testCollections
-#     # suite_addTest testCollectionsShortOpt
-#     # suite_addTest testDocument
-#     # suite_addTest testDocumentShortOpt
-#     # suite_addTest testNoDocumentCollection
-#     # suite_addTest testNoDocumentTocFile
-#     # suite_addTest testCollectionsCSV
-#     suite_addTest testCSVTOCCollection
-# }
+suite() {
+    # suite_addTest testRun
+    # suite_addTest testDryRun
+    # suite_addTest testDryRunShortOpt
+    # suite_addTest testForce
+    # suite_addTest testForceShortOpt
+    # suite_addTest testBrowse
+    # suite_addTest testBrowseShortOpt
+    # suite_addTest testToc
+    # suite_addTest testTocShortOpt
+    # suite_addTest testReadMe
+    # suite_addTest testReadMeShortOpt
+    # suite_addTest testReadMeFile
+    # suite_addTest testReadMeFileShortOpt
+    # suite_addTest testReadMeFileFailure
+    # suite_addTest testTocFile
+    # suite_addTest testTocFileShortOpt
+    # suite_addTest testCollections
+    # suite_addTest testCollectionsShortOpt
+    # suite_addTest testDocument
+    # suite_addTest testDocumentShortOpt
+    # suite_addTest testNoDocumentCollection
+    # suite_addTest testNoDocumentTocFile
+    suite_addTest testCollectionsCSV
+    # suite_addTest testCSVTOCCollection
+    # suite_addTest testAllCSVTOCs
+}
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -314,12 +315,23 @@ testCSVTOCCollection() {
     stagePages
     # make sure documents are marked online
     mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    output=`op-pages --csv-toc-collection=pennmss --show-options`
+    output=`op-pages --csv-toc-collection=ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     # cat ${STAGED_PAGES}/site/Data/0002_contents.csv
     assertEquals 0 $status
-    assertMatch "$output" "Wrote table of contents CSV file:.*0002_contents\.csv"
+    assertMatch "$output" "Wrote table of contents CSV file:.*0001_contents\.csv"
+}
+
+testAllCSVTOCs() {
+    stagePages
+    # make sure documents are marked online
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    output=`op-pages --csv-toc --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Wrote table of contents CSV file:.*0001_contents\.csv"
 }
 
 # Run shunit

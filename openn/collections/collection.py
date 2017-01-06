@@ -49,6 +49,9 @@ class Collection:
     def toc_file(self):
         return self.openn_collection().toc_file()
 
+    def csv_toc_file(self):
+        return self.openn_collection().csv_toc_file()
+
     def web_dir(self):
         return self.openn_collection().web_dir()
 
