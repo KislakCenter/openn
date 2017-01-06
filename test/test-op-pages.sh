@@ -6,33 +6,33 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
-suite() {
-    # suite_addTest testRun
-    # suite_addTest testDryRun
-    # suite_addTest testDryRunShortOpt
-    # suite_addTest testForce
-    # suite_addTest testForceShortOpt
-    # suite_addTest testBrowse
-    # suite_addTest testBrowseShortOpt
-    # suite_addTest testToc
-    # suite_addTest testTocShortOpt
-    # suite_addTest testReadMe
-    # suite_addTest testReadMeShortOpt
-    # suite_addTest testReadMeFile
-    # suite_addTest testReadMeFileShortOpt
-    # suite_addTest testReadMeFileFailure
-    # suite_addTest testTocFile
-    # suite_addTest testTocFileShortOpt
-    # suite_addTest testCollections
-    # suite_addTest testCollectionsShortOpt
-    # suite_addTest testDocument
-    # suite_addTest testDocumentShortOpt
-    # suite_addTest testNoDocumentCollection
-    # suite_addTest testNoDocumentTocFile
-    suite_addTest testCollectionsCSV
-    # suite_addTest testCSVTOCCollection
-    # suite_addTest testAllCSVTOCs
-}
+# suite() {
+#     # suite_addTest testRun
+#     # suite_addTest testDryRun
+#     # suite_addTest testDryRunShortOpt
+#     # suite_addTest testForce
+#     # suite_addTest testForceShortOpt
+#     # suite_addTest testBrowse
+#     # suite_addTest testBrowseShortOpt
+#     # suite_addTest testToc
+#     # suite_addTest testTocShortOpt
+#     # suite_addTest testReadMe
+#     # suite_addTest testReadMeShortOpt
+#     # suite_addTest testReadMeFile
+#     # suite_addTest testReadMeFileShortOpt
+#     # suite_addTest testReadMeFileFailure
+#     # suite_addTest testTocFile
+#     # suite_addTest testTocFileShortOpt
+#     # suite_addTest testCollections
+#     # suite_addTest testCollectionsShortOpt
+#     # suite_addTest testDocument
+#     # suite_addTest testDocumentShortOpt
+#     # suite_addTest testNoDocumentCollection
+#     # suite_addTest testNoDocumentTocFile
+#     # suite_addTest testCollectionsCSV
+#     # suite_addTest testCSVTOCCollection
+#     suite_addTest testAllCSVTOCs
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -332,6 +332,9 @@ testAllCSVTOCs() {
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Wrote table of contents CSV file:.*0001_contents\.csv"
+    assertMatch "$output" "CSV TOC not makeable; no HTML dir found.*/0002/"
+    assertMatch "$output" "CSV TOC not makeable; collection has no documents online"
+
 }
 
 # Run shunit

@@ -160,7 +160,8 @@ def make_collections_csv(opts):
 
     csv = CollectionsCSV(outdir=site_dir(), coll_configs=collection_configs())
     if is_makeable(csv, opts):
-        csv.write_file()
+        if not opts.dry_run:
+           csv.write_file()
         logging.info("Wrote collections CSV file: %s" % (csv.outpath(),))
     else:
         logging.info("Skipping page: %s" % (csv.outfile_path(),))
@@ -173,7 +174,8 @@ def make_collection_toc_csv(coll_tag, opts):
     csv          = TableOfContentsCSV(collection=coll_wrapper, outdir=site_dir())
 
     if is_makeable(csv, opts):
-        csv.write_file()
+        if not opts.dry_run:
+            csv.write_file()
         logging.info("Wrote table of contents CSV file: %s" % (csv.outfile_path(),))
     else:
         logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
@@ -187,8 +189,8 @@ def process_all(opts):
     toc(opts)
     collections(opts)
     readme(opts)
-    # csv_toc(opts)
-    # collections_csv(opts)
+    csv_toc(opts)
+    collections_csv(opts)
 
 def browse(opts):
     """Process browse HTML files as needed"""
