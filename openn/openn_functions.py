@@ -120,7 +120,7 @@ def queryset_iterator(queryset, chunksize=1000):
 def ensure_dir(dir_path):
     parent = os.path.dirname(dir_path)
     if not os.path.exists(parent):
-        self.ensure_dir(parent)
+        ensure_dir(parent)
     if not os.path.exists(dir_path):
         os.mkdir(dir_path)
         os.chmod(dir_path, 0775)
