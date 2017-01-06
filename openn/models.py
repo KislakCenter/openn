@@ -27,6 +27,9 @@ class OPennCollection(models.Model):
     def toc_file(self):
         return "%s.html" % (self.long_id(),)
 
+    def csv_toc_file(self):
+        return '%s_contents.csv' % (self.long_id())
+
     def web_dir(self):
         return "Data/%s" % (self.long_id(),)
 
