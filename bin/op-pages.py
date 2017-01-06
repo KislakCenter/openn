@@ -30,6 +30,7 @@ from openn.pages.collections import Collections
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
 from openn.csv.collections_csv import CollectionsCSV
+from openn.csv.table_of_contents_csv import TableOfContentsCSV
 
 logger = None
 
@@ -154,7 +155,7 @@ def make_collections(opts):
         raise OPennException(msg)
 
 def make_collections_csv(opts):
-    """Generate CSV table of contents for all collections. Looks like this (without padding):
+    """Generate collections.csv file listing all collections and projects.
     """
     data_dir = os.path.join(settings.SITE_DIR, 'Data')
     csv = CollectionsCSV(outdir=data_dir, filename='collections.csv',
@@ -162,6 +163,20 @@ def make_collections_csv(opts):
     csv.write_file()
 
     logging.info("Wrote collections CSV file: %s" % (csv.outpath(),))
+
+def make_collection_toc_csv(coll_tag, opts):
+    """
+    Generate CSV Table of Contents for collection with tag ``coll_tag``.
+    """
+
+    data_dir = os.path.join(settings.SITE_DIR, 'Data')
+    coll_wrapper = collection_configs().get_collection(coll_tag)
+    filename = coll_wrapper.openn_collection().csv_toc_file()
+    csv = TableOfContentsCSV(outdir=data_dir, filename=filename,
+        collection=coll_wrapper)
+    csv.write_file()
+
+    logging.info("Wrote table of contents CSV file: %s" % (csv.outpath(),))
 
 # ------------------------------------------------------------------------------
 # ACTIONS
@@ -179,7 +194,8 @@ def browse(opts):
     """Process browse HTML files as needed"""
     # update online statuses of the Documents first
     update_online_statuses()
-    docids = [doc.id for doc in opfunc.queryset_iterator(Document.objects.filter(is_online = True))]
+    docids = [doc.id for doc in opfunc.queryset_iterator(
+        Document.objects.filter(is_online = True))]
     for docid in docids:
         document(docid, opts)
 
@@ -217,7 +233,7 @@ def csv_toc(opts):
 
 def csv_toc_collection(coll_tag, opts):
     """Generate CSV table of contents for all collections"""
-    raise NotImplementedError("TODO: csv_toc_collection()")
+    make_collection_toc_csv(coll_tag, opts)
 
 def detailed_help(opts):
     """Print detailed help message"""

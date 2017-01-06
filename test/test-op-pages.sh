@@ -29,7 +29,8 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testDocumentShortOpt
 #     # suite_addTest testNoDocumentCollection
 #     # suite_addTest testNoDocumentTocFile
-#     suite_addTest testCollectionsCSV
+#     # suite_addTest testCollectionsCSV
+#     suite_addTest testCSVTOCCollection
 # }
 
 setUp() {
@@ -307,6 +308,18 @@ testCollectionsCSV() {
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Wrote collections CSV file:"
+}
+
+testCSVTOCCollection() {
+    stagePages
+    # make sure documents are marked online
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    output=`op-pages --csv-toc-collection=pennmss --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    # cat ${STAGED_PAGES}/site/Data/0002_contents.csv
+    assertEquals 0 $status
+    assertMatch "$output" "Wrote table of contents CSV file:.*0002_contents\.csv"
 }
 
 # Run shunit
