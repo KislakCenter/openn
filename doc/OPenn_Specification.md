@@ -540,13 +540,17 @@ Secondary collections have corresponding table of contents files. These files
 are named by the collection tag; for example, `bibliophilly_contents.csv`. A
 secondary collection TOC has these columns:
 
-- `primary_collection_id`:
-                    the ID of the primary collection; e.g., '0020'
+
+- `curated_collection`:
+                    the tag of the curated collection; e.g., 'bibliophilly'
 
 - `document_id`:    the numeric ID of the document; e.g., '2420'
 
 - `path`:           the relative path to the item's folder; e.g.,
                     `0002/mscoll764_item86`
+
+- `repository_id`:
+                    the ID of the primary collection; e.g., '0020'
 
 - `metadata_type`:  the items metadata format; e.g., 'TEI'
 
