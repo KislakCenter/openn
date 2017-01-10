@@ -75,10 +75,17 @@ get_document_id() {
     fi
 }
 
-# Usage: add_membership PROJECT_TAG DOCID
+# Usage; get_a_live_docid
+#
+# Retrieve a single ID for a live OPenn document
+get_a_live_docid() {
+  mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document where is_online = 1 limit 1"
+}
+
+# Usage: add_project_membership PROJECT_TAG DOCID
 add_project_membership() {
-    am_proj_tag=${1?add_membership - PROJECT_TAG required}
-    am_docid=${2?add_membership - DOCID required}
+    am_proj_tag=${1?add_project_membership - PROJECT_TAG required}
+    am_docid=${2?add_project_membership - DOCID required}
 
     # echo "=== $am_docid"
     am_proj_id=`get_project_id $am_proj_tag`
@@ -103,6 +110,25 @@ insert_document() {
     sql="$sql (openn_collection_id, base_dir, is_online, created, updated)"
     sql="$sql values ($collection_id, '$id_base_dir', 0, '$today', '$today')"
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "$sql"
+}
+
+# Usage: save_and_open FILE [APP]
+#
+# Copy the file to TMPDIR and open; optionally specifying the application.
+save_and_open() {
+  sao_file="${1?save_and_open - FILE required}"
+  sao_app="$2"
+
+  sao_base=`basename "$sao_file"`
+  sao_tmpfile="${TMPDIR:-/tmp}/${sao_base}"
+
+  cp "$sao_file" "$sao_tmpfile"
+
+  if [[ "$sao_app" ]]; then
+    open -a "$sao_app" "$sao_tmpfile"
+  else
+    open "$sao_tmpfile"
+  fi
 }
 
 print_output() {

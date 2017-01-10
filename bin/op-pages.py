@@ -31,6 +31,7 @@ from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
 from openn.csv.collections_csv import CollectionsCSV
 from openn.csv.table_of_contents_csv import TableOfContentsCSV
+from openn.csv.project_table_of_contents_csv import ProjectTableOfContentsCSV
 
 logger = None
 
@@ -42,6 +43,9 @@ def collection_configs():
 
 def get_coll_wrapper(tag):
     return collection_configs().get_collection(tag)
+
+def project_tags():
+    return [x.tag for x in  Project.objects.order_by('tag')]
 
 def site_dir():
     return settings.SITE_DIR
@@ -180,6 +184,18 @@ def make_collection_toc_csv(coll_tag, opts):
     else:
         logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
 
+def make_project_toc_csv(proj_tag, opts):
+    """
+    Generate CSV Table of Contents for project with tag ``proj_tag``.
+    """
+    csv = ProjectTableOfContentsCSV(project_tag=proj_tag, outdir=site_dir())
+    if is_makeable(csv, opts):
+        if not opts.dry_run:
+            csv.write_file()
+        logging.info("Wrote project table of contents CSV file: %s" % (csv.outfile_path(),))
+    else:
+        logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
+
 # ------------------------------------------------------------------------------
 # ACTIONS
 # ------------------------------------------------------------------------------
@@ -237,6 +253,10 @@ def csv_toc(opts):
 def csv_toc_collection(coll_tag, opts):
     """Generate CSV table of contents for all collections"""
     make_collection_toc_csv(coll_tag, opts)
+
+def csv_toc_project(proj_tag, opts):
+    """Generate CSV table of contents for proj_tag"""
+    make_project_toc_csv(proj_tag, opts)
 
 def detailed_help(opts):
     """Print detailed help message"""
@@ -444,6 +464,9 @@ def main(cmdline=None):
         elif opts.csv_toc_collection_tag is not None:
             csv_toc_collection(opts.csv_toc_collection_tag, opts)
 
+        elif opts.csv_toc_project_tag is not None:
+            csv_toc_project(opts.csv_toc_project_tag, opts)
+
         elif opts.detailed_help:
             detailed_help(opts)
 
@@ -548,6 +571,15 @@ skipped TOC creation for files that would be generated for an actual run.
                       help=("Generate CSV table of contents for COLLECTION_TAG; one of: %s" % (
                           ', '.join(opfunc.get_coll_tags()),)),
                       metavar="COLLECTION_TAG")
+
+    parser.add_option('-p', '--csv-toc-all-projects',
+                      action='store_true', dest='csv_toc_all_projects', default=False,
+                      help="Generate CSV table of contents for all projects")
+    parser.add_option('-s', '--csv-toc-project',
+                      dest='csv_toc_project_tag', default=None,
+                      help=("Generate CSV table of contents for PROJECT_TAG; one of: %s" % (
+                          ', '.join(project_tags()),)),
+                      metavar="PROJECT_TAG")
 
     parser.add_option('-H', '--detailed-help',
                       action='store_true', dest='detailed_help', default=False,

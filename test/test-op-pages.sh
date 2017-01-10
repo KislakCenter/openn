@@ -31,7 +31,10 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testNoDocumentTocFile
 #     # suite_addTest testCollectionsCSV
 #     # suite_addTest testCSVTOCCollection
-#     suite_addTest testAllCSVTOCs
+#     # suite_addTest testAllCSVTOCs
+#     # suite_addTest testProjectTOCOneProject
+#     # suite_addTest testProjectTOCOneProjectEmptyProject
+#     suite_addTest testProjectTOCAllProjects
 # }
 
 setUp() {
@@ -334,8 +337,33 @@ testAllCSVTOCs() {
     assertMatch "$output" "Wrote table of contents CSV file:.*0001_contents\.csv"
     assertMatch "$output" "CSV TOC not makeable; no HTML dir found.*/0002/"
     assertMatch "$output" "CSV TOC not makeable; collection has no documents online"
-
 }
+
+testProjectTOCOneProjectEmptyProject() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    output=`op-pages --csv-toc-project=bibliophilly --show-options`
+    status=$?
+    # cat ${STAGED_PAGES}/site/Data/bibliophilly_contents.csv
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "CSV TOC not makeable; project has no documents online"
+}
+
+testProjectTOCOneProject() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    doc_id=`get_a_live_docid`
+    # add_project_membership PROJECT_TAG DOCID
+    add_project_membership bibliophilly $doc_id
+    output=`op-pages --csv-toc-project=bibliophilly --show-options`
+    status=$?
+    # save_and_open "${STAGED_PAGES}/site/Data/bibliophilly_contents.csv"
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Wrote project table of contents CSV file:.*bibliophilly_contents\.csv"
+}
+
 
 # Run shunit
 . $shunit
