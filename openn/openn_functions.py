@@ -108,6 +108,11 @@ def queryset_iterator(queryset, chunksize=1000):
 
     Note that the implementation of the iterator does not support ordered query sets.
     """
+
+    # Don't break if the queryset is empty
+    if queryset.count() == 0:
+        return
+
     pk = 0
     last_pk = queryset.order_by('-pk')[0].pk
     queryset = queryset.order_by('pk')
