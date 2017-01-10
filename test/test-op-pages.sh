@@ -365,5 +365,22 @@ testProjectTOCOneProject() {
 }
 
 
+testProjectTOCAllProjects() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    doc_id=`get_a_live_docid`
+    # add_project_membership PROJECT_TAG DOCID
+    add_project_membership bibliophilly $doc_id
+    add_project_membership pacscl-diaries $doc_id
+    output=`op-pages --csv-toc-all-projects --show-options`
+    status=$?
+    # save_and_open "${STAGED_PAGES}/site/Data/bibliophilly_contents.csv"
+    # save_and_open "${STAGED_PAGES}/site/Data/pacscl-diaries_contents.csv"
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Wrote project table of contents CSV file:.*bibliophilly_contents\.csv"
+    assertMatch "$output" "Wrote project table of contents CSV file:.*pacscl-diaries_contents\.csv"
+}
+
 # Run shunit
 . $shunit

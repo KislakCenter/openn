@@ -258,6 +258,11 @@ def csv_toc_project(proj_tag, opts):
     """Generate CSV table of contents for proj_tag"""
     make_project_toc_csv(proj_tag, opts)
 
+def csv_toc_all_projects(opts):
+    """Generate CSV table of contents for all projects."""
+    for tag in project_tags():
+        make_project_toc_csv(tag, opts)
+
 def detailed_help(opts):
     """Print detailed help message"""
     print """
@@ -466,6 +471,9 @@ def main(cmdline=None):
 
         elif opts.csv_toc_project_tag is not None:
             csv_toc_project(opts.csv_toc_project_tag, opts)
+
+        elif opts.csv_toc_all_projects:
+            csv_toc_all_projects(opts)
 
         elif opts.detailed_help:
             detailed_help(opts)
