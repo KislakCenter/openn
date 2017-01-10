@@ -558,7 +558,7 @@ The following is a sample secondary collection TOC file,
 `bibliophilly_contents.csv`.
 
 ```
-primary_collection_id,    document_id,  path,             metadata_type,  title,                  added
-0002,                     1435,         0002/mscodex117,  TEI,            Alchemical miscellany,  2016-11-29 10:55:00
-0001,                     288,          0001/ljs447,      TEI,            Masālik al-abṣār...,    2016-12-02 15:10:00
+curated_collection,   document_id,  path,             repository_id, metadata_type,  title,                  added
+biblio_philly,        1435,         0002/mscodex117,  0002,          TEI,            Alchemical miscellany,  2016-11-29 10:55:00
+biblio_philly,        288,          0001/ljs447,      0001,          TEI,            Masālik al-abṣār...,    2016-12-02 15:10:00
 ```
