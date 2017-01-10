@@ -118,6 +118,20 @@ class Document(models.Model):
         else:
             return 'UNKNOWN'
 
+    @property
+    def collection_id_long(self):
+        if self.openn_collection is None:
+            return None
+
+        return self.openn_collection.long_id()
+
+    @property
+    def metadata_type(self):
+        if self.openn_collection is None:
+            return None
+
+        return self.openn_collection.metadata_type
+
 
     def is_live(self):
         c = httplib.HTTPConnection(settings.OPENN_HOST)
@@ -168,12 +182,16 @@ class Project(models.Model):
     live         = models.BooleanField(default = False)
     created      = models.DateTimeField(auto_now_add = True)
     updated      = models.DateTimeField(auto_now = True)
+    documents    = models.ManyToManyField(Document, through='ProjectMembership')
 
     def short_blurb(self):
         if self.blurb is not None and len(self.blurb) > 25:
             return self.blurb[:25] + '...'
         else:
             return self.blurb
+
+    def csv_toc_file(self):
+        return '%s_contents.csv' % (self.tag.lower(),)
 
     class Meta:
         ordering = ('name',)
