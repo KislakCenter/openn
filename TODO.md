@@ -2,12 +2,18 @@
 
 ## Repositories, collections
 
-#### Repositories:
+- Projects CSV
+  + Single project taks
+  + All projects
+
+- Projects html = curated_collections.html
+
 - rename collections.html to repositories.html
 - curated_collections.html
+-
 - HTML for each project/curated collections
 - CSV for each project/curated collections
-- CSV for each repository
+<!-- - CSV for each repository -->
 
 BibPhilly changes
 - Add metadata creator to spreadsheet to XML code as TEI <resp>Project
