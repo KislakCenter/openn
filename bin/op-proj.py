@@ -283,6 +283,11 @@ def print_list(projects):
     for proj in projects:
         print_proj(proj, fmtstr, tag_width)
 
+def print_proj(project, fmtstr, tag_width):
+    print fmtstr.format(proj_id=project['project_id'], tag=project['tag'],
+                               width=tag_width, doc_count=project['doc_count'],
+                               name=project['name'])
+
 def list_projects(args):
     configs = get_configs()
     do_validate_configuration()
