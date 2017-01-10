@@ -34,9 +34,6 @@ class TableOfContentsCSV(OPennCSV):
 
         :outdir:        the output directory; for example ``/path/to/Data``
 
-        :filename:      the output file basename; for example
-                        ``0002_contents.csv``
-
         :collection:    the openn.collections.collection.Collection object
                         for the collection
 
