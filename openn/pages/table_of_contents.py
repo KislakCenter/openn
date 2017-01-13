@@ -17,8 +17,8 @@ class TableOfContents(Page):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, collection,toc_dir,**kwargs):
-        self.collection = collection
+    def __init__(self, repository,toc_dir,**kwargs):
+        self.repository = repository
         self.toc_dir = toc_dir
         updated_kwargs = kwargs.update({'outfile':self.toc_path()})
         super(TableOfContents,self).__init__(**kwargs)
@@ -26,47 +26,47 @@ class TableOfContents(Page):
 
     def get_context(self,ctx_dict={}):
         docs = Document.objects.filter(
-            openn_collection=self.collection.openn_collection(),
+            repository=self.repository.repository(),
             is_online=True)
-        items = [ DocumentData(x, self.collection, self.toc_dir) for x in docs ]
-        ctx = { 'collection': self.collection,
+        items = [ DocumentData(x, self.repository, self.toc_dir) for x in docs ]
+        ctx = { 'repository': self.repository,
                 'items': items }
         ctx.update(ctx_dict={})
         return super(TableOfContents, self).get_context(ctx)
 
     @property
-    def collection_config(self):
-        return self.collection.config()
+    def repository_config(self):
+        return self.repository.config()
 
     @property
     def title(self):
-        return self.collection_config['name']
+        return self.repository_config['name']
 
     def toc_path(self):
-        toc_file = self.collection.toc_file()
+        toc_file = self.repository.toc_file()
         return "%s/%s" % (self.toc_dir, toc_file)
 
     def is_makeable(self):
-        if not self.collection.is_live():
-            self.logger.info("TOC not makeable; collection not set to 'live' (collection: %s)" % (
-                self.collection.tag()))
+        if not self.repository.is_live():
+            self.logger.info("TOC not makeable; repository not set to 'live' (repository: %s)" % (
+                self.repository.tag()))
             return False
 
-        # If this is a no-document collection, it is makeable; we don't have
+        # If this is a no-document repository, it is makeable; we don't have
         # to look for an `html` dir or the files in it.
-        if self.collection.no_document():
+        if self.repository.no_document():
             return True
 
-        html_dir = os.path.join(self.outdir, self.collection.html_dir())
+        html_dir = os.path.join(self.outdir, self.repository.html_dir())
         if not os.path.exists(html_dir):
-            self.logger.info("TOC not makeable; no HTML dir found: %s (collection: %s)" % (
-                html_dir, self.collection.tag()))
+            self.logger.info("TOC not makeable; no HTML dir found: %s (repository: %s)" % (
+                html_dir, self.repository.tag()))
             return False
 
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         if len(html_files) == 0:
-            self.logger.info("TOC not makeable; no HTML files found in %s (collection %s)" % (
-                html_dir, self.collection.tag()))
+            self.logger.info("TOC not makeable; no HTML files found in %s (repository %s)" % (
+                html_dir, self.repository.tag()))
             return False
 
         return True
@@ -78,12 +78,12 @@ class TableOfContents(Page):
         if not os.path.exists(self.outfile_path()):
             return True
 
-        html_dir = os.path.join(self.outdir, self.collection.html_dir())
+        html_dir = os.path.join(self.outdir, self.repository.html_dir())
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         if html_files:
             newest_html = max([os.path.getmtime(x) for x in html_files])
             if os.path.getmtime(self.outfile_path()) > newest_html:
-                logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.collection))
+                logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.repository))
                 return False
 
         return True

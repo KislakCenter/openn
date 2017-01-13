@@ -18,7 +18,7 @@ from django.core import serializers
 """
 CommonPrep performs OPenn preparation common to all OPenn data packages.
 
-CommonPrep expects an input package to have undergone collection-specific
+CommonPrep expects an input package to have undergone repository-specific
 preparation and to conform to its input requirements, which are described
 below.
 """
@@ -117,8 +117,8 @@ class CommonPrep(Status):
     def prep_dir(self):
         self.check_valid()
 
-        if self.get_status() < self.COLLECTION_PREP_COMPLETED:
-            raise OPennException("Collection prep not complete")
+        if self.get_status() < self.REPOSITORY_PREP_COMPLETED:
+            raise OPennException("Repository prep not complete")
 
         basedir = self.package_dir.basedir
         # rename master files

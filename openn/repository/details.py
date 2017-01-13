@@ -5,7 +5,7 @@ import re
 from copy import deepcopy
 
 from openn.openn_exception import OPennException
-from openn.collections.configs import Configs
+from openn.repository.configs import Configs
 from openn.openn_functions import *
 from openn.models import *
 
@@ -28,18 +28,17 @@ class Details(object):
         return k
 
     def details(self, sort_by = 'name'):
-        """Return details of all collections; sorted by name.
+        """Return details of all repositories; sorted by name.
 
         """
-        colls = self.collections()
         # create a list of tuples using the key
-        tups = [ (self.sort_key(x,sort_by), x) for x in self.collections() ]
+        tups = [ (self.sort_key(x,sort_by), x) for x in self.repositories() ]
         ordered = sorted(tups, key=lambda x: x[0])
 
         return [ x[1] for x in ordered ]
 
     def all_tags(self):
-        tags = [ c.tag for c in OPennCollection.objects.all() ]
+        tags = [ c.tag for c in Repository.objects.all() ]
         tags += [ c['tag'] for c in self._configs._configs if c.get('tag') ]
 
         return set(tags)
@@ -48,15 +47,15 @@ class Details(object):
         details = { 'tag': tag }
         # get information from the database
         try:
-           coll = OPennCollection.objects.get(tag=tag)
+           repo = Repository.objects.get(tag=tag)
            doc_count = Document.objects.filter(
-               openn_collection_id = coll.pk).count()
-           details.update({ 'collection_id': coll.long_id(),
-                            'metadata_type': coll.metadata_type,
+               repository_id = repo.pk).count()
+           details.update({ 'repository_id': repo.long_id(),
+                            'metadata_type': repo.metadata_type,
                             'documents': doc_count})
 
-        except OPennCollection.DoesNotExist:
-            details.update({ 'collection_id': None,
+        except Repository.DoesNotExist:
+            details.update({ 'repository_id': None,
                              'metadata_type': None,
                              'NOT_IN_DATABASE': 'NOT_IN_DATABASE',
                              'documents': 0})
@@ -77,15 +76,15 @@ class Details(object):
 
         return details
 
-    def collections(self):
-        """Return a comprehensive list all collections in the database and all
-        collections with configurations.
+    def repositories(self):
+        """Return a comprehensive list all repositories in the database and all
+        repositories with configurations.
 
         """
-        collections = []
+        repositories = []
         for tag in self.all_tags():
-            collections.append(self.get_details(tag))
-        return collections
+            repositories.append(self.get_details(tag))
+        return repositories
 
     def find_config(self, tag):
         try:

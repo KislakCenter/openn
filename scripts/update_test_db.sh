@@ -8,8 +8,7 @@ trap "cleanup; exit" 0
 
 cat <<EOF
 
-# On a development machine, to update the test.sql fixtures with new
-# collections. Do the following:
+# On a development machine, to update the test.sql fixtures, do the following:
 
 # dump the openn database to openn.dmp for safekeeping:
 $ mysqldump -u openn openn > openn.dmp
@@ -17,11 +16,20 @@ $ mysqldump -u openn openn > openn.dmp
 # Load the test fixture into openn
 $ mysql -u openn openn < test/fixtures/test.sql
 
-# update the collection list
-$ bin/op-coll update
+# Run the migrations
+$ ./manage.py migrate openn
+
+# update the repositories list
+$ bin/op-repo update
+
+# update the curated collections list
+$ bin/op-curt update
 
 # dump the updated data to the fixture SQL
 $ mysqldump -u openn openn > test/fixtures/test.sql
+
+# dump the data to JSON
+$ ./manage.py dumpdata > openn/fixtures/test.json
 
 # restore openn
 $ mysql -u openn openn < openn.dmp

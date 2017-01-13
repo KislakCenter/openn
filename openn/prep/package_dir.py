@@ -318,7 +318,7 @@ class PackageDir:
 
     def add_image_metadata(self,doc,image_rights,licence_config):
         """Add metadata to all images; parameters: ``doc`` -- the document
-        object, ``image_rights`` -- from settings, collection's
+        object, ``image_rights`` -- from settings, repository's
         ``images_rights`` dict.
 
         """

@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}{{ collection.name }}{% endblock %}
+{% block title %}{{ repository.name }}{% endblock %}
 
 {% block content %}
 
 <div class="breadcrumb">
   <p>
-    <span><a href="/">Home</a></span>&nbsp;|&nbsp;<span><a href="/Collections.html">Collections</a><span>
+    <span><a href="/">Home</a></span>&nbsp;|&nbsp;<span><a href="/Repositories.html">Repositories</a><span>
   </p>
 </div>
 
-<h1>{{ collection.name }}</h1>
+<h1>{{ repository.name }}</h1>
 
-<p><span class="collection_info">Collection ID: {{ collection.long_id }} </span> | <span class="collection_info">Metadata type: {{ collection.metadata_type }}</span></p>
+<p><span class="collection_info">Repository ID: {{ repository.long_id }} </span> | <span class="collection_info">Metadata type: {{ repository.metadata_type }}</span></p>
 
-{% include collection.include_file %}
+{% include repository.include_file %}
 
 {% if items %}
 <h2>The documents on OPenn</h2>
@@ -32,7 +32,7 @@
     {% endif %}
     {% endwith %}
     <br/>
-    {% if item.document.openn_collection.metadata_type|lower != 'custom' %}
+    {% if item.document.repository.metadata_type|lower != 'custom' %}
     <span class="page-link"><a href="/{{ item.document.browse_path }}">Browse</a></span> |
     <span class="page-link"><a href="/{{ item.document.tei_path }}">TEI XML</a></span> |
     {% endif %}

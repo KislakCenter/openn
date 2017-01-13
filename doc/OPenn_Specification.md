@@ -80,10 +80,10 @@ is the case with the website's main page:
 ```
         Name                  Last modified         Size
 
-    Collections.html         2016-11-26 18:18        16K
+    CuratedCollections.html  2016-11-26 18:18        16K
     Data/                    2016-05-19 18:15        -
-    Projects.html            2016-11-26 18:18        16K
     ReadMe.html              2016-11-26 18:18        11K
+    Repositories.html        2016-11-26 18:18        16K
     TechnicalReadMe.html     2016-11-26 18:18        87K
     robots.txt               2015-09-10 14:54        24
 ```
@@ -486,10 +486,10 @@ A sample file, with padding added for legibility, follows.
 
 ```
 collection_id,  collection_tag, collection_type,  metadata_type,  collection_name
-0001,           ljs,            repository,       OPENN-TEI,      Lawrence J. Schoenberg Manuscripts
-0002,           pennmss,        repository,       OPENN-TEI,      University of Pennsylvania Books & Manuscripts
-0003,           brynmawr,       repository,       OPENN-TEI,      Bryn Mawr College Library Special Collections
-0004,           drexarc,        repository,       OPENN-TEI,      Drexel University Archives and Special Collections
+0001,           ljs,            repository,       TEI,            Lawrence J. Schoenberg Manuscripts
+0002,           pennmss,        repository,       TEI,            University of Pennsylvania Books & Manuscripts
+0003,           brynmawr,       repository,       TEI,            Bryn Mawr College Library Special Collections
+0004,           drexarc,        repository,       TEI,            Drexel University Archives and Special Collections
 N/A,            bibliophilly,   curated,          N/A,            Bibliotheca Philadelphiensis
 ```
 
@@ -498,7 +498,7 @@ N/A,            bibliophilly,   curated,          N/A,            Bibliotheca Ph
 All primary collections have a table of contents file. This file is named
 `contents.csv` and is located in the collection folder; thus:
 
-    /Data/0002_contents.csv
+    /Data/repository_0002_contents.csv
 
 The file has these columns:
 
@@ -558,11 +558,12 @@ secondary collection TOC has these columns:
 
 - `added`:          date the item was added to the collection
 
-The following is a sample secondary collection TOC file,
+The following is a sample curated collection TOC file,
 `bibliophilly_contents.csv`.
+`curated_bibliophilly_contents.csv`.
 
 ```
 curated_collection,   document_id,  path,             repository_id, metadata_type,  title,                  added
-biblio_philly,        1435,         0002/mscodex117,  0002,          TEI,            Alchemical miscellany,  2016-11-29 10:55:00
-biblio_philly,        288,          0001/ljs447,      0001,          TEI,            Masālik al-abṣār...,    2016-12-02 15:10:00
+bibliophilly,         1435,         0002/mscodex117,  0002,          TEI,            Alchemical miscellany,  2016-11-29 10:55:00
+bibliophilly,         288,          0001/ljs447,      0001,          TEI,            Masālik al-abṣār...,    2016-12-02 15:10:00
 ```

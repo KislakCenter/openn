@@ -31,7 +31,7 @@ class TestMedrenPrep(TestCase):
     prep_cfg_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
-        collection_configs=settings.COLLECTIONS,
+        repository_configs=settings.REPOSITORIES,
         prep_context=settings.PREP_CONTEXT)
     pennpih_prep_config = prep_cfg_factory.create_prep_config('penn-pih')
     complex_files    = os.path.join(os.path.dirname(__file__), 'data/ljs472')
@@ -74,8 +74,8 @@ class TestMedrenPrep(TestCase):
         # setup
         self.stage_template()
         doc_count = Document.objects.count()
-        collection = self.pennpih_prep_config.collection()
-        doc = PrepSetup().prep_document(collection, 'mscodex1223')
+        repo_wrapper = self.pennpih_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'mscodex1223')
         prep = MedrenPrep(source_dir=self.staged_source, document=doc,
                           prep_config = self.pennpih_prep_config)
         # run
@@ -92,8 +92,8 @@ class TestMedrenPrep(TestCase):
     def test_complex_names(self):
         # setup
         shutil.copytree(self.complex_files, self.complex_staged)
-        collection = self.ljs_prep_config.collection()
-        doc = PrepSetup().prep_document(collection, 'ljs472')
+        repo_wrapper = self.ljs_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'ljs472')
         prep = MedrenPrep(self.complex_staged, doc, self.ljs_prep_config)
         files = prep.build_file_list(self.complex_pih_xml)
         self.assertHasFile(files, 'document', 'data/ljs472_wk1_body0193.tif')

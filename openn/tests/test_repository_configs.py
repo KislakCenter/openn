@@ -16,19 +16,19 @@ from pprint import PrettyPrinter
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
-from openn.collections.configs import Configs
+from openn.repository.configs import Configs
 from openn.models import *
 
-class TestCollectionConfigs(TestCase):
+class TestRepositoryConfigs(TestCase):
 
     # Paths
     this_dir               = os.path.dirname(__file__)
-    collections_dir        = os.path.join(this_dir, 'data/collections')
+    repositories_dir        = os.path.join(this_dir, 'data/repositories')
 
     # Configuration data
-    config_file            = os.path.join(collections_dir, 'collections.json')
+    config_file            = os.path.join(repositories_dir, 'repositories.json')
     config_data            = json.load(open(config_file))
-    valid_collections      = config_data['valid_collections']
+    valid_repositories     = config_data['valid_repositories']
     duplicate_tag          = config_data['duplicate_tag']
     duplicate_name         = config_data['duplicate_name']
     duplicate_include_file = config_data['duplicate_include_file']
@@ -36,30 +36,27 @@ class TestCollectionConfigs(TestCase):
     missing_tag            = config_data['missing_tag']
     missing_live           = config_data['missing_live']
 
-    def clear_openn_collections_table(self):
-        OPennCollection.objects.all().delete()
+    def clear_repositories_table(self):
+        Repository.objects.all().delete()
 
     def setUp(self):
         pass
-        # self.clear_openn_collections_table()
 
     def tearDown(self):
         pass
 
     def test_init(self):
-        # self.clear_openn_collections_table()
         try:
-            configs = Configs(self.valid_collections)
+            configs = Configs(self.valid_repositories)
         except Exception as ex:
             self.fail("Init should succeed; got error: %s" % (unicode(ex),))
 
-    def test_valid_collections(self):
-        # self.clear_openn_collections_table()
+    def test_valid_repositories(self):
         try:
-            configs = Configs(self.valid_collections)
+            configs = Configs(self.valid_repositories)
             configs.validate()
         except OPennException as oe:
-            self.fail("Configs for 'valid_collections' should be valid: got error: %s" % (unicode(oe),))
+            self.fail("Configs for 'valid_repositories' should be valid: got error: %s" % (unicode(oe),))
 
     def test_duplicate_tag(self):
         configs = Configs(self.duplicate_tag)

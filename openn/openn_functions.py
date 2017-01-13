@@ -8,7 +8,7 @@ import traceback
 import gc
 
 from openn.openn_exception import OPennException
-from openn.collections.configs import Configs
+from openn.repository.configs import Configs
 import openn.app as op_app
 
 def get_class(kls):
@@ -74,20 +74,20 @@ def sort_str(s):
 def prep_config_tags():
     return op_app.PREP_CONFIGS.keys()
 
-def get_coll_configs():
-    return Configs(op_app.COLLECTIONS)
+def get_repo_configs():
+    return Configs(op_app.REPOSITORIES)
 
-def get_coll_tags():
-    return get_coll_configs().tags()
+def get_repo_tags():
+    return get_repo_configs().tags()
 
-def get_coll_names():
-    return get_coll_configs().all_values('name')
+def get_repo_names():
+    return get_repo_configs().all_values('name')
 
-def get_coll_config(tag):
-    return get_coll_configs().get_config(tag)
+def get_repo_config(tag):
+    return get_repo_configs().get_config(tag)
 
-def get_coll_wrapper(tag):
-    return get_coll_configs().get_collection(tag)
+def get_repo_wrapper(tag):
+    return get_repo_configs().get_repository(tag)
 
 def queryset_iterator(queryset, chunksize=1000):
     """

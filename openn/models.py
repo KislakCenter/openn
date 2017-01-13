@@ -6,8 +6,8 @@ import httplib
 import os
 import re
 
-class OPennCollection(models.Model):
-    """OPennCollection is a collection to which a document belongs.
+class Repository(models.Model):
+    """Repository is a collection to which a document belongs.
 
     """
     tag = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
@@ -37,7 +37,7 @@ class OPennCollection(models.Model):
         return "Data/%s/html" % (self.long_id(),)
 
     def __str__(self):
-        return ("OPennCollection: id={id:d}, tag={tag}").format(
+        return ("Repository: id={id:d}, tag={tag}").format(
                         id=self.id, tag=self.tag)
 
     def __repr__(self):
@@ -77,7 +77,7 @@ class Document(models.Model):
     metadata_copyright_holder = models.CharField(max_length = 255, null = True, default = None, blank = True)
     metadata_copyright_year   = models.IntegerField(null = True, default = None, blank = True)
     metadata_rights_more_info = models.TextField(null = True, default = None, blank = True)
-    openn_collection          = models.ForeignKey(OPennCollection, default = None)
+    repository                = models.ForeignKey(Repository, default = None)
 
     @property
     def browse_basename(self):
@@ -85,11 +85,11 @@ class Document(models.Model):
 
     @property
     def browse_path(self):
-        return '{0}/{1}'.format(self.openn_collection.html_dir(), self.browse_basename)
+        return '{0}/{1}'.format(self.repository.html_dir(), self.browse_basename)
 
     @property
     def package_dir(self):
-        return '{0}/{1}'.format(self.openn_collection.web_dir(), self.base_dir)
+        return '{0}/{1}'.format(self.repository.web_dir(), self.base_dir)
 
     @property
     def data_dir(self):
@@ -112,25 +112,25 @@ class Document(models.Model):
         return (self.prepstatus and self.prepstatus.succeeded) or False
 
     @property
-    def collection_tag(self):
-        if self.openn_collection is not None:
-            return self.openn_collection.tag
+    def repository_tag(self):
+        if self.repository is not None:
+            return self.repository.tag
         else:
             return 'UNKNOWN'
 
     @property
-    def collection_id_long(self):
-        if self.openn_collection is None:
+    def repository_id_long(self):
+        if self.repository is None:
             return None
 
-        return self.openn_collection.long_id()
+        return self.repository.long_id()
 
     @property
     def metadata_type(self):
-        if self.openn_collection is None:
+        if self.repository is None:
             return None
 
-        return self.openn_collection.metadata_type
+        return self.repository.metadata_type
 
 
     def is_live(self):
@@ -143,8 +143,8 @@ class Document(models.Model):
     # While the collection + call_number should be unique, the collection +
     # base_dir must be unique to prevent filesystem collisions on the host.
     class Meta:
-        ordering        = ['openn_collection', 'base_dir', 'call_number' ]
-        unique_together = ('openn_collection', 'base_dir')
+        ordering        = ['repository', 'base_dir', 'call_number' ]
+        unique_together = ('repository', 'base_dir')
 
 
     def __str__(self):
@@ -169,9 +169,10 @@ class ExtraImageManager(models.Manager):
         return super(ExtraImageManager, self).get_query_set().filter(image_type=u'extra')
 
 
-class Project(models.Model):
-    """An OPenn Project is a secondary grouping of Documents from multiple
-    OPennCollections. Projects group Documents from one or more collections.
+class CuratedCollection(models.Model):
+    """An OPenn CuratedCollection is a secondary grouping of Documents from
+        multiple Repositories. CuratedCollections group Documents from one or
+        more collections.
 
     """
     tag          = models.CharField(max_length = 50,  null = False, default = None, blank = False, unique = True)
@@ -182,7 +183,7 @@ class Project(models.Model):
     live         = models.BooleanField(default = False)
     created      = models.DateTimeField(auto_now_add = True)
     updated      = models.DateTimeField(auto_now = True)
-    documents    = models.ManyToManyField(Document, through='ProjectMembership')
+    documents    = models.ManyToManyField(Document, through='CuratedMembership')
 
     def short_blurb(self):
         if self.blurb is not None and len(self.blurb) > 25:
@@ -197,7 +198,7 @@ class Project(models.Model):
         ordering = ('name',)
 
     def __str__(self):
-        return ('Project: id={id:d}' +
+        return ('CuratedCollection: id={id:d}' +
                 ', tag="{tag}"' +
                 ', name="{name}"' +
                 ', blurb="{blurb}"' +
@@ -216,23 +217,23 @@ class Project(models.Model):
                         created=self.created,
                         updated=self.updated)
 
-class ProjectMembership(models.Model):
-    """ A ProjectMembership links a Document to a Project.
+class CuratedMembership(models.Model):
+    """ A CuratedMembership links a Document to a CuratedCollection.
     """
-    document    = models.ForeignKey(Document, on_delete=models.CASCADE)
-    project     = models.ForeignKey(Project,  on_delete=models.CASCADE)
-    created     = models.DateTimeField(auto_now_add = True)
-    updated     = models.DateTimeField(auto_now = True)
+    document           = models.ForeignKey(Document, on_delete=models.CASCADE)
+    curated_collection = models.ForeignKey(CuratedCollection,  on_delete=models.CASCADE)
+    created            = models.DateTimeField(auto_now_add = True)
+    updated            = models.DateTimeField(auto_now = True)
 
     class Meta:
-        unique_together = ('document', 'project',)
+        unique_together = ('document', 'curated_collection',)
 
     def __str__(self):
-        return ('ProjectMembership: id={id:d}' +
-                ', project_id={project_id:d}' +
+        return ('CuratedMembership: id={id:d}' +
+                ', curated_collection_id={curated_collection_id:d}' +
                 ', document_id={document_id:d}').format(
                         id=self.id,
-                        project_id=self.project_id,
+                        curated_collection_id=self.curated_collection_id,
                         document_id=self.document_id)
 
 class PrepStatus(models.Model):
@@ -334,9 +335,9 @@ class Derivative(models.Model):
         ordering = [ 'deriv_type' ]
 
     def url(self):
-        collection = self.image.document.openn_collection
+        repository = self.image.document.repository
         return "/Data/%s/%s/%s" % (
-            collection.long_id(), self.image.document.base_dir, self.path)
+            repository.long_id(), self.image.document.base_dir, self.path)
 
     def basename(self):
         return os.path.splitext(os.path.basename(self.path))[0]

@@ -11,7 +11,7 @@ import glob
 
 
 class TableOfContentsCSV(OPennCSV):
-    """Generate the table of contents CSV for an OPennCollection
+    """Generate the table of contents CSV for an Repository
 
     The file `/Data/0002_contents.csv` looks like the following:
 
@@ -28,59 +28,59 @@ class TableOfContentsCSV(OPennCSV):
     REL_PATH_RE = re.compile('^/?Data/')
 
 
-    def __init__(self, collection, **kwargs):
+    def __init__(self, repository, **kwargs):
         """
         Create a new TableOfContentsCSV object. Arguments:
 
         :outdir:        the output directory; for example ``/path/to/Data``
 
-        :collection:    the openn.collections.collection.Collection object
-                        for the collection
+        :repository:    the openn.repository.repository.Collection object
+                        for the repository
 
         """
-        self.collection = collection
-        outfile         = os.path.join('Data', collection.csv_toc_file())
+        self.repository = repository
+        outfile         = os.path.join('Data', repository.csv_toc_file())
         kwargs.update({ 'outfile': outfile })
         super(TableOfContentsCSV, self).__init__(**kwargs)
 
 
     def is_makeable(self):
         # if not live, we don't make the TOC
-        if not self.collection.is_live():
-            self.logger.info("TOC not makeable; collection not set to 'live' (collection: %s)" % (
-                self.collection.tag()))
+        if not self.repository.is_live():
+            self.logger.info("TOC not makeable; repository not set to 'live' (repository: %s)" % (
+                self.repository.tag()))
             return False
 
-        # If this is a no-document collection, it is NOT makeable; we don't
+        # If this is a no-document repository, it is NOT makeable; we don't
         # have to look for an `html` dir or the files in it.
         #
         # NOTE: This is different from the regular TOC files; here, if there
         # are no documents, the CSV file will have no content.
-        if self.collection.no_document():
-            self.logger.info("CSV TOC not makeable; no document collection: %s" % (self.collection.tag(),))
+        if self.repository.no_document():
+            self.logger.info("CSV TOC not makeable; no document repository: %s" % (self.repository.tag(),))
             return False
 
-        # Not makeable if no live documents are in the collection
+        # Not makeable if no live documents are in the repository
         doc_count = Document.objects.filter(
-            openn_collection=self.collection.openn_collection(),
+            repository=self.repository.repository(),
             is_online=True
             ).count()
         if doc_count == 0:
-            self.logger.info("CSV TOC not makeable; collection has no documents online: %s" % (self.collection.tag(),))
+            self.logger.info("CSV TOC not makeable; repository has no documents online: %s" % (self.repository.tag(),))
             return False
 
-        # see if there are any HTML files for this collection
+        # see if there are any HTML files for this repository
         # if there's no HTML dir there aren't any files
-        html_dir = os.path.join(self.outdir, self.collection.html_dir())
+        html_dir = os.path.join(self.outdir, self.repository.html_dir())
         if not os.path.exists(html_dir):
-            self.logger.info("CSV TOC not makeable; no HTML dir found: %s (collection: %s)" % (
-                html_dir, self.collection.tag()))
+            self.logger.info("CSV TOC not makeable; no HTML dir found: %s (repository: %s)" % (
+                html_dir, self.repository.tag()))
             return False
         # OK, html dir is present; look for files
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         if len(html_files) == 0:
-            self.logger.info("CSV TOC not makeable; no HTML files found in %s (collection %s)" % (
-                html_dir, self.collection.tag()))
+            self.logger.info("CSV TOC not makeable; no HTML files found in %s (repository %s)" % (
+                html_dir, self.repository.tag()))
             return False
 
         return True
@@ -96,12 +96,12 @@ class TableOfContentsCSV(OPennCSV):
 
         # see if it's out-of-date
         latest_doc = Document.objects.filter(
-            openn_collection=self.collection.openn_collection(),
+            repository=self.repository.repository(),
             is_online=True
             ).latest('updated')
         current_file_date = os.path.getmtime(self.outfile_path())
         if current_file_date > latest_doc.updated:
-            logging.info("CSV TOC up-to-date; skipping %s" % (self.collection,))
+            logging.info("CSV TOC up-to-date; skipping %s" % (self.repository,))
             return False
 
         return True
@@ -110,7 +110,7 @@ class TableOfContentsCSV(OPennCSV):
         try:
             self.writerow(TableOfContentsCSV.HEADER)
             docs = Document.objects.filter(
-                openn_collection=self.collection.openn_collection(),
+                repository=self.repository.repository(),
                 is_online=True)
             for doc in opfunc.queryset_iterator(docs,chunksize=500):
                 rel_path = TableOfContentsCSV.REL_PATH_RE.sub('', doc.package_dir)
@@ -121,7 +121,7 @@ class TableOfContentsCSV(OPennCSV):
                     str(doc.id),
                     rel_path,
                     unidecode(doc.title),
-                    self.collection.metadata_type(),
+                    self.repository.metadata_type(),
                     str(doc.created),
                     str(doc.updated),
                     ]

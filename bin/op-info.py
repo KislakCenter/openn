@@ -25,7 +25,7 @@ from django.conf import settings
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.pages.page import Page
-from openn.pages.collections import Collections
+from openn.pages.repositories import Repositories
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
 
@@ -55,7 +55,7 @@ def add_prep(doc):
 def add_missing_preps():
     for doc in queryset_iterator(Document.objects.all()):
         if hasattr(doc, 'prepstatus'):
-            logging.info("Doc already has prep: %d: %s/%s" % (doc.id, doc.collection_tag, doc.base_dir))
+            logging.info("Doc already has prep: %d: %s/%s" % (doc.id, doc.repository_tag, doc.base_dir))
         else:
             add_prep(doc)
 
@@ -64,7 +64,7 @@ def update_online_statuses():
         if doc.is_live():
             doc.is_online = True
             doc.save()
-        logging.info("Is document online: %s/%s? %s" % (doc.collection_tag, doc.base_dir, str(doc.is_online)))
+        logging.info("Is document online: %s/%s? %s" % (doc.repository_tag, doc.base_dir, str(doc.is_online)))
 
 def print_options(opts):
     for k in vars(opts):
@@ -158,7 +158,7 @@ class Report:
 def show_all(opts):
     report = Report(colsep=' | ')
     report.add(ReportSegment(attr='id', fmt='d', width=4, head='ID'))
-    report.add(ReportSegment(attr='collection_tag', fmt='s', width=20, head='Coll'))
+    report.add(ReportSegment(attr='repository_tag', fmt='s', width=20, head='Coll'))
     report.add(ReportSegment(attr='base_dir', fmt='s', width=20, head='Directory'))
     report.add(ReportSegment(attr='is_online', fmt='s', width=7, head='Online?'))
     report.add(ReportSegment(attr='is_prepped', fmt='s', width=8, head='Prepped?'))
@@ -170,17 +170,17 @@ def show_all(opts):
     for doc in queryset_iterator(Document.objects.all(), chunksize=100):
         print report.row(doc)
 
-def collections(opts):
+def repositories(opts):
     report = Report(colsep=' | ')
     report.add(ReportSegment(attr='tag', fmt='s', width=20))
     report.add(ReportSegment(attr='name', fmt='s', width=50))
 
     print report.header()
     print report.divider()
-    for coll in settings.COLLECTIONS:
-        h = settings.COLLECTIONS[coll]
+    for repo in settings.REPOSITORIES['configs']:
+        # h = settings.REPOSITORIES['configs'][repo]
         # print h
-        print report.row(h)
+        print report.row(repo)
 
 def check_online(opts):
     update_online_statuses()
@@ -219,8 +219,8 @@ def main(cmdline=None):
             set_preps(opts)
             print ''
             show_all(opts)
-        elif opts.collections:
-            collections(opts)
+        elif opts.repositories:
+            repositories(opts)
         else:
             show_all(opts)
 
@@ -257,9 +257,9 @@ By default prints summary information about each document.
                       action='store_true', dest='set_preps', default=False,
                       help='Fill in any missing prep objects based on online status')
 
-    parser.add_option('-c', '--collections',
-                      action='store_true', dest='collections', default=False,
-                      help='List known collections')
+    parser.add_option('-c', '--repositories',
+                      action='store_true', dest='repositories', default=False,
+                      help='List known repositories')
 
     return parser
 

@@ -10,7 +10,7 @@ import sys
 import codecs
 import time
 from lxml import etree
-from openn.prep.collection_prep import CollectionPrep
+from openn.prep.repository_prep import RepositoryPrep
 from openn.prep.op_workbook import OPWorkbook
 from openn.prep.spreadsheet_xml import SpreadsheetXML
 from openn.openn_exception import OPennException
@@ -18,12 +18,12 @@ from openn.openn_functions import *
 from openn.xml.openn_tei import OPennTEI
 from openn.xml.openn_xml import OPennXML
 
-class SpreadsheetPrep(CollectionPrep):
+class SpreadsheetPrep(RepositoryPrep):
 
     SPREADSHEET_OPEN_XML_WRITTEN    = 60
     SPREADSHEET_LICENCE_TYPES_SAVED = 65
 
-    STATUS_NAMES = CollectionPrep.build_status_names({
+    STATUS_NAMES = RepositoryPrep.build_status_names({
         60: 'SPREADSHEET_OPEN_XML_WRITTEN',
         65: 'SPREADSHEET_LICENCE_TYPES_SAVED'
     })
@@ -33,9 +33,10 @@ class SpreadsheetPrep(CollectionPrep):
 
     def __init__(self, source_dir, document, prep_config):
         """
-        Create a new SpreadsheetPrep for the given source_dir, collection and document.
+        Create a new SpreadsheetPrep for the given source_dir, Document, and
+        PrepConfig.
         """
-        CollectionPrep.__init__(self,source_dir,document,prep_config)
+        RepositoryPrep.__init__(self,source_dir,document,prep_config)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir = os.path.join(self.source_dir, 'data')
         self._workbook = None
@@ -234,10 +235,10 @@ class SpreadsheetPrep(CollectionPrep):
         self.add_removal(self.xlsx_path)
 
     def archive_xlsx(self):
-        collection = self.prep_config.collection()
-        coll_dir = os.path.join(self.prep_config.context_var('archive_dir'),
-                                collection.folder())
-        mkdir_p(coll_dir)
+        repo_wrapper = self.prep_config.repository_wrapper()
+        repo_dir = os.path.join(self.prep_config.context_var('archive_dir'),
+                                repo_wrapper.folder())
+        mkdir_p(repo_dir)
 
         archive_xlsx = "%s_%s.xlsx" % (self.basedir, tstamptz())
         archive_path = os.path.join(self.prep_config.context_var('archive_dir'),
@@ -248,26 +249,26 @@ class SpreadsheetPrep(CollectionPrep):
 
     def _do_prep_dir(self):
 
-        if self.get_status() > self.COLLECTION_PREP_MD_VALIDATED:
+        if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
             self.logger.warning("[%s] Metadata alreaady validated" % (self.basedir, ))
         else:
             self.logger.info("[%s] Validating metadata" % (self.basedir, ))
             self.validate_workbook()
-            self.write_status(self.COLLECTION_PREP_MD_VALIDATED)
+            self.write_status(self.REPOSITORY_PREP_MD_VALIDATED)
 
-        if self.get_status() > self.COLLECTION_PREP_FILES_VALIDATED:
+        if self.get_status() > self.REPOSITORY_PREP_FILES_VALIDATED:
             self.logger.warning("[%s] Files alreaady validated" % (self.basedir, ))
         else:
             self.logger.info("[%s] Validating files" % (self.basedir, ))
             self.validate_file_names()
-            self.write_status(self.COLLECTION_PREP_FILES_VALIDATED)
+            self.write_status(self.REPOSITORY_PREP_FILES_VALIDATED)
 
-        if self.get_status() > self.COLLECTION_PREP_FILES_STAGED:
+        if self.get_status() > self.REPOSITORY_PREP_FILES_STAGED:
             self.logger.warning("[%s] Files already staged" % (self.basedir, ))
         else:
             self.logger.info("[%s] Staging files" % (self.basedir, ))
             self.stage_images()
-            self.write_status(self.COLLECTION_PREP_FILES_STAGED)
+            self.write_status(self.REPOSITORY_PREP_FILES_STAGED)
 
         if self.get_status() > self.SPREADSHEET_OPEN_XML_WRITTEN:
             self.logger.warning("[%s] OPenn XML already written" % (self.basedir, ))
@@ -284,15 +285,15 @@ class SpreadsheetPrep(CollectionPrep):
             self.save_right_data(self.openn_xml_path())
             self.write_status(self.SPREADSHEET_LICENCE_TYPES_SAVED)
 
-        if self.get_status() > self.COLLECTION_PREP_FILE_LIST_WRITTEN:
+        if self.get_status() > self.REPOSITORY_PREP_FILE_LIST_WRITTEN:
             self.logger.warning("[%s] File list already written" % (self.basedir, ))
         else:
             self.logger.info("[%s] Writing file list" % (self.basedir, ))
             file_list = self.build_file_list(self.openn_xml_path())
             self.add_file_list(file_list)
-            self.write_status(self.COLLECTION_PREP_FILE_LIST_WRITTEN)
+            self.write_status(self.REPOSITORY_PREP_FILE_LIST_WRITTEN)
 
-        if self.get_status() > self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN:
+        if self.get_status() > self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN:
             self.logger.warning("[%s] Partial TEI already written" % (self.basedir, ))
         else:
             self.logger.info("[%s] Writing partial TEI" % (self.basedir, ))
@@ -300,7 +301,7 @@ class SpreadsheetPrep(CollectionPrep):
             # print partial_tei
             self.write_partial_tei(self.source_dir, partial_tei)
             self.validate_partial_tei()
-            self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
+            self.write_status(self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN)
             self.add_removal(self.openn_xml_path())
             self.archive_xlsx()
         # files to cleanup

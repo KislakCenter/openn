@@ -8,12 +8,12 @@ from openn.openn_exception import OPennException
 from django.conf import settings
 
 class OPennSettings(object):
-    def __init__(self,coll_name):
+    def __init__(self,repo_name):
         """
-        Create a new setttings object for the specified coll_name. An error is
-        raised if the coll_name is not found.
+        Create a new setttings object for the specified repo_name. An error is
+        raised if the repo_name is not found.
         """
-        self._coll_name = coll_name.lower()
+        self._repo_name = repo_name.lower()
         self._validate()
 
     @property
@@ -42,10 +42,10 @@ class OPennSettings(object):
         return getattr(settings, name)
 
     @property
-    def coll(self):
+    def repo(self):
         """
-        Return the collection configuration. These are set up in
-        the settings.COLLECTIONS dict. A collection is a dict like this:
+        Return the repository configuration. These are set up in
+        the settings.REPOSITORIES dict. A repository is a dict like this:
 
             'medren': {
                 'prep_class': 'openn.prep.medren_prep.MedrenPrep',
@@ -63,23 +63,23 @@ class OPennSettings(object):
                 },
 
         """
-        return settings.COLLECTIONS[self._coll_name]
+        return settings.REPOSITORIES[self._repo_name]
 
     @property
-    def known_colls(self):
-        """ A list of all configured collections. """
-        return settings.COLLECTIONS.keys()
+    def known_repos(self):
+        """ A list of all configured repositories. """
+        return settings.REPOSITORIES.keys()
 
     @property
-    def coll_config(self):
-        return self.coll.get('config', None)
+    def repo_config(self):
+        return self.repo.get('config', None)
 
     def deriv_config(self,deriv_type):
         """ Return the configuration for the given deriv_type. """
         return self.deriv_configs.get(deriv_type, None)
 
     def _validate(self):
-        if not self._coll_name or not self._coll_name in settings.COLLECTIONS:
-            msg = "No collection found for %s; expected one of %s"
-            msg = msg % (self._coll_name, ','.join(self.known_colls))
+        if not self._repo_name or not self._repo_name in settings.REPOSITORIES:
+            msg = "No repository found for %s; expected one of %s"
+            msg = msg % (self._repo_name, ','.join(self.known_repos))
             raise OPennException(msg)

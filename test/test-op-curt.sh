@@ -6,19 +6,19 @@ source $THIS_DIR/shunit_helper
 # suite() {
 #     # suite_addTest testAddDoc
 #     # suite_addTest testAddDocAmbiguousDocument
-#     # suite_addTest testAddDocAmbiguousDocumentWithPrimaryCollection
+#     # suite_addTest testAddDocAmbiguousDocumentWithRepository
 #     # suite_addTest testAddDocByDocumentId
 #     # suite_addTest testAddDocBadDocumentBaseDir
 #     # suite_addTest testAddDocBadDocumentId
-#     # suite_addTest testAddDocBadProjectTag
+#     # suite_addTest testAddDocBadCuratedTag
 #     # suite_addTest testRmDocByBaseDir
 #     # suite_addTest testRmDocByID
 #     # suite_addTest testRmDocAmbiguousDocument
-#     # suite_addTest testRmDocAmbiguousDocumentWithPrimaryCollection
+#     # suite_addTest testRmDocAmbiguousDocumentWithRepository
 #     # suite_addTest testRmDocByDocumentId
 #     # suite_addTest testRmDocBadDocumentBaseDir
 #     # suite_addTest testRmDocBadDocumentId
-#     # suite_addTest testRmDocBadProjectTag
+#     # suite_addTest testRmDocBadCuratedTag
 #     # suite_addTest testBulkAddValidDocIdCSV
 #     # suite_addTest testBulkAddValidDocBasedirCSV
 #     # suite_addTest testBulkAddByDocumentIDWithErrors
@@ -26,7 +26,7 @@ source $THIS_DIR/shunit_helper
 #     # suite_addTest testBulkRmValidDocIdCSV
 #     # suite_addTest testBulkRmValidDocBasedirCSV
 #     # suite_addTest testBulkRmByDocumentIDWithErrors
-#     # suite_addTest testRmDocByIdNotInProject
+#     # suite_addTest testRmDocByIdNotInCuratedCollection
 #     suite_addTest testBulkRmByDocumentBaseDirWithErrors
 # }
 
@@ -43,7 +43,7 @@ tearDown() {
 
 testAddDoc() {
     insert_document mscodex123 pennmss
-    output=`op-proj add-doc bibliophilly mscodex123`
+    output=`op-curt add-doc bibliophilly mscodex123`
 
     status=$?
     if [ $status != 0 ]
@@ -57,7 +57,7 @@ testAddDoc() {
 testAddDocAmbiguousDocument() {
     insert_document mscodex123 pennmss
     insert_document mscodex123 ljs
-    output=`op-proj add-doc bibliophilly mscodex123`
+    output=`op-curt add-doc bibliophilly mscodex123`
     status=$?
     if [ $status != 1 ]
     then
@@ -67,10 +67,10 @@ testAddDocAmbiguousDocument() {
     assertMatch "$output" "Ambiguous"
 }
 
-testAddDocAmbiguousDocumentWithPrimaryCollection() {
+testAddDocAmbiguousDocumentWithRepository() {
     insert_document mscodex123 pennmss
     insert_document mscodex123 ljs
-    output=`op-proj add-doc --primary-collection ljs bibliophilly mscodex123`
+    output=`op-curt add-doc --repository ljs bibliophilly mscodex123`
 
     status=$?
     if [ $status != 0 ]
@@ -86,7 +86,7 @@ testAddDocByDocumentId() {
     doc_id=`get_document_id mscodex123 pennmss`
     insert_document mscodex123 ljs
 
-    output=`op-proj add-doc bibliophilly $doc_id`
+    output=`op-curt add-doc bibliophilly $doc_id`
 
     status=$?
     if [ $status != 0 ]
@@ -100,7 +100,7 @@ testAddDocByDocumentId() {
 testAddDocBadDocumentBaseDir() {
     insert_document mscodex123 pennmss
     # use the wrong document tag
-    output=`op-proj add-doc bibliophilly mscodex124`
+    output=`op-curt add-doc bibliophilly mscodex124`
 
     status=$?
 
@@ -117,7 +117,7 @@ testAddDocBadDocumentId() {
     doc_id=`get_document_id mscodex123 pennmss`
     doc_id=$(( doc_id + 1 ))
     # use the wrong document tag
-    output=`op-proj add-doc bibliophilly $doc_id`
+    output=`op-curt add-doc bibliophilly $doc_id`
 
     status=$?
 
@@ -129,10 +129,10 @@ testAddDocBadDocumentId() {
     assertMatch "$output" 'Unknown document'
 }
 
-testAddDocBadProjectTag() {
+testAddDocBadCuratedTag() {
     insert_document mscodex123 pennmss
-    # use a bad project tag
-    output=`op-proj add-doc xxx mscodex123`
+    # use a bad curated collection tag
+    output=`op-curt add-doc xxx mscodex123`
 
     status=$?
     if [ $status = 0 ]
@@ -140,15 +140,15 @@ testAddDocBadProjectTag() {
         echo "$output"
     fi
     assertNotEquals 0 $status
-    assertMatch "$output" 'Unknown project'
+    assertMatch "$output" 'Unknown curated collection'
 }
 
 testRmDocByBaseDir() {
     insert_document mscodex123 pennmss
     # get_document_id mscodex123 pennmss
     doc_id=`get_document_id mscodex123 pennmss`
-    add_project_membership bibliophilly $doc_id
-    output=`op-proj rm-doc bibliophilly mscodex123`
+    add_curated_membership bibliophilly $doc_id
+    output=`op-curt rm-doc bibliophilly mscodex123`
 
     status=$?
     if [ $status != 0 ];
@@ -164,8 +164,8 @@ testRmDocByID() {
     insert_document mscodex123 pennmss
     # get_document_id mscodex123 pennmss
     doc_id=`get_document_id mscodex123 pennmss`
-    add_project_membership bibliophilly $doc_id
-    output=`op-proj rm-doc bibliophilly $doc_id`
+    add_curated_membership bibliophilly $doc_id
+    output=`op-curt rm-doc bibliophilly $doc_id`
 
     status=$?
     if [ $status != 0 ];
@@ -178,13 +178,13 @@ testRmDocByID() {
 }
 
 testRmDocAmbiguousDocument() {
-    # Set up ambiguous documents and add one to a collection.
+    # Set up ambiguous documents and add one to a repository.
     insert_document mscodex123 pennmss
     insert_document mscodex123 ljs
     doc_id=`get_document_id mscodex123 ljs`
-    add_project_membership bibliophilly $doc_id
+    add_curated_membership bibliophilly $doc_id
 
-    output=`op-proj rm-doc bibliophilly mscodex123`
+    output=`op-curt rm-doc bibliophilly mscodex123`
     status=$?
     if [ $status != 1 ]
     then
@@ -194,14 +194,14 @@ testRmDocAmbiguousDocument() {
     assertMatch "$output" "Ambiguous"
 }
 
-testRmDocAmbiguousDocumentWithPrimaryCollection() {
-    # Set up ambiguous documents and add one to a collection.
+testRmDocAmbiguousDocumentWithRepository() {
+    # Set up ambiguous documents and add one to a repository.
     insert_document mscodex123 pennmss
     insert_document mscodex123 ljs
     doc_id=`get_document_id mscodex123 ljs`
-    add_project_membership bibliophilly $doc_id
+    add_curated_membership bibliophilly $doc_id
 
-    output=`op-proj rm-doc --primary-collection ljs bibliophilly mscodex123`
+    output=`op-curt rm-doc --repository ljs bibliophilly mscodex123`
 
     status=$?
     if [ $status != 0 ]
@@ -215,9 +215,9 @@ testRmDocAmbiguousDocumentWithPrimaryCollection() {
 testRmDocByDocumentId() {
     insert_document mscodex123 pennmss
     doc_id=`get_document_id mscodex123 pennmss`
-    add_project_membership bibliophilly $doc_id
+    add_curated_membership bibliophilly $doc_id
 
-    output=`op-proj rm-doc bibliophilly $doc_id`
+    output=`op-curt rm-doc bibliophilly $doc_id`
 
     status=$?
     if [ $status != 0 ]
@@ -231,10 +231,10 @@ testRmDocByDocumentId() {
 testRmDocBadDocumentBaseDir() {
     insert_document mscodex123 pennmss
     doc_id=`get_document_id mscodex123 pennmss`
-    add_project_membership bibliophilly $doc_id
+    add_curated_membership bibliophilly $doc_id
 
     # use the wrong document base_dir
-    output=`op-proj rm-doc bibliophilly mscodex124`
+    output=`op-curt rm-doc bibliophilly mscodex124`
 
     status=$?
     if [ $status = 0 ]
@@ -249,11 +249,11 @@ testRmDocBadDocumentBaseDir() {
 testRmDocBadDocumentId() {
     insert_document mscodex123 pennmss
     doc_id=`get_document_id mscodex123 pennmss`
-    add_project_membership bibliophilly $doc_id
+    add_curated_membership bibliophilly $doc_id
 
     # use the wrong document ID
     doc_id=$(( doc_id + 1 ))
-    output=`op-proj rm-doc bibliophilly $doc_id`
+    output=`op-curt rm-doc bibliophilly $doc_id`
 
     status=$?
 
@@ -265,13 +265,13 @@ testRmDocBadDocumentId() {
     assertMatch "$output" 'Unknown document'
 }
 
-testRmDocBadProjectTag() {
+testRmDocBadCuratedTag() {
     insert_document mscodex123 pennmss
     doc_id=`get_document_id mscodex123 pennmss`
-    add_project_membership bibliophilly $doc_id
+    add_curated_membership bibliophilly $doc_id
 
-    # use a bad project tag
-    output=`op-proj rm-doc xxx mscodex123`
+    # use a bad curated tag
+    output=`op-curt rm-doc xxx mscodex123`
 
     status=$?
     if [ $status = 0 ]
@@ -279,16 +279,16 @@ testRmDocBadProjectTag() {
         echo "$output"
     fi
     assertNotEquals 0 $status
-    assertMatch "$output" 'Unknown project'
+    assertMatch "$output" 'Unknown curated collection'
 }
 
-testRmDocByIdNotInProject() {
+testRmDocByIdNotInCuratedCollection() {
     insert_document mscodex123 pennmss
     doc_id=`get_document_id mscodex123 pennmss`
 
-    # try to remove a document not assigned to a project; both project and
-    # doc_id are valid
-    output=`op-proj rm-doc bibliophilly $doc_id`
+    # try to remove a document not assigned to a curated collection; both
+    # curated collection and doc_id are valid
+    output=`op-curt rm-doc bibliophilly $doc_id`
 
     status=$?
     if [ $status = 0 ]
@@ -296,7 +296,7 @@ testRmDocByIdNotInProject() {
         echo "$output"
     fi
     assertNotEquals 0 $status
-    assertMatch "$output" 'Document not in project'
+    assertMatch "$output" 'Document not in curated collection'
 }
 
 testBulkAddValidDocIdCSV() {
@@ -305,11 +305,11 @@ testBulkAddValidDocIdCSV() {
     id1=`get_document_id mscodex123 pennmss`
     id2=`get_document_id mscodex124 pennmss`
     csvfile=${TEMP_FILE}.1
-    echo 'project_tag,document_id' > $csvfile
+    echo 'curated_collection_tag,document_id' > $csvfile
     echo "bibliophilly,${id1}" >> $csvfile
     echo "bibliophilly,${id2}" >> $csvfile
 
-    output=`op-proj bulk-add $csvfile`
+    output=`op-curt bulk-add $csvfile`
 
     status=$?
     if [ $status != 0 ]
@@ -317,7 +317,7 @@ testBulkAddValidDocIdCSV() {
         echo "$output"
     fi
     assertEquals 0 $status
-    assertMatch "$output" 'Added document to project'
+    assertMatch "$output" 'Added document to curated collection'
     assertNotMatch "$output" 'Error adding document'
 }
 
@@ -325,11 +325,11 @@ testBulkAddValidDocBasedirCSV() {
     insert_document mscodex123 pennmss
     insert_document mscodex124 pennmss
     csvfile=${TEMP_FILE}.1
-    echo 'project_tag,document_base_dir,collection_tag' > $csvfile
+    echo 'curated_collection_tag,document_base_dir,repository_tag' > $csvfile
     echo "bibliophilly,mscodex123,pennmss" >> $csvfile
     echo "bibliophilly,mscodex124,pennmss" >> $csvfile
 
-    output=`op-proj bulk-add $csvfile`
+    output=`op-curt bulk-add $csvfile`
 
     status=$?
     if [ $status != 0 ]
@@ -337,7 +337,7 @@ testBulkAddValidDocBasedirCSV() {
         echo "$output"
     fi
     assertEquals 0 $status
-    assertMatch "$output" 'Added document to project'
+    assertMatch "$output" 'Added document to curated collection'
     assertNotMatch "$output" 'Error adding document'
 }
 
@@ -348,7 +348,7 @@ testBulkAddByDocumentIDWithErrors() {
     id2=`get_document_id mscodex124 pennmss`
     id3=$((id2 + 1))
     csvfile=${TEMP_FILE}.3
-    echo 'project_tag,document_id' > $csvfile
+    echo 'curated_collection_tag,document_id' > $csvfile
 
     # 2 good lines
     echo "bibliophilly,${id1}" >> $csvfile
@@ -357,22 +357,22 @@ testBulkAddByDocumentIDWithErrors() {
     # 3 ERROR lines
     # insert non-existent id
     echo "bibliophilly,${id3}" >> $csvfile
-    # insert bad project
-    echo "FALSE_PROJECT,${id2}" >> $csvfile
+    # insert bad curated collection
+    echo "FALSE_CURATED,${id2}" >> $csvfile
     # insert duplicate
     echo "bibliophilly,${id2}" >> $csvfile
 
-    output=`op-proj bulk-add $csvfile`
+    output=`op-curt bulk-add $csvfile`
     status=$?
     if [ $status != 0 ]
     then
         echo "$output"
     fi
     assertEquals 0 $status
-    assertMatch "$output" 'Added document to project'
-    assertNumberOfMatchingLines "$output" 'Added document to project' 2
+    assertMatch "$output" 'Added document to curated collection'
+    assertNumberOfMatchingLines "$output" 'Added document to curated collection' 2
     assertNumberOfMatchingLines "$output" 'Unknown document' 1
-    assertNumberOfMatchingLines "$output" 'Unknown project' 1
+    assertNumberOfMatchingLines "$output" 'Unknown curated collection' 1
     assertNumberOfMatchingLines "$output" 'Membership already exists' 1
 }
 
@@ -381,7 +381,7 @@ testBulkAddByDocumentBaseDirWithErrors() {
     insert_document mscodex124 pennmss
 
     csvfile=${TEMP_FILE}.1
-    echo 'project_tag,document_base_dir,collection_tag' > $csvfile
+    echo 'curated_collection_tag,document_base_dir,repository_tag' > $csvfile
 
     # Insert 2 good lines
     echo "bibliophilly,mscodex123,pennmss" >> $csvfile
@@ -393,15 +393,15 @@ testBulkAddByDocumentBaseDirWithErrors() {
     # insert duplicate
     echo "bibliophilly,mscodex124,pennmss" >> $csvfile
 
-    output=`op-proj bulk-add $csvfile`
+    output=`op-curt bulk-add $csvfile`
     status=$?
     if [ $status != 0 ]
     then
         echo "$output"
     fi
     assertEquals 0 $status
-    assertMatch "$output" 'Added document to project'
-    assertNumberOfMatchingLines "$output" 'Added document to project' 2
+    assertMatch "$output" 'Added document to curated collection'
+    assertNumberOfMatchingLines "$output" 'Added document to curated collection' 2
     assertNumberOfMatchingLines "$output" 'Unknown document' 1
     assertNumberOfMatchingLines "$output" 'Membership already exists' 1
 }
@@ -411,15 +411,15 @@ testBulkRmValidDocIdCSV() {
     insert_document mscodex124 pennmss
     id1=`get_document_id mscodex123 pennmss`
     id2=`get_document_id mscodex124 pennmss`
-    add_project_membership bibliophilly $id1
-    add_project_membership bibliophilly $id2
+    add_curated_membership bibliophilly $id1
+    add_curated_membership bibliophilly $id2
 
     csvfile=${TEMP_FILE}.1
-    echo 'project_tag,document_id' > $csvfile
+    echo 'curated_collection_tag,document_id' > $csvfile
     echo "bibliophilly,${id1}" >> $csvfile
     echo "bibliophilly,${id2}" >> $csvfile
 
-    output=`op-proj bulk-rm $csvfile`
+    output=`op-curt bulk-rm $csvfile`
 
     status=$?
     if [ $status != 0 ]
@@ -427,7 +427,7 @@ testBulkRmValidDocIdCSV() {
         echo "$output"
     fi
     assertEquals 0 $status
-    assertNumberOfMatchingLines "$output" 'Removed document .*from project' 2
+    assertNumberOfMatchingLines "$output" 'Removed document .*from curated collection' 2
     assertNotMatch "$output" 'ERROR'
 }
 
@@ -436,15 +436,15 @@ testBulkRmValidDocBasedirCSV() {
     insert_document mscodex124 pennmss
     id1=`get_document_id mscodex123 pennmss`
     id2=`get_document_id mscodex124 pennmss`
-    add_project_membership bibliophilly $id1
-    add_project_membership bibliophilly $id2
+    add_curated_membership bibliophilly $id1
+    add_curated_membership bibliophilly $id2
 
     csvfile=${TEMP_FILE}.1
-    echo 'project_tag,document_base_dir,collection_tag' > $csvfile
+    echo 'curated_collection_tag,document_base_dir,repository_tag' > $csvfile
     echo "bibliophilly,mscodex123,pennmss" >> $csvfile
     echo "bibliophilly,mscodex124,pennmss" >> $csvfile
 
-    output=`op-proj bulk-rm $csvfile`
+    output=`op-curt bulk-rm $csvfile`
 
     status=$?
     if [ $status != 0 ]
@@ -452,7 +452,7 @@ testBulkRmValidDocBasedirCSV() {
         echo "$output"
     fi
     assertEquals 0 $status
-    assertNumberOfMatchingLines "$output" 'Removed document .*from project' 2
+    assertNumberOfMatchingLines "$output" 'Removed document .*from curated collection' 2
     assertNotMatch "$output" 'ERROR'
 }
 
@@ -461,12 +461,12 @@ testBulkRmByDocumentIDWithErrors() {
     insert_document mscodex124 pennmss
     id1=`get_document_id mscodex123 pennmss`
     id2=`get_document_id mscodex124 pennmss`
-    add_project_membership bibliophilly $id1
-    add_project_membership bibliophilly $id2
+    add_curated_membership bibliophilly $id1
+    add_curated_membership bibliophilly $id2
 
 
     csvfile=${TEMP_FILE}.3
-    echo 'project_tag,document_id' > $csvfile
+    echo 'curated_collection_tag,document_id' > $csvfile
 
     # 2 good lines
     echo "bibliophilly,${id1}" >> $csvfile
@@ -476,23 +476,23 @@ testBulkRmByDocumentIDWithErrors() {
     # use non-existent id
     id3=$((id2 + 1)) # <= bad id
     echo "bibliophilly,${id3}" >> $csvfile
-    # use non-existent project
-    echo "FALSE_PROJECT,${id2}" >> $csvfile
+    # use non-existent curated collection
+    echo "FALSE_CURATED,${id2}" >> $csvfile
     # try to remove document second time;
-    # should have error 'Document not in project'
+    # should have error 'Document not in curated collection'
     echo "bibliophilly,${id2}" >> $csvfile
 
-    output=`op-proj bulk-rm $csvfile`
+    output=`op-curt bulk-rm $csvfile`
     status=$?
     if [ $status != 0 ]
     then
         echo "$output"
     fi
     assertEquals 0 $status
-    assertNumberOfMatchingLines "$output" 'Removed document .*from project' 2
+    assertNumberOfMatchingLines "$output" 'Removed document .*from curated collection' 2
     assertNumberOfMatchingLines "$output" 'Unknown document' 1
-    assertNumberOfMatchingLines "$output" 'Unknown project' 1
-    assertNumberOfMatchingLines "$output" 'Document not in project' 1
+    assertNumberOfMatchingLines "$output" 'Unknown curated collection' 1
+    assertNumberOfMatchingLines "$output" 'Document not in curated collection' 1
 }
 
 testBulkRmByDocumentBaseDirWithErrors() {
@@ -500,11 +500,11 @@ testBulkRmByDocumentBaseDirWithErrors() {
     insert_document mscodex124 pennmss
     id1=`get_document_id mscodex123 pennmss`
     id2=`get_document_id mscodex124 pennmss`
-    add_project_membership bibliophilly $id1
-    add_project_membership bibliophilly $id2
+    add_curated_membership bibliophilly $id1
+    add_curated_membership bibliophilly $id2
 
     csvfile=${TEMP_FILE}.1
-    echo 'project_tag,document_base_dir,collection_tag' > $csvfile
+    echo 'curated_collection_tag,document_base_dir,repository_tag' > $csvfile
 
     # Insert 2 good lines
     echo "bibliophilly,mscodex123,pennmss" >> $csvfile
@@ -513,23 +513,23 @@ testBulkRmByDocumentBaseDirWithErrors() {
     # ERROR lines
     # use non-existent base_dir
     echo "bibliophilly,mscodex125,pennmss" >> $csvfile
-    # use non-existent project
-    echo "FALSE_PROJECT,mscodex124,pennmss" >> $csvfile
+    # use non-existent curated collection
+    echo "FALSE_CURATED,mscodex124,pennmss" >> $csvfile
     # try to remove document second time;
-    # should have error 'Document not in project'
+    # should have error 'Document not in curated collection'
     echo "bibliophilly,mscodex124,pennmss" >> $csvfile
 
-    output=`op-proj bulk-rm $csvfile`
+    output=`op-curt bulk-rm $csvfile`
     status=$?
     if [ $status != 0 ]
     then
         echo "$output"
     fi
     assertEquals 0 $status
-    assertNumberOfMatchingLines "$output" 'Removed document .*from project' 2
+    assertNumberOfMatchingLines "$output" 'Removed document .*from curated collection' 2
     assertNumberOfMatchingLines "$output" 'Unknown document' 1
-    assertNumberOfMatchingLines "$output" 'Unknown project' 1
-    assertNumberOfMatchingLines "$output" 'Document not in project' 1
+    assertNumberOfMatchingLines "$output" 'Unknown curated collection' 1
+    assertNumberOfMatchingLines "$output" 'Document not in curated collection' 1
 }
 
 # Run shunit

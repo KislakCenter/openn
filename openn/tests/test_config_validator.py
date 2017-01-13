@@ -15,17 +15,17 @@ from pprint import PrettyPrinter
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
-from openn.collections.config_validator import ConfigValidator
+from openn.repository.config_validator import ConfigValidator
 from openn.models import *
 
 class TestConfigValidator(TestCase):
 
     # Paths
     this_dir               = os.path.dirname(__file__)
-    projects_dir           = os.path.join(this_dir, 'data/projects')
+    curated_dir           = os.path.join(this_dir, 'data/curated')
 
     # Configuration data
-    config_file            = os.path.join(projects_dir, 'configs.json')
+    config_file            = os.path.join(curated_dir, 'configs.json')
     config_data            = json.load(open(config_file))
     configs_dict           = config_data['configs']
     validator_dict         = config_data['validations']
@@ -35,12 +35,8 @@ class TestConfigValidator(TestCase):
     duplicate_name         = config_data['duplicate_name']
 
 
-    # def clear_openn_collections_table(self):
-    #     OPennCollection.objects.all().delete()
-
     def setUp(self):
         pass
-        # self.clear_openn_collections_table()
 
     def tearDown(self):
         pass

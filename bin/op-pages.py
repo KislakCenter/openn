@@ -25,27 +25,27 @@ from django.template.base import TemplateDoesNotExist
 from openn.openn_exception import OPennException
 import openn.openn_functions as opfunc
 from openn.pages.page import Page
-from openn.collections.configs import Configs
-from openn.pages.collections import Collections
+from openn.repository.configs import Configs
+from openn.pages.repositories import Repositories
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.browse import Browse
 from openn.csv.collections_csv import CollectionsCSV
 from openn.csv.table_of_contents_csv import TableOfContentsCSV
-from openn.csv.project_table_of_contents_csv import ProjectTableOfContentsCSV
+from openn.csv.curated_collection_contents_csv import CuratedCollectionContentsCSV
 
 logger = None
 
 def cmd():
     return os.path.basename(__file__)
 
-def collection_configs():
-    return Configs(settings.COLLECTIONS)
+def repository_configs():
+    return Configs(settings.REPOSITORIES)
 
-def get_coll_wrapper(tag):
-    return collection_configs().get_collection(tag)
+def get_repo_wrapper(tag):
+    return repository_configs().get_repository(tag)
 
-def project_tags():
-    return [x.tag for x in  Project.objects.order_by('tag')]
+def curated_tags():
+    return [x.tag for x in  CuratedCollection.objects.order_by('tag')]
 
 def site_dir():
     return settings.SITE_DIR
@@ -80,7 +80,7 @@ def update_online_statuses():
                 doc.is_online = True
                 doc.save()
         logging.info("Is document online? %-15s %-20s %s" % (
-            doc.openn_collection.tag, doc.base_dir, str(doc.is_online)))
+            doc.repository.tag, doc.base_dir, str(doc.is_online)))
 
 def is_makeable(page, opts):
     make_page = False
@@ -94,9 +94,9 @@ def is_makeable(page, opts):
 
 def make_browse_html(docid, opts):
     doc = Document.objects.get(pk=docid)
-    coll_tag = doc.openn_collection.tag
-    coll_wrapper = get_coll_wrapper(coll_tag)
-    page = Browse(document=doc, collection_wrapper=coll_wrapper,
+    repo_tag = doc.repository.tag
+    repo_wrapper = get_repo_wrapper(repo_tag)
+    page = Browse(document=doc, repository_wrapper=repo_wrapper,
                   toc_dir = settings.TOC_DIR,
                   **{ 'outdir': site_dir() })
 
@@ -107,9 +107,9 @@ def make_browse_html(docid, opts):
     else:
         logging.info("Skipping page: %s" % (page.outfile_path(), ))
 
-def make_toc_html(collwrap, opts):
+def make_toc_html(repowrap, opts):
     toc = TableOfContents(
-        collwrap, toc_dir=settings.TOC_DIR,
+        repowrap, toc_dir=settings.TOC_DIR,
         **{ 'template_name': 'TableOfContents.html', 'outdir': site_dir() })
 
     # TODO: have TOC is_needed() check the include file; fails to make
@@ -118,13 +118,13 @@ def make_toc_html(collwrap, opts):
     opts.force = True
 
     if is_makeable(toc, opts):
-        logging.info("Creating TOC for collection %s: %s" % (
-            collwrap.tag(), toc.outfile_path()))
+        logging.info("Creating TOC for repository %s: %s" % (
+            repowrap.tag(), toc.outfile_path()))
         if not opts.dry_run:
             toc.create_pages()
     else:
-        logging.info("Skipping TOC for collection %s: %s" % (
-            collwrap.tag(), toc.outfile_path()))
+        logging.info("Skipping TOC for repository %s: %s" % (
+            repowrap.tag(), toc.outfile_path()))
 
 def make_readme_html(readme, opts):
     try:
@@ -143,39 +143,39 @@ def make_readme_html(readme, opts):
         msg = "Could not find template: %s" % (readme,)
         raise OPennException(msg)
 
-def make_collections(opts):
+def make_repositories(opts):
     try:
-        page = Collections(settings.COLLECTIONS_TEMPLATE, site_dir(),
-                           collection_configs(), toc_dir=settings.TOC_DIR)
+        page = Repositories(settings.REPOSITORIES_TEMPLATE, site_dir(),
+                           repository_configs(), toc_dir=settings.TOC_DIR)
 
         if is_makeable(page, opts):
-            logging.info("Creating list of collections: %s" % (page.outfile_path(), ))
+            logging.info("Creating list of repositories: %s" % (page.outfile_path(), ))
             if not opts.dry_run:
                 page.create_pages()
         else:
             logging.info("Skipping page: %s" % (page.outfile_path(), ))
     except TemplateDoesNotExist as ex:
-        msg = "Could not find template: %s" % (settings.COLLECTIONS_TEMPLATE,)
+        msg = "Could not find template: %s" % (settings.REPOSITORIES_TEMPLATE,)
         raise OPennException(msg)
 
-def make_collections_csv(opts):
-    """Generate collections.csv file listing all collections and projects.
+def make_repositories_csv(opts):
+    """Generate repositories.csv file listing all repositories and curated collections.
     """
 
-    csv = CollectionsCSV(outdir=site_dir(), coll_configs=collection_configs())
+    csv = CollectionsCSV(outdir=site_dir(), repo_configs=repository_configs())
     if is_makeable(csv, opts):
         if not opts.dry_run:
            csv.write_file()
-        logging.info("Wrote collections CSV file: %s" % (csv.outpath(),))
+        logging.info("Wrote repositories CSV file: %s" % (csv.outpath(),))
     else:
         logging.info("Skipping page: %s" % (csv.outfile_path(),))
 
-def make_collection_toc_csv(coll_tag, opts):
+def make_repository_toc_csv(repo_tag, opts):
     """
-    Generate CSV Table of Contents for collection with tag ``coll_tag``.
+    Generate CSV Table of Contents for repository with tag ``repo_tag``.
     """
-    coll_wrapper = collection_configs().get_collection(coll_tag)
-    csv          = TableOfContentsCSV(collection=coll_wrapper, outdir=site_dir())
+    repo_wrapper = repository_configs().get_repository(repo_tag)
+    csv          = TableOfContentsCSV(repository=repo_wrapper, outdir=site_dir())
 
     if is_makeable(csv, opts):
         if not opts.dry_run:
@@ -184,15 +184,16 @@ def make_collection_toc_csv(coll_tag, opts):
     else:
         logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
 
-def make_project_toc_csv(proj_tag, opts):
+def make_curated_toc_csv(curated_tag, opts):
     """
-    Generate CSV Table of Contents for project with tag ``proj_tag``.
+    Generate CSV Table of Contents for curated collections with tag
+    ``curated_tag``.
     """
-    csv = ProjectTableOfContentsCSV(project_tag=proj_tag, outdir=site_dir())
+    csv = CuratedCollectionContentsCSV(curated_tag=curated_tag, outdir=site_dir())
     if is_makeable(csv, opts):
         if not opts.dry_run:
             csv.write_file()
-        logging.info("Wrote project table of contents CSV file: %s" % (csv.outfile_path(),))
+        logging.info("Wrote curated collection table of contents CSV file: %s" % (csv.outfile_path(),))
     else:
         logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
 
@@ -203,10 +204,12 @@ def process_all(opts):
     """Default behavior, process all file types."""
     browse(opts)
     toc(opts)
-    collections(opts)
+    repositories(opts)
+    # TODO curated collections HTML toc
     readme(opts)
     csv_toc(opts)
-    collections_csv(opts)
+    repositories_csv(opts)
+    csv_toc_all_curated_collections(opts)
 
 def browse(opts):
     """Process browse HTML files as needed"""
@@ -219,13 +222,13 @@ def browse(opts):
 
 def toc(opts):
     """Process TOC HTML files as needed"""
-    for tag in opfunc.get_coll_tags():
-        toc_collection(tag, opts)
+    for tag in opfunc.get_repo_tags():
+        toc_repository(tag, opts)
 
-def toc_collection(coll_tag, opts):
-    """Process table of contents for coll_tag"""
-    coll_wrapper = opfunc.get_coll_wrapper(coll_tag)
-    make_toc_html(coll_wrapper, opts)
+def toc_repository(repo_tag, opts):
+    """Process table of contents for repo_tag"""
+    repo_wrapper = opfunc.get_repo_wrapper(repo_tag)
+    make_toc_html(repo_wrapper, opts)
 
 def document(docid, opts):
     """Process browse HTML for DOC_ID"""
@@ -240,28 +243,28 @@ def readme_file(filename,opts):
     """Process ReadMe HTML for filename"""
     make_readme_html(filename, opts)
 
-def collections_csv(opts):
-    """Generate collections CSV"""
-    make_collections_csv(opts)
+def repositories_csv(opts):
+    """Generate repositories CSV"""
+    make_repositories_csv(opts)
 
 def csv_toc(opts):
-    """Generate CSV table of contents for all collections.
+    """Generate CSV table of contents for all repositories.
     """
-    for tag in opfunc.get_coll_tags():
-        csv_toc_collection(tag, opts)
+    for tag in opfunc.get_repo_tags():
+        csv_toc_repository(tag, opts)
 
-def csv_toc_collection(coll_tag, opts):
-    """Generate CSV table of contents for all collections"""
-    make_collection_toc_csv(coll_tag, opts)
+def csv_toc_repository(repo_tag, opts):
+    """Generate CSV table of contents for all repositories"""
+    make_repository_toc_csv(repo_tag, opts)
 
-def csv_toc_project(proj_tag, opts):
-    """Generate CSV table of contents for proj_tag"""
-    make_project_toc_csv(proj_tag, opts)
+def csv_toc_curated_collection(curated_tag, opts):
+    """Generate CSV table of contents for curated_tag"""
+    make_curated_toc_csv(curated_tag, opts)
 
-def csv_toc_all_projects(opts):
-    """Generate CSV table of contents for all projects."""
-    for tag in project_tags():
-        make_project_toc_csv(tag, opts)
+def csv_toc_all_curated_collections(opts):
+    """Generate CSV table of contents for all curated collections."""
+    for tag in curated_tags():
+        make_curated_toc_csv(tag, opts)
 
 def detailed_help(opts):
     """Print detailed help message"""
@@ -274,7 +277,7 @@ By default all HTML page types will be generated and staged as needed in this
 order:
 
     1. browse pages for each document on-line
-    2. table of contents for each collection with documents on-line
+    2. table of contents for each repository with documents on-line
     3. all ReadMe files
 
 Use options for more granular behavior, to force creation of certain files, or
@@ -293,8 +296,8 @@ be regenerated.
 Before browse page generation is done, %prog looks online for each
 document that hasn't already been marked as being online.
 
-A table of contents (TOC) file is generated for any collection that has
-documents with published images and browse pages.  A collection's TOC file is
+A table of contents (TOC) file is generated for any repository that has
+documents with published images and browse pages.  A repository's TOC file is
 regenerated whenever new browse pages are added or existing ones are updated.
 
 A ReadMe file is generated when no staged copy of the file is found or its
@@ -315,8 +318,8 @@ WHERE ARE FILES CREATED?
 
 Documents are staged according to parameters defined in `openn/settings`.  These
 include the SITE_DIR, the local directory where pages are staged for pushing
-to OPenn; and collection-specific files and subdirectories as defined under
-COLLECTIONS[<COLLECTION_KEY>]:
+to OPenn; and repository-specific files and subdirectories as defined under
+REPOSITORIES[<COLLECTION_KEY>]:
 
     - `toc_file`: output name of the table of contents file; e.g.,
        'TOC_LJSchoenberg_Manuscripts.html'
@@ -353,13 +356,13 @@ Browse pages are *needed* for a document if:
 TABLE OF CONTENTS PAGES
 -----------------------
 
-Table of contents (TOC) files are created at the collection level.  Each TOC
-file lists all published documents for a given collection.  A collection's TOC
+Table of contents (TOC) files are created at the repository level.  Each TOC
+file lists all published documents for a given repository.  A repository's TOC
 file is *makeable" only if there is an HTML browse page for at least one of the
-collection's documents.  Note that TOC generation must be run after browse page
+repository's documents.  Note that TOC generation must be run after browse page
 generation to be up-to-date.  A TOC file is *needed* if it is makeable and (a) it
 hasn't already been staged, or (b) if the currently staged file is older than
-at least one of the staged browse HTML for the TOC file's collection.
+at least one of the staged browse HTML for the TOC file's repository.
 
 README FILES
 ------------
@@ -381,8 +384,8 @@ don't create new or update browse files, so the TOC steps will likely report
 skipped TOC creation for files that would be generated for an actual run.
     """.replace('%prog', cmd())
 
-def collections(opts):
-    make_collections(opts)
+def repositories(opts):
+    make_repositories(opts)
 
 def print_options(opts):
     for k in vars(opts):
@@ -448,11 +451,11 @@ def main(cmdline=None):
         elif opts.readme:
             readme(opts)
 
-        elif opts.collection_tag:
-            toc_collection(opts.collection_tag, opts)
+        elif opts.repository_tag:
+            toc_repository(opts.repository_tag, opts)
 
-        elif opts.collections:
-            collections(opts)
+        elif opts.repositories:
+            repositories(opts)
 
         elif opts.document:
             document(opts.document, opts)
@@ -460,20 +463,20 @@ def main(cmdline=None):
         elif opts.readme_file:
             readme_file(opts.readme_file, opts)
 
-        elif opts.collections_csv:
-            collections_csv(opts)
+        elif opts.repositories_csv:
+            repositories_csv(opts)
 
         elif opts.csv_toc:
             csv_toc(opts)
 
-        elif opts.csv_toc_collection_tag is not None:
-            csv_toc_collection(opts.csv_toc_collection_tag, opts)
+        elif opts.csv_toc_repository_tag is not None:
+            csv_toc_repository(opts.csv_toc_repository_tag, opts)
 
-        elif opts.csv_toc_project_tag is not None:
-            csv_toc_project(opts.csv_toc_project_tag, opts)
+        elif opts.csv_toc_curated_tag is not None:
+            csv_toc_curated_collection(opts.csv_toc_curated_tag, opts)
 
-        elif opts.csv_toc_all_projects:
-            csv_toc_all_projects(opts)
+        elif opts.csv_toc_all_curated_collections:
+            csv_toc_all_curated_collections(opts)
 
         elif opts.detailed_help:
             detailed_help(opts)
@@ -506,7 +509,7 @@ By default all HTML page types will be generated and staged as needed in this
 order:
 
     1. browse pages for each document on-line
-    2. table of contents for each collection with documents on-line
+    2. table of contents for each repository with documents on-line
     3. all ReadMe files
 
 Use options for more granular behavior, to force creation of certain files, or
@@ -542,18 +545,18 @@ skipped TOC creation for files that would be generated for an actual run.
                           ', '.join(readme_files()),)),
                       metavar="README")
 
-    parser.add_option('-i', '--toc-collection', dest='collection_tag', default=None,
-                      help=("Process table of contents for COLLECTION_TAG; one of: %s" % (
-                          ', '.join(opfunc.get_coll_tags()),)),
-                      metavar="COLLECTION_TAG")
+    parser.add_option('-i', '--toc-repository', dest='repository_tag', default=None,
+                      help=("Process table of contents for REPOSITORY_TAG; one of: %s" % (
+                          ', '.join(opfunc.get_repo_tags()),)),
+                      metavar="REPOSITORY_TAG")
 
     parser.add_option('-d', '--document', dest='document', default=None,
                       help="Process browse HTML for DOC_ID",
                       metavar="DOC_ID")
 
-    parser.add_option('-c', '--collections',
-                      action='store_true', dest='collections', default=False,
-                      help='Process Collections list HTML as needed')
+    parser.add_option('-c', '--repositories',
+                      action='store_true', dest='repositories', default=False,
+                      help='Process Repositories list HTML as needed')
 
     parser.add_option('-n', '--dry-run',
                       action='store_true', dest='dry_run', default=False,
@@ -568,26 +571,26 @@ skipped TOC creation for files that would be generated for an actual run.
                       action='store_true', dest='show_options', default=False,
                       help='Print out the options at runtime')
 
-    parser.add_option('-x', '--collections-csv',
-                      action='store_true', dest='collections_csv', default=False,
-                      help='Generate collections CSV')
+    parser.add_option('-x', '--repositories-csv',
+                      action='store_true', dest='repositories_csv', default=False,
+                      help='Generate repositories CSV')
     parser.add_option('-y', '--csv-toc',
                       action='store_true', dest='csv_toc', default=False,
-                      help="Generate CSV table of contents for all collections")
-    parser.add_option('-z', '--csv-toc-collection',
-                      dest='csv_toc_collection_tag', default=None,
-                      help=("Generate CSV table of contents for COLLECTION_TAG; one of: %s" % (
-                          ', '.join(opfunc.get_coll_tags()),)),
-                      metavar="COLLECTION_TAG")
+                      help="Generate CSV table of contents for all repositories")
+    parser.add_option('-z', '--csv-toc-repository',
+                      dest='csv_toc_repository_tag', default=None,
+                      help=("Generate CSV table of contents for REPOSITORY_TAG; one of: %s" % (
+                          ', '.join(opfunc.get_repo_tags()),)),
+                      metavar="REPOSITORY_TAG")
 
-    parser.add_option('-p', '--csv-toc-all-projects',
-                      action='store_true', dest='csv_toc_all_projects', default=False,
-                      help="Generate CSV table of contents for all projects")
-    parser.add_option('-s', '--csv-toc-project',
-                      dest='csv_toc_project_tag', default=None,
-                      help=("Generate CSV table of contents for PROJECT_TAG; one of: %s" % (
-                          ', '.join(project_tags()),)),
-                      metavar="PROJECT_TAG")
+    parser.add_option('-p', '--csv-toc-all-curated',
+                      action='store_true', dest='csv_toc_all_curated_collections', default=False,
+                      help="Generate CSV table of contents for all curated collections")
+    parser.add_option('-s', '--csv-toc-curated',
+                      dest='csv_toc_curated_tag', default=None,
+                      help=("Generate CSV table of contents for CURATED_TAG; one of: %s" % (
+                          ', '.join(curated_tags()),)),
+                      metavar="CURATED_TAG")
 
     parser.add_option('-H', '--detailed-help',
                       action='store_true', dest='detailed_help', default=False,

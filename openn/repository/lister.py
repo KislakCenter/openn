@@ -4,8 +4,8 @@ import logging
 from copy import deepcopy
 
 from openn.openn_exception import OPennException
-from openn.collections.configs import Configs
-from openn.collections.details import Details
+from openn.repository.configs import Configs
+from openn.repository.details import Details
 from openn.models import *
 
 class Lister(Details):

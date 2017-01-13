@@ -56,7 +56,7 @@ class TestSpreadsheetPrep(TestCase):
     prep_cfg_factory       = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
-        collection_configs=settings.COLLECTIONS,
+        repository_configs=settings.REPOSITORIES,
         prep_context=settings.PREP_CONTEXT)
     haverford_prep_config  = prep_cfg_factory.create_prep_config(
         'haverford-diaries')
@@ -90,8 +90,8 @@ class TestSpreadsheetPrep(TestCase):
     def test_run(self):
         # setup
         self.stage_template()
-        collection = self.haverford_prep_config.collection()
-        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        repo_wrapper = self.haverford_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'XYZ_ABC_1')
         prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
 
         # run
@@ -118,8 +118,8 @@ class TestSpreadsheetPrep(TestCase):
 
     def test_prep_dir_bad_description(self):
         self.stage_template(template=self.bad_description)
-        collection = self.haverford_prep_config.collection()
-        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        repo_wrapper = self.haverford_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'XYZ_ABC_1')
         prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
 
         with self.assertRaises(OPennException) as oe:
@@ -129,8 +129,8 @@ class TestSpreadsheetPrep(TestCase):
 
     def test_prep_dir_bad_pages(self):
         self.stage_template(template=self.bad_pages)
-        collection = self.haverford_prep_config.collection()
-        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        repo_wrapper = self.haverford_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'XYZ_ABC_1')
         prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
 
         with self.assertRaises(OPennException) as oe:
@@ -140,8 +140,8 @@ class TestSpreadsheetPrep(TestCase):
 
     def test_prep_dir_missing_file(self):
         self.stage_template()
-        collection = self.haverford_prep_config.collection()
-        doc = PrepSetup().prep_document(collection, 'XYZ_ABC_1')
+        repo_wrapper = self.haverford_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'XYZ_ABC_1')
         prep = SpreadsheetPrep(self.staged_source, doc, self.haverford_prep_config)
         tiffs = glob.glob(os.path.join(self.staged_source, '*.tif'))
         os.remove(tiffs[0])

@@ -23,18 +23,18 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testReadMeFileFailure
 #     # suite_addTest testTocFile
 #     # suite_addTest testTocFileShortOpt
-#     # suite_addTest testCollections
-#     # suite_addTest testCollectionsShortOpt
+#     # suite_addTest testRepositories
+#     # suite_addTest testRepositoriesShortOpt
 #     # suite_addTest testDocument
 #     # suite_addTest testDocumentShortOpt
-#     # suite_addTest testNoDocumentCollection
+#     # suite_addTest testNoDocumentRepository
 #     # suite_addTest testNoDocumentTocFile
 #     # suite_addTest testCollectionsCSV
-#     # suite_addTest testCSVTOCCollection
+#     # suite_addTest testCSVTOCRepository
 #     # suite_addTest testAllCSVTOCs
-#     # suite_addTest testProjectTOCOneProject
-#     # suite_addTest testProjectTOCOneProjectEmptyProject
-#     suite_addTest testProjectTOCAllProjects
+#     # suite_addTest testCuratedCollectionTOCOneCollection
+#     suite_addTest testCuratedCollectionTOCOneEmptyCollection
+#     # suite_addTest testCuratedCollectionTOCAllCollections
 # }
 
 setUp() {
@@ -64,7 +64,7 @@ testRun() {
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
     assertMatch "$output" "Creating TOC"
-    assertMatch "$output" "Creating .*Collections"
+    assertMatch "$output" "Creating .*Repositories"
     assertMatch "$output" "Skipping"
 }
 
@@ -146,12 +146,12 @@ testToc() {
     assertMatch "$output" "Skipping TOC"
 }
 
-# test TOC for collection
+# test TOC for repository
 testNoDocumentTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES/site/Collections -name \*.html -delete
-    output=`op-pages --toc-collection tdw --show-options`
+    find $STAGED_PAGES/site/Repositories -name \*.html -delete
+    output=`op-pages --toc-repository tdw --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -220,23 +220,23 @@ testReadMeFileFailure() {
     assertMatch "$output" "Unknown readme file"
 }
 
-# test TOC for collection
+# test TOC for repository
 testTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES/site/Collections -name \*.html -delete
-    output=`op-pages --toc-collection ljs --show-options`
+    find $STAGED_PAGES/site/Repositories -name \*.html -delete
+    output=`op-pages --toc-repository ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC.*ljs"
 }
 
-# test TOC for collection
+# test TOC for repository
 testTocFileShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES/site/Collections -name \*.html -delete
+    find $STAGED_PAGES/site/Repositories -name \*.html -delete
     output=`op-pages -i ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
@@ -244,45 +244,45 @@ testTocFileShortOpt() {
     assertMatch "$output" "Creating TOC.*ljs"
 }
 
-# test collections
-testCollections() {
+# test repositories
+testRepositories() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES/site/Collections -name \*.html -delete
-    output=`op-pages --collections --show-options 2>&1`
+    find $STAGED_PAGES/site/Repositories -name \*.html -delete
+    output=`op-pages --repositories --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "Creating.*Collections"
+    assertMatch "$output" "Creating.*Repositories"
 }
 
-# test no_document collection
-testNoDocumentCollection() {
+# test no_document repository
+testNoDocumentRepository() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES/site/Collections -name \*.html -delete
-    output=`op-pages --collections --show-options 2>&1`
+    find $STAGED_PAGES/site/Repositories -name \*.html -delete
+    output=`op-pages --repositories --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "tdw.*collection is live and is marked no_document"
+    assertMatch "$output" "tdw.*repository is live and is marked no_document"
 }
 
-# test collections
-testCollectionsShortOpt() {
+# test repositories with short option
+testRepositoriesShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
-    find $STAGED_PAGES/site/Collections -name \*.html -delete
+    find $STAGED_PAGES/site/Repositories -name \*.html -delete
     output=`op-pages -c --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "Creating.*Collections"
+    assertMatch "$output" "Creating.*Repositories"
 }
 
 # test document
 testDocument() {
-    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where collection = 'ljs'"`
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where repository_id = 1"`
     # mark the document online to force page generation
     mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
     output=`op-pages --document $doc_id --show-options`
@@ -294,7 +294,7 @@ testDocument() {
 
 # test document
 testDocumentShortOpt() {
-    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where collection = 'ljs'"`
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where repository_id = 1"`
     # mark the document online to force page generation
     mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
     output=`op-pages -d $doc_id --show-options`
@@ -306,19 +306,19 @@ testDocumentShortOpt() {
 
 testCollectionsCSV() {
     stagePages
-    output=`op-pages --collections-csv --show-options`
+    output=`op-pages --repositories-csv --show-options`
     status=$?
     # cat ${STAGED_PAGES}/site/Data/collections.csv
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "Wrote collections CSV file:"
+    assertMatch "$output" "Wrote repositories CSV file:"
 }
 
-testCSVTOCCollection() {
+testCSVTOCRepository() {
     stagePages
     # make sure documents are marked online
     mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    output=`op-pages --csv-toc-collection=ljs --show-options`
+    output=`op-pages --csv-toc-repository=ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     # cat ${STAGED_PAGES}/site/Data/0002_contents.csv
@@ -336,50 +336,52 @@ testAllCSVTOCs() {
     assertEquals 0 $status
     assertMatch "$output" "Wrote table of contents CSV file:.*0001_contents\.csv"
     assertMatch "$output" "CSV TOC not makeable; no HTML dir found.*/0002/"
-    assertMatch "$output" "CSV TOC not makeable; collection has no documents online"
+    assertMatch "$output" "CSV TOC not makeable; repository has no documents online"
 }
 
-testProjectTOCOneProjectEmptyProject() {
+testCuratedCollectionTOCOneEmptyCollection() {
     stagePages
     mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    output=`op-pages --csv-toc-project=bibliophilly --show-options`
+    output=`op-pages --csv-toc-curated=bibliophilly --show-options`
     status=$?
     # cat ${STAGED_PAGES}/site/Data/bibliophilly_contents.csv
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "CSV TOC not makeable; project has no documents online"
+    assertMatch "$output" "CSV TOC not makeable; curated collection has no documents online"
 }
 
-testProjectTOCOneProject() {
+testCuratedCollectionTOCOneCollection() {
     stagePages
     mysql -u openn openn_test -e "update openn_document set is_online = 1"
     doc_id=`get_a_live_docid`
-    # add_project_membership PROJECT_TAG DOCID
-    add_project_membership bibliophilly $doc_id
-    output=`op-pages --csv-toc-project=bibliophilly --show-options`
+    # add_curated_membership CURATED_TAG DOCID
+    add_curated_membership bibliophilly $doc_id
+    output=`op-pages --csv-toc-curated=bibliophilly --show-options`
     status=$?
     # save_and_open "${STAGED_PAGES}/site/Data/bibliophilly_contents.csv"
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "Wrote project table of contents CSV file:.*bibliophilly_contents\.csv"
+    assertMatch "$output" "Wrote curated collection table of contents CSV file:.*bibliophilly_contents\.csv"
 }
 
 
-testProjectTOCAllProjects() {
+# TODO create test for curated collection not live
+
+testCuratedCollectionTOCAllCollections() {
     stagePages
     mysql -u openn openn_test -e "update openn_document set is_online = 1"
     doc_id=`get_a_live_docid`
-    # add_project_membership PROJECT_TAG DOCID
-    add_project_membership bibliophilly $doc_id
-    add_project_membership pacscl-diaries $doc_id
-    output=`op-pages --csv-toc-all-projects --show-options`
+    # add_curated_membership CURATED_TAG DOCID
+    add_curated_membership bibliophilly $doc_id
+    add_curated_membership pacscl-diaries $doc_id
+    output=`op-pages --csv-toc-all-curated --show-options`
     status=$?
     # save_and_open "${STAGED_PAGES}/site/Data/bibliophilly_contents.csv"
     # save_and_open "${STAGED_PAGES}/site/Data/pacscl-diaries_contents.csv"
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
-    assertMatch "$output" "Wrote project table of contents CSV file:.*bibliophilly_contents\.csv"
-    assertMatch "$output" "Wrote project table of contents CSV file:.*pacscl-diaries_contents\.csv"
+    assertMatch "$output" "Wrote curated collection table of contents CSV file:.*bibliophilly_contents\.csv"
+    assertMatch "$output" "Wrote curated collection table of contents CSV file:.*pacscl-diaries_contents\.csv"
 }
 
 # Run shunit

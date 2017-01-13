@@ -8,18 +8,18 @@ PREPPED_DIR=$TEST_DATA_DIR/mscodex1223_prepped
 TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
 STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
 
-suite() {
-    # suite_addTest testRun
-    suite_addTest testSpreadsheetPrep
-    # suite_addTest testHaverfordExample
-    # suite_addTest testBloodyUnicode
-    # suite_addTest testStatusFlags
-    # suite_addTest testDocumentClobber
-    # suite_addTest testDocumentClobberCancel
-    # suite_addTest testDocumentClobberNoDocYet
-    # suite_addTest testDocumentClobberDocOnline
-    # suite_addTest testResume
-}
+# suite() {
+#     # suite_addTest testRun
+#     suite_addTest testSpreadsheetPrep
+#     # suite_addTest testHaverfordExample
+#     # suite_addTest testBloodyUnicode
+#     # suite_addTest testStatusFlags
+#     # suite_addTest testDocumentClobber
+#     # suite_addTest testDocumentClobberCancel
+#     # suite_addTest testDocumentClobberNoDocYet
+#     # suite_addTest testDocumentClobberDocOnline
+#     # suite_addTest testResume
+# }
 
 setUp() {
     if [ ! -d $TEST_STAGING_DIR ]; then
@@ -29,28 +29,28 @@ setUp() {
     clear_tables
 }
 
-# tearDown() {
-#     clear_tables
-#     rm -rf $TEST_STAGING_DIR/* 2>/dev/null
-# }
+tearDown() {
+    clear_tables
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+}
 
-get_collection_id() {
-    gci_tag=${1?get_collection_id - tag required}
-    gci_id=`mysql --batch --skip-column-names -u openn openn -e "select id from openn_openncollection where tag = '$gci_tag'"`
+get_repository_id() {
+    gci_tag=${1?get_repository_id - tag required}
+    gci_id=`mysql --batch --skip-column-names -u openn openn -e "select id from openn_repository where tag = '$gci_tag'"`
     [[ -z "$gci_id" ]] && return 1
     echo $gci_id
     return 0
 }
 
-get_collection_folder() {
-    gcf_id=`get_collection_id $1`
+get_repository_folder() {
+    gcf_id=`get_repository_id $1`
     [[ -z "$gcf_id" ]] && return 1
     printf "%04d\n" $gcf_id
     return 0
 }
 
 get_staging_destination() {
-    gsd_folder=`get_collection_folder $1`
+    gsd_folder=`get_repository_folder $1`
     gsd_source_dir=$2
     [[ -z "$gsd_folder" ]] && return 1
     [[ -z "$gsd_source_dir" ]] && return 1
@@ -60,11 +60,11 @@ get_staging_destination() {
 
 insert_document() {
     today=`date "+%Y-%m-%d"`
-    haverford_id=`get_collection_id  haverford` || {
-        echo  "ERROR: haverford not in collections table";
+    haverford_id=`get_repository_id  haverford` || {
+        echo  "ERROR: haverford not in repositories table";
         exit 1; }
     sql="insert into openn_document"
-    sql="$sql (openn_collection_id, base_dir, is_online, created, updated)"
+    sql="$sql (repository_id, base_dir, is_online, created, updated)"
     sql="$sql values ($haverford_id, 'MS_XYZ_1.2', 0, '$today', '$today')"
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "$sql"
 }
@@ -287,7 +287,7 @@ testStatusFlags() {
     fi
     status=$?
     assertEquals 0 $status
-    assertMatch "$output" "Collection prep already completed"
+    assertMatch "$output" "Repository prep already completed"
 }
 
 testDocumentClobber() {

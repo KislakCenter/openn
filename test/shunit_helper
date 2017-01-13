@@ -16,7 +16,9 @@ export OPENN_SITE_DIR=$TEST_STAGING_DIR/openn/site
 export OPENN_ARCHIVE_DIR=$TEST_STAGING_DIR/openn/archive
 export TEMP_FILE=${TMPDIR:-/tmp}/prog$$
 
-TABLES_TO_DELETE="openn_projectmembership openn_project openn_derivative openn_image openn_version openn_prepstatus openn_document"
+# Note that we don't clear openn_curatedcollection and openn_repository. These
+# contain what is, effectively, seed data.
+TABLES_TO_DELETE="openn_curatedmembership openn_derivative openn_image openn_version openn_prepstatus openn_document"
 
 shunit=`dirname $0`/../shunit2/src/shunit2
 
@@ -34,38 +36,38 @@ loadDb() {
     mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $this_dir/fixtures/test.sql
 }
 
-# Usage: get_collection_id COLL_TAG
+# Usage: get_repository_id REPO_TAG
 #
-# Print the ID of the collection with tag COLL_TAG.
-get_collection_id() {
-    gci_tag=${1?get_collection_id - tag required}
-    gci_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_openncollection where tag = '$gci_tag'"`
+# Print the ID of the repository with tag REPO_TAG.
+get_repository_id() {
+    gci_tag=${1?get_repository_id - tag required}
+    gci_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_repository where tag = '$gci_tag'"`
     [[ -z "$gci_id" ]] && return 1
     echo $gci_id
     return 0
 }
 
-# Usage: get_project_id PROJ_TAG
+# Usage: get_curated_collection_id CURATED_TAG
 #
-# Print the ID of the project with tag PROJ_TAG.
-get_project_id() {
-    gpi_tag=${1?get_project_id - tag required}
-    gpi_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_project where tag = '$gpi_tag'"`
+# Print the ID of the curated_colection with tag CURATED_TAG.
+get_curated_collection_id() {
+    gpi_tag=${1?get_curated_collection_id - tag required}
+    gpi_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_curatedcollection where tag = '$gpi_tag'"`
     [[ -z "$gpi_id" ]] && return 1
     echo $gpi_id
     return 0
 }
 
-# Usage: get_document_id BASE_DIR COLL_TAG
+# Usage: get_document_id BASE_DIR REPO_TAG
 #
 # Print the document ID for the document with base_dir BASE_DIR in the
-# collection with tag COLL_TAG.
+# repository with tag REPO_TAG.
 get_document_id() {
     gdi_base_dir=${1?get_document_id - base_dir required}
-    gdi_collection_tag=${2?get_document_id - collection_tag required}
+    gdi_repository_tag=${2?get_document_id - repository_tag required}
 
-    gdi_coll_id=`get_collection_id $gdi_collection_tag`
-    gdi_doc_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document where base_dir = '$gdi_base_dir' and openn_collection_id = $gdi_coll_id"`
+    gdi_repo_id=`get_repository_id $gdi_repository_tag`
+    gdi_doc_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document where base_dir = '$gdi_base_dir' and repository_id = $gdi_repo_id"`
 
     if [[ "$gdi_doc_id" ]]; then
         echo "$gdi_doc_id"
@@ -82,33 +84,33 @@ get_a_live_docid() {
   mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document where is_online = 1 limit 1"
 }
 
-# Usage: add_project_membership PROJECT_TAG DOCID
-add_project_membership() {
-    am_proj_tag=${1?add_project_membership - PROJECT_TAG required}
-    am_docid=${2?add_project_membership - DOCID required}
+# Usage: add_curated_membership CURATED_TAG DOCID
+add_curated_membership() {
+    am_curt_tag=${1?add_curated_membership - CURATED_TAG required}
+    am_docid=${2?add_curated_membership - DOCID required}
 
     # echo "=== $am_docid"
-    am_proj_id=`get_project_id $am_proj_tag`
+    am_curt_id=`get_curated_collection_id $am_curt_tag`
     today=`date "+%Y-%m-%d"`
-    sql="insert into openn_projectmembership"
-    sql="$sql (project_id, document_id, created, updated)"
-    sql="$sql values ($am_proj_id, $am_docid, '$today', '$today')"
+    sql="insert into openn_curatedmembership"
+    sql="$sql (curated_collection_id, document_id, created, updated)"
+    sql="$sql values ($am_curt_id, $am_docid, '$today', '$today')"
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "$sql"
 }
 
-# Usage: insert_document BASE_DIR COLL_TAG
+# Usage: insert_document BASE_DIR REPO_TAG
 #
-# Insert new document with BASE_DIR, linked to collection with tag COLL_TAG.
+# Insert new document with BASE_DIR, linked to repository with tag REPO_TAG.
 insert_document() {
     id_base_dir=${1?insert_document - base_dir required}
-    id_collection_tag=${2?insert_document - collection_tag required}
+    id_repository_tag=${2?insert_document - repository_tag required}
     today=`date "+%Y-%m-%d"`
-    collection_id=`get_collection_id $id_collection_tag` || {
-        echo  "ERROR: $id_collection_tag not in collections table";
+    repository_id=`get_repository_id $id_repository_tag` || {
+        echo  "ERROR: $id_repository_tag not in repositories table";
         exit 1; }
     sql="insert into openn_document"
-    sql="$sql (openn_collection_id, base_dir, is_online, created, updated)"
-    sql="$sql values ($collection_id, '$id_base_dir', 0, '$today', '$today')"
+    sql="$sql (repository_id, base_dir, is_online, created, updated)"
+    sql="$sql values ($repository_id, '$id_base_dir', 0, '$today', '$today')"
     mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "$sql"
 }
 

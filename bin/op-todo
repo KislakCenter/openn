@@ -30,7 +30,7 @@ will create the file
 with the content
 
     source: /mnt/managedmasters/kislak/mscodex1234
-    coll_prep: penn-pih
+    repo_prep: penn-pih
     bibid: 1234567
 
 EOF
@@ -61,7 +61,7 @@ trap "cleanup; exit" 0
 #### USAGE AND ERRORS
 
 usage() {
-   echo "Usage: $cmd [OPTIONS] PATH_TO_DOC COLL_PREP BIBID"
+   echo "Usage: $cmd [OPTIONS] PATH_TO_DOC REPO_PREP BIBID"
 }
 
 op_todo_help() {
@@ -133,7 +133,7 @@ else
 fi
 
 DOC_DIR=$1
-COLL_PREP=$2
+REPO_PREP=$2
 BIBID=$3
 
 if [[ -d $DOC_DIR ]]
@@ -149,12 +149,12 @@ else
     error "Not a valid directory: $DOC_DIR"
 fi
 
-coll_preps=`${this_dir}/op-prep -l`
-if echo "$coll_preps" | grep -q "^${COLL_PREP}$"
+repo_preps=`${this_dir}/op-prep -l`
+if echo "$repo_preps" | grep -q "^${REPO_PREP}$"
 then
-    message "Using collection prep: $COLL_PREP"
+    message "Using repository prep: $REPO_PREP"
 else
-    error_no_exit "Unknown collection prep: '$COLL_PREP'"
+    error_no_exit "Unknown repository prep: '$REPO_PREP'"
     error "Use 'op-prep --list' to see valid values"
 fi
 
@@ -173,11 +173,11 @@ fi
 
 cat <<EOF > $outfile
 source: $DOC_DIR
-coll_prep: $COLL_PREP
+repo_prep: $REPO_PREP
 bibid: $BIBID
 EOF
 
-# echo "${DOC_DIR}:${COLL_PREP}:${BIBID}" > $outfile
+# echo "${DOC_DIR}:${REPO_PREP}:${BIBID}" > $outfile
 chmod 664 $outfile
 message "Wrote todo file: $outfile"
 message "Content:"

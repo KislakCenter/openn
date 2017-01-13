@@ -15,6 +15,11 @@
 - CSV for each project/curated collections
 <!-- - CSV for each repository -->
 
+# Deploy
+
+Re-run config
+Update op-todo items, coll_config -> repo_config
+
 BibPhilly changes
 - Add metadata creator to spreadsheet to XML code as TEI <resp>Project
   Cataloger</resp>, <resp>Inst'l cataloger</resp> --- language to be

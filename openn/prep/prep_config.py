@@ -1,20 +1,20 @@
 import json
 from copy import deepcopy
 
-from openn.collections.collection import Collection
+from openn.repository.repository_wrapper import RepositoryWrapper
 from openn.prep.prep_method import PrepMethod
 from openn.openn_exception import OPennException
 
 class PrepConfig:
-    def __init__(self, prep_config_tag, coll_prep_dict, coll_dict, prep_dict,
+    def __init__(self, prep_config_tag, repo_prep_dict, repo_dict, prep_dict,
                  prep_context):
         "docstring"
         self._prep_config_tag  = prep_config_tag
-        self._coll_prep_dict   = deepcopy(coll_prep_dict)
-        self._collection       = Collection(coll_dict)
+        self._repo_prep_dict   = deepcopy(repo_prep_dict)
+        self._repo_wrapper     = RepositoryWrapper(repo_dict)
         self._prep_method      = PrepMethod(prep_dict)
         self._context          = deepcopy(prep_context)
-        self._common_prep_dict = self._coll_prep_dict['common_prep']
+        self._common_prep_dict = self._repo_prep_dict['common_prep']
 
     def image_rights(self):
         try:
@@ -26,11 +26,11 @@ class PrepConfig:
     def context_var(self, name):
         return self._context[name]
 
-    def collection(self):
-        return self._collection
+    def repository_wrapper(self):
+        return self._repo_wrapper
 
-    def openn_collection(self):
-        return self.collection().openn_collection()
+    def repository(self):
+        return self.repository_wrapper().repository()
 
     def prep_method(self):
         return self._prep_method
@@ -59,9 +59,9 @@ class PrepConfig:
 
     def image_types(self):
         try:
-            return self._coll_prep_dict['image_types']
+            return self._repo_prep_dict['image_types']
         except KeyError:
             msg = "Cannot find required PREP_CONFIG parameter 'image_type'"
             msg += " in dict %s"
-            msg = msg % (json.dumps(self._coll_prep_dict),)
+            msg = msg % (json.dumps(self._repo_prep_dict),)
             raise OPennException(msg)

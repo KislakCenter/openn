@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}OPenn: Hosted repositories{% endblock %}
+
+{% block content %}
+
+<div class="breadcrumb"><p>
+    <span><a href="/">Home</a>&nbsp;</span>
+</p></div>
+
+<h1>OPenn: Hosted Repositories</h1>
+<ul class="ul_documents">
+{% for repository in repositories %}
+   <li>
+     <span class="coll-name"><a href="/{{context.toc_dir}}/{{repository.toc_file}}">{{repository.name}}</a><br />
+       Repository ID: {{repository.long_id}} | Metadata format: {{ repository.metadata_type }} </span><br />
+     <span>{{ repository.blurb |safe }}</span>
+   </li>
+{% endfor %}
+</ul>
+{% endblock %}

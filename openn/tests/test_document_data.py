@@ -9,12 +9,12 @@ from django.conf import settings
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.models import *
 from openn.pages.document_data import DocumentData
-from openn.collections.configs import Configs
+from openn.repository.configs import Configs
 
 class TestDocumentData(TestCase):
     fixtures = [ 'test.json' ]
-    configs = Configs(settings.COLLECTIONS)
-    pennmss_wrapper = configs.get_collection('pennmss')
+    configs = Configs(settings.REPOSITORIES)
+    pennmss_wrapper = configs.get_repository('pennmss')
 
     def setUp(self):
         pass

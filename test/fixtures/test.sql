@@ -42,6 +42,71 @@ LOCK TABLES `openn_altcollection` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `openn_curatedcollection`
+--
+
+DROP TABLE IF EXISTS `openn_curatedcollection`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `openn_curatedcollection` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `blurb` longtext COLLATE utf8_unicode_ci,
+  `csv_only` tinyint(1) NOT NULL,
+  `include_file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `live` tinyint(1) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag` (`tag`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `include_file` (`include_file`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `openn_curatedcollection`
+--
+
+LOCK TABLES `openn_curatedcollection` WRITE;
+/*!40000 ALTER TABLE `openn_curatedcollection` DISABLE KEYS */;
+INSERT INTO `openn_curatedcollection` VALUES (1,'bibliophilly','Bibliotheca Philadelphiensis','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet scelerisque tellus, ac dapibus neque. Vestibulum viverra mi odio, eu luctus elit volutpat nec. Vivamus sed nunc diam. Ut sed feugiat lectus. Curabitur cursus purus non ligula vulputate, vel porta lectus auctor. In magna velit, accumsan sed elit at, ultricies consequat dolor. Nullam at venenatis felis, cursus tristique ex. Nulla bibendum ante quis nisl placerat molestie. Morbi scelerisque non diam eget pharetra.\n\nInteger lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligula vitae suscipit. Morbi ultricies dolor et nunc euismod malesuada. Nullam sollicitudin neque imperdiet arcu pellentesque mattis. Aenean vitae urna et felis placerat rhoncus in ut libero. Vestibulum vel diam dui. Curabitur in mauris non dui pharetra aliquet nec nec quam. Nulla maximus ipsum nibh. Nulla bibendum, nunc at condimentum suscipit, nisl est sodales massa, quis faucibus odio neque ac nisl.',0,'BiblioPhilly.html',1,'2017-01-11 09:41:15','2017-01-11 09:41:15'),(2,'pacscl-diaries','PACSCL Diares','Lorem ipsum',0,'PACSCLDiaries.html',1,'2017-01-11 09:41:15','2017-01-11 09:41:15'),(3,'thai','Thai Manuscripts','Lorem ipsum',1,NULL,1,'2017-01-11 09:41:15','2017-01-11 09:41:15');
+/*!40000 ALTER TABLE `openn_curatedcollection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `openn_curatedmembership`
+--
+
+DROP TABLE IF EXISTS `openn_curatedmembership`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `openn_curatedmembership` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `document_id` int(11) NOT NULL,
+  `curated_collection_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `openn_projectmembership_document_id_49fe68f38821ba30_uniq` (`document_id`,`curated_collection_id`),
+  KEY `openn_projectmembership_b7398729` (`document_id`),
+  KEY `openn_projectmembership_37952554` (`curated_collection_id`),
+  CONSTRAINT `curated_collection_id_refs_id_56616e52` FOREIGN KEY (`curated_collection_id`) REFERENCES `openn_curatedcollection` (`id`),
+  CONSTRAINT `document_id_refs_id_dd6d44a7` FOREIGN KEY (`document_id`) REFERENCES `openn_document` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `openn_curatedmembership`
+--
+
+LOCK TABLES `openn_curatedmembership` WRITE;
+/*!40000 ALTER TABLE `openn_curatedmembership` DISABLE KEYS */;
+/*!40000 ALTER TABLE `openn_curatedmembership` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `openn_derivative`
 --
 
@@ -99,11 +164,11 @@ CREATE TABLE `openn_document` (
   `metadata_copyright_holder` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `metadata_copyright_year` int(11) DEFAULT NULL,
   `metadata_rights_more_info` longtext COLLATE utf8_unicode_ci,
-  `openn_collection_id` int(11) NOT NULL,
+  `repository_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `openn_document_openn_collection_id_7553d73c4cdd9185_uniq` (`openn_collection_id`,`base_dir`),
-  KEY `openn_document_a7dffeff` (`openn_collection_id`),
-  CONSTRAINT `openn_collection_id_refs_id_f79e4898` FOREIGN KEY (`openn_collection_id`) REFERENCES `openn_openncollection` (`id`)
+  UNIQUE KEY `openn_document_openn_collection_id_7553d73c4cdd9185_uniq` (`repository_id`,`base_dir`),
+  KEY `openn_document_a7dffeff` (`repository_id`),
+  CONSTRAINT `repository_id_refs_id_c33b5d29` FOREIGN KEY (`repository_id`) REFERENCES `openn_repository` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -180,32 +245,6 @@ INSERT INTO `openn_image` VALUES (1,0,1,'Front cover','data/mscodex1223_wk1_fron
 UNLOCK TABLES;
 
 --
--- Table structure for table `openn_openncollection`
---
-
-DROP TABLE IF EXISTS `openn_openncollection`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `openn_openncollection` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tag` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `metadata_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tag` (`tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `openn_openncollection`
---
-
-LOCK TABLES `openn_openncollection` WRITE;
-/*!40000 ALTER TABLE `openn_openncollection` DISABLE KEYS */;
-INSERT INTO `openn_openncollection` VALUES (1,'ljs','tei'),(2,'pennmss','tei'),(3,'brynmawr','tei'),(4,'drexarc','tei'),(5,'drexmed','tei'),(6,'haverford','tei'),(7,'lehigh','tei'),(8,'tlc','tei'),(9,'libpa','tei'),(10,'friendshl','tei'),(11,'hsp','tei'),(12,'lts','tei'),(13,'ulp','tei'),(14,'ulpx','tei'),(15,'private1','custom'),(16,'ism','TEI'),(17,'pennmuseum','TEI'),(18,'gsp','TEI'),(19,'pennmuseumarchives','TEI'),(20,'uarc','TEI'),(21,'tdw','walters-tei');
-/*!40000 ALTER TABLE `openn_openncollection` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `openn_prepstat`
 --
 
@@ -263,68 +302,29 @@ INSERT INTO `openn_prepstatus` VALUES (1,'2015-07-07 16:43:27','2015-07-07 16:43
 UNLOCK TABLES;
 
 --
--- Table structure for table `openn_project`
+-- Table structure for table `openn_repository`
 --
 
-DROP TABLE IF EXISTS `openn_project`;
+DROP TABLE IF EXISTS `openn_repository`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `openn_project` (
+CREATE TABLE `openn_repository` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `blurb` longtext COLLATE utf8_unicode_ci,
-  `csv_only` tinyint(1) NOT NULL,
-  `include_file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `live` tinyint(1) NOT NULL,
-  `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
+  `metadata_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `tag` (`tag`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `include_file` (`include_file`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `tag` (`tag`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `openn_project`
+-- Dumping data for table `openn_repository`
 --
 
-LOCK TABLES `openn_project` WRITE;
-/*!40000 ALTER TABLE `openn_project` DISABLE KEYS */;
-INSERT INTO `openn_project` VALUES (1,'bibliophilly','Bibliotheca Philadelphiensis','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet scelerisque tellus, ac dapibus neque. Vestibulum viverra mi odio, eu luctus elit volutpat nec. Vivamus sed nunc diam. Ut sed feugiat lectus. Curabitur cursus purus non ligula vulputate, vel porta lectus auctor. In magna velit, accumsan sed elit at, ultricies consequat dolor. Nullam at venenatis felis, cursus tristique ex. Nulla bibendum ante quis nisl placerat molestie. Morbi scelerisque non diam eget pharetra.\n\nInteger lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligula vitae suscipit. Morbi ultricies dolor et nunc euismod malesuada. Nullam sollicitudin neque imperdiet arcu pellentesque mattis. Aenean vitae urna et felis placerat rhoncus in ut libero. Vestibulum vel diam dui. Curabitur in mauris non dui pharetra aliquet nec nec quam. Nulla maximus ipsum nibh. Nulla bibendum, nunc at condimentum suscipit, nisl est sodales massa, quis faucibus odio neque ac nisl.',0,'BiblioPhilly.html',1,'2016-12-13 12:14:22','2016-12-14 08:43:23'),(2,'pacscl-diaries','PACSCL Diares','Lorem ipsum',0,'PACSCLDiaries.html',1,'2016-12-13 12:14:22','2016-12-13 12:14:22'),(3,'thai','Thai Manuscripts','Lorem ipsum',1,NULL,1,'2016-12-13 12:14:22','2016-12-13 12:14:22');
-/*!40000 ALTER TABLE `openn_project` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `openn_projectmembership`
---
-
-DROP TABLE IF EXISTS `openn_projectmembership`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `openn_projectmembership` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `document_id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `updated` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `openn_projectmembership_document_id_49fe68f38821ba30_uniq` (`document_id`,`project_id`),
-  KEY `openn_projectmembership_b7398729` (`document_id`),
-  KEY `openn_projectmembership_37952554` (`project_id`),
-  CONSTRAINT `document_id_refs_id_dd6d44a7` FOREIGN KEY (`document_id`) REFERENCES `openn_document` (`id`),
-  CONSTRAINT `project_id_refs_id_d524885d` FOREIGN KEY (`project_id`) REFERENCES `openn_project` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `openn_projectmembership`
---
-
-LOCK TABLES `openn_projectmembership` WRITE;
-/*!40000 ALTER TABLE `openn_projectmembership` DISABLE KEYS */;
-/*!40000 ALTER TABLE `openn_projectmembership` ENABLE KEYS */;
+LOCK TABLES `openn_repository` WRITE;
+/*!40000 ALTER TABLE `openn_repository` DISABLE KEYS */;
+INSERT INTO `openn_repository` VALUES (1,'ljs','tei'),(2,'pennmss','tei'),(3,'brynmawr','tei'),(4,'drexarc','tei'),(5,'drexmed','tei'),(6,'haverford','tei'),(7,'lehigh','tei'),(8,'tlc','tei'),(9,'libpa','tei'),(10,'friendshl','tei'),(11,'hsp','tei'),(12,'lts','tei'),(13,'ulp','tei'),(14,'ulpx','tei'),(15,'private1','custom'),(16,'ism','TEI'),(17,'pennmuseum','TEI'),(18,'gsp','TEI'),(19,'pennmuseumarchives','TEI'),(20,'uarc','TEI'),(21,'tdw','walters-tei');
+/*!40000 ALTER TABLE `openn_repository` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -375,7 +375,7 @@ CREATE TABLE `south_migrationhistory` (
   `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -384,7 +384,7 @@ CREATE TABLE `south_migrationhistory` (
 
 LOCK TABLES `south_migrationhistory` WRITE;
 /*!40000 ALTER TABLE `south_migrationhistory` DISABLE KEYS */;
-INSERT INTO `south_migrationhistory` VALUES (1,'openn','0001_initial','2015-01-28 14:27:56'),(2,'openn','0002_auto__add_field_document_is_online','2015-01-28 14:27:56'),(3,'openn','0003_auto__add_field_document_base_dir__add_field_document_tei_file_name','2015-01-28 14:27:56'),(4,'openn','0004_auto__add_field_document_colletion__chg_field_document_base_dir','2015-01-28 14:27:57'),(5,'openn','0005_auto__del_field_document_colletion__add_field_document_collection__add','2015-01-28 14:27:57'),(6,'openn','0006_auto__del_unique_document_collection_call_number__add_unique_document_','2015-01-28 14:27:57'),(7,'openn','0007_auto__add_image__add_derivative','2015-01-28 14:27:57'),(8,'openn','0008_auto__del_field_derivative_component__add_field_derivative_image','2015-01-28 14:27:57'),(9,'openn','0009_auto__add_field_document_title','2015-01-28 14:27:57'),(10,'openn','0010_auto__add_field_document_tei_xml','2015-01-28 14:27:57'),(11,'openn','0011_auto__chg_field_image_image_type','2015-01-28 14:27:57'),(12,'openn','0012_auto__add_field_image_created__add_field_image_updated__add_field_deri','2015-01-28 14:27:57'),(13,'openn','0013_auto__add_version__add_unique_version_document_major_version_minor_ver','2015-01-28 14:27:58'),(14,'openn','0014_auto__add_field_version_created__add_field_version_updated','2015-01-28 14:27:58'),(15,'openn','0015_auto__chg_field_document_call_number__chg_field_document_title','2015-01-28 14:27:58'),(16,'openn','0016_auto__add_prepstatus','2015-01-28 14:27:58'),(17,'openn','0017_auto__del_field_document_tei_file_name','2015-01-28 14:27:58'),(18,'django_extensions','0001_empty','2015-01-28 14:27:58'),(19,'openn','0018_auto__add_field_document_image_licence__add_field_document_metadata_li','2015-07-02 14:16:26'),(20,'openn','0019_auto__add_field_document_image_copyright_holder__add_field_document_im','2015-07-06 13:20:20'),(21,'openn','0020_auto__add_openncollection__add_field_document_openn_collection','2015-09-28 13:58:40'),(22,'openn','0021_add_collections','2015-09-28 13:58:40'),(23,'openn','0022_document_change_medren_to_pennmss','2015-09-28 13:58:40'),(24,'openn','0023_set_document_openncollection_ids','2015-09-28 13:58:40'),(25,'openn','0024_auto__chg_field_document_openn_collection','2015-09-28 13:58:40'),(26,'openn','0025_auto__add_field_openncollection_metadata_type','2015-09-28 13:58:40'),(27,'openn','0026_auto__chg_field_document_collection','2015-09-28 19:40:31'),(28,'openn','0027_auto__del_unique_document_collection_base_dir__add_unique_document_ope','2015-09-28 19:40:31');
+INSERT INTO `south_migrationhistory` VALUES (1,'openn','0001_initial','2015-01-28 14:27:56'),(2,'openn','0002_auto__add_field_document_is_online','2015-01-28 14:27:56'),(3,'openn','0003_auto__add_field_document_base_dir__add_field_document_tei_file_name','2015-01-28 14:27:56'),(4,'openn','0004_auto__add_field_document_colletion__chg_field_document_base_dir','2015-01-28 14:27:57'),(5,'openn','0005_auto__del_field_document_colletion__add_field_document_collection__add','2015-01-28 14:27:57'),(6,'openn','0006_auto__del_unique_document_collection_call_number__add_unique_document_','2015-01-28 14:27:57'),(7,'openn','0007_auto__add_image__add_derivative','2015-01-28 14:27:57'),(8,'openn','0008_auto__del_field_derivative_component__add_field_derivative_image','2015-01-28 14:27:57'),(9,'openn','0009_auto__add_field_document_title','2015-01-28 14:27:57'),(10,'openn','0010_auto__add_field_document_tei_xml','2015-01-28 14:27:57'),(11,'openn','0011_auto__chg_field_image_image_type','2015-01-28 14:27:57'),(12,'openn','0012_auto__add_field_image_created__add_field_image_updated__add_field_deri','2015-01-28 14:27:57'),(13,'openn','0013_auto__add_version__add_unique_version_document_major_version_minor_ver','2015-01-28 14:27:58'),(14,'openn','0014_auto__add_field_version_created__add_field_version_updated','2015-01-28 14:27:58'),(15,'openn','0015_auto__chg_field_document_call_number__chg_field_document_title','2015-01-28 14:27:58'),(16,'openn','0016_auto__add_prepstatus','2015-01-28 14:27:58'),(17,'openn','0017_auto__del_field_document_tei_file_name','2015-01-28 14:27:58'),(18,'django_extensions','0001_empty','2015-01-28 14:27:58'),(19,'openn','0018_auto__add_field_document_image_licence__add_field_document_metadata_li','2015-07-02 14:16:26'),(20,'openn','0019_auto__add_field_document_image_copyright_holder__add_field_document_im','2015-07-06 13:20:20'),(21,'openn','0020_auto__add_openncollection__add_field_document_openn_collection','2015-09-28 13:58:40'),(22,'openn','0021_add_collections','2015-09-28 13:58:40'),(23,'openn','0022_document_change_medren_to_pennmss','2015-09-28 13:58:40'),(24,'openn','0023_set_document_openncollection_ids','2015-09-28 13:58:40'),(25,'openn','0024_auto__chg_field_document_openn_collection','2015-09-28 13:58:40'),(26,'openn','0025_auto__add_field_openncollection_metadata_type','2015-09-28 13:58:40'),(27,'openn','0026_auto__chg_field_document_collection','2015-09-28 19:40:31'),(28,'openn','0027_auto__del_unique_document_collection_base_dir__add_unique_document_ope','2015-09-28 19:40:31'),(29,'openn','0028_auto__add_projectmembership__add_unique_projectmembership_document_pro','2017-01-11 09:24:39'),(30,'openn','0029_rename_openn_collection_to_repository','2017-01-11 09:24:39'),(31,'openn','0030_rename_openn_collection_id_to_repository_id_in_openn_document','2017-01-11 15:06:46'),(32,'openn','0031_rename_project_to_curated_collection','2017-01-20 13:31:12'),(33,'openn','0032_rename_project_membership_to_curated_membership','2017-01-20 14:08:36'),(34,'openn','0033_rename_column_project_id_to_curated_collection_id_in_curated_membership','2017-01-20 14:55:27');
 /*!40000 ALTER TABLE `south_migrationhistory` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -397,4 +397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-15 11:13:48
+-- Dump completed on 2017-01-20 15:55:36

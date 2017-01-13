@@ -6,18 +6,18 @@ from openn.models import *
 class CollectionsCSV(OPennCSV):
     """Generate CSV table of contents for all collections. Looks like this (without padding):
 
-    collection_id,  collection_tag, collection_type,  metadata_type,  collection_name
+    repository_id,  collection_tag, collection_type,  metadata_type,  collection_name
     0001,           ljs,            repository,       TEI,            Lawrence J. Schoenberg Manuscripts
     0002,           pennmss,        repository,       TEI,            University of Pennsylvania Books & Manuscripts
     0003,           brynmawr,       repository,       TEI,            Bryn Mawr College Library Special Collections
     0004,           drexarc,        repository,       TEI,            Drexel University Archives and Special Collections
     N/A,            bibliophilly,   curated,          N/A,            Bibliotheca Philadelphiensis
     """
-    HEADER = 'collection_id,collection_tag,collection_type,metadata_type,collection_name'.split(',')
+    HEADER = 'repository_id,collection_tag,collection_type,metadata_type,collection_name'.split(',')
 
     """docstring for CollectionsCSV"""
-    def __init__(self, coll_configs, **kwargs):
-        self.coll_configs = coll_configs
+    def __init__(self, repo_configs, **kwargs):
+        self.repo_configs = repo_configs
         outfile           = os.path.join('Data', 'collections.csv')
         kwargs.update({ 'outfile': outfile })
         super(CollectionsCSV, self).__init__(**kwargs)
@@ -25,25 +25,25 @@ class CollectionsCSV(OPennCSV):
     def write_file(self):
         try:
             self.writerow(CollectionsCSV.HEADER)
-            for coll_wrapper in self.coll_configs.all_collections():
-                if coll_wrapper.is_live():
+            for repo_wrapper in self.repo_configs.all_repositories():
+                if repo_wrapper.is_live():
                     row = [
-                        coll_wrapper.long_id(),
-                        coll_wrapper.tag(),
+                        repo_wrapper.long_id(),
+                        repo_wrapper.tag(),
                         'repository',
-                        coll_wrapper.metadata_type(),
-                        coll_wrapper.name(),
+                        repo_wrapper.metadata_type(),
+                        repo_wrapper.name(),
                         ]
                     self.writerow(row)
 
-            for project in Project.objects.all():
-                if project.live:
+            for curated in CuratedCollection.objects.all():
+                if curated.live:
                     row = [
                         'N/A',
-                        project.tag,
+                        curated.tag,
                         'curated',
                         'N/A',
-                        project.name,
+                        curated.name,
                         ]
                     self.writerow(row)
         finally:

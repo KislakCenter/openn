@@ -12,7 +12,7 @@ TEMPLATE_TEI=$TEST_DATA_DIR/xml/Archie_TEI.xml
 setUp() {
     # make sure the database is empty
     clear_tables
-    update_output=`op-coll update`
+    update_output=`op-repo update`
     if [[ $? -ne 0 ]]
     then
         echo "$output"

@@ -2,9 +2,9 @@
 
 """Module summary
 
-Usage: op-cust-prep.py COLL_PREP FOLDER_NAME INPUT_FILE
+Usage: op-cust-prep.py REPO_PREP FOLDER_NAME INPUT_FILE
 
-- add the document with FOLDER_NAME using COLL_PREP and the text of
+- add the document with FOLDER_NAME using REPO_PREP and the text of
   INPUT_FILE
 
 """
@@ -28,7 +28,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 from openn.openn_exception import OPennException
 from openn.prep.prep_setup import PrepSetup
 from openn.prep.prep_config_factory import PrepConfigFactory
-from openn.collections.configs import Configs
+from openn.repository.configs import Configs
 
 
 # Import your models for use in your script
@@ -57,24 +57,24 @@ def setup_logger():
     global logger
     logger = logging.getLogger(__name__)
 
-def collection_configs():
-    return Configs(settings.COLLECTIONS)
+def repository_configs():
+    return Configs(settings.REPOSITORIES)
 
-def validate_doc(base_dir, openn_collection, opts):
+def validate_doc(base_dir, repository, opts):
     params = { 'base_dir': base_dir,
-               'openn_collection': openn_collection }
+               'repository': repository }
     if openn_db.doc_exists(params):
         if opts.clobber:
             pass
         else:
             msg = "Document already exists with base_dir '%s' "
-            msg += "and primary collection '%s'"
-            raise OPennException(msg % (base_dir, openn_collection))
+            msg += "and repository '%s'"
+            raise OPennException(msg % (base_dir, repository))
     else:
         if opts.clobber:
             msg = "Clobber option not valid for non-existent document with"
-            msg += " base_dir '%s' and primary collection '%s'"
-            raise OPennException(msg % (base_dir, openn_collection))
+            msg += " base_dir '%s' and repository '%s'"
+            raise OPennException(msg % (base_dir, repository))
 
 def setup_prepstatus(doc):
     # destroy the associate prep if it exists
@@ -100,7 +100,7 @@ def get_prep_config(prep_config_tag, folder_name, input_file):
     prep_config_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
-        collection_configs=settings.COLLECTIONS,
+        repository_configs=settings.REPOSITORIES,
         prep_context=settings.PREP_CONTEXT)
 
     return prep_config_factory.create_prep_config(prep_config_tag)
@@ -110,12 +110,12 @@ def do_prep(prep_config_tag, folder_name, input_file, opts):
         prepstatus       = None
         base_dir         = os.path.basename(folder_name)
         prep_config      = get_prep_config(prep_config_tag, folder_name, input_file)
-        openn_collection = prep_config.openn_collection()
-        validate_doc(base_dir, openn_collection, opts)
+        repository = prep_config.repository()
+        validate_doc(base_dir, repository, opts)
 
         setup            = PrepSetup()
-        coll             = prep_config.collection()
-        doc              = setup.prep_document(coll, base_dir)
+        repo_wrapper     = prep_config.repository_wrapper()
+        doc              = setup.prep_document(repo_wrapper, base_dir)
 
         prepstatus       = setup_prepstatus(doc)
 
@@ -141,7 +141,7 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
-    if opts.list_coll_preps:
+    if opts.list_repo_preps:
         print "%s" % ('\n'.join(sorted(prep_config_tags())),)
         return status
 
@@ -167,11 +167,11 @@ def main(cmdline=None):
 def make_parser():
     """op-cust-prep.py option parser"""
 
-    usage = "%prog [OPTIONS] COLL_PREP FOLDER_NAME INPUT_FILE"
-    epilog = """ Prepare FOLDER_NAME as an OPenn document using collection prep
-COLL_PREP with descriptive metadata from INPUT_FILE.
+    usage = "%prog [OPTIONS] REPO_PREP FOLDER_NAME INPUT_FILE"
+    epilog = """ Prepare FOLDER_NAME as an OPenn document using repository prep
+REPO_PREP with descriptive metadata from INPUT_FILE.
 
-Known collection preps are:
+Known repository preps are:
 
     %s
 
@@ -191,10 +191,10 @@ prepare correctly the first time. Will fail if document is on-line.
 
     parser = OpOptParser(usage=usage,epilog=epilog)
 
-    list_help = 'List all known collection preps and quit; no'
+    list_help = 'List all known repository preps and quit; no'
     list_help += ' arguments required; any arguments ignored'
     parser.add_option('-l', '--list',
-                      action='store_true', dest='list_coll_preps', default=False,
+                      action='store_true', dest='list_repo_preps', default=False,
                       help=list_help)
 
     clobber_help = 'if it exists, delete document from database'
