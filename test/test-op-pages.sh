@@ -184,7 +184,7 @@ testReadMe() {
 # test readme
 testReadMeShortOpt() {
     # stagePages
-    output=`op-pages -r --show-options`
+    output=`op-pages -m --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -204,7 +204,7 @@ testReadMeFile() {
 
 # test readme-file
 testReadMeFileShortOpt() {
-    output=`op-pages -m ReadMe.html --show-options`
+    output=`op-pages -M ReadMe.html --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -237,7 +237,7 @@ testTocFileShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
-    output=`op-pages -i ljs --show-options`
+    output=`op-pages -T ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -273,7 +273,7 @@ testRepositoriesShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
-    output=`op-pages -c --show-options 2>&1`
+    output=`op-pages -r --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -297,7 +297,7 @@ testDocumentShortOpt() {
     doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where repository_id = 1"`
     # mark the document online to force page generation
     mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
-    output=`op-pages -d $doc_id --show-options`
+    output=`op-pages -B $doc_id --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
@@ -306,7 +306,7 @@ testDocumentShortOpt() {
 
 testCollectionsCSV() {
     stagePages
-    output=`op-pages --repositories-csv --show-options`
+    output=`op-pages --collections-csv --show-options`
     status=$?
     # cat ${STAGED_PAGES}/site/Data/collections.csv
     if [ $status != 0 ]; then echo "$output"; fi
@@ -365,7 +365,7 @@ testCuratedCollectionTOCOneCollection() {
 }
 
 
-# TODO create test for curated collection not live
+# TODO: create test for curated collection not live
 
 testCuratedCollectionTOCAllCollections() {
     stagePages

@@ -322,7 +322,7 @@ class PackageDir:
         ``images_rights`` dict.
 
         """
-        # TODO Need to have information to handle dynamic rights MD:
+        # TODO: Need to have information to handle dynamic rights MD:
         # licence configs (including single image licence text); the
         # appropriate 'single_image' licence type (PD, CC-BY,
         # CC-BY-SA, or CC0) for this doc.

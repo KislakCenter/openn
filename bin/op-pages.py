@@ -205,14 +205,14 @@ def process_all(opts):
     browse(opts)
     toc(opts)
     repositories(opts)
-    # TODO curated collections HTML toc
+    # TODO: curated collections HTML toc
     readme(opts)
     csv_toc(opts)
     repositories_csv(opts)
     csv_toc_all_curated_collections(opts)
 
 def browse(opts):
-    """Process browse HTML files as needed"""
+    """Generate browse HTML files as needed"""
     # update online statuses of the Documents first
     update_online_statuses()
     docids = [doc.id for doc in opfunc.queryset_iterator(
@@ -221,26 +221,26 @@ def browse(opts):
         document(docid, opts)
 
 def toc(opts):
-    """Process TOC HTML files as needed"""
+    """Generate TOC HTML files as needed"""
     for tag in opfunc.get_repo_tags():
         toc_repository(tag, opts)
 
 def toc_repository(repo_tag, opts):
-    """Process table of contents for repo_tag"""
+    """Generate table of contents for repo_tag"""
     repo_wrapper = opfunc.get_repo_wrapper(repo_tag)
     make_toc_html(repo_wrapper, opts)
 
 def document(docid, opts):
-    """Process browse HTML for DOC_ID"""
+    """Generate browse HTML for DOC_ID"""
     make_browse_html(docid, opts)
 
 def readme(opts):
-    """Process ReadMe files as needed"""
+    """Generate ReadMe files as needed"""
     for readme in settings.README_TEMPLATES:
         readme_file(readme['file'], opts)
 
 def readme_file(filename,opts):
-    """Process ReadMe HTML for filename"""
+    """Generate ReadMe HTML for filename"""
     make_readme_html(filename, opts)
 
 def repositories_csv(opts):
@@ -528,36 +528,64 @@ skipped TOC creation for files that would be generated for an actual run.
 
     parser = OptionParser(usage)
 
-    parser.add_option('-b', '--browse',
-                      action='store_true', dest='browse', default=False,
-                      help='Process browse HTML files as needed')
+    parser.add_option('-H', '--detailed-help',
+                      action='store_true', dest='detailed_help', default=False,
+                      help='Print detailed help message')
 
-    parser.add_option('-t', '--toc',
-                      action='store_true', dest='toc', default=False,
-                      help='Process TOC HTML files as needed')
+    parser.add_option('-r', '--repositories',
+                      action='store_true', dest='repositories', default=False,
+                      help='Generate Repositories.html')
 
-    parser.add_option('-r', '--readme',
+    parser.add_option('-m', '--readme',
                       action='store_true', dest='readme', default=False,
-                      help='Process ReadMe files as needed')
-
-    parser.add_option('-m', '--readme-file', dest='readme_file', default=None,
-                      help=("Process ReadMe HTML for README; one of:\n  %s" % (
+                      help='Generate ReadMe files as needed')
+    parser.add_option('-M', '--readme-file', dest='readme_file', default=None,
+                      help=("Generate ReadMe HTML for README, one of:\n  %s" % (
                           ', '.join(readme_files()),)),
                       metavar="README")
 
-    parser.add_option('-i', '--toc-repository', dest='repository_tag', default=None,
-                      help=("Process table of contents for REPOSITORY_TAG; one of: %s" % (
+    parser.add_option('-t', '--toc',
+                      action='store_true', dest='toc', default=False,
+                      help='Generate repository TOC HTML files as needed')
+    parser.add_option('-T', '--toc-repository', dest='repository_tag', default=None,
+                      help=("Generate table of contents for REPOSITORY_TAG; one of: %s" % (
+                        ', '.join(opfunc.get_repo_tags()),)),
+                      metavar="REPOSITORY_TAG")
+
+
+
+    parser.add_option('-b', '--browse',
+                      action='store_true', dest='browse', default=False,
+                      help='Generate browse HTML files as needed')
+    parser.add_option('-B', '--document', dest='document', default=None,
+                      help="Generate browse HTML for DOC_ID",
+                      metavar="DOC_ID")
+
+    parser.add_option('-c', '--collections-csv',
+                      action='store_true', dest='repositories_csv', default=False,
+                      help='Generate collections.csv')
+
+    parser.add_option('-x', '--csv-toc',
+                      action='store_true', dest='csv_toc', default=False,
+                      help="Generate CSV table of contents for all repositories")
+    parser.add_option('-X', '--csv-toc-repository',
+                      dest='csv_toc_repository_tag', default=None,
+                      help=("Generate CSV table of contents for REPOSITORY_TAG, one of: %s" % (
                           ', '.join(opfunc.get_repo_tags()),)),
                       metavar="REPOSITORY_TAG")
 
-    parser.add_option('-d', '--document', dest='document', default=None,
-                      help="Process browse HTML for DOC_ID",
-                      metavar="DOC_ID")
+    parser.add_option('-u', '--csv-toc-all-curated',
+                      action='store_true', dest='csv_toc_all_curated_collections', default=False,
+                      help="Generate CSV table of contents for all curated collections")
+    parser.add_option('-U', '--csv-toc-curated',
+                      dest='csv_toc_curated_tag', default=None,
+                      help=("Generate CSV table of contents for CURATED_TAG; one of: %s" % (
+                          ', '.join(curated_tags()),)),
+                      metavar="CURATED_TAG")
 
-    parser.add_option('-c', '--repositories',
-                      action='store_true', dest='repositories', default=False,
-                      help='Process Repositories list HTML as needed')
-
+    parser.add_option('-o', '--show-options',
+                      action='store_true', dest='show_options', default=False,
+                      help='Print out the options at runtime')
     parser.add_option('-n', '--dry-run',
                       action='store_true', dest='dry_run', default=False,
                       help='Make no changes; show what would be done')
@@ -567,34 +595,6 @@ skipped TOC creation for files that would be generated for an actual run.
     parser.add_option('--really-force',
                       action='store_true', dest='reallyforce', default=False,
                       help='Create files even if not makeable [only use for testing]')
-    parser.add_option('-o', '--show-options',
-                      action='store_true', dest='show_options', default=False,
-                      help='Print out the options at runtime')
-
-    parser.add_option('-x', '--repositories-csv',
-                      action='store_true', dest='repositories_csv', default=False,
-                      help='Generate repositories CSV')
-    parser.add_option('-y', '--csv-toc',
-                      action='store_true', dest='csv_toc', default=False,
-                      help="Generate CSV table of contents for all repositories")
-    parser.add_option('-z', '--csv-toc-repository',
-                      dest='csv_toc_repository_tag', default=None,
-                      help=("Generate CSV table of contents for REPOSITORY_TAG; one of: %s" % (
-                          ', '.join(opfunc.get_repo_tags()),)),
-                      metavar="REPOSITORY_TAG")
-
-    parser.add_option('-p', '--csv-toc-all-curated',
-                      action='store_true', dest='csv_toc_all_curated_collections', default=False,
-                      help="Generate CSV table of contents for all curated collections")
-    parser.add_option('-s', '--csv-toc-curated',
-                      dest='csv_toc_curated_tag', default=None,
-                      help=("Generate CSV table of contents for CURATED_TAG; one of: %s" % (
-                          ', '.join(curated_tags()),)),
-                      metavar="CURATED_TAG")
-
-    parser.add_option('-H', '--detailed-help',
-                      action='store_true', dest='detailed_help', default=False,
-                      help='Print detailed help message')
 
     return parser
 
