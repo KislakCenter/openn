@@ -24,9 +24,9 @@ class Configs(object):
         return [ self.get_repository(tag) for tag in self.tags() ]
 
     def get_repository(self, tag):
-        return RepositoryWrapper(self.get_config(tag))
+        return RepositoryWrapper(self.get_config_dict(tag))
 
-    def get_config(self, tag):
+    def get_config_dict(self, tag):
         configlist = [ x for x in self._configs if x['tag'] == tag ]
 
         if len(configlist) == 1:

@@ -28,6 +28,7 @@ from openn.pages.page import Page
 from openn.repository.configs import Configs
 from openn.pages.repositories import Repositories
 from openn.pages.table_of_contents import TableOfContents
+from openn.pages.curated_collection_toc import CuratedCollectionTOC
 from openn.pages.browse import Browse
 from openn.csv.collections_csv import CollectionsCSV
 from openn.csv.table_of_contents_csv import TableOfContentsCSV
@@ -197,6 +198,19 @@ def make_curated_toc_csv(curated_tag, opts):
     else:
         logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
 
+def make_curated_toc_html(curated_tag, opts):
+    page = CuratedCollectionTOC(curated_tag=curated_tag, toc_dir=settings.TOC_DIR,
+        **{ 'template_name': 'CuratedCollectionTOC.html', 'outdir': site_dir() })
+
+    opts.force = True
+
+    if is_makeable(page, opts):
+        if not opts.dry_run:
+            page.create_pages()
+        logging.info("Wrote curated collection HTML table of contents file: %s" % (page.outfile_path(),))
+    else:
+        logging.info("Skipping curated collection HTML table of contents file: %s" % (page.outfile_path(), ))
+
 # ------------------------------------------------------------------------------
 # ACTIONS
 # ------------------------------------------------------------------------------
@@ -265,6 +279,9 @@ def csv_toc_all_curated_collections(opts):
     """Generate CSV table of contents for all curated collections."""
     for tag in curated_tags():
         make_curated_toc_csv(tag, opts)
+
+def html_toc_curated_collection(curated_tag, opts):
+    make_curated_toc_html(curated_tag, opts)
 
 def detailed_help(opts):
     """Print detailed help message"""
@@ -481,6 +498,9 @@ def main(cmdline=None):
         elif opts.detailed_help:
             detailed_help(opts)
 
+        elif opts.html_toc_curated_tag is not None:
+            html_toc_curated_collection(opts.html_toc_curated_tag, opts)
+
         else:
             process_all(opts)
 
@@ -490,6 +510,9 @@ def main(cmdline=None):
     except OPennException as ex:
         handle_exc()
         parser.error(str(ex))
+        status = 4
+    except CuratedCollection.DoesNotExist as ex:
+        logging.error("Unknown curated collection; use 'op-curt list' for a list")
         status = 4
     except Exception as ex:
         handle_exc()
@@ -552,7 +575,14 @@ skipped TOC creation for files that would be generated for an actual run.
                         ', '.join(opfunc.get_repo_tags()),)),
                       metavar="REPOSITORY_TAG")
 
-
+    parser.add_option('-z', '--toc-all-curated',
+                      action='store_true', dest='html_toc_all_curated_collections', default=False,
+                      help="Generate HTML table of contents for all curated collections")
+    parser.add_option('-Z', '--toc-curated',
+                      dest='html_toc_curated_tag', default=None,
+                      help=("Generate HtML table of contents for CURATED_TAG, one of: %s" % (
+                          ', '.join(curated_tags()),)),
+                      metavar="CURATED_TAG")
 
     parser.add_option('-b', '--browse',
                       action='store_true', dest='browse', default=False,
@@ -579,7 +609,7 @@ skipped TOC creation for files that would be generated for an actual run.
                       help="Generate CSV table of contents for all curated collections")
     parser.add_option('-U', '--csv-toc-curated',
                       dest='csv_toc_curated_tag', default=None,
-                      help=("Generate CSV table of contents for CURATED_TAG; one of: %s" % (
+                      help=("Generate CSV table of contents for CURATED_TAG, one of: %s" % (
                           ', '.join(curated_tags()),)),
                       metavar="CURATED_TAG")
 

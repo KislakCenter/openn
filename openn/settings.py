@@ -14,7 +14,7 @@ elif os.path.exists(skey_file):
 # From the docs:
 #
 #    The lifetime of a database connection, in seconds. Use 0 to close
-#    database connections at the end of each request — Django’s historical
+#    database connections at the end of each request — Django's historical
 #    behavior — and None for unlimited persistent connections.
 #
 # Prevent MySQL error 2006:
@@ -444,14 +444,14 @@ under a Creative Commons Attribution License.""",
             'name': 'J. Welles Henderson Archives and Library of the Independence Seaport Museum',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Independence  Seaport Museum’s J. Welles Henderson Archives and
+            'blurb': """Independence  Seaport Museum's J. Welles Henderson Archives and
 Library is one of the nation's premier regional maritime research
 facilities. With a rich repository of regional documents, 12,000 ship
 plans, a significant collection of rare books and manuscripts; maps
 and charts; photographs, and a 15,000 volume research library, the J.
 Welles Henderson Archives and Library boasts an impressive range of
 materials. The collections are dedicated to a deeper understanding,
-appreciation, and experience of Philadelphia’s regional waterways and
+appreciation, and experience of Philadelphia's regional waterways and
 the Delaware watershed area for everyone. They carry national and
 international significance.""",
             'include_file': 'IndependenceSeaportMuseum.html',
@@ -461,7 +461,7 @@ international significance.""",
             'name': 'German Society of Pennsylvania',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Founded in 1764, The German Society of Pennsylvania is America’s
+            'blurb': """Founded in 1764, The German Society of Pennsylvania is America's
 oldest German organization. Its Joseph P. Horner Memorial Library,
 housed in a beautiful 19th century reading room, holds one of the
 largest private collections of German-language books in the U.S. The
@@ -518,7 +518,7 @@ three-dimensional memorabilia.""",
             'name': 'University of Pennsylvania Museum of Archaeology and Anthropology',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Founded in 1887, the Penn Museum has always been one of the world’s
+            'blurb': """Founded in 1887, the Penn Museum has always been one of the world's
 great archaeology and anthropology research museums, and the largest
 university museum in the United States. With roughly one million
 objects in its care, the Penn Museum encapsulates and illustrates the

@@ -62,7 +62,7 @@ class Details(object):
 
         # get information from the settings
         try:
-            cfg = self._configs.get_config(tag)
+            cfg = self._configs.get_config_dict(tag)
             db_mdtype = details['metadata_type']
             cfg_mdtype = details['metadata_type']
             details.update(cfg)
@@ -88,7 +88,7 @@ class Details(object):
 
     def find_config(self, tag):
         try:
-            return self._configs.get_config(tag)
+            return self._configs.get_config_dict(tag)
         except OPennException as oe:
             msg = "Error finding config for tag '%s': %s"
             logger.warn(msg % (tag,oe.exception))

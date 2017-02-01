@@ -21025,5 +21025,23 @@
       "app_name": "openn",
       "migration": "0033_rename_column_project_id_to_curated_collection_id_in_curated_membership"
     }
+  },
+  {
+    "pk": 35,
+    "model": "south.migrationhistory",
+    "fields": {
+      "applied": "2017-01-30T14:49:50",
+      "app_name": "openn",
+      "migration": "0034_auto__add_field_repository_name"
+    }
+  },
+  {
+    "pk": 36,
+    "model": "south.migrationhistory",
+    "fields": {
+      "applied": "2017-01-30T14:49:50",
+      "app_name": "openn",
+      "migration": "0035_auto__add_field_repository_live__add_field_repository_blurb__add_field"
+    }
   }
 ]

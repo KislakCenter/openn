@@ -53,7 +53,7 @@ list `prep_methods` and list of repository_configs.
             msg = msg % (prep_config_dict,)
             raise OPennException(msg)
 
-        return self._repository_configs.get_config(repo_tag)
+        return self._repository_configs.get_config_dict(repo_tag)
 
     def _get_prep_method_dict(self, prep_config_tag):
         prep_config_dict = self._get_prep_config_dict(prep_config_tag)

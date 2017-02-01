@@ -23,7 +23,6 @@ class TableOfContents(Page):
         updated_kwargs = kwargs.update({'outfile':self.toc_path()})
         super(TableOfContents,self).__init__(**kwargs)
 
-
     def get_context(self,ctx_dict={}):
         docs = Document.objects.filter(
             repository=self.repository.repository(),

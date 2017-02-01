@@ -84,6 +84,13 @@ get_a_live_docid() {
   mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document where is_online = 1 limit 1"
 }
 
+# Usage; get_a_live_docid
+#
+# Retrieve a single ID for a live OPenn document
+get_a_docid() {
+  mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document limit 1"
+}
+
 # Usage: add_curated_membership CURATED_TAG DOCID
 add_curated_membership() {
     am_curt_tag=${1?add_curated_membership - CURATED_TAG required}

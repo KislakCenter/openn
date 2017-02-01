@@ -10,10 +10,14 @@ class Repository(models.Model):
     """Repository is a collection to which a document belongs.
 
     """
-    tag = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
-    metadata_type = models.CharField(
-        max_length = 50, null = False, default = None, blank = False,
+    tag           = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
+    metadata_type = models.CharField(max_length = 50, null = False, default = None, blank = False,
         choices = (('tei','TEI'), ('ead', 'EAD'), ('custom', 'Custom'), ('walters-tei', 'Walters TEI')))
+    name          = models.CharField(max_length = 255, null = True, default = None, blank = True, unique = True)
+    live          = models.BooleanField(default = False)
+    blurb         = models.TextField(null = True, default = None, blank = True)
+    include_file  = models.CharField(max_length = 255, null = True, default = None, blank = False, unique = True)
+    no_document   = models.BooleanField(default = False)
 
     class Meta:
         ordering = ('tag',)
@@ -193,6 +197,9 @@ class CuratedCollection(models.Model):
 
     def csv_toc_file(self):
         return '%s_contents.csv' % (self.tag.lower(),)
+
+    def toc_file(self):
+        return '%s_contents.html' % (self.tag.lower(),)
 
     class Meta:
         ordering = ('name',)

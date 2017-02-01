@@ -8,10 +8,16 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        db.rename_column('openn_curatedmembership', 'project_id', 'curated_collection_id')
+        # Adding field 'Repository.name'
+        db.add_column(u'openn_repository', 'name',
+                      self.gf('django.db.models.fields.CharField')(default=None, max_length=255, unique=True, null=True, blank=True),
+                      keep_default=False)
+
 
     def backwards(self, orm):
-        db.rename_column('openn_curatedmembership', 'curated_collection_id', 'project_id')
+        # Deleting field 'Repository.name'
+        db.delete_column(u'openn_repository', 'name')
+
 
     models = {
         u'openn.curatedcollection': {
@@ -92,6 +98,7 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "('tag',)", 'object_name': 'Repository'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'metadata_type': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '50'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'tag': ('django.db.models.fields.CharField', [], {'default': 'None', 'unique': 'True', 'max_length': '50'})
         },
         u'openn.version': {
@@ -107,6 +114,5 @@ class Migration(SchemaMigration):
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         }
     }
-
 
     complete_apps = ['openn']

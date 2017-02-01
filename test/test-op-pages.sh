@@ -33,8 +33,13 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testCSVTOCRepository
 #     # suite_addTest testAllCSVTOCs
 #     # suite_addTest testCuratedCollectionTOCOneCollection
-#     suite_addTest testCuratedCollectionTOCOneEmptyCollection
+#     # suite_addTest testCuratedCollectionTOCOneEmptyCollection
+#     suite_addTest testCuratedCollectionTOCNoDocsOnline
 #     # suite_addTest testCuratedCollectionTOCAllCollections
+#     # suite_addTest testHtmlTocCuratedFile
+#     # suite_addTest testHtmlTocCuratedFileNoDocsOnline
+#     # suite_addTest testHtmlTocCuratedFileNoDocs
+#     # suite_addTest testHtmlTocCuratedFileBadCollection
 # }
 
 setUp() {
@@ -347,6 +352,20 @@ testCuratedCollectionTOCOneEmptyCollection() {
     # cat ${STAGED_PAGES}/site/Data/bibliophilly_contents.csv
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
+    assertMatch "$output" "CSV TOC not makeable; curated collection has no documents"
+}
+
+testCuratedCollectionTOCNoDocsOnline() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 0"
+    doc_id=`get_a_docid`
+    # add_curated_membership CURATED_TAG DOCID
+    add_curated_membership bibliophilly $doc_id
+    output=`op-pages --csv-toc-curated=bibliophilly --show-options`
+    status=$?
+    # cat ${STAGED_PAGES}/site/Data/bibliophilly_contents.csv
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
     assertMatch "$output" "CSV TOC not makeable; curated collection has no documents online"
 }
 
@@ -363,7 +382,6 @@ testCuratedCollectionTOCOneCollection() {
     assertEquals 0 $status
     assertMatch "$output" "Wrote curated collection table of contents CSV file:.*bibliophilly_contents\.csv"
 }
-
 
 # TODO: create test for curated collection not live
 
@@ -384,5 +402,55 @@ testCuratedCollectionTOCAllCollections() {
     assertMatch "$output" "Wrote curated collection table of contents CSV file:.*pacscl-diaries_contents\.csv"
 }
 
+testHtmlTocCuratedFile() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+   # add_curated_membership CURATED_TAG DOCID
+    doc_id=`get_a_live_docid`
+    add_curated_membership bibliophilly $doc_id
+    output=`op-pages --toc-curated=bibliophilly --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Wrote curated collection HTML table of contents.*bibliophilly_contents\.html"
+}
+
+testHtmlTocCuratedFileNoDocs() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    # add_curated_membership CURATED_TAG DOCID
+    # don't add any docs
+    output=`op-pages --toc-curated=bibliophilly --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "curated collection has no documents:.*bibliophilly"
+    assertMatch "$output" "Skipping curated collection HTML table of contents.*bibliophilly_contents\.html"
+}
+
+testHtmlTocCuratedFileNoDocsOnline() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 0"
+    doc_id=`get_a_docid`
+    # add_curated_membership CURATED_TAG DOCID
+    add_curated_membership bibliophilly $doc_id
+    output=`op-pages --toc-curated=bibliophilly --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "curated collection has no documents online:.*bibliophilly"
+    assertMatch "$output" "Skipping curated collection HTML table of contents.*bibliophilly_contents\.html"
+}
+
+testHtmlTocCuratedFileBadCollection() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 0"
+    doc_id=`get_a_docid`
+    output=`op-pages --toc-curated=notacollection --show-options`
+    status=$?
+    if [ $status != 4 ]; then echo "$output"; fi
+    assertEquals 4 $status
+    assertMatch "$output" "ERROR.*Unknown curated collection"
+}
 # Run shunit
 . $shunit

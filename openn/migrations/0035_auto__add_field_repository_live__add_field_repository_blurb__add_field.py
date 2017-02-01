@@ -8,10 +8,40 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        db.rename_column('openn_curatedmembership', 'project_id', 'curated_collection_id')
+        # Adding field 'Repository.live'
+        db.add_column(u'openn_repository', 'live',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
+
+        # Adding field 'Repository.blurb'
+        db.add_column(u'openn_repository', 'blurb',
+                      self.gf('django.db.models.fields.TextField')(default=None, null=True, blank=True),
+                      keep_default=False)
+
+        # Adding field 'Repository.include_file'
+        db.add_column(u'openn_repository', 'include_file',
+                      self.gf('django.db.models.fields.CharField')(default=None, max_length=255, unique=True, null=True),
+                      keep_default=False)
+
+        # Adding field 'Repository.no_document'
+        db.add_column(u'openn_repository', 'no_document',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
+
 
     def backwards(self, orm):
-        db.rename_column('openn_curatedmembership', 'curated_collection_id', 'project_id')
+        # Deleting field 'Repository.live'
+        db.delete_column(u'openn_repository', 'live')
+
+        # Deleting field 'Repository.blurb'
+        db.delete_column(u'openn_repository', 'blurb')
+
+        # Deleting field 'Repository.include_file'
+        db.delete_column(u'openn_repository', 'include_file')
+
+        # Deleting field 'Repository.no_document'
+        db.delete_column(u'openn_repository', 'no_document')
+
 
     models = {
         u'openn.curatedcollection': {
@@ -90,8 +120,13 @@ class Migration(SchemaMigration):
         },
         u'openn.repository': {
             'Meta': {'ordering': "('tag',)", 'object_name': 'Repository'},
+            'blurb': ('django.db.models.fields.TextField', [], {'default': 'None', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'include_file': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'unique': 'True', 'null': 'True'}),
+            'live': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'metadata_type': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '50'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '255', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
+            'no_document': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'tag': ('django.db.models.fields.CharField', [], {'default': 'None', 'unique': 'True', 'max_length': '50'})
         },
         u'openn.version': {
@@ -107,6 +142,5 @@ class Migration(SchemaMigration):
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         }
     }
-
 
     complete_apps = ['openn']

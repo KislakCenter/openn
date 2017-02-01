@@ -47,7 +47,10 @@ class CuratedCollectionContentsCSV(OPennCSV):
                 self.curated_collection.tag()))
             return False
 
-        # Not makeable if no live documents are in the curated collection
+        if self.curated_collection.documents.count() == 0:
+            self.logger.info("CSV TOC not makeable; curated collection has no documents: %s" % (self.curated_collection.tag,))
+            return False
+
         doc_count = self.curated_collection.documents.filter(is_online=True).count()
         if doc_count == 0:
             self.logger.info("CSV TOC not makeable; curated collection has no documents online: %s" % (self.curated_collection.tag,))

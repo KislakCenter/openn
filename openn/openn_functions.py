@@ -84,7 +84,7 @@ def get_repo_names():
     return get_repo_configs().all_values('name')
 
 def get_repo_config(tag):
-    return get_repo_configs().get_config(tag)
+    return get_repo_configs().get_config_dict(tag)
 
 def get_repo_wrapper(tag):
     return get_repo_configs().get_repository(tag)
