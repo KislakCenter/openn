@@ -34,12 +34,14 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testAllCSVTOCs
 #     # suite_addTest testCuratedCollectionTOCOneCollection
 #     # suite_addTest testCuratedCollectionTOCOneEmptyCollection
-#     suite_addTest testCuratedCollectionTOCNoDocsOnline
+#     # suite_addTest testCuratedCollectionTOCNoDocsOnline
 #     # suite_addTest testCuratedCollectionTOCAllCollections
 #     # suite_addTest testHtmlTocCuratedFile
 #     # suite_addTest testHtmlTocCuratedFileNoDocsOnline
 #     # suite_addTest testHtmlTocCuratedFileNoDocs
 #     # suite_addTest testHtmlTocCuratedFileBadCollection
+#     # suite_addTest testHtmlTocAllCuratedCollections
+#     # suite_addTest testHtmlTocCuratedCollectionCSVOnly
 # }
 
 setUp() {
@@ -452,5 +454,34 @@ testHtmlTocCuratedFileBadCollection() {
     assertEquals 4 $status
     assertMatch "$output" "ERROR.*Unknown curated collection"
 }
+
+testHtmlTocCuratedCollectionCSVOnly() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    doc_id=`get_a_docid`
+    # add_curated_membership CURATED_TAG DOCID
+    add_curated_membership thai $doc_id
+    output=`op-pages --toc-curated=thai --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "curated collection is CSV-only.*thai"
+    assertMatch "$output" "Skipping curated collection HTML table of contents.*thai_contents\.html"
+}
+
+testHtmlTocAllCuratedCollections() {
+    stagePages
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    doc_id=`get_a_docid`
+    # add_curated_membership CURATED_TAG DOCID
+    add_curated_membership bibliophilly $doc_id
+    output=`op-pages --toc-all-curated --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+    assertEquals 0 $status
+    assertMatch "$output" "Wrote curated collection HTML table of contents.*bibliophilly_contents\.html"
+    assertMatch "$output" "Skipping curated collection HTML table of contents.*pacscl-diaries_contents\.html"
+}
+
 # Run shunit
 . $shunit

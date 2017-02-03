@@ -98,8 +98,8 @@ def make_browse_html(docid, opts):
     repo_tag = doc.repository.tag
     repo_wrapper = get_repo_wrapper(repo_tag)
     page = Browse(document=doc, repository_wrapper=repo_wrapper,
-                  toc_dir = settings.TOC_DIR,
-                  **{ 'outdir': site_dir() })
+                  toc_dir=settings.TOC_DIR,
+                  **{'outdir': site_dir()})
 
     if is_makeable(page, opts):
         logging.info("Creating page: %s" % (page.outfile_path(), ))
@@ -109,23 +109,23 @@ def make_browse_html(docid, opts):
         logging.info("Skipping page: %s" % (page.outfile_path(), ))
 
 def make_toc_html(repowrap, opts):
-    toc = TableOfContents(
+    page = TableOfContents(
         repowrap, toc_dir=settings.TOC_DIR,
-        **{ 'template_name': 'TableOfContents.html', 'outdir': site_dir() })
+        **{'template_name': 'TableOfContents.html', 'outdir': site_dir()})
 
     # TODO: have TOC is_needed() check the include file; fails to make
     #       now b/c TableOfContents.html seldom changes
     # For now, always force, and make them all:
     opts.force = True
 
-    if is_makeable(toc, opts):
+    if is_makeable(page, opts):
         logging.info("Creating TOC for repository %s: %s" % (
-            repowrap.tag(), toc.outfile_path()))
+            repowrap.tag(), page.outfile_path()))
         if not opts.dry_run:
-            toc.create_pages()
+            page.create_pages()
     else:
         logging.info("Skipping TOC for repository %s: %s" % (
-            repowrap.tag(), toc.outfile_path()))
+            repowrap.tag(), page.outfile_path()))
 
 def make_readme_html(readme, opts):
     try:
@@ -194,13 +194,14 @@ def make_curated_toc_csv(curated_tag, opts):
     if is_makeable(csv, opts):
         if not opts.dry_run:
             csv.write_file()
-        logging.info("Wrote curated collection table of contents CSV file: %s" % (csv.outfile_path(),))
+        logging.info("Wrote curated collection table of contents CSV file: %s", csv.outfile_path())
     else:
-        logging.info("Skipping CSV: %s" % (csv.outfile_path(), ))
+        logging.info("Skipping CSV: %s", csv.outfile_path())
 
 def make_curated_toc_html(curated_tag, opts):
     page = CuratedCollectionTOC(curated_tag=curated_tag, toc_dir=settings.TOC_DIR,
-        **{ 'template_name': 'CuratedCollectionTOC.html', 'outdir': site_dir() })
+                                **{'template_name': 'CuratedCollectionTOC.html',
+                                   'outdir': site_dir()})
 
     opts.force = True
 
@@ -218,11 +219,12 @@ def process_all(opts):
     """Default behavior, process all file types."""
     browse(opts)
     toc(opts)
-    repositories(opts)
-    # TODO: curated collections HTML toc
+    repositories_html(opts)
+    curated_collections_html(opts)
     readme(opts)
     csv_toc(opts)
     repositories_csv(opts)
+    html_toc_all_curated_colls(opts)
     csv_toc_all_curated_collections(opts)
 
 def browse(opts):
@@ -233,6 +235,14 @@ def browse(opts):
         Document.objects.filter(is_online = True))]
     for docid in docids:
         document(docid, opts)
+
+def repositories_html(opts):
+    """ Generate Repositories.html """
+    make_repositories(opts)
+
+def curated_collections_html(opts):
+    """ Generate CuratedCollections.html """
+    pass
 
 def toc(opts):
     """Generate TOC HTML files as needed"""
@@ -250,10 +260,10 @@ def document(docid, opts):
 
 def readme(opts):
     """Generate ReadMe files as needed"""
-    for readme in settings.README_TEMPLATES:
-        readme_file(readme['file'], opts)
+    for template in settings.README_TEMPLATES:
+        readme_file(template['file'], opts)
 
-def readme_file(filename,opts):
+def readme_file(filename, opts):
     """Generate ReadMe HTML for filename"""
     make_readme_html(filename, opts)
 
@@ -281,7 +291,13 @@ def csv_toc_all_curated_collections(opts):
         make_curated_toc_csv(tag, opts)
 
 def html_toc_curated_collection(curated_tag, opts):
+    """ Generate HtML table of contents for curated_tag """
     make_curated_toc_html(curated_tag, opts)
+
+def html_toc_all_curated_colls(opts):
+    """ Generate HTML table of contents for all curated collections. """
+    for tag in curated_tags():
+        html_toc_curated_collection(tag, opts)
 
 def detailed_help(opts):
     """Print detailed help message"""
@@ -401,9 +417,6 @@ don't create new or update browse files, so the TOC steps will likely report
 skipped TOC creation for files that would be generated for an actual run.
     """.replace('%prog', cmd())
 
-def repositories(opts):
-    make_repositories(opts)
-
 def print_options(opts):
     for k in vars(opts):
         print "OPTION: %12s  %s" % (k, getattr(opts, k))
@@ -471,8 +484,11 @@ def main(cmdline=None):
         elif opts.repository_tag:
             toc_repository(opts.repository_tag, opts)
 
-        elif opts.repositories:
-            repositories(opts)
+        elif opts.repositories_html:
+            repositories_html(opts)
+
+        elif opts.curated_collections_html:
+            curated_collections_html(opts)
 
         elif opts.document:
             document(opts.document, opts)
@@ -500,6 +516,9 @@ def main(cmdline=None):
 
         elif opts.html_toc_curated_tag is not None:
             html_toc_curated_collection(opts.html_toc_curated_tag, opts)
+
+        elif opts.html_toc_all_curated_colls:
+            html_toc_all_curated_colls(opts)
 
         else:
             process_all(opts)
@@ -556,8 +575,12 @@ skipped TOC creation for files that would be generated for an actual run.
                       help='Print detailed help message')
 
     parser.add_option('-r', '--repositories',
-                      action='store_true', dest='repositories', default=False,
+                      action='store_true', dest='repositories_html', default=False,
                       help='Generate Repositories.html')
+
+    parser.add_option('-q', '--curated-colls',
+                      action='store_true', dest='curated_collections_html', default=False,
+                      help='Generate CuratedCollections.html')
 
     parser.add_option('-m', '--readme',
                       action='store_true', dest='readme', default=False,
@@ -576,7 +599,7 @@ skipped TOC creation for files that would be generated for an actual run.
                       metavar="REPOSITORY_TAG")
 
     parser.add_option('-z', '--toc-all-curated',
-                      action='store_true', dest='html_toc_all_curated_collections', default=False,
+                      action='store_true', dest='html_toc_all_curated_colls', default=False,
                       help="Generate HTML table of contents for all curated collections")
     parser.add_option('-Z', '--toc-curated',
                       dest='html_toc_curated_tag', default=None,

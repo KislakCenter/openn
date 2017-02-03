@@ -39,6 +39,12 @@ class CuratedCollectionTOC(Page):
                 self.curated_collection.tag()))
             return False
 
+        if self.curated_collection.csv_only:
+            self.logger.info("Curated collection HTML TOC not makeable; "
+                             "curated collection is CSV-only  (curated collection: %s",
+                             self.curated_collection.tag)
+            return False
+
         if self.curated_collection.documents.count() == 0:
             self.logger.info("Curated collection HTML TOC not makeable; curated collection has no documents: %s" % (self.curated_collection.tag,))
             return False
