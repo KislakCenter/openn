@@ -68,10 +68,10 @@ class CuratedCollectionContentsCSV(OPennCSV):
             return True
 
         # see if it's out-of-date
-        latest_doc = CuratedCollection.documents.filter(is_online=True).latest('updated')
-        current_file_date = os.path.getmtime(self.outfile_path())
+        latest_doc = self.curated_collection.documents.filter(is_online=True).latest('updated')
+        current_file_date = opfunc.mtime_to_datetime(self.outfile_path())
         if current_file_date > latest_doc.updated:
-            logging.info("CSV TOC up-to-date; skipping %s" % (self.curated_collection.tag,))
+            logging.info("CSV TOC up-to-date; skipping %s", self.curated_collection.tag)
             return False
 
         return True

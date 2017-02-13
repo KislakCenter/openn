@@ -7,7 +7,7 @@ TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
 # suite() {
-#     # suite_addTest testRun
+#     suite_addTest testRun
 #     # suite_addTest testDryRun
 #     # suite_addTest testDryRunShortOpt
 #     # suite_addTest testForce
@@ -42,6 +42,7 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testHtmlTocCuratedFileBadCollection
 #     # suite_addTest testHtmlTocAllCuratedCollections
 #     # suite_addTest testHtmlTocCuratedCollectionCSVOnly
+#     # suite_addTest testCuratedCollectionsHTML
 # }
 
 setUp() {
@@ -64,15 +65,43 @@ stagePages() {
     cp -r $TEMPLATE_PAGES $STAGED_PAGES
 }
 
+setAllDocsOnLine() {
+    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+}
+
+setAllDocsOffLine() {
+    mysql -u openn openn_test -e "update openn_document set is_online = 0"
+}
+
+# Usage:
+#
+#       addADocToCuratedCollection COLL_TAG
+addADocToCuratedCollection() {
+    adcc_coll_tag=$1
+    adcc_doc_id=`get_a_docid`
+    # [[ $adcc_doc_id ]] || adcc_doc_id=`get_a_docid`
+    add_curated_membership $adcc_coll_tag $adcc_doc_id
+}
+
 testRun() {
+    # make sure there's at least one curated collection
+    setAllDocsOnLine
+    addADocToCuratedCollection bibliophilly
+
+    # RUN IT
     output=`op-pages --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
     assertMatch "$output" "Creating TOC"
     assertMatch "$output" "Creating .*Repositories"
     assertMatch "$output" "Skipping"
+    assertMatch "$output" "curated collection has no documents:.*pacscl-diaries"
+    assertMatch "$output" "Wrote curated collection HTML table of contents.*bibliophilly_contents\.html"
+    assertMatch "$output" "Skipping curated collection HTML table of contents.*thai_contents\.html"
+    assertMatch "$output" "Wrote curated collection table of contents CSV file:.*bibliophilly_contents\.csv"
 }
 
 # test dry run
@@ -80,6 +109,7 @@ testDryRun() {
     output=`op-pages --dry-run --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "DRY RUN COMPLETE"
     assertMatch "$output" "Skipping"
@@ -91,6 +121,7 @@ testDryRunShortOpt() {
     output=`op-pages -n --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "DRY RUN COMPLETE"
     assertMatch "$output" "Skipping"
@@ -99,9 +130,11 @@ testDryRunShortOpt() {
 # test force
 testForce() {
     stagePages
+
     output=`op-pages --force --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page.*ReadMe"
     assertMatch "$output" "Creating page.*ljs454.html"
@@ -112,9 +145,11 @@ testForce() {
 # test force
 testForceShortOpt() {
     stagePages
+
     output=`op-pages -f --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page.*ReadMe"
     assertMatch "$output" "Creating page.*ljs454.html"
@@ -124,20 +159,20 @@ testForceShortOpt() {
 
 # test browse
 testBrowse() {
-    # TOOD tests is incorrect; change --dry-run to --browse
     output=`op-pages --browse --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
 }
 
 # test browse
 testBrowseShortOpt() {
-    # TOOD tests is incorrect; change --dry-run to --browse
     output=`op-pages -b --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
 }
@@ -145,9 +180,11 @@ testBrowseShortOpt() {
 # test toc
 testToc() {
     stagePages
+
     output=`op-pages --toc --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC"
     assertMatch "$output" "Skipping TOC"
@@ -158,9 +195,11 @@ testNoDocumentTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
+
     output=`op-pages --toc-repository tdw --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC.*tdw"
 }
@@ -168,9 +207,11 @@ testNoDocumentTocFile() {
 # test toc
 testTocShortOpt() {
     stagePages
+
     output=`op-pages -t --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC"
     assertMatch "$output" "Skipping TOC"
@@ -178,10 +219,10 @@ testTocShortOpt() {
 
 # test readme
 testReadMe() {
-    # stagePages
     output=`op-pages --readme --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page.*ReadMe"
     assertNotMatch "$output" "Creating page.*ljs454.html"
@@ -194,6 +235,7 @@ testReadMeShortOpt() {
     output=`op-pages -m --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page.*ReadMe"
     assertNotMatch "$output" "Creating page.*ljs454.html"
@@ -205,6 +247,7 @@ testReadMeFile() {
     output=`op-pages --readme-file ReadMe.html --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page.*ReadMe"
 }
@@ -214,6 +257,7 @@ testReadMeFileShortOpt() {
     output=`op-pages -M ReadMe.html --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page.*ReadMe"
 }
@@ -223,6 +267,7 @@ testReadMeFileFailure() {
     output=`op-pages --readme-file 01_ReadMe.html --show-options 2>&1`
     status=$?
     if [ $status != 2 ]; then echo "$output"; fi
+
     assertEquals 2 $status
     assertMatch "$output" "Unknown readme file"
 }
@@ -232,9 +277,11 @@ testTocFile() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
+
     output=`op-pages --toc-repository ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC.*ljs"
 }
@@ -244,9 +291,11 @@ testTocFileShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
+
     output=`op-pages -T ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating TOC.*ljs"
 }
@@ -256,9 +305,11 @@ testRepositories() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
+
     output=`op-pages --repositories --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating.*Repositories"
 }
@@ -268,9 +319,11 @@ testNoDocumentRepository() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
+
     output=`op-pages --repositories --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "tdw.*repository is live and is marked no_document"
 }
@@ -280,9 +333,11 @@ testRepositoriesShortOpt() {
     stagePages
     # delete all TOCs to force TOC generation
     find $STAGED_PAGES/site/Repositories -name \*.html -delete
+
     output=`op-pages -r --show-options 2>&1`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating.*Repositories"
 }
@@ -292,8 +347,10 @@ testDocument() {
     doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where repository_id = 1"`
     # mark the document online to force page generation
     mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
+
     output=`op-pages --document $doc_id --show-options`
     status=$?
+
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
@@ -304,42 +361,48 @@ testDocumentShortOpt() {
     doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where repository_id = 1"`
     # mark the document online to force page generation
     mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
+
     output=`op-pages -B $doc_id --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
 }
 
 testCollectionsCSV() {
     stagePages
+
     output=`op-pages --collections-csv --show-options`
     status=$?
     # cat ${STAGED_PAGES}/site/Data/collections.csv
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Wrote repositories CSV file:"
 }
 
 testCSVTOCRepository() {
     stagePages
-    # make sure documents are marked online
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    setAllDocsOnLine
+
     output=`op-pages --csv-toc-repository=ljs --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     # cat ${STAGED_PAGES}/site/Data/0002_contents.csv
+
     assertEquals 0 $status
     assertMatch "$output" "Wrote table of contents CSV file:.*0001_contents\.csv"
 }
 
 testAllCSVTOCs() {
     stagePages
-    # make sure documents are marked online
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    setAllDocsOnLine
+
     output=`op-pages --csv-toc --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Wrote table of contents CSV file:.*0001_contents\.csv"
     assertMatch "$output" "CSV TOC not makeable; no HTML dir found.*/0002/"
@@ -348,39 +411,40 @@ testAllCSVTOCs() {
 
 testCuratedCollectionTOCOneEmptyCollection() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
+    setAllDocsOnLine
+
     output=`op-pages --csv-toc-curated=bibliophilly --show-options`
     status=$?
     # cat ${STAGED_PAGES}/site/Data/bibliophilly_contents.csv
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "CSV TOC not makeable; curated collection has no documents"
 }
 
 testCuratedCollectionTOCNoDocsOnline() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 0"
-    doc_id=`get_a_docid`
-    # add_curated_membership CURATED_TAG DOCID
-    add_curated_membership bibliophilly $doc_id
+    setAllDocsOffLine
+    addADocToCuratedCollection bibliophilly
+
     output=`op-pages --csv-toc-curated=bibliophilly --show-options`
     status=$?
-    # cat ${STAGED_PAGES}/site/Data/bibliophilly_contents.csv
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "CSV TOC not makeable; curated collection has no documents online"
 }
 
 testCuratedCollectionTOCOneCollection() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    doc_id=`get_a_live_docid`
-    # add_curated_membership CURATED_TAG DOCID
-    add_curated_membership bibliophilly $doc_id
+    setAllDocsOnLine
+    addADocToCuratedCollection bibliophilly
+
     output=`op-pages --csv-toc-curated=bibliophilly --show-options`
     status=$?
     # save_and_open "${STAGED_PAGES}/site/Data/bibliophilly_contents.csv"
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Wrote curated collection table of contents CSV file:.*bibliophilly_contents\.csv"
 }
@@ -389,16 +453,14 @@ testCuratedCollectionTOCOneCollection() {
 
 testCuratedCollectionTOCAllCollections() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    doc_id=`get_a_live_docid`
-    # add_curated_membership CURATED_TAG DOCID
-    add_curated_membership bibliophilly $doc_id
-    add_curated_membership pacscl-diaries $doc_id
+    setAllDocsOnLine
+    addADocToCuratedCollection bibliophilly
+    addADocToCuratedCollection pacscl-diaries
+
     output=`op-pages --csv-toc-all-curated --show-options`
     status=$?
-    # save_and_open "${STAGED_PAGES}/site/Data/bibliophilly_contents.csv"
-    # save_and_open "${STAGED_PAGES}/site/Data/pacscl-diaries_contents.csv"
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Wrote curated collection table of contents CSV file:.*bibliophilly_contents\.csv"
     assertMatch "$output" "Wrote curated collection table of contents CSV file:.*pacscl-diaries_contents\.csv"
@@ -406,25 +468,26 @@ testCuratedCollectionTOCAllCollections() {
 
 testHtmlTocCuratedFile() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
-   # add_curated_membership CURATED_TAG DOCID
-    doc_id=`get_a_live_docid`
-    add_curated_membership bibliophilly $doc_id
+    setAllDocsOnLine
+    addADocToCuratedCollection bibliophilly
+
     output=`op-pages --toc-curated=bibliophilly --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "Wrote curated collection HTML table of contents.*bibliophilly_contents\.html"
 }
 
 testHtmlTocCuratedFileNoDocs() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    # add_curated_membership CURATED_TAG DOCID
+    setAllDocsOnLine
     # don't add any docs
+
     output=`op-pages --toc-curated=bibliophilly --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "curated collection has no documents:.*bibliophilly"
     assertMatch "$output" "Skipping curated collection HTML table of contents.*bibliophilly_contents\.html"
@@ -432,13 +495,13 @@ testHtmlTocCuratedFileNoDocs() {
 
 testHtmlTocCuratedFileNoDocsOnline() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 0"
-    doc_id=`get_a_docid`
-    # add_curated_membership CURATED_TAG DOCID
-    add_curated_membership bibliophilly $doc_id
+    setAllDocsOffLine
+    addADocToCuratedCollection bibliophilly
+
     output=`op-pages --toc-curated=bibliophilly --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+
     assertEquals 0 $status
     assertMatch "$output" "curated collection has no documents online:.*bibliophilly"
     assertMatch "$output" "Skipping curated collection HTML table of contents.*bibliophilly_contents\.html"
@@ -446,41 +509,55 @@ testHtmlTocCuratedFileNoDocsOnline() {
 
 testHtmlTocCuratedFileBadCollection() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 0"
-    doc_id=`get_a_docid`
+    setAllDocsOffLine
+
     output=`op-pages --toc-curated=notacollection --show-options`
     status=$?
     if [ $status != 4 ]; then echo "$output"; fi
+
     assertEquals 4 $status
     assertMatch "$output" "ERROR.*Unknown curated collection"
 }
 
 testHtmlTocCuratedCollectionCSVOnly() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    doc_id=`get_a_docid`
-    # add_curated_membership CURATED_TAG DOCID
-    add_curated_membership thai $doc_id
+    setAllDocsOnLine
+    addADocToCuratedCollection thai
+
     output=`op-pages --toc-curated=thai --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
+
     assertMatch "$output" "curated collection is CSV-only.*thai"
     assertMatch "$output" "Skipping curated collection HTML table of contents.*thai_contents\.html"
 }
 
 testHtmlTocAllCuratedCollections() {
     stagePages
-    mysql -u openn openn_test -e "update openn_document set is_online = 1"
-    doc_id=`get_a_docid`
-    # add_curated_membership CURATED_TAG DOCID
-    add_curated_membership bibliophilly $doc_id
+    setAllDocsOnLine
+    addADocToCuratedCollection bibliophilly
+
     output=`op-pages --toc-all-curated --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
     assertEquals 0 $status
+
     assertMatch "$output" "Wrote curated collection HTML table of contents.*bibliophilly_contents\.html"
     assertMatch "$output" "Skipping curated collection HTML table of contents.*pacscl-diaries_contents\.html"
+}
+
+testCuratedCollectionsHTML() {
+    stagePages
+    setAllDocsOnLine
+    addADocToCuratedCollection bibliophilly
+
+    output=`op-pages --curated-colls --show-options`
+    status=$?
+    if [ $status != 0 ]; then echo "$output"; fi
+
+    assertEquals 0 $status
+    assertMatch "$output" "Creating list of curated collections"
 }
 
 # Run shunit

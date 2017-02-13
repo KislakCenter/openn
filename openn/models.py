@@ -201,6 +201,14 @@ class CuratedCollection(models.Model):
     def toc_file(self):
         return '%s_contents.html' % (self.tag.lower(),)
 
+    def has_documents(self):
+        return self.documents.count() > 0
+
+    def has_documents_on_line(self):
+        if not self.has_documents():
+            return False
+        return self.documents.filter(is_online=True).count() > 0
+
     class Meta:
         ordering = ('name',)
 

@@ -29,6 +29,7 @@ from openn.repository.configs import Configs
 from openn.pages.repositories import Repositories
 from openn.pages.table_of_contents import TableOfContents
 from openn.pages.curated_collection_toc import CuratedCollectionTOC
+from openn.pages.curated_collections import CuratedCollections
 from openn.pages.browse import Browse
 from openn.csv.collections_csv import CollectionsCSV
 from openn.csv.table_of_contents_csv import TableOfContentsCSV
@@ -126,6 +127,25 @@ def make_toc_html(repowrap, opts):
     else:
         logging.info("Skipping TOC for repository %s: %s" % (
             repowrap.tag(), page.outfile_path()))
+
+def make_curated_collections_html(opts):
+    """ Do the actual work """
+
+    try:
+        page = CuratedCollections(settings.CURATED_COLLECTIONS_TEMPLATE,
+            site_dir(), toc_dir=settings.TOC_DIR)
+
+        if is_makeable(page, opts):
+            logging.info("Creating list of curated collections: %s" % (page.outfile_path(), ))
+            if not opts.dry_run:
+                page.create_pages()
+        else:
+            logging.info("Skipping page: %s" % (page.outfile_path(), ))
+    except TemplateDoesNotExist as ex:
+        msg = "Could not find template: %s" % (settings.CURATED_COLLECTIONS_TEMPLATE,)
+        raise OPennException(msg)
+
+
 
 def make_readme_html(readme, opts):
     try:
@@ -242,7 +262,7 @@ def repositories_html(opts):
 
 def curated_collections_html(opts):
     """ Generate CuratedCollections.html """
-    pass
+    make_curated_collections_html(opts)
 
 def toc(opts):
     """Generate TOC HTML files as needed"""
@@ -595,7 +615,7 @@ skipped TOC creation for files that would be generated for an actual run.
                       help='Generate repository TOC HTML files as needed')
     parser.add_option('-T', '--toc-repository', dest='repository_tag', default=None,
                       help=("Generate table of contents for REPOSITORY_TAG; one of: %s" % (
-                        ', '.join(opfunc.get_repo_tags()),)),
+                          ', '.join(opfunc.get_repo_tags()),)),
                       metavar="REPOSITORY_TAG")
 
     parser.add_option('-z', '--toc-all-curated',

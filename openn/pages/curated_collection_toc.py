@@ -6,6 +6,7 @@ from django.template import Context, Template
 from django.template.loader import get_template
 
 from operator import itemgetter
+from datetime import datetime
 
 from openn.models import *
 import openn.openn_functions as opfunc
@@ -65,10 +66,12 @@ class CuratedCollectionTOC(Page):
             return True
 
         # see if it's out-of-date
-        latest_doc = CuratedCollection.documents.filter(is_online=True).latest('updated')
-        current_file_date = os.path.getmtime(self.outfile_path())
+        latest_doc = self.curated_collection.documents.filter(is_online=True).latest('updated')
+
+        current_file_date = opfunc.mtime_to_datetime(self.outfile_path())
         if current_file_date > latest_doc.updated:
-            logging.info("Curated collection HTML TOC up-to-date; skipping %s" % (self.curated_collection.tag,))
+            logging.info("Curated collection HTML TOC up-to-date; skipping %s",
+                         self.curated_collection.tag,)
             return False
 
         return True

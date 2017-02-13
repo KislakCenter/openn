@@ -74,6 +74,9 @@ INSTALLED_APPS = (
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
+TIME_ZONE = 'US/Eastern'
+USE_TZ = True
+
 OPENN_HOST = 'openn.library.upenn.edu'
 
 # put the openn/bin dir in the path
@@ -96,6 +99,7 @@ TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 README_TEMPLATES = [ { 'file': 'ReadMe.html', 'title': 'Read Me' },
                      { 'file': 'TechnicalReadMe.html', 'title': 'Technical Read Me' } ]
 REPOSITORIES_TEMPLATE = 'Repositories.html'
+CURATED_COLLECTIONS_TEMPLATE = 'CuratedCollections.html'
 
 STAGING_DIR = os.environ['OPENN_STAGING_DIR']
 PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']

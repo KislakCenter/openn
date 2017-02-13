@@ -4,7 +4,7 @@ THIS_DIR=`dirname $0`
 source $THIS_DIR/shunit_helper
 
 # suite() {
-#     suite_addTest testRepositories
+#     suite_addTest testRun
 # }
 
 setUp() {
@@ -38,7 +38,7 @@ testRun() {
     assertEquals 0 $status
 }
 
-testCheckOline() {
+testCheckOnline() {
     loadDb
     output=`op-info --check-online 2>&1`
     status=$?

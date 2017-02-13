@@ -16,6 +16,8 @@ from distutils.dir_util import copy_tree
 from optparse import OptionParser
 from datetime import datetime
 
+import pytz
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
 from openn.models import *
@@ -92,10 +94,20 @@ class ReportSegment:
         return '%-{0}{1}'.format(self._width,self._fmt)
 
     def fix_value(self, val):
-        if self._fmt == 's' and val and len(str(val)) > self._width:
-            return '%s...' % (val[:-3], )
-        else:
+        if self._fmt != 's':
             return val
+
+        if val is None:
+            return val
+
+        if isinstance(val, datetime):
+            ltime = localize_datetime(val)
+            return ltime.strftime('%Y-%m-%d %H:%M:%S %Z')
+
+        if len(str(val)) > self._width:
+            return '%s...' % (str(val)[:-3], )
+
+        return val
 
     def get_val(self, obj, attr):
         item = obj
@@ -162,8 +174,8 @@ def show_all(opts):
     report.add(ReportSegment(attr='base_dir', fmt='s', width=20, head='Directory'))
     report.add(ReportSegment(attr='is_online', fmt='s', width=7, head='Online?'))
     report.add(ReportSegment(attr='is_prepped', fmt='s', width=8, head='Prepped?'))
-    report.add(ReportSegment(attr='created', fmt='s', width=19, head='Created'))
-    report.add(ReportSegment(attr='updated', fmt='s', width=19, head='Updated'))
+    report.add(ReportSegment(attr='created', fmt='s', width=25, head='Created'))
+    report.add(ReportSegment(attr='updated', fmt='s', width=25, head='Updated'))
 
     print report.header()
     print report.divider()
@@ -227,9 +239,9 @@ def main(cmdline=None):
     except OPennException as ex:
         parser.error(str(ex))
         status = 4
-    except Exception as ex:
-        parser.error(str(ex))
-        status = 4
+    # except Exception as ex:
+    #     parser.error(str(ex))
+    #     status = 4
 
     return status
 

@@ -6,6 +6,9 @@ import re
 import sys
 import traceback
 import gc
+from datetime import datetime
+import pytz
+
 
 from openn.openn_exception import OPennException
 from openn.repository.configs import Configs
@@ -129,3 +132,40 @@ def ensure_dir(dir_path):
     if not os.path.exists(dir_path):
         os.mkdir(dir_path)
         os.chmod(dir_path, 0775)
+
+def mtime_to_datetime(path):
+    """ Get the path mtime and make it time-zone aware if possible. """
+    stamp = os.path.getmtime(path)
+    return timestamp_to_datetime(stamp)
+
+def ctime_to_datetime(path):
+    """ Get the path mtime and make it time-zone aware if possible. """
+    stamp = os.path.getctime(path)
+    return timestamp_to_datetime(stamp)
+
+def atime_to_datetime(path):
+    """ Get the path atime and make it time-zone aware if possible. """
+    stamp = os.path.getatime(path)
+    return timestamp_to_datetime(stamp)
+
+def timestamp_to_datetime(stamp):
+    """ Convert the given timestamp to time-zone aware date if possible;
+    otherwise, return naive date.  """
+    naive = datetime.utcfromtimestamp(stamp)
+
+    try:
+        tzone = pytz.timezone(op_app.TIME_ZONE)
+        return tzone.localize(naive)
+    except AttributeError:
+        return naive
+
+def localize_datetime(dtime):
+    try:
+        tzone = pytz.timezone(op_app.TIME_ZONE)
+    except AttributeError:
+        return dtime
+
+    if dtime.tzinfo is None:
+        return tzone.localize(dtime)
+    else:
+        return dtime.astimezone(tzone)

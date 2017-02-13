@@ -99,9 +99,9 @@ class TableOfContentsCSV(OPennCSV):
             repository=self.repository.repository(),
             is_online=True
             ).latest('updated')
-        current_file_date = os.path.getmtime(self.outfile_path())
+        current_file_date = opfunc.mtime_to_datetime(self.outfile_path())
         if current_file_date > latest_doc.updated:
-            logging.info("CSV TOC up-to-date; skipping %s" % (self.repository,))
+            logging.info("CSV TOC up-to-date; skipping %s", self.repository)
             return False
 
         return True

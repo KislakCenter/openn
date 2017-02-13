@@ -12,6 +12,7 @@ from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.pages.page import Page
 from openn.pages.document_data import DocumentData
+import openn.openn_functions as opfunc
 
 class Browse(Page):
 
@@ -67,7 +68,7 @@ class Browse(Page):
             return False
 
         if os.path.exists(self.outfile_path()):
-            mtime = datetime.fromtimestamp(os.path.getmtime(self.outfile_path()))
+            mtime = opfunc.mtime_to_datetime(self.outfile_path())
             if mtime < self.document.prepstatus.started:
                 return True
             else:

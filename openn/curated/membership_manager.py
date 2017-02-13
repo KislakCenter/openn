@@ -87,6 +87,24 @@ class MembershipManager(object):
         repo     = Repository.objects.get(tag=repo_tag.lower())
         return Document.objects.get(repository_id=repo.pk, base_dir=base_dir)
 
+    @staticmethod
+    def active_collections():
+        """ Return all collections that are 'live' and have documents  marked
+        'is_online'. """
+
+        live_curated_ids = set(CuratedMembership.objects.
+                               filter(curated_collection__live=True, document__is_online=True).
+                               values_list('curated_collection__pk', flat=True))
+        colls = list(CuratedCollection.objects.filter(pk__in=live_curated_ids))
+
+        if logging.getLogger().getEffectiveLevel() <= logging.INFO:
+            MembershipManager.logger.info("Found %d live curated collections: ", len(colls))
+            for coll in colls:
+                MembershipManager.logger.info("Add active collection: %s", coll.tag)
+
+        return colls
+
+
     def is_integer(self, s):
         try:
             int(s)
