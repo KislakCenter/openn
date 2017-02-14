@@ -21,8 +21,12 @@ class OPennTEI(XMLWhatsit):
     n_extra_spaces_re = re.compile('\s+')
 
     def __init__(self, xml):
-        if xml is None or xml.strip() == '':
+        if xml is None:
             raise OPennException("XML has no content")
+
+        if (isinstance(xml, str) or isinstance(xml, unicode)) and xml.strip() == '':
+            raise OPennException("XML has no content")
+
         if isinstance(xml, str):
             parser = etree.XMLParser(recover=True, encoding='utf-8', remove_blank_text=True)
             self.xml = etree.fromstring(xml, parser)
