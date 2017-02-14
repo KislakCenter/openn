@@ -276,7 +276,11 @@ def toc_repository(repo_tag, opts):
 
 def document(docid, opts):
     """Generate browse HTML for DOC_ID"""
-    make_browse_html(docid, opts)
+    try:
+        make_browse_html(docid, opts)
+    except Exception:
+        logger.error("Error processing document with ID %d", docid)
+        raise
 
 def readme(opts):
     """Generate ReadMe files as needed"""
