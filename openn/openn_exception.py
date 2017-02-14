@@ -12,3 +12,8 @@ class OPennException(Exception):
 
     def print_cause(self):
         print self.cause_text
+
+class InvalidOptionsException(OPennException):
+    """ Exception for invalid script options """
+    def __init__(self, *args, **kwargs):
+        super(InvalidOptionsException, self).__init__(*args, **kwargs)
