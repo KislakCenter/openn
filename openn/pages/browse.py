@@ -12,13 +12,14 @@ from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.pages.page import Page
 from openn.pages.document_data import DocumentData
+import openn.openn_functions as opfunc
 
 class Browse(Page):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self,document, collection_wrapper, toc_dir,**kwargs):
-        self._data = DocumentData(document, collection_wrapper, toc_dir)
+    def __init__(self,document, repository_wrapper, toc_dir,**kwargs):
+        self._data = DocumentData(document, repository_wrapper, toc_dir)
 
         updated_kwargs = kwargs.update({'template_name': 'browse_ms.html',
                                         'outfile':self.document.browse_path})
@@ -43,7 +44,7 @@ class Browse(Page):
 
     def log_msg(self, msg_type, msg):
         msg = "%s; %s: %s/%s" % (
-            msg_type, msg, self.document.openn_collection.tag, self.document.base_dir)
+            msg_type, msg, self.document.repository.tag, self.document.base_dir)
         self.logger.info(msg)
 
 
@@ -67,7 +68,7 @@ class Browse(Page):
             return False
 
         if os.path.exists(self.outfile_path()):
-            mtime = datetime.fromtimestamp(os.path.getmtime(self.outfile_path()))
+            mtime = opfunc.mtime_to_datetime(self.outfile_path())
             if mtime < self.document.prepstatus.started:
                 return True
             else:

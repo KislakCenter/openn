@@ -107,12 +107,12 @@ trap "cleanup; exit" 0
 
 # clear the vars
 path=; prep=; base=; prepsource=
-prep=`get_field $todo coll_prep`
+prep=`get_field $todo repo_prep`
 if [[ $? -ne 0 ]]
 then
-    error "Cannot retrieve field 'coll_prep' from $todo"
+    error "Cannot retrieve field 'repo_prep' from $todo"
 fi
-message "Found coll_prep: $prep"
+message "Found repo_prep: $prep"
 prepsource=`get_field $todo prepsource`
 if [[ $? -ne 0 ]]
 then

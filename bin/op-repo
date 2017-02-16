@@ -6,6 +6,6 @@
 
 this_dir=`dirname $0`
 wrapper=$this_dir/op-wrapper.sh
-script=${this_dir}/op-coll.py
+script=${this_dir}/op-repo.py
 
 $wrapper -C $script $@

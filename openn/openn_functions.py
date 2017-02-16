@@ -5,9 +5,13 @@ import errno
 import re
 import sys
 import traceback
+import gc
+from datetime import datetime
+import pytz
+
 
 from openn.openn_exception import OPennException
-from openn.collections.configs import Configs
+from openn.repository.configs import Configs
 import openn.app as op_app
 
 def get_class(kls):
@@ -41,6 +45,12 @@ def tstamp():
 def str_time():
     return time.strftime('%Y-%m-%dT%H:%M:%S')
 
+def safe_isoformat(dtime):
+    """ Return the ISO format date if dtime is an instance of datetime; else
+        return dtime as a string.
+    """
+    return dtime.isoformat() if isinstance(dtime, datetime) else str(dtime)
+
 def print_message(level, cmd, str):
     cmd_box = '[{0}]'.format(cmd)
     print "%-23s %-20s %-43s %s" % (cmd_box,str_time(),level,str)
@@ -73,17 +83,95 @@ def sort_str(s):
 def prep_config_tags():
     return op_app.PREP_CONFIGS.keys()
 
-def get_coll_configs():
-    return Configs(op_app.COLLECTIONS)
+def get_repo_configs():
+    return Configs(op_app.REPOSITORIES)
 
-def get_coll_tags():
-    return get_coll_configs().tags()
+def get_repo_tags():
+    return get_repo_configs().tags()
 
-def get_coll_names():
-    return get_coll_configs().all_values('name')
+def get_repo_names():
+    return get_repo_configs().all_values('name')
 
-def get_coll_config(tag):
-    return get_coll_configs().get_config(tag)
+def get_repo_config(tag):
+    return get_repo_configs().get_config_dict(tag)
 
-def get_coll_wrapper(tag):
-    return get_coll_configs().get_collection(tag)
+def get_repo_wrapper(tag):
+    return get_repo_configs().get_repository(tag)
+
+def queryset_iterator(queryset, chunksize=1000):
+    """
+    From: https://djangosnippets.org/snippets/1949/
+
+    Iterate over a Django Queryset ordered by the primary key
+
+    This method loads a maximum of chunksize (default: 1000) rows in it's
+    memory at the same time while django normally would load all rows in it's
+    memory. Using the iterator() method only causes it to not preload all the
+    classes.
+
+    Usage:
+
+        my_queryset = queryset_iterator(MyItem.objects.all())
+        for item in my_queryset:
+            item.do_something()
+
+    Note that the implementation of the iterator does not support ordered query sets.
+    """
+
+    # Don't break if the queryset is empty
+    if queryset.count() == 0:
+        return
+
+    pk = 0
+    last_pk = queryset.order_by('-pk')[0].pk
+    queryset = queryset.order_by('pk')
+    while pk < last_pk:
+        for row in queryset.filter(pk__gt=pk)[:chunksize]:
+            pk = row.pk
+            yield row
+        gc.collect()
+
+def ensure_dir(dir_path):
+    parent = os.path.dirname(dir_path)
+    if not os.path.exists(parent):
+        ensure_dir(parent)
+    if not os.path.exists(dir_path):
+        os.mkdir(dir_path)
+        os.chmod(dir_path, 0775)
+
+def mtime_to_datetime(path):
+    """ Get the path mtime and make it time-zone aware if possible. """
+    stamp = os.path.getmtime(path)
+    return timestamp_to_datetime(stamp)
+
+def ctime_to_datetime(path):
+    """ Get the path mtime and make it time-zone aware if possible. """
+    stamp = os.path.getctime(path)
+    return timestamp_to_datetime(stamp)
+
+def atime_to_datetime(path):
+    """ Get the path atime and make it time-zone aware if possible. """
+    stamp = os.path.getatime(path)
+    return timestamp_to_datetime(stamp)
+
+def timestamp_to_datetime(stamp):
+    """ Convert the given timestamp to time-zone aware date if possible;
+    otherwise, return naive date.  """
+    naive = datetime.utcfromtimestamp(stamp)
+
+    try:
+        tzone = pytz.timezone(op_app.TIME_ZONE)
+        return tzone.localize(naive)
+    except AttributeError:
+        return naive
+
+def localize_datetime(dtime):
+    try:
+        tzone = pytz.timezone(op_app.TIME_ZONE)
+    except AttributeError:
+        return dtime
+
+    if dtime.tzinfo is None:
+        return tzone.localize(dtime)
+    else:
+        return dtime.astimezone(tzone)

@@ -14,7 +14,7 @@ elif os.path.exists(skey_file):
 # From the docs:
 #
 #    The lifetime of a database connection, in seconds. Use 0 to close
-#    database connections at the end of each request — Django’s historical
+#    database connections at the end of each request — Django's historical
 #    behavior — and None for unlimited persistent connections.
 #
 # Prevent MySQL error 2006:
@@ -74,6 +74,9 @@ INSTALLED_APPS = (
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
+TIME_ZONE = 'US/Eastern'
+USE_TZ = True
+
 OPENN_HOST = 'openn.library.upenn.edu'
 
 # put the openn/bin dir in the path
@@ -95,7 +98,8 @@ TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
 README_TEMPLATES = [ { 'file': 'ReadMe.html', 'title': 'Read Me' },
                      { 'file': 'TechnicalReadMe.html', 'title': 'Technical Read Me' } ]
-COLLECTIONS_TEMPLATE = 'Collections.html'
+REPOSITORIES_TEMPLATE = 'Repositories.html'
+CURATED_COLLECTIONS_TEMPLATE = 'CuratedCollections.html'
 
 STAGING_DIR = os.environ['OPENN_STAGING_DIR']
 PACKAGE_DIR = os.environ['OPENN_PACKAGE_DIR']
@@ -196,10 +200,10 @@ folder name to the database; requires a TEI file.""",
 
 ]
 
-# On 'no-document' collections: These are collections for which OPenn lists no
-# documents. The Walters Art Museum is one such collection. Listing of
+# On 'no-document' repositories: These are repositories for which OPenn lists
+# no documents. The Walters Art Museum is one such repository. Listing of
 # documents is handled by the site itself.
-COLLECTIONS = {
+REPOSITORIES = {
     'validations': {
         'unique_fields': [
             'tag',
@@ -444,14 +448,14 @@ under a Creative Commons Attribution License.""",
             'name': 'J. Welles Henderson Archives and Library of the Independence Seaport Museum',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Independence  Seaport Museum’s J. Welles Henderson Archives and
+            'blurb': """Independence  Seaport Museum's J. Welles Henderson Archives and
 Library is one of the nation's premier regional maritime research
 facilities. With a rich repository of regional documents, 12,000 ship
 plans, a significant collection of rare books and manuscripts; maps
 and charts; photographs, and a 15,000 volume research library, the J.
 Welles Henderson Archives and Library boasts an impressive range of
 materials. The collections are dedicated to a deeper understanding,
-appreciation, and experience of Philadelphia’s regional waterways and
+appreciation, and experience of Philadelphia's regional waterways and
 the Delaware watershed area for everyone. They carry national and
 international significance.""",
             'include_file': 'IndependenceSeaportMuseum.html',
@@ -461,7 +465,7 @@ international significance.""",
             'name': 'German Society of Pennsylvania',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Founded in 1764, The German Society of Pennsylvania is America’s
+            'blurb': """Founded in 1764, The German Society of Pennsylvania is America's
 oldest German organization. Its Joseph P. Horner Memorial Library,
 housed in a beautiful 19th century reading room, holds one of the
 largest private collections of German-language books in the U.S. The
@@ -518,7 +522,7 @@ three-dimensional memorabilia.""",
             'name': 'University of Pennsylvania Museum of Archaeology and Anthropology',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Founded in 1887, the Penn Museum has always been one of the world’s
+            'blurb': """Founded in 1887, the Penn Museum has always been one of the world's
 great archaeology and anthropology research museums, and the largest
 university museum in the United States. With roughly one million
 objects in its care, the Penn Museum encapsulates and illustrates the
@@ -551,11 +555,11 @@ illumination.""",
 
 PREP_CONFIGS = {
     'penn-pih': {
-        'collection': {
+        'repository': {
             'tag': 'pennmss',
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'pih',
         },
         'common_prep': {
@@ -578,11 +582,11 @@ PREP_CONFIGS = {
         }
     },
     'ljs-pih': {
-        'collection': {
+        'repository': {
             'tag': 'ljs'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'pih',
         },
         'common_prep': {
@@ -605,11 +609,11 @@ PREP_CONFIGS = {
         },
     },
     'pennmuseum-pih': {
-        'collection': {
+        'repository': {
             'tag': 'pennmuseum'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'pih',
         },
         'common_prep': {
@@ -632,11 +636,11 @@ PREP_CONFIGS = {
         },
     },
     'penn-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'pennmss'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -654,11 +658,11 @@ PREP_CONFIGS = {
         }
     },
     'brynmawr-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'brynmawr'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -676,11 +680,11 @@ PREP_CONFIGS = {
         }
     },
     'drexarc-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'drexarc'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -698,11 +702,11 @@ PREP_CONFIGS = {
         }
     },
     'drexmed-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'drexmed'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -720,11 +724,11 @@ PREP_CONFIGS = {
         }
     },
     'haverford-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'haverford'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -742,11 +746,11 @@ PREP_CONFIGS = {
         }
     },
     'lehigh-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'lehigh'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -764,11 +768,11 @@ PREP_CONFIGS = {
         }
     },
     'friendshl-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'friendshl'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -786,11 +790,11 @@ PREP_CONFIGS = {
         }
     },
     'hsp-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'hsp'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -808,11 +812,11 @@ PREP_CONFIGS = {
         }
     },
     'lts-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'lts'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -830,11 +834,11 @@ PREP_CONFIGS = {
         }
     },
     'ulp-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'ulp'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -852,11 +856,11 @@ PREP_CONFIGS = {
         }
     },
     'tlc-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'tlc'
         },
         "image_types": [ '*.tif' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -874,11 +878,11 @@ PREP_CONFIGS = {
         }
     },
     'libpa-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'libpa'
         },
         "image_types": [ '*.tif', '*.jpg' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -896,11 +900,11 @@ PREP_CONFIGS = {
         }
     },
     'ism-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'ism'
         },
         "image_types": [ '*.tif', '*.jpg' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -918,11 +922,11 @@ PREP_CONFIGS = {
         }
     },
     'uarc-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'uarc'
         },
         "image_types": [ '*.tif', '*.jpg' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -940,11 +944,11 @@ PREP_CONFIGS = {
         }
     },
     'gsp-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'gsp'
         },
         "image_types": [ '*.tif', '*.jpg' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -962,10 +966,10 @@ PREP_CONFIGS = {
         }
     },
     'private1-dirlesstei': {
-        'collection': {
+        'repository': {
             'tag': 'private1',
         },
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'dirlesstei',
         },
         'common_prep': {
@@ -982,11 +986,11 @@ PREP_CONFIGS = {
         },
     },
     'pennmuseumarchives-diaries': {
-        'collection': {
+        'repository': {
             'tag': 'pennmuseumarchives'
         },
         "image_types": [ '*.tif', '*.jpg' ],
-        'collection_prep': {
+        'repository_prep': {
             'tag': 'diaries',
         },
         'common_prep': {
@@ -1003,6 +1007,49 @@ PREP_CONFIGS = {
             },
         }
     },
+}
+
+CURATED_COLLECTIONS = {
+    'validations': {
+        'unique_fields': [
+            'tag',
+            'name',
+        ],
+        'required_fields': [
+            'tag',
+            'live',
+            'name',
+            'blurb',
+            'csv_only',
+        ],
+    },
+    'configs': [
+        {
+            'tag': 'bibliophilly',
+            'name': 'Bibliotheca Philadelphiensis',
+            'blurb': """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet scelerisque tellus, ac dapibus neque. Vestibulum viverra mi odio, eu luctus elit volutpat nec. Vivamus sed nunc diam. Ut sed feugiat lectus. Curabitur cursus purus non ligula vulputate, vel porta lectus auctor. In magna velit, accumsan sed elit at, ultricies consequat dolor. Nullam at venenatis felis, cursus tristique ex. Nulla bibendum ante quis nisl placerat molestie. Morbi scelerisque non diam eget pharetra.
+
+Integer lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligula vitae suscipit. Morbi ultricies dolor et nunc euismod malesuada. Nullam sollicitudin neque imperdiet arcu pellentesque mattis. Aenean vitae urna et felis placerat rhoncus in ut libero. Vestibulum vel diam dui. Curabitur in mauris non dui pharetra aliquet nec nec quam. Nulla maximus ipsum nibh. Nulla bibendum, nunc at condimentum suscipit, nisl est sodales massa, quis faucibus odio neque ac nisl.""",
+            'csv_only': False,
+            'include_file': 'BiblioPhilly.html',
+            'live': True,
+        },
+        {
+            'tag': 'pacscl-diaries',
+            'name': 'PACSCL Diares',
+            'blurb': 'Lorem ipsum',
+            'csv_only': False,
+            'include_file': 'PACSCLDiaries.html',
+            'live': True,
+        },
+        {
+            'tag': 'thai',
+            'name': 'Thai Manuscripts',
+            'blurb': 'Lorem ipsum',
+            'csv_only': True,
+            'live': True,
+        },
+    ],
 }
 
 PREP_CONTEXT = {

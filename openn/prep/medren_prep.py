@@ -11,12 +11,12 @@ import logging
 import sys
 import codecs
 from lxml import etree
-from openn.prep.collection_prep import CollectionPrep
+from openn.prep.repository_prep import RepositoryPrep
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.xml.openn_tei import OPennTEI
 
-class MedrenPrep(CollectionPrep):
+class MedrenPrep(RepositoryPrep):
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
     DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\w*\.tif$', 'body\d{4}\w*\.tif$', 'back\d{4}\w*\.tif$' ]
@@ -39,7 +39,7 @@ class MedrenPrep(CollectionPrep):
 
         """
         # TODO: break if SAXON_JAR not set; see bin/op-gen-tei
-        CollectionPrep.__init__(self,source_dir,document, prep_config)
+        RepositoryPrep.__init__(self,source_dir,document, prep_config)
         self.source_dir_re = re.compile('^%s/*' % source_dir)
         self.data_dir      = os.path.join(self.source_dir, 'data')
         self.pih_host      = prep_config.prep_class_parameter('pih_host')
@@ -282,47 +282,47 @@ class MedrenPrep(CollectionPrep):
         self.add_removal(self.pih_filename)
 
     def _do_prep_dir(self):
-        if self.get_status() > self.COLLECTION_PREP_MD_VALIDATED:
+        if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
             self.logger.warning("[%s] Metadata alreaady validated" % (self.basedir, ))
         else:
             self.logger.info("[%s] Validating metadata" % (self.basedir, ))
             bibid = self.get_bibid()
             self.write_xml(bibid, self.pih_filename)
             call_no = self.check_valid_xml(self.pih_filename)
-            self.write_status(self.COLLECTION_PREP_MD_VALIDATED)
+            self.write_status(self.REPOSITORY_PREP_MD_VALIDATED)
 
-        if self.get_status() > self.COLLECTION_PREP_FILES_VALIDATED:
+        if self.get_status() > self.REPOSITORY_PREP_FILES_VALIDATED:
             self.logger.warning("[%s] Files alreaady validated" % (self.basedir, ))
         else:
             self.logger.info("[%s] Validating files" % (self.basedir, ))
             expected_files = self.xml_file_names(self.pih_filename)
             self.check_file_names(expected_files)
-            self.write_status(self.COLLECTION_PREP_FILES_VALIDATED)
+            self.write_status(self.REPOSITORY_PREP_FILES_VALIDATED)
 
-        if self.get_status() > self.COLLECTION_PREP_FILES_STAGED:
+        if self.get_status() > self.REPOSITORY_PREP_FILES_STAGED:
             self.logger.warning("[%s] Files already staged" % (self.basedir, ))
         else:
             self.logger.info("[%s] Staging files" % (self.basedir, ))
             self.fix_image_names()
             self.stage_images()
-            self.write_status(self.COLLECTION_PREP_FILES_STAGED)
+            self.write_status(self.REPOSITORY_PREP_FILES_STAGED)
 
-        if self.get_status() > self.COLLECTION_PREP_FILE_LIST_WRITTEN:
+        if self.get_status() > self.REPOSITORY_PREP_FILE_LIST_WRITTEN:
             self.logger.warning("[%s] File list already written" % (self.basedir, ))
         else:
             self.logger.info("[%s] Writing file list" % (self.basedir, ))
             file_list = self.build_file_list(self.pih_filename)
             self.add_file_list(file_list)
-            self.write_status(self.COLLECTION_PREP_FILE_LIST_WRITTEN)
+            self.write_status(self.REPOSITORY_PREP_FILE_LIST_WRITTEN)
 
-        if self.get_status() > self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN:
+        if self.get_status() > self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN:
             self.logger.warning("[%s] Partial TEI already written" % (self.basedir, ))
         else:
             self.logger.info("[%s] Writing partial TEI" % (self.basedir, ))
             partial_tei_xml = self.gen_partial_tei()
             self.write_partial_tei(self.source_dir, partial_tei_xml)
             self.validate_partial_tei()
-            self.write_status(self.COLLECTION_PREP_PARTIAL_TEI_WRITTEN)
+            self.write_status(self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN)
 
         # files to cleanup
         self.add_removal(self.pih_filename)

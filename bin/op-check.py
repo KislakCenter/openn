@@ -35,20 +35,20 @@ def setup_logger():
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
 
-def get_validation(coll_name):
-    collection = settings.COLLECTIONS.get(coll_name, None)
-    if not collection:
-        raise(OPennException("Collection not found: %s" % (coll_name,)))
-    if collection.get('package_validation', None):
-        return PackageValidation(**collection['package_validation'])
+def get_validation(repo_name):
+    repository = settings.REPOSITORYS.get(repo_name, None)
+    if not repository:
+        raise(OPennException("Collection not found: %s" % (repo_name,)))
+    if repository.get('package_validation', None):
+        return PackageValidation(**repository['package_validation'])
 
-def validate(coll_name, pkg_dir):
+def validate(repo_name, pkg_dir):
     errors = []
-    validation = get_validation(coll_name)
+    validation = get_validation(repo_name)
     if validation:
         errors = validation.validate(pkg_dir)
     else:
-        logging.warn("No package_validation configuration found for collection: %s", (coll_name, ))
+        logging.warn("No package_validation configuration found for repository: %s", (repo_name, ))
     return errors
 
 # ------------------------------------------------------------------------------
@@ -69,8 +69,8 @@ def main(cmdline=None):
     try:
         if len(args) != 2:
             raise OPennException("Wrong number of arguments")
-        coll_name, pkg_dir = args
-        errors = validate(coll_name, pkg_dir)
+        repo_name, pkg_dir = args
+        errors = validate(repo_name, pkg_dir)
         if len(errors) > 0:
             logging.error("Errors found checking package directory: %s" % (args[1],))
             for er in errors:
@@ -91,14 +91,14 @@ def main(cmdline=None):
 def make_parser():
     """ option parser"""
 
-    usage = """%prog COLLECTION PKG_DIR
+    usage = """%prog REPOSITORY PKG_DIR
 
-Check PKG_DIR validity using package_validation rules for COLLECTION.
+Check PKG_DIR validity using package_validation rules for REPOSITORY.
 
-Package validation rules defined under a collection name in the
+Package validation rules defined under a repository name in the
 settings file:
 
-        COLLECTIONS = {
+        REPOSITORIES = {
             'medren': {
                 'tag': 'medren',
                 'name': 'Penn Manuscripts',

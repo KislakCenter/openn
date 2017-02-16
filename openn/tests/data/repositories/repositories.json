@@ -209,7 +209,7 @@
       }
     ]
   },
-  "valid_collections": {
+  "valid_repositories": {
     "validations": {
       "unique_fields": [
         "tag",

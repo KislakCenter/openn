@@ -40,8 +40,8 @@ fi
 # APPLICATION VARS
 APP_DIR=$(cd `dirname $0`; cd ..; pwd)
 VENDOR_DIR=$THIS_DIR/../vendor
-JING_FOLDER=$VENDOR_DIR/jing
-JING_JAR=$JING_FOLDER/bin/jing.jar
+JING_FOLDER=$VENDOR_DIR/jars
+JING_JAR=$JING_FOLDER/jing.jar
 SCHEMA=`realpath $THIS_DIR/../openn/xml/schema/openn_tei.rng`
 
 # Note that LOGFILE is used by functions for log commands: log_message,

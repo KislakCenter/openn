@@ -1,8 +1,28 @@
 # Tasks
 
+## Repositories, collections
+
+- Projects CSV
+  + Single project taks
+  + All projects
+
+- Projects html = curated_collections.html
+
+- rename collections.html to repositories.html
+- curated_collections.html
+-
+- HTML for each project/curated collections
+- CSV for each project/curated collections
+<!-- - CSV for each repository -->
+
+# Deploy
+
+Re-run config
+Update op-todo items, coll_config -> repo_config
+
 BibPhilly changes
 - Add metadata creator to spreadsheet to XML code as TEI <resp>Project
-  Cataloger</resp>, <resp>Inst'l cataloger</resp> --- language to be 
+  Cataloger</resp>, <resp>Inst'l cataloger</resp> --- language to be
   determined
 - Add author to pages spreadsheet
 - Add author @ref to XSL

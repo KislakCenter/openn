@@ -24,6 +24,9 @@ cmd=`basename $0`
 vendor_dir=$this_dir/vendor
 
 PYEXIFTOOL_GIT=https://github.com/demery/pyexiftool.git
+JING_GIT=https://github.com/relaxng/jing-trang.git
+JARS=$vendor_dir/jars
+JING_JAR=$JARS/jing.jar
 JING_URL=https://jing-trang.googlecode.com/files/jing-20091111.zip
 JING_ZIP=$this_dir/`echo $JING_URL | sed 's/^.*\///'`
 JING_DIR=$vendor_dir/`basename $JING_ZIP .zip`
@@ -36,6 +39,7 @@ usage() {
     echo " -h              print help and exit"
     echo " -e VIRTUALENV   Virtualenv executable"
     echo " -p PYTHON       Python executable"
+    echo " -J              Clobber JING if it exists [DEFAULT=false]"
     echo " -u              Attempt to update this installation"
     echo ""
     echo "Note: If the dir 'venv' is found, update is automatically attempted."
@@ -94,7 +98,7 @@ virtualenv
 
 
 ### OPTIONS
-while getopts "hp:e:u" opt; do
+while getopts "hp:e:uJ" opt; do
     case $opt in
         h)
             usage
@@ -108,6 +112,9 @@ while getopts "hp:e:u" opt; do
             ;;
         u)
             UPDATE=true
+            ;;
+        J)
+            CLOBBER_JING=true
             ;;
         \?)
             echo "ERROR Invalid option: -$OPTARG" >&2
@@ -282,51 +289,36 @@ else
     LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 50 | xargs > $secret_txt
 fi
 
-# Install Jing
-# remove anything called jing in the vendor dir
-echo "[$cmd] Installing Jing for RelaxNG XML validation."
-if [[ -f $JING_ZIP ]]; then
-    echo "[$cmd] Found previous $JING_ZIP; deleting"
-    rm $JING_ZIP
+# Handle Jing
+# see if we need to remove JING
+if [[ -n "$CLOBBER_JING" && -f "$JING_JAR" ]]; then
+    echo "Removing existing $JING_JAR"
+    rm -f -v $JING_JAR
 fi
 
-#  for x in $(shopt -s nullglob; echo vendor/jing*); do echo $x; done
-for x in $(shopt -s nullglob; echo $vendor_dir/jing*);
-do
-    echo "[$cmd] Removing previous Jing directory $x"
-    rm -rf $x
-done
-
-# Download Jing
-echo "[$cmd] Downloading Jing from $JING_URL"
-curl -o $JING_ZIP $JING_URL
-if [[ $? -ne 0 ]] || [[ ! -f $JING_ZIP ]]; then
-    echo "[$cmd] Error downloading $JING_URL"
-    exit 1
-fi
-
-# Unzip
-echo "[$cmd] Unzipping $JING_ZIP to $vendor_dir"
-unzip -q $JING_ZIP -d $vendor_dir
-if [[ $? -ne 0 ]]; then
-    echo "[$cmd] Error unzipping $JING_ZIP"
-    exit 1
-fi
-
-jing_dir=$vendor_dir/`basename $JING_ZIP .zip`
-if [[ -d $jing_dir ]]; then
-    echo "[$cmd] Jing unzipped to $jing_dir; removing $JING_ZIP"
-    rm -rf $JING_ZIP
+# If JING doesn't exist, we build it
+if [[ -f "$JING_JAR" ]]; then
+    echo "Found jing already installed: $JING_JAR"
 else
-    echo "[$cmd] Error unzipping $JING_ZIP; expected dir: $jing_dir"
-    exit 1
-fi
-
-echo "[$cmd] Linkng $jing_dir to $vendor_dir/jing"
-ln -s $jing_dir $vendor_dir/jing
-if [[ $? -ne 0 ]]; then
-    echo "[$cmd] Error linking $jing_dir to $vendor_dir/jing"
-    exit 1
+    echo "Building jing from source: $JING_GIT"
+    git clone $JING_GIT ./tmp-jing
+    if [[ -d ./tmp-jing ]]; then
+        (
+            cd ./tmp-jing
+            ./ant
+        )
+        if cp ./tmp-jing/build/jing.jar $JING_JAR ; then
+            echo "Jing jar built and copied to $JING_JAR; cleaning up"
+            rm -rf ./tmp-jing
+        else
+            echo "Unable to copy ./tmp-jing/build/jing.jar to $JING_JAR"
+            echo "Did build fail?"
+            exit 1
+        fi
+    else
+        echo "Unable to clone jing git repo: $JING_GIT"
+        exit 1
+    fi
 fi
 
 #

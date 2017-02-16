@@ -44,7 +44,7 @@ from openn.prep.prep_setup import PrepSetup
 from openn.prep.package_validation import PackageValidation
 from openn.prep.status import Status
 from openn.prep.prep_config_factory import PrepConfigFactory
-from openn.collections.configs import Configs
+from openn.repository.configs import Configs
 from openn.prep.openn_prep import OPennPrep
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openn.settings")
@@ -65,8 +65,8 @@ def cmd():
 
 def stage_doc(source_dir, doc):
     staging_dir = os.environ['OPENN_STAGING_DIR']
-    coll_folder = doc.openn_collection.long_id()
-    dest_dir    = os.path.join(staging_dir, 'Data', coll_folder, doc.base_dir)
+    repo_folder = doc.repository.long_id()
+    dest_dir    = os.path.join(staging_dir, 'Data', repo_folder, doc.base_dir)
     source      = os.path.abspath(source_dir)
     dest        = os.path.abspath(dest_dir)
 
@@ -89,8 +89,8 @@ def setup_logger():
     global logger
     logger = logging.getLogger(__name__)
 
-def collection_configs():
-    return Configs(settings.COLLECTIONS)
+def repository_configs():
+    return Configs(settings.REPOSITORIES)
 
 def setup_prepstatus(doc):
     # destroy the associate prep if it exists
@@ -142,7 +142,7 @@ def clobber_document(params):
 
     if logger.getEffectiveLevel() >= logging.INFO:
         msg = "Preparing to clobber document id: %d,"
-        msg += " collection: %s, base_dir: %s"
+        msg += " repository: %s, base_dir: %s"
         logger.info(msg % doc.id, doc.collection, doc.base_dir)
 
     if doc.is_online:
@@ -181,7 +181,7 @@ def get_prep_config(prep_config_tag):
     prep_config_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
-        collection_configs=settings.COLLECTIONS,
+        repository_configs=settings.REPOSITORIES,
         prep_context=settings.PREP_CONTEXT)
 
     return prep_config_factory.create_prep_config(prep_config_tag)
@@ -198,7 +198,7 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
-    if opts.list_coll_preps:
+    if opts.list_repo_preps:
         print "%s" % ('\n'.join(sorted(prep_config_tags())),)
         return status
 
@@ -210,14 +210,14 @@ def main(cmdline=None):
         source_dir       = prep_source_dir_arg(args[1])
 
         prep_config      = get_prep_config(prep_config_tag)
-        openn_collection = prep_config.openn_collection()
+        repository = prep_config.repository()
         prep_method      = prep_config.prep_method()
 
         validate_source_dir(prep_method, source_dir)
 
         base_dir         = os.path.basename(source_dir)
         doc_params       = { 'base_dir': base_dir,
-                             'openn_collection': openn_collection }
+                             'repository': repository }
 
         if openn_db.doc_exists(doc_params):
             if opts.resume:
@@ -228,8 +228,8 @@ def main(cmdline=None):
                 parser.error('Update function not yet implemented')
             else:
                 msg = "Document already exists with base_dir"
-                msg += " '%s' and primary collection '%s'"
-                parser.error(msg % (base_dir, openn_collection))
+                msg += " '%s' and repository '%s'"
+                parser.error(msg % (base_dir, repository))
 
         status_txt = os.path.join(source_dir, 'status.txt')
         if opts.resume:
@@ -263,11 +263,11 @@ def main(cmdline=None):
 def make_parser():
     """get_xml option parser"""
 
-    usage = "%prog [OPTIONS] COLL_PREP SOURCE_DIR"
+    usage = "%prog [OPTIONS] REPO_PREP SOURCE_DIR"
     epilog = """
 Prepare the given source diretory for OPenn.
 
-Known collection preps are:
+Known repository preps are:
 
     %s
 
@@ -293,10 +293,10 @@ prepare correctly the first time. Will fail if document is on-line.
                       action='store_true', dest='update', default=False,
                       help=update_help)
 
-    list_help = 'List all known collection preps and quit; no'
+    list_help = 'List all known repository preps and quit; no'
     list_help += ' arguments required; any arguments ignored'
     parser.add_option('-l', '--list',
-                      action='store_true', dest='list_coll_preps', default=False,
+                      action='store_true', dest='list_repo_preps', default=False,
                       help=list_help)
 
     resume_help = 'resume processing of document [default: %default]'

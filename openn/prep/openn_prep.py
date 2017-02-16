@@ -18,13 +18,13 @@ class OPennPrep:
                 Status(source_dir).write_status(Status.PREP_BEGUN)
 
             setup = PrepSetup()
-            coll = prep_config.collection()
-            doc = setup.prep_document(coll, base_dir)
+            repo_wrapper = prep_config.repository_wrapper()
+            doc = setup.prep_document(repo_wrapper, base_dir)
             prepstatus = self._setup_prepstatus(doc)
 
-            coll_prep_class = prep_config.get_prep_class()
-            coll_prep = coll_prep_class(source_dir, doc, prep_config)
-            coll_prep.prep_dir()
+            repo_prep_class = prep_config.get_prep_class()
+            repo_prep = repo_prep_class(source_dir, doc, prep_config)
+            repo_prep.prep_dir()
 
             common_prep = CommonPrep(source_dir, doc, prep_config)
             common_prep.prep_dir()
@@ -36,10 +36,10 @@ class OPennPrep:
             raise
 
     def update_tei(self, source_dir, document, prep_config, **kwargs):
-        coll_prep_class = prep_config.get_prep_class()
-        coll_prep = coll_prep_class(source_dir, document, prep_config)
-        coll_prep.regen_partial_tei(document, **kwargs)
-        coll_prep._cleanup()
+        repo_prep_class = prep_config.get_prep_class()
+        repo_prep = repo_prep_class(source_dir, document, prep_config)
+        repo_prep.regen_partial_tei(document, **kwargs)
+        repo_prep._cleanup()
 
         common_prep = CommonPrep(source_dir, document, prep_config)
         common_prep.update_tei()

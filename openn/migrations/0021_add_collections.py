@@ -32,7 +32,7 @@ class Migration(DataMigration):
             self.find_or_create(orm, tag)
 
         # Now do any others
-        for config in settings.COLLECTIONS['configs']:
+        for config in settings.REPOSITORIES['configs']:
             tag = config['tag']
             self.find_or_create(orm, tag)
 

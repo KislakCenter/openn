@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}OPenn: Hosted repositories{% endblock %}
+
+{% block content %}
+
+<div class="breadcrumb"><p>
+    <span><a href="/">Home</a>&nbsp;</span>
+</p></div>
+
+<h1>OPenn: Curated collections</h1>
+<ul class="ul_documents">
+{% for curated in curated_collections %}
+   <li>
+     <span class="coll-name"><a href="/{{context.toc_dir}}/{{curated.toc_file}}">{{curated.name}}</a></span><br />
+     <span>{{ curated.blurb |safe }}</span>
+   </li>
+{% endfor %}
+</ul>
+{% endblock %}

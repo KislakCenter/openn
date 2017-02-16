@@ -46,7 +46,7 @@ def get_prep_config(prep_config_tag):
     prep_config_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
-        collection_configs=settings.COLLECTIONS,
+        repository_configs=settings.REPOSITORIES,
         prep_context=settings.PREP_CONTEXT)
 
     return prep_config_factory.create_prep_config(prep_config_tag)

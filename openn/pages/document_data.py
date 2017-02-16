@@ -7,9 +7,9 @@ from openn.xml.openn_tei import OPennTEI
 from openn.pages.document_page import DocumentPage
 
 class DocumentData:
-    def __init__(self, document, collection, toc_dir):
+    def __init__(self, document, repository, toc_dir):
         self._document      = document
-        self._collection    = collection
+        self._repository    = repository
         self._toc_dir       = toc_dir
         self._tei           = OPennTEI(document.tei_xml)
         self._pages         = None
@@ -25,12 +25,12 @@ class DocumentData:
         return self._document
 
     @property
-    def collection(self):
-        return self._collection
+    def repository(self):
+        return self._repository
 
     @property
     def toc_path(self):
-        toc_file = self._collection.toc_file()
+        toc_file = self._repository.toc_file()
         return "/%s/%s" % (self._toc_dir, toc_file)
 
     @property

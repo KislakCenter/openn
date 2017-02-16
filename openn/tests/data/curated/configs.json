@@ -1,0 +1,145 @@
+{
+  "validations": {
+    "unique_fields": [
+      "tag",
+      "name"
+    ],
+    "required_fields": [
+      "tag",
+      "live",
+      "name",
+      "blurb",
+      "csv_only"
+    ]
+  },
+  "configs": [
+    {
+      "include_file": "BiblioPhilly.html",
+      "name": "Bibliotheca Philadelphiensis",
+      "live": true,
+      "tag": "bibliophilly",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "include_file": "PACSCLDiaries.html",
+      "name": "PACSCL Diares",
+      "live": true,
+      "tag": "pacscl-diaries",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "live": true,
+      "tag": "thai",
+      "name": "Thai Manuscripts",
+      "blurb": "Lorem ipsum",
+      "csv_only": true
+    }
+  ],
+  "missing_tag": [
+    {
+      "include_file": "BiblioPhilly.html",
+      "name": "Bibliotheca Philadelphiensis",
+      "live": true,
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "include_file": "PACSCLDiaries.html",
+      "name": "PACSCL Diares",
+      "live": true,
+      "tag": "pacscl-diaries",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "live": true,
+      "tag": "thai",
+      "name": "Thai Manuscripts",
+      "blurb": "Lorem ipsum",
+      "csv_only": true
+    }
+  ],
+  "missing_name": [
+    {
+      "include_file": "BiblioPhilly.html",
+      "live": true,
+      "tag": "bibliophilly",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "include_file": "PACSCLDiaries.html",
+      "name": "PACSCL Diares",
+      "live": true,
+      "tag": "pacscl-diaries",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "live": true,
+      "tag": "thai",
+      "name": "Thai Manuscripts",
+      "blurb": "Lorem ipsum",
+      "csv_only": true
+    }
+  ],
+  "duplicate_tag": [
+    {
+      "include_file": "BiblioPhilly.html",
+      "name": "Bibliotheca Philadelphiensis",
+      "live": true,
+      "tag": "bibliophilly",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "include_file": "PACSCLDiaries.html",
+      "name": "PACSCL Diares",
+      "live": true,
+      "tag": "pacscl-diaries",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "live": true,
+      "tag": "thai",
+      "name": "Thai Manuscripts",
+      "blurb": "Lorem ipsum",
+      "csv_only": true
+    },
+    {
+      "live": true,
+      "tag": "thai",
+      "name": "Thai Manuscripts 2",
+      "blurb": "Lorem ipsum",
+      "csv_only": true
+    }
+  ],
+  "duplicate_name": [
+    {
+      "include_file": "BiblioPhilly.html",
+      "name": "PACSCL Diares",
+      "live": true,
+      "tag": "bibliophilly",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "include_file": "PACSCLDiaries.html",
+      "name": "PACSCL Diares",
+      "live": true,
+      "tag": "pacscl-diaries",
+      "blurb": "Lorem ipsum",
+      "csv_only": false
+    },
+    {
+      "live": true,
+      "tag": "thai",
+      "name": "Thai Manuscripts",
+      "blurb": "Lorem ipsum",
+      "csv_only": true
+    }
+  ]
+}

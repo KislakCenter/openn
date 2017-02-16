@@ -13,10 +13,11 @@ from openn.xml.openn_tei import OPennTEI
 from openn.prep.package_validation import PackageValidation
 from openn.openn_functions import *
 
+
 """
-Parent of collection-specific Prep classes.
+Parent of repository-specific Prep classes.
 """
-class CollectionPrep(Status):
+class RepositoryPrep(Status):
 
     logger = logging.getLogger(__name__)
 
@@ -127,19 +128,19 @@ class CollectionPrep(Status):
 
     def prep_dir(self):
 
-        if self.get_status() >= self.COLLECTION_PREP_COMPLETED:
-            self.logger.warning("[%s] Collection prep already completed" % (self.basedir,))
+        if self.get_status() >= self.REPOSITORY_PREP_COMPLETED:
+            self.logger.warning("[%s] Repository prep already completed" % (self.basedir,))
         else:
-            if self.get_status() > self.COLLECTION_PREP_PACKAGE_VALIDATED:
+            if self.get_status() > self.REPOSITORY_PREP_PACKAGE_VALIDATED:
                 self.logger.warning("[%s] Package directory already validated" % (self.basedir,))
             else:
                 self.logger.info("[%s] Validating package directory" % (self.basedir,))
                 self.validate()
-                self.write_status(self.COLLECTION_PREP_PACKAGE_VALIDATED)
+                self.write_status(self.REPOSITORY_PREP_PACKAGE_VALIDATED)
 
             self._do_prep_dir()
             self._cleanup()
-            self.write_status(self.COLLECTION_PREP_COMPLETED)
+            self.write_status(self.REPOSITORY_PREP_COMPLETED)
 
     def _do_prep_dirs(self):
         pass

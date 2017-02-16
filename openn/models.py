@@ -6,14 +6,18 @@ import httplib
 import os
 import re
 
-class OPennCollection(models.Model):
-    """OPennCollection is a collection to which a document belongs.
+class Repository(models.Model):
+    """Repository is a collection to which a document belongs.
 
     """
-    tag = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
-    metadata_type = models.CharField(
-        max_length = 50, null = False, default = None, blank = False,
+    tag           = models.CharField(max_length = 50, null = False, default = None, blank = False, unique = True)
+    metadata_type = models.CharField(max_length = 50, null = False, default = None, blank = False,
         choices = (('tei','TEI'), ('ead', 'EAD'), ('custom', 'Custom'), ('walters-tei', 'Walters TEI')))
+    name          = models.CharField(max_length = 255, null = True, default = None, blank = True, unique = True)
+    live          = models.BooleanField(default = False)
+    blurb         = models.TextField(null = True, default = None, blank = True)
+    include_file  = models.CharField(max_length = 255, null = True, default = None, blank = False, unique = True)
+    no_document   = models.BooleanField(default = False)
 
     class Meta:
         ordering = ('tag',)
@@ -27,6 +31,9 @@ class OPennCollection(models.Model):
     def toc_file(self):
         return "%s.html" % (self.long_id(),)
 
+    def csv_toc_file(self):
+        return '%s_contents.csv' % (self.long_id())
+
     def web_dir(self):
         return "Data/%s" % (self.long_id(),)
 
@@ -34,7 +41,7 @@ class OPennCollection(models.Model):
         return "Data/%s/html" % (self.long_id(),)
 
     def __str__(self):
-        return ("OPennCollection: id={id:d}, tag={tag}").format(
+        return ("Repository: id={id:d}, tag={tag}").format(
                         id=self.id, tag=self.tag)
 
     def __repr__(self):
@@ -74,7 +81,7 @@ class Document(models.Model):
     metadata_copyright_holder = models.CharField(max_length = 255, null = True, default = None, blank = True)
     metadata_copyright_year   = models.IntegerField(null = True, default = None, blank = True)
     metadata_rights_more_info = models.TextField(null = True, default = None, blank = True)
-    openn_collection          = models.ForeignKey(OPennCollection, default = None)
+    repository                = models.ForeignKey(Repository, default = None)
 
     @property
     def browse_basename(self):
@@ -82,11 +89,11 @@ class Document(models.Model):
 
     @property
     def browse_path(self):
-        return '{0}/{1}'.format(self.openn_collection.html_dir(), self.browse_basename)
+        return '{0}/{1}'.format(self.repository.html_dir(), self.browse_basename)
 
     @property
     def package_dir(self):
-        return '{0}/{1}'.format(self.openn_collection.web_dir(), self.base_dir)
+        return '{0}/{1}'.format(self.repository.web_dir(), self.base_dir)
 
     @property
     def data_dir(self):
@@ -109,11 +116,25 @@ class Document(models.Model):
         return (self.prepstatus and self.prepstatus.succeeded) or False
 
     @property
-    def collection_tag(self):
-        if self.openn_collection is not None:
-            return self.openn_collection.tag
+    def repository_tag(self):
+        if self.repository is not None:
+            return self.repository.tag
         else:
             return 'UNKNOWN'
+
+    @property
+    def repository_id_long(self):
+        if self.repository is None:
+            return None
+
+        return self.repository.long_id()
+
+    @property
+    def metadata_type(self):
+        if self.repository is None:
+            return None
+
+        return self.repository.metadata_type
 
 
     def is_live(self):
@@ -126,8 +147,8 @@ class Document(models.Model):
     # While the collection + call_number should be unique, the collection +
     # base_dir must be unique to prevent filesystem collisions on the host.
     class Meta:
-        ordering        = ['openn_collection', 'base_dir', 'call_number' ]
-        unique_together = ('openn_collection', 'base_dir')
+        ordering        = ['repository', 'base_dir', 'call_number' ]
+        unique_together = ('repository', 'base_dir')
 
 
     def __str__(self):
@@ -150,6 +171,85 @@ class DocumentImageManager(models.Manager):
 class ExtraImageManager(models.Manager):
     def get_query_set(self):
         return super(ExtraImageManager, self).get_query_set().filter(image_type=u'extra')
+
+
+class CuratedCollection(models.Model):
+    """An OPenn CuratedCollection is a secondary grouping of Documents from
+        multiple Repositories. CuratedCollections group Documents from one or
+        more collections.
+
+    """
+    tag          = models.CharField(max_length = 50,  null = False, default = None, blank = False, unique = True)
+    name         = models.CharField(max_length = 255, null = False, default = None, blank = False, unique = True)
+    blurb        = models.TextField(null = True, default = None, blank = True)
+    csv_only     = models.BooleanField(default = True)
+    include_file = models.CharField(max_length = 255, null = True, default = None, blank = False, unique = True)
+    live         = models.BooleanField(default = False)
+    created      = models.DateTimeField(auto_now_add = True)
+    updated      = models.DateTimeField(auto_now = True)
+    documents    = models.ManyToManyField(Document, through='CuratedMembership')
+
+    def short_blurb(self):
+        if self.blurb is not None and len(self.blurb) > 25:
+            return self.blurb[:25] + '...'
+        else:
+            return self.blurb
+
+    def csv_toc_file(self):
+        return '%s_contents.csv' % (self.tag.lower(),)
+
+    def toc_file(self):
+        return '%s_contents.html' % (self.tag.lower(),)
+
+    def has_documents(self):
+        return self.documents.count() > 0
+
+    def has_documents_on_line(self):
+        if not self.has_documents():
+            return False
+        return self.documents.filter(is_online=True).count() > 0
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return ('CuratedCollection: id={id:d}' +
+                ', tag="{tag}"' +
+                ', name="{name}"' +
+                ', blurb="{blurb}"' +
+                ", csv_only={csv_only}" +
+                ', include_file="{include_file}"' +
+                ", live={live}" +
+                ', created="{created}"' +
+                ', updated="{updated}"').format(
+                        id=self.id,
+                        tag=self.tag,
+                        name=self.name,
+                        blurb=self.short_blurb(),
+                        csv_only=self.csv_only,
+                        include_file=self.include_file,
+                        live=self.live,
+                        created=self.created,
+                        updated=self.updated)
+
+class CuratedMembership(models.Model):
+    """ A CuratedMembership links a Document to a CuratedCollection.
+    """
+    document           = models.ForeignKey(Document, on_delete=models.CASCADE)
+    curated_collection = models.ForeignKey(CuratedCollection,  on_delete=models.CASCADE)
+    created            = models.DateTimeField(auto_now_add = True)
+    updated            = models.DateTimeField(auto_now = True)
+
+    class Meta:
+        unique_together = ('document', 'curated_collection',)
+
+    def __str__(self):
+        return ('CuratedMembership: id={id:d}' +
+                ', curated_collection_id={curated_collection_id:d}' +
+                ', document_id={document_id:d}').format(
+                        id=self.id,
+                        curated_collection_id=self.curated_collection_id,
+                        document_id=self.document_id)
 
 class PrepStatus(models.Model):
     document  = models.OneToOneField(Document, primary_key = True)
@@ -250,9 +350,9 @@ class Derivative(models.Model):
         ordering = [ 'deriv_type' ]
 
     def url(self):
-        collection = self.image.document.openn_collection
+        repository = self.image.document.repository
         return "/Data/%s/%s/%s" % (
-            collection.long_id(), self.image.document.base_dir, self.path)
+            repository.long_id(), self.image.document.base_dir, self.path)
 
     def basename(self):
         return os.path.splitext(os.path.basename(self.path))[0]

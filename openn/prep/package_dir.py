@@ -318,11 +318,11 @@ class PackageDir:
 
     def add_image_metadata(self,doc,image_rights,licence_config):
         """Add metadata to all images; parameters: ``doc`` -- the document
-        object, ``image_rights`` -- from settings, collection's
+        object, ``image_rights`` -- from settings, repository's
         ``images_rights`` dict.
 
         """
-        # TODO Need to have information to handle dynamic rights MD:
+        # TODO: Need to have information to handle dynamic rights MD:
         # licence configs (including single image licence text); the
         # appropriate 'single_image' licence type (PD, CC-BY,
         # CC-BY-SA, or CC0) for this doc.
