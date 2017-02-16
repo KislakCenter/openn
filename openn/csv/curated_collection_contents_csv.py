@@ -101,7 +101,7 @@ class CuratedCollectionContentsCSV(OPennCSV):
                     doc.repository_id_long,
                     doc.metadata_type,
                     unidecode(doc.title),
-                    str(membership.created),
+                    opfunc.safe_isoformat(membership.created),
                     ]
                 self.writerow(row)
         finally:

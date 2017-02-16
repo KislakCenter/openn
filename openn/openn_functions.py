@@ -45,6 +45,12 @@ def tstamp():
 def str_time():
     return time.strftime('%Y-%m-%dT%H:%M:%S')
 
+def safe_isoformat(dtime):
+    """ Return the ISO format date if dtime is an instance of datetime; else
+        return dtime as a string.
+    """
+    return dtime.isoformat() if isinstance(dtime, datetime) else str(dtime)
+
 def print_message(level, cmd, str):
     cmd_box = '[{0}]'.format(cmd)
     print "%-23s %-20s %-43s %s" % (cmd_box,str_time(),level,str)

@@ -112,7 +112,7 @@ class TableOfContentsCSV(OPennCSV):
             docs = Document.objects.filter(
                 repository=self.repository.repository(),
                 is_online=True)
-            for doc in opfunc.queryset_iterator(docs,chunksize=500):
+            for doc in opfunc.queryset_iterator(docs, chunksize=500):
                 rel_path = TableOfContentsCSV.REL_PATH_RE.sub('', doc.package_dir)
                 # Note that we use unidecode on the title to strip off
                 # diacritics and special characters. This is to make CSVs
@@ -122,8 +122,8 @@ class TableOfContentsCSV(OPennCSV):
                     rel_path,
                     unidecode(doc.title),
                     self.repository.metadata_type(),
-                    str(doc.created),
-                    str(doc.updated),
+                    opfunc.safe_isoformat(doc.created),
+                    opfunc.safe_isoformat(doc.updated),
                     ]
                 self.writerow(row)
         finally:
