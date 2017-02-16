@@ -1,4 +1,6 @@
 import os
+import pytz
+
 from datetime import datetime
 
 from openn.prep.status import Status
@@ -55,12 +57,12 @@ class OPennPrep:
         return prepstatus
 
     def _success_status(self, prepstatus):
-        prepstatus.finished  = datetime.now()
+        prepstatus.finished  = datetime.now(pytz.utc)
         prepstatus.succeeded = True
         prepstatus.save()
 
     def _failure_status(self, prepstatus, ex):
-        prepstatus.finished  = datetime.now()
+        prepstatus.finished  = datetime.now(pytz.utc)
         prepstatus.succeeded = False
         prepstatus.error     = unicode(ex)
         prepstatus.save()

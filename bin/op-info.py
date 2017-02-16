@@ -69,7 +69,7 @@ def add_prep(doc):
         prepstatus.succeeded = False
         prepstatus.error = 'Unknown; bulkset by %s' % (cmd(), )
 
-    prepstatus.finished = datetime.now()
+    prepstatus.finished = datetime.now(pytz.utc)
     prepstatus.save()
 
 def add_missing_preps():

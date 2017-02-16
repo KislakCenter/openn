@@ -20,6 +20,7 @@ import os
 import sys
 import logging
 import shutil
+import pytz
 
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')))
@@ -86,12 +87,12 @@ def setup_prepstatus(doc):
     return prepstatus
 
 def set_success_status(prepstatus):
-    prepstatus.finished  = datetime.now()
+    prepstatus.finished  = datetime.now(pytz.utc)
     prepstatus.succeeded = True
     prepstatus.save()
 
 def set_failure_status(prepstatus, ex):
-    prepstatus.finished  = datetime.now()
+    prepstatus.finished  = datetime.now(pytz.utc)
     prepstatus.succeeded = False
     prepstatus.error     = str(ex)
     prepstatus.save()
