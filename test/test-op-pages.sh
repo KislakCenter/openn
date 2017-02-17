@@ -7,7 +7,7 @@ TEMPLATE_PAGES=$TEST_DATA_DIR/openn_pages
 STAGED_PAGES=$TEST_STAGING_DIR/openn
 
 # suite() {
-#     suite_addTest testRun
+#     # suite_addTest testRun
 #     # suite_addTest testDryRun
 #     # suite_addTest testDryRunShortOpt
 #     # suite_addTest testForce
@@ -20,7 +20,7 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testReadMeShortOpt
 #     # suite_addTest testReadMeFile
 #     # suite_addTest testReadMeFileShortOpt
-#     # suite_addTest testReadMeFileFailure
+#     suite_addTest testReadMeFileFailure
 #     # suite_addTest testTocFile
 #     # suite_addTest testTocFileShortOpt
 #     # suite_addTest testRepositories
@@ -43,6 +43,7 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testHtmlTocAllCuratedCollections
 #     # suite_addTest testHtmlTocCuratedCollectionCSVOnly
 #     # suite_addTest testCuratedCollectionsHTML
+#     # suite_addTest testDocumentNoTEI
 # }
 
 setUp() {
@@ -264,11 +265,11 @@ testReadMeFileShortOpt() {
 
 # test readme-file failure
 testReadMeFileFailure() {
-    output=`op-pages --readme-file 01_ReadMe.html --show-options 2>&1`
+    output=`op-pages --readme-file 01_ReadMe.html -v --show-options 2>&1`
     status=$?
-    if [ $status != 2 ]; then echo "$output"; fi
+    if [ $status == 0 ]; then echo "$output"; fi
 
-    assertEquals 2 $status
+    assertNotEquals 0 $status
     assertMatch "$output" "Unknown readme file"
 }
 
@@ -368,6 +369,21 @@ testDocumentShortOpt() {
 
     assertEquals 0 $status
     assertMatch "$output" "Creating page"
+}
+
+testDocumentNoTEI() {
+    doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select max(id) from openn_document where repository_id = 1"`
+    # mark the document online to force page generation
+    mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
+    # clear the TEI content
+    mysql -B -u openn openn_test -e "update openn_document set tei_xml = null where id = $doc_id"
+
+    output=`op-pages --document=$doc_id --show-options 2>&1`
+    status=$?
+    if [ $status == 0 ]; then echo "$output"; fi
+
+    assertNotEquals 0 $status
+    assertMatch "$output" "Error processing document with ID $doc_id"
 }
 
 testCollectionsCSV() {

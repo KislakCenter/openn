@@ -72,6 +72,8 @@ def setup_logger():
     ch.setFormatter(formatter)
     logging.getLogger().addHandler(ch)
     logging.getLogger().setLevel(logging.DEBUG)
+    global logger
+    logger = logging.getLogger(__name__)
 
 def update_online_statuses():
     for doc in opfunc.queryset_iterator(Document.objects.all()):
@@ -279,7 +281,7 @@ def document(docid, opts):
     try:
         make_browse_html(docid, opts)
     except Exception:
-        logger.error("Error processing document with ID %d", docid)
+        logger.error("Error processing document with ID %s", str(docid))
         raise
 
 def readme(opts):
@@ -443,25 +445,35 @@ skipped TOC creation for files that would be generated for an actual run.
 
 def print_options(opts):
     for k in vars(opts):
-        print "OPTION: %12s  %s" % (k, getattr(opts, k))
+        print "OPTION: %33s  %s" % (k, getattr(opts, k))
 
 
 def check_options(opts):
     # get the options
     opt_dict = copy.deepcopy(vars(opts))
 
-    # remove dry-run
-    dry_run = opt_dict['dry_run']
-    opt_dict['dry_run'] = False
-    # remove force
-    force = opt_dict['force']
-    opt_dict['force'] = False
-    # remove reallyforce
-    reallyforce = opt_dict['reallyforce']
-    opt_dict['reallyforce'] = False
-    # remove show-options
-    show_options = opt_dict['show_options']
-    opt_dict['show_options'] = False
+    removal_keys = ['dry_run', 'force', 'reallyforce', 'show_options', 'verbose']
+
+    removed_vals = {}
+    for key in removal_keys:
+        removed_vals[key] = opt_dict[key]
+        del opt_dict[key]
+
+    # # remove dry-run
+    # dry_run = opt_dict['dry_run']
+    # opt_dict['dry_run'] = False
+    # # remove force
+    # force = opt_dict['force']
+    # opt_dict['force'] = False
+    # # remove reallyforce
+    # reallyforce = opt_dict['reallyforce']
+    # opt_dict['reallyforce'] = False
+    # # remove show-options
+    # show_options = opt_dict['show_options']
+    # opt_dict['show_options'] = False
+    # # remove verbose
+    # verbose = opt_dict['verbose']
+    # opt_dict['verbose'] = False
 
     # collect used options
     temp_os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
@@ -470,9 +482,11 @@ def check_options(opts):
         s = ', '.join(["%s=%s" % (k,str(v)) for k,v in temp_os.iteritems()])
         raise OPennException("More than one option selected: %s" % (s,))
 
-    temp_os['dry_run'] = dry_run
-    temp_os['force'] = force
-    temp_os['show_options'] = show_options
+    temp_os = temp_os.update(removed_vals)
+    # temp_os['dry_run'] = dry_run
+    # temp_os['force'] = force
+    # temp_os['show_options'] = show_options
+    # temp_os['verbose'] = verbose
 
     return temp_os
 
@@ -551,15 +565,20 @@ def main(cmdline=None):
             logging.warn("DRY RUN COMPLETE; displayed actions approximate")
 
     except OPennException as ex:
-        handle_exc()
-        parser.error(str(ex))
+        if opts.verbose:
+            handle_exc()
+            logging.error(str(ex))
+        else:
+            logging.error(str(ex))
         status = 4
     except CuratedCollection.DoesNotExist as ex:
         logging.error("Unknown curated collection; use 'op-curt list' for a list")
         status = 4
     except Exception as ex:
-        handle_exc()
-        parser.error(str(ex))
+        if opts.verbose:
+            handle_exc()
+        else:
+            logging.error(str(ex))
         status = 4
 
     return status
@@ -672,6 +691,9 @@ skipped TOC creation for files that would be generated for an actual run.
     parser.add_option('--really-force',
                       action='store_true', dest='reallyforce', default=False,
                       help='Create files even if not makeable [only use for testing]')
+
+    parser.add_option('-v', '--verbose', dest='verbose', default=False,
+                      action='store_true', help='Print out lots of info, primarily stack traces')
 
     return parser
 
