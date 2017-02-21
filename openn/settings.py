@@ -1036,7 +1036,7 @@ Integer lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligu
         },
         {
             'tag': 'pacscl-diaries',
-            'name': 'PACSCL Diares',
+            'name': 'PACSCL Diaries',
             'blurb': """The PACSCL Diaries Project will allow researchers an intimate view into a
                         wide variety of personalities, largely from Philadelphia, as they went about their
                         daily lives and commented on the world around them. The project will
