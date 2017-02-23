@@ -15,6 +15,7 @@ export OPENN_STAGING_DIR=$TEST_STAGING_DIR/openn/site
 export OPENN_SITE_DIR=$TEST_STAGING_DIR/openn/site
 export OPENN_ARCHIVE_DIR=$TEST_STAGING_DIR/openn/archive
 export TEMP_FILE=${TMPDIR:-/tmp}/prog$$
+export TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
 
 # Note that we don't clear openn_curatedcollection and openn_repository. These
 # contain what is, effectively, seed data.
@@ -33,7 +34,7 @@ clear_tables() {
 
 loadDb() {
     this_dir=`dirname $0`
-    mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $this_dir/fixtures/test.sql
+    mysql -u $OPENN_DB_USER --default-character-set=utf8 $OPENN_DB_NAME < $this_dir/fixtures/test.sql
 }
 
 # Usage: get_repository_id REPO_TAG
@@ -41,7 +42,8 @@ loadDb() {
 # Print the ID of the repository with tag REPO_TAG.
 get_repository_id() {
     gci_tag=${1?get_repository_id - tag required}
-    gci_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_repository where tag = '$gci_tag'"`
+    echo "mysql --batch --skip-column-names -u $OPENN_DB_USER $OPENN_DB_NAME -e \"select id from openn_repository where tag = '$gci_tag'\""
+    gci_id=`mysql --batch --skip-column-names -u $OPENN_DB_USER $OPENN_DB_NAME -e "select id from openn_repository where tag = '$gci_tag'"`
     [[ -z "$gci_id" ]] && return 1
     echo $gci_id
     return 0
@@ -52,7 +54,7 @@ get_repository_id() {
 # Print the ID of the curated_colection with tag CURATED_TAG.
 get_curated_collection_id() {
     gpi_tag=${1?get_curated_collection_id - tag required}
-    gpi_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_curatedcollection where tag = '$gpi_tag'"`
+    gpi_id=`mysql --batch --skip-column-names -u $OPENN_DB_USER $OPENN_DB_NAME -e "select id from openn_curatedcollection where tag = '$gpi_tag'"`
     [[ -z "$gpi_id" ]] && return 1
     echo $gpi_id
     return 0
@@ -67,7 +69,7 @@ get_document_id() {
     gdi_repository_tag=${2?get_document_id - repository_tag required}
 
     gdi_repo_id=`get_repository_id $gdi_repository_tag`
-    gdi_doc_id=`mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document where base_dir = '$gdi_base_dir' and repository_id = $gdi_repo_id"`
+    gdi_doc_id=`mysql --batch --skip-column-names -u $OPENN_DB_USER $OPENN_DB_NAME -e "select id from openn_document where base_dir = '$gdi_base_dir' and repository_id = $gdi_repo_id"`
 
     if [[ "$gdi_doc_id" ]]; then
         echo "$gdi_doc_id"
@@ -81,14 +83,14 @@ get_document_id() {
 #
 # Retrieve a single ID for a live OPenn document
 get_a_live_docid() {
-  mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document where is_online = 1 limit 1"
+  mysql --batch --skip-column-names -u $OPENN_DB_USER $OPENN_DB_NAME -e "select id from openn_document where is_online = 1 limit 1"
 }
 
 # Usage; get_a_live_docid
 #
 # Retrieve a single ID for a live OPenn document
 get_a_docid() {
-  mysql --batch --skip-column-names -u openn $OPENN_DB_NAME -e "select id from openn_document limit 1"
+  mysql --batch --skip-column-names -u $OPENN_DB_USER $OPENN_DB_NAME -e "select id from openn_document limit 1"
 }
 
 # Usage: add_curated_membership CURATED_TAG DOCID
@@ -123,7 +125,7 @@ insert_document() {
 
 get_repository_id() {
     gci_tag=${1?get_repository_id - tag required}
-    gci_id=`mysql --batch --skip-column-names -u openn openn -e "select id from openn_repository where tag = '$gci_tag'"`
+    gci_id=`mysql --batch --skip-column-names -u $OPENN_DB_USER $OPENN_DB_NAME -e "select id from openn_repository where tag = '$gci_tag'"`
     [[ -z "$gci_id" ]] && return 1
     echo $gci_id
     return 0
@@ -149,7 +151,7 @@ touch_dummy_files() {
     tdf_dest_dir=$1
     tdf_file_list=$2
     if [[ -z "$tdf_dest_dir" ]] || [[ ! -d $tdf_dest_dir ]]; then
-        echo "[create_dummy_files] Directory not found: '$tdf_dest_dir'; quitting"
+        echo "[touch_dummy_files] Directory not found: '$tdf_dest_dir'; quitting"
         exit 1
     fi
     for x in ${!tdf_file_list}; do
@@ -159,13 +161,14 @@ touch_dummy_files() {
 
 create_dummy_files() {
     cdf_dest_dir=$1
-    cdf_file_list=$2
+    shift
+    cdf_file_list=$@
     if [[ -z "$cdf_dest_dir" ]] || [[ ! -d $cdf_dest_dir ]]; then
         echo "[create_dummy_files] Directory not found: '$cdf_dest_dir'; quitting"
         exit 1
     fi
-    for x in ${!cdf_file_list}; do
-        cp $TEMPLATE_TIFF "$cdf_dest_dir/$x"
+    for x in ${cdf_file_list}; do
+        cp "$TEMPLATE_TIFF" "$cdf_dest_dir/$x"
     done
 }
 

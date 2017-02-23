@@ -54,20 +54,18 @@
                     </titleStmt>
                     <publicationStmt>
                         <publisher><xsl:value-of select="$repository"/></publisher>
+                      <xsl:if test="//description/metadata_rights/legalcode_url | //description/metadata_rights/text | //description/image_rights/legalcode_url | //description/image_rights/text">
                         <availability>
-                            <licence>
-                                <xsl:attribute name="target">
-                                    <xsl:value-of select="//description/metadata_rights/legalcode_url"/>
-                                </xsl:attribute>
-                                <xsl:value-of select="//description/metadata_rights/text"/>
-                            </licence>
-                            <licence>
-                              <xsl:attribute name="target">
-                                <xsl:value-of select="//description/image_rights/legalcode_url"/>
-                              </xsl:attribute>
-                              <xsl:value-of select="//description/image_rights/text"/>
-                            </licence>
+                          <xsl:call-template name="license">
+                            <xsl:with-param name="license_url" select="//description/metadata_rights/legalcode_url"/>
+                            <xsl:with-param name="license_text" select="//description/metadata_rights/text"/>
+                          </xsl:call-template>
+                          <xsl:call-template name="license">
+                            <xsl:with-param name="license_url" select="//description/image_rights/legalcode_url"/>
+                            <xsl:with-param name="license_text" select="//description/image_rights/text"/>
+                          </xsl:call-template>
                          </availability>
+                      </xsl:if>
                     </publicationStmt>
 
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
@@ -429,10 +427,10 @@
         <xsl:param name="string"/>
         <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
     </xsl:template>
-  
+
     <xsl:template name="lang-names">
         <xsl:param name="langs" as="node()*"/>
-          <xsl:if test="count($langs) &gt; 0"> 
+          <xsl:if test="count($langs) &gt; 0">
             <xsl:text>Primary language: </xsl:text>
             <xsl:value-of select="normalize-space($langs[1]/language_name)"/>
             <xsl:choose>
@@ -520,5 +518,20 @@
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="license">
+      <xsl:param name="license_url"/>
+      <xsl:param name="license_text"/>
+      <xsl:if test="$license_url | $license_text">
+        <license>
+          <xsl:if test="$license_url">
+            <xsl:attribute name="target" select="$license_url"/>
+          </xsl:if>
+          <xsl:if test="$license_text">
+            <xsl:value-of select="$license_text"/>
+          </xsl:if>
+        </license>
+      </xsl:if>
     </xsl:template>
 </xsl:stylesheet>

@@ -90,22 +90,7 @@ testRun() {
     # mysql -u $OPENN_DB_USER --default-character-set=utf8 openn_test < $THIS_DIR/fixtures/test.sql
     source_dir=$TEST_STAGING_DIR/MC_968_11_4_v03
     cp -r $TEST_DATA_DIR/diaries/haverford/MC_968_11_4_v03 $source_dir
-    create_dummy_files $source_dir mc_968_11_4_v03_files
-    output=`op-prep haverford-diaries $source_dir`
-    status=$?
-    if [ "$status" != 0 ]; then echo "$output"; fi
-    assertEquals 0 "$status"
-    destdir=`get_staging_destination haverford $source_dir`
-    assertTrue "Expected destination dir $destdir" "[ -d $destdir ]"
-    assertTrue "Expected TEI file in $destdir/data; found: `ls $destdir/data 2>/dev/null`" "ls $destdir/data/*_TEI.xml"
-    assertTrue "Expected manifest in $destdir" "[ -f $destdir/manifest-sha1.txt ]"
-    assertFalse "Should not find $destdir/openn_metadata.xml" "[ -f $destdir/openn_metadata.xml ]"
-}
-
-testSpreadsheetPrep() {
-    source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
-    cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    create_dummy_files $source_dir dummy_files
+    create_dummy_files $source_dir $mc_968_11_4_v03_files
     output=`op-prep haverford-diaries $source_dir`
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi

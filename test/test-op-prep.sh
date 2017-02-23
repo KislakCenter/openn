@@ -97,18 +97,6 @@ testRun() {
     cp -r $TEST_DATA_DIR/mscodex1223 $source_dir
     output=`op-prep penn-pih $source_dir`
 
-    # source_dir=$TEST_STAGING_DIR/mscodex1589
-    # cp -r $TEST_DATA_DIR/mscodex1589 $source_dir
-    # source=`op-prep medren $source_dir`
-
-    # source_dir=$TEST_STAGING_DIR/ljs454
-    # cp -r $TEST_DATA_DIR/ljs454 $source_dir
-    # output=`op-prep ljs $source_dir`
-
-    # source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
-    # cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    # create_dummy_files $source_dir
-    # output=`op-prep haverford $source_dir`
     status=$?
     if [ $status != 0 ]
     then
@@ -203,7 +191,7 @@ testDocumentClobber() {
 
     source_dir=$TEST_STAGING_DIR/MS_XYZ_1.2
     cp -r $TEST_DATA_DIR/sheets/valid_template $source_dir
-    create_dummy_files $source_dir dummy_files
+    create_dummy_files $source_dir $dummy_files
 
     # now run clobber; should succeed
     output=`echo 'Yes' | op-prep --clobber haverford-diaries $source_dir 2>&1`

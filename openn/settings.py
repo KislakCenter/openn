@@ -184,6 +184,27 @@ PREPARATION_METHODS = [
         },
     },
     {
+        'tag': 'bphil',
+        'description': """Extracts metadata from Biblio-Philly spreadsheet to build metadata for the
+            object. Requires valid openn_metadata.xslx file.""",
+        'name': 'Biblio Philly Prep',
+        'package_validation': {
+            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.xlsx'],
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+            'params' : {
+                'image_rights': {
+                    'dynamic': True,
+                },
+                'config_json': os.path.join(SITE_ROOT, 'bibliophilly.json'),
+                'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+            },
+        },
+    },
+    {
         'tag': 'dirlesstei',
         'description': """Directory-less TEI prep: Does not process a directory; add the
 folder name to the database; requires a TEI file.""",
@@ -550,6 +571,15 @@ illumination.""",
             'include_file': 'TheDigitalWalters.html',
             'no_document': True,
         },
+        {
+            'tag': 'flp',
+            'name': 'Free Library of Pennsylvania',
+            'metadata_type': 'tei',
+            'live': True,
+            'blurb': """The Free Library of Philadelphia.""",
+            'include_file': 'FreeLibraryOfPhiladelphia.html',
+            'no_document': True,
+        },
     ],
 }
 
@@ -558,7 +588,7 @@ PREP_CONFIGS = {
         'repository': {
             'tag': 'pennmss',
         },
-        "image_types": [ '*.tif' ],
+        "image_types": ['*.tif'],
         'repository_prep': {
             'tag': 'pih',
         },
@@ -566,17 +596,35 @@ PREP_CONFIGS = {
             'image_rights': {
                 'Marked': 'False',
                 'WebStatement': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                'UsageTerms': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-                'rights': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
+                'UsageTerms': 'This image and its content are free of known copyright restrictions'
+                              ' and in the public domain. See the Creative Commons Public Domain'
+                              ' Mark page for usage details,'
+                              ' http://creativecommons.org/publicdomain/mark/1.0/.',
+                'rights': 'This image and its content are free of known copyright restrictions and'
+                          ' in the public domain. See the Creative Commons Public Domain Mark page'
+                          ' for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
             },
             'rights_statements': {
                 'images': {
                     'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                    'text': 'Unless otherwise stated, all images and their content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
+                    'text': 'Unless otherwise stated, all images and their content are free of'
+                            ' known copyright restrictions and in the public domain. See the'
+                            ' Creative Commons Public Domain Mark page for more information on'
+                            ' terms of use,'
+                            ' <a href="http://creativecommons.org/publicdomain/mark/1.0/">'
+                            'http://creativecommons.org/publicdomain/mark/1.0/</a>',
                 },
                 'metadata': {
                     'url': 'http://creativecommons.org/licenses/by/4.0/',
-                    'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
+                    'text': ('Unless otherwise stated, all manuscript descriptions and other'
+                             ' cataloging metadata are ©%d The University of Pennsylvania'
+                             ' Libraries. They are licensed for use under a Creative Commons'
+                             ' Attribution License version 4.0 (CC-BY-4.0'
+                             ' <a href="https://creativecommons.org/licenses/by/4.0/legalcode">'
+                             'https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a'
+                             ' description of the terms of use see the Creative Commons Deed'
+                             ' <a href="https://creativecommons.org/licenses/by/4.0/">'
+                             'https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
                 },
             },
         }
@@ -992,6 +1040,28 @@ PREP_CONFIGS = {
         "image_types": [ '*.tif', '*.jpg' ],
         'repository_prep': {
             'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
+    'flp-bphil': {
+        'repository': {
+            'tag': 'flp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
         },
         'common_prep': {
             'image_rights': {

@@ -206,8 +206,8 @@ def main(cmdline=None):
     if len(args) != 2:
         parser.error('Wrong number of arguments')
 
+    prep_config_tag  = args[0]
     try:
-        prep_config_tag  = args[0]
         source_dir       = prep_source_dir_arg(args[1])
 
         prep_config      = get_prep_config(prep_config_tag)
@@ -253,10 +253,10 @@ def main(cmdline=None):
         doc = OPennPrep().prep_dir(source_dir, prep_config)
         stage_doc(source_dir, doc)
     except OPennException as ex:
+        logger.error(unicode(ex).encode('utf8'))
         status = 4
-        print_exc()
-        u = unicode(ex).encode('utf8')
-        parser.error(u)
+        if opts.verbose:
+            print_exc()
 
     return status
 
@@ -309,6 +309,11 @@ prepare correctly the first time. Will fail if document is on-line.
     parser.add_option('-x', '--clobber',
                       action='store_true', dest='clobber', default=False,
                       help=clobber_help)
+
+    verbose_help = 'print detailed error information'
+    parser.add_option('-v', '--verbose',
+                      action='store_true', dest='verbose', default=False,
+                      help=verbose_help)
 
     return parser
 
