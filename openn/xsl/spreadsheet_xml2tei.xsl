@@ -54,6 +54,7 @@
                     </titleStmt>
                     <publicationStmt>
                         <publisher><xsl:value-of select="$repository"/></publisher>
+                      <!-- If licence info present; generate license stanza(s). -->
                       <xsl:if test="//description/metadata_rights/legalcode_url | //description/metadata_rights/text | //description/image_rights/legalcode_url | //description/image_rights/text">
                         <availability>
                           <xsl:call-template name="license">
@@ -520,18 +521,19 @@
         </xsl:for-each>
     </xsl:template>
 
+    <!-- Generate a license stanza if license_url or license_text are present. -->
     <xsl:template name="license">
       <xsl:param name="license_url"/>
       <xsl:param name="license_text"/>
       <xsl:if test="$license_url | $license_text">
-        <license>
+        <licence>
           <xsl:if test="$license_url">
             <xsl:attribute name="target" select="$license_url"/>
           </xsl:if>
           <xsl:if test="$license_text">
             <xsl:value-of select="$license_text"/>
           </xsl:if>
-        </license>
+        </licence>
       </xsl:if>
     </xsl:template>
 </xsl:stylesheet>
