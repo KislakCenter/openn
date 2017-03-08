@@ -13,8 +13,9 @@ from openn.openn_exception import OPennException
 from openn.pages.browse import Browse
 from openn.models import *
 from openn.repository.configs import Configs
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestBrowsePage(TestCase):
+class TestBrowsePage(OPennTestCase):
     fixtures = [ 'test.json' ]
 
     configs          = Configs(settings.REPOSITORIES)
@@ -55,7 +56,6 @@ class TestBrowsePage(TestCase):
         for doc in Document.objects.all():
             page = Browse(doc, wrapper, toc_dir='html', outdir=self.staging_dir)
             page.create_pages()
-
 
 # Signatures
 

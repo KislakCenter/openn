@@ -13,8 +13,9 @@ from openn.prep.op_workbook import OPWorkbook
 from openn.prep.pages_sheet import PagesSheet
 from openn.prep.validatable_sheet import ValidatableSheet
 from openn.tests.helpers import *
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestPagesSheet(TestCase):
+class TestPagesSheet(OPennTestCase):
     this_dir                 = os.path.dirname(__file__)
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')

@@ -54,6 +54,7 @@ class MembershipManager(object):
         try:
             membership = CuratedMembership.objects.create(
                 curated_collection=curated, document=document)
+            self.mark_updated(curated)
         except IntegrityError as ie:
             if re.search('Duplicate entry', str(ie)):
                 msg = "Membership already exists for document %d/%s and curated %s" % (
@@ -64,12 +65,15 @@ class MembershipManager(object):
             else:
                 raise
 
+        return membership
+
     def remove_document(self, curated_tag, doc_tag, repo_tag=None):
         curated    = CuratedCollection.objects.get(tag=curated_tag.lower())
         document   = self.find_document(doc_tag=doc_tag, repo_tag=repo_tag)
 
         membership = CuratedMembership.objects.get(curated_collection_id=curated.pk, document_id=document.pk)
         membership.delete()
+        self.mark_updated(curated)
 
     def find_document(self, doc_tag, repo_tag=None):
         if self.is_integer(doc_tag):
@@ -86,6 +90,12 @@ class MembershipManager(object):
     def doc_by_base_dir_and_repo(self, base_dir, repo_tag):
         repo     = Repository.objects.get(tag=repo_tag.lower())
         return Document.objects.get(repository_id=repo.pk, base_dir=base_dir)
+
+    def mark_updated(self, curated_collection):
+        """
+        Chnage the updated timestamp on curated_collection to the current time.
+        """
+        curated_collection.save()
 
     @staticmethod
     def active_collections():

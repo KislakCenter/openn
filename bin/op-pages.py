@@ -35,7 +35,7 @@ from openn.csv.collections_csv import CollectionsCSV
 from openn.csv.table_of_contents_csv import TableOfContentsCSV
 from openn.csv.curated_collection_contents_csv import CuratedCollectionContentsCSV
 
-logger = None
+logger = logging.getLogger(__name__)
 
 def cmd():
     return os.path.basename(__file__)
@@ -65,15 +65,19 @@ def find_readme(file_name):
 def readme_files():
     return [ x['file'] for x in settings.README_TEMPLATES ]
 
-def setup_logger():
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)-15s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)
-    logging.getLogger().addHandler(ch)
-    logging.getLogger().setLevel(logging.DEBUG)
-    global logger
-    logger = logging.getLogger(__name__)
+def setup_logger(logger):
+    log_format = '%(asctime)s - %(name)-15s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.DEBUG, format=log_format, stream=sys.stdout)
+    # ch = logging.StreamHandler(sys.stdout)
+    # ch.setLevel(logging.DEBUG)
+    # formatter = logging.Formatter('%(asctime)s - %(name)-15s - %(levelname)s - %(message)s')
+    # ch.setFormatter(formatter)
+    # logging.getLogger().addHandler(ch)
+    logger.setLevel(logging.DEBUG)
+    # logging.getLogger().setLevel(logging.DEBUG)
+    # global logger
+    # logger = logging.getLogger(__name__)
+    logging.debug("We're debugging!")
 
 def update_online_statuses():
     for doc in opfunc.queryset_iterator(Document.objects.all()):
@@ -281,7 +285,7 @@ def document(docid, opts):
     try:
         make_browse_html(docid, opts)
     except Exception:
-        logger.error("Error processing document with ID %s", str(docid))
+        logging.error("Error processing document with ID %s", str(docid))
         raise
 
 def readme(opts):
@@ -501,8 +505,13 @@ def main(cmdline=None):
     if opts.show_options:
         print_options(opts)
 
-    setup_logger()
-    logger = logging.getLogger(__name__)
+    # logger = logging.getLogger(__name__)
+    # setup_logger(logger)
+    log_format = '%(asctime)s - %(name)-15s - %(levelname)s - %(message)s'
+    log_level = logging.DEBUG if opts.verbose else logging.INFO
+    logging.basicConfig(level=log_level, format=log_format, stream=sys.stdout)
+    # logger.setLevel(logging.DEBUG)
+    logger.debug("We're debugging!")
 
     try:
         check_options(opts)

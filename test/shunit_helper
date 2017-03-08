@@ -18,7 +18,7 @@ export TEMP_FILE=${TMPDIR:-/tmp}/prog$$
 
 # Note that we don't clear openn_curatedcollection and openn_repository. These
 # contain what is, effectively, seed data.
-TABLES_TO_DELETE="openn_curatedmembership openn_derivative openn_image openn_version openn_prepstatus openn_document"
+TABLES_TO_DELETE="openn_curatedmembership openn_derivative openn_image openn_version openn_prepstatus openn_document openn_sitefile openn_templatehash openn_templatefile"
 
 shunit=`dirname $0`/../shunit2/src/shunit2
 

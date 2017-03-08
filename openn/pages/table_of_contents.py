@@ -20,8 +20,10 @@ class TableOfContents(Page):
     def __init__(self, repository,toc_dir,**kwargs):
         self.repository = repository
         self.toc_dir = toc_dir
-        updated_kwargs = kwargs.update({'outfile':self.toc_path()})
+        kwargs.update({'outfile':self.toc_path(),
+                       'page_object': self.repository.repository()})
         super(TableOfContents,self).__init__(**kwargs)
+        self.add_after_write('update_hashes')
 
     def get_context(self,ctx_dict={}):
         docs = Document.objects.filter(

@@ -9,8 +9,13 @@ class RepositoryWrapper:
         self._repository = None
 
     def repository(self):
-        if self._repository is None:
-            self._repository = Repository.objects.get(tag=self.tag())
+        try:
+            if self._repository is None:
+                self._repository = Repository.objects.get(tag=self.tag())
+        except Repository.DoesNotExist:
+            repos = [x.tag for x in Repository.objects.all()]
+            raise OPennException("Could not find repository for tag: %s; repos: %s" % (
+                self.tag(), ', '.join(repos)))
 
         return self._repository
 

@@ -10,8 +10,9 @@ from django.conf import settings
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.file_list import FileList
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestFileList(TestCase):
+class TestFileList(OPennTestCase):
 
 
     file_list_path   = os.path.join(os.path.dirname(__file__), 'data/json/mscodex1223_file_list.json')

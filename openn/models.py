@@ -5,6 +5,9 @@ from django.conf import settings
 import httplib
 import os
 import re
+import hashlib
+import pytz
+from datetime import datetime
 
 class Repository(models.Model):
     """Repository is a collection to which a document belongs.
@@ -209,6 +212,18 @@ class CuratedCollection(models.Model):
             return False
         return self.documents.filter(is_online=True).count() > 0
 
+    def last_updated(self):
+
+        """ Return the data this curated_collection was modified or a document
+        was added or removed from it.
+
+        This method relies on
+        `openn.curated.membership_manager.MembershipManager` to save the object
+        whenever documents are added or removed.
+
+        """
+        return self.updated
+
     class Meta:
         ordering = ('name',)
 
@@ -356,3 +371,198 @@ class Derivative(models.Model):
 
     def basename(self):
         return os.path.splitext(os.path.basename(self.path))[0]
+
+class TemplateHash(models.Model):
+    """
+    Model to hold hashes.
+    """
+    sha256 = models.CharField(max_length=64, null=True, default=None, blank=True)
+
+    @staticmethod
+    def find_or_create(sha256_hash):
+        """ For outfile either find the SiteFile object or create in the database.
+        """
+        try:
+            return TemplateHash.objects.get(sha256=sha256_hash)
+        except TemplateHash.DoesNotExist:
+            thash = TemplateHash(sha256=sha256_hash)
+            thash.save()
+            return thash
+
+class TemplateFile(models.Model):
+    """
+    Model to hold template names.
+    """
+    name = models.CharField(max_length=255, null=False, default=None, blank=False,
+                                     unique=True)
+
+    @staticmethod
+    def find_or_create(template_name):
+        """ For outfile either find the SiteFile object or create in the database.
+        """
+        try:
+            return TemplateFile.objects.get(name=template_name)
+        except TemplateFile.DoesNotExist:
+            templ = TemplateFile(name=template_name)
+            templ.save()
+            return templ
+
+    def template_path(self):
+        "Construct and returnt the path for this template"
+        for dirname in settings.TEMPLATE_DIRS:
+            tpath = os.path.join(settings.SITE_ROOT, dirname, self.name)
+            if os.path.exists(tpath):
+                return tpath
+
+class SiteFile(models.Model):
+    """
+    Model to hold details about a given website file. It has the following fields.
+    """
+
+    # The name and relative path of the output file; required, unique
+    output_file = models.CharField(max_length=255, null=False, default=None, blank=False,
+                                   unique=True)
+    # If an HTML page, the template name; optional
+    template = models.ForeignKey(TemplateFile, null=True, default=None, blank=True,
+                                        related_name='html_pages')
+    # If an HTML page, the hash of the template; optional. Used to check
+    # template changes.
+    template_hash = models.ForeignKey(TemplateHash, null=True, default=None, blank=True,
+                                        related_name='html_pages')
+    # The date that this file was last generated.
+    last_generated = models.DateTimeField(null=True, default=None, blank=True)
+
+    # If an HTML page with include file, the include file name; optional
+    include_file = models.ForeignKey(TemplateFile, null=True, default=None, blank=True,
+                                            related_name='include_pages')
+    # If SiteFile has an include_file, the hash of the file; optional. Used to check
+    # include_file changes.
+    include_file_hash = models.ForeignKey(TemplateHash, null=True, default=None, blank=True,
+                                            related_name='include_pages')
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def update_last_generated(self, dtime=None):
+        if dtime is None:
+            self.last_generated = datetime.now(pytz.utc)
+        else:
+            self.last_generated = dtime
+        self.save()
+
+    @staticmethod
+    def find_or_create(outfile, **kwargs):
+        """ For outfile either find the SiteFile object or create in the database.
+        """
+        try:
+            sfile = SiteFile.objects.get(output_file=outfile)
+        except SiteFile.DoesNotExist:
+            sfile = SiteFile(output_file=outfile, **kwargs)
+            sfile.save()
+
+        return sfile
+
+    def set_template(self, template_name):
+        """ Set the template using the template_name
+        """
+        if self.template_name == template_name:
+            return
+
+        self.template = TemplateFile.find_or_create(template_name)
+        self.save()
+
+    def template_path(self):
+        "Return the path to the template if template present; otherwise, None."
+        return None if self.template is None else self.template.template_path()
+
+    def template_name(self):
+        "Return the name of the template if template present; otherwise, None."
+        return None if self.template is None else self.template.name
+
+    def set_template_hash(self, sha256):
+        "Set the template_sha256 to the give hash."
+        if self.template_hash is not None and self.template_hash.sha256 == sha256:
+            return
+
+        self.template_hash = TemplateHash.find_or_create(sha256)
+        self.save()
+
+    def template_sha256_on_disk(self):
+        "Get the template sha256 on disk."
+        return self._get_hash_on_disk('template_path')
+
+    def template_has_changed(self):
+        "Return true if the on disk hash is different from the stored hash."
+        if self.template_hash is None:
+            return True
+
+        return self.template_sha256_on_disk() != self.template_hash.sha256
+
+    def update_template_sha256(self):
+        "Update the stored hash to the value on disk."
+        self.set_template_hash(self.template_sha256_on_disk())
+
+    def set_include_file(self, include_file_name):
+        "Set the include_file using the include_file_name "
+        if self.include_file_name == include_file_name:
+            return
+
+        self.include_file = TemplateFile.find_or_create(include_file_name)
+        self.save()
+
+    def include_file_path(self):
+        "Return the path to the include_file if include_file present; otherwise, None."
+        return None if self.include_file is None else self.include_file.template_path()
+
+    def include_file_name(self):
+        "Return the name of the include_file if include_file present; otherwise, None."
+        return None if self.include_file is None else self.include_file.name
+
+    def set_include_file_hash(self, sha256):
+        "Set the include_file_sha256 to the given hash."
+        if self.include_file_hash is not None and self.include_file_hash.sha256 == sha256:
+            return
+
+        self.include_file_hash = TemplateHash.find_or_create(sha256)
+        self.save()
+
+    def include_file_sha256_on_disk(self):
+        "Get the include_file sha256 on disk."
+        return self._get_hash_on_disk('include_file_path')
+
+    def include_file_has_changed(self):
+        "Return true if the on disk hash is different from the stored hash."
+        if self.include_file_hash is None:
+            return True
+
+        return self.include_file_sha256_on_disk() != self.include_file_hash.sha256
+
+    def update_include_file_sha256(self):
+        "Update the store hash to the value on disk."
+        self.set_include_file_hash(self.include_file_sha256_on_disk())
+
+    def _get_hash_on_disk(self, path_attr):
+        sha256 = hashlib.sha256()
+        file_path = getattr(self, path_attr)()
+        sha256.update(open(file_path).read())
+        return sha256.hexdigest()
+
+    def __str__(self):
+        return ('SiteFile: id={id:d}'
+                ', output_file="{output_file}"'
+                ', template="{template}"'
+                ', template_sha256="{template_sha256}"'
+                ', last_generated="{last_generated}"'
+                ', include_file="{include_file}"'
+                ', include_file_sha256="{include_file_sha256}"'
+                ', created="{created}"'
+                ', updated="{updated}"').format(
+                    id=self.id,
+                    output_file=self.output_file,
+                    template=self.template_name(),
+                    template_sha256=self.template_hash,
+                    last_generated=self.last_generated,
+                    include_file=self.include_file_name(),
+                    include_file_sha256=self.include_file_hash,
+                    created=self.created,
+                    updated=self.updated)

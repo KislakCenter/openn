@@ -20,7 +20,7 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testReadMeShortOpt
 #     # suite_addTest testReadMeFile
 #     # suite_addTest testReadMeFileShortOpt
-#     suite_addTest testReadMeFileFailure
+#     # suite_addTest testReadMeFileFailure
 #     # suite_addTest testTocFile
 #     # suite_addTest testTocFileShortOpt
 #     # suite_addTest testRepositories
@@ -32,7 +32,7 @@ STAGED_PAGES=$TEST_STAGING_DIR/openn
 #     # suite_addTest testCollectionsCSV
 #     # suite_addTest testCSVTOCRepository
 #     # suite_addTest testAllCSVTOCs
-#     # suite_addTest testCuratedCollectionTOCOneCollection
+#     suite_addTest testCuratedCollectionTOCOneCollection
 #     # suite_addTest testCuratedCollectionTOCOneEmptyCollection
 #     # suite_addTest testCuratedCollectionTOCNoDocsOnline
 #     # suite_addTest testCuratedCollectionTOCAllCollections
@@ -90,7 +90,7 @@ testRun() {
     addADocToCuratedCollection bibliophilly
 
     # RUN IT
-    output=`op-pages --show-options`
+    output=`op-pages --verbose --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
 
@@ -182,7 +182,7 @@ testBrowseShortOpt() {
 testToc() {
     stagePages
 
-    output=`op-pages --toc --show-options`
+    output=`op-pages --verbose --toc --show-options`
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
 
@@ -349,7 +349,7 @@ testDocument() {
     # mark the document online to force page generation
     mysql -B -u openn openn_test -e "update openn_document set is_online = 1 where id = $doc_id"
 
-    output=`op-pages --document $doc_id --show-options`
+    output=`op-pages --verbose --document $doc_id --show-options`
     status=$?
 
     if [ $status != 0 ]; then echo "$output"; fi
@@ -458,14 +458,11 @@ testCuratedCollectionTOCOneCollection() {
 
     output=`op-pages --csv-toc-curated=bibliophilly --show-options`
     status=$?
-    # save_and_open "${STAGED_PAGES}/site/Data/bibliophilly_contents.csv"
     if [ $status != 0 ]; then echo "$output"; fi
 
     assertEquals 0 $status
     assertMatch "$output" "Wrote curated collection table of contents CSV file:.*bibliophilly_contents\.csv"
 }
-
-# TODO: create test for curated collection not live
 
 testCuratedCollectionTOCAllCollections() {
     stagePages
@@ -487,9 +484,12 @@ testHtmlTocCuratedFile() {
     setAllDocsOnLine
     addADocToCuratedCollection bibliophilly
 
-    output=`op-pages --toc-curated=bibliophilly --show-options`
+    output=`op-pages -v --toc-curated=bibliophilly --show-options`
+    output=$output`op-pages -v --toc-curated=bibliophilly`
+    # mysql -u $OPENN_DB_USER $OPENN_DB_NAME -e "select * from openn_sitefile"
     status=$?
     if [ $status != 0 ]; then echo "$output"; fi
+    # echo "$output"
 
     assertEquals 0 $status
     assertMatch "$output" "Wrote curated collection HTML table of contents.*bibliophilly_contents\.html"

@@ -10,8 +10,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.models import *
 from openn.pages.document_data import DocumentData
 from openn.repository.configs import Configs
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestDocumentData(TestCase):
+class TestDocumentData(OPennTestCase):
     fixtures = [ 'test.json' ]
     configs = Configs(settings.REPOSITORIES)
     pennmss_wrapper = configs.get_repository('pennmss')

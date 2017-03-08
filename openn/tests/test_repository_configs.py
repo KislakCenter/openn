@@ -18,8 +18,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.repository.configs import Configs
 from openn.models import *
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestRepositoryConfigs(TestCase):
+class TestRepositoryConfigs(OPennTestCase):
 
     # Paths
     this_dir               = os.path.dirname(__file__)

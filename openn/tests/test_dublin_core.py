@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.md.dublin_core import DublinCore
 from openn.models import *
+from openn.tests.openn_test_case import OPennTestCase
 
 class DCTest(DublinCore):
     def dc_identifier(self):
@@ -22,7 +23,7 @@ class DCTest(DublinCore):
         return [ 'Smith, Joan', 'Brown, Charles' ]
 
 
-class TestDublinCore(TestCase):
+class TestDublinCore(OPennTestCase):
     def setUp(self):
         pass
 
