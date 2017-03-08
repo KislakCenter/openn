@@ -44,7 +44,8 @@ class CuratedCollections(Page):
     def live_curated_colls_count(self):
         return len(self.live_curated_colls())
 
-    def is_needed(self):
+    def is_needed(self, strict=True):
+        # not needed if not makeable
         """If the curated collections template exits, we always say it's needed.
 
         Why? If implemented, the tests for creating an updated curated
@@ -68,7 +69,10 @@ class CuratedCollections(Page):
         Therefore, we always say the page is needed if it's makeable.
 
         """
-        return self.is_makeable()
+        if not self.is_makeable() and strict is True:
+            return False
+
+        return True
 
     def is_makeable(self):
         """ Page is makeable if there are live curate collections with

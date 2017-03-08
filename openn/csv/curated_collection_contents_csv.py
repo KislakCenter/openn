@@ -35,7 +35,8 @@ class CuratedCollectionContentsCSV(OPennCSV):
         """
         self.curated_collection    = CuratedCollection.objects.get(tag=unicode(curated_tag))
         outfile                    = os.path.join('Data', self.curated_collection.csv_toc_file())
-        kwargs.update({ 'outfile': outfile })
+        kwargs.update({'outfile': outfile})
+        kwargs.update({'page_object': self.curated_collection})
         super(CuratedCollectionContentsCSV, self).__init__(**kwargs)
 
     def is_makeable(self):
@@ -56,9 +57,9 @@ class CuratedCollectionContentsCSV(OPennCSV):
 
         return True
 
-    def is_needed(self):
+    def is_needed(self, strict=True):
         # not needed if not makeable
-        if not self.is_makeable():
+        if not self.is_makeable() and strict is True:
             return False
 
         # needed if it doesn't exist

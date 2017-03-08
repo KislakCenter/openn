@@ -72,11 +72,11 @@ class TableOfContents(Page):
 
         return True
 
-    def is_needed(self):
-        if not self.is_makeable():
+    def is_needed(self, strict=True):
+        if not self.is_makeable() and strict is True:
             return False
 
-        if not os.path.exists(self.outfile_path()):
+        if not self.output_file_exists():
             return True
 
         html_dir = os.path.join(self.outdir, self.repository.html_dir())
@@ -84,7 +84,7 @@ class TableOfContents(Page):
         if html_files:
             newest_html = max([os.path.getmtime(x) for x in html_files])
             if os.path.getmtime(self.outfile_path()) > newest_html:
-                logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.repository))
+                logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.repository.tag()))
                 return False
 
         return True

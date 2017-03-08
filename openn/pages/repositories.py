@@ -60,7 +60,8 @@ class Repositories(Page):
 
         return live_ones
 
-    def is_needed(self):
+    def is_needed(self, strict=True):
+        # not needed if not makeable
         """If the repositories template exits; we always say it's needed.
 
         Why? If implemented, the tests for creating a new repositories list
@@ -81,4 +82,7 @@ class Repositories(Page):
         Therefore, we always say the page is needed.
 
         """
-        return self.is_makeable()
+        if not self.is_makeable() and strict is True:
+            return False
+
+        return True

@@ -35,7 +35,7 @@ class Page(object):
     def title(self):
         return self._title
 
-    def add_after_write(self,method_name):
+    def add_after_write(self, method_name):
         self.after_writes.add(method_name)
 
     def source_path(self):

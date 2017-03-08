@@ -39,7 +39,8 @@ class TableOfContentsCSV(OPennCSV):
         """
         self.repository = repository
         outfile         = os.path.join('Data', repository.csv_toc_file())
-        kwargs.update({ 'outfile': outfile })
+        kwargs.update({'outfile': outfile})
+        kwargs.update({'page_object': self.repository})
         super(TableOfContentsCSV, self).__init__(**kwargs)
 
 
@@ -102,7 +103,7 @@ class TableOfContentsCSV(OPennCSV):
         current_file_date = opfunc.mtime_to_datetime(self.outfile_path())
 
         if current_file_date > latest_doc.updated:
-            logging.info("CSV TOC up-to-date; skipping %s", self.repository)
+            logging.info("CSV TOC up-to-date; skipping %s", self.repository.tag())
             return False
 
         return True
