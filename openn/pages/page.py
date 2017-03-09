@@ -30,6 +30,7 @@ class Page(object):
         self.site_file     = None
         self.set_site_file()
         self.add_after_write('update_last_generated')
+        self.add_after_write('update_hashes')
 
     @property
     def title(self):

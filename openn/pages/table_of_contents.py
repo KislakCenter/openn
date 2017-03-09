@@ -23,7 +23,6 @@ class TableOfContents(Page):
         kwargs.update({'outfile':self.toc_path(),
                        'page_object': self.repository.repository()})
         super(TableOfContents,self).__init__(**kwargs)
-        self.add_after_write('update_hashes')
 
     def get_context(self,ctx_dict={}):
         docs = Document.objects.filter(

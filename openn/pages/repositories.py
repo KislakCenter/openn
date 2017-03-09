@@ -16,7 +16,6 @@ class Repositories(Page):
     def __init__(self, template_name, outdir, repo_configs,**kwargs):
         self._repo_configs = repo_configs
         super(Repositories, self).__init__(template_name, outdir, **kwargs)
-        self.add_after_write('update_hashes')
 
     def get_context(self, ctx_dict={}):
         repositories = self.live_repositories()

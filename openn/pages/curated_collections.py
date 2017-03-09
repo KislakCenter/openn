@@ -18,7 +18,6 @@ class CuratedCollections(Page):
     def __init__(self, template_name, outdir, **kwargs):
         self._live_collections = None
         super(CuratedCollections, self).__init__(template_name, outdir, **kwargs)
-        self.add_after_write('update_hashes')
 
     def get_context(self, ctx_dict={}):
         collections = self.live_curated_colls()

@@ -26,7 +26,6 @@ class CuratedCollectionTOC(Page):
         kwargs.update({'outfile': self.toc_path(),
                        'page_object': self.curated_collection})
         super(CuratedCollectionTOC, self).__init__(**kwargs)
-        self.add_after_write('update_hashes')
 
     def toc_path(self):
         return "%s/%s" % (self.toc_dir, self.curated_collection.toc_file())

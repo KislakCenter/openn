@@ -26,7 +26,6 @@ class Browse(Page):
         updated_kwargs = kwargs.update({'template_name': 'browse_ms.html',
                                         'outfile': self.document.browse_path})
         super(Browse,self).__init__(**kwargs)
-        self.add_after_write('update_hashes')
 
     def get_context(self,ctx_dict={}):
         ctx = { 'doc': self.data }
