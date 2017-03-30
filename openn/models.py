@@ -136,6 +136,23 @@ class Document(models.Model):
 
         return self.repository.metadata_type
 
+    def image_license_args(self):
+         # image_copyright_holder
+         # image_copyright_year
+         # image_rights_more_info
+         return {'holder': self.image_copyright_holder,
+                 'year': self.image_copyright_year,
+                 'more_information': self.image_rights_more_info,
+                 'title': self.title}
+
+    def metadata_license_args(self):
+         # metadata_copyright_holder
+         # metadata_copyright_year
+         # metadata_rights_more_info
+         return {'holder': self.metadata_copyright_holder,
+                 'year': self.metadata_copyright_year,
+                 'more_information': self.metadata_rights_more_info,
+                 'title': self.title}
 
     def is_live(self):
         c = httplib.HTTPConnection(settings.OPENN_HOST)
@@ -332,6 +349,12 @@ class Image(OrderedModel):
 
     def master(self):
         return self.deriv('master')
+
+    def image_license_args(self):
+        hmb_dict = self.document.image_license_args()
+        hmb_dict.update({'title': self.full_name()})
+
+        return hmb_dict
 
     class Meta(OrderedModel.Meta):
         pass

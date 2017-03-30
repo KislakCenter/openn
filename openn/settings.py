@@ -108,37 +108,125 @@ SITE_DIR = os.environ['OPENN_SITE_DIR']
 
 TOC_DIR = 'html'
 
-LICENCES = {
-    'CC-BY-SA' : {
-        'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons Attribution ShareAlike License version 4.0 (CC-BY-SA-4.0 https://creativecommons.org/licenses/by-sa/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
-        'image': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution ShareAlike License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
-        'single_image': u'This image of {title} is ©{year} {holder} and licensed under a Creative Commons Attribution ShareAlike License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by-sa/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+LICENSE_CC_BY_SA_40 = {
+    'code': 'CC-BY-SA',
+    'version': '4.0',
+    'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons'
+                ' Attribution ShareAlike License version 4.0'
+                ' (CC-BY-SA-4.0 https://creativecommons.org/licenses/by-sa/4.0/legalcode.'
+                ' For a description of the terms of use see the Creative Commons Deed'
+                ' https://creativecommons.org/licenses/by/4.0/. {more_information}',
+    'images': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution'
+             ' ShareAlike License version 4.0'
+             ' (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode.'
+             ' For a description of the terms of use see the Creative Commons Deed'
+             ' https://creativecommons.org/licenses/by/4.0/. {more_information}',
+    'single_image': u'This image of {title} is ©{year} {holder} and licensed under a Creative'
+                   ' Commons Attribution ShareAlike License version 4.0 (CC-BY-4.0'
+                   ' https://creativecommons.org/licenses/by-sa/4.0/legalcode.'
+                   ' For a description of the terms of use see the Creative Commons Deed'
+                   ' https://creativecommons.org/licenses/by-sa/4.0/. {more_information}',
+    'legalcode_url': 'https://creativecommons.org/licenses/by-sa/4.0/legalcode',
+    'deed_url': 'https://creativecommons.org/licenses/by-sa/4.0/',
+    'marked': True
+}
 
-        'legalcode_url': 'https://creativecommons.org/licenses/by-sa/4.0/legalcode',
-        'deed_url': 'https://creativecommons.org/licenses/by-sa/4.0/'
-    },
-    'CC-BY': {
-        'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
-        'image': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
-        'single_image': u'This image of {title} is ©{year} {holder} and licensed under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. {more_information}',
+LICENSE_CC_BY_40 = {
+    'code': 'CC-BY',
+    'version': '4.0',
+    'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons Attribution'
+                ' License version 4.0 (CC-BY-4.0'
+                ' https://creativecommons.org/licenses/by/4.0/legalcode.'
+                ' For a description of the terms of use see the Creative Commons Deed'
+                ' https://creativecommons.org/licenses/by/4.0/. {more_information}',
+    'images': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution'
+            ' License version 4.0 (CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/legalcode.'
+            ' For a description of the terms of use see the Creative Commons Deed'
+            ' https://creativecommons.org/licenses/by/4.0/. {more_information}',
+    'single_image': u'This image of {title} is ©{year} {holder} and licensed under a Creative'
+                    ' Commons Attribution License version 4.0 (CC-BY-4.0'
+                    ' https://creativecommons.org/licenses/by/4.0/legalcode.'
+                    ' For a description of the terms of use see the Creative Commons Deed'
+                    ' https://creativecommons.org/licenses/by/4.0/. {more_information}',
+    'legalcode_url': 'https://creativecommons.org/licenses/by/4.0/legalcode',
+    'deed_url': 'https://creativecommons.org/licenses/by/4.0/',
+    'marked': True
+}
 
-        'legalcode_url': 'https://creativecommons.org/licenses/by/4.0/legalcode',
-        'deed_url': 'https://creativecommons.org/licenses/by/4.0/'
-        },
-    'CC0': {
-        'metadata': u'To the extent possible under law, {holder} has waived all copyright and related or neighboring rights to this metadata about {title}. This work is published from: United States. For a summary of CC0, see https://creativecommons.org/publicdomain/zero/1.0/. Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode.  {more_information}',
-        'image': u'To the extent possible under law, {holder} has waived all copyright and related or neighboring rights to these images and the content of {title}. This work is published from: United States. For a summary of CC0, see https://creativecommons.org/publicdomain/zero/1.0/. Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode. {more_information}',
-        'single_image': u'To the extent possible under law, {holder} has waived all copyright and related or neighboring rights to this image and the content of {title}. This work is published from: United States. For a summary of CC0, see https://creativecommons.org/publicdomain/zero/1.0/. Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode. {more_information}',
-        'legalcode_url': 'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
-        'deed_url': 'https://creativecommons.org/publicdomain/zero/1.0/'
-    },
-    'PD': {
-        'metadata': u'This metadata about {title} is free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
-        'image':  u'These images and the content of {title} are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
-        'single_image':  u'This image and the content of {title} are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
-        'legalcode_url': 'http://creativecommons.org/publicdomain/mark/1.0/',
-        'deed_url': 'http://creativecommons.org/publicdomain/mark/1.0/'
-    },
+LICENSE_CC0_10 = {
+    'code': 'CC0',
+    'version': '1.0',
+    'metadata': u'To the extent possible under law, {holder} has waived all copyright and related'
+                ' or neighboring rights to this metadata about {title}. This work is published'
+                ' from: United States. For a summary of CC0, see'
+                ' https://creativecommons.org/publicdomain/zero/1.0/. Legal code:'
+                ' https://creativecommons.org/publicdomain/zero/1.0/legalcode.  {more_information}',
+    'images': u'To the extent possible under law, {holder} has waived all copyright and related or'
+            ' neighboring rights to these images and the content of {title}. This work is published'
+            ' from: United States. For a summary of CC0, see'
+            ' https://creativecommons.org/publicdomain/zero/1.0/. Legal code:'
+            ' https://creativecommons.org/publicdomain/zero/1.0/legalcode. {more_information}',
+    'single_image': u'To the extent possible under law, {holder} has waived all copyright and'
+                    ' related or neighboring rights to this image and the content of {title}. This'
+                    ' work is published from: United States. For a summary of CC0, see'
+                    ' https://creativecommons.org/publicdomain/zero/1.0/. Legal code:'
+                    ' https://creativecommons.org/publicdomain/zero/1.0/legalcode. {more_information}',
+    'legalcode_url': 'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+    'deed_url': 'https://creativecommons.org/publicdomain/zero/1.0/',
+    'marked': True
+}
+
+LICENSE_PD_10 = {
+    'code': 'PD',
+    'version': '1.0',
+    'metadata': u'This metadata about {title} is free of known copyright restrictions and in the'
+                ' public domain. See the Creative Commons Public Domain Mark page for usage'
+                ' details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
+    'images': u'These images and the content of {title} are free of known copyright restrictions'
+             ' and in the public domain. See the Creative Commons Public Domain Mark page for usage'
+             ' details, http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
+    'single_image': u'This image and the content of {title} are free of known copyright'
+                    ' restrictions and in the public domain. See the Creative Commons Public Domain'
+                    ' Mark page for usage details,'
+                    ' http://creativecommons.org/publicdomain/mark/1.0/. {more_information}',
+    'legalcode_url': 'http://creativecommons.org/publicdomain/mark/1.0/',
+    'deed_url': 'http://creativecommons.org/publicdomain/mark/1.0/',
+    'marked': False
+}
+LICENSE_CC_BY_SA_20 = {
+    'code': 'CC-BY-SA-20',
+    'version': '2.0',
+    'metadata': u'Metadata is ©{year} {holder} and licensed under a Creative Commons'
+                ' Attribution ShareAlike License version 2.0'
+                ' (CC-BY-SA-2.0 https://creativecommons.org/licenses/by-sa/2.0/legalcode.'
+                ' For a description of the terms of use see the Creative Commons Deed'
+                ' https://creativecommons.org/licenses/by/2.0/. {more_information}',
+    'images': u'Images are  ©{year} {holder} and licensed under a Creative Commons Attribution'
+             ' ShareAlike License version 4.0'
+             ' (CC-BY-2.0 https://creativecommons.org/licenses/by/2.0/legalcode.'
+             ' For a description of the terms of use see the Creative Commons Deed'
+             ' https://creativecommons.org/licenses/by/2.0/. {more_information}',
+    'single_image': u'This image of {title} is ©{year} {holder} and licensed under a Creative'
+                   ' Commons Attribution ShareAlike License version 2.0 (CC-BY-2.0'
+                   ' https://creativecommons.org/licenses/by-sa/2.0/legalcode.'
+                   ' For a description of the terms of use see the Creative Commons Deed'
+                   ' https://creativecommons.org/licenses/by-sa/2.0/. {more_information}',
+    'legalcode_url': 'https://creativecommons.org/licenses/by-sa/2.0/legalcode',
+    'deed_url': 'https://creativecommons.org/licenses/by-sa/2.0/',
+    'marked': True
+
+}
+
+LICENSES = {
+    'CC-BY-SA' : LICENSE_CC_BY_SA_40,
+    'CC-BY': LICENSE_CC_BY_40,
+    'CC0': LICENSE_CC0_10,
+    'PD': LICENSE_PD_10,
+    'CC-BY-SA-40' : LICENSE_CC_BY_SA_40,
+    'CC-BY-40': LICENSE_CC_BY_40,
+    'CC0-10': LICENSE_CC0_10,
+    'PD-10': LICENSE_PD_10,
+    'CC-BY-SA-20' : LICENSE_CC_BY_SA_20,
 }
 
 IMAGE_TYPES = ( '*.tif', '*.jpg' )
@@ -197,7 +285,7 @@ PREPARATION_METHODS = [
             'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
             'params' : {
                 'image_rights': {
-                    'dynamic': True,
+                    'dynamic': False,
                 },
                 'config_json': os.path.join(SITE_ROOT, 'bibliophilly.json'),
                 'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
@@ -592,42 +680,10 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'pih',
         },
-        'common_prep': {
-            'image_rights': {
-                'Marked': 'False',
-                'WebStatement': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                'UsageTerms': 'This image and its content are free of known copyright restrictions'
-                              ' and in the public domain. See the Creative Commons Public Domain'
-                              ' Mark page for usage details,'
-                              ' http://creativecommons.org/publicdomain/mark/1.0/.',
-                'rights': 'This image and its content are free of known copyright restrictions and'
-                          ' in the public domain. See the Creative Commons Public Domain Mark page'
-                          ' for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-            },
-            'rights_statements': {
-                'images': {
-                    'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                    'text': 'Unless otherwise stated, all images and their content are free of'
-                            ' known copyright restrictions and in the public domain. See the'
-                            ' Creative Commons Public Domain Mark page for more information on'
-                            ' terms of use,'
-                            ' <a href="http://creativecommons.org/publicdomain/mark/1.0/">'
-                            'http://creativecommons.org/publicdomain/mark/1.0/</a>',
-                },
-                'metadata': {
-                    'url': 'http://creativecommons.org/licenses/by/4.0/',
-                    'text': ('Unless otherwise stated, all manuscript descriptions and other'
-                             ' cataloging metadata are ©%d The University of Pennsylvania'
-                             ' Libraries. They are licensed for use under a Creative Commons'
-                             ' Attribution License version 4.0 (CC-BY-4.0'
-                             ' <a href="https://creativecommons.org/licenses/by/4.0/legalcode">'
-                             'https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a'
-                             ' description of the terms of use see the Creative Commons Deed'
-                             ' <a href="https://creativecommons.org/licenses/by/4.0/">'
-                             'https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
-                },
-            },
-        }
+        'rights': {
+            'image_rights': 'PD',
+            'metadata_rights': 'CC-BY-40'
+        },
     },
     'ljs-pih': {
         'repository': {
@@ -637,23 +693,10 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'pih',
         },
-        'common_prep': {
-            'image_rights': {
-                'Marked': 'False',
-                'WebStatement': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                'UsageTerms': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-                'rights': 'This image and its content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for usage details, http://creativecommons.org/publicdomain/mark/1.0/.',
-            },
-            'rights_statements': {
-                'images': {
-                    'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                    'text': 'Unless otherwise stated, all images and their content are free of known copyright restrictions and in the public domain. See the Creative Commons Public Domain Mark page for more information on terms of use, <a href="http://creativecommons.org/publicdomain/mark/1.0/">http://creativecommons.org/publicdomain/mark/1.0/</a>',
-                },
-                'metadata': {
-                    'url': 'http://creativecommons.org/licenses/by/4.0/',
-                    'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>). For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
-                },
-            },
+        'rights': {
+            'holder': 'The University of Pennsylvania Libraries',
+            'image_rights': 'PD',
+            'metadata_rights': 'CC-BY-40'
         },
     },
     'pennmuseum-pih': {
@@ -664,23 +707,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'pih',
         },
-        'common_prep': {
-            'image_rights': {
-                'Marked': 'False',
-                'WebStatement': 'https://creativecommons.org/licenses/by-sa/2.0/',
-                'UsageTerms': 'This image is reproduced from the original with permission of the University of Pennsylvania Museum of Archaeology and Anthropology under a Creative Commons Attribution-ShareAlike 2.0 Generic (CC BY-SA 2.0) license, https://creativecommons.org/licenses/by-sa/2.0/.',
-                'rights': 'This image is reproduced from the original with permission of the University of Pennsylvania Museum of Archaeology and Anthropology under a Creative Commons Attribution-ShareAlike 2.0 Generic (CC BY-SA 2.0) license, https://creativecommons.org/licenses/by-sa/2.0/.',
-            },
-            'rights_statements': {
-                'images': {
-                    'url': 'http://creativecommons.org/publicdomain/mark/1.0/',
-                    'text': 'All images are reproduced from the originals with permission of the University of Pennsylvania Museum of Archaeology and Anthropology under a Creative Commons Attribution-ShareAlike 2.0 Generic (CC BY-SA 2.0) license, <a href="https://creativecommons.org/licenses/by-sa/2.0/">https://creativecommons.org/licenses/by-sa/2.0/</a>.',
-                },
-                'metadata': {
-                    'url': 'http://creativecommons.org/licenses/by/4.0/',
-                    'text': ('Unless otherwise stated, all manuscript descriptions and other cataloging metadata are ©%d The University of Pennsylvania Libraries. They are licensed for use under a Creative Commons Attribution License version 4.0 (CC-BY-4.0 <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>. For a description of the terms of use see the Creative Commons Deed <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a>' % (today.year, )),
-                },
-            },
+        'rights': {
+            'image_rights': 'CC-BY-SA-20',
+            'metadata_rights': 'CC-BY-40'
         },
     },
     'penn-diaries': {
@@ -691,18 +720,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'brynmawr-diaries': {
@@ -713,18 +733,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'drexarc-diaries': {
@@ -735,18 +746,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'drexmed-diaries': {
@@ -757,18 +759,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'haverford-diaries': {
@@ -779,18 +772,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'lehigh-diaries': {
@@ -801,18 +785,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'friendshl-diaries': {
@@ -823,18 +798,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'hsp-diaries': {
@@ -845,18 +811,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'lts-diaries': {
@@ -867,18 +824,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'ulp-diaries': {
@@ -889,18 +837,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'tlc-diaries': {
@@ -911,18 +850,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'libpa-diaries': {
@@ -933,18 +863,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'ism-diaries': {
@@ -955,18 +876,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'uarc-diaries': {
@@ -977,18 +889,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'gsp-diaries': {
@@ -999,18 +902,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'private1-dirlesstei': {
@@ -1020,18 +914,10 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'dirlesstei',
         },
-        'common_prep': {
-            'image_rights': {
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
-        },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
+        }
     },
     'pennmuseumarchives-diaries': {
         'repository': {
@@ -1041,18 +927,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'flp-bphil': {
@@ -1063,18 +940,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'bphil',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
         }
     },
 }
@@ -1126,7 +994,7 @@ PREP_CONTEXT = {
     'archive_dir': ARCHIVE_DIR,
     'package_dir': PACKAGE_DIR,
     'staging_dir': STAGING_DIR,
-    'licences': LICENCES,
+    'licences': LICENSES,
     'deriv_configs': DERIV_CONFIGS,
 }
 

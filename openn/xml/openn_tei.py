@@ -333,6 +333,43 @@ class OPennTEI(XMLWhatsit):
         nodes = self._get_nodes('//t:decoNote[@n="%s"]' % n)
         return [node.text for node in nodes ]
 
+    def add_licences(self, document, license_factory):
+        """
+            <availability>
+                <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+                    This description is ©<xsl:value-of select="year-from-date(current-date())"/>
+                    University of
+                    Pennsylvania Libraries. It is licensed under a Creative Commons
+                    Attribution License version 4.0 (CC-BY-4.0
+                    https://creativecommons.org/licenses/by/4.0/legalcode. For a
+                    description of the terms of use see the Creative Commons Deed
+                    https://creativecommons.org/licenses/by/4.0/. </licence>
+                <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+                    referenced images and their content are free of known copyright
+                    restrictions and in the public domain. See the Creative Commons
+                    Public Domain Mark page for usage details,
+                    http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+            </availability>
+        """
+        xpath = '/t:TEI/t:teiHeader/t:fileDesc/t:publicationStmt/t:availability'
+        for avail in self.xml.xpath(xpath, namespaces=self.ns):
+            avail.getparent().remove(avail)
+
+        availability = etree.Element("availability", nsmap=self.ns)
+        lic = license_factory.license(document.image_licence)
+        lic_element = etree.Element("licence", target=lic.legalcode_url(), nsmap=self.ns)
+        lic_element.text = lic.format_images(**document.image_license_args())
+        availability.append(lic_element)
+
+        lic = license_factory.license(document.metadata_licence)
+        lic_element = etree.Element("licence", target=lic.legalcode_url(), nsmap=self.ns)
+        lic_element.text = lic.format_metadata(**document.metadata_license_args())
+        availability.append(lic_element)
+
+        pub_stmt = self.xml.xpath('/t:TEI/t:teiHeader/t:fileDesc/t:publicationStmt',
+                                  namespaces=self.ns)[0]
+        pub_stmt.append(availability)
+
     def add_file_list(self,document):
         """
            <facsimile>

@@ -20,6 +20,7 @@ STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
 # }
 
 setUp() {
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
     if [ ! -d $TEST_STAGING_DIR ]; then
         mkdir $TEST_STAGING_DIR
     fi
@@ -102,6 +103,7 @@ testRun() {
     then
         echo "$output"
     fi
+    # echo "$output"
     assertEquals 0 $status
     destdir=`get_staging_destination pennmss $source_dir`
     assertTrue "Expected TEI file in $destdir/data; found: `ls $destdir/data 2>/dev/null`" "ls $destdir/data/*[0-9]_TEI.xml"
@@ -194,7 +196,7 @@ testDocumentClobber() {
     create_dummy_files $source_dir $dummy_files
 
     # now run clobber; should succeed
-    output=`echo 'Yes' | op-prep --clobber haverford-diaries $source_dir 2>&1`
+    output=`echo 'Yes' | op-prep --verbose --clobber haverford-diaries $source_dir 2>&1`
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
     assertEquals 0 "$status"

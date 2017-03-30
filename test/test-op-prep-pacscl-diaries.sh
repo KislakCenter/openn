@@ -14,6 +14,7 @@ STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
 # }
 
 setUp() {
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
     if [ ! -d $TEST_STAGING_DIR ]; then
         mkdir $TEST_STAGING_DIR
     fi
@@ -91,7 +92,7 @@ testRun() {
     source_dir=$TEST_STAGING_DIR/MC_968_11_4_v03
     cp -r $TEST_DATA_DIR/diaries/haverford/MC_968_11_4_v03 $source_dir
     create_dummy_files $source_dir $mc_968_11_4_v03_files
-    output=`op-prep haverford-diaries $source_dir`
+    output=`op-prep --verbose haverford-diaries $source_dir`
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
     assertEquals 0 "$status"

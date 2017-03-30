@@ -71,16 +71,36 @@ class SpreadsheetPrep(RepositoryPrep):
             names = tree.xpath('//file_name')
         return [ unicode(x.text, 'utf8') for x in names ]
 
-    def save_right_data(self, openn_xml_path):
+    def save_rights_data(self, openn_xml_path):
         xml = OPennXML(codecs.open(openn_xml_path, 'r', 'utf-8'))
-        self.document.image_licence             = xml.image_licence()
-        self.document.image_copyright_holder    = xml.image_copyright_holder()
-        self.document.image_copyright_year      = xml.image_copyright_year()
-        self.document.image_rights_more_info    = xml.image_rights_more_info()
-        self.document.metadata_licence          = xml.metadata_licence()
-        self.document.metadata_copyright_holder = xml.metadata_copyright_holder()
-        self.document.metadata_copyright_year   = xml.metadata_copyright_year()
-        self.document.metadata_rights_more_info = xml.metadata_rights_more_info()
+
+        if self.prep_config.image_rights() == 'dynamic':
+            self.document.image_licence             = xml.image_licence()
+            self.document.image_copyright_holder    = xml.image_copyright_holder()
+            self.document.image_copyright_year      = xml.image_copyright_year()
+            self.document.image_rights_more_info    = xml.image_rights_more_info()
+        elif self.prep_config.image_rights().startswith('PD'):
+            self.document.image_copyright_holder = None
+            self.document.image_copyright_year = None
+            self.document.image_rights_more_info = None
+        else:
+            self.document.image_copyright_holder = self.prep_config.rights_holder()
+            self.document.image_copyright_year = datetime.now(pytz.UTC).year
+            self.document.image_rights_more_info = self.prep_config.rights_more_info()
+
+        if self.prep_config.metadata_rights() == 'dynamic':
+            self.document.metadata_licence             = xml.metadata_licence()
+            self.document.metadata_copyright_holder    = xml.metadata_copyright_holder()
+            self.document.metadata_copyright_year      = xml.metadata_copyright_year()
+            self.document.metadata_rights_more_info    = xml.metadata_rights_more_info()
+        elif self.prep_config.metadata_rights().startswith('PD'):
+            self.document.metadata_copyright_holder = None
+            self.document.metadata_copyright_year = None
+            self.document.metadata_rights_more_info = None
+        else:
+            self.document.metadata_copyright_holder = self.prep_config.rights_holder()
+            self.document.metadata_copyright_year = datetime.now(pytz.UTC).year
+            self.document.metadata_rights_more_info = self.prep_config.rights_more_info()
 
         self.document.save()
 
@@ -281,8 +301,7 @@ class SpreadsheetPrep(RepositoryPrep):
             self.logger.warning("[%s] Licence types already saved" % (self.basedir, ))
         else:
             self.logger.info("[%s] Saving licence types" % (self.basedir, ))
-            # self.write_openn_xml(self.openn_xml_path())
-            self.save_right_data(self.openn_xml_path())
+            self.save_rights_data(self.openn_xml_path())
             self.write_status(self.SPREADSHEET_LICENCE_TYPES_SAVED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILE_LIST_WRITTEN:
@@ -304,5 +323,3 @@ class SpreadsheetPrep(RepositoryPrep):
             self.write_status(self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN)
             self.add_removal(self.openn_xml_path())
             self.archive_xlsx()
-        # files to cleanup
-        # TODO: remove workbook ????

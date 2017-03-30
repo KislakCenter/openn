@@ -196,17 +196,17 @@ class TestSpreadsheetXML(TestCase):
         return json.load(open(self.pacscl_diairies_json))
 
     def test_init(self):
-        self.assertIsInstance(SpreadsheetXML(settings.LICENCES), SpreadsheetXML)
+        self.assertIsInstance(SpreadsheetXML(settings.LICENSES), SpreadsheetXML)
 
     def test_run(self):
         config = self.get_config()
         workbook = OPWorkbook(self.valid_workbook, config)
-        sp_xml = SpreadsheetXML(settings.LICENCES)
+        sp_xml = SpreadsheetXML(settings.LICENSES)
 
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
 
     def test_unicode(self):
         config = self.get_config()
         workbook = OPWorkbook(self.unicode_workbook, config)
-        sp_xml = SpreadsheetXML(settings.LICENCES)
+        sp_xml = SpreadsheetXML(settings.LICENSES)
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])

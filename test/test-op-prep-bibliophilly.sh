@@ -11,6 +11,7 @@ STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
 # }
 
 setUp() {
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
     if [ ! -d $TEST_STAGING_DIR ]; then
         mkdir $TEST_STAGING_DIR
     fi
