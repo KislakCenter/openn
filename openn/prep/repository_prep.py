@@ -124,7 +124,6 @@ class RepositoryPrep(Status):
             tei = OPennTEI(f)
             tei.validate()
         except Exception as ex:
-            # TODO: rename outfile if error
             raise OPennException("Error creating TEI: %s" % str(ex))
         finally:
             f.close()
