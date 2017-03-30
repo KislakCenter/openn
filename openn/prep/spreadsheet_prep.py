@@ -263,59 +263,59 @@ class SpreadsheetPrep(RepositoryPrep):
         archive_xlsx = "%s_%s.xlsx" % (self.basedir, tstamptz())
         archive_path = os.path.join(self.prep_config.context_var('archive_dir'),
                                     archive_xlsx)
-        self.logger.info("[%s] Archiving %s as %s" % (
-            self.basedir, self.xlsx_path, archive_path))
+        self.logger.info("[%s] Archiving %s as %s",
+            self.basedir, self.xlsx_path, archive_path)
         os.rename(self.xlsx_path, archive_path)
 
     def _do_prep_dir(self):
 
         if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
-            self.logger.warning("[%s] Metadata alreaady validated" % (self.basedir, ))
+            self.logger.warning("[%s] Metadata alreaady validated", self.basedir, )
         else:
-            self.logger.info("[%s] Validating metadata" % (self.basedir, ))
+            self.logger.info("[%s] Validating metadata", self.basedir, )
             self.validate_workbook()
             self.write_status(self.REPOSITORY_PREP_MD_VALIDATED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILES_VALIDATED:
-            self.logger.warning("[%s] Files alreaady validated" % (self.basedir, ))
+            self.logger.warning("[%s] Files alreaady validated", self.basedir, )
         else:
-            self.logger.info("[%s] Validating files" % (self.basedir, ))
+            self.logger.info("[%s] Validating files", self.basedir, )
             self.validate_file_names()
             self.write_status(self.REPOSITORY_PREP_FILES_VALIDATED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILES_STAGED:
-            self.logger.warning("[%s] Files already staged" % (self.basedir, ))
+            self.logger.warning("[%s] Files already staged", self.basedir, )
         else:
-            self.logger.info("[%s] Staging files" % (self.basedir, ))
+            self.logger.info("[%s] Staging files", self.basedir, )
             self.stage_images()
             self.write_status(self.REPOSITORY_PREP_FILES_STAGED)
 
         if self.get_status() > self.SPREADSHEET_OPEN_XML_WRITTEN:
-            self.logger.warning("[%s] OPenn XML already written" % (self.basedir, ))
+            self.logger.warning("[%s] OPenn XML already written", self.basedir, )
         else:
-            self.logger.info("[%s] Writing OPenn XML" % (self.basedir, ))
+            self.logger.info("[%s] Writing OPenn XML", self.basedir, )
             self.write_openn_xml(self.openn_xml_path())
             self.write_status(self.SPREADSHEET_OPEN_XML_WRITTEN)
 
         if self.get_status() > self.SPREADSHEET_LICENCE_TYPES_SAVED:
-            self.logger.warning("[%s] Licence types already saved" % (self.basedir, ))
+            self.logger.warning("[%s] Licence types already saved", self.basedir, )
         else:
-            self.logger.info("[%s] Saving licence types" % (self.basedir, ))
+            self.logger.info("[%s] Saving licence types", self.basedir, )
             self.save_rights_data(self.openn_xml_path())
             self.write_status(self.SPREADSHEET_LICENCE_TYPES_SAVED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILE_LIST_WRITTEN:
-            self.logger.warning("[%s] File list already written" % (self.basedir, ))
+            self.logger.warning("[%s] File list already written", self.basedir, )
         else:
-            self.logger.info("[%s] Writing file list" % (self.basedir, ))
+            self.logger.info("[%s] Writing file list", self.basedir, )
             file_list = self.build_file_list(self.openn_xml_path())
             self.add_file_list(file_list)
             self.write_status(self.REPOSITORY_PREP_FILE_LIST_WRITTEN)
 
         if self.get_status() > self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN:
-            self.logger.warning("[%s] Partial TEI already written" % (self.basedir, ))
+            self.logger.warning("[%s] Partial TEI already written", self.basedir, )
         else:
-            self.logger.info("[%s] Writing partial TEI" % (self.basedir, ))
+            self.logger.info("[%s] Writing partial TEI", self.basedir, )
             partial_tei = self.gen_partial_tei()
             # print partial_tei
             self.write_partial_tei(self.source_dir, partial_tei)

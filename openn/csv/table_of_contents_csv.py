@@ -47,8 +47,8 @@ class TableOfContentsCSV(OPennCSV):
     def is_makeable(self):
         # if not live, we don't make the TOC
         if not self.repository.is_live():
-            self.logger.info("TOC not makeable; repository not set to 'live' (repository: %s)" % (
-                self.repository.tag()))
+            self.logger.info("TOC not makeable; repository not set to 'live' (repository: %s)",
+                             self.repository.tag())
             return False
 
         # If this is a no-document repository, it is NOT makeable; we don't
@@ -57,7 +57,8 @@ class TableOfContentsCSV(OPennCSV):
         # NOTE: This is different from the regular TOC files; here, if there
         # are no documents, the CSV file will have no content.
         if self.repository.no_document():
-            self.logger.info("CSV TOC not makeable; no document repository: %s" % (self.repository.tag(),))
+            self.logger.info("CSV TOC not makeable; no document repository: %s",
+                             self.repository.tag(),)
             return False
 
         # Not makeable if no live documents are in the repository
@@ -66,21 +67,22 @@ class TableOfContentsCSV(OPennCSV):
             is_online=True
             ).count()
         if doc_count == 0:
-            self.logger.info("CSV TOC not makeable; repository has no documents online: %s" % (self.repository.tag(),))
+            self.logger.info("CSV TOC not makeable; repository has no documents online: %s",
+                             self.repository.tag(),)
             return False
 
         # see if there are any HTML files for this repository
         # if there's no HTML dir there aren't any files
         html_dir = os.path.join(self.outdir, self.repository.html_dir())
         if not os.path.exists(html_dir):
-            self.logger.info("CSV TOC not makeable; no HTML dir found: %s (repository: %s)" % (
-                html_dir, self.repository.tag()))
+            self.logger.info("CSV TOC not makeable; no HTML dir found: %s (repository: %s)",
+                             html_dir, self.repository.tag())
             return False
         # OK, html dir is present; look for files
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         if len(html_files) == 0:
-            self.logger.info("CSV TOC not makeable; no HTML files found in %s (repository %s)" % (
-                html_dir, self.repository.tag()))
+            self.logger.info("CSV TOC not makeable; no HTML files found in %s (repository %s)",
+                             html_dir, self.repository.tag())
             return False
 
         return True

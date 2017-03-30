@@ -180,7 +180,7 @@ def bulk_add_documents(args):
     input_file = args.input_file
 
     if not os.path.exists(input_file):
-        logger.error("Could not find INPUT_FILE: %s" % (input_file,))
+        logger.error("Could not find INPUT_FILE: %s", input_file,)
         return 1
 
     headers = get_bulk_headers(input_file)
@@ -205,15 +205,16 @@ def add_one_document(membership_manager, curated_tag, doc_tag, repo_tag=None):
 
     try:
         membership_manager.add_document(**params)
-        logger.info("Added document to curated collection %s" % (params,))
+        logger.info("Added document to curated collection %s", params,)
     except Document.MultipleObjectsReturned:
         logger.error("Ambiguous document specification; did you try the --repository option?")
         return 1
     except Document.DoesNotExist:
-        logger.error("Unknown document; no document found for DOC_ID '%s'" % (str(doc_tag),))
+        logger.error("Unknown document; no document found for DOC_ID '%s'", str(doc_tag),)
         return 1
     except CuratedCollection.DoesNotExist:
-        logger.error("Unknown curated collection; no curated collection found for '%s'" % (str(curated_tag),))
+        logger.error("Unknown curated collection; no curated collection"
+                     " found for '%s'", str(curated_tag),)
         return 1
 
     return 0
@@ -235,18 +236,20 @@ def rm_one_document(membership_manager, curated_tag, doc_tag, repo_tag=None):
 
     try:
         membership_manager.remove_document(**params)
-        logger.info("Removed document '%s' from curated collection '%s'" % (doc_tag, curated_tag))
+        logger.info("Removed document '%s' from curated collection '%s'", doc_tag, curated_tag)
     except Document.MultipleObjectsReturned:
         logger.error("Ambiguous document specification; did you try the --repository option?")
         return 1
     except Document.DoesNotExist:
-        logger.error("Unknown document; no document found for DOC_ID '%s'" % (str(doc_tag),))
+        logger.error("Unknown document; no document found for DOC_ID '%s'", str(doc_tag),)
         return 1
     except CuratedCollection.DoesNotExist:
-        logger.error("Unknown curated collection; no curated collection found for '%s'" % (str(curated_tag),))
+        logger.error("Unknown curated collection; no curated collection found"
+                     " for '%s'", str(curated_tag),)
         return 1
     except CuratedMembership.DoesNotExist:
-        logger.error("Document not in curated collection; for curated collection '%s' and document '%s'" % (doc_tag, curated_tag))
+        logger.error("Document not in curated collection; for curated collection '%s'"
+                     " and document '%s'", doc_tag, curated_tag)
         return 1
 
     return 0
@@ -255,7 +258,7 @@ def bulk_rm_documents(args):
     input_file = args.input_file
 
     if not os.path.exists(input_file):
-        logger.error("Could not find INPUT_FILE: %s" % (input_file,))
+        logger.error("Could not find INPUT_FILE: %s", input_file,)
         return 1
 
     headers = get_bulk_headers(input_file)

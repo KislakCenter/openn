@@ -36,8 +36,9 @@ class CuratedCollectionTOC(Page):
 
     def is_makeable(self):
         if not self.curated_collection.live:
-            self.logger.info("Curated collection HTML TOC not makeable; curated collection not set to 'live' (curated collection: %s)" % (
-                self.curated_collection.tag()))
+            self.logger.info("Curated collection HTML TOC not makeable; curated collection not"
+                             " set to 'live' (curated collection: %s)",
+                             self.curated_collection.tag())
             return False
 
         if self.curated_collection.csv_only:
@@ -47,12 +48,16 @@ class CuratedCollectionTOC(Page):
             return False
 
         if self.curated_collection.documents.count() == 0:
-            self.logger.info("Curated collection HTML TOC not makeable; curated collection has no documents: %s" % (self.curated_collection.tag,))
+            self.logger.info("Curated collection HTML TOC not makeable;"
+                             " curated collection has no documents: %s",
+                             self.curated_collection.tag,)
             return False
 
         doc_count = self.curated_collection.documents.filter(is_online=True).count()
         if doc_count == 0:
-            self.logger.info("Curated collection HTML TOC not makeable; curated collection has no documents online: %s" % (self.curated_collection.tag,))
+            self.logger.info("Curated collection HTML TOC not makeable;"
+                             " curated collection has no documents online: %s",
+                             self.curated_collection.tag,)
             return False
 
         return True

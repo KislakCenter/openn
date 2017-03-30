@@ -77,7 +77,7 @@ def stage_doc(source_dir, doc):
         shutil.rmtree(dest)
 
     shutil.move(source, dest)
-    logger.info("Document '%s' staged at %s" % (doc.call_number, dest))
+    logger.info("Document '%s' staged at %s", doc.call_number, dest)
 
 def setup_logger():
     ch = logging.StreamHandler(sys.stdout)

@@ -55,8 +55,8 @@ class RepositoryPrep(Status):
     def _cleanup(self):
         for f in self.removals:
             if os.path.exists(f):
-                self.logger.debug("[%s] Cleanup: removing \'%s\'" % (
-                    self.basedir,f))
+                self.logger.debug("[%s] Cleanup: removing \'%s\'",
+                    self.basedir,f)
                 os.remove(f)
 
     def image_files(self,image_dir=None):
@@ -151,12 +151,12 @@ class RepositoryPrep(Status):
     def prep_dir(self):
 
         if self.get_status() >= self.REPOSITORY_PREP_COMPLETED:
-            self.logger.warning("[%s] Repository prep already completed" % (self.basedir,))
+            self.logger.warning("[%s] Repository prep already completed", self.basedir,)
         else:
             if self.get_status() > self.REPOSITORY_PREP_PACKAGE_VALIDATED:
-                self.logger.warning("[%s] Package directory already validated" % (self.basedir,))
+                self.logger.warning("[%s] Package directory already validated", self.basedir,)
             else:
-                self.logger.info("[%s] Validating package directory" % (self.basedir,))
+                self.logger.info("[%s] Validating package directory", self.basedir,)
                 self.validate()
                 self.write_status(self.REPOSITORY_PREP_PACKAGE_VALIDATED)
 
