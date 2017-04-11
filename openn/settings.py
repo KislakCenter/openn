@@ -1007,6 +1007,28 @@ PREP_CONFIGS = {
             },
         }
     },
+    'pennmuseum-diaries': {
+        'repository': {
+            'tag': 'pennmuseum'
+        },
+        "image_types": [ '*.tif', '*.jpg' ],
+        'repository_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
 }
 
 CURATED_COLLECTIONS = {
