@@ -730,6 +730,8 @@ class ValidatableSheet(object):
         else:
             return value
 
+    # TODO: Change extract column to stop after hitting blank cell
+    # TODO: Have column comparisons check to see that columns are same len()
     def _extract_column(self, attr):
         if self.locus(attr) is None: return
 

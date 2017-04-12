@@ -21,35 +21,32 @@ setUp() {
 
 tearDown() {
     clear_tables
-    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+    # rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
-DUMMY_FILES="lewis_e_129_body0001.tif
-    lewis_e_129_body0002.tif
-    lewis_e_129_body0003.tif
-    lewis_e_129_body0004.tif
-    lewis_e_129_body0005.tif
-    lewis_e_129_body0006.tif
-    lewis_e_129_body0007.tif
-    lewis_e_129_body0008.tif
-    lewis_e_129_body0009.tif
-    lewis_e_129_body0010.tif
-    lewis_e_129_body0259.tif
-    lewis_e_129_body0260.tif
-    lewis_e_129_body0261.tif
-    lewis_e_129_body0262.tif
-    lewis_e_129_body0263.tif
-    lewis_e_129_body0264.tif
-    lewis_e_129_body0265.tif
-    lewis_e_129_body0266.tif
-    lewis_e_129_body0267.tif
-    lewis_e_129_body0268.tif
-    lewis_e_129_body0269.tif"
+DUMMY_FILES="lewis_e_087_body0001.tif
+lewis_e_087_body0002.tif
+lewis_e_087_body0003.tif
+lewis_e_087_body0004.tif
+lewis_e_087_body0005.tif
+lewis_e_087_body0006.tif
+lewis_e_087_body0007.tif
+lewis_e_087_body0008.tif
+lewis_e_087_body0009.tif
+lewis_e_087_body0010.tif
+lewis_e_087_body0011.tif
+lewis_e_087_body0012.tif
+lewis_e_087_body0013.tif
+lewis_e_087_body0014.tif
+lewis_e_087_body0015.tif
+lewis_e_087_body0016.tif
+lewis_e_087_body0017.tif
+lewis_e_087_body0018.tif"
 
 testRun() {
     loadDb
-    source_dir=${TEST_STAGING_DIR}/FLPLewisE129
-    template_dir=${TEST_DATA_DIR}/bibliophilly/FLPLewisE129
+    source_dir=${TEST_STAGING_DIR}/FLPLewisE087
+    template_dir=${TEST_DATA_DIR}/bibliophilly/FLPLewisE087
     cp -r $template_dir $source_dir
     create_dummy_files $source_dir $DUMMY_FILES
 
@@ -57,7 +54,7 @@ testRun() {
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
     # find $TEST_STAGING_DIR
-    # save_and_open "${TEST_STAGING_DIR}/FLPLewisE129/PARTIAL_TEI.xml" "Sublime Text"
+    # save_and_open "${TEST_STAGING_DIR}/FLPLewisE087/PARTIAL_TEI.xml" "Sublime Text"
 
     assertEquals 0 "$status"
     destdir=`get_staging_destination flp $source_dir`

@@ -10,9 +10,8 @@
             <xd:p><xd:b>Author:</xd:b> emeryr</xd:p>
         </xd:desc>
     </xd:doc>
-
+    <!-- TODO: metadata creator  -->
     <xsl:output indent="yes"/>
-
     <xsl:variable name="repository">
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text"
@@ -41,7 +40,6 @@
       </xsl:if>
     </xsl:variable>
     <xsl:template match="/">
-
         <TEI xmlns="http://www.tei-c.org/ns/1.0">
             <teiHeader>
                 <fileDesc>
@@ -68,7 +66,6 @@
                          </availability>
                       </xsl:if>
                     </publicationStmt>
-
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
                     <xsl:if test="//notes">
                       <notesStmt>
@@ -78,16 +75,20 @@
                       </notesStmt>
                     </xsl:if>
                     <!-- END DOT MOD -->
-
                     <sourceDesc>
                         <msDesc>
                             <msIdentifier>
+                              <xsl:if test="//identification/repository_country">
+                                  <country>
+                                    <xsl:value-of select="//identification/repository_country"/>
+                                  </country>
+                              </xsl:if>
+                              <settlement><xsl:value-of select="//identification/repository_city"/></settlement>
                               <xsl:if test="//identification/institution">
                                 <institution>
                                   <xsl:value-of select="//identification/institution"/>
                                 </institution>
                               </xsl:if>
-                              <settlement><xsl:value-of select="//identification/repository_city"/></settlement>
                                 <repository>
                                     <xsl:value-of select="$repository"/>
                                 </repository>
@@ -324,11 +325,21 @@
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-
                 <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
               <profileDesc>
                 <textClass>
                   <!-- DE: Switching to marc 610 and joining subfields -->
+                  <xsl:if test="//subjects_keywords">
+                    <keywords n="keywords">
+                      <xsl:for-each select="//subjects_keywords">
+                        <term>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_keyword"/>
+                          </xsl:call-template>
+                        </term>
+                      </xsl:for-each>
+                    </keywords>
+                  </xsl:if>
                   <xsl:if test="//subjects_topical">
                     <keywords n="subjects">
                       <xsl:for-each select="//subjects_topical">
@@ -393,11 +404,9 @@
                       </xsl:for-each>
                     </keywords>
                   </xsl:if>
-
                 </textClass>
               </profileDesc>
               <!-- DOT MOD ENDS HERE -->
-
             </teiHeader>
             <facsimile>
                 <!--
@@ -418,17 +427,14 @@
             </facsimile>
         </TEI>
     </xsl:template>
-
     <xsl:template name="clean-up-text">
         <xsl:param name="some-text"/>
         <xsl:value-of select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))" />
     </xsl:template>
-
     <xsl:template name="chomp-period">
         <xsl:param name="string"/>
         <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
     </xsl:template>
-
     <xsl:template name="lang-names">
         <xsl:param name="langs" as="node()*"/>
           <xsl:if test="count($langs) &gt; 0">
@@ -454,7 +460,6 @@
             <xsl:text>.</xsl:text>
           </xsl:if>
     </xsl:template>
-
     <xsl:template name="join-keywords">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -468,7 +473,6 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-
     <xsl:template name="join-genre">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -482,7 +486,6 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-
   <xsl:template name="join-text">
     <xsl:param name="items"/>
     <xsl:param name="sep"/>
@@ -493,7 +496,6 @@
           </xsl:if>
         </xsl:for-each>
   </xsl:template>
-
   <!-- Extract personal names, employing the date if present. -->
     <xsl:template name="extract-pn">
         <xsl:param name="datafield"/>
@@ -508,7 +510,6 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-
     <xsl:template name="other-langs">
         <xsl:param name="tags"/>
         <xsl:for-each select="$tags">
@@ -520,7 +521,6 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
-
     <!-- Generate a license stanza if license_url or license_text are present. -->
     <xsl:template name="license">
       <xsl:param name="license_url"/>

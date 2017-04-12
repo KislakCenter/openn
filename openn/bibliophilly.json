@@ -41,6 +41,18 @@
                     "repeating": false,
                     "data_type": "string"
                 },
+                "repository_country": {
+                    "field_name": "Repository Country",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string"
+                },
+                "repository_institution": {
+                    "field_name": "Holding Institution",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string"
+                },
                 "repository_name": {
                     "field_name": "Repository Name",
                     "required": true,
@@ -90,10 +102,10 @@
                     "data_type": "string",
                     "class": "openn.prep.call_number_field.CallNumberField",
                     "arg_fields": [ "call_numberid",
-                                    "archival_drawer",
-                                    "archival_box",
-                                    "archival_folder",
-                                    "archival_item" ]
+                        "archival_drawer",
+                        "archival_box",
+                        "archival_folder",
+                        "archival_item" ]
                 },
                 "alternate_id": {
                     "field_name": "Alternate ID",
@@ -118,6 +130,12 @@
                     "repeating": false,
                     "data_type": "string"
                 },
+                "record_url": {
+                    "field_name": "Record URL",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "uri"
+                },
                 "title": {
                     "field_name": "Manuscript Name",
                     "required": true,
@@ -141,6 +159,48 @@
                     "required": false,
                     "repeating": true,
                     "data_type": "uri"
+                },
+                "translator_name": {
+                    "field_name": "Translator name",
+                    "required": false,
+                    "repeating": true,
+                    "data_type": "string"
+                },
+                "translator_uri": {
+                    "field_name": "Translator URI",
+                    "required": false,
+                    "repeating": true,
+                    "data_type": "uri"
+                },
+                "artist_name": {
+                    "field_name": "Artist name",
+                    "required": false,
+                    "repeating": true,
+                    "data_type": "string"
+                },
+                "artist_uri": {
+                    "field_name": "Artist URI",
+                    "required": false,
+                    "repeating": true,
+                    "data_type": "uri"
+                },
+                "former_owner_name": {
+                    "field_name": "Former Owner name",
+                    "required": false,
+                    "repeating": true,
+                    "data_type": "string"
+                },
+                "former_owner_uri": {
+                    "field_name": "Former Owner URI",
+                    "required": false,
+                    "repeating": true,
+                    "data_type": "uri"
+                },
+                "provenance_details": {
+                    "field_name": "Provenance details",
+                    "required": false,
+                    "repeating": false,
+                    "data_type": "string"
                 },
                 "date_single": {
                     "field_name": "Date (single)",
@@ -205,6 +265,12 @@
                     "repeating": true,
                     "data_type": "string"
                 },
+                "origin_details": {
+                    "field_name": "Origin details",
+                    "required": true,
+                    "repeating": false,
+                    "data_type": "string"
+                },
                 "description": {
                     "field_name": "Description",
                     "required": false,
@@ -225,427 +291,957 @@
                     "class": "openn.prep.language_name_field.LanguageNameField",
                     "arg_fields": [ "language" ]
                 },
-                "page_count": {
-                    "field_name": "Number of physical pages",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "page_gaps_in_images": {
-                    "field_name": "Gaps",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "page_dimensions": {
-                    "field_name": "Page dimensions",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "bound_dimensions": {
-                    "field_name": "Bound dimensions",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "related_resource": {
-                    "field_name": "Related resource",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "related_resource_url": {
-                    "field_name": "Related resource URL",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "uri"
-                },
-                "subject_names": {
-                    "field_name": "Subject: names",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "subject_names_uri": {
-                    "field_name": "Subject: names URI [?]",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "uri"
-                },
-                "subject_topical": {
-                    "field_name": "Subject: topical",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "subject_topical_uri": {
-                    "field_name": "Subject: topical URI [?]",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "uri"
-                },
-                "subject_geographic": {
-                    "field_name": "Subject: geographic",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "subject_geographic_uri": {
-                    "field_name": "Subject: geographic URI [?]",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "uri"
-                },
-                "subject_genreform": {
-                    "field_name": "Subject: genre/form",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "subject_genreform_uri": {
-                    "field_name": "Subject: genre/form URI [?]",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "uri"
+                "pagination_foliation": {
+                 "field_name": "Foliation / Pagination",
+                 "required": false,
+                 "repeating": false,
+                 "data_type": "string"
+             },
+             "extent": {
+              "field_name": "Flyleaves & Leaves",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "layout": {
+              "field_name": "Layout",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "colophon": {
+              "field_name": "Colophon",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "collation": {
+              "field_name": "Collation",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "script": {
+              "field_name": "Script",
+              "required": false,
+              "repeating": true,
+              "data_type": "string"
+          },
+          "decoration": {
+              "field_name": "Decoration",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "binding": {
+              "field_name": "Binding",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "watermarks": {
+              "field_name": "Watermarks",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "catchwords": {
+              "field_name": "Catchwords",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "signatures": {
+              "field_name": "signatures",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "note": {
+              "field_name": "Note(s)",
+              "required": false,
+              "repeating": true,
+              "data_type": "string"
+          },
+          "support_material": {
+              "field_name": "Support material",
+              "required": false,
+              "repeating": false,
+              "data_type": "string"
+          },
+          "page_count": {
+            "field_name": "Number of physical pages",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "page_gaps_in_images": {
+            "field_name": "Gaps",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "page_dimensions": {
+            "field_name": "Page dimensions",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "bound_dimensions": {
+            "field_name": "Bound dimensions",
+            "required": false,
+            "repeating": false,
+            "data_type": "string"
+        },
+        "related_resource": {
+            "field_name": "Related resource",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "related_resource_url": {
+            "field_name": "Related resource URL",
+            "required": false,
+            "repeating": true,
+            "data_type": "uri"
+        },
+        "subject_names": {
+            "field_name": "Subject: names",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "subject_names_uri": {
+            "field_name": "Subject: names URI [?]",
+            "required": false,
+            "repeating": true,
+            "data_type": "uri"
+        },
+        "subject_topical": {
+            "field_name": "Subject: topical",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "subject_topical_uri": {
+            "field_name": "Subject: topical URI [?]",
+            "required": false,
+            "repeating": true,
+            "data_type": "uri"
+        },
+        "subject_geographic": {
+            "field_name": "Subject: geographic",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "subject_geographic_uri": {
+            "field_name": "Subject: geographic URI [?]",
+            "required": false,
+            "repeating": true,
+            "data_type": "uri"
+        },
+        "subject_genreform": {
+            "field_name": "Subject: genre/form",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "subject_genreform_uri": {
+            "field_name": "Subject: genre/form URI [?]",
+            "required": false,
+            "repeating": true,
+            "data_type": "uri"
+        },
+        "subject_keyword": {
+            "field_name": "Subject: keywords",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        }
+    }
+},
+"pages": {
+    "sheet_name": "Pages",
+    "data_offset": 1,
+    "heading_type": "column",
+    "fields": {
+        "object_id": {
+            "field_name": "OBJECT_ID",
+            "required": false,
+            "repeating": true,
+            "data_type": "string"
+        },
+        "serial_num": {
+            "field_name": "SERIAL_NUM",
+            "repeating": true,
+            "unique": true,
+            "data_type": "integer",
+            "required": {
+                "if": {
+                    "field": "file_name",
+                    "is": "NONEMPTY"
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
                 }
             }
         },
-        "pages": {
-            "sheet_name": "Pages",
-            "data_offset": 1,
-            "heading_type": "column",
-            "fields": {
-                "object_id": {
-                    "field_name": "OBJECT_ID",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "serial_num": {
-                    "field_name": "SERIAL_NUM",
-                    "repeating": true,
-                    "unique": true,
-                    "data_type": "integer",
-                    "required": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "NONEMPTY"
-                        }
-                    },
-                    "blank": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "EMPTY"
-                        }
-                    }
-                },
-                "display_page": {
-                    "field_name": "DISPLAY PAGE",
-                    "required": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "NONEMPTY"
-                        }
-                    },
-                    "repeating": true,
-                    "data_type": "string",
-                    "blank": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "EMPTY"
-                        }
-                    }
-                },
-                "file_name": {
-                    "field_name": "FILE_NAME",
-                    "required": true,
-                    "repeating": true,
-                    "unique": true,
-                    "data_type": "string",
-                    "file_list": true
-                },
-                "tag1": {
-                    "field_name": "TAG1",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
-                    "blank": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "EMPTY"
-                        }
-                    }
-                },
-                "value1": {
-                    "field_name": "VALUE1",
-                    "required": {
-                        "if": {
-                            "field": "tag1",
-                            "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
-                        }
-                    },
-                    "blank": {
-                        "if": {
-                            "field": "tag1",
-                            "is": "EMPTY"
-                        }
-                    },
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "tag2": {
-                    "field_name": "TAG2",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string",
-                    "Value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
-                    "blank": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "EMPTY"
-                        }
-                    }
-                },
-                "value2": {
-                    "field_name": "VALUE2",
-                    "required": {
-                        "if": {
-                            "field": "tag2",
-                            "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
-                        }
-                    },
-                    "blank": {
-                        "if": {
-                            "field": "tag2",
-                            "is": "EMPTY"
-                        }
-                    },
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "tag3": {
-                    "field_name": "TAG3",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
-                    "blank": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "EMPTY"
-                        }
-                    }
-                },
-                "value3": {
-                    "field_name": "VALUE3",
-                    "required": {
-                        "if": {
-                            "field": "tag3",
-                            "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
-                        }
-                    },
-                    "blank": {
-                        "if": {
-                            "field": "tag3",
-                            "is": "EMPTY"
-                        }
-                    },
-                    "repeating": true,
-                    "data_type": "string"
-                },
-                "tag4": {
-                    "field_name": "TAG4",
-                    "required": false,
-                    "repeating": true,
-                    "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
-                    "blank": {
-                        "if": {
-                            "field": "file_name",
-                            "is": "EMPTY"
-                        }
-                    }
-                },
-                "value4": {
-                    "field_name": "VALUE4",
-                    "required": {
-                        "if": {
-                            "field": "tag4",
-                            "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
-                        }
-                    },
-                    "blank": {
-                        "if": {
-                            "field": "tag4",
-                            "is": "EMPTY"
-                        }
-                    },
-                    "repeating": true,
-                    "data_type": "string"
+        "display_page": {
+            "field_name": "DISPLAY PAGE",
+            "required": {
+                "if": {
+                    "field": "file_name",
+                    "is": "NONEMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string",
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
                 }
             }
-        }
-    },
-    "xml_config": [
-        {
-            "sheet_root": "pages",
-            "sheet_attr": "pages",
-            "field_groups": [
-                {
-                    "xml_attr": "page",
-                    "columns": [
-                        "file_name",
-                        "display_page",
-                        "serial_num",
-                        "tag1",
-                        "value1",
-                        "tag2",
-                        "value2",
-                        "tag3",
-                        "value3",
-                        "tag4",
-                        "value4"
-                    ]
+        },
+        "file_name": {
+            "field_name": "FILE_NAME",
+            "required": true,
+            "repeating": true,
+            "unique": true,
+            "data_type": "string",
+            "file_list": true
+        },
+        "tag1": {
+            "field_name": "TAG1",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
                 }
+            }
+        },
+        "value1": {
+            "field_name": "VALUE1",
+            "required": {
+                "if": {
+                    "field": "tag1",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag1",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag2": {
+            "field_name": "TAG2",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "Value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value2": {
+            "field_name": "VALUE2",
+            "required": {
+                "if": {
+                    "field": "tag2",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag2",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag3": {
+            "field_name": "TAG3",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value3": {
+            "field_name": "VALUE3",
+            "required": {
+                "if": {
+                    "field": "tag3",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag3",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag4": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value4": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag4",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag4",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag5": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value5": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag5",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag5",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag6": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value6": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag6",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag6",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag7": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value7": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag7",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag7",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag8": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value8": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag8",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag8",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag9": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value9": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag9",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag9",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag10": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value10": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag10",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag10",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag11": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value11": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag11",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag11",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag12": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value12": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag12",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag12",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag13": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value13": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag13",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag13",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag14": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value14": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag14",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag14",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        },
+        "tag15": {
+            "field_name": "TAG4",
+            "required": false,
+            "repeating": true,
+            "data_type": "string",
+            "value_list": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO", "BLANK" ],
+            "blank": {
+                "if": {
+                    "field": "file_name",
+                    "is": "EMPTY"
+                }
+            }
+        },
+        "value15": {
+            "field_name": "VALUE4",
+            "required": {
+                "if": {
+                    "field": "tag15",
+                    "is": [ "TOC1", "TOC2", "TOC3", "INC", "EXP", "DECO" ]
+                }
+            },
+            "blank": {
+                "if": {
+                    "field": "tag15",
+                    "is": "EMPTY"
+                }
+            },
+            "repeating": true,
+            "data_type": "string"
+        }
+    }
+}
+},
+"xml_config": [
+    {
+        "sheet_root": "pages",
+        "sheet_attr": "pages",
+        "field_groups": [
+            {
+                "xml_attr": "page",
+                "columns": [
+                    "file_name",
+                    "display_page",
+                    "serial_num",
+                    "tag1",
+                    "value1",
+                    "tag2",
+                    "value2",
+                    "tag3",
+                    "value3",
+                    "tag4",
+                    "value4",
+                    "tag5",
+                    "value5",
+                    "tag6",
+                    "value6",
+                    "tag7",
+                    "value7",
+                    "tag8",
+                    "value8",
+                    "tag9",
+                    "value9",
+                    "tag10",
+                    "value10",
+                    "tag11",
+                    "value11",
+                    "tag12",
+                    "value12",
+                    "tag13",
+                    "value13",
+                    "tag14",
+                    "value14",
+                    "tag15",
+                    "value15"
+                ]
+            }
+        ]
+    },
+    {
+        "sheet_root": "description",
+        "sheet_attr": "description",
+        "composite_fields": {
+            "full_title": [
+                "repository_name",
+                "full_call_number",
+                "title"
             ]
         },
-        {
-            "sheet_root": "description",
-            "sheet_attr": "description",
-            "composite_fields": {
-                "full_title": [
-                    "repository_name",
-                    "full_call_number",
-                    "title"
+        "field_groups": [
+            {
+                "xml_attr": "administrative",
+                "columns": [
+                    "administrative_contact",
+                    "administrative_contact_email"
                 ]
             },
-            "field_groups": [
-                {
-                    "xml_attr": "administrative",
-                    "columns": [
-                        "administrative_contact",
-                        "administrative_contact_email"
-                    ]
-                },
-                {
-                    "xml_attr": "metadata_creator",
-                    "columns": [
-                        "metadata_creator",
-                        "metadata_creator_email"
-                    ]
-                },
-                {
-                    "xml_attr": "identification",
-                    "columns": [
-                        "repository_city",
-                        "repository_name",
-                        "source_collection",
-                        "call_numberid",
-                        "archival_drawer",
-                        "archival_box",
-                        "archival_folder",
-                        "archival_item",
-                        "full_call_number",
-                        "volume_number"
-                    ]
-                },
-                {
-                    "xml_attr": "altId",
-                    "columns": [
-                        "alternate_id",
-                        "alternate_id_type"
-                    ]
-                },
-                {
-                    "xml_attr": "title",
-                    "columns": [
-                        "title",
-                        "volume_number"
-                    ]
-                },
-                {
-                    "xml_attr": "creator",
-                    "columns": [
-                        "creator_name",
-                        "creator_uri"
-                    ]
-                },
-                {
-                    "xml_attr": "origin",
-                    "columns": [
-                        "date_single",
-                        "date_range_start",
-                        "date_range_end",
-                        "date_narrative",
-                        "place_of_origin"
-                    ]
-                },
-                {
-                    "xml_attr": "summary",
-                    "columns": [
-                        "description"
-                    ]
-                },
-                {
+            {
+                "xml_attr": "metadata_creator",
+                "columns": [
+                    "metadata_creator",
+                    "metadata_creator_email"
+                ]
+            },
+            {
+                "xml_attr": "identification",
+                "columns": [
+                    "repository_country",
+                    "repository_city",
+                    "repository_name",
+                    "repository_institution",
+                    "source_collection",
+                    "call_numberid",
+                    "archival_drawer",
+                    "archival_box",
+                    "archival_folder",
+                    "archival_item",
+                    "full_call_number",
+                    "volume_number"
+                ]
+            },
+            {
+                "xml_attr": "altId",
+                "columns": [
+                    "alternate_id",
+                    "alternate_id_type"
+                ]
+            },
+            {
+                "xml_attr": "recordURL",
+                "columns": [
+                    "record_url"
+                ]
+            },
+            {
+                "xml_attr": "title",
+                "columns": [
+                    "title",
+                    "volume_number"
+                ]
+            },
+            {
+                "xml_attr": "creator",
+                "columns": [
+                    "creator_name",
+                    "creator_uri"
+                ]
+            },
+            {
+                "xml_attr": "translator",
+                "columns": [
+                    "translator_name",
+                    "translator_uri"
+                ]
+            },
+            {
+                "xml_attr": "artist",
+                "columns": [
+                    "artist_name",
+                    "artist_uri"
+                ]
+            },
+            {
+                "xml_attr": "former_owner",
+                "columns": [
+                    "former_owner_name",
+                    "former_owner_uri"
+                ]
+            },
+            {
+                "xml_attr": "provenance",
+                "columns": [
+                    "provenance_details"
+                ]
+            },                {
+                "xml_attr": "origin",
+                "columns": [
+                    "date_single",
+                    "date_range_start",
+                    "date_range_end",
+                    "date_narrative",
+                    "place_of_origin",
+                    "origin_details"
+                ]
+            },
+            {
+                "xml_attr": "summary",
+                "columns": [
+                    "description"
+                ]
+            },
+            {
 
-                    "xml_attr": "language",
-                    "columns": [
-                        "language",
-                        "language_name"
-                    ]
-                },
-                {
-                    "xml_attr": "page_info",
-                    "columns": [
-                        "page_count",
-                        "page_gaps_in_images"
-                    ]
-                },
-                {
-                    "xml_attr": "dimensions",
-                    "columns": [
-                        "page_dimensions",
-                        "bound_dimensions"
-                    ]
-                },
-                {
-                    "xml_attr": "related",
-                    "columns": [
-                        "related_resource",
-                        "related_resource_url"
-                    ]
-                },
-                {
-                    "xml_attr": "subjects_names",
-                    "columns": [
-                        "subject_names",
-                        "subject_names_uri"
-                    ]
-                },
-                {
-                    "xml_attr": "subjects_topical",
-                    "columns": [
-                        "subject_topical",
-                        "subject_topical_uri"
-                    ]
-                },
-                {
-                    "xml_attr": "subjects_geographic",
-                    "columns": [
-                        "subject_geographic",
-                        "subject_geographic_uri"
-                    ]
-                },
-                {
-                    "xml_attr": "subjects_genreform",
-                    "columns": [
-                        "subject_genreform",
-                        "subject_genreform_uri"
-                    ]
-                }
-            ]
-        }
-    ]
+                "xml_attr": "language",
+                "columns": [
+                    "language",
+                    "language_name"
+                ]
+            },
+            {
+                "xml_attr": "page_info",
+                "columns": [
+                    "page_count",
+                    "page_gaps_in_images"
+                ]
+            },
+            {
+                "xml_attr": "support",
+                "columns": [
+                    "pagination_foliation",
+                    "extent",
+                    "watermarks",
+                    "support_material"
+                ]
+            },
+            {
+                "xml_attr": "layout",
+                "columns": [
+                    "layout"
+                ]
+            },
+            {
+                "xml_attr": "colophon",
+                "columns": [
+                    "colophon"
+                ]
+            },
+            {
+                "xml_attr": "collation",
+                "columns": [
+                    "collation",
+                    "catchwords",
+                    "signatures"
+                ]
+            },
+            {
+                "xml_attr": "scriptNote",
+                "columns": [
+                    "script"
+                ]
+            },
+            {
+                "xml_attr": "decoNote",
+                "columns": [
+                    "decoration"
+                ]
+            },
+            {
+                "xml_attr": "binding",
+                "columns": [
+                    "binding"
+                ]
+            },
+            {
+                "xml_attr": "dimensions",
+                "columns": [
+                    "page_dimensions",
+                    "bound_dimensions"
+                ]
+            },
+            {
+                "xml_attr": "notes",
+                "columns": [
+                    "note"
+                ]
+            },
+            {
+                "xml_attr": "related",
+                "columns": [
+                    "related_resource",
+                    "related_resource_url"
+                ]
+            },
+            {
+                "xml_attr": "subjects_keywords",
+                "columns": [
+                    "subject_keyword"
+                ]
+            },
+            {
+                "xml_attr": "subjects_names",
+                "columns": [
+                    "subject_names",
+                    "subject_names_uri"
+                ]
+            },
+            {
+                "xml_attr": "subjects_topical",
+                "columns": [
+                    "subject_topical",
+                    "subject_topical_uri"
+                ]
+            },
+            {
+                "xml_attr": "subjects_geographic",
+                "columns": [
+                    "subject_geographic",
+                    "subject_geographic_uri"
+                ]
+            },
+            {
+                "xml_attr": "subjects_genreform",
+                "columns": [
+                    "subject_genreform",
+                    "subject_genreform_uri"
+                ]
+            }
+        ]
+}
+]
 }

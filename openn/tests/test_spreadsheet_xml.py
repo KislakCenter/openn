@@ -18,6 +18,8 @@ class TestSpreadsheetXML(TestCase):
     sheets_dir               = os.path.join(this_dir, 'data/sheets')
     valid_workbook           = os.path.join(sheets_dir, 'valid_workbook.xlsx')
     unicode_workbook         = os.path.join(sheets_dir, 'unicode_workbook.xlsx')
+    bibliophilly_workbook    = os.path.join(this_dir,
+                                            'data/bibliophilly/FLPLewisE087/openn_metadata.xlsx')
 
     url1 = 'http://id.loc.gov/authorities/names/n50049445.html'
     url2 = 'http://id.loc.gov/authorities/subjects/sh99002320.html'
@@ -26,6 +28,7 @@ class TestSpreadsheetXML(TestCase):
     url5 = 'https://openpyxl.readthedocs.org/en/latest/api/openpyxl.worksheet.html?highlight=min_col#openpyxl.worksheet.worksheet.Worksheet.min_col'
 
     pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
+    biblio_philly_json      = os.path.join(this_dir, '../bibliophilly.json')
 
     xml_config = [
         {
@@ -71,6 +74,7 @@ class TestSpreadsheetXML(TestCase):
                     'xml_attr': 'identification',
                     'columns': [
                         'repository_city',
+                        'repository_country',
                         'repository_name',
                         'source_collection',
                         'call_numberid',
@@ -185,7 +189,6 @@ class TestSpreadsheetXML(TestCase):
         }
     ]
 
-
     def setUp(self):
         pass
 
@@ -209,4 +212,13 @@ class TestSpreadsheetXML(TestCase):
         config = self.get_config()
         workbook = OPWorkbook(self.unicode_workbook, config)
         sp_xml = SpreadsheetXML(settings.LICENSES)
+
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
+
+    def test_biblio_philly(self):
+        config = json.load(open(self.biblio_philly_json))
+        workbook = OPWorkbook(self.bibliophilly_workbook, config)
+        sp_xml = SpreadsheetXML(settings.LICENSES)
+
+        xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
+        print xml
