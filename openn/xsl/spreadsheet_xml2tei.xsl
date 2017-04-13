@@ -98,14 +98,16 @@
                                 <idno type="call-number">
                                     <xsl:value-of select="$call_number"/>
                                 </idno>
-                                <xsl:if test="//altId">
+                                <xsl:for-each select="//altId">
                                   <altIdentifier>
-                                    <xsl:attribute name="type" select="//altId/alternate_id_type"/>
+                                    <xsl:if test="./alternate_id_type">
+                                        <xsl:attribute name="type" select="./alternate_id_type"/>
+                                    </xsl:if>
                                     <idno>
-                                      <xsl:value-of select="//altId/alternate_id"/>
+                                      <xsl:value-of select="./alternate_id"/>
                                     </idno>
                                   </altIdentifier>
-                                </xsl:if>
+                                </xsl:for-each>
                             </msIdentifier>
                             <msContents>
                               <xsl:if test="//description">
@@ -429,10 +431,10 @@
         <xsl:param name="string"/>
         <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
     </xsl:template>
-  
+
     <xsl:template name="lang-names">
         <xsl:param name="langs" as="node()*"/>
-          <xsl:if test="count($langs) &gt; 0"> 
+          <xsl:if test="count($langs) &gt; 0">
             <xsl:text>Primary language: </xsl:text>
             <xsl:value-of select="normalize-space($langs[1]/language_name)"/>
             <xsl:choose>

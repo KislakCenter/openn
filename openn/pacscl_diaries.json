@@ -98,7 +98,7 @@
                 "alternate_id": {
                     "field_name": "Alternate ID",
                     "required": false,
-                    "repeating": false,
+                    "repeating": true,
                     "data_type": "string"
                 },
                 "alternate_id_type": {
@@ -115,7 +115,7 @@
                             "is": "EMPTY"
                         }
                     },
-                    "repeating": false,
+                    "repeating": true,
                     "data_type": "string"
                 },
                 "title": {
