@@ -132,7 +132,7 @@
                 },
                 "creator_name": {
                     "field_name": "Creator name",
-                    "required": true,
+                    "required": false,
                     "repeating": true,
                     "data_type": "string"
                 },
