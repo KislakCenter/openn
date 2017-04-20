@@ -18,12 +18,12 @@
 Welcome to OPenn!
 
 This website contains complete sets of high-resolution archival images
-of manuscripts from the collection of the University of Pennsylvania
-Libraries and other institutions, along with machine-readable TEI P5
-descriptions and technical metadata. All materials on this site are in
-the public domain or released under Creative Commons licenses as [Free
-Cultural Works](https://creativecommons.org/freeworks). Please see
-specific collections and documents for applicable license terms.
+of manuscripts from the University of Pennsylvania Libraries and other
+institutions, along with machine-readable TEI P5 descriptions and
+technical metadata. All materials on this site are in the public domain
+or released under Creative Commons licenses as [Free Cultural
+Works](https://creativecommons.org/freeworks). Please see specific
+collections and documents for applicable license terms.
 
 ## Licenses and use
 
@@ -52,7 +52,7 @@ citations.
 
 In order to determine the license under which images from each
 institutions have been released, please refer to that institution's
-collection web page on OPenn.
+repository web page on OPenn.
 
 Unless otherwise stated, all manuscript descriptions and other
 cataloging metadata are copyright by the holding institution and
@@ -76,8 +76,8 @@ folio or binding part of the manuscript.
 
 Here is a sample citation for an image:
 
-- University of Pennsylvania Libraries, Ms. Codex 1589, fol 14r, in
-  the Public Domain: http://creativecommons.org/publicdomain/mark/1.0/
+- University of Pennsylvania Libraries, Ms. Codex 1589, fol 14r, in the
+ Public Domain: http://creativecommons.org/publicdomain/mark/1.0/
 
 Here is a sample citation for a manuscript description:
 
@@ -86,15 +86,16 @@ Here is a sample citation for a manuscript description:
   used under a Creative Commons Attribution 4.0 license:
   http://creativecommons.org/licenses/by/4.0/
 
-Please consult each institution's website for authoritative
-information when citing images from its collection.
+Please consult each institution's website for authoritative information
+when citing images from its collection.
 
 ## Sponsorship
 
 Many of the manuscripts on OPenn were digitized through grants and
-awards from public and private donors.  See each collection's page for
-information about the sponsorship and support that made possible the
-wealth of materials available through OPenn.
+awards from public and private donors.  See each repository page or
+curated collection page for information about the sponsorship and
+support that made possible the wealth of materials available through
+OPenn.
 
 ## Intended audiences
 
@@ -103,7 +104,7 @@ scholars who have been directed here to procure high-resolution images
 of manuscript pages. It is presented in a manner most likely to ensure
 its long-term digital preservation. Many of the images here are
 available via more user-friendly page-turning applications on
-institutional websites.  See individual collection pages for details.
+institutional websites.  See individual repository pages for details.
 
 ## Let us know how we're doing
 
@@ -117,14 +118,15 @@ better, or if you need help using OPenn, please let us know at
 ### Documents
 
 The documents represented on this site represent the richness and
-breadth of their holding collections.  See each collection's page for
-more information on respective holdings.  The images of these
-documents are accompanied by detailed manuscript descriptions in
-machine-readable TEI format. Images and TEI manuscript descriptions
-are added frequently, so check often to see new additions.
+breadth of their holding repositories.  See each repository's page for
+more information on respective holdings.  The images of these documents
+are accompanied by detailed manuscript descriptions in machine-readable
+TEI format. Images and TEI manuscript descriptions are added frequently,
+so check often to see new additions.
 
-We will regularly be adding new collections in order to bring more
-OPenn data to the public.  Check back often to see what's new.
+We will regularly be adding new repositories and new documents in order
+to bring more OPenn data to the public.  Check back often to see what's
+new.
 
 ### Document images
 
@@ -174,6 +176,47 @@ historian, historian, and philologist.  A description of the
 manuscript cataloging, with technical and non-technical detail, is
 given in the Technical ReadMe document.
 
+### Repositories
+
+An OPenn repository is a group of documents belonging to a single
+institutional collection, all having the same metadata format. Each
+repository is assigned a numeric ID; for example, `0001` is assigned to
+the Lawrence J. Schoenberg Manuscripts, `0020` is assigned to The
+Walters Art Museum.
+
+The scope of the documents available from an institutional collection is
+determined by the institution. An institution may have a single
+repository for all its items or choose to have multiple repositories.
+For example, the University of Pennsylvania is represented by several
+repositories, including 'University of Pennsylvania Books &
+Manuscripts', 'Lawrence J. Schoenberg Manuscripts', and 'Penn Museum
+Archives'.
+
+Because a repository can only have one metadata format, in order to
+present multiple metadata formats, an institution must have at least one
+repository for each format. For example, Penn Libraries has TEI
+collections for 'Lawrence J. Schoenberg Manuscripts' and 'University of
+Pennsylvania Books & Manuscripts'. To have a repository with MODS
+metadata, Penn Libraries would need to create a new repository for that
+purpose.
+
+### Curated Collections
+
+An OPenn curated collection is a group of documents belonging to one or
+more repositories.  A curated collection allows for the grouping of
+items by topic, theme, or project. Items in a curated collection are not
+required to have the same metadata format. They do not have numeric
+identifiers like the reposotories, but are identified by names; for
+example, 'PACSCL Diaries', 'Bibliotheca Philadelphiensis'.
+
+Each curated collection page contains information about why the
+documents in the collection have been grouped together and any other
+pertinent information related to its curation. It lists the repositories
+from which the documents are drawn, and under each repository it lists
+the curated documents with links to the human-readable document page,
+the TEI manuscript description and a link to its location in the OPenn
+directory structure. 
+
 ## How to use this data set
 
 This data set contains complete digital surrogates for the manuscripts
@@ -184,13 +227,13 @@ structure access are described below.
 
 ### HTML access
 
-To ease human navigation of the site, a series of web pages is
-provided. The entry point is the [Collections.html](/Collections.html)
-file, which lists all of the collections currently on the site and
-provides links to collection-specific manuscript listings (files like
-[0001.html](/html/0001.html) for the L. J. Schoenberg manuscripts).
-The amount of detail for each manuscript varies, based on the
-manuscript's catalog record.
+To ease human navigation of the site, a series of web pages is provided.
+The entry point is the [Repositories.html](/Repositories.html) file,
+which lists all of the repositories currently on the site and provides
+links to repository-specific manuscript listings (files like
+[0001.html](/html/0001.html) for the L. J. Schoenberg manuscripts). The
+amount of detail for each manuscript varies, based on the manuscript's
+catalog record.
 
 A typical entry for a manuscript will look something like this:
 
@@ -209,7 +252,7 @@ A typical entry for a manuscript will look something like this:
 ### Alternate access methods and other technical stuff
 
 We also provide access via anonymous FTP and anonymous RSYNC.  For
-information on access data from OPenn using those methods and the
+information on accessing data from OPenn using those methods and the
 command-line tool `wget`, as well as detailed information on OPenn
 descriptive and structural metadata, please see the [technical readme
 document](/TechnicalReadMe.html).
