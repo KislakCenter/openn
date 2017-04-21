@@ -53,6 +53,7 @@ testRun() {
     output=`op-prep flp-bphil $source_dir`
     status=$?
     if [ "$status" != 0 ]; then echo "$output"; fi
+    # echo "$output"
     # find $TEST_STAGING_DIR
     # save_and_open "${TEST_STAGING_DIR}/FLPLewisE087/PARTIAL_TEI.xml" "Sublime Text"
 

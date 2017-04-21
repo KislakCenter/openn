@@ -1,11 +1,15 @@
 import json
 from copy import deepcopy
+import logging
 
 from openn.repository.repository_wrapper import RepositoryWrapper
 from openn.prep.prep_method import PrepMethod
 from openn.openn_exception import OPennException
 
 class PrepConfig:
+
+    logger = logging.getLogger(__name__)
+
     def __init__(self, prep_config_tag, repo_prep_dict, repo_dict, prep_dict,
                  prep_context):
         """
@@ -105,6 +109,14 @@ class PrepConfig:
 
     def source_dir_validations(self):
         return self._prep_method.package_validations()
+
+    def before_scripts(self):
+        if self._prep_method is None:
+            return []
+        if self._prep_method._config is None:
+            return []
+
+        return self._prep_method._config.get('before_scripts', [])
 
     def image_types(self):
         try:

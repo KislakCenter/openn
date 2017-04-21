@@ -10,9 +10,10 @@
             <xd:p><xd:b>Author:</xd:b> emeryr</xd:p>
         </xd:desc>
     </xd:doc>
-
+    <!-- TODO: metadata creator  -->
     <xsl:output indent="yes"/>
-
+    <xsl:param name="project_path" required="yes"/>
+    <xsl:variable name="bibliophilly-keywords-xml" select="concat($project_path,'/vendor/bibliophilly-keywords/bibliophilly-keywords.xml')"/>
     <xsl:variable name="repository">
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text"
@@ -41,7 +42,6 @@
       </xsl:if>
     </xsl:variable>
     <xsl:template match="/">
-
         <TEI xmlns="http://www.tei-c.org/ns/1.0">
             <teiHeader>
                 <fileDesc>
@@ -51,44 +51,68 @@
                                 select="normalize-space(concat('Description of ', $repository, ', ', $call_number, ': ', $ms_title))"
                             />
                         </title>
+                      <xsl:if test="//contrib_cataloger">
+                        <respStmt>
+                          <resp>contributor</resp>
+                          <persName><xsl:value-of select="//contrib_cataloger[1]/metadata_creator"/></persName>
+                        </respStmt>
+                      </xsl:if>
+                      <xsl:for-each select="//contrib_cataloger">
+                        <xsl:if test="position() &gt; 1">
+                          <respStmt>
+                            <resp>cataloger</resp>
+                            <persName><xsl:value-of select="./metadata_creator"/></persName>
+                          </respStmt>                          
+                        </xsl:if>
+                      </xsl:for-each>
                     </titleStmt>
                     <publicationStmt>
                         <publisher><xsl:value-of select="$repository"/></publisher>
+                      <!-- If licence info present; generate license stanza(s). -->
+                      <xsl:if test="//description/metadata_rights/legalcode_url | //description/metadata_rights/text | //description/image_rights/legalcode_url | //description/image_rights/text">
                         <availability>
-                            <licence>
-                                <xsl:attribute name="target">
-                                    <xsl:value-of select="//description/metadata_rights/legalcode_url"/>
-                                </xsl:attribute>
-                                <xsl:value-of select="//description/metadata_rights/text"/>
-                            </licence>
-                            <licence>
-                              <xsl:attribute name="target">
-                                <xsl:value-of select="//description/image_rights/legalcode_url"/>
-                              </xsl:attribute>
-                              <xsl:value-of select="//description/image_rights/text"/>
-                            </licence>
+                          <xsl:call-template name="license">
+                            <xsl:with-param name="license_url" select="//description/metadata_rights/legalcode_url"/>
+                            <xsl:with-param name="license_text" select="//description/metadata_rights/text"/>
+                          </xsl:call-template>
+                          <xsl:call-template name="license">
+                            <xsl:with-param name="license_url" select="//description/image_rights/legalcode_url"/>
+                            <xsl:with-param name="license_text" select="//description/image_rights/text"/>
+                          </xsl:call-template>
                          </availability>
+                      </xsl:if>
                     </publicationStmt>
-
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
                     <xsl:if test="//notes">
                       <notesStmt>
-                        <xsl:for-each select="//notes/node()">
+                        <xsl:for-each select="//notes/note/node()">
                           <note><xsl:value-of select="."/></note>
+                        </xsl:for-each>
+                        <xsl:for-each select="//related">
+                          <note>
+                            <xsl:if test="./related_resource_url">
+                              <xsl:attribute name="target" select="./related_resource_url"/>
+                            </xsl:if>
+                            <xsl:value-of select="./related_resource"/>
+                          </note>
                         </xsl:for-each>
                       </notesStmt>
                     </xsl:if>
                     <!-- END DOT MOD -->
-
                     <sourceDesc>
                         <msDesc>
                             <msIdentifier>
-                              <xsl:if test="//identification/institution">
-                                <institution>
-                                  <xsl:value-of select="//identification/institution"/>
-                                </institution>
+                              <xsl:if test="//identification/repository_country">
+                                  <country>
+                                    <xsl:value-of select="//identification/repository_country"/>
+                                  </country>
                               </xsl:if>
                               <settlement><xsl:value-of select="//identification/repository_city"/></settlement>
+                              <xsl:if test="//identification/repository_institution">
+                                <institution>
+                                  <xsl:value-of select="//identification/repository_institution"/>
+                                </institution>
+                              </xsl:if>
                                 <repository>
                                     <xsl:value-of select="$repository"/>
                                 </repository>
@@ -98,6 +122,13 @@
                                 <idno type="call-number">
                                     <xsl:value-of select="$call_number"/>
                                 </idno>
+                                <xsl:if test="//identification/record_url">
+                                  <altIdentifier type="resource">
+                                    <idno>
+                                    <xsl:value-of select="//identification/record_url"/>
+                                    </idno>
+                                  </altIdentifier>
+                                </xsl:if>
                                 <xsl:for-each select="//altId">
                                   <altIdentifier>
                                     <xsl:if test="./alternate_id_type">
@@ -143,15 +174,41 @@
                                         </xsl:call-template>
                                     </title>
                                   <xsl:if test="//creator">
-                                    <xsl:for-each select="//creator/creator_name">
+                                    <xsl:for-each select="//creator">
                                       <author>
-                                        <xsl:value-of select="."/>
+                                        <xsl:if test="./creator_uri">
+                                          <xsl:attribute name="ref">
+                                          <xsl:value-of select="./creator_uri"/>
+                                          </xsl:attribute>
+                                        </xsl:if>
+                                        <xsl:value-of select="./creator_name"/>
                                       </author>
                                     </xsl:for-each>
                                   </xsl:if>
-                                  <xsl:if test="//notes/colophon">
+                                  <xsl:for-each select="//translator">
+                                    <xsl:call-template name="build_resp">
+                                      <xsl:with-param name="resp">translator</xsl:with-param>
+                                      <xsl:with-param name="personName" select="./translator_name"/>
+                                      <xsl:with-param name="ref" select="./translator_uri"></xsl:with-param>
+                                    </xsl:call-template>
+                                  </xsl:for-each>
+                                  <xsl:for-each select="//artist">
+                                    <xsl:call-template name="build_resp">
+                                      <xsl:with-param name="resp">artist</xsl:with-param>
+                                      <xsl:with-param name="personName" select="./artist_name"/>
+                                      <xsl:with-param name="ref" select="./artist_uri"></xsl:with-param>
+                                    </xsl:call-template>
+                                  </xsl:for-each>
+                                  <xsl:for-each select="//former_owner">
+                                    <xsl:call-template name="build_resp">
+                                      <xsl:with-param name="resp">former owner</xsl:with-param>
+                                      <xsl:with-param name="personName" select="./former_owner_name"/>
+                                      <xsl:with-param name="ref" select="./former_owner_uri"></xsl:with-param>
+                                    </xsl:call-template>
+                                  </xsl:for-each>
+                                  <xsl:if test="//colophon/colophon">
                                     <colophon>
-                                      Colophon: <xsl:value-of select="."/>
+                                      <xsl:value-of select="//colophon/colophon"/>
                                     </colophon>
                                   </xsl:if>
                                 </msItem>
@@ -165,83 +222,85 @@
                               </xsl:for-each>
                             </msContents>
                           <physDesc>
-                              <xsl:if test="//material | //support | //watermark | //extent | //collation | //signatures | //page_dimensions | //bound_dimensions">
+                              <xsl:if test="//support | //supportDesc | //boundDim | //collation | //boundDim | //pageDim | //extent">
                                 <objectDesc>
                                   <supportDesc>
-                                    <xsl:if test="//support | //watermark">
+                                    <xsl:if test="//support/support_material">
+                                      <xsl:attribute name="material" select="//support/support_material"/>
+                                    </xsl:if>
+                                    <xsl:if test="//support">
                                       <support>
+                                        <xsl:if test="//support/support_material">
                                         <p>
-                                          <xsl:value-of select="//support"/>
+                                          <xsl:value-of select="//support/support_material"/>
                                         </p>
-                                        <xsl:for-each select="//watermark">
+                                        </xsl:if>
+                                        <xsl:for-each select="//support/watermarks">
                                           <watermark>
-                                            <xsl:value-of select="//watermark"/>
+                                            <xsl:value-of select="."/>
                                           </watermark>
                                         </xsl:for-each>
                                       </support>
                                     </xsl:if>
-                                    <xsl:if test="//page_info/page_count | //dimensions">
-                                      <xsl:variable name="page_count" select="//page_info/page_count"/>
-                                      <xsl:variable name="page_dimensions" select="//dimensions/page_dimensions"/>
-                                      <xsl:variable name="bound_dimensions" select="//dimensions/bound_dimensions"/>
-                                      <xsl:variable name="extent-values" as="element()*">
-                                        <xsl:if test="$page_count">
-                                          <x><xsl:value-of select="$page_count"/></x>
-                                        </xsl:if>
-                                        <xsl:if test="$page_dimensions">
-                                          <x><xsl:text>page dimensions: </xsl:text>
-                                          <xsl:value-of select="$page_dimensions"/></x>
-                                        </xsl:if>
-                                        <xsl:if test="$bound_dimensions">
-                                          <x><xsl:text>bound to: </xsl:text>
-                                          <xsl:value-of select="$bound_dimensions"/></x>
-                                        </xsl:if>
-                                      </xsl:variable>
+                                    <xsl:if test="//boundDim | //pageDim | //extent">
                                       <extent>
-                                        <xsl:call-template name="join-text">
-                                          <xsl:with-param name="items" select="$extent-values"/>
-                                          <xsl:with-param name="sep">
-                                            <xsl:text>; </xsl:text>
-                                          </xsl:with-param>
-                                        </xsl:call-template>
+                                        <xsl:if test="//extent/flyleaves_leaves">
+                                          <xsl:value-of select="//extent/flyleaves_leaves"/><xsl:text>; </xsl:text>
+                                        </xsl:if>
+                                        <xsl:for-each select=" //pageDim/page_dimensions">
+                                          <xsl:value-of select="."/><xsl:text> </xsl:text>
+                                        </xsl:for-each>
+                                        <xsl:if test="//boundDim/bound_dimensions">
+                                          <xsl:text>bound to </xsl:text><xsl:value-of select="//boundDim/bound_dimensions"/>
+                                        </xsl:if>
                                       </extent>
                                     </xsl:if>
-                                    <xsl:if test="//foliation">
+                                    <xsl:if test="//supportDesc/pagination_foliation">
                                       <foliation>
-                                        <xsl:value-of select="//foliation"></xsl:value-of>
+                                        <xsl:value-of select="//supportDesc/pagination_foliation"></xsl:value-of>
                                       </foliation>
                                     </xsl:if>
-                                    <xsl:if test="//collation | //signatures">
+                                    <xsl:if test="//collation/collation">
                                       <collation>
-                                        <xsl:for-each select="//collation">
-                                          <p>
-                                            <xsl:value-of select="."/>
-                                          </p>
-                                        </xsl:for-each>
-                                        <xsl:for-each select="//signatures">
-                                          <p>
-                                            <signatures>
-                                              <xsl:value-of select="."/>
-                                            </signatures>
-                                          </p>
-                                        </xsl:for-each>
+                                        <p>
+                                          <xsl:value-of select="//collation/collation"/>
+                                        </p>
+                                        <xsl:if test="//collation/signatures">
+                                        <p>
+                                          <signatures>
+                                            <xsl:value-of select="//collation/signatures"/>
+                                          </signatures>
+                                        </p>
+                                       </xsl:if>
+                                       <xsl:if test="//collation/catchwords">
+                                         <p>
+                                           <catchwords>
+                                           <xsl:value-of select="//collation/catchwords"/>
+                                           </catchwords>
+                                         </p>
+                                       </xsl:if>
                                       </collation>
                                     </xsl:if>
                                   </supportDesc>
+                                <xsl:if test="//layout/layout">
+                                  <layoutDesc>
+                                    <layout><xsl:value-of select="//layout/layout"/></layout>
+                                  </layoutDesc>
+                                </xsl:if>
                                 </objectDesc>
                               </xsl:if>
-                              <xsl:if test="//script">
+                              <xsl:if test="//scriptNote/script">
                                 <scriptDesc>
-                                  <scriptNote>
-                                    <xsl:value-of select="//script"/>
-                                  </scriptNote>
+                                  <xsl:for-each select="//scriptNote/script">
+                                  <scriptNote><xsl:value-of select="."/></scriptNote>
+                                  </xsl:for-each>
                                 </scriptDesc>
                               </xsl:if>
-                              <xsl:if test="//decoration | //tags/tag/name = 'ILL'">
+                            <xsl:if test="//decoNote/decoration | //tags/tag/name[text() = 'ILL']">
                               <decoDesc>
-                                <xsl:if test="//decoration">
+                                <xsl:if test="//decoNote/decoration">
                                   <decoNote>
-                                    <xsl:value-of select="//decoration"/>
+                                    <xsl:value-of select="//decoNote/decoration"/>
                                   </decoNote>
                                 </xsl:if>
                                 <xsl:for-each select="//tags/tag/name[text() = 'ILL']">
@@ -254,11 +313,11 @@
                                 </xsl:for-each>
                               </decoDesc>
                               </xsl:if>
-                              <xsl:if test="//binding">
+                              <xsl:if test="//binding/binding">
                                 <bindingDesc>
                                   <binding>
                                     <p>
-                                      <xsl:value-of select="//binding"/>
+                                      <xsl:value-of select="//binding/binding"/>
                                     </p>
                                   </binding>
                                 </bindingDesc>
@@ -268,9 +327,10 @@
                               <xsl:if test="//origin">
                                 <xsl:variable name="date_string" select="//origin/date_narrative"/>
                                 <xsl:variable name="date_when" select="//origin/date_single"/>
-                                <xsl:variable name="date_to" select="//origin/date_range_end"/>
-                                <xsl:variable name="date_from" select="//origin/date_range_start"/>
+                                <xsl:variable name="date_notAfter" select="//origin/date_range_end"/>
+                                <xsl:variable name="date_notBefore" select="//origin/date_range_start"/>
                                 <xsl:variable name="orig_place" select="//origin/place_of_origin"/>
+                                <xsl:variable name="orig_details" select="//origin/origin_details"/>
                                 <origin>
                                   <xsl:if test="//origin/origin">
                                     <p>
@@ -278,17 +338,15 @@
                                     </p>
                                   </xsl:if>
                                   <xsl:variable name="o" select="//origin"/>
-                                  <xsl:if test="$date_string or $date_when or $date_from or $date_to">
+                                  <xsl:if test="$date_string or $date_when or $date_notBefore or $date_notAfter">
                                     <origDate>
                                       <xsl:choose>
                                         <xsl:when test="$date_when">
                                           <xsl:attribute name="when" select="$date_when"/>
                                         </xsl:when>
-                                        <xsl:when test="$date_from">
-                                          <xsl:attribute name="from" select="$date_from"/>
-                                          <xsl:attribute name="to" select="$date_to"/>
-                                        </xsl:when>
-                                        <xsl:when test="$date_to">
+                                        <xsl:when test="$date_notBefore">
+                                          <xsl:attribute name="notBefore" select="$date_notBefore"/>
+                                          <xsl:attribute name="notAfter" select="$date_notAfter"/>
                                         </xsl:when>
                                       </xsl:choose>
                                       <xsl:choose>
@@ -298,11 +356,11 @@
                                         <xsl:when test="$date_when">
                                           <xsl:value-of select="$date_when"/>
                                         </xsl:when>
-                                        <xsl:when test="$date_from and $date_to">
-                                          <xsl:text>From </xsl:text>
-                                          <xsl:value-of select="$date_from"/>
-                                          <xsl:text> to </xsl:text>
-                                          <xsl:value-of select="$date_to"/>
+                                        <xsl:when test="$date_notBefore and $date_notAfter">
+                                          <xsl:text>Between </xsl:text>
+                                          <xsl:value-of select="$date_notBefore"/>
+                                          <xsl:text> and </xsl:text>
+                                          <xsl:value-of select="$date_notAfter"/>
                                         </xsl:when>
                                       </xsl:choose>
                                     </origDate>
@@ -314,25 +372,36 @@
                                     </origPlace>
                                     </xsl:for-each>
                                   </xsl:if>
+                                  <xsl:if test="$orig_details">
+                                    <p><xsl:value-of select="$orig_details"/></p>
+                                  </xsl:if>
                                 </origin>
                               </xsl:if>
-                                <!-- DOT ADDED PROVENANCE -->
-                                <xsl:for-each select="//marc:datafield[@tag='561']">
-                                    <provenance>
-                                        <xsl:value-of select="marc:subfield[@code='a']"/>
-                                    </provenance>
-                                </xsl:for-each>
-                                <!-- END DOT MOD -->
+                              <xsl:if test="//provenance/provenance_details">
+                                <provenance><xsl:value-of select="//provenance/provenance_details"/></provenance>
+                              </xsl:if>
                             </history>
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-
+<!--              <xsl:value-of select="$bibliophilly-keywords-xml"/>-->
+              <xsl:copy-of select="document($bibliophilly-keywords-xml)"/>
                 <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
               <profileDesc>
                 <textClass>
                   <!-- DE: Switching to marc 610 and joining subfields -->
-                  <xsl:if test="//subjects_topical">
+                  <xsl:if test="//subjects_keywords">
+                    <keywords n="keywords">
+                      <xsl:for-each select="//subjects_keywords">
+                        <term>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_keyword"/>
+                          </xsl:call-template>
+                        </term>
+                      </xsl:for-each>
+                    </keywords>
+                  </xsl:if>
+                  <xsl:if test="//subjects_topical | //subjects_names | //subjects_geographic">
                     <keywords n="subjects">
                       <xsl:for-each select="//subjects_topical">
                         <term>
@@ -343,6 +412,30 @@
                           </xsl:if>
                           <xsl:call-template name="chomp-period">
                             <xsl:with-param name="string" select="./subject_topical"/>
+                          </xsl:call-template>
+                        </term>
+                      </xsl:for-each>
+                      <xsl:for-each select="//subjects_geographic">
+                        <term>
+                          <xsl:if test="./subject_geographic_uri">
+                            <xsl:attribute name="target">
+                              <xsl:value-of select="./subject_geographic_uri"/>
+                            </xsl:attribute>
+                          </xsl:if>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_geographic"/>
+                          </xsl:call-template>
+                        </term>
+                      </xsl:for-each>
+                      <xsl:for-each select="//subjects_names">
+                        <term>
+                          <xsl:if test="./subject_names_uri">
+                            <xsl:attribute name="target">
+                              <xsl:value-of select="./subject_names_uri"/>
+                            </xsl:attribute>
+                          </xsl:if>
+                          <xsl:call-template name="chomp-period">
+                            <xsl:with-param name="string" select="./subject_names"/>
                           </xsl:call-template>
                         </term>
                       </xsl:for-each>
@@ -364,43 +457,9 @@
                       </xsl:for-each>
                     </keywords>
                   </xsl:if>
-                  <xsl:if test="//subjects_names">
-                    <keywords n="subjects/names">
-                      <xsl:for-each select="//subjects_names">
-                        <term>
-                          <xsl:if test="./subject_names_uri">
-                            <xsl:attribute name="target">
-                              <xsl:value-of select="./subject_names_uri"/>
-                            </xsl:attribute>
-                          </xsl:if>
-                          <xsl:call-template name="chomp-period">
-                            <xsl:with-param name="string" select="./subject_names"/>
-                          </xsl:call-template>
-                        </term>
-                      </xsl:for-each>
-                    </keywords>
-                  </xsl:if>
-                  <xsl:if test="//subjects_geographic">
-                    <keywords n="subjects/geographic">
-                      <xsl:for-each select="//subjects_geographic">
-                        <term>
-                          <xsl:if test="./subject_geographic_uri">
-                            <xsl:attribute name="target">
-                              <xsl:value-of select="./subject_geographic_uri"/>
-                            </xsl:attribute>
-                          </xsl:if>
-                          <xsl:call-template name="chomp-period">
-                            <xsl:with-param name="string" select="./subject_geographic"/>
-                          </xsl:call-template>
-                        </term>
-                      </xsl:for-each>
-                    </keywords>
-                  </xsl:if>
-
                 </textClass>
               </profileDesc>
               <!-- DOT MOD ENDS HERE -->
-
             </teiHeader>
             <facsimile>
                 <!--
@@ -421,17 +480,14 @@
             </facsimile>
         </TEI>
     </xsl:template>
-
     <xsl:template name="clean-up-text">
         <xsl:param name="some-text"/>
         <xsl:value-of select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))" />
     </xsl:template>
-
     <xsl:template name="chomp-period">
         <xsl:param name="string"/>
         <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
     </xsl:template>
-
     <xsl:template name="lang-names">
         <xsl:param name="langs" as="node()*"/>
           <xsl:if test="count($langs) &gt; 0">
@@ -457,7 +513,6 @@
             <xsl:text>.</xsl:text>
           </xsl:if>
     </xsl:template>
-
     <xsl:template name="join-keywords">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -471,7 +526,6 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-
     <xsl:template name="join-genre">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -485,7 +539,6 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-
   <xsl:template name="join-text">
     <xsl:param name="items"/>
     <xsl:param name="sep"/>
@@ -496,7 +549,6 @@
           </xsl:if>
         </xsl:for-each>
   </xsl:template>
-
   <!-- Extract personal names, employing the date if present. -->
     <xsl:template name="extract-pn">
         <xsl:param name="datafield"/>
@@ -511,7 +563,6 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-
     <xsl:template name="other-langs">
         <xsl:param name="tags"/>
         <xsl:for-each select="$tags">
@@ -522,5 +573,36 @@
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
+    </xsl:template>
+    <!-- Generate a license stanza if license_url or license_text are present. -->
+    <xsl:template name="license">
+      <xsl:param name="license_url"/>
+      <xsl:param name="license_text"/>
+      <xsl:if test="$license_url | $license_text">
+        <licence>
+          <xsl:if test="$license_url">
+            <xsl:attribute name="target" select="$license_url"/>
+          </xsl:if>
+          <xsl:if test="$license_text">
+            <xsl:value-of select="$license_text"/>
+          </xsl:if>
+        </licence>
+      </xsl:if>
+    </xsl:template>
+    <xsl:template name="build_resp">
+      <xsl:param name="resp"/>
+      <xsl:param name="personName"/>
+      <xsl:param name="ref"/>
+      <respStmt>
+        <resp><xsl:value-of select="$resp"/></resp>
+        <persName>
+          <xsl:if test="$ref">
+            <xsl:attribute name="ref">
+              <xsl:value-of select="$ref"/>
+            </xsl:attribute>
+          </xsl:if>
+          <xsl:value-of select="$personName"/>
+        </persName>
+      </respStmt>
     </xsl:template>
 </xsl:stylesheet>

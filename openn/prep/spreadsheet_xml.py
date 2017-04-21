@@ -70,7 +70,7 @@ class SpreadsheetXML(object):
 
         for page in page_list:
             tags = []
-            for i in xrange(1,5):
+            for i in xrange(1,100):
                 t = "tag" + str(i)
                 v = "value" + str(i)
                 if page.get(t, None) is not None:

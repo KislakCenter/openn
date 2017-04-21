@@ -281,6 +281,9 @@ PREPARATION_METHODS = [
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.xlsx'],
         },
+        'before_scripts': [
+            [os.path.join(PROJECT_PATH, 'scripts', 'get-bibliophilly-keywords.sh')]
+        ],
         'prep_class': {
             'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
             'params' : {
@@ -288,7 +291,7 @@ PREPARATION_METHODS = [
                     'dynamic': False,
                 },
                 'config_json': os.path.join(SITE_ROOT, 'bibliophilly.json'),
-                'xsl': os.path.join(SITE_ROOT, 'xsl/spreadsheet_xml2tei.xsl'),
+                'xsl': os.path.join(SITE_ROOT, 'xsl/bp_spreadsheet_xml2tei.xsl'),
             },
         },
     },

@@ -724,11 +724,15 @@ class ValidatableSheet(object):
     def _get_cell_value(self, cell):
         value = cell.value
         if value is None or unicode(value).strip() == '':
-            return None
+            value = None
         elif isinstance(value, basestring):
-            return self.fix_unicode(value)
-        else:
-            return value
+            value = self.fix_unicode(value)
+
+        # Ugh, Microsoft.
+        if isinstance(value, basestring) and value.startswith('=HYPERLINK'):
+            value = value.split('"')[1]
+
+        return value
 
     # TODO: Change extract column to stop after hitting blank cell
     # TODO: Have column comparisons check to see that columns are same len()
