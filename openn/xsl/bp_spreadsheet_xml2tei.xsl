@@ -62,7 +62,7 @@
                           <respStmt>
                             <resp>cataloger</resp>
                             <persName><xsl:value-of select="./metadata_creator"/></persName>
-                          </respStmt>                          
+                          </respStmt>
                         </xsl:if>
                       </xsl:for-each>
                     </titleStmt>
@@ -218,6 +218,15 @@
                                   <xsl:attribute name="n" select="$locus"/>
                                   <locus><xsl:value-of select="$locus"/></locus>
                                   <title><xsl:value-of select="parent::tag/value"/></title>
+                                  <xsl:if test="parent::tag/following::tag[1]/name/text() = 'INC'">
+                                    <incipit><xsl:value-of select="parent::tag/following::tag[1]/value"/></incipit>
+                                    <xsl:if test="parent::tag/following::tag[2]/name/text() = 'EXP'">
+                                      <explicit><xsl:value-of select="parent::tag/following::tag[2]/value"/></explicit>
+                                    </xsl:if>
+                                  </xsl:if>
+                                  <xsl:if test="parent::tag/following::tag[1]/name/text() = 'EXP'">
+                                    <explicit><xsl:value-of select="parent::tag/following::tag[1]/value"/></explicit>
+                                  </xsl:if>
                                 </msItem>
                               </xsl:for-each>
                             </msContents>
@@ -384,7 +393,6 @@
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-<!--              <xsl:value-of select="$bibliophilly-keywords-xml"/>-->
               <xsl:copy-of select="document($bibliophilly-keywords-xml)"/>
                 <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
               <profileDesc>
