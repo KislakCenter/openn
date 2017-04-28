@@ -221,4 +221,3 @@ class TestSpreadsheetXML(TestCase):
         sp_xml = SpreadsheetXML(settings.LICENSES)
 
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
-        print xml

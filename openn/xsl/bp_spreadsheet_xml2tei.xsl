@@ -10,7 +10,6 @@
             <xd:p><xd:b>Author:</xd:b> emeryr</xd:p>
         </xd:desc>
     </xd:doc>
-    <!-- TODO: metadata creator  -->
     <xsl:output indent="yes"/>
     <xsl:param name="project_path" required="yes"/>
     <xsl:variable name="bibliophilly-keywords-xml" select="concat($project_path,'/vendor/bibliophilly-keywords/bibliophilly-keywords.xml')"/>
@@ -164,7 +163,6 @@
                                       <xsl:call-template name="lang-names">
                                         <xsl:with-param name="langs" select="//description/language"/>
                                       </xsl:call-template>
-<!--                                      TODO Add language name-->
                                     </textLang>
                                 </xsl:if>
                                 <msItem>
@@ -470,20 +468,6 @@
               <!-- DOT MOD ENDS HERE -->
             </teiHeader>
             <facsimile>
-                <!--
-                    <xsl:for-each select="//xml[@name='pages']/page">
-                    <surface>
-                    <xsl:attribute name="n">
-                    <xsl:call-template name="clean-up-text">
-                    <xsl:with-param name="some-text">
-                    <xsl:value-of select="./@visiblepage"/>
-                    </xsl:with-param>
-                    </xsl:call-template>
-                    </xsl:attribute>
-                    <graphic url="{concat(./@image, '.tif')}"/>
-                    </surface>
-                    </xsl:for-each>
-                -->
                 <graphic url=""/>
             </facsimile>
         </TEI>
