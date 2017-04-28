@@ -54,20 +54,6 @@
                     </titleStmt>
                     <publicationStmt>
                         <publisher><xsl:value-of select="$repository"/></publisher>
-                        <availability>
-                            <licence>
-                                <xsl:attribute name="target">
-                                    <xsl:value-of select="//description/metadata_rights/legalcode_url"/>
-                                </xsl:attribute>
-                                <xsl:value-of select="//description/metadata_rights/text"/>
-                            </licence>
-                            <licence>
-                              <xsl:attribute name="target">
-                                <xsl:value-of select="//description/image_rights/legalcode_url"/>
-                              </xsl:attribute>
-                              <xsl:value-of select="//description/image_rights/text"/>
-                            </licence>
-                         </availability>
                     </publicationStmt>
 
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
@@ -133,7 +119,6 @@
                                       <xsl:call-template name="lang-names">
                                         <xsl:with-param name="langs" select="//description/language"/>
                                       </xsl:call-template>
-<!--                                      TODO Add language name-->
                                     </textLang>
                                 </xsl:if>
                                 <msItem>

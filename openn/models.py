@@ -172,12 +172,27 @@ class Document(models.Model):
         return ("Document: id={id:d}, call_number={call_number}" +
                 ", collection={collection}, base_dir={base_dir}" +
                 ", is_online={is_online}" +
+                ", image_licence={image_licence}" +
+                ", image_copyright_year={image_copyright_year}" +
+                ", image_rights_more_info={image_rights_more_info}" +
+                ", metadata_licence={metadata_licence}" +
+                ", metadata_copyright_holder={metadata_copyright_holder}" +
+                ", metadata_copyright_year={metadata_copyright_year}" +
+                ", metadata_rights_more_info={metadata_rights_more_info}" +
                 ", created={created}, updated={updated}").format(
                         id=self.id,
                         call_number=self.call_number,
                         collection=self.collection,
                         base_dir=self.base_dir,
                         is_online=self.is_online,
+                        image_licence=self.image_licence,
+                        image_copyright_holder=self.image_copyright_holder,
+                        image_copyright_year=self.image_copyright_year,
+                        image_rights_more_info=self.image_rights_more_info,
+                        metadata_licence=self.metadata_licence,
+                        metadata_copyright_holder=self.metadata_copyright_holder,
+                        metadata_copyright_year=self.metadata_copyright_year,
+                        metadata_rights_more_info=self.metadata_rights_more_info,
                         created=self.created,
                         updated=self.updated)
 
