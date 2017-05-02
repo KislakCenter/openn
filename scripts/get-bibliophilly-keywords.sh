@@ -11,6 +11,9 @@ if [ -d "$outdir" ]; then
   echo "[$cmd] Updating keywords"
   cd "$outdir"
   git pull --progress
+  if [[ $? -ne 0 ]]; then
+    echo "WARNING: Unable to update get repo; using cached copy"
+  fi
 else
   echo "[$cmd] Retrieving keywords"
   bibliophilly_repo="https://github.com/leoba/bibliophilly-keywords.git"

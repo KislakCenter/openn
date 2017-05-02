@@ -233,7 +233,7 @@
                                 <objectDesc>
                                   <supportDesc>
                                     <xsl:if test="//support/support_material">
-                                      <xsl:attribute name="material" select="//support/support_material"/>
+                                      <xsl:attribute name="material" select="lower-case(//support/support_material)"/>
                                     </xsl:if>
                                     <xsl:if test="//support">
                                       <support>
@@ -291,7 +291,9 @@
                                   </supportDesc>
                                 <xsl:if test="//layout/layout">
                                   <layoutDesc>
-                                    <layout><xsl:value-of select="//layout/layout"/></layout>
+                                    <xsl:for-each select="//layout/layout">
+                                      <layout><xsl:value-of select="."/></layout>
+                                    </xsl:for-each>
                                   </layoutDesc>
                                 </xsl:if>
                                 </objectDesc>
@@ -331,57 +333,38 @@
                               </xsl:if>
                             </physDesc>
                             <history>
-                              <xsl:if test="//origin">
-                                <xsl:variable name="date_string" select="//origin/date_narrative"/>
-                                <xsl:variable name="date_when" select="//origin/date_single"/>
-                                <xsl:variable name="date_notAfter" select="//origin/date_range_end"/>
-                                <xsl:variable name="date_notBefore" select="//origin/date_range_start"/>
-                                <xsl:variable name="orig_place" select="//origin/place_of_origin"/>
-                                <xsl:variable name="orig_details" select="//origin/origin_details"/>
+                              <xsl:if test="//originDate | //originPlace | //originDetails">
                                 <origin>
-                                  <xsl:if test="//origin/origin">
-                                    <p>
-                                      <xsl:value-of select="normalize-space(substring(.,8))"/>
-                                    </p>
-                                  </xsl:if>
-                                  <xsl:variable name="o" select="//origin"/>
-                                  <xsl:if test="$date_string or $date_when or $date_notBefore or $date_notAfter">
+                                  <xsl:for-each select="//originDate">
                                     <origDate>
                                       <xsl:choose>
-                                        <xsl:when test="$date_when">
-                                          <xsl:attribute name="when" select="$date_when"/>
+                                        <xsl:when test="./date_single">
+                                          <xsl:attribute name="when" select="./date_single"/>
                                         </xsl:when>
-                                        <xsl:when test="$date_notBefore">
-                                          <xsl:attribute name="notBefore" select="$date_notBefore"/>
-                                          <xsl:attribute name="notAfter" select="$date_notAfter"/>
-                                        </xsl:when>
-                                      </xsl:choose>
-                                      <xsl:choose>
-                                        <xsl:when test="$date_string">
-                                          <xsl:value-of select="$date_string"/>
-                                        </xsl:when>
-                                        <xsl:when test="$date_when">
-                                          <xsl:value-of select="$date_when"/>
-                                        </xsl:when>
-                                        <xsl:when test="$date_notBefore and $date_notAfter">
-                                          <xsl:text>Between </xsl:text>
-                                          <xsl:value-of select="$date_notBefore"/>
-                                          <xsl:text> and </xsl:text>
-                                          <xsl:value-of select="$date_notAfter"/>
-                                        </xsl:when>
+                                        <xsl:otherwise>
+                                        <xsl:if test="./date_range_start">
+                                          <xsl:attribute name="notBefore" select="./date_range_start"/>
+                                        </xsl:if>
+                                        <xsl:if test="./date_range_end">
+                                          <xsl:attribute name="notAfter" select="./date_range_end"/>
+                                        </xsl:if>
+                                        </xsl:otherwise>
                                       </xsl:choose>
                                     </origDate>
+                                  </xsl:for-each>
+                                  <xsl:if test="//originDetails/origin_details | //originDate">
+                                    <p>
+                                      <xsl:call-template name="build-origin-details">
+                                        <xsl:with-param name="originDetails" select="//originDetails/origin_details"/>
+                                        <xsl:with-param name="originDates" select="//originDate" as="node()*"></xsl:with-param>
+                                      </xsl:call-template>
+                                    </p>
                                   </xsl:if>
-                                  <xsl:if test="$orig_place">
-                                    <xsl:for-each select="//place_of_origin">
-                                    <origPlace>
-                                      <xsl:value-of select="."/>
-                                    </origPlace>
-                                    </xsl:for-each>
-                                  </xsl:if>
-                                  <xsl:if test="$orig_details">
-                                    <p><xsl:value-of select="$orig_details"/></p>
-                                  </xsl:if>
+                                  <xsl:for-each select="//place_of_origin">
+                                   <origPlace>
+                                     <xsl:value-of select="."/>
+                                   </origPlace>
+                                  </xsl:for-each>
                                 </origin>
                               </xsl:if>
                               <xsl:if test="//provenance/provenance_details">
@@ -597,4 +580,73 @@
         </persName>
       </respStmt>
     </xsl:template>
+  
+  <xsl:template name="build-origin-details">
+    <xsl:param name="originDates"/>
+    <xsl:param name="originDetails"/>     
+    <xsl:variable name="date-strings" as="xs:string*">
+      <xsl:for-each select="$originDates/.">
+        <xsl:variable name="date-part">
+        <xsl:call-template name="build-date-string-part">
+            <xsl:with-param name="originDate" select="."/>
+          </xsl:call-template>
+        </xsl:variable>
+        <xsl:choose>
+        <xsl:when test="position() &gt; 1">
+          <xsl:call-template name="downcase-first-letter">
+            <xsl:with-param name="the_string" select="$date-part"/>
+          </xsl:call-template>
+        </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="normalize-space($date-part)"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$originDetails">
+        <xsl:call-template name="chomp-period">
+          <xsl:with-param name="string" select="normalize-space($originDetails)"></xsl:with-param>
+        </xsl:call-template>
+        <xsl:if test="count($date-strings) &gt; 0">
+          <xsl:text>; </xsl:text>
+          <xsl:call-template name="downcase-first-letter">
+            <xsl:with-param name="the_string" select="string-join($date-strings, '; ')"/>
+          </xsl:call-template>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="string-join($date-strings, '; ')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="build-date-string-part">
+    <xsl:param name="originDate"/>
+    <xsl:choose>
+      <xsl:when test="./date_narrative">
+        <xsl:value-of select="./date_narrative"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="./date_single">
+            <xsl:value-of select="./date_single"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>Between </xsl:text>
+            <xsl:value-of select="./date_range_start"/>
+            <xsl:text> and </xsl:text>
+            <xsl:value-of select="./date_range_end"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>    
+  </xsl:template>
+
+  <xsl:template name="downcase-first-letter">
+    <xsl:param name="the_string"/>
+    <xsl:variable name="normal-string" select="normalize-space($the_string)"/>
+    <xsl:value-of select="concat(lower-case(substring($normal-string, 1, 1)), substring($normal-string, 2))"></xsl:value-of>
+  </xsl:template>
+  
 </xsl:stylesheet>

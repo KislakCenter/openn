@@ -216,7 +216,7 @@
                             "is": "NONEMPTY"
                         }
                     },
-                    "repeating": false,
+                    "repeating": true,
                     "data_type": "year"
                 },
                 "date_range_start": {
@@ -233,7 +233,7 @@
                             "is": "NONEMPTY"
                         }
                     },
-                    "repeating": false,
+                    "repeating": true,
                     "data_type": "year"
                 },
                 "date_range_end": {
@@ -250,7 +250,7 @@
                             "is": "EMPTY"
                         }
                     },
-                    "repeating": false,
+                    "repeating": true,
                     "data_type": "year"
                 },
                 "date_narrative": {
@@ -267,7 +267,7 @@
                 },
                 "origin_details": {
                     "field_name": "Origin details",
-                    "required": true,
+                    "required": false,
                     "repeating": false,
                     "data_type": "string"
                 },
@@ -306,7 +306,7 @@
           "layout": {
               "field_name": "Layout",
               "required": false,
-              "repeating": false,
+              "repeating": true,
               "data_type": "string"
           },
           "colophon": {
@@ -1105,13 +1105,23 @@
                     "provenance_details"
                 ]
             },                {
-                "xml_attr": "origin",
+                "xml_attr": "originDate",
                 "columns": [
                     "date_single",
                     "date_range_start",
                     "date_range_end",
-                    "date_narrative",
-                    "place_of_origin",
+                    "date_narrative"
+                ]
+            },
+            {
+                "xml_attr": "originPlace",
+                "columns": [
+                    "place_of_origin"
+                ]
+            },
+            {
+                "xml_attr": "originDetails",
+                "columns": [
                     "origin_details"
                 ]
             },
