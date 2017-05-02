@@ -287,6 +287,48 @@ class ValidatableSheet(object):
         """
         return self.config.get('heading_type', 'column')
 
+    @property
+    def max_repeat(self):
+
+        """
+
+        Max repeat `max_repeat` is an optional parameter that helps the
+        worksheet calculate a maximum number of rows or columns to check when
+        inspecting a field. If `None`, the spreadsheet `max_column` or
+        `max_row` value is used.
+
+        If "fixed", an integer should be provided:
+
+                    "sheet_config": {
+                        "description": {
+                            "sheet_name": "Description",
+                            "data_offset": 2,
+                            "heading_type": "row",
+                            "max_repeat": {
+                                "fixed": 50
+                            },
+                            "fields": { ...
+
+        In the above case, exraction will not check more than 50 columns.
+
+        If "fields", a list of fields should be provided.
+
+                "pages": {
+                    "sheet_name": "Pages",
+                    "data_offset": 1,
+                    "heading_type": "column",
+                    "max_repeat": {
+                        "fields": [ "file_name", "display_page" ]
+                    },
+                    "fields": { ....
+
+        In the above case, the `max_repeat` number will be the maximum of the
+        last non-blank row for `file_name` and `display_page`.
+
+        """
+
+        return self.config.get('max_repeat', None)
+
     # --------------------------------------------------------------------
     # Validation
     # --------------------------------------------------------------------
@@ -745,7 +787,7 @@ class ValidatableSheet(object):
         data_row = locus['row'] + self.data_offset
 
         vals     = []
-        for row in xrange(data_row, self.sheet.max_row + 1):
+        for row in xrange(data_row, self._max_repeat() + 1):
             cell = self.sheet.cell(column=col,row=row)
             val  = self._get_cell_value(cell)
             vals.append(val)
@@ -762,7 +804,7 @@ class ValidatableSheet(object):
 
 
         vals = []
-        for col in xrange(data_col, self.sheet.max_column + 1):
+        for col in xrange(data_col, self._max_repeat() + 1):
             cell = self.sheet.cell(column=col,row=row)
             val  = self._get_cell_value(cell)
             vals.append(val)
@@ -814,3 +856,53 @@ class ValidatableSheet(object):
             if size > 1:
                 dups.append((val,size))
         return dups
+
+    def _max_repeat(self):
+        repeat_config = self.max_repeat
+
+        if repeat_config is None:
+            if self.heading_type.lower() == 'row':
+                return self.sheet.max_column
+            else:
+                return self.sheet.max_row
+
+        if repeat_config.get('fixed', None) is not None:
+            return repeat_config.get('fixed')
+
+        if repeat_config.get('fields', None) is not None:
+            vals = []
+            for attr in repeat_config.get('fields'):
+                vals.append(self._find_max_nonblank_index(attr))
+
+            return sorted(vals, reverse=True)[0]
+
+    def _find_max_nonblank_index(self, attr):
+        max_field = 0
+        details = self.fields[attr]
+
+        lastval = ''
+        locus = self.locus(attr)
+        if self.heading_type.lower() == 'row':
+            row = locus['row']
+            data_col = locus['col'] + self.data_offset
+            for col in xrange(data_col, self.sheet.max_column + 1):
+                cell = self.sheet.cell(column=col, row=row)
+                val = self._get_cell_value(cell)
+                if val is None or unicode(val).strip() == '':
+                    pass
+                else:
+                    max_field = col
+                    lastval = val
+        else:
+            col = locus['col']
+            data_row = locus['row'] + self.data_offset
+            for row in xrange(data_row, self.sheet.max_row + 1):
+                cell = self.sheet.cell(column=col, row=row)
+                val = self._get_cell_value(cell)
+                if val is None or unicode(val).strip() == '':
+                    pass
+                else:
+                    max_field = row
+                    lastval = val
+
+        return max_field

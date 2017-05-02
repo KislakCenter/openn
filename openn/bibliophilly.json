@@ -4,6 +4,9 @@
             "sheet_name": "Description",
             "data_offset": 2,
             "heading_type": "row",
+            "max_repeat": {
+                "fixed": 50
+            },
             "fields": {
                 "administrative_contact": {
                     "field_name": "Administrative Contact",
@@ -465,30 +468,15 @@
     "sheet_name": "Pages",
     "data_offset": 1,
     "heading_type": "column",
+     "max_repeat": {
+        "fields": [ "file_name", "display_page" ]
+    },
     "fields": {
         "object_id": {
             "field_name": "OBJECT_ID",
             "required": false,
             "repeating": true,
             "data_type": "string"
-        },
-        "serial_num": {
-            "field_name": "SERIAL_NUM",
-            "repeating": true,
-            "unique": true,
-            "data_type": "integer",
-            "required": {
-                "if": {
-                    "field": "file_name",
-                    "is": "NONEMPTY"
-                }
-            },
-            "blank": {
-                "if": {
-                    "field": "file_name",
-                    "is": "EMPTY"
-                }
-            }
         },
         "display_page": {
             "field_name": "DISPLAY PAGE",
@@ -979,7 +967,6 @@
                 "columns": [
                     "file_name",
                     "display_page",
-                    "serial_num",
                     "tag1",
                     "value1",
                     "tag2",

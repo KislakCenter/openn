@@ -4,7 +4,10 @@
             "fields": {},
             "heading_type": "row",
             "data_offset": 2,
-            "sheet_name": "Description"
+            "sheet_name": "Description",
+            "max_repeat": {
+                "fixed": 50
+            }
         },
         "pages": {
             "fields": {
