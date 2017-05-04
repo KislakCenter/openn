@@ -4,9 +4,11 @@
             "sheet_name": "Description",
             "data_offset": 2,
             "heading_type": "row",
-            "max_repeat": {
+            "repeat_limit": {
                 "fixed": 50
             },
+            "max_column": 200,
+            "max_row": 500,
             "fields": {
                 "administrative_contact": {
                     "field_name": "Administrative Contact",
@@ -400,9 +402,11 @@
             "sheet_name": "Pages",
             "data_offset": 1,
             "heading_type": "column",
-            "max_repeat": {
+            "repeat_limit": {
                 "fields": [ "file_name", "display_page" ]
             },
+            "max_column": 200,
+            "max_row": 10000,
             "fields": {
                 "object_id": {
                     "field_name": "OBJECT_ID",

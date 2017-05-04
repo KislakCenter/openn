@@ -5,7 +5,7 @@
             "heading_type": "row",
             "data_offset": 2,
             "sheet_name": "Description",
-            "max_repeat": {
+            "repeat_limit": {
                 "fixed": 50
             }
         },

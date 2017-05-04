@@ -4,9 +4,11 @@
             "sheet_name": "Description",
             "data_offset": 2,
             "heading_type": "row",
-            "max_repeat": {
+            "repeat_limit": {
                 "fixed": 50
             },
+            "max_column": 200,
+            "max_row": 500,
             "fields": {
                 "administrative_contact": {
                     "field_name": "Administrative Contact",
@@ -290,26 +292,26 @@
                 },
                 "subject_geographic": {
                     "field_name": "Subject: geographic",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "string"
                 },
                 "subject_geographic_uri": {
                     "field_name": "Subject: geographic URI [?]",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "uri"
                 },
                 "subject_genreform": {
                     "field_name": "Subject: genre/form",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "string"
                 },
                 "subject_genreform_uri": {
                     "field_name": "Subject: genre/form URI [?]",
-                    "required": true,
-                    "repeating": false,
+                    "required": false,
+                    "repeating": true,
                     "data_type": "uri"
                 },
                 "image_rights": {
@@ -400,9 +402,11 @@
             "sheet_name": "Pages",
             "data_offset": 1,
             "heading_type": "column",
-            "max_repeat": {
+            "repeat_limit": {
                 "fields": [ "file_name", "display_page" ]
             },
+            "max_column": 200,
+            "max_row": 500,
             "fields": {
                 "object_id": {
                     "field_name": "OBJECT_ID",
@@ -470,7 +474,7 @@
                     "required": false,
                     "repeating": true,
                     "data_type": "string",
-                    "value_list": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL", "BLANK" ],
+                    "Value_list": [ "TOC1", "TOC2", "TOC3", "TOC4", "ILL", "BLANK" ],
                     "blank": {
                         "if": {
                             "field": "file_name",
@@ -587,8 +591,7 @@
                 "full_title": [
                     "repository_name",
                     "full_call_number",
-                    "title",
-                    "volume_number"
+                    "title"
                 ]
             },
             "field_groups": [
@@ -688,7 +691,7 @@
                     ]
                 },
                 {
-                    "xml_attr": "subjects",
+                    "xml_attr": "subjects_names",
                     "columns": [
                         "subject_names",
                         "subject_names_uri"

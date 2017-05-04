@@ -4,6 +4,7 @@
 import os
 import re
 import itertools
+import logging
 from copy import deepcopy
 
 from openn.prep import langs
@@ -13,8 +14,13 @@ from openn.openn_functions import *
 
 class ValidatableSheet(object):
 
+    logger = logging.getLogger(__name__)
+
     MIN_YEAR = -5000
     MAX_YEAR = 3000
+
+    HEADER_COLUMN_MAX = 300
+    HEADER_ROW_MAX = 300
 
     # No-break space
     NO_BREAK_SPACE = '\u00A0'
@@ -194,6 +200,8 @@ class ValidatableSheet(object):
         self.file_errors   = []
         self.errors        = []
         self.warnings      = []
+        self._heading_column = None
+        self._heading_row = None
         self._set_headings()
 
     # --------------------------------------------------------------------
@@ -285,14 +293,14 @@ class ValidatableSheet(object):
 
 
         """
-        return self.config.get('heading_type', 'column')
+        return self.config.get('heading_type', 'column').lower()
 
     @property
-    def max_repeat(self):
+    def repeat_limit(self):
 
         """
 
-        Max repeat `max_repeat` is an optional parameter that helps the
+        Max repeat `repeat_limit` is an optional parameter that helps the
         worksheet calculate a maximum number of rows or columns to check when
         inspecting a field. If `None`, the spreadsheet `max_column` or
         `max_row` value is used.
@@ -304,7 +312,7 @@ class ValidatableSheet(object):
                             "sheet_name": "Description",
                             "data_offset": 2,
                             "heading_type": "row",
-                            "max_repeat": {
+                            "repeat_limit": {
                                 "fixed": 50
                             },
                             "fields": { ...
@@ -317,17 +325,88 @@ class ValidatableSheet(object):
                     "sheet_name": "Pages",
                     "data_offset": 1,
                     "heading_type": "column",
-                    "max_repeat": {
+                    "repeat_limit": {
                         "fields": [ "file_name", "display_page" ]
                     },
                     "fields": { ....
 
-        In the above case, the `max_repeat` number will be the maximum of the
+        In the above case, the `repeat_limit` number will be the maximum of the
         last non-blank row for `file_name` and `display_page`.
 
         """
 
-        return self.config.get('max_repeat', None)
+        return self.config.get('repeat_limit', None)
+
+    @property
+    def max_column(self):
+        """
+        Return the maximum as configured for the spreadsheet or the
+        spreadsheet's actual last column whichver is lower.
+
+        Example:
+
+                "pages": {
+                    "sheet_name": "Pages",
+                    "data_offset": 1,
+                    "heading_type": "column",
+                    "repeat_limit": {
+                        "fields": [ "file_name", "display_page" ]
+                    },
+                    "max_column": 200,
+                    "max_row": 10000,
+                    ...
+
+        The max_column configuration value is not intended to limit the number
+        of items that may be in a spreadsheet, but to prevent a situation
+        which can happen with some spreadsheets where the last row or column
+        goes to the spreadsheet's limit; e.g., row 1,048,576 or column 16,384,
+        thus bogging down computation. Therefore, the max_column value should
+        be well more than any possible number of values, while being below the
+        spreadsheet limit.
+
+        """
+
+        vals = [self.sheet.max_column]
+
+        if self.config.get('max_column', None) is not None:
+            vals.append(self.config.get('max_column'))
+
+        return min(vals)
+
+    @property
+    def max_row(self):
+        """
+        Return the maximum as configured for the spreadsheet or the
+        spreadsheet's actual last row whichver is lower.
+
+         Example:
+
+                "pages": {
+                    "sheet_name": "Pages",
+                    "data_offset": 1,
+                    "heading_type": "column",
+                    "repeat_limit": {
+                        "fields": [ "file_name", "display_page" ]
+                    },
+                    "max_column": 200,
+                    "max_row": 10000,
+                    ...
+
+        The max_row configuration value is not intended to limit the number of
+        items that may be in a spreadsheet, but to prevent a situation which
+        can happen with some spreadsheets where the last row or column goes to
+        the spreadsheet's limit; e.g., row 1,048,576 or column 16,384, thus
+        bogging down computation. Therefore, the max_row value should be well
+        more than any possible number of values, while being below the
+        spreadsheet limit.
+
+        """
+        vals = [self.sheet.max_row]
+
+        if self.config.get('max_row', None) is not None:
+            vals.append(self.config.get('max_row'))
+
+        return min(vals)
 
     # --------------------------------------------------------------------
     # Validation
@@ -740,14 +819,33 @@ class ValidatableSheet(object):
         the remaining characters to lower case.
 
         """
-        locus = []
-        for row in xrange(1, self.sheet.max_row+1):
-            for col in xrange(1, self.sheet.max_column + 1):
-                cell = self.sheet.cell(column=col, row=row)
-                value = cell.value if cell is not None else ''
-                if self.normalize(value) == self.normalize(field_name):
+        if self._heading_column is not None:
+            for row in xrange(1, self.HEADER_ROW_MAX + 1):
+                if self._is_header_cell(col=self._heading_column, row=row, field_name=field_name):
+                    return {'col': self._heading_column, 'row': row }
+        elif self._heading_row is not None:
+            for col in xrange(1, self.HEADER_COLUMN_MAX + 1):
+                if self._is_header_cell(col=col, row=self._heading_row, field_name=field_name):
+                    return {'col': col, 'row': self._heading_row}
+        else:
+            return self._brute_force_find_field(field_name)
+
+    def _brute_force_find_field(self, field_name):
+        for row in xrange(1, self.HEADER_ROW_MAX + 1):
+            for col in xrange(1, self.HEADER_COLUMN_MAX + 1):
+                if self._is_header_cell(col, row, field_name):
+                    if self.heading_type == 'row':
+                        self._heading_column = col
+                    else:
+                        self._heading_row = row
+
                     return {'col': col,'row': row }
 
+
+    def _is_header_cell(self, col, row, field_name):
+        cell = self.sheet.cell(column=col, row=row)
+        value = cell.value if cell is not None else ''
+        return self.normalize(value) == self.normalize(field_name)
 
     def _extract_virtual_values(self, details):
         cls = get_class(details.get('class'))
@@ -787,7 +885,7 @@ class ValidatableSheet(object):
         data_row = locus['row'] + self.data_offset
 
         vals     = []
-        for row in xrange(data_row, self._max_repeat() + 1):
+        for row in xrange(data_row, self._repeat_limit() + 1):
             cell = self.sheet.cell(column=col,row=row)
             val  = self._get_cell_value(cell)
             vals.append(val)
@@ -804,7 +902,7 @@ class ValidatableSheet(object):
 
 
         vals = []
-        for col in xrange(data_col, self._max_repeat() + 1):
+        for col in xrange(data_col, self._repeat_limit() + 1):
             cell = self.sheet.cell(column=col,row=row)
             val  = self._get_cell_value(cell)
             vals.append(val)
@@ -857,14 +955,14 @@ class ValidatableSheet(object):
                 dups.append((val,size))
         return dups
 
-    def _max_repeat(self):
-        repeat_config = self.max_repeat
+    def _repeat_limit(self):
+        repeat_config = self.repeat_limit
 
         if repeat_config is None:
             if self.heading_type.lower() == 'row':
-                return self.sheet.max_column
+                return self.max_column
             else:
-                return self.sheet.max_row
+                return self.max_row
 
         if repeat_config.get('fixed', None) is not None:
             return repeat_config.get('fixed')
@@ -874,18 +972,17 @@ class ValidatableSheet(object):
             for attr in repeat_config.get('fields'):
                 vals.append(self._find_max_nonblank_index(attr))
 
-            return sorted(vals, reverse=True)[0]
+            return max(vals)
 
     def _find_max_nonblank_index(self, attr):
         max_field = 0
-        details = self.fields[attr]
 
         lastval = ''
         locus = self.locus(attr)
         if self.heading_type.lower() == 'row':
             row = locus['row']
             data_col = locus['col'] + self.data_offset
-            for col in xrange(data_col, self.sheet.max_column + 1):
+            for col in xrange(data_col, self.max_column + 1):
                 cell = self.sheet.cell(column=col, row=row)
                 val = self._get_cell_value(cell)
                 if val is None or unicode(val).strip() == '':
@@ -896,7 +993,7 @@ class ValidatableSheet(object):
         else:
             col = locus['col']
             data_row = locus['row'] + self.data_offset
-            for row in xrange(data_row, self.sheet.max_row + 1):
+            for row in xrange(data_row, self.max_row + 1):
                 cell = self.sheet.cell(column=col, row=row)
                 val = self._get_cell_value(cell)
                 if val is None or unicode(val).strip() == '':
@@ -904,5 +1001,7 @@ class ValidatableSheet(object):
                 else:
                     max_field = row
                     lastval = val
+
+        self.logger.info("Found last value '%s' for attr '%s' (row/col %d)", lastval, attr, max_field)
 
         return max_field
