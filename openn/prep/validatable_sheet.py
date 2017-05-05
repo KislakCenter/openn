@@ -202,6 +202,7 @@ class ValidatableSheet(object):
         self.warnings      = []
         self._heading_column = None
         self._heading_row = None
+        self.__repeat_limit = None
         self._set_headings()
 
     # --------------------------------------------------------------------
@@ -956,23 +957,26 @@ class ValidatableSheet(object):
         return dups
 
     def _repeat_limit(self):
-        repeat_config = self.repeat_limit
+        if self.__repeat_limit is None:
+            repeat_config = self.repeat_limit
 
-        if repeat_config is None:
-            if self.heading_type.lower() == 'row':
-                return self.max_column
-            else:
-                return self.max_row
+            if repeat_config is None:
+                if self.heading_type.lower() == 'row':
+                    return self.max_column
+                else:
+                    return self.max_row
 
-        if repeat_config.get('fixed', None) is not None:
-            return repeat_config.get('fixed')
+            if repeat_config.get('fixed', None) is not None:
+                return repeat_config.get('fixed')
 
-        if repeat_config.get('fields', None) is not None:
-            vals = []
-            for attr in repeat_config.get('fields'):
-                vals.append(self._find_max_nonblank_index(attr))
+            if repeat_config.get('fields', None) is not None:
+                vals = []
+                for attr in repeat_config.get('fields'):
+                    vals.append(self._find_max_nonblank_index(attr))
 
-            return max(vals)
+                self.__repeat_limit = max(vals)
+
+        return self.__repeat_limit
 
     def _find_max_nonblank_index(self, attr):
         max_field = 0
