@@ -380,6 +380,25 @@ movement.""",
             'include_file': 'FriendsHistoricalLibrary.html',
         },
         {
+            'tag': 'flp',
+            'name': 'Free Library of Philadelphia, Special Collections',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """With more than 6 million visits to its 54 locations and 9 million online
+visits annually, the Free Library is one of Philadelphia’s most widely
+used educational and cultural institutions. The Free Library's Special
+Collections feature music, maps, drawings, photographs, fine art prints,
+and one of the largest rare book collections in an American public
+library. The Rare Book Department houses thousands of illuminated
+pre-modern manuscripts and cuttings; first editions and manuscripts of
+important American and British writers, including some of the largest
+collections of Charles Dickens and Edgar Allan Poe; early American
+children’s books and original artworks by children’s illustrators;
+hundreds of incunables; and books, manuscripts, and maps relating to the
+discovery, exploration, and settlement of the Americas. """,
+            'include_file': 'FreeLibraryOfPhiladelphia.html',
+        },
+        {
             'tag': 'hsp',
             'name': 'Historical Society of Pennsylvania',
             'metadata_type': 'TEI',
