@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+import shutil
+import tempfile
+import subprocess
 import logging
 from pprint import PrettyPrinter
+from sys import platform
+
 
 from openn.models import Document
 from openn.curated.membership_manager import MembershipManager
@@ -19,6 +24,19 @@ def touch(filename, times=None):
 def pp(thing):
     pprinter = PrettyPrinter(indent=2)
     pprinter.pprint(thing)
+
+def save_and_open(file):
+    """ Copy file to a temp location and open it using the Mac os """
+    ext = os.path.splitext(file)
+    with tempfile.NamedTemporaryFile(suffix=ext) as tmp:
+        shutil.copy(file, tmp)
+        if platform == "linux" or platform == "linux2":
+            print "==== Copied %s to %s ===" % (file, tmp.name)
+            subprocess.call(["cat", tmp.name])
+        elif platform == "darwin":
+            os.system("open " + tmp.name)
+        elif platform == "win32":
+            os.system("start " + tmp.name)
 
 def add_to_curated(curated_tag, base_dir='mscodex1223'):
     doc = Document.objects.get(base_dir=base_dir)

@@ -316,24 +316,20 @@ class PackageDir:
         exman.serialize_xmp(files)
         exman.stop()
 
-    def add_image_metadata(self,doc,image_rights,licence_config):
+    def add_image_metadata(self, doc, license_factory):
         """Add metadata to all images; parameters: ``doc`` -- the document
-        object, ``image_rights`` -- from settings, repository's
-        ``images_rights`` dict.
+        object, ``license_factory`` LicenseFactory instance
 
         """
-        # TODO: Need to have information to handle dynamic rights MD:
-        # licence configs (including single image licence text); the
-        # appropriate 'single_image' licence type (PD, CC-BY,
-        # CC-BY-SA, or CC0) for this doc.
         images = []
         files = [ os.path.join(self.source_dir, x) for x in self.file_list.paths ]
         exman = ExifManager()
         all_images = doc.image_set.all()
         cntr = CountLogger(self.logger,all_images)
         cntr.count(msg='Adding metadata', inc=False)
+        license = license_factory.license(doc.image_licence)
         for image in all_images:
-            rights = ImageRights(image, image_rights, licence_config)
+            rights = ImageRights(image, license)
             rights_dict = rights.rights_properties()
 
             for deriv in image.derivative_set.all():
