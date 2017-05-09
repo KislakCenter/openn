@@ -5,9 +5,7 @@ from copy import deepcopy
 from xml.dom.minidom import parseString
 from dict2xml import dict2xml
 
-from openn.prep.licence_handler import LicenceHandler
-
-class SpreadsheetXML:
+class SpreadsheetXML(object):
     RIGHTS_RE          = re.compile(r'^(image|metadata)_rights$', re.IGNORECASE)
 
     def __init__(self, licence_config):
@@ -52,11 +50,7 @@ class SpreadsheetXML:
             if ele is not None and len(ele) > 0:
                 group_list.append(ele)
         group_attr  = group_config['xml_attr']
-        if self.RIGHTS_RE.match(group_attr):
-            titles = composites.get('full_title', 'Untitled')
-            title = '; '.join(titles)
-            self.add_rights_details(group_attr, group_list, title)
-        elif group_attr == 'page':
+        if group_attr == 'page':
             self.rewrite_tags(group_list)
 
         return group_list
@@ -76,7 +70,7 @@ class SpreadsheetXML:
 
         for page in page_list:
             tags = []
-            for i in xrange(1,5):
+            for i in xrange(1,100):
                 t = "tag" + str(i)
                 v = "value" + str(i)
                 if page.get(t, None) is not None:
@@ -93,24 +87,3 @@ class SpreadsheetXML:
         for d in list_of_dicts: merged.update(d)
 
         return merged
-
-
-    def add_rights_details(self, group_attr, group_list, full_title):
-        temp_dict = group_list[0]
-
-        # group_attr will be metadata_rights or image_rights (or maybe
-        # single_image_rights); grab the front part (i.e., `metadata`,
-        # `image`, `single_image`)
-        content_type = '_'.join(group_attr.split(r'_')[:-1])
-        licence      = temp_dict["%s_rights" % (content_type,)]
-        holder       = temp_dict.get("%s_copyright_holder" % (content_type,), None)
-        year         = temp_dict.get("%s_copyright_year" % (content_type,), None)
-
-        hdlr = LicenceHandler(self._licences)
-        temp_dict['text'] = hdlr.format_statement(licence=licence,
-                                                  content_type=content_type,
-                                                  year=year,
-                                                  holder=holder,
-                                                  title=full_title)
-        temp_dict['legalcode_url'] = hdlr.legalcode_url(licence)
-        temp_dict['deed_url'] = hdlr.deed_url(licence)
