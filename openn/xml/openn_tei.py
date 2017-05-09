@@ -239,6 +239,10 @@ class OPennTEI(XMLWhatsit):
         return self._provenance
 
     @property
+    def funders(self):
+        return self._all_the_strings('//t:titleStmt/t:funder')
+
+    @property
     def authors(self):
         if not getattr(self, '_authors', None):
             xpath = '//t:msContents/t:msItem[1]/t:author'
