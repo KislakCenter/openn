@@ -386,7 +386,7 @@ collection ranging from the 15th century to the present, including
             'metadata_type': 'TEI',
             'live': True,
             'name': 'The University of Manchester Library Special Collections',
-            'blurb': """The University of Manchester Library’s manuscripts and archives are
+            'blurb': """The University of Manchester Library's manuscripts and archives are
 internationally important. Their subject range is extraordinarily
 diverse and the collections span many centuries, from the 3rd millennium
 BCE to the 21st century. European manuscripts include hundreds of
@@ -401,7 +401,7 @@ incunables; a remarkable collection of 16th-century Italian books; one
 of the greatest collections in the world covering the entire history of
 the printed Bible; internationally important collections of French
 Revolutionary material, Nonconformist literature, and scientific and
-medical texts. The Library’s significant Visual Collection comprises:
+medical texts. The Library's significant Visual Collection comprises:
 paintings, drawings, photographs, sculptures, textiles, ceramics, glass,
 archives, manuscripts, prints, papers, illustrated and painted books,
 and associated objects. Dating from the ancient world to the present,
@@ -526,7 +526,7 @@ movement.""",
             'live': True,
             'blurb': """The Huntington Library is one of the largest and most complete research
 libraries in the United States in its fields of specialization. The
-Library’s collection of rare books, manuscripts, prints, photographs,
+Library's collection of rare books, manuscripts, prints, photographs,
 maps, and other materials in the fields of British and American history
 and literature totals more than nine million items. The Library
 collections date from the Middle Ages to the 21st century. The greatest
@@ -710,12 +710,22 @@ illumination.""",
         },
         {
             'tag': 'flp',
-            'name': 'Free Library of Philadelphia',
-            'metadata_type': 'tei',
+            'name': 'Free Library of Philadelphia, Special Collections',
+            'metadata_type': 'TEI',
             'live': True,
-            'blurb': """The Free Library of Philadelphia.""",
+            'blurb': """With more than 6 million visits to its 54 locations and 9 million online
+visits annually, the Free Library is one of Philadelphia's most widely
+used educational and cultural institutions. The Free Library's Special
+Collections feature music, maps, drawings, photographs, fine art prints,
+and one of the largest rare book collections in an American public
+library. The Rare Book Department houses thousands of illuminated
+pre-modern manuscripts and cuttings; first editions and manuscripts of
+important American and British writers, including some of the largest
+collections of Charles Dickens and Edgar Allan Poe; early American
+children's books and original artworks by children's illustrators;
+hundreds of incunables; and books, manuscripts, and maps relating to the
+discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
-            'no_document': True,
         },
     ],
 }
