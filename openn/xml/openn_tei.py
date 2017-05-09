@@ -7,6 +7,8 @@ from openn.xml.xml_whatsit import XMLWhatsit
 from openn.xml.ms_item import MSItem
 from openn.xml.licence import Licence
 from openn.xml.resp_stmt import RespStmt
+from openn.xml.related_resource import RelatedResource
+from openn.xml.author import Author
 from openn.xml.identifier import Identifier
 from openn.openn_exception import OPennException
 from openn.models import *
@@ -95,6 +97,14 @@ class OPennTEI(XMLWhatsit):
         return self._get_text('//t:msIdentifier/t:repository')
 
     @property
+    def collection(self):
+        return self._get_text('//t:msIdentifier/t:collection')
+
+    @property
+    def country(self):
+        return self._get_text('//t:msIdentifier/t:country')
+
+    @property
     def summary(self):
         return self._get_text('//t:msContents/t:summary')
 
@@ -161,9 +171,20 @@ class OPennTEI(XMLWhatsit):
         return self._ms_items
 
     @property
+    def support_material(self):
+        return self._get_text('//t:objectDesc/t:supportDesc/t:support/t:p')
+
+    @property
+    def related_resources(self):
+        if not getattr(self, '_related_resources', None):
+            xpath = '//t:notesStmt/t:note[@type="relatedResource"]'
+            self._related_resources = [RelatedResource(node, self.ns) for node in self._get_nodes(xpath)]
+        return self._related_resources
+
+    @property
     def notes(self):
-        if not getattr(self, '_notes'):
-            xpath = '//t:notesStmt/t:notes'
+        if not getattr(self, '_notes', None):
+            xpath = '//t:notesStmt/t:note[not(@type)]'
             self._notes = self._all_the_strings(xpath)
         return self._notes
 
@@ -196,6 +217,13 @@ class OPennTEI(XMLWhatsit):
         return self._namesubjects
 
     @property
+    def keywords(self):
+        if not getattr(self, '_keywords', None):
+            xpath = '//t:keywords[@n="keywords"]/t:term'
+            self._keywords = self._all_the_strings(xpath)
+        return self._keywords
+
+    @property
     def support(self):
         return self._get_text('//t:supportDesc/t:support')
 
@@ -214,8 +242,12 @@ class OPennTEI(XMLWhatsit):
     def authors(self):
         if not getattr(self, '_authors', None):
             xpath = '//t:msContents/t:msItem[1]/t:author'
-            self._authors = self._all_the_strings(xpath)
+            self._authors = [Author(n, self.ns) for n in self._get_nodes(xpath)]
         return self._authors
+
+    @property
+    def author_names(self):
+        return [ n.name for n in self.authors ]
 
     @property
     def resource(self):
@@ -248,8 +280,8 @@ class OPennTEI(XMLWhatsit):
     # Layout
     # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/layoutDesc/layout
     @property
-    def layout(self):
-        return self._get_text('//t:layoutDesc/t:layout')
+    def layouts(self):
+        return self._all_the_strings('//t:layoutDesc/t:layout')
 
     # Colophon
     # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/colophon
@@ -266,8 +298,12 @@ class OPennTEI(XMLWhatsit):
     # Script
     # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/scriptDesc/scriptNote
     @property
-    def script(self):
-        return self._get_text('//t:scriptDesc/t:scriptNote')
+    def scripts(self):
+        return self._all_the_strings('//t:scriptDesc/t:scriptNote')
+
+    @property
+    def catchwords(self):
+        return self._get_text('//t:collation/t:p/t:catchwords')
 
     # Decoration
     # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/decoDesc/decoNote
@@ -332,6 +368,43 @@ class OPennTEI(XMLWhatsit):
     def deco_notes(self, n):
         nodes = self._get_nodes('//t:decoNote[@n="%s"]' % n)
         return [node.text for node in nodes ]
+
+    def add_licences(self, document, license_factory):
+        """
+            <availability>
+                <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
+                    This description is ©<xsl:value-of select="year-from-date(current-date())"/>
+                    University of
+                    Pennsylvania Libraries. It is licensed under a Creative Commons
+                    Attribution License version 4.0 (CC-BY-4.0
+                    https://creativecommons.org/licenses/by/4.0/legalcode. For a
+                    description of the terms of use see the Creative Commons Deed
+                    https://creativecommons.org/licenses/by/4.0/. </licence>
+                <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All
+                    referenced images and their content are free of known copyright
+                    restrictions and in the public domain. See the Creative Commons
+                    Public Domain Mark page for usage details,
+                    http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+            </availability>
+        """
+        xpath = '/t:TEI/t:teiHeader/t:fileDesc/t:publicationStmt/t:availability'
+        for avail in self.xml.xpath(xpath, namespaces=self.ns):
+            avail.getparent().remove(avail)
+
+        availability = etree.Element("availability", nsmap=self.ns)
+        lic = license_factory.license(document.image_licence)
+        lic_element = etree.Element("licence", target=lic.legalcode_url(), nsmap=self.ns)
+        lic_element.text = lic.format_images(**document.image_license_args())
+        availability.append(lic_element)
+
+        lic = license_factory.license(document.metadata_licence)
+        lic_element = etree.Element("licence", target=lic.legalcode_url(), nsmap=self.ns)
+        lic_element.text = lic.format_metadata(**document.metadata_license_args())
+        availability.append(lic_element)
+
+        pub_stmt = self.xml.xpath('/t:TEI/t:teiHeader/t:fileDesc/t:publicationStmt',
+                                  namespaces=self.ns)[0]
+        pub_stmt.append(availability)
 
     def add_file_list(self,document):
         """

@@ -10,13 +10,21 @@ import shutil
 import logging
 import sys
 import codecs
+import pytz
 from lxml import etree
+from datetime import datetime
 from openn.prep.repository_prep import RepositoryPrep
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.xml.openn_tei import OPennTEI
 
 class MedrenPrep(RepositoryPrep):
+
+    MEDREN_LICENCE_TYPES_SAVED = 65
+
+    STATUS_NAMES = RepositoryPrep.build_status_names({
+        65: 'MEDREN_LICENCE_TYPES_SAVED'
+    })
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
     DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\w*\.tif$', 'body\d{4}\w*\.tif$', 'back\d{4}\w*\.tif$' ]
@@ -286,42 +294,49 @@ class MedrenPrep(RepositoryPrep):
 
     def _do_prep_dir(self):
         if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
-            self.logger.warning("[%s] Metadata alreaady validated" % (self.basedir, ))
+            self.logger.warning("[%s] Metadata alreaady validated", self.basedir)
         else:
-            self.logger.info("[%s] Validating metadata" % (self.basedir, ))
+            self.logger.info("[%s] Validating metadata", self.basedir)
             bibid = self.get_bibid()
             self.write_xml(bibid, self.pih_filename)
             call_no = self.check_valid_xml(self.pih_filename)
             self.write_status(self.REPOSITORY_PREP_MD_VALIDATED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILES_VALIDATED:
-            self.logger.warning("[%s] Files alreaady validated" % (self.basedir, ))
+            self.logger.warning("[%s] Files alreaady validated", self.basedir)
         else:
-            self.logger.info("[%s] Validating files" % (self.basedir, ))
+            self.logger.info("[%s] Validating files", self.basedir)
             expected_files = self.xml_file_names(self.pih_filename)
             self.check_file_names(expected_files)
             self.write_status(self.REPOSITORY_PREP_FILES_VALIDATED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILES_STAGED:
-            self.logger.warning("[%s] Files already staged" % (self.basedir, ))
+            self.logger.warning("[%s] Files already staged", self.basedir)
         else:
-            self.logger.info("[%s] Staging files" % (self.basedir, ))
+            self.logger.info("[%s] Staging files", self.basedir)
             self.fix_image_names()
             self.stage_images()
             self.write_status(self.REPOSITORY_PREP_FILES_STAGED)
 
-        if self.get_status() > self.REPOSITORY_PREP_FILE_LIST_WRITTEN:
-            self.logger.warning("[%s] File list already written" % (self.basedir, ))
+        if self.get_status() > self.MEDREN_LICENCE_TYPES_SAVED:
+            self.logger.warning("[%s] Licensce types already saved", self.basedir)
         else:
-            self.logger.info("[%s] Writing file list" % (self.basedir, ))
+            self.logger.info("[%s] Staging files", self.basedir)
+            self.save_rights_data()
+            self.write_status(self.MEDREN_LICENCE_TYPES_SAVED)
+
+        if self.get_status() > self.REPOSITORY_PREP_FILE_LIST_WRITTEN:
+            self.logger.warning("[%s] File list already written", self.basedir)
+        else:
+            self.logger.info("[%s] Writing file list", self.basedir)
             file_list = self.build_file_list(self.pih_filename)
             self.add_file_list(file_list)
             self.write_status(self.REPOSITORY_PREP_FILE_LIST_WRITTEN)
 
         if self.get_status() > self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN:
-            self.logger.warning("[%s] Partial TEI already written" % (self.basedir, ))
+            self.logger.warning("[%s] Partial TEI already written", self.basedir)
         else:
-            self.logger.info("[%s] Writing partial TEI" % (self.basedir, ))
+            self.logger.info("[%s] Writing partial TEI", self.basedir)
             partial_tei_xml = self.gen_partial_tei()
             self.write_partial_tei(self.source_dir, partial_tei_xml)
             self.validate_partial_tei()

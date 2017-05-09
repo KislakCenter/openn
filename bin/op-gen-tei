@@ -124,7 +124,7 @@ fi
 
 CLASSPATH=$CLASSPATH:$OPENN_SAXON_JAR
 
-java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$XSL
+java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$XSL project_path="$APP_DIR"
 
 
 ################################################################################

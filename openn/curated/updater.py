@@ -43,10 +43,10 @@ class Updater(object):
         attrs = { 'tag': config_dict['tag'] }
         try:
             curated = CuratedCollection.objects.get(**attrs)
-            self.logger.info("CuratedCollection already exists: '%s'" % (curated.tag,))
+            self.logger.info("CuratedCollection already exists: '%s'", curated.tag,)
         except CuratedCollection.DoesNotExist:
             curated = CuratedCollection(**config_dict)
-            self.logger.info("Creating curated: %s" % (curated.tag,))
+            self.logger.info("Creating curated: %s", curated.tag,)
             curated.save()
 
         return curated
