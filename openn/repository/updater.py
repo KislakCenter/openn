@@ -21,7 +21,7 @@ class Updater(object):
                 if key == 'tag':
                     continue
                 new_val = config_dict[key]
-                if getattr(repo,key) == new_val:
+                if unicode(getattr(repo,key)) == unicode(new_val):
                     continue
                 self.logger.info("Updating repository '%s' field '%s' to '%s'", repo.tag, key,
                                   unicode(new_val).encode('utf8'))
@@ -55,6 +55,6 @@ class Updater(object):
                 continue
             new_val = config_dict[key]
             curr_val = getattr(current_repo, key)
-            if new_val != curr_val:
+            if unicode(new_val) != unicode(curr_val):
                 return True
         return False
