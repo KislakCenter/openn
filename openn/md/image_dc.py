@@ -66,7 +66,7 @@ class ImageDC(CommonDC):
             s += ', a document on %s' % (self.tei.support, )
 
         if self.tei.authors:
-            s += ', by %s' % (', '.join(self.tei.authors), )
+            s += ', by %s' % (', '.join(self.tei.author_names), )
 
         origin = self.origin()
         if origin:

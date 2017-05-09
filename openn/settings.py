@@ -664,7 +664,7 @@ illumination.""",
         },
         {
             'tag': 'flp',
-            'name': 'Free Library of Pennsylvania',
+            'name': 'Free Library of Philadelphia',
             'metadata_type': 'tei',
             'live': True,
             'blurb': """The Free Library of Philadelphia.""",

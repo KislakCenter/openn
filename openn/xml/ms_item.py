@@ -11,5 +11,17 @@ class MSItem(XMLWhatsit):
     def title(self):
         return self._get_text('.//t:title')
 
+    @property
+    def incipit(self):
+        return self._get_text('.//t:incipit')
+
+    @property
+    def explicit(self):
+        return self._get_text('.//t:explicit')
+
+    @property
+    def locus(self):
+        return self._get_text('.//t:locus')
+
     def tostring(self):
         return etree.tostring(self.xml, pretty_print=True)

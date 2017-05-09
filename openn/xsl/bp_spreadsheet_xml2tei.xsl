@@ -89,6 +89,7 @@
                         </xsl:for-each>
                         <xsl:for-each select="//related">
                           <note>
+                            <xsl:attribute name="type" select="'relatedResource'"></xsl:attribute>
                             <xsl:if test="./related_resource_url">
                               <xsl:attribute name="target" select="./related_resource_url"/>
                             </xsl:if>
@@ -466,26 +467,15 @@
     <xsl:template name="lang-names">
         <xsl:param name="langs" as="node()*"/>
           <xsl:if test="count($langs) &gt; 0">
-            <xsl:text>Primary language: </xsl:text>
             <xsl:value-of select="normalize-space($langs[1]/language_name)"/>
-            <xsl:choose>
-              <xsl:when test="count($langs) = 2">
-                <xsl:text>. Secondary language: </xsl:text>
-                <xsl:value-of select="normalize-space($langs[2]/language_name)"/>
-              </xsl:when>
-              <xsl:when test="count($langs) &gt; 2">
-                <xsl:text>. Secondary languages: </xsl:text>
-                <xsl:for-each select="$langs">
-                  <xsl:if test="position() &gt; 1">
-                    <xsl:value-of select="language_name"/>
-                    <xsl:if test="position() != last()">
-                      <xsl:text>; </xsl:text>
-                    </xsl:if>
-                  </xsl:if>
-                </xsl:for-each>
-              </xsl:when>
-            </xsl:choose>
-            <xsl:text>.</xsl:text>
+            <xsl:if test="count($langs) &gt; 1">
+              <xsl:for-each select="$langs">
+                <xsl:if test="position() &gt; 1">
+                  <xsl:text>; </xsl:text>
+                  <xsl:value-of select="language_name"/>
+                </xsl:if>
+              </xsl:for-each>
+            </xsl:if>
           </xsl:if>
     </xsl:template>
     <xsl:template name="join-keywords">

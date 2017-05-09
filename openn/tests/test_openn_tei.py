@@ -48,9 +48,9 @@ class TestOPennTEI(TestCase):
         openn_tei = OPennTEI(open(self.mscodex52_tei))
         self.assertEqual('Paper, i (contemporary paper) + 119; 1-94, [95-119]; contemporary foliation in ink, modern foliation in pencil, upper right recto.', openn_tei.foliation)
 
-    def test_layout(self):
+    def test_layouts(self):
         openn_tei = OPennTEI(open(self.ljs270_tei))
-        self.assertEqual('Inscribed in 23 lines on 2 sides of the tablet.', openn_tei.layout)
+        self.assertIn('Inscribed in 23 lines on 2 sides of the tablet.', openn_tei.layouts)
 
     def test_colophon(self):
         openn_tei = OPennTEI(open(self.mscodex83_tei))
@@ -60,9 +60,9 @@ class TestOPennTEI(TestCase):
         openn_tei = OPennTEI(codecs.open(self.mscodex906_tei))
         self.assertEqual(u'Paper, 342; 1-18¹⁶ 19¹⁸ 20-22¹⁶; [ii], 1-317, 319-340, [i]; misnumbered at 318, no loss of text. Foliation and line numbering in a later hand. Signatures at bottom right; catchwords at bottom center, often cropped.', openn_tei.collation)
 
-    def test_script(self):
+    def test_scripts(self):
         openn_tei = OPennTEI(codecs.open(self.mscodex906_tei))
-        self.assertEqual(u'Written in Gothic cursive, with the first words or first line at the beginning of sections in bâtarde script; f. 306-322v (a single gathering) in a second hand.', openn_tei.script)
+        self.assertIn(u'Written in Gothic cursive, with the first words or first line at the beginning of sections in bâtarde script; f. 306-322v (a single gathering) in a second hand.', openn_tei.scripts)
 
     def test_decoration(self):
         openn_tei = OPennTEI(codecs.open(self.mscodex906_tei))
