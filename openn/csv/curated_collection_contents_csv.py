@@ -7,8 +7,6 @@ from unidecode import unidecode
 import os
 import re
 import logging
-import glob
-
 
 class CuratedCollectionContentsCSV(OPennCSV):
     """Generate the table of contents CSV for an Repository
@@ -37,7 +35,8 @@ class CuratedCollectionContentsCSV(OPennCSV):
         """
         self.curated_collection    = CuratedCollection.objects.get(tag=unicode(curated_tag))
         outfile                    = os.path.join('Data', self.curated_collection.csv_toc_file())
-        kwargs.update({ 'outfile': outfile })
+        kwargs.update({'outfile': outfile})
+        kwargs.update({'page_object': self.curated_collection})
         super(CuratedCollectionContentsCSV, self).__init__(**kwargs)
 
     def is_makeable(self):
@@ -60,9 +59,9 @@ class CuratedCollectionContentsCSV(OPennCSV):
 
         return True
 
-    def is_needed(self):
+    def is_needed(self, strict=True):
         # not needed if not makeable
-        if not self.is_makeable():
+        if not self.is_makeable() and strict is True:
             return False
 
         # needed if it doesn't exist
@@ -70,9 +69,12 @@ class CuratedCollectionContentsCSV(OPennCSV):
             return True
 
         # see if it's out-of-date
-        latest_doc = self.curated_collection.documents.filter(is_online=True).latest('updated')
+        latest_doc = self.curated_collection.curatedmembership_set.filter(
+            document__is_online=True).latest('updated')
         current_file_date = opfunc.mtime_to_datetime(self.outfile_path())
         if current_file_date > latest_doc.updated:
+            self.logger.debug("current_file_date: %s; latest_doc updated: %s", current_file_date,
+                              latest_doc.updated)
             logging.info("CSV TOC up-to-date; skipping %s", self.curated_collection.tag)
             return False
 

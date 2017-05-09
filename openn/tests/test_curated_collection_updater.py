@@ -17,8 +17,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.curated.updater import Updater
 from openn.models import *
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestCuratedCollectionUpdater(TestCase):
+class TestCuratedCollectionUpdater(OPennTestCase):
 
     # Paths
     this_dir               = os.path.dirname(__file__)

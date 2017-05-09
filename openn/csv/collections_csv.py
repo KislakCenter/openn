@@ -2,6 +2,7 @@
 
 from openn.csv.openn_csv import OPennCSV
 from openn.models import *
+from openn.curated.membership_manager import MembershipManager
 
 class CollectionsCSV(OPennCSV):
     """Generate CSV table of contents for all collections. Looks like this (without padding):
@@ -36,7 +37,7 @@ class CollectionsCSV(OPennCSV):
                         ]
                     self.writerow(row)
 
-            for curated in CuratedCollection.objects.all():
+            for curated in MembershipManager.active_collections():
                 if curated.live:
                     row = [
                         'N/A',

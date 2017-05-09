@@ -9,7 +9,6 @@ import re
 import logging
 import glob
 
-
 class TableOfContentsCSV(OPennCSV):
     """Generate the table of contents CSV for an Repository
 
@@ -40,7 +39,8 @@ class TableOfContentsCSV(OPennCSV):
         """
         self.repository = repository
         outfile         = os.path.join('Data', repository.csv_toc_file())
-        kwargs.update({ 'outfile': outfile })
+        kwargs.update({'outfile': outfile})
+        kwargs.update({'page_object': self.repository})
         super(TableOfContentsCSV, self).__init__(**kwargs)
 
 
@@ -94,6 +94,7 @@ class TableOfContentsCSV(OPennCSV):
 
         # needed if it doesn't exist
         if not os.path.exists(self.outfile_path()):
+            self.logger.info("CSV is needed; file does not exist: %s", self.outfile_path())
             return True
 
         # see if it's out-of-date
@@ -102,8 +103,9 @@ class TableOfContentsCSV(OPennCSV):
             is_online=True
             ).latest('updated')
         current_file_date = opfunc.mtime_to_datetime(self.outfile_path())
+
         if current_file_date > latest_doc.updated:
-            logging.info("CSV TOC up-to-date; skipping %s", self.repository)
+            logging.info("CSV TOC up-to-date; skipping %s", self.repository.tag())
             return False
 
         return True

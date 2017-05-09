@@ -11,8 +11,9 @@ from django.conf import settings
 from openn.prep.op_workbook import OPWorkbook
 from openn.prep.spreadsheet_xml import SpreadsheetXML
 from openn.tests.helpers import *
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestSpreadsheetXML(TestCase):
+class TestSpreadsheetXML(OPennTestCase):
     this_dir                 = os.path.dirname(__file__)
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')

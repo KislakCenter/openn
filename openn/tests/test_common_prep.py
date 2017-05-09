@@ -19,8 +19,9 @@ from openn.prep.prep_config_factory import PrepConfigFactory
 from openn.xml.openn_tei import OPennTEI
 from openn.models import *
 from openn.tests.helpers import *
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestCommonPrep(TestCase):
+class TestCommonPrep(OPennTestCase):
 
     staging_dir            = os.path.join(os.path.dirname(__file__), 'staging')
     command                = os.path.join(settings.PROJECT_PATH, 'bin/op-prep')

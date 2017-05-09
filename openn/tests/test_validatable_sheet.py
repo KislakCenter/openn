@@ -10,8 +10,9 @@ from django.conf import settings
 
 from openn.prep.op_workbook import OPWorkbook
 from openn.prep.validatable_sheet import ValidatableSheet
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestValidatableSheet(TestCase):
+class TestValidatableSheet(OPennTestCase):
     this_dir                 = os.path.dirname(__file__)
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')

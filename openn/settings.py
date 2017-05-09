@@ -948,6 +948,28 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'pennmuseum-diaries': {
+        'repository': {
+            'tag': 'pennmuseum'
+        },
+        "image_types": [ '*.tif', '*.jpg' ],
+        'repository_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
+        }
+    },
 }
 
 CURATED_COLLECTIONS = {
@@ -977,8 +999,12 @@ Integer lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligu
         },
         {
             'tag': 'pacscl-diaries',
-            'name': 'PACSCL Diares',
-            'blurb': 'Lorem ipsum',
+            'name': 'PACSCL Diaries',
+            'blurb': """The PACSCL Diaries Project will allow researchers an intimate view into a
+                        wide variety of personalities, largely from Philadelphia, as they went about their
+                        daily lives and commented on the world around them. The project will
+                        ultimately provide an online archive of diaries drawn from PACSCL member
+                        collections. OPenn currently hosts a pilot group of 53 diary volumes.""",
             'csv_only': False,
             'include_file': 'PACSCLDiaries.html',
             'live': True,

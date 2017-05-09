@@ -12,8 +12,9 @@ from django.core.exceptions import ValidationError
 from openn.prep.op_workbook import OPWorkbook
 from openn.prep.description_sheet import DescriptionSheet
 from openn.prep.validatable_sheet import ValidatableSheet
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestDescriptionSheet(TestCase):
+class TestDescriptionSheet(OPennTestCase):
     this_dir                 = os.path.dirname(__file__)
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')

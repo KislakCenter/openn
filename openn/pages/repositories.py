@@ -15,7 +15,7 @@ class Repositories(Page):
 
     def __init__(self, template_name, outdir, repo_configs,**kwargs):
         self._repo_configs = repo_configs
-        super(Repositories,self).__init__(template_name, outdir, **kwargs)
+        super(Repositories, self).__init__(template_name, outdir, **kwargs)
 
     def get_context(self, ctx_dict={}):
         repositories = self.live_repositories()
@@ -59,7 +59,8 @@ class Repositories(Page):
 
         return live_ones
 
-    def is_needed(self):
+    def is_needed(self, strict=True):
+        # not needed if not makeable
         """If the repositories template exits; we always say it's needed.
 
         Why? If implemented, the tests for creating a new repositories list
@@ -80,4 +81,7 @@ class Repositories(Page):
         Therefore, we always say the page is needed.
 
         """
-        return self.is_makeable()
+        if not self.is_makeable() and strict is True:
+            return False
+
+        return True

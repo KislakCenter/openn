@@ -14,8 +14,9 @@ from django.conf import settings
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.exif_manager import ExifManager
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestExifManager(TestCase):
+class TestExifManager(OPennTestCase):
 
     staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
     source_dir       = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')

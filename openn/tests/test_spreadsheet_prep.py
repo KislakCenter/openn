@@ -23,8 +23,9 @@ from openn.prep.prep_setup import PrepSetup
 from openn.models import *
 from openn.tests.helpers import *
 from openn.prep.prep_config_factory import PrepConfigFactory
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestSpreadsheetPrep(TestCase):
+class TestSpreadsheetPrep(OPennTestCase):
 
     this_dir               = os.path.dirname(__file__)
     data_dir               = os.path.join(this_dir, 'data')

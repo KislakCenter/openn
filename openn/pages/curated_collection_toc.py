@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import os
 
 from django.template import Context, Template
 from django.template.loader import get_template
@@ -12,16 +13,19 @@ from openn.models import *
 import openn.openn_functions as opfunc
 from openn.pages.page import Page
 from openn.pages.document_data import DocumentData
+from openn.pages.template_hash import TemplateHash
 
 class CuratedCollectionTOC(Page):
 
     logger = logging.getLogger(__name__)
+    human_name = "Curated collection"
 
     def __init__(self, curated_tag, toc_dir, **kwargs):
         self.curated_collection = CuratedCollection.objects.get(tag=unicode(curated_tag))
         self.toc_dir = toc_dir
-        kwargs.update({'outfile':self.toc_path()})
-        super(CuratedCollectionTOC,self).__init__(**kwargs)
+        kwargs.update({'outfile': self.toc_path(),
+                       'page_object': self.curated_collection})
+        super(CuratedCollectionTOC, self).__init__(**kwargs)
 
     def toc_path(self):
         return "%s/%s" % (self.toc_dir, self.curated_collection.toc_file())
@@ -36,9 +40,9 @@ class CuratedCollectionTOC(Page):
 
     def is_makeable(self):
         if not self.curated_collection.live:
-            self.logger.info("Curated collection HTML TOC not makeable; curated collection not"
-                             " set to 'live' (curated collection: %s)",
-                             self.curated_collection.tag())
+            self.logger.info("Curated collection HTML TOC not makeable;"
+                " curated collection not set to 'live' (curated collection: %s)",
+                self.curated_collection.tag)
             return False
 
         if self.curated_collection.csv_only:
@@ -62,28 +66,32 @@ class CuratedCollectionTOC(Page):
 
         return True
 
-    def is_needed(self):
-        if not self.is_makeable():
+    def is_needed(self, strict=True):
+        if not self.is_makeable() and strict is True:
             return False
 
         # needed if it doesn't exist
-        if not os.path.exists(self.outfile_path()):
+        if not self.output_file_exists():
             return True
 
-        # see if it's out-of-date
-        latest_doc = self.curated_collection.documents.filter(is_online=True).latest('updated')
+        # needed if template has changed
+        if self.template_changed():
+            return True
 
-        current_file_date = opfunc.mtime_to_datetime(self.outfile_path())
-        if current_file_date > latest_doc.updated:
-            logging.info("Curated collection HTML TOC up-to-date; skipping %s",
-                         self.curated_collection.tag,)
+        # needed if include_file has changed
+        if self.include_file_changed(page_object=self.curated_collection):
+            return True
+
+        # needed if the page DOES NOT have a last generated date
+        if not self.changed_since_generation(
+            comp_date=self.curated_collection.last_updated()):
             return False
 
         return True
 
     def get_repositories(self):
-        repo_ids = self.curated_collection.documents.filter(is_online=True).order_by('repository').values_list('repository', flat=True).distinct()
-        print "repo_ids are %s" % (str(repo_ids,))
+        repo_ids = self.curated_collection.documents.filter(is_online=True).order_by(
+            'repository').values_list('repository', flat=True).distinct()
         repos    = [ Repository.objects.get(pk=x) for x in repo_ids ]
         repos.sort(key=lambda x: x.name)
 

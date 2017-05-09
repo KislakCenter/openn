@@ -20,7 +20,8 @@ class TableOfContents(Page):
     def __init__(self, repository,toc_dir,**kwargs):
         self.repository = repository
         self.toc_dir = toc_dir
-        updated_kwargs = kwargs.update({'outfile':self.toc_path()})
+        kwargs.update({'outfile':self.toc_path(),
+                       'page_object': self.repository.repository()})
         super(TableOfContents,self).__init__(**kwargs)
 
     def get_context(self,ctx_dict={}):
@@ -70,11 +71,11 @@ class TableOfContents(Page):
 
         return True
 
-    def is_needed(self):
-        if not self.is_makeable():
+    def is_needed(self, strict=True):
+        if not self.is_makeable() and strict is True:
             return False
 
-        if not os.path.exists(self.outfile_path()):
+        if not self.output_file_exists():
             return True
 
         html_dir = os.path.join(self.outdir, self.repository.html_dir())
@@ -82,7 +83,7 @@ class TableOfContents(Page):
         if html_files:
             newest_html = max([os.path.getmtime(x) for x in html_files])
             if os.path.getmtime(self.outfile_path()) > newest_html:
-                logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.repository))
+                logging.info("TOC file newer than all HTML files found in %s; skipping %s" % (html_dir, self.repository.tag()))
                 return False
 
         return True

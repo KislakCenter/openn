@@ -11,8 +11,9 @@ from django.conf import settings
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.xml.openn_tei import OPennTEI
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestOPennTEI(TestCase):
+class TestOPennTEI(OPennTestCase):
 
 
     test_partial_tei         = os.path.join(os.path.dirname(__file__), 'data/xml/ms1223_PARTIAL_TEI.xml')

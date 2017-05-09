@@ -16,8 +16,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 from openn.openn_exception import OPennException
 from openn.prep.package_validation import PackageValidation
 from openn.models import *
+from openn.tests.openn_test_case import OPennTestCase
 
-class TestPackageValidation(TestCase):
+class TestPackageValidation(OPennTestCase):
     pass
 
     pp                = PrettyPrinter(indent=2)

@@ -22,6 +22,7 @@ class Migration(DataMigration):
         return coll
 
     def forwards(self, orm):
+        # pass
         "Write your forwards methods here."
         # Note: Don't use "from appname.models import ModelName".
         # Use orm.ModelName to refer to models in this application,
@@ -37,6 +38,7 @@ class Migration(DataMigration):
             self.find_or_create(orm, tag)
 
     def backwards(self, orm):
+        # pass
         "Write your backwards methods here."
         orm.OPennCollection.objects.all().delete()
 
