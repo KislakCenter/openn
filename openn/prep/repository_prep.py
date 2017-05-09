@@ -55,8 +55,8 @@ class RepositoryPrep(Status):
     def _cleanup(self):
         for f in self.removals:
             if os.path.exists(f):
-                self.logger.debug("[%s] Cleanup: removing \'%s\'" % (
-                    self.basedir,f))
+                self.logger.debug("[%s] Cleanup: removing \'%s\'",
+                    self.basedir,f)
                 os.remove(f)
 
     def image_files(self,image_dir=None):
@@ -83,6 +83,29 @@ class RepositoryPrep(Status):
                                         space_re.sub('_', basename))
                 shutil.move(x, new_name)
 
+    def save_rights_data(self):
+        self.document.image_licence = self.prep_config.image_rights()
+        if not self.prep_config.image_rights().startswith('PD'):
+            self.document.image_copyright_holder = self.prep_config.rights_holder()
+            self.document.image_copyright_year = datetime.now(pytz.UTC).year
+            self.document.image_rights_more_info = self.prep_config.rights_more_info()
+        else:
+            self.document.image_copyright_holder = None
+            self.document.image_copyright_year = None
+            self.document.image_rights_more_info = None
+
+        self.document.metadata_licence = self.prep_config.metadata_rights()
+        if not self.prep_config.metadata_rights().startswith('PD'):
+            self.document.metadata_copyright_holder = self.prep_config.rights_holder()
+            self.document.metadata_copyright_year = datetime.now(pytz.UTC).year
+            self.document.metadata_rights_more_info = self.prep_config.rights_more_info()
+        else:
+            self.document.metadata_copyright_holder = None
+            self.document.metadata_copyright_year = None
+            self.document.metadata_rights_more_info = None
+
+        self.document.save()
+
     def validate(self):
         errors = []
         if self.package_validation:
@@ -101,7 +124,6 @@ class RepositoryPrep(Status):
             tei = OPennTEI(f)
             tei.validate()
         except Exception as ex:
-            # TODO: rename outfile if error
             raise OPennException("Error creating TEI: %s" % str(ex))
         finally:
             f.close()
@@ -129,12 +151,12 @@ class RepositoryPrep(Status):
     def prep_dir(self):
 
         if self.get_status() >= self.REPOSITORY_PREP_COMPLETED:
-            self.logger.warning("[%s] Repository prep already completed" % (self.basedir,))
+            self.logger.warning("[%s] Repository prep already completed", self.basedir,)
         else:
             if self.get_status() > self.REPOSITORY_PREP_PACKAGE_VALIDATED:
-                self.logger.warning("[%s] Package directory already validated" % (self.basedir,))
+                self.logger.warning("[%s] Package directory already validated", self.basedir,)
             else:
-                self.logger.info("[%s] Validating package directory" % (self.basedir,))
+                self.logger.info("[%s] Validating package directory", self.basedir,)
                 self.validate()
                 self.write_status(self.REPOSITORY_PREP_PACKAGE_VALIDATED)
 
@@ -142,5 +164,5 @@ class RepositoryPrep(Status):
             self._cleanup()
             self.write_status(self.REPOSITORY_PREP_COMPLETED)
 
-    def _do_prep_dirs(self):
+    def _do_prep_dir(self):
         pass

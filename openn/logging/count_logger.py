@@ -6,7 +6,7 @@ class CountLogger(object):
         self._width  = len(str(self._total))
 
     def count_string(self, msg=None):
-        return '{count:0{width}d}/{total} {msg}'.format(
+        return u'{count:0{width}d}/{total} {msg}'.format(
             count=self._count, width=self._width, total=self._total, msg=msg)
 
     def count(self, msg=None,inc=True):

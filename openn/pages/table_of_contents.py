@@ -48,8 +48,8 @@ class TableOfContents(Page):
 
     def is_makeable(self):
         if not self.repository.is_live():
-            self.logger.info("TOC not makeable; repository not set to 'live' (repository: %s)" % (
-                self.repository.tag()))
+            self.logger.info("TOC not makeable; repository not set to 'live' (repository: %s)",
+                             self.repository.tag())
             return False
 
         # If this is a no-document repository, it is makeable; we don't have
@@ -59,14 +59,14 @@ class TableOfContents(Page):
 
         html_dir = os.path.join(self.outdir, self.repository.html_dir())
         if not os.path.exists(html_dir):
-            self.logger.info("TOC not makeable; no HTML dir found: %s (repository: %s)" % (
-                html_dir, self.repository.tag()))
+            self.logger.info("TOC not makeable; no HTML dir found: %s (repository: %s)",
+                             html_dir, self.repository.tag())
             return False
 
         html_files = glob.glob(os.path.join(html_dir, '*.html'))
         if len(html_files) == 0:
-            self.logger.info("TOC not makeable; no HTML files found in %s (repository %s)" % (
-                html_dir, self.repository.tag()))
+            self.logger.info("TOC not makeable; no HTML files found in %s (repository %s)",
+                             html_dir, self.repository.tag())
             return False
 
         return True

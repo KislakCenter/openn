@@ -43,7 +43,11 @@ class DocumentData:
 
     @property
     def document_location(self):
-        parts = [self.tei.settlement, self.tei.institution, self.tei.repository]
+        parts = [self.tei.settlement,
+                 self.tei.country,
+                 self.tei.institution,
+                 self.tei.repository,
+                 self.tei.collection]
         parts = [ x for x in parts if x is not None ]
         return ', '.join(parts)
 

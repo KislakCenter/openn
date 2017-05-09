@@ -16,14 +16,15 @@ class Updater(object):
     def update(self, tag, config_dict):
         repo = self.find_or_create_repository(tag)
         if self.has_changed(repo, config_dict):
-            self.logger.info("Updating repository: %s" % (repo.tag,))
+            self.logger.info("Updating repository: %s", repo.tag,)
             for key in config_dict.keys():
                 if key == 'tag':
                     continue
                 new_val = config_dict[key]
                 if getattr(repo,key) == new_val:
                     continue
-                self.logger.info("Updating repository '%s' field '%s' to '%s'" % (repo.tag, key, unicode(new_val).encode('utf8')))
+                self.logger.info("Updating repository '%s' field '%s' to '%s'", repo.tag, key,
+                                  unicode(new_val).encode('utf8'))
                 setattr(repo, key, new_val)
                 repo.save()
 
@@ -39,11 +40,11 @@ class Updater(object):
         attrs = { 'tag': tag }
         try:
             repo = Repository.objects.get(**attrs)
-            self.logger.info("Repository already exists: '%s'" % (repo.tag,))
+            self.logger.info("Repository already exists: '%s'", repo.tag,)
         except Repository.DoesNotExist:
             attrs = self._configs.get_config_dict(tag)
             repo = Repository(**attrs)
-            self.logger.info("Creating repository: %s" % (repo.tag,))
+            self.logger.info("Creating repository: %s", repo.tag,)
             repo.save()
 
         return repo
