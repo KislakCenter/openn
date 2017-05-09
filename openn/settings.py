@@ -940,6 +940,7 @@ PREP_CONFIGS = {
             'tag': 'flp'
         },
         "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
         'repository_prep': {
             'tag': 'bphil',
         },

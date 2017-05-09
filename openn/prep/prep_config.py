@@ -49,6 +49,7 @@ class PrepConfig:
         self._prep_method      = PrepMethod(prep_dict)
         self._context          = deepcopy(prep_context)
         self._rights_dict      = self._repo_prep_dict['rights']
+        self._funders = self._repo_prep_dict.get('funders', [])
 
     def image_rights(self):
         try:
@@ -92,6 +93,9 @@ class PrepConfig:
         prep_class = self._prep_method.get_prep_class()
 
         return prep_class
+
+    def funders(self):
+        return self._funders
 
     def prep_class_params(self):
         return self._prep_method.prep_class_params()

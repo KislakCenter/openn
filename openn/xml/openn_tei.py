@@ -406,6 +406,17 @@ class OPennTEI(XMLWhatsit):
                                   namespaces=self.ns)[0]
         pub_stmt.append(availability)
 
+    def add_funders(self, funders=[]):
+        if funders is None or len(funders) == 0:
+            return
+
+        xpath = '/t:TEI/t:teiHeader/t:fileDesc/t:titleStmt'
+        title_stmt = self.xml.xpath(xpath, namespaces=self.ns)[0]
+        for funder in funders:
+            funder_element = etree.Element('funder', nsmap=self.ns)
+            funder_element.text = funder
+            title_stmt.append(funder_element)
+
     def add_file_list(self,document):
         """
            <facsimile>
