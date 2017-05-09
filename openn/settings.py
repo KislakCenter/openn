@@ -520,6 +520,24 @@ movement.""",
             'include_file': 'FriendsHistoricalLibrary.html',
         },
         {
+            'tag': 'huntington',
+            'name': 'The Huntington Library',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Huntington Library is one of the largest and most complete research
+libraries in the United States in its fields of specialization. The
+Library’s collection of rare books, manuscripts, prints, photographs,
+maps, and other materials in the fields of British and American history
+and literature totals more than nine million items. The Library
+collections date from the Middle Ages to the 21st century. The greatest
+concentration is in the English Renaissance, about 1500 to 1641; other
+strengths include medieval manuscripts, incunabula (books printed before
+1501), maps, travel literature, British and American history and
+literature, the American Southwest, and the history of science, medicine
+and technology.""",
+            'include_file': 'HuntingtonLibrary.html',
+        },
+        {
             'tag': 'hsp',
             'name': 'Historical Society of Pennsylvania',
             'metadata_type': 'TEI',
@@ -845,6 +863,28 @@ PREP_CONFIGS = {
         'rights': {
             'image_rights': 'dynamic',
             'metadata_rights': 'dynamic',
+        }
+    },
+    'huntington-diaries': {
+        'repository': {
+            'tag': 'huntington'
+        },
+        "image_types": [ '*.tif' ],
+        'repository_prep': {
+            'tag': 'diaries',
+        },
+        'common_prep': {
+            'image_rights': {
+                'dynamic': True,
+            },
+            'rights_statements': {
+                'images': {
+                    'dynamic': True,
+                },
+                'metadata': {
+                    'dynamic': True,
+                },
+            },
         }
     },
     'lts-diaries': {
