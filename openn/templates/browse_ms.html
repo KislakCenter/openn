@@ -55,6 +55,17 @@
         </div>
         {% endif %}
 
+        {% if doc.tei.funders %}
+        <div>
+          <h4>Funders</h4>
+          <ul class="list-unstyled">
+          {% for funder in doc.tei.funders %}
+             <li>{{ funder }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
         {% if doc.tei.call_number %}
         <div>
           <h4>Call number</h4>

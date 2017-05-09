@@ -114,6 +114,7 @@ class CommonPrep(Status):
         self.tei.add_file_list(self.document)
         lic_fact = LicenseFactory(op_app.LICENSES)
         self.tei.add_licences(self.document, lic_fact)
+        self.tei.add_funders(self.prep_config.funders())
         self.package_dir.save_tei(self.tei, self.document)
         self.document.tei_xml = self.tei.to_string()
         self.document.save()

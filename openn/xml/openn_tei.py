@@ -239,6 +239,10 @@ class OPennTEI(XMLWhatsit):
         return self._provenance
 
     @property
+    def funders(self):
+        return self._all_the_strings('//t:titleStmt/t:funder')
+
+    @property
     def authors(self):
         if not getattr(self, '_authors', None):
             xpath = '//t:msContents/t:msItem[1]/t:author'
@@ -405,6 +409,17 @@ class OPennTEI(XMLWhatsit):
         pub_stmt = self.xml.xpath('/t:TEI/t:teiHeader/t:fileDesc/t:publicationStmt',
                                   namespaces=self.ns)[0]
         pub_stmt.append(availability)
+
+    def add_funders(self, funders=[]):
+        if funders is None or len(funders) == 0:
+            return
+
+        xpath = '/t:TEI/t:teiHeader/t:fileDesc/t:titleStmt'
+        title_stmt = self.xml.xpath(xpath, namespaces=self.ns)[0]
+        for funder in funders:
+            funder_element = etree.Element('funder', nsmap=self.ns)
+            funder_element.text = funder
+            title_stmt.append(funder_element)
 
     def add_file_list(self,document):
         """
