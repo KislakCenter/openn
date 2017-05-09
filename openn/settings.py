@@ -382,6 +382,34 @@ collection ranging from the 15th century to the present, including
             'include_file': 'BrynMawrCollege.html',
         },
         {
+            'tag': 'manchester',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'The University of Manchester Library Special Collections',
+            'blurb': """The University of Manchester Library’s manuscripts and archives are
+internationally important. Their subject range is extraordinarily
+diverse and the collections span many centuries, from the 3rd millennium
+BCE to the 21st century. European manuscripts include hundreds of
+medieval codices, and there are major collections of Arabic, Persian,
+Turkish and Hebrew manuscripts. The Library holds the archives of
+hundreds of companies, trade unions, charities, social organizations and
+religious institutions, as well as individuals. Our rare book
+collections are amongst the finest in the world. They encompass almost
+all the landmarks of printing through five centuries, including
+magnificent illustrated books. Highlights include: over 4,000
+incunables; a remarkable collection of 16th-century Italian books; one
+of the greatest collections in the world covering the entire history of
+the printed Bible; internationally important collections of French
+Revolutionary material, Nonconformist literature, and scientific and
+medical texts. The Library’s significant Visual Collection comprises:
+paintings, drawings, photographs, sculptures, textiles, ceramics, glass,
+archives, manuscripts, prints, papers, illustrated and painted books,
+and associated objects. Dating from the ancient world to the present,
+its representation of visual culture is excellent, of international
+scope, importance and interest.""",
+            'include_file': 'UniversityOfManchester.html',
+        },
+        {
             'tag': 'drexarc',
             'name': 'Drexel University Archives and Special Collections',
             'metadata_type': 'TEI',
