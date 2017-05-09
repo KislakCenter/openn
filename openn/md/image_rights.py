@@ -20,23 +20,16 @@ class ImageRights:
 
     """
 
-    def __init__(self, image, image_rights, licence_config):
+    def __init__(self, image, license):
         """Create return formatted licence strings and other values for
         image.
 
         """
-        self._image             = image
-        self._document          = image.document
-        self._image_rights      = deepcopy(image_rights)
-        self._licence_config    = deepcopy(licence_config)
+        self._image = image
+        self._document = image.document
+        self._license = license
 
     def rights_properties(self):
-        if self._image_rights.get('dynamic', False):
-            return self._do_build_properties()
-        else:
-            return self._image_rights
-
-    def _do_build_properties(self):
         return {
             'Marked': str(self.marked()),
             'WebStatement': self.web_statement(),
@@ -45,32 +38,16 @@ class ImageRights:
         }
 
     def marked(self):
-        return False if self.lic_code() == 'PD' else True
+        if self._license.code().startswith('PD'):
+            return False
+
+        return True
 
     def usage_terms(self):
-        template = self.single_image_template()
-        params = {
-            'title': self._image.full_name(),
-            'holder': self._document.image_copyright_holder,
-            'year': self._document.image_copyright_year,
-            'more_information': self._document.image_rights_more_info,
-        }
-        return template.format(**params)
+        return self._license.format_single_image(**self._image.image_license_args())
 
     def web_statement(self):
-        data = self.licence_data()
-        return data.get('deed_url', '')
+        return self._license.deed_url()
 
     def lic_code(self):
-        code = self._image.document.image_licence
-        if code and len(code.strip()) > 0:
-            return code.strip().upper()
-        else:
-            return 'PD'
-
-    def single_image_template(self):
-        return self.licence_data()['single_image']
-
-    def licence_data(self):
-        code = self.lic_code()
-        return self._licence_config[code]
+        return '-'.join([self._license.code(), self._license.version()])

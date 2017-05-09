@@ -19,8 +19,10 @@ class TestOPWorkbook(OPennTestCase):
     diaries_dir             = os.path.join(this_dir, 'data/diaries')
 
     pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
+    bibliophilly_json       = os.path.join(sheets_dir, 'bibliophilly.json')
 
     valid_workbook          = os.path.join(sheets_dir, 'valid_workbook.xlsx')
+    untrimmed_workbook      = os.path.join(this_dir, 'data/bibliophilly/FLPLewisE018/openn_metadata.xlsx')
 
 
     def setUp(self):
@@ -50,6 +52,11 @@ class TestOPWorkbook(OPennTestCase):
         sheet = OPWorkbook(self.valid_workbook, self.get_config())
         sheet.validate()
         self.assertFalse(sheet.has_metadata_errors())
+
+    def test_untrimmed_workbook(self):
+        wkbk = OPWorkbook(self.untrimmed_workbook, json.load(open(self.bibliophilly_json)))
+        wkbk.validate()
+        self.assertFalse(wkbk.has_metadata_errors())
 
 if __name__ == '__main__':
     unittest2.main()

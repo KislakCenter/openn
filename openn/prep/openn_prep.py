@@ -8,8 +8,12 @@ from openn.prep.common_prep import CommonPrep
 from openn.prep.prep_setup import PrepSetup
 from openn.openn_exception import OPennException
 from openn.models import PrepStatus
+import subprocess
+import logging
 
 class OPennPrep:
+
+    logger = logging.getLogger(__name__)
 
     def prep_dir(self, source_dir, prep_config):
         try:
@@ -24,6 +28,9 @@ class OPennPrep:
             doc = setup.prep_document(repo_wrapper, base_dir)
             prepstatus = self._setup_prepstatus(doc)
 
+
+            self.run_before(source_dir, prep_config)
+
             repo_prep_class = prep_config.get_prep_class()
             repo_prep = repo_prep_class(source_dir, doc, prep_config)
             repo_prep.prep_dir()
@@ -36,6 +43,21 @@ class OPennPrep:
             if prepstatus is not None:
                 self._failure_status(prepstatus, ex)
             raise
+
+    def run_before(self, source_dir, prep_config):
+        """Run any before scripts."""
+        for script in prep_config.before_scripts():
+            self.logger.info("Processing before script: %r", (script,))
+            p = subprocess.Popen(script,
+                                 stderr=subprocess.PIPE,
+                                 stdout=subprocess.PIPE)
+            out, err = p.communicate()
+            print out
+            print err
+            if p.returncode != 0:
+                # print err
+                raise OPennException("Before script failed: %s", str(script))
+
 
     def update_tei(self, source_dir, document, prep_config, **kwargs):
         repo_prep_class = prep_config.get_prep_class()

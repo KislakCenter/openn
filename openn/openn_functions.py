@@ -8,7 +8,7 @@ import traceback
 import gc
 from datetime import datetime
 import pytz
-
+import string
 
 from openn.openn_exception import OPennException
 from openn.repository.configs import Configs
@@ -175,3 +175,27 @@ def localize_datetime(dtime):
         return tzone.localize(dtime)
     else:
         return dtime.astimezone(tzone)
+
+# query formatted string:
+# taken from here:
+#
+#  http://www.trueblade.com/techblog/python-how-to-tell-if-a-format-string-contains-a-given-variable
+
+class AnyFormatSpec(object):
+    """ Rerturn any format; prevents breaking on weird formats. """
+    def __format__(self, fmt):
+        return ''
+
+class QueryFormatter(string.Formatter):
+    """ Sublcass of string.Formatter that we can query to see what keys are used. """
+    def __init__(self):
+        self.used = set()
+    def get_value(self, key, args, kwargs):
+        self.used.add(key)
+        return AnyFormatSpec()
+
+def is_used(var, format_string):
+    """ Return true if var is found in format_string. """
+    formatter = QueryFormatter()
+    formatter.format(format_string)
+    return var in formatter.used

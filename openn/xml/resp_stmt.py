@@ -9,11 +9,15 @@ class RespStmt(XMLWhatsit):
 
     @property
     def resp(self):
-        return self._get_text('.//t:resp')
+        return self._get_text('./t:resp')
 
     @property
     def pers_name(self):
-        return self._get_text('.//t:persName')
+        return self._get_text('./t:persName')
+
+    @property
+    def ref(self):
+        return self._get_attr('./t:persName', 'ref')
 
     def tostring(self):
         return etree.tostring(self.xml, pretty_print=True)

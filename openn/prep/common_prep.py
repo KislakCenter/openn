@@ -11,7 +11,9 @@ from openn.prep.file_list import FileList
 from openn.prep.package_dir import PackageDir
 from openn.openn_settings import OPennSettings
 from openn.prep.status import Status
+from openn.prep.license import LicenseFactory
 from openn.models import *
+import openn.app as op_app
 
 from django.core import serializers
 
@@ -101,6 +103,7 @@ class CommonPrep(Status):
     def update_document(self):
         self.document.call_number = self.tei.call_number
         self.document.title = getattr(self.tei, 'title', 'Untitled')
+        # raise Exception("==== glerbl " + self.document.title + " ====")
         self.document.save()
         return self.document
 
@@ -109,6 +112,8 @@ class CommonPrep(Status):
 
     def update_tei(self):
         self.tei.add_file_list(self.document)
+        lic_fact = LicenseFactory(op_app.LICENSES)
+        self.tei.add_licences(self.document, lic_fact)
         self.package_dir.save_tei(self.tei, self.document)
         self.document.tei_xml = self.tei.to_string()
         self.document.save()
@@ -123,17 +128,17 @@ class CommonPrep(Status):
         basedir = self.package_dir.basedir
         # rename master files
         if self.get_status() > self.MASTERS_RENAMED:
-            self.logger.warning("[%s] Master files already renamed" % (basedir,))
+            self.logger.warning("[%s] Master files already renamed", basedir)
         else:
-            self.logger.info("[%s] Rename master files" % (basedir,))
+            self.logger.info("[%s] Rename master files", basedir)
             self.package_dir.rename_masters(self.document)
             self.write_status(self.MASTERS_RENAMED)
 
         # generate derivatives
         if self.get_status() > self.DERIVS_CREATED:
-            self.logger.warning("[%s] Derivatives already created" % (basedir,))
+            self.logger.warning("[%s] Derivatives already created", basedir)
         else:
-            self.logger.info("[%s] Generate derivatives" % (basedir,))
+            self.logger.info("[%s] Generate derivatives", basedir)
             self.package_dir.create_derivs(
                 self.prep_config.context_var('deriv_configs'))
             openn_db.save_image_data(self.document,self.package_dir.file_list.data)
@@ -141,54 +146,51 @@ class CommonPrep(Status):
 
         # update tei
         if self.get_status() > self.TEI_COMPLETED:
-            self.logger.warning("[%s] TEI already completed" % (basedir,))
+            self.logger.warning("[%s] TEI already completed", basedir)
         else:
-            self.logger.info("[%s] Complete TEI" % (basedir,))
-            self.update_tei()
+            self.logger.info("[%s] Complete TEI", basedir)
             self.update_document()
+            self.update_tei()
             self.write_status(self.TEI_COMPLETED)
 
         # add metadata derivatives
         if self.get_status() > self.IMAGE_METADATA_ADDED:
-            self.logger.warning("[%s] Image metadata already added" % (basedir,))
+            self.logger.warning("[%s] Image metadata already added", basedir)
         else:
-            self.logger.info("[%s] Add metadata" % (basedir,))
-            image_rights = self.prep_config.image_rights()
-            licences = self.prep_config.context_var('licences')
-            self.package_dir.add_image_metadata(
-                self.document,image_rights,licences)
+            self.logger.info("[%s] Add metadata", basedir)
+            self.package_dir.add_image_metadata(self.document, LicenseFactory(op_app.LICENSES))
             self.write_status(self.IMAGE_METADATA_ADDED)
 
         # serialize_xmp
         if self.get_status() > self.IMAGE_DETAILS_UPDATED:
-            self.logger.warning("[%s] Image details already updated" % (basedir,))
+            self.logger.warning("[%s] Image details already updated", basedir)
         else:
-            self.logger.info("[%s] Serialize XMP" % (basedir,))
+            self.logger.info("[%s] Serialize XMP", basedir)
             self.package_dir.serialize_xmp(self.document)
             self.package_dir.update_image_details()
             self.write_status(self.IMAGE_DETAILS_UPDATED)
 
         # generate manifest
         if self.get_status() > self.MANIFEST_CREATED:
-            self.logger.warning("[%s] Manifest already generated" % (basedir,))
+            self.logger.warning("[%s] Manifest already generated", basedir)
         else:
-            self.logger.info("[%s] Generate manifest" % (basedir,))
+            self.logger.info("[%s] Generate manifest", basedir)
             self.package_dir.create_manifest()
             self.write_status(self.MANIFEST_CREATED)
 
         # write version.txt
         if self.get_status() > self.VERSION_TXT_WRITTEN:
-            self.logger.warning("[%s] Version.txt already written" % (basedir,))
+            self.logger.warning("[%s] Version.txt already written", basedir)
         else:
-            self.logger.info("[%s] Write version.txt" % (basedir,))
+            self.logger.info("[%s] Write version.txt", basedir)
             version = self.save_version(self.document)
             self.package_dir.write_version_txt(self.document)
             self.write_status(self.VERSION_TXT_WRITTEN)
 
         if self.get_status() >= self.COMMON_PREP_COMPLETED:
-            self.logger.warning("[%s] Common prep already complete" % (basedir,))
+            self.logger.warning("[%s] Common prep already complete", basedir)
         else:
-            self.logger.info("[%s] Marking common prep COMPLETED" % (basedir,))
+            self.logger.info("[%s] Marking common prep COMPLETED", basedir)
             self.write_status(self.COMMON_PREP_COMPLETED)
 
         self.add_default_removals()
@@ -201,6 +203,5 @@ class CommonPrep(Status):
     def _cleanup(self):
         for r in self._removals:
             if os.path.exists(r):
-                self.logger.debug("[%s] Cleanup: removing \'%s\'" % (
-                    self.package_dir.basedir,r))
+                self.logger.debug("[%s] Cleanup: removing \'%s\'", self.package_dir, r)
                 os.remove(r)

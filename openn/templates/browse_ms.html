@@ -30,7 +30,11 @@
           <h4>Authors</h4>
           <ul class="list-unstyled">
           {% for author in doc.tei.authors %}
-             <li>{{ author }}</li>
+             <li>{{ author.name }}
+             {% if author.ref %}
+             ({{ author.ref|urlize }})
+             {% endif %}
+             </li>
            {% endfor %}
           </ul>
         </div>
@@ -41,7 +45,11 @@
           <h4>Other related names</h4>
           <ul class="list-unstyled">
           {% for resp in doc.tei.related_names %}
-             <li>{{ resp.pers_name }} ({{ resp.resp }})</li>
+             <li>{{ resp.pers_name }}, {{resp.resp}}
+             {% if resp.ref %}
+             ({{ resp.ref|urlize }})
+             {% endif %}
+             </li>
            {% endfor %}
           </ul>
         </div>
@@ -65,7 +73,6 @@
           </ul>
         </div>
         {% endif %}
-
 
         {% if doc.tei.publisher %}
         <div>
@@ -170,6 +177,20 @@
         </div>
         {% endif %}
 
+        {% if doc.tei.support_material %}
+        <div>
+          <h4>Support</h4>
+          <span>{{ doc.tei.support_material|capfirst }}</span>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.catchwords %}
+        <div>
+          <h4>Catchwords</h4>
+          <span>{{ doc.tei.catchwords }}</span>
+        </div>
+        {% endif %}
+
         {% if doc.tei.binding %}
         <div>
           <h4>Binding</h4>
@@ -177,10 +198,12 @@
         </div>
         {% endif %}
 
-        {% if doc.tei.layout %}
+        {% if doc.tei.layouts %}
         <div>
           <h4>Layout</h4>
-          <span>{{ doc.tei.layout }}</span>
+          {% for layout in doc.tei.layouts %}
+          <li>{{ layout }}</li>
+          {% endfor %}
         </div>
         {% endif %}
 
@@ -191,10 +214,12 @@
         </div>
         {% endif %}
 
-        {% if doc.tei.script %}
+        {% if doc.tei.scripts %}
         <div>
           <h4>Script</h4>
-          <span>{{ doc.tei.script }}</span>
+          {% for script in doc.tei.scripts %}
+          <li>{{ script }}</li>
+          {% endfor %}
         </div>
         {% endif %}
 
@@ -212,6 +237,25 @@
           <ul class="list-unstyled">
           {% for note in doc.tei.provenance %}
              <li>{{ note }}<br/>&nbsp;</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        {% if doc.tei.related_resources %}
+        <div>
+          <h4>Related resources</h4>
+
+          <ul class="list-unstyled">
+          {% for resource in doc.tei.related_resources %}
+             <li>
+             {% if resource.text %}
+             {{ resource.text }}
+             {% endif %}
+             {% if resource.target %}
+             {{ resource.target|urlize }}
+             {% endif %}
+             </li>
            {% endfor %}
           </ul>
         </div>
@@ -261,6 +305,17 @@
         </div>
         {% endif %}
 
+        {% if doc.tei.keywords %}
+        <div>
+          <h4>Keywords</h4>
+          <ul class="list-unstyled">
+          {% for keyword in doc.tei.keywords %}
+             <li>{{ keyword }}</li>
+           {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
         {% if doc.tei.licences %}
         <div>
           <h4>Licenses</h4>
@@ -286,10 +341,13 @@
           <h4>Table of contents</h4>
           <ul>
           {% for page in pages %}
-          {% for title in page.titles %}
+          {% for ms_item in page.ms_items %}
           <li>
             <span style="font-style: italic;"><a href="#{{ page.image.label|aname }}">{{ page.image.display_label }}</a> &mdash; </span>
-            <span>{{ title }}</span>
+            <span>{{ ms_item.title }}{% if ms_item.incipit %};
+            incipit: {{ ms_item.incipit }}{% endif %}{% if ms_item.explicit %}; explicit: {{ ms_item.explicit }}{% endif %}
+
+            </span>
           </li>
           {% endfor %}
           {% endfor %}
