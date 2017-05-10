@@ -282,7 +282,7 @@ PREPARATION_METHODS = [
             'required_names': ['*.xlsx'],
         },
         'before_scripts': [
-            [os.path.join(PROJECT_PATH, 'scripts', 'get-bibliophilly-keywords.sh')]
+            [os.path.join(SITE_ROOT, '..', 'scripts', 'get-bibliophilly-keywords.sh')]
         ],
         'prep_class': {
             'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
