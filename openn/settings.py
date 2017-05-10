@@ -1069,9 +1069,8 @@ CURATED_COLLECTIONS = {
         {
             'tag': 'bibliophilly',
             'name': 'Bibliotheca Philadelphiensis',
-            'blurb': """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet scelerisque tellus, ac dapibus neque. Vestibulum viverra mi odio, eu luctus elit volutpat nec. Vivamus sed nunc diam. Ut sed feugiat lectus. Curabitur cursus purus non ligula vulputate, vel porta lectus auctor. In magna velit, accumsan sed elit at, ultricies consequat dolor. Nullam at venenatis felis, cursus tristique ex. Nulla bibendum ante quis nisl placerat molestie. Morbi scelerisque non diam eget pharetra.
-
-Integer lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligula vitae suscipit. Morbi ultricies dolor et nunc euismod malesuada. Nullam sollicitudin neque imperdiet arcu pellentesque mattis. Aenean vitae urna et felis placerat rhoncus in ut libero. Vestibulum vel diam dui. Curabitur in mauris non dui pharetra aliquet nec nec quam. Nulla maximus ipsum nibh. Nulla bibendum, nunc at condimentum suscipit, nisl est sodales massa, quis faucibus odio neque ac nisl.""",
+            'blurb': """Documents from the Biblitheca Philadelphiensis Project,
+                        funded by the Council on Library and Information Resources.""",
             'csv_only': False,
             'include_file': 'BiblioPhilly.html',
             'live': True,
