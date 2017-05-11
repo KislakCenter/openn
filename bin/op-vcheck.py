@@ -158,7 +158,8 @@ def main(cmdline=None):
         return status
 
     if len(args) != 2:
-        parser.error('Wrong number of arguments')
+        msg = 'Wrong number of arguments: %d; expected: %d' % (len(args), 2)
+        parser.error(msg)
 
     prep_config_tag  = args[0]
     workbook_path = args[1]
