@@ -6,6 +6,6 @@
 
 this_dir=`dirname $0`
 wrapper=$this_dir/op-wrapper.sh
-script=${this_dir}/op-vcheck.py
+script=${this_dir}/op-vsheet.py
 
 $wrapper -C $script $@
