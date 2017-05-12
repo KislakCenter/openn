@@ -70,7 +70,7 @@ A Document records:
 class Document(models.Model):
     call_number               = models.CharField(max_length = 255, null = True, default = None, blank = True)
     collection                = models.CharField(max_length = 30, null = True, default = None, blank = True)
-    base_dir                  = models.CharField(max_length = 30, null = False, default = None, blank = False)
+    base_dir                  = models.CharField(max_length = 100, null = False, default = None, blank = False)
     image_licence             = models.CharField(max_length = 10, null = True, default = 'PD', blank = True)
     metadata_licence          = models.CharField(max_length = 10, null = True, default = 'CC-BY', blank = True)
     is_online                 = models.BooleanField(default = False)
