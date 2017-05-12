@@ -172,7 +172,7 @@ class TestCuratedCollectionsTOC(OPennTestCase):
         page.is_needed()
 
         self.assertIn(
-            "Curated collection HTML hasn't changed since last generated",
+            "object hasn't changed since Curated collection HTML last generated",
             format_logging(self.log_messages))
 
 
