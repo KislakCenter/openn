@@ -77,7 +77,8 @@ class Browse(Page):
         if self.template_changed():
             return True
 
-        if not self.changed_since_generation(comp_date=self.document.prepstatus.started):
+        comp_date = max(self.document.prepstatus.started, self.document.updated)
+        if self.changed_since_generation(comp_date=comp_date):
             return False
 
         return True
