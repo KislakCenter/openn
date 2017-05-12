@@ -398,12 +398,12 @@ class OPennTEI(XMLWhatsit):
         availability = etree.Element("availability", nsmap=self.ns)
         lic = license_factory.license(document.image_licence)
         lic_element = etree.Element("licence", target=lic.legalcode_url(), nsmap=self.ns)
-        lic_element.text = lic.format_images(**document.image_license_args())
+        lic_element.text = lic.format_images(**self.image_license_args(document))
         availability.append(lic_element)
 
         lic = license_factory.license(document.metadata_licence)
         lic_element = etree.Element("licence", target=lic.legalcode_url(), nsmap=self.ns)
-        lic_element.text = lic.format_metadata(**document.metadata_license_args())
+        lic_element.text = lic.format_metadata(**self.metadata_license_args(document))
         availability.append(lic_element)
 
         pub_stmt = self.xml.xpath('/t:TEI/t:teiHeader/t:fileDesc/t:publicationStmt',
@@ -421,6 +421,19 @@ class OPennTEI(XMLWhatsit):
             funder_element.text = funder
             title_stmt.append(funder_element)
 
+    def metadata_license_args(self, document):
+        args = document.metadata_license_args()
+        title = "%s %s: %s" % (self.repository, self.call_number, self.title)
+        args['title'] = title
+
+        return args
+
+    def image_license_args(self, document):
+        args = document.image_license_args()
+        title = "%s, %s: %s" % (self.repository, self.call_number, self.title)
+        args['title'] = title
+
+        return args
     def add_file_list(self,document):
         """
            <facsimile>
