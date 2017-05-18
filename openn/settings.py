@@ -871,7 +871,7 @@ PREP_CONFIGS = {
             'metadata_rights': 'dynamic',
         }
     },
-    'huntington-diaries': {
+     'huntington-diaries': {
         'repository': {
             'tag': 'huntington'
         },
@@ -879,18 +879,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'lts-diaries': {
