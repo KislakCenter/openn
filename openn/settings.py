@@ -366,6 +366,22 @@ intellectual heritage.""",
             'include_file': 'LJSchoenbergManuscripts.html',
         },
         {
+            'tag': 'bates',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Barbara Bates Center for the Study of the History of Nursing',
+            'blurb': """The Barbara Bates Center for the Study of the History of Nursing is the
+largest repository for primary source materials and rare books about the
+history of nursing. The Center holds an extensive collection of
+materials from 19th to the 20th century hospital based nursing schools,
+visiting nurse societies and the personal papers of nursing leaders.
+Contained in the collections are over 3000 books, rare books, glass
+slides, photographs, audio tapes, and films, as well as a smaller amount
+of artifact holdings. The Center's collections are approximately 2300
+linear feet.""",
+            'include_file': 'BatesCenter.html',
+        },
+        {
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
             'live': True,
@@ -770,6 +786,19 @@ PREP_CONFIGS = {
     'penn-diaries': {
         'repository': {
             'tag': 'pennmss'
+        },
+        "image_types": [ '*.tif' ],
+        'repository_prep': {
+            'tag': 'diaries',
+        },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
+        }
+    },
+    'bates-diaries': {
+        'repository': {
+            'tag': 'bates'
         },
         "image_types": [ '*.tif' ],
         'repository_prep': {
