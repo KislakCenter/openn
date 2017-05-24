@@ -976,6 +976,19 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'manchester-bphil': {
+        'repository': {
+            'tag': 'manchester'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'CC-BY',
+            'metadata_rights': 'CC-BY',
+        }
+    },
     'pennmuseum-diaries': {
         'repository': {
             'tag': 'pennmuseum'
