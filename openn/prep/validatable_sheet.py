@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-import re
+# import re
 import itertools
 import logging
+import regex
 from copy import deepcopy
 
 from openn.prep import langs
@@ -26,32 +27,34 @@ class ValidatableSheet(object):
     NO_BREAK_SPACE = '\u00A0'
     # Match non-breaking space followed or proceeded by one or zero
     # spaces
-    NO_BREAK_SPACE_RE = re.compile(" ?%s ?" % (NO_BREAK_SPACE,), re.UNICODE)
+    NO_BREAK_SPACE_RE = regex.compile(" ?%s ?" % (NO_BREAK_SPACE,), regex.UNICODE)
     # For stray right-to-left and left-to-right characters
     RTL = '\u200F'.decode( 'unicode-escape' )
     LTR = '\u200E'.decode( 'unicode-escape' )
-    BIDI_RE = re.compile("[%s%s]+" % (RTL, LTR), re.UNICODE)
+    BIDI_RE = regex.compile("[%s%s]+" % (RTL, LTR), regex.UNICODE)
     # Fixing MS `smart` quotes
     # ‘ (U+2018) LEFT SINGLE QUOTATION MARK
     LEFT_SINGLE_QUOTATION_MARK = '\u2018'.decode('unicode-escape')
     # ’ (U+2019) RIGHT SINGLE QUOTATION MARK
     RIGHT_SINGLE_QUOTATION_MARK  = '\u2019'.decode('unicode-escape')
-    SINGLE_QUOTE_RE = re.compile("[%s%s]" % (
-        RIGHT_SINGLE_QUOTATION_MARK, LEFT_SINGLE_QUOTATION_MARK), re.UNICODE)
+    SINGLE_QUOTE_RE = regex.compile("[%s%s]" % (
+        RIGHT_SINGLE_QUOTATION_MARK, LEFT_SINGLE_QUOTATION_MARK), regex.UNICODE)
 
     # “ (U+201C) LEFT DOUBLE QUOTATION MARK
     LEFT_DOUBLE_QUOTATION_MARK = '\u201C'.decode('unicode-escape')
     # ” (U+201D) RIGHT DOUBLE QUOTATION MARK
     RIGHT_DOUBLE_QUOTATION_MARK = '\u201D'.decode('unicode-escape')
-    DOUBLE_QUOTE_RE = re.compile("[%s%s]" % (
-        RIGHT_DOUBLE_QUOTATION_MARK, LEFT_DOUBLE_QUOTATION_MARK), re.UNICODE)
+    DOUBLE_QUOTE_RE = regex.compile("[%s%s]" % (
+        RIGHT_DOUBLE_QUOTATION_MARK, LEFT_DOUBLE_QUOTATION_MARK), regex.UNICODE)
 
     # conversion of John Gruber's URI RE adapted from:
     #   https://gist.github.com/uogbuji/705383
-    URI_RE = re.compile(ur'(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
+    URI_RE = regex.compile(ur'(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?\xab\xbb\u201c\u201d\u2018\u2019]))')
 
-    YEAR_RE = re.compile(ur'^-?\d{1,4}$')
-    INTEGER_RE = re.compile(ur'^\d+$')
+    YEAR_RE = regex.compile(ur'^-?\d{4}$')
+
+    WORD_RE = regex.compile(ur'^(\p{L}|\p{N}|\p{P}|\p{S})+$')
+    INTEGER_RE = regex.compile(ur'^\d+$')
     # this an imperfect regex for this purpose and can only be assumed
     # to match most email address
     # It's taken from here:
@@ -62,7 +65,7 @@ class ValidatableSheet(object):
     #
     #   http://stackoverflow.com/questions/201323/using-a-regular-expression-to-validate-an-email-address
     #
-    EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b', re.I)
+    EMAIL_RE = regex.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b', regex.I)
 
     # openpyxl numbers colunms starting at 1; put None at 0 index;
     # this is the first 520 columns.  Wish Python had Ruby's
@@ -130,6 +133,10 @@ class ValidatableSheet(object):
             int(val) in xrange(ValidatableSheet.MIN_YEAR, ValidatableSheet.MAX_YEAR + 1)
 
     @staticmethod
+    def is_valid_word(val):
+        return ValidatableSheet.WORD_RE.match(unicode(val).strip())
+
+    @staticmethod
     def is_empty_value(value):
         return value is None or len(unicode(value).strip()) == 0
 
@@ -178,7 +185,7 @@ class ValidatableSheet(object):
     def normalize(s):
         if s is not None:
             u = ValidatableSheet.fix_unicode(s)
-            return re.sub(r'\W+', '', u).lower()
+            return regex.sub(r'\W+', '', u).lower()
 
     @staticmethod
     def fix_unicode(val):
@@ -936,6 +943,10 @@ class ValidatableSheet(object):
                     self._format_error(field, value, data_type))
         elif data_type == 'integer':
             if not self.is_valid_integer(value):
+                self.errors.append(
+                    self._format_error(field, value, data_type))
+        elif data_type == 'word':
+            if not self.is_valid_word(value):
                 self.errors.append(
                     self._format_error(field, value, data_type))
         elif data_type == 'string':

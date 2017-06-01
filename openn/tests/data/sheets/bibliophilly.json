@@ -372,7 +372,8 @@
                   "field_name": "Support material",
                   "required": false,
                   "repeating": false,
-                  "data_type": "string"
+                  "data_type": "word",
+                  "value_list": [ "parchment", "paper", "mixed" ]
               },
               "page_count": {
                 "field_name": "Number of physical pages",

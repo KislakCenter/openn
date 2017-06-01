@@ -155,6 +155,7 @@ class PackageDir:
         f = open(self.tei_name(doc), 'w+')
         try:
             f.write(openn_tei.to_string())
+            self.logger.info("Wrote TEI: '%s'", self.tei_name(doc))
         finally:
             f.close()
 

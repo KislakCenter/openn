@@ -48,12 +48,20 @@ class TestValidatableSheet(OPennTestCase):
         self.assertFalse(ValidatableSheet.is_valid_uri("car money"))
 
     def test_is_valid_year(self):
-        for year in (2013, 013, 3000, -5000, 2):
-            self.assertTrue(ValidatableSheet.is_valid_year(year), ("%d should be a valid year" % (year,)))
+        for year in ('2013', '0013', '3000', '-5000', '0002'):
+            self.assertTrue(ValidatableSheet.is_valid_year(year), ("%s should be a valid year" % (year,)))
 
     def test_is_not_valid_year(self):
         for year in (2013.3, 'car', 3001, -5001):
             self.assertFalse(ValidatableSheet.is_valid_year(year), ("%s should not be a valid year" % (str(year),)))
+
+    def test_is_valid_word(self):
+        for word in ('word', 'wod$$d', 'wo:rd', ':word2', 'word!word', ' word '):
+            self.assertTrue(ValidatableSheet.is_valid_word(word), ("'%s' should be a valid word" % (word,)))
+
+    def test_is_not_valid_word(self):
+        for word in ('wo rd', 'wod$ $d', 'wo :rd', ': word2', 'word !word', ''):
+            self.assertFalse(ValidatableSheet.is_valid_word(word), ("%s should not be a valid word" % (word,)))
 
     def test_is_valid_email(self):
         self.assertTrue(ValidatableSheet.is_valid_email('joe@example.com'))

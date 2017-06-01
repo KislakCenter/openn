@@ -282,7 +282,7 @@ PREPARATION_METHODS = [
             'required_names': ['*.xlsx'],
         },
         'before_scripts': [
-            [os.path.join(PROJECT_PATH, 'scripts', 'get-bibliophilly-keywords.sh')]
+            [os.path.join(SITE_ROOT, '..', 'scripts', 'get-bibliophilly-keywords.sh')]
         ],
         'prep_class': {
             'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
@@ -366,6 +366,22 @@ intellectual heritage.""",
             'include_file': 'LJSchoenbergManuscripts.html',
         },
         {
+            'tag': 'bates',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Barbara Bates Center for the Study of the History of Nursing',
+            'blurb': """The Barbara Bates Center for the Study of the History of Nursing is the
+largest repository for primary source materials and rare books about the
+history of nursing. The Center holds an extensive collection of
+materials from 19th to the 20th century hospital based nursing schools,
+visiting nurse societies and the personal papers of nursing leaders.
+Contained in the collections are over 3000 books, rare books, glass
+slides, photographs, audio tapes, and films, as well as a smaller amount
+of artifact holdings. The Center's collections are approximately 2300
+linear feet.""",
+            'include_file': 'BatesCenter.html',
+        },
+        {
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
             'live': True,
@@ -386,7 +402,7 @@ collection ranging from the 15th century to the present, including
             'metadata_type': 'TEI',
             'live': True,
             'name': 'The University of Manchester Library Special Collections',
-            'blurb': """The University of Manchester Library’s manuscripts and archives are
+            'blurb': """The University of Manchester Library's manuscripts and archives are
 internationally important. Their subject range is extraordinarily
 diverse and the collections span many centuries, from the 3rd millennium
 BCE to the 21st century. European manuscripts include hundreds of
@@ -401,7 +417,7 @@ incunables; a remarkable collection of 16th-century Italian books; one
 of the greatest collections in the world covering the entire history of
 the printed Bible; internationally important collections of French
 Revolutionary material, Nonconformist literature, and scientific and
-medical texts. The Library’s significant Visual Collection comprises:
+medical texts. The Library's significant Visual Collection comprises:
 paintings, drawings, photographs, sculptures, textiles, ceramics, glass,
 archives, manuscripts, prints, papers, illustrated and painted books,
 and associated objects. Dating from the ancient world to the present,
@@ -518,6 +534,20 @@ world, it includes materials on women's suffrage, the rights of Native
 Americans, the anti-slavery movement, social activism, and the peace
 movement.""",
             'include_file': 'FriendsHistoricalLibrary.html',
+        },
+        {
+            'tag': 'huntington',
+            'name': 'The Huntington Library',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Huntington Library is one of the largest and most complete research
+libraries in the United States in its fields of specialization. The
+Library's collection of rare books, manuscripts, prints, photographs,
+maps, and other materials in the fields of British and American history
+and literature totals more than nine million items. OPenn hosts one item
+from The Huntington Library, the *Autobiography of Benjamin
+Franklin,(Autograph manuscript signed), 1771-1789.*""",
+            'include_file': 'HuntingtonLibrary.html',
         },
         {
             'tag': 'hsp',
@@ -692,12 +722,22 @@ illumination.""",
         },
         {
             'tag': 'flp',
-            'name': 'Free Library of Philadelphia',
-            'metadata_type': 'tei',
+            'name': 'Free Library of Philadelphia, Special Collections',
+            'metadata_type': 'TEI',
             'live': True,
-            'blurb': """The Free Library of Philadelphia.""",
+            'blurb': """With more than 6 million visits to its 54 locations and 9 million online
+visits annually, the Free Library is one of Philadelphia's most widely
+used educational and cultural institutions. The Free Library's Special
+Collections feature music, maps, drawings, photographs, fine art prints,
+and one of the largest rare book collections in an American public
+library. The Rare Book Department houses thousands of illuminated
+pre-modern manuscripts and cuttings; first editions and manuscripts of
+important American and British writers, including some of the largest
+collections of Charles Dickens and Edgar Allan Poe; early American
+children's books and original artworks by children's illustrators;
+hundreds of incunables; and books, manuscripts, and maps relating to the
+discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
-            'no_document': True,
         },
     ],
 }
@@ -746,6 +786,19 @@ PREP_CONFIGS = {
     'penn-diaries': {
         'repository': {
             'tag': 'pennmss'
+        },
+        "image_types": [ '*.tif' ],
+        'repository_prep': {
+            'tag': 'diaries',
+        },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
+        }
+    },
+    'bates-diaries': {
+        'repository': {
+            'tag': 'bates'
         },
         "image_types": [ '*.tif' ],
         'repository_prep': {
@@ -837,6 +890,19 @@ PREP_CONFIGS = {
     'hsp-diaries': {
         'repository': {
             'tag': 'hsp'
+        },
+        "image_types": [ '*.tif' ],
+        'repository_prep': {
+            'tag': 'diaries',
+        },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
+        }
+    },
+     'huntington-diaries': {
+        'repository': {
+            'tag': 'huntington'
         },
         "image_types": [ '*.tif' ],
         'repository_prep': {
@@ -968,6 +1034,7 @@ PREP_CONFIGS = {
             'tag': 'flp'
         },
         "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
         'repository_prep': {
             'tag': 'bphil',
         },
@@ -1031,9 +1098,8 @@ CURATED_COLLECTIONS = {
         {
             'tag': 'bibliophilly',
             'name': 'Bibliotheca Philadelphiensis',
-            'blurb': """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet scelerisque tellus, ac dapibus neque. Vestibulum viverra mi odio, eu luctus elit volutpat nec. Vivamus sed nunc diam. Ut sed feugiat lectus. Curabitur cursus purus non ligula vulputate, vel porta lectus auctor. In magna velit, accumsan sed elit at, ultricies consequat dolor. Nullam at venenatis felis, cursus tristique ex. Nulla bibendum ante quis nisl placerat molestie. Morbi scelerisque non diam eget pharetra.
-
-Integer lobortis dictum feugiat. Sed euismod felis nisi. Morbi porttitor id ligula vitae suscipit. Morbi ultricies dolor et nunc euismod malesuada. Nullam sollicitudin neque imperdiet arcu pellentesque mattis. Aenean vitae urna et felis placerat rhoncus in ut libero. Vestibulum vel diam dui. Curabitur in mauris non dui pharetra aliquet nec nec quam. Nulla maximus ipsum nibh. Nulla bibendum, nunc at condimentum suscipit, nisl est sodales massa, quis faucibus odio neque ac nisl.""",
+            'blurb': """Documents from the Biblitheca Philadelphiensis Project,
+                        funded by the Council on Library and Information Resources.""",
             'csv_only': False,
             'include_file': 'BiblioPhilly.html',
             'live': True,

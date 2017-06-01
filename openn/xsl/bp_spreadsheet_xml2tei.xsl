@@ -306,14 +306,14 @@
                                   </xsl:for-each>
                                 </scriptDesc>
                               </xsl:if>
-                            <xsl:if test="//decoNote/decoration | //tags/tag/name[text() = 'ILL']">
+                            <xsl:if test="//decoNote/decoration | //tags/tag/name[text() = 'DECO']">
                               <decoDesc>
                                 <xsl:if test="//decoNote/decoration">
                                   <decoNote>
                                     <xsl:value-of select="//decoNote/decoration"/>
                                   </decoNote>
                                 </xsl:if>
-                                <xsl:for-each select="//tags/tag/name[text() = 'ILL']">
+                                <xsl:for-each select="//tags/tag/name[text() = 'DECO']">
                                    <decoNote>
                                      <xsl:attribute name="n">
                                        <xsl:value-of select="ancestor::page/display_page/text()"/>
