@@ -104,10 +104,15 @@ For a package previously completed document with DOCUMENT_ID using
 PREP_CONFIG, recreate the TEI file outputting the TEI to OUTPUT_DIR
 [default:.]; OUTPUT_DIR can be changed with the '--out-dir' option.
 
-NOTE: At present TEI for only PIH (Penn in Hand) documents can be
-regenerated.
+For medren prep documents, the PREP_CONFIG and DOCUMENT_ID are all that is
+needed. For documents generated from a spreadsheet the path to the
+spreadsheet must be given as a keyword:
+
+
+    op-update-tei -k xlsx=path/to/file.xls flp-bphil 9004
 
 """
+
     # usage = "%prog COLLECTION SOURCE_DIR"
 
     parser = OpOptParser(usage=usage,epilog=epilog)
