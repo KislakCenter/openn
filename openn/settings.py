@@ -402,7 +402,7 @@ collection ranging from the 15th century to the present, including
             'metadata_type': 'TEI',
             'live': True,
             'name': 'Othmer Library, Chemical Heritage Foundation',
-            'blurb': """The Chemical Heritage Foundation’s Donald F. and Mildred Topp Othmer
+            'blurb': """The Chemical Heritage Foundation's Donald F. and Mildred Topp Othmer
 Library of Chemical History collects, preserves, and makes accessible
 materials relating to the history of science, technology, and medicine
 with an emphasis on chemical and material sciences and technologies from
