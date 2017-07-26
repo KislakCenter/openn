@@ -84,9 +84,14 @@ def main(cmdline=None):
     try:
         prep_config = get_prep_config(prep_config_tag)
         doc = Document.objects.get(pk=doc_id)
+        output_dir = os.path.join(opts.out_dir, doc.base_dir)
+        if os.path.exists(output_dir):
+            raise OPennException("Output directory already exists: %s" % (output_dir))
+        else:
+            os.mkdir(output_dir)
         kwargs = get_keywords(opts)
 
-        OPennPrep().update_tei(opts.out_dir, doc, prep_config, **kwargs)
+        OPennPrep().update_tei(output_dir, doc, prep_config, **kwargs)
     except OPennException as ex:
         status = 4
         parser.error(str(ex))
@@ -101,11 +106,27 @@ def make_parser():
     epilog = """
 
 For a package previously completed document with DOCUMENT_ID using
-PREP_CONFIG, recreate the TEI file outputting the TEI to OUTPUT_DIR
-[default:.]; OUTPUT_DIR can be changed with the '--out-dir' option.
+PREP_CONFIG, add new TEI file to a new document base directory, like
+'mscodex123' located in OUT_DIR [default:.]; OUTPUT_DIR can be changed with
+the '--out-dir' option.
 
-NOTE: At present TEI for only PIH (Penn in Hand) documents can be
-regenerated.
+For example, note the following, for a document with ID 4221 and base
+directory 'lewis_e_018':
+
+   $ %prog -k xlsx=lewis_e_018_metadata.xlsx flp-bphil 4221
+
+This will create a new directory 'lewis_e_018' in the current directory, as
+well as the contained 'data' directory, and the TEI file:
+
+   ./lewis_e_018/data/lewis_e_018_TEI.xml
+
+Note: script will not run if './lewis_e_018' already exists.
+
+For spreadsheet-based TEI, the 'xlsx' keyword must be used:
+
+    $ %prog -k xlsx=path/to/file.xlsx flp-bphil 4732
+
+For Penn in Hand, no keyword arguments are necessary.
 
 """
     # usage = "%prog COLLECTION SOURCE_DIR"
