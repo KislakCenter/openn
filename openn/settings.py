@@ -366,6 +366,22 @@ intellectual heritage.""",
             'include_file': 'LJSchoenbergManuscripts.html',
         },
         {
+            'tag': 'bates',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Barbara Bates Center for the Study of the History of Nursing',
+            'blurb': """The Barbara Bates Center for the Study of the History of Nursing is the
+largest repository for primary source materials and rare books about the
+history of nursing. The Center holds an extensive collection of
+materials from 19th to the 20th century hospital based nursing schools,
+visiting nurse societies and the personal papers of nursing leaders.
+Contained in the collections are over 3000 books, rare books, glass
+slides, photographs, audio tapes, and films, as well as a smaller amount
+of artifact holdings. The Center's collections are approximately 2300
+linear feet.""",
+            'include_file': 'BatesCenter.html',
+        },
+        {
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
             'live': True,
@@ -380,6 +396,26 @@ printed books. These collections are supported by a graphics
 collection ranging from the 15th century to the present, including
 7,300 prints, 3,500 drawings, and 13,000 vintage photographs.""",
             'include_file': 'BrynMawrCollege.html',
+        },
+        {
+            'tag': 'chf',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Othmer Library, Chemical Heritage Foundation',
+            'blurb': """The Chemical Heritage Foundation's Donald F. and Mildred Topp Othmer
+Library of Chemical History collects, preserves, and makes accessible
+materials relating to the history of science, technology, and medicine
+with an emphasis on chemical and material sciences and technologies from
+ancient to modern times. The Othmer Library was founded in 1988 when Dr.
+and Mrs. Othmer announced their challenge grant to be given for the
+creation of a library which would work to preserve the history of the
+chemical sciences. The Othmer Library now houses approximately 160,000
+print and microform volumes, rare books & manuscripts, significant
+archival materials, and historical photographs of great value to
+researchers and our cultural heritage. Together these collections form
+an unrivaled resource for the history of chemistry and related sciences,
+technologies, and industries.""",
+            'include_file': 'ChemHeritageFoundation.html',
         },
         {
             'tag': 'manchester',
@@ -528,13 +564,9 @@ movement.""",
 libraries in the United States in its fields of specialization. The
 Library's collection of rare books, manuscripts, prints, photographs,
 maps, and other materials in the fields of British and American history
-and literature totals more than nine million items. The Library
-collections date from the Middle Ages to the 21st century. The greatest
-concentration is in the English Renaissance, about 1500 to 1641; other
-strengths include medieval manuscripts, incunabula (books printed before
-1501), maps, travel literature, British and American history and
-literature, the American Southwest, and the history of science, medicine
-and technology.""",
+and literature totals more than nine million items. OPenn hosts one item
+from The Huntington Library, the *Autobiography of Benjamin
+Franklin,(Autograph manuscript signed), 1771-1789.*""",
             'include_file': 'HuntingtonLibrary.html',
         },
         {
@@ -784,6 +816,19 @@ PREP_CONFIGS = {
             'metadata_rights': 'dynamic',
         }
     },
+    'bates-diaries': {
+        'repository': {
+            'tag': 'bates'
+        },
+        "image_types": [ '*.tif' ],
+        'repository_prep': {
+            'tag': 'diaries',
+        },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
+        }
+    },
     'brynmawr-diaries': {
         'repository': {
             'tag': 'brynmawr'
@@ -875,7 +920,7 @@ PREP_CONFIGS = {
             'metadata_rights': 'dynamic',
         }
     },
-    'huntington-diaries': {
+     'huntington-diaries': {
         'repository': {
             'tag': 'huntington'
         },
@@ -883,18 +928,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
     'lts-diaries': {
@@ -1027,6 +1063,33 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'chf-bphil': {
+        'repository': {
+            'tag': 'chf'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'manchester-bphil': {
+        'repository': {
+            'tag': 'manchester'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'CC-BY',
+            'metadata_rights': 'CC-BY',
+        }
+    },
     'pennmuseum-diaries': {
         'repository': {
             'tag': 'pennmuseum'
@@ -1069,8 +1132,12 @@ CURATED_COLLECTIONS = {
         {
             'tag': 'bibliophilly',
             'name': 'Bibliotheca Philadelphiensis',
-            'blurb': """Documents from the Biblitheca Philadelphiensis Project,
-                        funded by the Council on Library and Information Resources.""",
+            'blurb': """This collection, when completed, will include digital editions of more
+than 400 western European medieval and early modern codices, plus
+selected leaves and cuttings, from the collections of Philadelphia Area
+Consortium of Special Collections Libraries (PACSCL) member libraries.
+This collections is funded by the Council on Library and Information
+Resources.""",
             'csv_only': False,
             'include_file': 'BiblioPhilly.html',
             'live': True,
