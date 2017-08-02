@@ -461,7 +461,7 @@
             },
             "subject_keyword": {
                 "field_name": "Subject: keywords",
-                "required": false,
+                "required": true,
                 "repeating": true,
                 "data_type": "string"
             }
