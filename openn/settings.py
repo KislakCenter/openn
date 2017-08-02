@@ -296,6 +296,27 @@ PREPARATION_METHODS = [
         },
     },
     {
+        'tag': 'gzh',
+        'description': """Extracts metadata from Genizah spreadsheet to build metadata for the
+            object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
+        'name': 'Genizah Prep',
+        'package_validation': {
+            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*', '.DS_Store'],
+            'required_names': ['*.xlsx'],
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+            'params' : {
+                'image_rights': {
+                    'dynamic': False,
+                },
+                'config_json': os.path.join(SITE_ROOT, 'genizah.json'),
+                'xsl': os.path.join(SITE_ROOT, 'xsl/bp_spreadsheet_xml2tei.xsl'),
+            },
+        },
+    },
+    {
         'tag': 'dirlesstei',
         'description': """Directory-less TEI prep: Does not process a directory; add the
 folder name to the database; requires a TEI file.""",
@@ -1084,6 +1105,19 @@ PREP_CONFIGS = {
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
             'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'CC-BY',
+            'metadata_rights': 'CC-BY',
+        }
+    },
+    'penn-gzh': {
+        'repository': {
+            'tag': 'pennmss'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'gzh',
         },
         'rights': {
             'image_rights': 'CC-BY',

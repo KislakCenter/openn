@@ -1,5 +1,21 @@
 # Tasks
 
+## Incoming
+
+genizah.json
+ x -- Make MD creator not required
+ x -- Add scribe name, scribe uri
+ x -- Make provenance repeatable
+
+ genizah_spreadsheet_xml2tei.xsl
+ x -- Add scribe name
+ x -- Add scribe URI
+ x -- Handle repeated provenance
+
+ bibliophilly.json
+ x -- Make 'Subject: keywords' required
+
+
 ## Repositories, collections
 
 - Projects CSV

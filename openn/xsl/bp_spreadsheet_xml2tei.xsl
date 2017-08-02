@@ -198,6 +198,13 @@
                                       <xsl:with-param name="ref" select="./artist_uri"></xsl:with-param>
                                     </xsl:call-template>
                                   </xsl:for-each>
+                                  <xsl:for-each select="//scribe">
+                                    <xsl:call-template name="build_resp">
+                                      <xsl:with-param name="resp">scribe</xsl:with-param>
+                                      <xsl:with-param name="personName" select="./scribe_name"/>
+                                      <xsl:with-param name="ref" select="./scribe_uri"></xsl:with-param>
+                                    </xsl:call-template>
+                                  </xsl:for-each>
                                   <xsl:for-each select="//former_owner">
                                     <xsl:call-template name="build_resp">
                                       <xsl:with-param name="resp">former owner</xsl:with-param>
@@ -368,18 +375,18 @@
                                   </xsl:for-each>
                                 </origin>
                               </xsl:if>
-                              <xsl:if test="//provenance/provenance_details">
-                                <provenance><xsl:value-of select="//provenance/provenance_details"/></provenance>
-                              </xsl:if>
+                              <xsl:for-each select="//provenance/provenance_details">
+                                <provenance><xsl:value-of select="."/></provenance>
+                              </xsl:for-each>
                             </history>
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-              <xsl:copy-of select="document($bibliophilly-keywords-xml)"/>
-                <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
+              <xsl:if test="//subjects_keywords">
+                <xsl:copy-of select="document($bibliophilly-keywords-xml)"/>
+              </xsl:if>
               <profileDesc>
                 <textClass>
-                  <!-- DE: Switching to marc 610 and joining subfields -->
                   <xsl:if test="//subjects_keywords">
                     <keywords n="keywords">
                       <xsl:for-each select="//subjects_keywords">
@@ -570,10 +577,10 @@
         </persName>
       </respStmt>
     </xsl:template>
-  
+
   <xsl:template name="build-origin-details">
     <xsl:param name="originDates"/>
-    <xsl:param name="originDetails"/>     
+    <xsl:param name="originDetails"/>
     <xsl:variable name="date-strings" as="xs:string*">
       <xsl:for-each select="$originDates/.">
         <xsl:variable name="date-part">
@@ -610,7 +617,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template name="build-date-string-part">
     <xsl:param name="originDate"/>
     <xsl:choose>
@@ -630,7 +637,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
-    </xsl:choose>    
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="downcase-first-letter">
@@ -638,5 +645,5 @@
     <xsl:variable name="normal-string" select="normalize-space($the_string)"/>
     <xsl:value-of select="concat(lower-case(substring($normal-string, 1, 1)), substring($normal-string, 2))"></xsl:value-of>
   </xsl:template>
-  
+
 </xsl:stylesheet>
