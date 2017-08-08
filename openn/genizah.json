@@ -221,12 +221,7 @@
                 },
                 "date_single": {
                     "field_name": "Date (single)",
-                    "required": {
-                        "if": {
-                            "field": "date_range_start",
-                            "is": "EMPTY"
-                        }
-                    },
+                    "required": false,
                     "blank": {
                         "if": {
                             "field": "date_range_start",
@@ -238,12 +233,7 @@
                 },
                 "date_range_start": {
                     "field_name": "Date (range) start",
-                    "required": {
-                        "if": {
-                            "field": "date_single",
-                            "is": "EMPTY"
-                        }
-                    },
+                    "required": false,
                     "blank": {
                         "if": {
                             "field": "date_single",
