@@ -1180,6 +1180,23 @@ Resources.""",
             'live': True,
         },
         {
+            'tag': 'genizah',
+            'name': 'Cairo Genizah',
+            'blurb': """In the late 1990s, thanks to a significant gift from a Penn alum named
+						Jeffrey Keil, W' 65 and PAR '91, Penn initiated a project, in
+						collaboration with Cambridge University Libraries, to apply digital
+						technologies to discover new intellectual matches among physically
+						dispersed Cario genizah fragments. Through this initiative it was demonstrated
+						how digital technologies may serve as discovery tools to identify
+						matches among a global diaspora of thousands of fragments of medieval
+						manuscripts (see: http://sceti.library.upenn.edu/genizah/index.cfm).
+						This collection of Cairo genizah fragments consists of Penn manuscripts
+						that were part of this project.""",
+            'csv_only': False,
+            'include_file': 'CairoGenizah.html',
+            'live': True,
+        },
+        {
             'tag': 'thai',
             'name': 'Thai Manuscripts',
             'blurb': 'Lorem ipsum',
