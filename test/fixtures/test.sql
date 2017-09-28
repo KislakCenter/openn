@@ -62,7 +62,7 @@ CREATE TABLE `openn_curatedcollection` (
   UNIQUE KEY `tag` (`tag`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `include_file` (`include_file`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `openn_curatedcollection` (
 
 LOCK TABLES `openn_curatedcollection` WRITE;
 /*!40000 ALTER TABLE `openn_curatedcollection` DISABLE KEYS */;
-INSERT INTO `openn_curatedcollection` VALUES (1,'bibliophilly','Bibliotheca Philadelphiensis','This collection, when completed, will include digital editions of more\nthan 400 western European medieval and early modern codices, plus\nselected leaves and cuttings, from the collections of Philadelphia Area\nConsortium of Special Collections Libraries (PACSCL) member libraries.\nThis collections is funded by the Council on Library and Information\nResources.',0,'BiblioPhilly.html',1,'2017-01-11 15:41:15','2017-07-14 15:04:36'),(2,'pacscl-diaries','PACSCL Diaries','The PACSCL Diaries Project will allow researchers an intimate view into a\n                        wide variety of personalities, largely from Philadelphia, as they went about their\n                        daily lives and commented on the world around them. The project will\n                        ultimately provide an online archive of diaries drawn from PACSCL member\n                        collections. OPenn currently hosts a pilot group of 53 diary volumes.',0,'PACSCLDiaries.html',1,'2017-01-11 15:41:15','2017-03-03 03:26:13'),(3,'thai','Thai Manuscripts','Lorem ipsum',1,NULL,1,'2017-01-11 15:41:15','2017-01-11 15:41:15');
+INSERT INTO `openn_curatedcollection` VALUES (1,'bibliophilly','Bibliotheca Philadelphiensis','This collection, when completed, will include digital editions of more\nthan 400 western European medieval and early modern codices, plus\nselected leaves and cuttings, from the collections of Philadelphia Area\nConsortium of Special Collections Libraries (PACSCL) member libraries.\nThis collections is funded by the Council on Library and Information\nResources.',0,'BiblioPhilly.html',1,'2017-01-11 15:41:15','2017-07-14 15:04:36'),(2,'pacscl-diaries','PACSCL Diaries','The PACSCL Diaries Project will allow researchers an intimate view into a\n                        wide variety of personalities, largely from Philadelphia, as they went about their\n                        daily lives and commented on the world around them. The project will\n                        ultimately provide an online archive of diaries drawn from PACSCL member\n                        collections. OPenn currently hosts a pilot group of 53 diary volumes.',0,'PACSCLDiaries.html',1,'2017-01-11 15:41:15','2017-03-03 03:26:13'),(3,'thai','Thai Manuscripts','Lorem ipsum',1,NULL,1,'2017-01-11 15:41:15','2017-01-11 15:41:15'),(4,'genizah','Cairo Genizah','In the late 1990s, thanks to a significant gift from a Penn alum named\n						Jeffrey Keil, W\' 65 and PAR \'91, Penn initiated a project, in\n						collaboration with Cambridge University Libraries, to apply digital\n						technologies to discover new intellectual matches among physically\n						dispersed Cario genizah fragments. Through this initiative it was demonstrated\n						how digital technologies may serve as discovery tools to identify\n						matches among a global diaspora of thousands of fragments of medieval\n						manuscripts (see: http://sceti.library.upenn.edu/genizah/index.cfm).\n						This collection of Cairo genizah fragments consists of Penn manuscripts\n						that were part of this project.',0,'CairoGenizah.html',1,'2017-09-28 19:34:44','2017-09-28 19:34:44');
 /*!40000 ALTER TABLE `openn_curatedcollection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,4 +490,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-14 11:04:36
+-- Dump completed on 2017-09-28 15:34:44
