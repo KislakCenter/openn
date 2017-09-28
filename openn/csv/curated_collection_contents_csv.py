@@ -20,7 +20,7 @@ class CuratedCollectionContentsCSV(OPennCSV):
 
     logger = logging.getLogger(__name__)
 
-    HEADER      = 'curated_collection,document_id,path,repository_id,metadata_type,title,added'.split(',')
+    HEADER      = 'curated_collection,document_id,path,repository_id,metadata_type,title,added,document_created,document_updated'.split(',')
     REL_PATH_RE = re.compile('^/?Data/')
 
 
@@ -84,9 +84,9 @@ class CuratedCollectionContentsCSV(OPennCSV):
         """
             The file `/Data/bibliophilly_contents.csv` looks like the following:
 
-                curated_collection,   document_id,  path,             repository_id, metadata_type,  title,                  added
-                biblio_philly,        1435,         0002/mscodex117,  0002,          TEI,            Alchemical miscellany,  2016-11-29 10:55:00
-                biblio_philly,        288,          0001/ljs447,      0001,          TEI,            Masālik al-abṣār...,    2016-12-02 15:10:00
+                curated_collection,   document_id,  path,             repository_id, metadata_type,  title,                  added,                document_created,     document_updated
+                biblio_philly,        1435,         0002/mscodex117,  0002,          TEI,            Alchemical miscellany,  2016-11-29 10:55:00,  2016-11-29 10:55:00,  2016-11-29 10:55:00
+                biblio_philly,        288,          0001/ljs447,      0001,          TEI,            Masālik al-abṣār...,    2016-12-02 15:10:00,  2016-11-29 10:55:00,  2016-11-29 10:55:00
         """
         try:
             self.writerow(CuratedCollectionContentsCSV.HEADER)
@@ -106,6 +106,8 @@ class CuratedCollectionContentsCSV(OPennCSV):
                     doc.metadata_type,
                     unidecode(doc.title),
                     opfunc.safe_isoformat(membership.created),
+                    opfunc.safe_isoformat(doc.created),
+                    opfunc.safe_isoformat(doc.updated)
                     ]
                 self.writerow(row)
         finally:
