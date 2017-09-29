@@ -171,6 +171,10 @@ class SpreadsheetPrep(RepositoryPrep):
             el             = xml.xpath(query)
             label          = el[0].text if len(el) > 0 else None
             image['label'] = label
+            query          = "//file_name[text()='%s']/parent::page/serial_number" % (base,)
+            el             = xml.xpath(query)
+            serial_number  = el[0].text if len(el) > 0 else None
+            image['serial_number'] = serial_number
 
         return files
 

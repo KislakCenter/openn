@@ -86,6 +86,8 @@ class Document(models.Model):
     metadata_rights_more_info = models.TextField(null = True, default = None, blank = True)
     repository                = models.ForeignKey(Repository, default = None)
 
+    SHELFMARK_RE = re.compile('[^a-zA-Z0-9]+')
+
     @property
     def browse_basename(self):
         return '{0}.html'.format(self.base_dir)
@@ -138,6 +140,12 @@ class Document(models.Model):
             return None
 
         return self.repository.metadata_type
+
+    @property
+    def idified_call_number(self):
+        if self.call_number is None:
+            return None
+        return self.SHELFMARK_RE.sub('-', self.call_number.strip().lower())
 
     def image_license_args(self):
          # image_copyright_holder
@@ -344,6 +352,7 @@ class Image(OrderedModel):
     filename              = models.CharField(max_length = 255, null = False, default = None, blank = False)
     image_type            = models.CharField(max_length = 20, choices=(('document', 'Document'), ('extra', 'Extra')))
     order_with_respect_to = 'document'
+    serial_number         = models.IntegerField(null = True, default = None, blank = True)
     objects               = models.Manager()
     images                = models.Manager()
     document_images       = DocumentImageManager()
@@ -385,6 +394,14 @@ class Image(OrderedModel):
         hmb_dict.update({'title': self.full_name()})
 
         return hmb_dict
+
+    def xml_id(self):
+        if self.serial_number is None:
+            return None
+        if self.document.call_number is None:
+            return None
+        return "surface-%s-%d" % (self.document.idified_call_number,
+                                  self.serial_number)
 
     class Meta(OrderedModel.Meta):
         pass

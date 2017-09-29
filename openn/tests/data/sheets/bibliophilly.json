@@ -508,6 +508,18 @@
                 "data_type": "string",
                 "file_list": true
             },
+            "serial_number": {
+                "field_name": "SERIAL_NUM",
+                "required": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "integer",
+                "unique": true
+            },
             "tag1": {
                 "field_name": "TAG1",
                 "required": false,
@@ -972,6 +984,7 @@
                 "columns": [
                     "file_name",
                     "display_page",
+                    "serial_number",
                     "tag1",
                     "value1",
                     "tag2",

@@ -453,8 +453,14 @@ class OPennTEI(XMLWhatsit):
             graphic.getparent().remove(graphic)
         # add the surface/graphic elements
         for image in document.image_set.filter(image_type='document'):
-            n = self.fix_n(image.label)
-            surface = etree.Element("surface", n=n, nsmap=self.ns)
+            # n = self.fix_n(image.label)
+            surface_attrs = {}
+            surface_attrs['n'] = self.fix_n(image.label)
+            surface_attrs['nsmap'] = self.ns
+            if image.xml_id() is not None:
+                surface_attrs['{http://www.w3.org/XML/1998/namespace}id'] = image.xml_id()
+            # surface = etree.Element("surface", n=n, nsmap=self.ns)
+            surface = etree.Element("surface", **surface_attrs)
             for deriv in image.derivative_set.all():
                 deriv_type = deriv.deriv_type
                 path = OPennTEI.fix_path_re.sub("", deriv.path)
