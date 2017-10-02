@@ -762,6 +762,21 @@ illumination.""",
             'no_document': True,
         },
         {
+            'tag': 'kislak',
+            'name': 'Jay I. Kislak Foundation',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Established in 1984, the Jay I. Kislak Foundation is a private nonprofit
+cultural institution engaged in the collection, conservation, research
+and interpretation of rare books, manuscripts, maps and indigenous art
+and cultural artifacts of the Americas and other parts of the world.
+Kislak collections are rich in primary research materials on the history
+of Florida, the Caribbean and Mesoamerica, with special emphasis on
+native cultures, their contact with Europeans and the colonial period to
+about 1820.""",
+            'include_file': 'KislakFoundation.html',
+        },
+        {
             'tag': 'flp',
             'name': 'Free Library of Philadelphia, Special Collections',
             'metadata_type': 'TEI',
@@ -1108,6 +1123,19 @@ PREP_CONFIGS = {
         },
         'rights': {
             'image_rights': 'CC-BY',
+            'metadata_rights': 'CC-BY',
+        }
+    },
+    'kislak-bphil': {
+        'repository': {
+            'tag': 'kislak'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
             'metadata_rights': 'CC-BY',
         }
     },
