@@ -373,7 +373,7 @@
                   "required": false,
                   "repeating": false,
                   "data_type": "word",
-                  "value_list": [ "parchment", "paper", "mixed" ]
+                  "value_list": [ "parchment", "paper", "mixed", "palm-leaf", "amatl" ]
               },
               "page_count": {
                 "field_name": "Number of physical pages",

@@ -9,7 +9,7 @@ Schema generated from ODD source 2016-04-15T20:21:05Z. .
 TEI Edition: Version 3.0.0. Last updated on
 	29th March 2016, revision 89ba24e
 TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 3.0.0/
-  
+
 --><!--This material is dual-licensed.
 [http://creativecommons.org/licenses/by-sa/3.0/] Distributed under a Creative Commons Attribution-ShareAlike 3.0 Unported License [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2013 TEI Consortium.All rights reserved.Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium.--><define name="macro.paraContent">
       <zeroOrMore>
@@ -4193,21 +4193,21 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       <element name="address">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a postal address, for example of a publisher, an organization, or an individual. [3.5.2. Addresses 2.2.4. Publication, Distribution, Licensing, etc. 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
+
             <oneOrMore>
                <group>
-        
+
                   <ref name="model.addrPart"/>
-        
-        
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </oneOrMore>
          </group>
@@ -4347,7 +4347,7 @@ Measures]</a:documentation>
             <choice>
                <text/>
                <ref name="model.gLike"/>
-        
+
                <ref name="model.phrase"/>
                <ref name="model.global"/>
             </choice>
@@ -4432,72 +4432,72 @@ attributes @target and @cRef may be supplied on <name/>.</report>
       <element name="list">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains any sequence of items organized as a list. [3.7. Lists]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
-          
+
                   <ref name="model.divTop"/>
-          
-          
+
+
                   <ref name="model.global"/>
-          
+
                </choice>
             </zeroOrMore>
-      
+
             <choice>
                <oneOrMore>
                   <group>
                      <ref name="item"/>
-          
+
                      <zeroOrMore>
                         <ref name="model.global"/>
                      </zeroOrMore>
-          
+
                   </group>
                </oneOrMore>
                <group>
-          
+
                   <optional>
                      <ref name="headLabel"/>
                   </optional>
-          
-          
+
+
                   <optional>
                      <ref name="headItem"/>
                   </optional>
-          
+
                   <oneOrMore>
                      <group>
                         <ref name="label"/>
-            
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-            
+
                         <ref name="item"/>
-            
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-            
+
                      </group>
                   </oneOrMore>
                </group>
             </choice>
-      
+
             <zeroOrMore>
                <group>
-          
+
                   <ref name="model.divBottom"/>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-          
+
                </group>
             </zeroOrMore>
-      
+
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="openn_tei-list-gloss-list-must-have-labels-constraint-9">
@@ -4628,11 +4628,11 @@ Suggested values include: 1] gloss; 2] index; 3] instructions; 4] litany; 5] syl
          <zeroOrMore>
             <group>
                <ref name="term"/>
-        
+
                <optional>
                   <ref name="index"/>
                </optional>
-        
+
             </group>
          </zeroOrMore>
          <ref name="att.global.attributes"/>
@@ -4798,7 +4798,7 @@ Elements]</a:documentation>
       <element name="monogr">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(monographic level) contains bibliographic elements describing an item (e.g. a book or journal) published as an independent item (i.e. as a separate physical object). [3.11.2.1. Analytic, Monographic, and Series Levels]</a:documentation>
          <group>
-      
+
             <optional>
                <choice>
                   <group>
@@ -4808,7 +4808,7 @@ Elements]</a:documentation>
                         <ref name="meeting"/>
                         <ref name="respStmt"/>
                      </choice>
-            
+
                      <zeroOrMore>
                         <choice>
                            <ref name="author"/>
@@ -4817,13 +4817,13 @@ Elements]</a:documentation>
                            <ref name="respStmt"/>
                         </choice>
                      </zeroOrMore>
-            
-            
+
+
                      <oneOrMore>
                         <ref name="title"/>
                      </oneOrMore>
-            
-            
+
+
                      <zeroOrMore>
                         <choice>
                            <ref name="model.ptrLike"/>
@@ -4833,10 +4833,10 @@ Elements]</a:documentation>
                            <ref name="respStmt"/>
                         </choice>
                      </zeroOrMore>
-            
+
                   </group>
                   <group>
-            
+
                      <oneOrMore>
                         <choice>
                            <ref name="title"/>
@@ -4844,8 +4844,8 @@ Elements]</a:documentation>
                            <ref name="idno"/>
                         </choice>
                      </oneOrMore>
-            
-            
+
+
                      <zeroOrMore>
                         <choice>
                            <ref name="textLang"/>
@@ -4855,30 +4855,30 @@ Elements]</a:documentation>
                            <ref name="respStmt"/>
                         </choice>
                      </zeroOrMore>
-            
+
                   </group>
                   <group>
-            
+
                      <ref name="authority"/>
                      <ref name="idno"/>
                   </group>
                </choice>
             </optional>
-      
-      
+
+
             <zeroOrMore>
                <ref name="availability"/>
             </zeroOrMore>
-      
-      
+
+
             <zeroOrMore>
                <ref name="model.noteLike"/>
             </zeroOrMore>
-      
+
             <zeroOrMore>
                <group>
                   <ref name="edition"/>
-        
+
                   <zeroOrMore>
                      <choice>
                         <ref name="idno"/>
@@ -4889,11 +4889,11 @@ Elements]</a:documentation>
                         <ref name="respStmt"/>
                      </choice>
                   </zeroOrMore>
-        
+
                </group>
             </zeroOrMore>
             <ref name="imprint"/>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="imprint"/>
@@ -4901,7 +4901,7 @@ Elements]</a:documentation>
                   <ref name="biblScope"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -4952,28 +4952,28 @@ Elements]</a:documentation>
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(statement of responsibility) supplies a statement of responsibility for the intellectual content of a text, edition, recording, or series, where the specialized elements for authors, editors, etc. do not suffice or do not apply. May also be used to encode information about individuals or organizations which have played a role in the production or distribution of a bibliographic work. [3.11.2.2. Titles, Authors, and Editors 2.2.1. The Title Statement 2.2.2. The Edition Statement 2.2.5. The Series Statement]</a:documentation>
          <choice>
             <group>
-        
+
                <oneOrMore>
                   <ref name="resp"/>
                </oneOrMore>
-        
-        
+
+
                <oneOrMore>
                   <ref name="model.nameLike.agent"/>
                </oneOrMore>
-        
+
             </group>
             <group>
-        
+
                <oneOrMore>
                   <ref name="model.nameLike.agent"/>
                </oneOrMore>
-        
-        
+
+
                <oneOrMore>
                   <ref name="resp"/>
                </oneOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -5040,36 +5040,36 @@ Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] sho
       <element name="imprint">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups information relating to the publication or distribution of a bibliographic item. [3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="classCode"/>
                   <ref name="catRef"/>
                </choice>
             </zeroOrMore>
-      
+
             <oneOrMore>
                <group>
                   <choice>
-          
-            
+
+
                      <ref name="model.imprintPart"/>
-          
-          
-            
+
+
+
                      <ref name="model.dateLike"/>
-          
+
                   </choice>
-        
+
                   <zeroOrMore>
                      <ref name="respStmt"/>
                   </zeroOrMore>
-        
-        
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </oneOrMore>
          </group>
@@ -5141,33 +5141,33 @@ Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] sho
       <element name="biblStruct">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(structured bibliographic citation) contains a structured bibliographic citation, in which only bibliographic sub-elements appear and in a specified order. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="analytic"/>
             </zeroOrMore>
-      
+
             <oneOrMore>
                <group>
                   <ref name="monogr"/>
-        
+
                   <zeroOrMore>
                      <ref name="series"/>
                   </zeroOrMore>
-        
+
                </group>
             </oneOrMore>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.noteLike"/>
                   <ref name="idno"/>
-          
+
                   <ref name="model.ptrLike"/>
                   <ref name="relatedItem"/>
                   <ref name="citedRange"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="openn_tei-biblStruct-deprecate-altIdentifier-child-constraint-8">
@@ -5191,27 +5191,27 @@ Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] sho
       <element name="listBibl">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(citation list) contains a list of bibliographic citations of any kind. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="model.biblLike"/>
                   <ref name="model.milestoneLike"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="relation"/>
                   <ref name="listRelation"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.sortable.attributes"/>
@@ -5291,21 +5291,21 @@ relatedItem element must be empty</sch:report>
       <element name="lg">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [3.12.1. Core Tags for Verse 3.12. Passages of Verse or Drama 7.2.5. Speech Contents]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <choice>
                <ref name="model.lLike"/>
                <ref name="model.stageLike"/>
                <ref name="model.labelLike"/>
                <ref name="lg"/>
             </choice>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.lLike"/>
@@ -5315,17 +5315,17 @@ relatedItem element must be empty</sch:report>
                   <ref name="lg"/>
                </choice>
             </zeroOrMore>
-      
+
             <zeroOrMore>
                <group>
-        
+
                   <ref name="model.divBottom"/>
-        
-        
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </zeroOrMore>
          </group>
@@ -5359,19 +5359,19 @@ relatedItem element must be empty</sch:report>
       <element name="sp">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [3.12.2. Core Tags for Drama 3.12. Passages of Verse or Drama 7.2.2. Speeches and Speakers]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <ref name="speaker"/>
-        
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </optional>
             <oneOrMore>
@@ -5384,11 +5384,11 @@ relatedItem element must be empty</sch:report>
                      <ref name="model.stageLike"/>
                      <ref name="model.qLike"/>
                   </choice>
-        
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </oneOrMore>
          </group>
@@ -5455,28 +5455,28 @@ Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] nove
             <ref name="teiHeader"/>
             <choice>
                <group>
-          
+
                   <oneOrMore>
                      <ref name="model.resourceLike"/>
                   </oneOrMore>
-          
-          
+
+
                   <zeroOrMore>
                      <choice>
                         <ref name="TEI"/>
                         <ref name="teiCorpus"/>
                      </choice>
                   </zeroOrMore>
-          
+
                </group>
-        
+
                <oneOrMore>
                   <choice>
                      <ref name="TEI"/>
                      <ref name="teiCorpus"/>
                   </choice>
                </oneOrMore>
-        
+
             </choice>
          </group>
          <ref name="att.global.attributes"/>
@@ -5569,16 +5569,16 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(TEI header) supplies descriptive and declarative metadata associated with a digital resource or set of resources. [2.1.1. The TEI Header and Its Components 15.1. Varieties of Composite Text]</a:documentation>
          <group>
             <ref name="fileDesc"/>
-      
+
             <zeroOrMore>
                <ref name="model.teiHeaderPart"/>
             </zeroOrMore>
-      
-      
+
+
             <optional>
                <ref name="revisionDesc"/>
             </optional>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <optional>
@@ -5601,33 +5601,33 @@ Sample values include: 1] text; 2] corpus</a:documentation>
          <group>
             <group>
                <ref name="titleStmt"/>
-        
+
                <optional>
                   <ref name="editionStmt"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="extent"/>
                </optional>
-        
+
                <ref name="publicationStmt"/>
-        
+
                <optional>
                   <ref name="seriesStmt"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="notesStmt"/>
                </optional>
-        
+
             </group>
-      
+
             <oneOrMore>
                <ref name="sourceDesc"/>
             </oneOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -5637,16 +5637,16 @@ Sample values include: 1] text; 2] corpus</a:documentation>
       <element name="titleStmt">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(title statement) groups information about the title of a work and those responsible for its content. [2.2.1. The Title Statement 2.2. The File Description]</a:documentation>
          <group>
-      
+
             <oneOrMore>
                <ref name="title"/>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <ref name="model.respLike"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -5683,18 +5683,18 @@ Sample values include: 1] text; 2] corpus</a:documentation>
       <element name="editionStmt">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(edition statement) groups information relating to one edition of a text. [2.2.2. The Edition Statement 2.2. The File Description]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
                <ref name="edition"/>
-        
+
                <zeroOrMore>
                   <ref name="model.respLike"/>
                </zeroOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -5721,25 +5721,25 @@ Sample values include: 1] text; 2] corpus</a:documentation>
       <element name="publicationStmt">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(publication statement) groups information concerning the publication or distribution of an electronic or other text. [2.2.4. Publication, Distribution, Licensing, etc. 2.2. The File Description]</a:documentation>
          <choice>
-      
+
 	           <oneOrMore>
                <group>
-	  
+
 	                 <ref name="model.publicationStmtPart.agency"/>
-	  
-	  
+
+
 	                 <zeroOrMore>
                      <ref name="model.publicationStmtPart.detail"/>
                   </zeroOrMore>
-	  
+
 	              </group>
             </oneOrMore>
-      
-      
+
+
 	           <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -5827,33 +5827,33 @@ Sample values include: 1] text; 2] corpus</a:documentation>
       <element name="seriesStmt">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series statement) groups information about the series, if any, to which a publication belongs. [2.2.5. The Series Statement 2.2. The File Description]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <oneOrMore>
                   <ref name="title"/>
                </oneOrMore>
-        
-        
+
+
                <zeroOrMore>
                   <choice>
                      <ref name="editor"/>
                      <ref name="respStmt"/>
                   </choice>
                </zeroOrMore>
-        
-        
+
+
                <zeroOrMore>
                   <choice>
                      <ref name="idno"/>
                      <ref name="biblScope"/>
                   </choice>
                </zeroOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -5877,12 +5877,12 @@ Sample values include: 1] text; 2] corpus</a:documentation>
       <element name="sourceDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(source description) describes the source from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as "born digital" for a text which has no previous existence. [2.2.7. The Source Description]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="model.biblLike"/>
@@ -5890,7 +5890,7 @@ Sample values include: 1] text; 2] corpus</a:documentation>
                   <ref name="model.listLike"/>
                </choice>
             </oneOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <ref name="att.declarable.attributes"/>
@@ -5901,36 +5901,36 @@ Sample values include: 1] text; 2] corpus</a:documentation>
       <element name="biblFull">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(fully-structured bibliographic citation) contains a fully-structured bibliographic citation, in which all components of the TEI file description are present. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2. The File Description 2.2.7. The Source Description 15.3.2. Declarable Elements]</a:documentation>
          <group>
-      
+
             <group>
                <ref name="titleStmt"/>
-        
+
                <optional>
                   <ref name="editionStmt"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="extent"/>
                </optional>
-        
+
                <ref name="publicationStmt"/>
-        
+
                <optional>
                   <ref name="seriesStmt"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="notesStmt"/>
                </optional>
-        
+
             </group>
-      
+
             <zeroOrMore>
                <ref name="sourceDesc"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declarable.attributes"/>
@@ -6192,16 +6192,16 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
       <element name="tagsDecl">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(tagging declaration) provides detailed information about the tagging applied to a document. [2.3.4. The Tagging Declaration 2.3. The Encoding Description]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="rendition"/>
             </zeroOrMore>
-      
-      
+
+
             <zeroOrMore>
                <ref name="namespace"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <optional>
@@ -6301,21 +6301,21 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
       <element name="refsDecl">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(references declaration) specifies how canonical references are constructed for this text. [2.3.6.3. Milestone Method 2.3. The Encoding Description 2.3.6. The Reference System Declaration]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
-      
+
+
             <oneOrMore>
                <ref name="cRefPattern"/>
             </oneOrMore>
-      
-      
+
+
             <oneOrMore>
                <ref name="refState"/>
             </oneOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <ref name="att.declarable.attributes"/>
@@ -6397,35 +6397,35 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
       <element name="taxonomy">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [2.3.7. The Classification Declaration]</a:documentation>
          <choice>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.glossLike"/>
                   <ref name="model.descLike"/>
                </choice>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="category"/>
                   <ref name="taxonomy"/>
                </choice>
             </oneOrMore>
-      
+
             <group>
-        
-          
+
+
                <ref name="model.biblLike"/>
-        
-        
+
+
                <zeroOrMore>
                   <choice>
                      <ref name="category"/>
                      <ref name="taxonomy"/>
                   </choice>
                </zeroOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -6437,25 +6437,25 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains an individual descriptive category, possibly nested within a superordinate category, within a user-defined taxonomy. [2.3.7. The Classification Declaration]</a:documentation>
          <group>
             <choice>
-        
+
                <oneOrMore>
                   <ref name="catDesc"/>
                </oneOrMore>
-        
-        
+
+
                <zeroOrMore>
                   <choice>
                      <ref name="model.descLike"/>
                      <ref name="model.glossLike"/>
                   </choice>
                </zeroOrMore>
-        
+
             </choice>
-      
+
             <zeroOrMore>
                <ref name="category"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -6519,22 +6519,22 @@ Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Gri
       <element name="application">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides information about an application which has acted upon the document. [2.3.10. The Application Information Element]</a:documentation>
          <group>
-      
+
             <oneOrMore>
                <ref name="model.labelLike"/>
             </oneOrMore>
-      
+
             <choice>
-        
+
                <zeroOrMore>
                   <ref name="model.ptrLike"/>
                </zeroOrMore>
-        
-        
+
+
                <zeroOrMore>
                   <ref name="model.pLike"/>
                </zeroOrMore>
-        
+
             </choice>
          </group>
          <ref name="att.global.attributes"/>
@@ -6605,16 +6605,16 @@ Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Gri
       <element name="langUsage">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text. [2.4.2. Language Usage 2.4. The Profile Description 15.3.2. Declarable Elements]</a:documentation>
          <choice>
-        
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-         
-          
+
+
             <oneOrMore>
                <ref name="language"/>
             </oneOrMore>
-        
+
          </choice>
          <ref name="att.global.attributes"/>
          <ref name="att.declarable.attributes"/>
@@ -6664,11 +6664,11 @@ Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Gri
       <element name="keywords">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a list of keywords or phrases identifying the topic or nature of a text. [2.4.3. The Text Classification]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="term"/>
             </oneOrMore>
-      
+
             <ref name="list"/>
          </choice>
          <ref name="att.global.attributes"/>
@@ -6734,16 +6734,16 @@ Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Gri
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(correspondence
     description) contains a description of the actions related to one act of correspondence. [2.4.6. Correspondence Description]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.correspDescPart"/>
             </oneOrMore>
-      
-      
+
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
          </choice>
          <ref name="att.declarable.attributes"/>
          <ref name="att.canonical.attributes"/>
@@ -6819,11 +6819,11 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
          <choice>
             <ref name="list"/>
             <ref name="listChange"/>
-      
+
             <oneOrMore>
                <ref name="change"/>
             </oneOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <ref name="att.docStatus.attributes"/>
@@ -7234,19 +7234,19 @@ You must supply at least two values for @target on <name/>
       <element name="joinGrp">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(join group) groups a collection of join elements and possibly pointers. [16.7. Aggregation]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.glossLike"/>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="join"/>
                   <ref name="ptr"/>
                </choice>
             </oneOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.pointing.group.attributes"/>
@@ -7367,38 +7367,38 @@ You must supply at least two values for @target on <name/>
       <element name="text">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single text of any kind, whether unitary or composite, for example a poem or drama, a collection of essays, a novel, a dictionary, or a corpus sample. [4. Default Text Structure 15.1. Varieties of Composite Text]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <ref name="front"/>
-        
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </optional>
             <choice>
                <ref name="body"/>
                <ref name="group"/>
             </choice>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <ref name="back"/>
-        
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </optional>
          </group>
@@ -7413,162 +7413,162 @@ You must supply at least two values for @target on <name/>
       <element name="body">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text body) contains the whole body of a single unitary text, excluding any front or back matter. [4. Default Text Structure]</a:documentation>
          <group>
-      
-      
+
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
-      
-      
+
+
+
             <optional>
                <group>
-          
+
                   <ref name="model.divTop"/>
-          
-          
+
+
                   <zeroOrMore>
                      <choice>
                         <ref name="model.global"/>
                         <ref name="model.divTop"/>
                      </choice>
                   </zeroOrMore>
-          
+
                </group>
             </optional>
-      
-      
-      
+
+
+
             <optional>
                <group>
-          
+
                   <ref name="model.divGenLike"/>
-          
-          
+
+
                   <zeroOrMore>
                      <choice>
                         <ref name="model.global"/>
                         <ref name="model.divGenLike"/>
                      </choice>
                   </zeroOrMore>
-          
+
                </group>
             </optional>
-      
-      
-        
+
+
+
             <choice>
-          
-          
+
+
                <oneOrMore>
                   <group>
-              
+
                      <ref name="model.divLike"/>
-              
-              
+
+
                      <zeroOrMore>
                         <choice>
                            <ref name="model.global"/>
                            <ref name="model.divGenLike"/>
                         </choice>
                      </zeroOrMore>
-              
+
                   </group>
                </oneOrMore>
-          
-          
-          
+
+
+
                <oneOrMore>
                   <group>
-              
+
                      <ref name="model.div1Like"/>
-              
-              
+
+
                      <zeroOrMore>
                         <choice>
                            <ref name="model.global"/>
                            <ref name="model.divGenLike"/>
                         </choice>
                      </zeroOrMore>
-              
+
                   </group>
                </oneOrMore>
-          
-          
+
+
                <group>
                   <oneOrMore>
                      <group>
-              
+
                         <ref name="model.common"/>
-              
-              
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-              
+
                      </group>
                   </oneOrMore>
-            
+
                   <optional>
                      <choice>
-                
-                
+
+
                         <oneOrMore>
                            <group>
-                    
+
                               <ref name="model.divLike"/>
-                    
-                    
+
+
                               <zeroOrMore>
                                  <choice>
                                     <ref name="model.global"/>
                                     <ref name="model.divGenLike"/>
                                  </choice>
                               </zeroOrMore>
-                    
+
                            </group>
                         </oneOrMore>
-                
-                
-                
+
+
+
                         <oneOrMore>
                            <group>
-                    
+
                               <ref name="model.div1Like"/>
-                    
-                    
+
+
                               <zeroOrMore>
                                  <choice>
                                     <ref name="model.global"/>
                                     <ref name="model.divGenLike"/>
                                  </choice>
                               </zeroOrMore>
-                    
+
                            </group>
                         </oneOrMore>
-                
+
                      </choice>
                   </optional>
-            
+
                </group>
             </choice>
-        
-      
-      
-      
+
+
+
+
             <zeroOrMore>
                <group>
-          
+
                   <ref name="model.divBottom"/>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-          
+
                </group>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>
@@ -7579,20 +7579,20 @@ You must supply at least two values for @target on <name/>
       <element name="group">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the body of a composite text, grouping together a sequence of distinct texts (or groups of such texts) which are regarded as a unit for some purpose, for example the collected works of an author, a sequence of prose essays, etc. [4. Default Text Structure 4.3.1. Grouped Texts 15.1. Varieties of Composite Text]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <group>
                <choice>
                   <ref name="text"/>
                   <ref name="group"/>
                </choice>
-        
+
                <zeroOrMore>
                   <choice>
                      <ref name="text"/>
@@ -7600,13 +7600,13 @@ You must supply at least two values for @target on <name/>
                      <ref name="model.global"/>
                   </choice>
                </zeroOrMore>
-        
+
             </group>
-      
+
             <zeroOrMore>
                <ref name="model.divBottom"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>
@@ -7618,38 +7618,38 @@ You must supply at least two values for @target on <name/>
       <element name="floatingText">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single text of any kind, whether unitary or composite, which interrupts the text containing it at any point and after which the surrounding text resumes. [4.3.2. Floating Texts]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <ref name="front"/>
-        
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </optional>
             <choice>
                <ref name="body"/>
                <ref name="group"/>
             </choice>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <ref name="back"/>
-        
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </optional>
          </group>
@@ -7663,44 +7663,44 @@ You must supply at least two values for @target on <name/>
       <element name="div">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text division) contains a subdivision of the front, body, or back of a text. [4.1. Divisions of the Body]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
-          
+
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
-          
+
                      <oneOrMore>
                         <group>
                            <choice>
                               <ref name="model.divLike"/>
                               <ref name="model.divGenLike"/>
                            </choice>
-              
+
                            <zeroOrMore>
                               <ref name="model.global"/>
                            </zeroOrMore>
-              
+
                         </group>
                      </oneOrMore>
-          
+
                      <group>
                         <oneOrMore>
                            <group>
-              
+
                               <ref name="model.common"/>
-              
-              
+
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </oneOrMore>
                         <zeroOrMore>
@@ -7709,25 +7709,25 @@ You must supply at least two values for @target on <name/>
                                  <ref name="model.divLike"/>
                                  <ref name="model.divGenLike"/>
                               </choice>
-              
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </zeroOrMore>
                      </group>
                   </choice>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -7762,14 +7762,14 @@ You must supply at least two values for @target on <name/>
       <element name="div1">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(level-1 text division) contains a first-level subdivision of the front, body, or back of a text. [4.1.2. Numbered Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
@@ -7779,24 +7779,24 @@ You must supply at least two values for @target on <name/>
                               <ref name="model.div2Like"/>
                               <ref name="model.divGenLike"/>
                            </choice>
-            
+
                            <zeroOrMore>
                               <ref name="model.global"/>
                            </zeroOrMore>
-            
+
                         </group>
                      </oneOrMore>
                      <group>
                         <oneOrMore>
                            <group>
-              
+
                               <ref name="model.common"/>
-              
-              
+
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </oneOrMore>
                         <zeroOrMore>
@@ -7805,25 +7805,25 @@ You must supply at least two values for @target on <name/>
                                  <ref name="model.div2Like"/>
                                  <ref name="model.divGenLike"/>
                               </choice>
-              
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </zeroOrMore>
                      </group>
                   </choice>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -7840,14 +7840,14 @@ You must supply at least two values for @target on <name/>
       <element name="div2">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(level-2 text division) contains a second-level subdivision of the front, body, or back of a text. [4.1.2. Numbered Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
@@ -7857,24 +7857,24 @@ You must supply at least two values for @target on <name/>
                               <ref name="model.div3Like"/>
                               <ref name="model.divGenLike"/>
                            </choice>
-            
+
                            <zeroOrMore>
                               <ref name="model.global"/>
                            </zeroOrMore>
-            
+
                         </group>
                      </oneOrMore>
                      <group>
                         <oneOrMore>
                            <group>
-              
+
                               <ref name="model.common"/>
-              
-              
+
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </oneOrMore>
                         <zeroOrMore>
@@ -7883,25 +7883,25 @@ You must supply at least two values for @target on <name/>
                                  <ref name="model.div3Like"/>
                                  <ref name="model.divGenLike"/>
                               </choice>
-              
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </zeroOrMore>
                      </group>
                   </choice>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -7918,14 +7918,14 @@ You must supply at least two values for @target on <name/>
       <element name="div3">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(level-3 text division) contains a third-level subdivision of the front, body, or back of a text. [4.1.2. Numbered Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
@@ -7935,24 +7935,24 @@ You must supply at least two values for @target on <name/>
                               <ref name="model.div4Like"/>
                               <ref name="model.divGenLike"/>
                            </choice>
-            
+
                            <zeroOrMore>
                               <ref name="model.global"/>
                            </zeroOrMore>
-            
+
                         </group>
                      </oneOrMore>
                      <group>
                         <oneOrMore>
                            <group>
-              
+
                               <ref name="model.common"/>
-              
-              
+
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </oneOrMore>
                         <zeroOrMore>
@@ -7961,25 +7961,25 @@ You must supply at least two values for @target on <name/>
                                  <ref name="model.div4Like"/>
                                  <ref name="model.divGenLike"/>
                               </choice>
-              
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </zeroOrMore>
                      </group>
                   </choice>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -7996,14 +7996,14 @@ You must supply at least two values for @target on <name/>
       <element name="div4">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(level-4 text division) contains a fourth-level subdivision of the front, body, or back of a text. [4.1.2. Numbered Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
@@ -8013,24 +8013,24 @@ You must supply at least two values for @target on <name/>
                               <ref name="model.div5Like"/>
                               <ref name="model.divGenLike"/>
                            </choice>
-            
+
                            <zeroOrMore>
                               <ref name="model.global"/>
                            </zeroOrMore>
-            
+
                         </group>
                      </oneOrMore>
                      <group>
                         <oneOrMore>
                            <group>
-              
+
                               <ref name="model.common"/>
-              
-              
+
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </oneOrMore>
                         <zeroOrMore>
@@ -8039,25 +8039,25 @@ You must supply at least two values for @target on <name/>
                                  <ref name="model.div5Like"/>
                                  <ref name="model.divGenLike"/>
                               </choice>
-              
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </zeroOrMore>
                      </group>
                   </choice>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -8074,14 +8074,14 @@ You must supply at least two values for @target on <name/>
       <element name="div5">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(level-5 text division) contains a fifth-level subdivision of the front, body, or back of a text. [4.1.2. Numbered Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
@@ -8091,24 +8091,24 @@ You must supply at least two values for @target on <name/>
                               <ref name="model.div6Like"/>
                               <ref name="model.divGenLike"/>
                            </choice>
-            
+
                            <zeroOrMore>
                               <ref name="model.global"/>
                            </zeroOrMore>
-            
+
                         </group>
                      </oneOrMore>
                      <group>
                         <oneOrMore>
                            <group>
-              
+
                               <ref name="model.common"/>
-              
-              
+
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </oneOrMore>
                         <zeroOrMore>
@@ -8117,25 +8117,25 @@ You must supply at least two values for @target on <name/>
                                  <ref name="model.div6Like"/>
                                  <ref name="model.divGenLike"/>
                               </choice>
-              
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </zeroOrMore>
                      </group>
                   </choice>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -8152,14 +8152,14 @@ You must supply at least two values for @target on <name/>
       <element name="div6">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(level-6 text division) contains a sixth-level subdivision of the front, body, or back of a text. [4.1.2. Numbered Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
@@ -8169,24 +8169,24 @@ You must supply at least two values for @target on <name/>
                               <ref name="model.div7Like"/>
                               <ref name="model.divGenLike"/>
                            </choice>
-            
+
                            <zeroOrMore>
                               <ref name="model.global"/>
                            </zeroOrMore>
-            
+
                         </group>
                      </oneOrMore>
                      <group>
                         <oneOrMore>
                            <group>
-              
+
                               <ref name="model.common"/>
-              
-              
+
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </oneOrMore>
                         <zeroOrMore>
@@ -8195,25 +8195,25 @@ You must supply at least two values for @target on <name/>
                                  <ref name="model.div7Like"/>
                                  <ref name="model.divGenLike"/>
                               </choice>
-              
+
                               <zeroOrMore>
                                  <ref name="model.global"/>
                               </zeroOrMore>
-              
+
                            </group>
                         </zeroOrMore>
                      </group>
                   </choice>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -8230,38 +8230,38 @@ You must supply at least two values for @target on <name/>
       <element name="div7">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(level-7 text division) contains the smallest possible subdivision of the front, body or back of a text, larger than a paragraph. [4.1.2. Numbered Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.divTop"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <oneOrMore>
                      <group>
-          
+
                         <ref name="model.common"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </oneOrMore>
                   <zeroOrMore>
                      <group>
-          
+
                         <ref name="model.divBottom"/>
-          
-          
+
+
                         <zeroOrMore>
                            <ref name="model.global"/>
                         </zeroOrMore>
-          
+
                      </group>
                   </zeroOrMore>
                </group>
@@ -8329,24 +8329,24 @@ You must supply at least two values for @target on <name/>
       <element name="argument">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a formal list or prose description of the topics addressed by a subdivision of a text. [4.2. Elements Common to All Divisions 4.6. Title Pages]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.global"/>
                   <ref name="model.headLike"/>
                </choice>
             </zeroOrMore>
-      
+
             <oneOrMore>
                <group>
-        
+
                   <ref name="model.common"/>
-        
-        
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </oneOrMore>
          </group>
@@ -8375,7 +8375,7 @@ You must supply at least two values for @target on <name/>
                <text/>
                <ref name="model.gLike"/>
                <ref name="model.phrase"/>
-        
+
                <ref name="argument"/>
                <ref name="byline"/>
                <ref name="dateline"/>
@@ -8430,35 +8430,35 @@ You must supply at least two values for @target on <name/>
       <element name="postscript">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a postscript, e.g. to a letter. [4.2. Elements Common to All Divisions]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.global"/>
                   <ref name="model.divTopPart"/>
                </choice>
             </zeroOrMore>
-      
-      
+
+
             <ref name="model.common"/>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="model.global"/>
                   <ref name="model.common"/>
                </choice>
             </zeroOrMore>
-      
+
             <zeroOrMore>
                <group>
-        
+
                   <ref name="model.divBottomPart"/>
-        
-        
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </zeroOrMore>
          </group>
@@ -8470,22 +8470,22 @@ You must supply at least two values for @target on <name/>
       <element name="titlePage">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(title page) contains the title page of a text, appearing within the front or back matter. [4.6. Title Pages]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
-      
+
+
             <ref name="model.titlepagePart"/>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="model.titlepagePart"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <optional>
@@ -8503,19 +8503,19 @@ You must supply at least two values for @target on <name/>
       <element name="docTitle">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(document title) contains the title of a document, including all its constituents, as given on a title page. [4.6. Title Pages]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.global"/>
             </zeroOrMore>
-      
+
             <oneOrMore>
                <group>
                   <ref name="titlePart"/>
-        
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </oneOrMore>
          </group>
@@ -8625,7 +8625,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="front">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(front matter) contains any prefatory matter (headers, abstracts, title page, prefaces, dedications, etc.) found at the start of a document, before the main body. [4.6. Title Pages 4. Default Text Structure]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.frontPart"/>
@@ -8637,7 +8637,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
             <optional>
                <group>
                   <choice>
-          
+
                      <group>
                         <ref name="model.div1Like"/>
                         <zeroOrMore>
@@ -8648,7 +8648,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                            </choice>
                         </zeroOrMore>
                      </group>
-          
+
                      <group>
                         <ref name="model.divLike"/>
                         <zeroOrMore>
@@ -8660,7 +8660,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                         </zeroOrMore>
                      </group>
                   </choice>
-        
+
                   <optional>
                      <group>
                         <ref name="model.divBottom"/>
@@ -8684,7 +8684,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="back">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(back matter) contains any appendixes, etc. following the main part of a text. [4.7. Back Matter 4. Default Text Structure]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.frontPart"/>
@@ -8694,16 +8694,16 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
-      
-        
+
+
+
             <optional>
                <choice>
                   <group>
-              
+
                      <ref name="model.div1Like"/>
-              
-              
+
+
                      <zeroOrMore>
                         <choice>
                            <ref name="model.frontPart"/>
@@ -8711,13 +8711,13 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                            <ref name="model.global"/>
                         </choice>
                      </zeroOrMore>
-              
+
                   </group>
                   <group>
-              
+
                      <ref name="model.divLike"/>
-              
-              
+
+
                      <zeroOrMore>
                         <choice>
                            <ref name="model.frontPart"/>
@@ -8725,29 +8725,29 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                            <ref name="model.global"/>
                         </choice>
                      </zeroOrMore>
-              
+
                   </group>
                </choice>
             </optional>
-        
-      
-      
+
+
+
             <optional>
                <group>
-          
+
                   <ref name="model.divBottomPart"/>
-          
-          
+
+
                   <zeroOrMore>
                      <choice>
                         <ref name="model.divBottomPart"/>
                         <ref name="model.global"/>
                      </choice>
                   </zeroOrMore>
-          
+
                </group>
             </optional>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>
@@ -9272,43 +9272,43 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="climate">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains information about the physical climate of a place. [13.3.4.3. States, Traits, and Events]</a:documentation>
          <group>
-      
-         
-      
-      
+
+
+
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
+
             <choice>
-        
-          
+
+
                <oneOrMore>
                   <ref name="model.pLike"/>
                </oneOrMore>
-          
-        
-        
-          
+
+
+
+
                <oneOrMore>
                   <ref name="model.labelLike"/>
                </oneOrMore>
-          
-        
+
+
             </choice>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.noteLike"/>
                   <ref name="model.biblLike"/>
                </choice>
             </zeroOrMore>
-      
-      
+
+
             <zeroOrMore>
                <ref name="climate"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.datable.attributes"/>
@@ -9344,28 +9344,28 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="event">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains data relating to any kind of significant event associated with a person, place, or organization. [13.3.1. Basic Principles]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
+
             <choice>
-        
-          
+
+
                <oneOrMore>
                   <ref name="model.pLike"/>
                </oneOrMore>
-          
-        
-        
-          
+
+
+
+
                <oneOrMore>
                   <ref name="model.labelLike"/>
                </oneOrMore>
-          
-        
+
+
             </choice>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.noteLike"/>
@@ -9374,12 +9374,12 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                   <ref name="link"/>
                </choice>
             </zeroOrMore>
-      
-      
+
+
             <zeroOrMore>
                <ref name="event"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.datable.attributes"/>
@@ -9430,16 +9430,16 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="langKnowledge">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(language knowledge) summarizes the state of a person's linguistic knowledge, either as prose or by a list of langKnown elements. [13.3.2.1. Personal Characteristics]</a:documentation>
          <group>
-        
-           
-        
+
+
+
             <choice>
                <ref name="model.pLike"/>
-           
+
               <oneOrMore>
                   <ref name="langKnown"/>
                </oneOrMore>
-           
+
             </choice>
          </group>
          <ref name="att.global.attributes"/>
@@ -9496,27 +9496,27 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="listOrg">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of organizations) contains a list of elements, each of which provides information about an identifiable organization. [13.2.2. Organizational Names]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="org"/>
                   <ref name="listOrg"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="relation"/>
                   <ref name="listRelation"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -9529,27 +9529,27 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="listEvent">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of events) contains a list of descriptions, each of which provides information about an identifiable event. [13.3.1. Basic Principles]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="event"/>
                   <ref name="listEvent"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="relation"/>
                   <ref name="listRelation"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -9562,27 +9562,27 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="listPerson">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of persons) contains a list of descriptions, each of which provides information about an identifiable person or a group of people, for example the participants in a language interaction, or the people referred to in a historical source. [13.3.2. The Person Element 15.2. Contextual Information 2.4. The Profile Description 15.3.2. Declarable Elements]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="model.personLike"/>
                   <ref name="listPerson"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="relation"/>
                   <ref name="listRelation"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -9595,27 +9595,27 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="listPlace">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of places) contains a list of places, optionally followed by a list of relationships (other than containment) defined amongst them. [2.2.7. The Source Description 13.3.4. Places]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="model.placeLike"/>
                   <ref name="listPlace"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="relation"/>
                   <ref name="listRelation"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -9629,7 +9629,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines the location of a place as a set of geographical coordinates, in terms of other named geo-political entities, or as an address. [13.3.4. Places]</a:documentation>
          <zeroOrMore>
             <choice>
-        
+
                <ref name="model.labelLike"/>
                <ref name="model.placeNamePart"/>
                <ref name="model.offsetLike"/>
@@ -9684,20 +9684,20 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="org">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(organization) provides information about an identifiable organization such as a business, a tribe, or any other grouping of people. [13.2.2. Organizational Names]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
+
             <choice>
-        
-          
+
+
                <zeroOrMore>
                   <ref name="model.pLike"/>
                </zeroOrMore>
-          
-        
-        
+
+
+
                <zeroOrMore>
                   <choice>
                      <ref name="model.labelLike"/>
@@ -9707,9 +9707,9 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
 	                    <ref name="model.milestoneLike"/>
                   </choice>
                </zeroOrMore>
-        
+
             </choice>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.noteLike"/>
@@ -9718,12 +9718,12 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                   <ref name="link"/>
                </choice>
             </zeroOrMore>
-      
-      
+
+
             <zeroOrMore>
                <ref name="model.personLike"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -9748,21 +9748,21 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="listRelation">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides information about relationships identified amongst people, places, and organizations, either informally as prose or as formally expressed relation links. [13.3.2.3. Personal Relationships]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
+
             <choice>
                <ref name="model.pLike"/>
-        
+
                <oneOrMore>
                   <choice>
                      <ref name="relation"/>
                      <ref name="listRelation"/>
                   </choice>
                </oneOrMore>
-        
+
             </choice>
          </group>
          <ref name="att.global.attributes"/>
@@ -9775,19 +9775,19 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="person">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides information about an identifiable individual, for example a participant in a language interaction, or a person referred to in a historical source. [13.3.2. The Person Element 15.2.2. The Participant Description]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="model.personPart"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <ref name="att.editLike.attributes"/>
@@ -9831,19 +9831,19 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="personGrp">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(personal group) describes a group of individuals treated as a single person for analytic purposes. [15.2.2. The Participant Description]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="model.personPart"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <ref name="att.sortable.attributes"/>
@@ -9894,20 +9894,20 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="place">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains data about a geographic location [13.3.4. Places]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
+
             <choice>
-        
-          
+
+
                <zeroOrMore>
                   <ref name="model.pLike"/>
                </zeroOrMore>
-          
-        
-        
+
+
+
                <zeroOrMore>
                   <choice>
                      <ref name="model.labelLike"/>
@@ -9915,9 +9915,9 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                      <ref name="model.eventLike"/>
                   </choice>
                </zeroOrMore>
-        
+
             </choice>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.noteLike"/>
@@ -9927,15 +9927,15 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                   <ref name="link"/>
                </choice>
             </zeroOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="model.placeLike"/>
                   <ref name="listPlace"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -9948,47 +9948,47 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="population">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains information about the population of a place. [13.3.4.3. States, Traits, and Events]</a:documentation>
          <group>
-      
-         
-      
-      
+
+
+
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
+
             <optional>
                <group>
                   <choice>
-          
-            
+
+
                      <oneOrMore>
                         <ref name="model.pLike"/>
                      </oneOrMore>
-            
-          
-          
-            
+
+
+
+
                      <oneOrMore>
                         <ref name="model.labelLike"/>
                      </oneOrMore>
-            
-          
+
+
                   </choice>
-        
+
                   <zeroOrMore>
                      <choice>
                         <ref name="model.noteLike"/>
                         <ref name="model.biblLike"/>
                      </choice>
                   </zeroOrMore>
-        
+
                </group>
             </optional>
-      
+
             <zeroOrMore>
                <ref name="population"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.datable.attributes"/>
@@ -10136,37 +10136,37 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="state">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range. [13.3.1. Basic Principles 13.3.2.1. Personal Characteristics]</a:documentation>
          <group>
-        
-           
-        
+
+
+
             <choice>
-           
+
               <oneOrMore>
                   <ref name="state"/>
                </oneOrMore>
-           
+
                <group>
-              
+
                  <zeroOrMore>
                      <ref name="model.headLike"/>
                   </zeroOrMore>
-              
-              
+
+
                  <oneOrMore>
                      <ref name="model.pLike"/>
                   </oneOrMore>
-              
-              
+
+
                  <zeroOrMore>
                      <choice>
                         <ref name="model.noteLike"/>
                         <ref name="model.biblLike"/>
                      </choice>
                   </zeroOrMore>
-              
+
                </group>
-           
-              
+
+
                  <zeroOrMore>
                   <choice>
                     <ref name="model.labelLike"/>
@@ -10174,8 +10174,8 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                     <ref name="model.biblLike"/>
                  </choice>
                </zeroOrMore>
-              
-           
+
+
             </choice>
          </group>
          <ref name="att.global.attributes"/>
@@ -10190,43 +10190,43 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="terrain">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains information about the physical terrain of a place. [13.3.4.3. States, Traits, and Events]</a:documentation>
          <group>
-      
-         
-      
-      
+
+
+
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
+
             <choice>
-        
-          
+
+
                <oneOrMore>
                   <ref name="model.pLike"/>
                </oneOrMore>
-          
-        
-        
-          
+
+
+
+
                <oneOrMore>
                   <ref name="model.labelLike"/>
                </oneOrMore>
-          
-        
+
+
             </choice>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.noteLike"/>
                   <ref name="model.biblLike"/>
                </choice>
             </zeroOrMore>
-      
-      
+
+
             <zeroOrMore>
                <ref name="terrain"/>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.datable.attributes"/>
@@ -10240,37 +10240,37 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="trait">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a description of some status or quality attributed to a person, place, or organization typically, but not necessarily, independent of the volition or action of the holder and usually not at some specific time or for a specific date range. [13.3.1. Basic Principles 13.3.2.1. Personal Characteristics]</a:documentation>
          <group>
-       
-          
-       
+
+
+
             <choice>
-          
+
                <oneOrMore>
                   <ref name="trait"/>
                </oneOrMore>
-          
+
                <group>
-             
+
                   <zeroOrMore>
                      <ref name="model.headLike"/>
                   </zeroOrMore>
-             
-             
+
+
                   <oneOrMore>
                      <ref name="model.pLike"/>
                   </oneOrMore>
-             
-             
+
+
                   <zeroOrMore>
                      <choice>
                         <ref name="model.noteLike"/>
                         <ref name="model.biblLike"/>
                      </choice>
                   </zeroOrMore>
-             
+
                </group>
-          
-             
+
+
                 <zeroOrMore>
                   <choice>
                      <ref name="model.labelLike"/>
@@ -10278,8 +10278,8 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                      <ref name="model.biblLike"/>
                   </choice>
                </zeroOrMore>
-             
-          
+
+
             </choice>
          </group>
          <ref name="att.global.attributes"/>
@@ -10294,27 +10294,27 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="nym">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(canonical name) contains the definition for a canonical name or name component of any kind. [13.3.5. Names and Nyms]</a:documentation>
          <group>
-      
-        
+
+
             <zeroOrMore>
                <ref name="model.entryPart"/>
             </zeroOrMore>
-        
-      
-      
-        
+
+
+
+
             <zeroOrMore>
                <ref name="model.pLike"/>
             </zeroOrMore>
-        
-      
-      
-        
+
+
+
+
             <zeroOrMore>
                <ref name="nym"/>
             </zeroOrMore>
-        
-      
+
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -10336,27 +10336,27 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="listNym">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of canonical names) contains a list of nyms, that is, standardized names for any thing. [13.3.5. Names and Nyms]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.headLike"/>
             </zeroOrMore>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="nym"/>
                   <ref name="listNym"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <zeroOrMore>
                <choice>
                   <ref name="relation"/>
                   <ref name="listRelation"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -10494,12 +10494,12 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="facsimile">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a representation of some written source in the form of a set of images rather than as transcribed or encoded text. [11.1. Digital Facsimiles]</a:documentation>
          <group>
-      
+
             <optional>
                <ref name="front"/>
             </optional>
-      
-      
+
+
             <oneOrMore>
                <choice>
                   <ref name="model.graphicLike"/>
@@ -10507,12 +10507,12 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                   <ref name="surfaceGrp"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <optional>
                <ref name="back"/>
             </optional>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.declaring.attributes"/>
@@ -10539,7 +10539,7 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
       <element name="surface">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [11.1. Digital Facsimiles 11.2.2. Embedded Transcription]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.global"/>
@@ -10547,22 +10547,22 @@ Suggested values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] 
                   <ref name="model.graphicLike"/>
                </choice>
             </zeroOrMore>
-      
+
             <zeroOrMore>
                <group>
-        
+
                   <choice>
                      <ref name="zone"/>
                      <ref name="line"/>
                      <ref name="surface"/>
                      <ref name="surfaceGrp"/>
                   </choice>
-        
-        
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </zeroOrMore>
          </group>
@@ -11058,11 +11058,11 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [11.3.4.5. Transpositions]</a:documentation>
          <group>
             <ref name="ptr"/>
-      
+
             <oneOrMore>
                <ref name="ptr"/>
             </oneOrMore>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -11092,48 +11092,48 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
       <element name="table">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains text displayed in tabular form, in rows and columns. [14.1.1. TEI Tables]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="model.headLike"/>
                   <ref name="model.global"/>
                </choice>
             </zeroOrMore>
-      
+
             <choice>
                <oneOrMore>
                   <group>
                      <ref name="row"/>
-          
+
                      <zeroOrMore>
                         <ref name="model.global"/>
                      </zeroOrMore>
-          
+
                   </group>
                </oneOrMore>
                <oneOrMore>
                   <group>
-          
+
                      <ref name="model.graphicLike"/>
-          
-          
+
+
                      <zeroOrMore>
                         <ref name="model.global"/>
                      </zeroOrMore>
-          
+
                   </group>
                </oneOrMore>
             </choice>
             <zeroOrMore>
                <group>
-        
+
                   <ref name="model.divBottom"/>
-        
-        
+
+
                   <zeroOrMore>
                      <ref name="model.global"/>
                   </zeroOrMore>
-        
+
                </group>
             </zeroOrMore>
          </group>
@@ -11181,7 +11181,7 @@ Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNu
             <choice>
                <text/>
                <ref name="model.graphicLike"/>
-               <ref name="model.hiLike"/>       
+               <ref name="model.hiLike"/>
             </choice>
          </zeroOrMore>
          <ref name="att.global.attributes"/>
@@ -11553,35 +11553,35 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
                <optional>
                   <ref name="geogName"/>
                </optional>
-        
+
                <optional>
                   <ref name="institution"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="repository"/>
                </optional>
-        
-        
+
+
                <zeroOrMore>
                   <ref name="collection"/>
                </zeroOrMore>
-        
-        
+
+
                <optional>
                   <ref name="idno"/>
                </optional>
-        
+
             </group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="msName"/>
                   <ref name="altIdentifier"/>
                </choice>
             </zeroOrMore>
-      
+
          </group>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="openn_tei-msIdentifier-msId_minimal-constraint-22">
@@ -11647,27 +11647,27 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
             <optional>
                <ref name="geogName"/>
             </optional>
-     
+
             <optional>
                <ref name="institution"/>
             </optional>
-     
-     
+
+
             <optional>
                <ref name="repository"/>
             </optional>
-     
-     
+
+
             <optional>
                <ref name="collection"/>
             </optional>
-     
+
             <ref name="idno"/>
-     
+
             <optional>
                <ref name="note"/>
             </optional>
-     
+
          </group>
          <ref name="att.global.attributes"/>
          <ref name="att.typed.attributes"/>
@@ -11733,35 +11733,35 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="msContents">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(manuscript contents) describes the intellectual content of a manuscript or manuscript part, either as a series of paragraphs or as a series of structured manuscript items. [10.6. Intellectual Content]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="textLang"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="titlePage"/>
                </optional>
-        
-        
+
+
                <zeroOrMore>
                   <choice>
                      <ref name="msItem"/>
                      <ref name="msItemStruct"/>
                   </choice>
                </zeroOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -11783,21 +11783,21 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="msItem">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(manuscript item) describes an individual work or item within the intellectual content of a manuscript or manuscript part. [10.6.1. The msItem and msItemStruct Elements]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <choice>
                   <ref name="locus"/>
                   <ref name="locusGrp"/>
                </choice>
             </zeroOrMore>
-      
+
             <choice>
-        
+
                <oneOrMore>
                   <ref name="model.pLike"/>
                </oneOrMore>
-        
-        
+
+
                <oneOrMore>
                   <choice>
                      <ref name="model.titlepagePart"/>
@@ -11805,7 +11805,7 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
                      <ref name="model.global"/>
                   </choice>
                </oneOrMore>
-        
+
             </choice>
          </group>
          <ref name="att.global.attributes"/>
@@ -11827,94 +11827,94 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="msItemStruct">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(structured manuscript item) contains a structured description for an individual work or item within the intellectual content of a manuscript or manuscript part. [10.6.1. The msItem and msItemStruct Elements]</a:documentation>
          <group>
-      
+
             <optional>
                <choice>
                   <ref name="locus"/>
                   <ref name="locusGrp"/>
                </choice>
             </optional>
-      
+
             <choice>
-        
+
                <oneOrMore>
                   <ref name="model.pLike"/>
                </oneOrMore>
-        
+
                <group>
-          
+
                   <zeroOrMore>
                      <ref name="author"/>
                   </zeroOrMore>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="respStmt"/>
                   </zeroOrMore>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="title"/>
                   </zeroOrMore>
-          
-          
+
+
                   <optional>
                      <ref name="rubric"/>
                   </optional>
-          
-          
+
+
                   <optional>
                      <ref name="incipit"/>
                   </optional>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="msItemStruct"/>
                   </zeroOrMore>
-          
-          
+
+
                   <optional>
                      <ref name="explicit"/>
                   </optional>
-          
-          
+
+
                   <optional>
                      <ref name="finalRubric"/>
                   </optional>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="colophon"/>
                   </zeroOrMore>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="decoNote"/>
                   </zeroOrMore>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="listBibl"/>
                   </zeroOrMore>
-          
-          
+
+
                   <zeroOrMore>
                      <choice>
                         <ref name="bibl"/>
                         <ref name="biblStruct"/>
                      </choice>
                   </zeroOrMore>
-          
-          
+
+
                   <zeroOrMore>
                      <ref name="model.noteLike"/>
                   </zeroOrMore>
-          
-          
+
+
                   <optional>
                      <ref name="textLang"/>
                   </optional>
-          
+
                </group>
             </choice>
          </group>
@@ -11954,13 +11954,13 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="physDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(physical description) contains a full physical description of a manuscript or manuscript part, optionally subdivided using more specialized elements from the model.physDescPart class. [10.7. Physical Description]</a:documentation>
          <group>
-      
+
             <zeroOrMore>
                <ref name="model.pLike"/>
             </zeroOrMore>
-      
-      
-        
+
+
+
             <optional>
                <ref name="objectDesc"/>
             </optional>
@@ -11991,7 +11991,7 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
             <optional>
                <ref name="accMat"/>
             </optional>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -12001,22 +12001,22 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="objectDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a description of the physical components making up the object which is being described. [10.7.1. Object Description]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="supportDesc"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="layoutDesc"/>
                </optional>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12069,6 +12069,8 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                   <value>papyrus</value>
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                  <value>amatl</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                   <value>mixed</value>
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                </choice>
@@ -12113,22 +12115,22 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="layoutDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(layout description) collects the set of layout descriptions applicable to a manuscript. [10.7.2. Writing, Decoration, and Other Notations]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <oneOrMore>
                   <ref name="layout"/>
                </oneOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12180,22 +12182,22 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="handDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description of hands) contains a description of all the different kinds of writing used in a manuscript. [10.7.2. Writing, Decoration, and Other Notations]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <oneOrMore>
                   <ref name="handNote"/>
                </oneOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12212,22 +12214,22 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="typeDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a description of the typefaces or other aspects of the printing of an incunable or other printed source. [10.7.2.1. Writing]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <oneOrMore>
                   <ref name="typeNote"/>
                </oneOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12238,22 +12240,22 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="scriptDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a description of the scripts used in a manuscript or similar source. [10.7.2.1. Writing]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <oneOrMore>
                   <ref name="scriptNote"/>
                </oneOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12272,22 +12274,22 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="decoDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(decoration description) contains a description of the decoration of a manuscript, either as a sequence of paragraphs, or as a sequence of topically organized decoNote elements. [10.7.3. Bindings, Seals, and Additional Material]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <oneOrMore>
                   <ref name="decoNote"/>
                </oneOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12315,7 +12317,7 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="bindingDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(binding description) describes the present and former bindings of a manuscript, either as a series of paragraphs or as a series of distinct binding elements, one for each binding of the manuscript. [10.7.3.1. Binding Descriptions]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <choice>
                   <ref name="model.pLike"/>
@@ -12323,12 +12325,12 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
                   <ref name="condition"/>
                </choice>
             </oneOrMore>
-      
-      
+
+
             <oneOrMore>
                <ref name="binding"/>
             </oneOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -12367,18 +12369,18 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="sealDesc">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(seal description) describes the seals or other external items attached to a manuscript, either as a series of paragraphs or as a series of distinct seal elements, possibly with additional decoNotes. [10.7.3.2. Seals]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <oneOrMore>
                   <choice>
                      <ref name="decoNote"/>
@@ -12386,7 +12388,7 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
                      <ref name="condition"/>
                   </choice>
                </oneOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12435,32 +12437,32 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="history">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups elements describing the full history of a manuscript or manuscript part. [10.8. History]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
-        
+
                <optional>
                   <ref name="summary"/>
                </optional>
-        
-        
+
+
                <optional>
                   <ref name="origin"/>
                </optional>
-        
-        
+
+
                <zeroOrMore>
                   <ref name="provenance"/>
                </zeroOrMore>
-        
-        
+
+
                <optional>
                   <ref name="acquisition"/>
                </optional>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12501,21 +12503,21 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="additional">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups additional information, combining bibliographic information about a manuscript, or surrogate copies of it with curatorial or administrative information. [10.9. Additional Information]</a:documentation>
          <group>
-      
+
             <optional>
                <ref name="adminInfo"/>
             </optional>
-      
-      
+
+
             <optional>
                <ref name="surrogates"/>
             </optional>
-      
-      
+
+
             <optional>
                <ref name="listBibl"/>
             </optional>
-      
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -12525,27 +12527,27 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="adminInfo">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(administrative information) contains information about the present custody and availability of the manuscript, and also about the record description itself. [10.9.1. Administrative Information]</a:documentation>
          <group>
-      
+
             <optional>
                <ref name="recordHist"/>
             </optional>
-      
-      
+
+
             <optional>
                <ref name="availability"/>
             </optional>
-      
-      
+
+
             <optional>
                <ref name="custodialHist"/>
             </optional>
-      
-      
+
+
             <optional>
                <ref name="model.noteLike"/>
             </optional>
-        
-      
+
+
          </group>
          <ref name="att.global.attributes"/>
          <empty/>
@@ -12555,18 +12557,18 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="recordHist">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(recorded history) provides information about the source and revision status of the parent manuscript description itself. [10.9.1. Administrative Information]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
+
             <group>
                <ref name="source"/>
-        
+
                <zeroOrMore>
                   <ref name="change"/>
                </zeroOrMore>
-        
+
             </group>
          </choice>
          <ref name="att.global.attributes"/>
@@ -12585,16 +12587,16 @@ Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniature
       <element name="custodialHist">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(custodial history) contains a description of a manuscript's custodial history, either as running prose or as a series of dated custodial events. [10.9.1.2. Availability and Custodial History]</a:documentation>
          <choice>
-      
+
             <oneOrMore>
                <ref name="model.pLike"/>
             </oneOrMore>
-      
-      
+
+
             <oneOrMore>
                <ref name="custEvent"/>
             </oneOrMore>
-      
+
          </choice>
          <ref name="att.global.attributes"/>
          <empty/>
