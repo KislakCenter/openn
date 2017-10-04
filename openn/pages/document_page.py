@@ -31,11 +31,15 @@ class DocumentPage:
     @property
     def ms_items(self):
         if self._ms_items is None:
-            self._ms_items = self._tei.ms_items(self.n)
+            self._ms_items = self._tei.ms_items(self.n, xml_id=self.xml_id)
         return self._ms_items
 
     @property
     def deco_notes(self):
         if self._deco_notes is None:
-            self._deco_notes = self._tei.deco_notes(self.n)
+            self._deco_notes = self._tei.deco_notes(self.n, xml_id=self.xml_id)
         return self._deco_notes
+
+    @property
+    def xml_id(self):
+        return self._image.xml_id()

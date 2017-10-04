@@ -365,13 +365,21 @@ class OPennTEI(XMLWhatsit):
         s = self.n_close_paren_re.sub(')', s)
         return s.strip()
 
-    def ms_items(self, n):
-        nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
+    def ms_items(self, n, xml_id=None):
+        if xml_id is None:
+            nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
+        else:
+            nodes = self._get_nodes('//t:msItem/t:locus[@target="#%s"]/parent::node()' % xml_id)
         return [ MSItem(node, self.ns) for node in nodes ]
 
-    def deco_notes(self, n):
-        nodes = self._get_nodes('//t:decoNote[@n="%s"]' % n)
-        return [node.text for node in nodes ]
+    def deco_notes(self, n, xml_id=None):
+        if xml_id is None:
+            nodes = [node.text for node in self._get_nodes('//t:decoNote[@n="%s"]' % n)]
+        else:
+            # xml.xpath('//decoNote[@n="10r"]/locus')[0].tail
+            nodes = [node.tail for node in self._get_nodes('//t:decoNote/t:locus[@target="#%s"]' % xml_id)]
+        # return [node.text for node in nodes ]
+        return nodes
 
     def add_licences(self, document, license_factory):
         """
@@ -456,6 +464,8 @@ class OPennTEI(XMLWhatsit):
             # n = self.fix_n(image.label)
             surface_attrs = {}
             surface_attrs['n'] = self.fix_n(image.label)
+            if image.serial_number is not None:
+                surface_attrs['xml:id'] = image.xml_id()
             surface_attrs['nsmap'] = self.ns
             if image.xml_id() is not None:
                 surface_attrs['{http://www.w3.org/XML/1998/namespace}id'] = image.xml_id()
