@@ -39,7 +39,7 @@ class OPennTEI(XMLWhatsit):
         else:
             parser = etree.XMLParser(encoding='utf-8', remove_blank_text=True)
             self.xml = etree.parse(xml, parser)
-        self._namespaces = { 't': OPennTEI.TEI_NS }
+        self._namespaces = { u't': OPennTEI.TEI_NS }
 
     @property
     def ns(self):
@@ -465,10 +465,10 @@ class OPennTEI(XMLWhatsit):
             surface_attrs = {}
             surface_attrs['n'] = self.fix_n(image.label)
             if image.serial_number is not None:
-                surface_attrs['xml:id'] = image.xml_id()
-            surface_attrs['nsmap'] = self.ns
-            if image.xml_id() is not None:
                 surface_attrs['{http://www.w3.org/XML/1998/namespace}id'] = image.xml_id()
+            surface_attrs['nsmap'] = self.ns
+            # if image.xml_id() is not None:
+            #     surface_attrs['{http://www.w3.org/XML/1998/namespace}id'] = image.xml_id()
             # surface = etree.Element("surface", n=n, nsmap=self.ns)
             surface = etree.Element("surface", **surface_attrs)
             for deriv in image.derivative_set.all():

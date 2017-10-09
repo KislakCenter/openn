@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from lxml import etree
+from lxml import objectify
+import xmltodict
 
 class XMLWhatsit:
     def _get_nodes(self,xpath):
@@ -18,6 +20,24 @@ class XMLWhatsit:
 
     def _all_the_strings(self,xpath):
         return [n.text for n in self._get_nodes(xpath) ]
+
+    def _get_dict(self,xpath):
+        nodes = self._get_nodes(xpath)
+        if len(nodes) == 0:
+            return {}
+        s = etree.tostring(nodes[0], pretty_print=True, xml_declaration=True,
+                           encoding='UTF-8')
+
+        return xmltodict.parse(s)
+
+    def _get_objects(self,xpath):
+        objs = []
+        for e in self._get_nodes(xpath):
+            s = etree.tostring(e, pretty_print=True, xml_declaration=True,
+                               encoding='UTF-8')
+            objs.append(objectify.fromstring(s))
+
+        return objs
 
     @property
     def ns(self):

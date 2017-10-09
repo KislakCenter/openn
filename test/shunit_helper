@@ -191,6 +191,18 @@ save_and_open() {
   fi
 }
 
+save_and_cat() {
+  sac_file="${1?save_and_open - FILE required}"
+
+  sac_base=`basename "$sac_file"`
+  sac_tmpfile="${TMPDIR:-/tmp}/${sac_base}"
+
+  cp "$sac_file" "$sac_tmpfile"
+
+  cat "$sac_tmpfile"
+  echo ">> catted "$sac_tmpfile <<"
+}
+
 print_output() {
   echo "\n====\n$output"
 }
