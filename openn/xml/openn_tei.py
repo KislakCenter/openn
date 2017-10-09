@@ -39,7 +39,7 @@ class OPennTEI(XMLWhatsit):
         else:
             parser = etree.XMLParser(encoding='utf-8', remove_blank_text=True)
             self.xml = etree.parse(xml, parser)
-        self._namespaces = { 't': OPennTEI.TEI_NS }
+        self._namespaces = { u't': OPennTEI.TEI_NS }
 
     @property
     def ns(self):
@@ -365,13 +365,21 @@ class OPennTEI(XMLWhatsit):
         s = self.n_close_paren_re.sub(')', s)
         return s.strip()
 
-    def ms_items(self, n):
-        nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
+    def ms_items(self, n, xml_id=None):
+        if xml_id is None:
+            nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
+        else:
+            nodes = self._get_nodes('//t:msItem/t:locus[@target="#%s"]/parent::node()' % xml_id)
         return [ MSItem(node, self.ns) for node in nodes ]
 
-    def deco_notes(self, n):
-        nodes = self._get_nodes('//t:decoNote[@n="%s"]' % n)
-        return [node.text for node in nodes ]
+    def deco_notes(self, n, xml_id=None):
+        if xml_id is None:
+            nodes = [node.text for node in self._get_nodes('//t:decoNote[@n="%s"]' % n)]
+        else:
+            # xml.xpath('//decoNote[@n="10r"]/locus')[0].tail
+            nodes = [node.tail for node in self._get_nodes('//t:decoNote/t:locus[@target="#%s"]' % xml_id)]
+        # return [node.text for node in nodes ]
+        return nodes
 
     def add_licences(self, document, license_factory):
         """
@@ -453,8 +461,16 @@ class OPennTEI(XMLWhatsit):
             graphic.getparent().remove(graphic)
         # add the surface/graphic elements
         for image in document.image_set.filter(image_type='document'):
-            n = self.fix_n(image.label)
-            surface = etree.Element("surface", n=n, nsmap=self.ns)
+            # n = self.fix_n(image.label)
+            surface_attrs = {}
+            surface_attrs['n'] = self.fix_n(image.label)
+            if image.serial_number is not None:
+                surface_attrs['{http://www.w3.org/XML/1998/namespace}id'] = image.xml_id()
+            surface_attrs['nsmap'] = self.ns
+            # if image.xml_id() is not None:
+            #     surface_attrs['{http://www.w3.org/XML/1998/namespace}id'] = image.xml_id()
+            # surface = etree.Element("surface", n=n, nsmap=self.ns)
+            surface = etree.Element("surface", **surface_attrs)
             for deriv in image.derivative_set.all():
                 deriv_type = deriv.deriv_type
                 path = OPennTEI.fix_path_re.sub("", deriv.path)

@@ -123,10 +123,12 @@ class RepositoryPrep(Status):
             f.seek(0)
             tei = OPennTEI(f)
             tei.validate()
-        except Exception as ex:
-            raise OPennException("Error creating TEI: %s" % str(ex))
         finally:
             f.close()
+        # except Exception as ex:
+        #     raise OPennException("Error creating TEI: %s" % str(ex))
+        # finally:
+        #     f.close()
 
         return outfile
 

@@ -40,3 +40,15 @@ class OPennXML(XMLWhatsit):
 
     def metadata_rights_more_info(self):
         return self._get_text('//metadata_rights/metadata_rights_more_info')
+
+    def page_count(self):
+        return len(self._get_nodes('//pages/page'))
+
+    def has_serial_numbers(self):
+        return len(self._get_nodes('//pages/page/serial_number')) > 0
+
+    def page_dict(self):
+        return self._get_dict('//pages')
+
+    def page_objects(self):
+        return self._get_objects('//pages/page')

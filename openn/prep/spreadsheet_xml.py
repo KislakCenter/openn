@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import json
 from copy import deepcopy
 
 from xml.dom.minidom import parseString
@@ -13,6 +14,7 @@ class SpreadsheetXML(object):
 
     def build_xml(self, workbook_data, xml_config):
         structure = self.build_dict(workbook_data, xml_config)
+        # print json.dumps(structure)
         xml       = dict2xml(structure, wrap='doc')
         return xml
 

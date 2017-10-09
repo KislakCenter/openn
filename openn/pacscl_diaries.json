@@ -431,6 +431,18 @@
                         }
                     }
                 },
+                "serial_number": {
+                    "field_name": "SERIAL_NUM",
+                    "required": {
+                        "if": {
+                            "field": "file_name",
+                            "is": "NONEMPTY"
+                        }
+                    },
+                    "repeating": true,
+                    "data_type": "integer",
+                    "unique": true
+                },
                 "file_name": {
                     "field_name": "FILE_NAME",
                     "required": true,
@@ -570,6 +582,7 @@
                 {
                     "xml_attr": "page",
                     "columns": [
+                        "serial_number",
                         "file_name",
                         "display_page",
                         "tag1",
