@@ -30,6 +30,7 @@ from openn.openn_exception import OPennException
 from openn.prep.prep_setup import PrepSetup
 from openn.prep.prep_config_factory import PrepConfigFactory
 from openn.repository.configs import Configs
+from openn.prep.common_prep import CommonPrep
 
 
 # Import your models for use in your script
