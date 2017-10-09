@@ -24,6 +24,9 @@
             <xsl:with-param name="some-text" select="//description/identification/full_call_number"/>
         </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="idified_call_number">
+      <xsl:value-of select="replace(normalize-space(lower-case($call_number)), '[^a-zA-Z0-9]+', '-')"></xsl:value-of>
+    </xsl:variable>
     <xsl:variable name="volume_number">
       <xsl:call-template name="clean-up-text">
         <xsl:with-param name="some-text"
@@ -144,7 +147,15 @@
                                 <xsl:variable name="locus" select="ancestor::page/display_page"/>
                                 <msItem>
                                   <xsl:attribute name="n" select="$locus"/>
-                                  <locus><xsl:value-of select="$locus"/></locus>
+                                  <locus>
+                                    <xsl:attribute name="target">
+                                      <xsl:text>#</xsl:text>
+                                      <xsl:call-template name="page-id">
+                                        <xsl:with-param name="serial_num" select="ancestor::page/serial_number"/>
+                                      </xsl:call-template>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="$locus"/>
+                                  </locus>
                                   <title><xsl:value-of select="parent::tag/value"/></title>
                                 </msItem>
                               </xsl:for-each>
@@ -234,6 +245,15 @@
                                      <xsl:attribute name="n">
                                        <xsl:value-of select="ancestor::page/display_page/text()"/>
                                      </xsl:attribute>
+                                     <locus>
+                                       <xsl:attribute name="target">
+                                         <xsl:text>#</xsl:text>
+                                         <xsl:call-template name="page-id">
+                                           <xsl:with-param name="serial_num" select="ancestor::page/serial_number"/>
+                                         </xsl:call-template>
+                                       </xsl:attribute>
+                                       <xsl:value-of select="ancestor::page/display_page/text()"/>
+                                     </locus>
                                      <xsl:value-of select="ancestor::tag/value"/>
                                    </decoNote>
                                 </xsl:for-each>
@@ -507,5 +527,9 @@
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
+    </xsl:template>
+    <xsl:template name="page-id">
+      <xsl:param name="serial_num"/>
+      <xsl:value-of select="concat('surface-', $idified_call_number, '-', $serial_num)"/>
     </xsl:template>
 </xsl:stylesheet>
