@@ -200,7 +200,7 @@ save_and_cat() {
   cp "$sac_file" "$sac_tmpfile"
 
   cat "$sac_tmpfile"
-  echo ">> catted "$sac_tmpfile <<"
+  echo ">> catted $sac_tmpfile <<"
 }
 
 print_output() {
