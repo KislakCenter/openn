@@ -6,13 +6,13 @@ source $THIS_DIR/shunit_helper
 TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
 STAGING_DATA_DIR=$OPENN_STAGING_DIR/Data
 
-# suite() {
-#     # suite_addTest testRun
-#     # suite_addTest testLewis_e_003
-#     # suite_addTest testLewis_e_005
-#     # suite_addTest testLewis_e_009
-#     suite_addTest testLewis_e_049
-# }
+suite() {
+    # suite_addTest testRun
+    # suite_addTest testLewis_e_003
+    # suite_addTest testLewis_e_005
+    # suite_addTest testLewis_e_009
+    suite_addTest testLewis_e_049
+}
 
 setUp() {
     rm -rf $TEST_STAGING_DIR/* 2>/dev/null
