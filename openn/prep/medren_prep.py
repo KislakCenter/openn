@@ -27,6 +27,7 @@ class MedrenPrep(RepositoryPrep):
     })
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
+    NEW_BIBID_RE = re.compile('^99\d+3503681$')
     DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\w*\.tif$', 'body\d{4}\w*\.tif$', 'back\d{4}\w*\.tif$' ]
     STRICT_IMAGE_PATTERN_RE = re.compile('^\w*_(front|body|back)\d{4}.tif$')
 
@@ -101,7 +102,10 @@ class MedrenPrep(RepositoryPrep):
         bibid = open(self.bibid_filename()).read().strip()
         if not re.match('\d+$', bibid):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
-        return bibid
+        if self.NEW_BIBID_RE.match(bibid):
+            return bibid
+        else:
+            return '99%s3503681' % (str(bibid),)
 
     @property
     def pih_filename(self):
@@ -281,6 +285,8 @@ class MedrenPrep(RepositoryPrep):
         bibid = tei.bibid
         if bibid is None:
             raise OPennException("Whoah now. bibid is none. That ain't right.")
+        if not self.NEW_BIBID_RE.match(bibid):
+            bibid = '99%s3503681' % (str(bibid),)
         self.write_xml(bibid,self.pih_filename)
         p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
                 stderr=subprocess.PIPE,
