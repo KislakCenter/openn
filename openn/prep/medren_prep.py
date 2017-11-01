@@ -102,7 +102,7 @@ class MedrenPrep(RepositoryPrep):
         bibid = open(self.bibid_filename()).read().strip()
         if not re.match('\d+$', bibid):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
-        if self.NEW_BIBID_RE.match(bibid):
+        if len(bibid) > 7:
             return bibid
         else:
             return '99%s3503681' % (str(bibid),)
