@@ -439,6 +439,19 @@ technologies, and industries.""",
             'include_file': 'ChemHeritageFoundation.html',
         },
         {
+            'tag': 'cpp',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'The Historical Medical Library of the College of Physicians of Philadelphia',
+            'blurb': """Established in 1788, the Historical Medical Library was Philadelphia's
+central medical library for over 150 years, serving its medical schools,
+hospitals, physicians and other health professionals. Today, it is an
+independent research library devoted to the history of medicine and the
+medical humanities, serving hundreds of scholars, health professionals,
+students and popular writers each year.""",
+            'include_file': 'CollegeOfPhysicians.html',
+        },
+        {
             'tag': 'manchester',
             'metadata_type': 'TEI',
             'live': True,
@@ -1102,6 +1115,20 @@ PREP_CONFIGS = {
     'chf-bphil': {
         'repository': {
             'tag': 'chf'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'cpp-bphil': {
+        'repository': {
+            'tag': 'cpp'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
