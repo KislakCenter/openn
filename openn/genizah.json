@@ -133,7 +133,7 @@
                         }
                     },
                     "repeating": true,
-                    "data_type": "string"
+                    "data_type": "word"
                 },
                 "record_url": {
                     "field_name": "Record URL",
