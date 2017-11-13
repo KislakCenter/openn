@@ -28,8 +28,17 @@ class MedrenPrep(RepositoryPrep):
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
     NEW_BIBID_RE = re.compile('^99\d+3503681$')
-    DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\w*\.tif$', 'body\d{4}\w*\.tif$', 'back\d{4}\w*\.tif$' ]
-    STRICT_IMAGE_PATTERN_RE = re.compile('^\w*_(front|body|back)\d{4}.tif$')
+    DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front_?\d{4}\w*\.tif$', 'body_?\d{4}\w*\.tif$', 'back_?\d{4}\w*\.tif$' ]
+    # 2017-11-13 DE: Accommodate odd file pattern:
+    #
+    #    cajs_rarms228_wk1_body_0003.tif
+    #
+    # typically, this file would be
+    #
+    #   cajs_rarms228_wk1_body0003.tif
+    #
+    # i.e., without '_' between `body` and `0003`.
+    STRICT_IMAGE_PATTERN_RE = re.compile('^\w*_(front|body|back)_?\d{4}.tif$')
 
     logger = logging.getLogger(__name__)
 
