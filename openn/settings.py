@@ -1140,6 +1140,20 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'friendshl-bphil': {
+        'repository': {
+            'tag': 'friendshl'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'manchester-bphil': {
         'repository': {
             'tag': 'manchester'
