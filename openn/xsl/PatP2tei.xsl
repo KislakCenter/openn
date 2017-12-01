@@ -47,9 +47,16 @@
         select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"/>
     </xsl:call-template>
   </xsl:variable>
+  <!--  The way call number is pulled now is bad. The XSL pulls the first
+        holding from the list of holdings and gets that call number. How do
+        we distinguish which call number? Require the holdings number as input?
+
+        A: We will need to build a way to pull the correct holding, probably using
+        holdings ID.
+  -->
   <xsl:variable name="call_number">
     <xsl:call-template name="clean-up-text">
-      <xsl:with-param name="some-text" select="//marc:holding/marc:call_number"/>
+      <xsl:with-param name="some-text" select="//marc:holding[1]/marc:call_number"/>
     </xsl:call-template>
   </xsl:variable>
   <xsl:variable name="ms_title">
@@ -69,9 +76,11 @@
       <xsl:comment>
         DE: Note that below I'm not consistent about marking the source marc field as @type.
           That's coming from a template I've copied *some* stuff from.
+          A: Use type: with 245a have "Description of xxxxx..."
       </xsl:comment>
       <xsl:comment>
         DE: I haven't looked at the title@level attribute. Need to make sure this being used consistently.
+        A: Remove @level
       </xsl:comment>
       <teiHeader>
         <fileDesc>
@@ -104,6 +113,7 @@
             </xsl:for-each>
             <xsl:for-each
               select="//marc:datafield[@tag=100]|//marc:datafield[@tag=110]|//marc:datafield[@tag=111]">
+<!--              No author for Penn catalog records. -->
               <author>
                 <xsl:call-template name="subfieldSelect">
                   <xsl:with-param name="codes">abcdgu</xsl:with-param>
@@ -125,6 +135,7 @@
           <publicationStmt>
             <publisher>The University of Pennsylvania Libraries</publisher>
             <availability>
+<!--              Only Public Domain print works will go on OPenn -->
               <licence target="http://creativecommons.org/licenses/by/4.0/legalcode"> This
                 description is ©<xsl:value-of select="year-from-date(current-date())"/> University
                 of Pennsylvania Libraries. It is licensed under a Creative Commons Attribution
@@ -137,18 +148,18 @@
                 domain. See the Creative Commons Public Domain Mark page for usage details,
                 http://creativecommons.org/publicdomain/mark/1.0/. </licence>
             </availability>
-            <xsl:text>&#10;</xsl:text>
             <xsl:comment>
               DE: We haven't had an ID for our TEI. Should we? If so, what?
               &lt;idno&gt;SOME VALUE&lt;/idno&gt;
             </xsl:comment>
-            <xsl:text>&#10;</xsl:text>
             <xsl:comment>
-              DE: We also haven't had a publicatoin date. We should. Date the TEI is generated? 
+              DE: We also haven't had a publicatoin date. We should. Date the TEI is generated?
+
+              A: use year
             </xsl:comment>
             <date>
               <xsl:attribute name="when">
-                <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
+                <xsl:value-of select="format-date(current-date(), '[Y0001]')"/>
               </xsl:attribute>
             </date>
           </publicationStmt>
@@ -157,6 +168,7 @@
               <monogr>
                 <xsl:for-each
                   select="//marc:datafield[@tag=100]|//marc:datafield[@tag=110]|//marc:datafield[@tag=700]|//marc:datafield[@tag=710]">
+                  <!-- Don't pull 710. That's the collection -->
                   <author>
                     <xsl:call-template name="subfieldSelect">
                       <xsl:with-param name="codes">abcdgu</xsl:with-param>
@@ -205,6 +217,7 @@
                   </edition>
                 </xsl:for-each>
                 <imprint>
+                  <!-- pubPlace pull prefer 752$a$d (order: '$d, $a'); fallback to 260$a -->
                   <xsl:for-each select="//marc:datafield[@tag=260]/marc:subfield[@code='a']">
                     <pubPlace>
                       <xsl:call-template name="chopPunctuation">
@@ -231,11 +244,22 @@
                         </xsl:with-param>
                       </xsl:call-template>
                     </xsl:variable>
-                    <xsl:text>&#10;</xsl:text>
                     <xsl:comment>
                         <xsl:text>
                           TODO: Is this dangerous? Can it be a range? An LC partial date? Circa date?
                           They won't validate as date attributes. (DE)
+
+                          A: pull ctrl field 008 positions 7-10; figure out if number.
+                          Samples:
+
+                          #12345678901234567890
+                          #131218q19001936mr
+                          #12345678901234567890
+                          #930202s1980
+
+                          See: https://www.loc.gov/marc/bibliographic/bd008a.html
+                          Common s, q, m, new data starts at character 15.
+
                         </xsl:text>
                     </xsl:comment>
 
@@ -286,6 +310,13 @@
                   </note>
                 </xsl:for-each>
               </xsl:if>
+              <xsl:comment>
+                <xsl:text>
+                  The way call number is pulled now is bad. The XSL pulls the first
+                  holding from the list of holdings and gets that call number. How do
+                  we distinguish which call number? Require the holdings number as input?
+                </xsl:text>
+              </xsl:comment>
               <idno>
                 <xsl:attribute name="type">
                   <xsl:text>LC_call_number</xsl:text>
@@ -300,7 +331,7 @@
               </idno>
               <xsl:comment>
                 DE: Related item -- TEI recommendations only have pulling from 740 field, but
-                    also mention &lt;author&gt;, without saying where to pull the value. Can 
+                    also mention &lt;author&gt;, without saying where to pull the value. Can
                     we provide author, based on how we catalog?
               </xsl:comment>
                 <xsl:for-each select="//marc:datafield[@tag=740]">
@@ -340,15 +371,18 @@
         </encodingDesc>
         <profileDesc>
           <xsl:comment>
-            Language: Found an item (bibid: 1761820, 9917618203503681) with 041$a (=eng) 
+            Language: Found an item (bibid: 1761820, 9917618203503681) with 041$a (=eng)
             and 041$h (=fre). Work is an English translation from French. How to handle?
+            A: Pull 041$a however many times it occurs -- can be multiple.
+
+            https://www.loc.gov/marc/bibliographic/bd041.html
           </xsl:comment>
           <xsl:if test="//marc:datafield[@tag='041']">
             <langUsage>
             <xsl:for-each select="//marc:datafield[@tag='041']">
               <xsl:for-each select="marc:subfield">
                 <language>
-                  <xsl:attribute name="ident" select="."/>                    
+                  <xsl:attribute name="ident" select="."/>
                 </language>
               </xsl:for-each>
             </xsl:for-each>
