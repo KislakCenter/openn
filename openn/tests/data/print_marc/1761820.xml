@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<marc:records xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>01225cam a2200349 a 4500</marc:leader>
+    <marc:controlfield tag="001">9917618203503681</marc:controlfield>
+    <marc:controlfield tag="005">20160922142456.0</marc:controlfield>
+    <marc:controlfield tag="008">910529s1786    enk           000 1 eng d</marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)ocm82178955</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)82178955</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUGEAT6750-B</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="9">EAT6750</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">1761820</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(PU)1761820-penndb-Voyager</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+  <marc:subfield code="a">PU</marc:subfield>
+  <marc:subfield code="c">PU</marc:subfield>
+  <marc:subfield code="e">dcrb</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="041">
+  <marc:subfield code="a">eng</marc:subfield>
+  <marc:subfield code="h">fre</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="100">
+  <marc:subfield code="a">Pre&#x301;vost,</marc:subfield>
+  <marc:subfield code="c">abbe&#x301;,</marc:subfield>
+  <marc:subfield code="d">1697-1763.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="240">
+  <marc:subfield code="a">Manon Lescaut.</marc:subfield>
+  <marc:subfield code="l">English</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="245">
+  <marc:subfield code="a">Manon L'Escaut, or The fatal attachment :</marc:subfield>
+  <marc:subfield code="b">a French story.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="260">
+  <marc:subfield code="a">London :</marc:subfield>
+  <marc:subfield code="b">Printed for T. Cadell ...,</marc:subfield>
+  <marc:subfield code="c">1786.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+  <marc:subfield code="a">2 v. ;</marc:subfield>
+  <marc:subfield code="c">18 cm. (12mo)</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Translation by Charlotte Turner Smith of Manon Lescaut.  Cf. Garside and Raven.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">ESTC</marc:subfield>
+  <marc:subfield code="c">N034770</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">English novel, 1770-1829,</marc:subfield>
+  <marc:subfield code="c">(note between 1786:36 and 37)</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="561">
+  <marc:subfield code="a">Forrest, Edwin, Estate of (Donor)</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="651">
+  <marc:subfield code="y">1786</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="700">
+  <marc:subfield code="a">Smith, Charlotte Turner,</marc:subfield>
+  <marc:subfield code="d">1749-1806.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="2" ind2=" " tag="710">
+  <marc:subfield code="a">Collection of British and American Fiction, 1660-1830 (University of Pennsylvania)</marc:subfield>
+  <marc:subfield code="5">PU</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2="1" tag="740">
+  <marc:subfield code="a">Manon L'Escaut.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2="1" tag="740">
+  <marc:subfield code="a">Fatal attachment.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2="1" tag="856">
+  <marc:subfield code="z">Facsimile</marc:subfield>
+  <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/print/1761820</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="948">
+  <marc:subfield code="a">ajs#</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+  <marc:subfield code="a">DLA</marc:subfield>
+  <marc:subfield code="b">20160912</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+  <marc:subfield code="z">CHR 1786</marc:subfield>
+  <marc:subfield code="z">PRO Forrest, Edwin, Estate of (Donor)</marc:subfield>
+</marc:datafield>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22328950290003681</marc:holding_id>
+        <marc:call_number>PQ2021.M3 E5 1786</marc:call_number>
+        <marc:library>KislakCntr</marc:library>
+        <marc:location>scforr</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+</marc:records>

@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<marc:records xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>01081cam a2200337 i 4500</marc:leader>
+    <marc:controlfield tag="001">9919911903503681</marc:controlfield>
+    <marc:controlfield tag="005">20160922142506.0</marc:controlfield>
+    <marc:controlfield tag="008">961011s1787    enk           000 1 eng d</marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)ocm78604609</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)78604609</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUGEBS9126-B</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUGEBS9126-B</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="9">EBS9126</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">1991190</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(PU)1991190-penndb-Voyager</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+  <marc:subfield code="a">PU</marc:subfield>
+  <marc:subfield code="c">PU</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="4" tag="050">
+  <marc:subfield code="a">PR3991.A1</marc:subfield>
+  <marc:subfield code="b">L63 1787</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="090">
+  <marc:subfield code="f">h</marc:subfield>
+  <marc:subfield code="n">\jl\</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="245">
+  <marc:subfield code="a">Lord Winworth, or, The memoirs of an heir :</marc:subfield>
+  <marc:subfield code="b">a novel.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="3" ind2="0" tag="246">
+  <marc:subfield code="a">Memoirs of an heir.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="250">
+  <marc:subfield code="a">2nd ed.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="260">
+  <marc:subfield code="a">London :</marc:subfield>
+  <marc:subfield code="b">Printed for G. Allen,</marc:subfield>
+  <marc:subfield code="c">1787.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+  <marc:subfield code="a">3 v. ;</marc:subfield>
+  <marc:subfield code="c">18 cm. (12mo)</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">ESTC (RLIN)</marc:subfield>
+  <marc:subfield code="c">N33874</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="651">
+  <marc:subfield code="y">1787</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="2" ind2=" " tag="710">
+  <marc:subfield code="a">Collection of British and American Fiction, 1660-1830 (University of Pennsylvania)</marc:subfield>
+  <marc:subfield code="5">PU</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2="1" tag="856">
+  <marc:subfield code="z">Facsimile</marc:subfield>
+  <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/print/1991190</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="948">
+  <marc:subfield code="a">jl</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="950">
+  <marc:subfield code="l">RBC</marc:subfield>
+  <marc:subfield code="a">PR3991.A1</marc:subfield>
+  <marc:subfield code="b">L63 1787</marc:subfield>
+  <marc:subfield code="i">01/01/01 N</marc:subfield>
+  <marc:subfield code="x">010</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="955">
+  <marc:subfield code="l">RBC</marc:subfield>
+  <marc:subfield code="c">1:v.1-3</marc:subfield>
+  <marc:subfield code="s">47-1031</marc:subfield>
+  <marc:subfield code="s">Singer Mem. Fd.</marc:subfield>
+  <marc:subfield code="s">recl. fr. EC75/A100/787l2</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="998">
+  <marc:subfield code="n">PU</marc:subfield>
+  <marc:subfield code="z">BNA</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+  <marc:subfield code="a">DLA</marc:subfield>
+  <marc:subfield code="b">20160912</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+  <marc:subfield code="z">CHR 1787</marc:subfield>
+</marc:datafield>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22267307410003681</marc:holding_id>
+        <marc:call_number>PR3991.A1 L63 1787</marc:call_number>
+        <marc:library>KislakCntr</marc:library>
+        <marc:location>scsing</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+</marc:records>

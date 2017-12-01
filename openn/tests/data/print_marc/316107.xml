@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<marc:records xmlns:marc="http://www.loc.gov/MARC21/slim"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>01807cam a2200385 a 4500</marc:leader>
+    <marc:controlfield tag="001">993161073503681</marc:controlfield>
+    <marc:controlfield tag="005">20161129132632.0</marc:controlfield>
+    <marc:controlfield tag="008">830209s1726    enk           00010deng d</marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:subfield code="a">(OCoLC)ocn187317532</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:subfield code="a">(OCoLC)187317532</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:subfield code="a">(CStRLIN)PAUG83-B4927</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:subfield code="a">(CaOTULAS)105293389</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:subfield code="9">ABR9642</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:subfield code="a">316107</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+      <marc:subfield code="a">(PU)316107-penndb-Voyager</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+      <marc:subfield code="a">PU</marc:subfield>
+      <marc:subfield code="c">PU</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="041">
+      <marc:subfield code="a">eng</marc:subfield>
+      <marc:subfield code="h">fre</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="090">
+      <marc:subfield code="a">DA787.A365</marc:subfield>
+      <marc:subfield code="b">A5 1726</marc:subfield>
+      <marc:subfield code="i">02/09/83 CT</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="100">
+      <marc:subfield code="a">Mary,</marc:subfield>
+      <marc:subfield code="c">Queen of Scots,</marc:subfield>
+      <marc:subfield code="d">1542-1587.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="0" ind2="4" tag="245">
+      <marc:subfield code="a">The genuine letters of Mary Queen of Scots, to James Earl of Bothwell :</marc:subfield>
+      <marc:subfield code="b">found in his secretary's closet after his decease, and now in the possession of a gentleman of Oxford : discovering the greatest and most secret transactions of her time /</marc:subfield>
+      <marc:subfield code="c">translated from the French originals, by Edward Simmonds ... : never before made publick ; to which is added, remarks on each letter, with an abstract of her life, in a letter to the bookseller, from an unknown hand.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="250">
+      <marc:subfield code="a">The second edition.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="260">
+      <marc:subfield code="a">Westminster :</marc:subfield>
+      <marc:subfield code="b">Printed by A. Campbell ... for J. Millan ... :</marc:subfield>
+      <marc:subfield code="b">Sold by J. Roberts ... and the booksellers of London and Westminster,</marc:subfield>
+      <marc:subfield code="c">1726.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+      <marc:subfield code="a">v, [3], 48 p. ;</marc:subfield>
+      <marc:subfield code="c">20 cm. (8vo)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:subfield code="a">The letter to the bookseller signed: B.S.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+      <marc:subfield code="a">Advertisements on fourth leaf.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+      <marc:subfield code="a">ESTC</marc:subfield>
+      <marc:subfield code="c">T40769</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="561">
+      <marc:subfield code="a">Parsons, Coleman O. (donor)</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="651">
+      <marc:subfield code="y">1726</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:subfield code="a">Bothwell, James Hepburn,</marc:subfield>
+      <marc:subfield code="c">Earl of,</marc:subfield>
+      <marc:subfield code="d">1536?-1578.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:subfield code="a">Simmonds, Edward.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="700">
+      <marc:subfield code="a">S. B.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="2" ind2=" " tag="710">
+      <marc:subfield code="a">Collection of British and American Fiction, 1660-1830 (University of Pennsylvania)</marc:subfield>
+      <marc:subfield code="5">PU</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1="4" ind2="1" tag="856">
+      <marc:subfield code="z">Facsimile</marc:subfield>
+      <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/print/316107</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="950">
+      <marc:subfield code="l">RBC</marc:subfield>
+      <marc:subfield code="i">02/09/83 C</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="955">
+      <marc:subfield code="l">RBC</marc:subfield>
+      <marc:subfield code="c">1</marc:subfield>
+      <marc:subfield code="q">g.Coleman O. Parsons</marc:subfield>
+      <marc:subfield code="i">02/09/83 C</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+      <marc:subfield code="a">DLA</marc:subfield>
+      <marc:subfield code="b">20160912</marc:subfield>
+    </marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+      <marc:subfield code="z">CHR 1726</marc:subfield>
+      <marc:subfield code="z">PRO Parsons, Coleman O. (donor)</marc:subfield>
+    </marc:datafield>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22245218330003681</marc:holding_id>
+        <marc:call_number>DA787.A365 A5 1726</marc:call_number>
+        <marc:library>KislakCntr</marc:library>
+        <marc:location>scrare</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+</marc:records>

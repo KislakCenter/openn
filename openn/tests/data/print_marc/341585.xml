@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<marc:records xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>01299cam a2200373 i 4500</marc:leader>
+    <marc:controlfield tag="001">993415853503681</marc:controlfield>
+    <marc:controlfield tag="005">20141124123833.0</marc:controlfield>
+    <marc:controlfield tag="008">811222s1981    pau      b    00110 eng  </marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="010">
+  <marc:subfield code="a">   80027973 </marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="020">
+  <marc:subfield code="a">0878573488 (pbk.) :</marc:subfield>
+  <marc:subfield code="c">$14.95</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)ocm07171677</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)7171677</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUG81-B11514</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CaOTULAS)105235755</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="9">ABU6631</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">341585</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(PU)341585-penndb-Voyager</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+  <marc:subfield code="d">PU</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="050">
+  <marc:subfield code="a">HT65</marc:subfield>
+  <marc:subfield code="b">.C67</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="082">
+  <marc:subfield code="a">307</marc:subfield>
+  <marc:subfield code="2">19</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="090">
+  <marc:subfield code="a">HT65</marc:subfield>
+  <marc:subfield code="b">.C67</marc:subfield>
+  <marc:subfield code="i">09/10/82 CT</marc:subfield>
+  <marc:subfield code="h">12/22/81 CT</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="100">
+  <marc:subfield code="a">Corbett, Michael N.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="2" tag="245">
+  <marc:subfield code="a">A better place to live :</marc:subfield>
+  <marc:subfield code="b">new designs for tomorrow's communities /</marc:subfield>
+  <marc:subfield code="c">by Michael N. Corbett, assisted by Judy Corbett and John Klein ; ill. by Paul harris ; foreword by Denis Hayes.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="260">
+  <marc:subfield code="a">Emmaus, Pa. :</marc:subfield>
+  <marc:subfield code="b">Rodale Press,</marc:subfield>
+  <marc:subfield code="c">c1981.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="263">
+  <marc:subfield code="a">8105</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+  <marc:subfield code="a">x, 164 p. :</marc:subfield>
+  <marc:subfield code="b">ill. (some col.) ;</marc:subfield>
+  <marc:subfield code="c">21x28 cm.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="504">
+  <marc:subfield code="a">Includes bibliographical references and index.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="650">
+  <marc:subfield code="a">Human settlements</marc:subfield>
+  <marc:subfield code="x">Philosophy.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="650">
+  <marc:subfield code="a">Human settlements</marc:subfield>
+  <marc:subfield code="x">Planning.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="700">
+  <marc:subfield code="a">Corbett, Judy.</marc:subfield>
+  <marc:subfield code="e">joint author.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="700">
+  <marc:subfield code="a">Klein, John.</marc:subfield>
+  <marc:subfield code="e">joint author.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="948">
+  <marc:subfield code="a">msf</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="950">
+  <marc:subfield code="l">FAL</marc:subfield>
+  <marc:subfield code="i">09/10/82 C</marc:subfield>
+  <marc:subfield code="h">12/22/81 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="955">
+  <marc:subfield code="l">FAL</marc:subfield>
+  <marc:subfield code="c">1</marc:subfield>
+  <marc:subfield code="q">E88697</marc:subfield>
+  <marc:subfield code="r">[00560 1278]</marc:subfield>
+  <marc:subfield code="h">12/22/81 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="955">
+  <marc:subfield code="l">FAL</marc:subfield>
+  <marc:subfield code="c">2</marc:subfield>
+  <marc:subfield code="q">F00222</marc:subfield>
+  <marc:subfield code="r">[00601 7052]</marc:subfield>
+  <marc:subfield code="i">09/10/82 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999"/>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22248116700003681</marc:holding_id>
+        <marc:call_number>HT65 .C67</marc:call_number>
+        <marc:library>FisherFAL</marc:library>
+        <marc:location>fine</marc:location>
+      </marc:holding>
+      <marc:holding>
+        <marc:holding_id>22248116660003681</marc:holding_id>
+        <marc:call_number>HT65 .C67</marc:call_number>
+        <marc:library>Libra</marc:library>
+        <marc:location>stor</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+</marc:records>
