@@ -51,6 +51,7 @@
         holding from the list of holdings and gets that call number. How do
         we distinguish which call number? Require the holdings number as input?
 
+
         A: We will need to build a way to pull the correct holding, probably using
         holdings ID.
   -->
@@ -316,7 +317,7 @@
                   holding from the list of holdings and gets that call number. How do
                   we distinguish which call number? Require the holdings number as input?
                 </xsl:text>
-              </xsl:comment>
+              </xsl:comment>              
               <idno>
                 <xsl:attribute name="type">
                   <xsl:text>LC_call_number</xsl:text>
