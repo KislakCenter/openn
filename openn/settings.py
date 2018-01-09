@@ -532,7 +532,7 @@ collections are open to all.""",
         },
         {
             'tag': 'lehigh',
-            'name': 'Special Collections, Lehigh University Library',
+            'name': 'Lehigh University Libraries, Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Lehigh University Special Collections serves as the repository for the
