@@ -532,7 +532,7 @@ collections are open to all.""",
         },
         {
             'tag': 'lehigh',
-            'name': 'Special Collections, Lehigh University Library',
+            'name': 'Lehigh University Libraries, Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Lehigh University Special Collections serves as the repository for the
@@ -1115,6 +1115,20 @@ PREP_CONFIGS = {
     'chf-bphil': {
         'repository': {
             'tag': 'chf'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'tlc-bphil': {
+        'repository': {
+            'tag': 'tlc'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
