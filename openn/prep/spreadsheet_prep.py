@@ -80,10 +80,14 @@ class SpreadsheetPrep(RepositoryPrep):
             self.document.image_copyright_year      = xml.image_copyright_year()
             self.document.image_rights_more_info    = xml.image_rights_more_info()
         elif self.prep_config.image_rights().startswith('PD'):
+            # TODO: set document.image_licence
+            self.document.image_licence = self.prep_config.image_rights()
             self.document.image_copyright_holder = None
             self.document.image_copyright_year = None
             self.document.image_rights_more_info = None
         else:
+            # TODO: set document.image_licence
+            self.document.image_licence = self.prep_config.image_rights()
             self.document.image_copyright_holder = self.prep_config.rights_holder()
             self.document.image_copyright_year = datetime.now(pytz.UTC).year
             self.document.image_rights_more_info = self.prep_config.rights_more_info()
@@ -94,10 +98,14 @@ class SpreadsheetPrep(RepositoryPrep):
             self.document.metadata_copyright_year      = xml.metadata_copyright_year()
             self.document.metadata_rights_more_info    = xml.metadata_rights_more_info()
         elif self.prep_config.metadata_rights().startswith('PD'):
+            # TODO: set document.metadata_licence
+            self.document.metadata_licence = self.prep_config.metadata_rights()
             self.document.metadata_copyright_holder = None
             self.document.metadata_copyright_year = None
             self.document.metadata_rights_more_info = None
         else:
+            # TODO: set document.metadata_licence
+            self.document.metadata_licence = self.prep_config.metadata_rights()
             self.document.metadata_copyright_holder = self.prep_config.rights_holder()
             self.document.metadata_copyright_year = datetime.now(pytz.UTC).year
             self.document.metadata_rights_more_info = self.prep_config.rights_more_info()
