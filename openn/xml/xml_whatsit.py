@@ -43,8 +43,9 @@ class XMLWhatsit:
         return objs
 
     def _node_strings(self, node):
-        """ Return all the strings in the node proper, joined by `sep`. Does not
-        return strings from child nodes. For example, for a node `x`:
+        """ Return all the strings in the node proper as an array. Does not
+        return strings from child nodes. For example, for a node `node`
+        derived from:
 
             <node>
                 a
@@ -55,9 +56,9 @@ class XMLWhatsit:
             </node>
 
 
-        Node string will return all strings but 'b':
+        this method will return all strings but 'b':
 
-            self._node_string(x) # => ['a',  'c']
+            self._node_string(node) # => ['a',  'c']
         """
         a = []
         if node.text is not None:
