@@ -1,4 +1,5 @@
 # Byte-compiled / optimized / DLL files
+,,
 __pycache__/
 *.py[cod]
 
@@ -80,6 +81,6 @@ shunit2*
 vendor/*
 
 # ignore MySQL dumps
-*.dmp.*
+*.dmp*
 
 *junk*
