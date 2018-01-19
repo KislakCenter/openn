@@ -808,6 +808,23 @@ hundreds of incunables; and books, manuscripts, and maps relating to the
 discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
         },
+        {
+            'tag': 'rosenbach',
+            'name': 'Rosenbach of the Free Library of Philadelphia',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Rosenbach seeks to foster inquiry, learning and creative thought by
+engaging audiences in programs, exhibitions, and research inspired by
+our collections of nearly 400,000 rare books, manuscripts, and fine and
+decorative art objects, including some of the best-known literary and
+historical objects in the world. In December 2013, the Rosenbach became
+affiliated with the Free Library of Philadelphia, bringing together two
+of the world's preeminent collections of rare books, manuscripts,
+Americana and art. The combined holdings of the Rosenbach and the Free
+Library of Philadelphia inspire unique exhibitions and programs
+throughout the year.""",
+            'include_file': 'Rosenbach.html',
+        },
     ],
 }
 
@@ -1101,6 +1118,20 @@ PREP_CONFIGS = {
     'flp-bphil': {
         'repository': {
             'tag': 'flp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'rosenbach-bphil': {
+        'repository': {
+            'tag': 'rosenbach'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
