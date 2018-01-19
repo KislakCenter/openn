@@ -815,11 +815,11 @@ discovery, exploration, and settlement of the Americas. """,
             'live': True,
             'blurb': """The Rosenbach seeks to foster inquiry, learning and creative thought by
 engaging audiences in programs, exhibitions, and research inspired by
-our collections of nearly 400,000 rare books, manuscripts, and ﬁne and
+our collections of nearly 400,000 rare books, manuscripts, and fine and
 decorative art objects, including some of the best-known literary and
 historical objects in the world. In December 2013, the Rosenbach became
-afﬁliated with the Free Library of Philadelphia, bringing together two
-of the world’s preeminent collections of rare books, manuscripts,
+affiliated with the Free Library of Philadelphia, bringing together two
+of the world's preeminent collections of rare books, manuscripts,
 Americana and art. The combined holdings of the Rosenbach and the Free
 Library of Philadelphia inspire unique exhibitions and programs
 throughout the year.""",
