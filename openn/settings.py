@@ -32,6 +32,7 @@ REQUIRED_ENV_VARS = [
     'OPENN_DB_USER',
     'OPENN_DB_PASSWORD',
     'OPENN_DB_HOST',
+    'OPENN_DB_PORT',
     'OPENN_SAXON_JAR',
     'OPENN_STAGING_DIR',
     'OPENN_PACKAGE_DIR' ]
@@ -43,8 +44,9 @@ DATABASES = {
         'USER': os.environ['OPENN_DB_USER'],
         'PASSWORD': os.environ['OPENN_DB_PASSWORD'],
         'HOST': os.environ['OPENN_DB_HOST'],
+        'PORT': os.environ['OPENN_DB_PORT'],
         'OPTIONS': {
-            'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci',
+            'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci',
         },
     }
 }
