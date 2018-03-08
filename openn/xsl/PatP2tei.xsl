@@ -50,8 +50,6 @@
   <!--  The way call number is pulled now is bad. The XSL pulls the first
         holding from the list of holdings and gets that call number. How do
         we distinguish which call number? Require the holdings number as input?
-
-
         A: We will need to build a way to pull the correct holding, probably using
         holdings ID.
   -->
@@ -90,19 +88,8 @@
               <xsl:for-each select="marc:subfield">
                 <xsl:if test="@code='a'">
                   <title>
-                    <xsl:attribute name="level">m</xsl:attribute>
                     <xsl:attribute name="type">marc245a</xsl:attribute>
-                    <xsl:call-template name="chopPunctuation">
-                      <xsl:with-param name="chopString">
-                        <xsl:value-of select="."/>
-                      </xsl:with-param>
-                    </xsl:call-template>
-                  </title>
-                </xsl:if>
-                <xsl:if test="@code='b'">
-                  <title>
-                    <xsl:attribute name="level">m</xsl:attribute>
-                    <xsl:attribute name="type">marc245b</xsl:attribute>
+                    <xsl:text>Description of </xsl:text>
                     <xsl:call-template name="chopPunctuation">
                       <xsl:with-param name="chopString">
                         <xsl:value-of select="."/>
@@ -150,17 +137,13 @@
                 http://creativecommons.org/publicdomain/mark/1.0/. </licence>
             </availability>
             <xsl:comment>
-              DE: We haven't had an ID for our TEI. Should we? If so, what?
-              &lt;idno&gt;SOME VALUE&lt;/idno&gt;
-            </xsl:comment>
-            <xsl:comment>
-              DE: We also haven't had a publicatoin date. We should. Date the TEI is generated?
-
+              DE: We also haven't had a publication date. We should. Date the TEI is generated?
               A: use year
+              @done
             </xsl:comment>
             <date>
               <xsl:attribute name="when">
-                <xsl:value-of select="format-date(current-date(), '[Y0001]')"/>
+                <xsl:value-of select="year-from-date(current-date())"/>
               </xsl:attribute>
             </date>
           </publicationStmt>
@@ -168,8 +151,8 @@
             <biblStruct>
               <monogr>
                 <xsl:for-each
-                  select="//marc:datafield[@tag=100]|//marc:datafield[@tag=110]|//marc:datafield[@tag=700]|//marc:datafield[@tag=710]">
-                  <!-- Don't pull 710. That's the collection -->
+                  select="//marc:datafield[@tag=100]|//marc:datafield[@tag=110]|//marc:datafield[@tag=700]">
+                  <!-- Don't pull 710. That's the collection @done -->
                   <author>
                     <xsl:call-template name="subfieldSelect">
                       <xsl:with-param name="codes">abcdgu</xsl:with-param>
@@ -219,15 +202,50 @@
                 </xsl:for-each>
                 <imprint>
                   <!-- pubPlace pull prefer 752$a$d (order: '$d, $a'); fallback to 260$a -->
-                  <xsl:for-each select="//marc:datafield[@tag=260]/marc:subfield[@code='a']">
-                    <pubPlace>
-                      <xsl:call-template name="chopPunctuation">
-                        <xsl:with-param name="chopString">
-                          <xsl:value-of select="."/>
-                        </xsl:with-param>
-                      </xsl:call-template>
-                    </pubPlace>
-                  </xsl:for-each>
+                  <xsl:choose>
+                    <xsl:when test="//marc:datafield[@tag=722]/marc:subfield[@code='a']|//marc:datafield[@tag=722]/marc:subfield[@code='d']">
+                      <pubPlace>
+                      <xsl:choose>
+                        <xsl:when test="//marc:datafield[@tag=722]/marc:subfield[@code='a'] and //marc:datafield[@tag=722]/marc:subfield[@code='d']">
+                          <xsl:call-template name="chopPunctuation">
+                            <xsl:with-param name="chopString">
+                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='d']"/>
+                            </xsl:with-param>
+                          </xsl:call-template>
+                          <xsl:text>, </xsl:text>
+                          <xsl:call-template name="chopPunctuation">
+                            <xsl:with-param name="chopString">
+                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='a']"/>
+                            </xsl:with-param>
+                          </xsl:call-template>
+                        </xsl:when>
+                        <xsl:when test="//marc:datafield[@tag=722]/marc:subfield[@code='a']">
+                          <xsl:call-template name="chopPunctuation">
+                            <xsl:with-param name="chopString">
+                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='a']"/>
+                            </xsl:with-param>
+                          </xsl:call-template>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:call-template name="chopPunctuation">
+                            <xsl:with-param name="chopString">
+                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='d']"/>
+                            </xsl:with-param>
+                          </xsl:call-template>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                      </pubPlace>
+                    </xsl:when>
+                    <xsl:when test="//marc:datafield[@tag=260]/marc:subfield[@code='a']">
+                      <pubPlace>
+                        <xsl:call-template name="chopPunctuation">
+                          <xsl:with-param name="chopString">
+                            <xsl:value-of select="//marc:datafield[@tag=260]/marc:subfield[@code='a']"/>
+                          </xsl:with-param>
+                        </xsl:call-template>
+                      </pubPlace>
+                    </xsl:when>
+                  </xsl:choose>
                   <xsl:for-each select="//marc:datafield[@tag=260]/marc:subfield[@code='b']">
                     <publisher>
                       <xsl:call-template name="chopPunctuation">
@@ -237,44 +255,59 @@
                       </xsl:call-template>
                     </publisher>
                   </xsl:for-each>
-                  <xsl:for-each select="//marc:datafield[@tag=260]/marc:subfield[@code='c']">
-                    <xsl:variable name="pubDate">
-                      <xsl:call-template name="chopPunctuation">
-                        <xsl:with-param name="chopString">
-                          <xsl:value-of select="."/>
-                        </xsl:with-param>
-                      </xsl:call-template>
-                    </xsl:variable>
+                  <xsl:variable name="marc008" select="//marc:controlfield[@tag='008']"/>
+                  <xsl:variable name="pubDateFrom">
+                    <xsl:call-template name="extractPubDateFrom">
+                      <xsl:with-param name="marc008" select="$marc008"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <xsl:variable name="pubDateTo">
+                    <xsl:call-template name="extractPubDateTo">
+                      <xsl:with-param name="marc008" select="$marc008"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <xsl:variable name="pubDateWhen">
+                    <xsl:call-template name="extractPubDateWhen">
+                      <xsl:with-param name="marc008" select="$marc008"/>
+                    </xsl:call-template>
+                  </xsl:variable>
                     <xsl:comment>
                         <xsl:text>
                           TODO: Is this dangerous? Can it be a range? An LC partial date? Circa date?
                           They won't validate as date attributes. (DE)
-
                           A: pull ctrl field 008 positions 7-10; figure out if number.
                           Samples:
-
                           #12345678901234567890
                           #131218q19001936mr
                           #12345678901234567890
                           #930202s1980
-
                           See: https://www.loc.gov/marc/bibliographic/bd008a.html
                           Common s, q, m, new data starts at character 15.
-
                         </xsl:text>
                     </xsl:comment>
-
+                  <xsl:if test="$pubDateFrom or $pubDateTo or $pubDateWhen">
                     <date>
-                      <xsl:attribute name="when" select="$pubDate"/>
-                      <xsl:value-of select="$pubDate"/>
+                      <xsl:choose>
+                        <xsl:when test="$pubDateWhen">
+                          <xsl:attribute name="when" select="$pubDateWhen"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:if test="$pubDateFrom">
+                            <xsl:attribute name="from" select="$pubDateFrom"/>
+                          </xsl:if>
+                          <xsl:if test="$pubDateTo">
+                            <xsl:attribute name="to" select="$pubDateTo"/>
+                          </xsl:if>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </date>
-                  </xsl:for-each>
+                  </xsl:if>
                 </imprint>
-                <xsl:for-each select="//marc:datafield[@tag=300]/marc:subfield">
-                  <xsl:text>&#10;</xsl:text>
-                  <xsl:comment>
+                <xsl:comment>
                     DE: I'm skipping subfield 'b' here. It should be combined with 'a' if it exists.
-                  </xsl:comment>
+                    A: Join $a $c; remove trailing :; and join with '; '
+                 </xsl:comment>
+                <xsl:for-each select="//marc:datafield[@tag=300]/marc:subfield">
                   <xsl:if test="@code='a'">
                     <extent>
                       <xsl:call-template name="chopPunctuation">
@@ -301,6 +334,7 @@
                   recommends 4xx and 8xx be used here, without providing much detail. Need to
                   investigate subfield. In sample marc, we use 440, 490, 810, 830, 856; the last
                   being the facsimile.
+                  A: 440$a | 490$a | 830$a in that order, with $v if it is there
                 </xsl:comment>
                 <title level="s">????</title>
               </series>
@@ -316,8 +350,9 @@
                   The way call number is pulled now is bad. The XSL pulls the first
                   holding from the list of holdings and gets that call number. How do
                   we distinguish which call number? Require the holdings number as input?
+                  A: Require holding ID and translate and prepend subcollection `scforr`, `scsing`.
                 </xsl:text>
-              </xsl:comment>              
+              </xsl:comment>
               <idno>
                 <xsl:attribute name="type">
                   <xsl:text>LC_call_number</xsl:text>
@@ -356,6 +391,7 @@
               - provenance
               - section, chapter names?
               - illustrations?
+           A: email Dot, cc'ing group; also LVT to find examples
         </xsl:comment>
         <encodingDesc>
           <xsl:comment>
@@ -375,7 +411,6 @@
             Language: Found an item (bibid: 1761820, 9917618203503681) with 041$a (=eng)
             and 041$h (=fre). Work is an English translation from French. How to handle?
             A: Pull 041$a however many times it occurs -- can be multiple.
-
             https://www.loc.gov/marc/bibliographic/bd041.html
           </xsl:comment>
           <xsl:if test="//marc:datafield[@tag='041']">
@@ -602,5 +637,53 @@
         </xsl:if>
       </xsl:if>
     </xsl:for-each>
+  </xsl:template>
+  <xsl:template name="extractPubDateWhen">
+    <xsl:param name="marc008"/>
+    <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
+    <xsl:if test="not($dateCode = 'm')">
+      <xsl:variable name="datePortion" select="substring($marc008, 7, 4)"/>
+      <xsl:if test="matches($datePortion, '^\d+$')">
+        <xsl:value-of select="$datePortion"/>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  <xsl:template name="extractPubDateFrom">
+    <xsl:param name="marc008"/>
+    <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
+    <xsl:if test="$dateCode = 'm'">
+      <xsl:variable name="datePortion" select="substring($marc008, 7, 4)"/>
+      <xsl:if test="matches($datePortion, '^\d+$')">
+        <xsl:value-of select="$datePortion"/>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  <xsl:template name="extractPubDateTo">
+    <xsl:param name="marc008"/>
+    <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
+    <xsl:if test="$dateCode = 'm'">
+      <xsl:variable name="toDatePortion" select="substring($marc008, 11, 4)"/>
+      <xsl:if test="matches($toDatePortion, '^\d+$')">
+        <xsl:value-of select="$toDatePortion"/>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  <xsl:template name="dateString">
+    <xsl:param name="dateWhen"/>
+    <xsl:param name="dateFrom"/>
+    <xsl:param name="dateTo"/>
+    <xsl:choose>
+      <xsl:when test="$dateWhen">
+        <xsl:value-of select="$dateWhen"/>
+      </xsl:when>
+      <xsl:when test="$dateFrom or $dateTo">
+        <xsl:variable name="dateString">
+          <xsl:value-of select="$dateFrom"/>
+          <xsl:text> - </xsl:text>
+          <xsl:value-of select="$dateTo"/>
+        </xsl:variable>
+          <xsl:value-of select="normalize-space($dateString)"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
