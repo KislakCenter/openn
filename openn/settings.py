@@ -32,6 +32,7 @@ REQUIRED_ENV_VARS = [
     'OPENN_DB_USER',
     'OPENN_DB_PASSWORD',
     'OPENN_DB_HOST',
+    'OPENN_DB_PORT',
     'OPENN_SAXON_JAR',
     'OPENN_STAGING_DIR',
     'OPENN_PACKAGE_DIR' ]
@@ -43,8 +44,9 @@ DATABASES = {
         'USER': os.environ['OPENN_DB_USER'],
         'PASSWORD': os.environ['OPENN_DB_PASSWORD'],
         'HOST': os.environ['OPENN_DB_HOST'],
+        'PORT': os.environ['OPENN_DB_PORT'],
         'OPTIONS': {
-            'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci',
+            'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci',
         },
     }
 }
@@ -809,6 +811,18 @@ discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
         },
         {
+            'tag': 'udel',
+            'name': 'University of Delaware Library',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Special Collections at the University of Delaware Library collects,
+preserves, and makes accessible rare and unique materials such as rare
+books, artists' books, fine press books, manuscripts and archives.  The
+Special Collections have four main collecting areas in literature, art,
+history and Delawareana, and science and technology.""",
+            'include_file': 'UniversityOfDelaware.html',
+        },
+        {
             'tag': 'rosenbach',
             'name': 'Rosenbach of the Free Library of Philadelphia',
             'metadata_type': 'TEI',
@@ -1118,6 +1132,20 @@ PREP_CONFIGS = {
     'flp-bphil': {
         'repository': {
             'tag': 'flp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'udel-bphil': {
+        'repository': {
+            'tag': 'udel'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
