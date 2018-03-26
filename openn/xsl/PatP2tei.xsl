@@ -201,35 +201,57 @@
                   </edition>
                 </xsl:for-each>
                 <imprint>
-                  <!-- pubPlace pull prefer 752$a$d (order: '$d, $a'); fallback to 260$a -->
+                  <!--
+                    pubPlace pull prefer 752$a$d (order: '$d, $a'); fallback to 260$a @done
+                  -->
+                  <xsl:variable name="marc752a">
+                    <xsl:call-template name="chopPunctuation">
+                      <xsl:with-param name="chopString" select="//marc:datafield[@tag=752]/marc:subfield[@code='a']"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <xsl:variable name="marc752d">
+                    <xsl:call-template name="chopPunctuation">
+                      <xsl:with-param name="chopString" select="//marc:datafield[@tag=752]/marc:subfield[@code='d']"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <xsl:variable name="marc260a">
+                    <xsl:call-template name="chopPunctuation">
+                      <xsl:with-param name="chopString" select="//marc:datafield[@tag=260]/marc:subfield[@code='a']"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <xsl:call-template name="pubPlace">
+                    <xsl:with-param name="marc752d" select="$marc752d"/>
+                    <xsl:with-param name="marc752a" select="$marc752a"/>
+                    <xsl:with-param name="marc260a" select="$marc260a"/>
+                  </xsl:call-template>
                   <xsl:choose>
-                    <xsl:when test="//marc:datafield[@tag=722]/marc:subfield[@code='a']|//marc:datafield[@tag=722]/marc:subfield[@code='d']">
+                    <xsl:when test="//marc:datafield[@tag=752]/marc:subfield[@code='a']|//marc:datafield[@tag=752]/marc:subfield[@code='d']">
                       <pubPlace>
                       <xsl:choose>
-                        <xsl:when test="//marc:datafield[@tag=722]/marc:subfield[@code='a'] and //marc:datafield[@tag=722]/marc:subfield[@code='d']">
+                        <xsl:when test="//marc:datafield[@tag=752]/marc:subfield[@code='a'] and //marc:datafield[@tag=752]/marc:subfield[@code='d']">
                           <xsl:call-template name="chopPunctuation">
                             <xsl:with-param name="chopString">
-                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='d']"/>
+                              <xsl:value-of select="//marc:datafield[@tag=752]/marc:subfield[@code='d']"/>
                             </xsl:with-param>
                           </xsl:call-template>
                           <xsl:text>, </xsl:text>
                           <xsl:call-template name="chopPunctuation">
                             <xsl:with-param name="chopString">
-                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='a']"/>
+                              <xsl:value-of select="//marc:datafield[@tag=752]/marc:subfield[@code='a']"/>
                             </xsl:with-param>
                           </xsl:call-template>
                         </xsl:when>
-                        <xsl:when test="//marc:datafield[@tag=722]/marc:subfield[@code='a']">
+                        <xsl:when test="//marc:datafield[@tag=752]/marc:subfield[@code='a']">
                           <xsl:call-template name="chopPunctuation">
                             <xsl:with-param name="chopString">
-                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='a']"/>
+                              <xsl:value-of select="//marc:datafield[@tag=752]/marc:subfield[@code='a']"/>
                             </xsl:with-param>
                           </xsl:call-template>
                         </xsl:when>
                         <xsl:otherwise>
                           <xsl:call-template name="chopPunctuation">
                             <xsl:with-param name="chopString">
-                              <xsl:value-of select="//marc:datafield[@tag=722]/marc:subfield[@code='d']"/>
+                              <xsl:value-of select="//marc:datafield[@tag=752]/marc:subfield[@code='d']"/>
                             </xsl:with-param>
                           </xsl:call-template>
                         </xsl:otherwise>
@@ -271,38 +293,48 @@
                       <xsl:with-param name="marc008" select="$marc008"/>
                     </xsl:call-template>
                   </xsl:variable>
-                    <xsl:comment>
-                        <xsl:text>
-                          TODO: Is this dangerous? Can it be a range? An LC partial date? Circa date?
-                          They won't validate as date attributes. (DE)
-                          A: pull ctrl field 008 positions 7-10; figure out if number.
-                          Samples:
-                          #12345678901234567890
-                          #131218q19001936mr
-                          #12345678901234567890
-                          #930202s1980
-                          See: https://www.loc.gov/marc/bibliographic/bd008a.html
-
-                          06 - Type of date/Publication status
-                                b - No dates given; B.C. date involved
-                                c - Continuing resource currently published
-                                d - Continuing resource ceased publication
-                                e - Detailed date
-                                i - Inclusive dates of collection
-                                k - Range of years of bulk of collection
-                                m - Multiple dates
-                                n - Dates unknown
-
-                          Common s, q, m, new data starts at character 15.
-
-                          For 'c' see: https://franklin.library.upenn.edu/catalog/FRANKLIN_9937563503681
-                              008 920427c18459999nyumr p 0 a0eng
-
-
-                          TODO: 260$c for publication date -- the title page date in brackets if not on title page and 'n.d.' if 'no date';
-                          'n.d.' algorithm: strip non-alnum chars; downcase; if val == 'nd' => 'no date'
-                        </xsl:text>
-                    </xsl:comment>
+                  <xsl:variable name="marc260c">
+                    <xsl:call-template name="chopPunctuation">
+                      <xsl:with-param name="chopString">
+                        <xsl:value-of select="//marc:controlfield[@tag='260']/marc:subfield[@code='c']"/>
+                      </xsl:with-param>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <xsl:variable name="pubDateText">
+                    <xsl:call-template name="dateString">
+                      <xsl:with-param name="marc260c" select="$marc260c"/>
+                      <xsl:with-param name="dateWhen" select="$pubDateWhen"/>
+                      <xsl:with-param name="dateFrom" select="$pubDateFrom"/>
+                      <xsl:with-param name="dateTo"   select="$pubDateTo"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+                  <!--
+                    DE: Is this dangerous? Can it be a range? An LC partial date? Circa date?
+                    They won't validate as date attributes. (DE)
+                    A: pull ctrl field 008 positions 7-10; figure out if number.
+                    @done
+                    Samples:
+                    #12345678901234567890
+                    #131218q19001936mr
+                    #12345678901234567890
+                    #930202s1980
+                    See: https://www.loc.gov/marc/bibliographic/bd008a.html
+                    06 - Type of date/Publication status
+                          b - No dates given; B.C. date involved
+                          c - Continuing resource currently published
+                          d - Continuing resource ceased publication
+                          e - Detailed date
+                          i - Inclusive dates of collection
+                          k - Range of years of bulk of collection
+                          m - Multiple dates
+                          n - Dates unknown
+                    Common s, q, m, new data starts at character 15.
+                    Multiple date codes: c, d, i, k, m
+                    For 'c' see: https://franklin.library.upenn.edu/catalog/FRANKLIN_9937563503681
+                        008 920427c18459999nyumr p 0 a0eng
+                    TODO: 260$c for publication date - the title page date in brackets if not on title page and 'n.d.' if 'no date';
+                    'n.d.' algorithm: strip non-alnum chars; downcase; if val == 'nd' => 'no date'
+                    -->
                   <xsl:if test="$pubDateFrom or $pubDateTo or $pubDateWhen">
                     <date>
                       <xsl:choose>
@@ -656,14 +688,12 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
-
-
   <xsl:template name="extractPubDateWhen">
     <xsl:param name="marc008"/>
-    <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
-    <!--  Use multiple date codes: i, k, m-->
-    <xsl:if test="not($dateCode = 'm')">
-      <xsl:variable name="datePortion" select="substring($marc008, 7, 4)"/>
+    <xsl:variable name="dateCode" select="substring($marc008, 7, 1)"/>
+    <!--  Use multiple date codes: c, d, i, k, m-->
+    <xsl:if test="not(contains('cdikm', $dateCode))">
+      <xsl:variable name="datePortion" select="substring($marc008, 8, 4)"/>
       <xsl:if test="matches($datePortion, '^\d+$')">
         <xsl:value-of select="$datePortion"/>
       </xsl:if>
@@ -671,42 +701,70 @@
   </xsl:template>
   <xsl:template name="extractPubDateFrom">
     <xsl:param name="marc008"/>
-    <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
-    <!--  Use multiple date codes: i, k, m-->
+    <xsl:variable name="dateCode" select="substring($marc008, 7, 1)"/>
+    <!--  Use multiple date codes: c, d, i, k, m-->
     <xsl:if test="$dateCode = 'm'">
-      <xsl:variable name="datePortion" select="substring($marc008, 7, 4)"/>
-      <xsl:if test="matches($datePortion, '^\d+$')">
+      <xsl:variable name="datePortion" select="substring($marc008, 8, 4)"/>
+      <xsl:if test="contains('cdikm', $dateCode)">
         <xsl:value-of select="$datePortion"/>
       </xsl:if>
     </xsl:if>
   </xsl:template>
   <xsl:template name="extractPubDateTo">
     <xsl:param name="marc008"/>
-    <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
-    <!--  Use multiple date codes: i, k, m-->
-    <xsl:if test="$dateCode = 'm'">
-      <xsl:variable name="toDatePortion" select="substring($marc008, 11, 4)"/>
+    <xsl:variable name="dateCode" select="substring($marc008, 7, 1)"/>
+    <!--  Use multiple date codes: c, d, i, k, m-->
+    <xsl:if test="contains('cdikm', $dateCode)">
+      <xsl:variable name="toDatePortion" select="substring($marc008, 12, 4)"/>
       <xsl:if test="matches($toDatePortion, '^\d+$')">
         <xsl:value-of select="$toDatePortion"/>
       </xsl:if>
     </xsl:if>
   </xsl:template>
   <xsl:template name="dateString">
+    <xsl:param name="marc260c"/>
     <xsl:param name="dateWhen"/>
     <xsl:param name="dateFrom"/>
     <xsl:param name="dateTo"/>
     <xsl:choose>
+      <xsl:when test="$marc260c">
+        <xsl:value-of select="$marc260c"/>
+      </xsl:when>
       <xsl:when test="$dateWhen">
         <xsl:value-of select="$dateWhen"/>
       </xsl:when>
       <xsl:when test="$dateFrom or $dateTo">
-        <xsl:variable name="dateString">
+        <xsl:variable name="text">
           <xsl:value-of select="$dateFrom"/>
           <xsl:text> - </xsl:text>
           <xsl:value-of select="$dateTo"/>
         </xsl:variable>
-          <xsl:value-of select="normalize-space($dateString)"/>
+          <xsl:value-of select="normalize-space($text)"/>
       </xsl:when>
     </xsl:choose>
+  </xsl:template>
+  <xsl:template name="pubPlace">
+    <xsl:param name="marc752d"/>
+    <xsl:param name="marc752a"/>
+    <xsl:param name="marc260a"/>
+    <xsl:if test="$marc752d or $marc752a or $marc260a">
+      <pubPlace>
+      <xsl:choose>
+        <xsl:when test="$marc752d">
+          <xsl:value-of select="$marc752d"/>
+          <xsl:if test="$marc752a">
+            <xsl:text>, </xsl:text>
+            <xsl:value-of select="$marc752a"/>
+          </xsl:if>
+        </xsl:when>
+        <xsl:when test="$marc752a">
+          <xsl:value-of select="$marc752a"/>
+        </xsl:when>
+        <xsl:when test="$marc260a">
+         <xsl:value-of select="$marc260a"/>
+        </xsl:when>
+      </xsl:choose>
+      </pubPlace>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
