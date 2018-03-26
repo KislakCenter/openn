@@ -282,7 +282,25 @@
                           #12345678901234567890
                           #930202s1980
                           See: https://www.loc.gov/marc/bibliographic/bd008a.html
+
+                          06 - Type of date/Publication status
+                                b - No dates given; B.C. date involved
+                                c - Continuing resource currently published
+                                d - Continuing resource ceased publication
+                                e - Detailed date
+                                i - Inclusive dates of collection
+                                k - Range of years of bulk of collection
+                                m - Multiple dates
+                                n - Dates unknown
+
                           Common s, q, m, new data starts at character 15.
+
+                          For 'c' see: https://franklin.library.upenn.edu/catalog/FRANKLIN_9937563503681
+                              008 920427c18459999nyumr p 0 a0eng
+
+
+                          TODO: 260$c for publication date -- the title page date in brackets if not on title page and 'n.d.' if 'no date';
+                          'n.d.' algorithm: strip non-alnum chars; downcase; if val == 'nd' => 'no date'
                         </xsl:text>
                     </xsl:comment>
                   <xsl:if test="$pubDateFrom or $pubDateTo or $pubDateWhen">
@@ -638,9 +656,12 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
+
+
   <xsl:template name="extractPubDateWhen">
     <xsl:param name="marc008"/>
     <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
+    <!--  Use multiple date codes: i, k, m-->
     <xsl:if test="not($dateCode = 'm')">
       <xsl:variable name="datePortion" select="substring($marc008, 7, 4)"/>
       <xsl:if test="matches($datePortion, '^\d+$')">
@@ -651,6 +672,7 @@
   <xsl:template name="extractPubDateFrom">
     <xsl:param name="marc008"/>
     <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
+    <!--  Use multiple date codes: i, k, m-->
     <xsl:if test="$dateCode = 'm'">
       <xsl:variable name="datePortion" select="substring($marc008, 7, 4)"/>
       <xsl:if test="matches($datePortion, '^\d+$')">
@@ -661,6 +683,7 @@
   <xsl:template name="extractPubDateTo">
     <xsl:param name="marc008"/>
     <xsl:variable name="dateCode" select="substring($marc008, 6, 1)"/>
+    <!--  Use multiple date codes: i, k, m-->
     <xsl:if test="$dateCode = 'm'">
       <xsl:variable name="toDatePortion" select="substring($marc008, 11, 4)"/>
       <xsl:if test="matches($toDatePortion, '^\d+$')">
