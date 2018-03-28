@@ -32,6 +32,7 @@ REQUIRED_ENV_VARS = [
     'OPENN_DB_USER',
     'OPENN_DB_PASSWORD',
     'OPENN_DB_HOST',
+    'OPENN_DB_PORT',
     'OPENN_SAXON_JAR',
     'OPENN_STAGING_DIR',
     'OPENN_PACKAGE_DIR' ]
@@ -43,8 +44,9 @@ DATABASES = {
         'USER': os.environ['OPENN_DB_USER'],
         'PASSWORD': os.environ['OPENN_DB_PASSWORD'],
         'HOST': os.environ['OPENN_DB_HOST'],
+        'PORT': os.environ['OPENN_DB_PORT'],
         'OPTIONS': {
-            'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci',
+            'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci',
         },
     }
 }
@@ -808,6 +810,35 @@ hundreds of incunables; and books, manuscripts, and maps relating to the
 discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
         },
+        {
+            'tag': 'udel',
+            'name': 'University of Delaware Library',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Special Collections at the University of Delaware Library collects,
+preserves, and makes accessible rare and unique materials such as rare
+books, artists' books, fine press books, manuscripts and archives.  The
+Special Collections have four main collecting areas in literature, art,
+history and Delawareana, and science and technology.""",
+            'include_file': 'UniversityOfDelaware.html',
+        },
+        {
+            'tag': 'rosenbach',
+            'name': 'Rosenbach of the Free Library of Philadelphia',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Rosenbach seeks to foster inquiry, learning and creative thought by
+engaging audiences in programs, exhibitions, and research inspired by
+our collections of nearly 400,000 rare books, manuscripts, and fine and
+decorative art objects, including some of the best-known literary and
+historical objects in the world. In December 2013, the Rosenbach became
+affiliated with the Free Library of Philadelphia, bringing together two
+of the world's preeminent collections of rare books, manuscripts,
+Americana and art. The combined holdings of the Rosenbach and the Free
+Library of Philadelphia inspire unique exhibitions and programs
+throughout the year.""",
+            'include_file': 'Rosenbach.html',
+        },
     ],
 }
 
@@ -1112,6 +1143,34 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'udel-bphil': {
+        'repository': {
+            'tag': 'udel'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'rosenbach-bphil': {
+        'repository': {
+            'tag': 'rosenbach'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'chf-bphil': {
         'repository': {
             'tag': 'chf'
@@ -1129,6 +1188,20 @@ PREP_CONFIGS = {
     'lehigh-bphil': {
         'repository': {
             'tag': 'lehigh'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'tlc-bphil': {
+        'repository': {
+            'tag': 'tlc'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],

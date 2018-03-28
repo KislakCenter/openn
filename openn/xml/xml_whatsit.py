@@ -18,8 +18,11 @@ class XMLWhatsit:
         nodes = self._get_nodes(xpath)
         return nodes[0].text if len(nodes) > 0 else None
 
-    def _all_the_strings(self,xpath):
-        return [n.text for n in self._get_nodes(xpath) ]
+    def _get_strings_for_nodes(self,xpath):
+        """Return a list of all the strings for the matched nodes, excluding
+        strings that are in children. See `_node_string(node)` for behavior.
+        """
+        return [' '.join(self._node_strings(n)) for n in self._get_nodes(xpath) ]
 
     def _get_dict(self,xpath):
         nodes = self._get_nodes(xpath)
@@ -38,6 +41,34 @@ class XMLWhatsit:
             objs.append(objectify.fromstring(s))
 
         return objs
+
+    def _node_strings(self, node):
+        """ Return all the strings in the node proper as an array. Does not
+        return strings from child nodes. For example, for a node `node`
+        derived from:
+
+            <node>
+                a
+                <child>
+                    b
+                </child>
+                c
+            </node>
+
+
+        this method will return all strings but 'b':
+
+            self._node_string(node) # => ['a',  'c']
+        """
+        a = []
+        if node.text is not None:
+            a.append(node.text)
+
+        for sub in node:
+            if sub.tail is not None:
+                a.append(sub.tail)
+
+        return a
 
     @property
     def ns(self):

@@ -70,12 +70,8 @@ find_python() {
 
 find_virtualenv() {
     fv_virtualenvs="
-virtualenv2.6
-virtualenv26
 virtualenv2.7
 virtualenv27
-virtualenv-2.6
-virtualenv-26
 virtualenv-2.7
 virtualenv-27
 virtualenv

@@ -53,7 +53,7 @@ class OPennTEI(XMLWhatsit):
         """
         if not getattr(self,'_tei_authors', None):
             xpath = '//t:fileDesc/t:titleStmt/t:author'
-            self._tei_authors = self._all_the_strings(xpath)
+            self._tei_authors = self._get_strings_for_nodes(xpath)
         return self._tei_authors
 
     @property
@@ -161,7 +161,7 @@ class OPennTEI(XMLWhatsit):
 
     @property
     def orig_places(self):
-        return self._all_the_strings('//t:origPlace')
+        return self._get_strings_for_nodes('//t:origPlace')
 
     @property
     def ms_items(self):
@@ -185,42 +185,42 @@ class OPennTEI(XMLWhatsit):
     def notes(self):
         if not getattr(self, '_notes', None):
             xpath = '//t:notesStmt/t:note[not(@type)]'
-            self._notes = self._all_the_strings(xpath)
+            self._notes = self._get_strings_for_nodes(xpath)
         return self._notes
 
     @property
     def genres(self):
         if not getattr(self, '_genres', None):
             xpath = '//t:keywords[@n="form/genre"]/t:term'
-            self._genres = self._all_the_strings(xpath)
+            self._genres = self._get_strings_for_nodes(xpath)
         return self._genres
 
     @property
     def subjects(self):
         if not getattr(self, '_subjects', None):
             xpath = '//t:keywords[@n="subjects"]/t:term'
-            self._subjects = self._all_the_strings(xpath)
+            self._subjects = self._get_strings_for_nodes(xpath)
         return self._subjects
 
     @property
     def geosubjects(self):
         if not getattr(self, '_geosubjects', None):
             xpath = '//t:keywords[@n="subjects/geographic"]/t:term'
-            self._geosubjects = self._all_the_strings(xpath)
+            self._geosubjects = self._get_strings_for_nodes(xpath)
         return self._geosubjects
 
     @property
     def namesubjects(self):
         if not getattr(self, '_namesubjects', None):
             xpath = '//t:keywords[@n="subjects/names"]/t:term'
-            self._namesubjects = self._all_the_strings(xpath)
+            self._namesubjects = self._get_strings_for_nodes(xpath)
         return self._namesubjects
 
     @property
     def keywords(self):
         if not getattr(self, '_keywords', None):
             xpath = '//t:keywords[@n="keywords"]/t:term'
-            self._keywords = self._all_the_strings(xpath)
+            self._keywords = self._get_strings_for_nodes(xpath)
         return self._keywords
 
     @property
@@ -235,12 +235,12 @@ class OPennTEI(XMLWhatsit):
     def provenance(self):
         if not getattr(self, '_provenance', None):
             xpath = '//t:history/t:provenance'
-            self._provenance = self._all_the_strings(xpath)
+            self._provenance = self._get_strings_for_nodes(xpath)
         return self._provenance
 
     @property
     def funders(self):
-        return self._all_the_strings('//t:titleStmt/t:funder')
+        return self._get_strings_for_nodes('//t:titleStmt/t:funder')
 
     @property
     def authors(self):
@@ -285,7 +285,7 @@ class OPennTEI(XMLWhatsit):
     # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/objectDesc/layoutDesc/layout
     @property
     def layouts(self):
-        return self._all_the_strings('//t:layoutDesc/t:layout')
+        return self._get_strings_for_nodes('//t:layoutDesc/t:layout')
 
     # Colophon
     # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/msContents/msItem/colophon
@@ -303,7 +303,7 @@ class OPennTEI(XMLWhatsit):
     # /TEI/teiHeader/fileDesc/sourceDesc/msDesc/physDesc/scriptDesc/scriptNote
     @property
     def scripts(self):
-        return self._all_the_strings('//t:scriptDesc/t:scriptNote')
+        return self._get_strings_for_nodes('//t:scriptDesc/t:scriptNote')
 
     @property
     def catchwords(self):
@@ -366,20 +366,30 @@ class OPennTEI(XMLWhatsit):
         return s.strip()
 
     def ms_items(self, n, xml_id=None):
+        nodes = []
+        # try the xml_id if passed in
         if xml_id is None:
+            xpath = '//t:msItem/t:locus[@target="#%s"]/parent::node()' % xml_id
+            nodes = [n for n in self._get_nodes(xpath) if n is not None]
+
+        # if no xml_id, or xml_id returned nothing, try the `n` value
+        if len(nodes) == 0:
             nodes = self._get_nodes('//t:msItem[@n="%s"]' % n)
-        else:
-            nodes = self._get_nodes('//t:msItem/t:locus[@target="#%s"]/parent::node()' % xml_id)
+
         return [ MSItem(node, self.ns) for node in nodes ]
 
     def deco_notes(self, n, xml_id=None):
-        if xml_id is None:
-            nodes = [node.text for node in self._get_nodes('//t:decoNote[@n="%s"]' % n)]
-        else:
-            # xml.xpath('//decoNote[@n="10r"]/locus')[0].tail
-            nodes = [node.tail for node in self._get_nodes('//t:decoNote/t:locus[@target="#%s"]' % xml_id)]
-        # return [node.text for node in nodes ]
-        return nodes
+        notes = []
+        # try the xml_id if passed in
+        if xml_id is not None:
+            xpath = '//t:decoNote/t:locus[@target="#%s"]/parent::node()' % xml_id
+            notes = [n for n in self._get_strings_for_nodes(xpath) if n is not None]
+
+        # if no xml_id, or xml_id returned nothing, try the `n` value
+        if len(notes) == 0:
+            notes = self._get_strings_for_nodes('//t:decoNote[@n="%s"]' % n)
+
+        return notes
 
     def add_licences(self, document, license_factory):
         """
