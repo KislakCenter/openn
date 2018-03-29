@@ -83,3 +83,4 @@ vendor/*
 *.dmp
 
 *junk*
+openn/tests/data/print_marc/*_TEI.xml
