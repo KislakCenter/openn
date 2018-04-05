@@ -1158,6 +1158,20 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'brynmawr-bphil': {
+        'repository': {
+            'tag': 'brynmawr'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'udel-bphil': {
         'repository': {
             'tag': 'udel'
