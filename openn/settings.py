@@ -823,6 +823,21 @@ history and Delawareana, and science and technology.""",
             'include_file': 'UniversityOfDelaware.html',
         },
         {
+            'tag': 'temple',
+            'name': 'Temple University Libraries, Special Collections Research Center',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Special Collections Research Center (SCRC) is the principal
+repository for and steward of the Libraries' rare books, manuscripts,
+archives and University records.  The SCRC collects, preserves, and
+makes accessible primary resources and rare or unique materials, to
+stimulate, enrich, and support research, teaching, learning, and
+administration at Temple University.  SCRC makes these resources
+available to a broad constituency as part of the University's engagement
+with the larger community of scholars and independent researchers.""",
+            'include_file': 'TempleUniversity.html',
+        },
+        {
             'tag': 'rosenbach',
             'name': 'Rosenbach of the Free Library of Philadelphia',
             'metadata_type': 'TEI',
@@ -1143,9 +1158,37 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'brynmawr-bphil': {
+        'repository': {
+            'tag': 'brynmawr'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'udel-bphil': {
         'repository': {
             'tag': 'udel'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'temple-bphil': {
+        'repository': {
+            'tag': 'temple'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
