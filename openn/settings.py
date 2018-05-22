@@ -537,18 +537,21 @@ collections are open to all.""",
             'name': 'Lehigh University Libraries, Special Collections',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Lehigh University Special Collections serves as the repository for the
-University's collections of rare books and manuscripts, and for
-holdings relating to its own history. It encompasses a rare book
-collection of over 25,000 volumes, with first editions of English and
-American literature from the 17th to the 19th centuries, strengths in
-travel and exploration, natural history and ornithology, and works of
-historical significance in science and technology. Materials relating
-to the University include documents and publications of the
-University, papers of faculty members, and memorabilia from the
-University's history. Special Collections also holds manuscripts and
-personal papers, in addition to papers relating to the University's
-history.""",
+            'blurb': """Lehigh University Libraries' Special Collections serves as the
+repository for the University's collections of rare books and
+manuscripts as well as for holdings relating to Lehigh's institutional
+and cultural history. The catalog encompasses over 40,000 volumes,
+including first editions of English and American literature from the
+seventeenth to the nineteenth centuries and represents diverse topics
+such as travel and exploration, natural history, and ornithology. A
+special focus on the history of science and technology includes an
+expansive assortment of material related to large-scale construction and
+the use of iron and steel in industrial life, as well as a collection of
+classic and seminal works relating to bridge building and design.
+University materials include official documents and publications of the
+school administration, papers and publications of faculty members,
+theses and dissertations composed by graduate students, and memorabilia
+from the broad spectrum of campus life.""",
             'include_file': 'LehighUniversity.html',
         },
         {
