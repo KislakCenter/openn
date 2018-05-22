@@ -359,7 +359,7 @@ REPOSITORIES = {
             'tag': 'pennmss',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'University of Pennsylvania Books & Manuscripts',
+            'name': 'University of Pennsylvania Libraries',
             'blurb': """With approximately 250,000 printed books and nearly ten million
 pieces of manuscript material, the Rare Book and Manuscript Library is
 a small part of the University's 5 million-volume library system.
@@ -375,7 +375,7 @@ Church history, the Inquisition, magic, and witchcraft.""",
             'tag': 'ljs',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Lawrence J. Schoenberg Manuscripts',
+            'name': 'University of Pennsylvania Libraries, Lawrence J. Schoenberg Manuscripts',
             'blurb': """These manuscripts are from the Lawrence J. Schoenberg collection in
 the Rare Books and Manuscripts Library at the University of
 Pennsylvania. With its emphasis on the history of science and the
@@ -392,7 +392,7 @@ intellectual heritage.""",
             'tag': 'bates',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Barbara Bates Center for the Study of the History of Nursing',
+            'name': 'University of Pennsylvania School of Nursing, Barbara Bates Center',
             'blurb': """The Barbara Bates Center for the Study of the History of Nursing is the
 largest repository for primary source materials and rare books about the
 history of nursing. The Center holds an extensive collection of
@@ -408,7 +408,7 @@ linear feet.""",
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Bryn Mawr College Library Special Collections',
+            'name': 'Bryn Mawr College, Special Collections',
             'blurb': """The Bryn Mawr College Special Collections includes rare books,
 manuscripts, the college archives, works of art on paper, and
 ethnographic and archaeological objects. The rare book collection
@@ -424,8 +424,8 @@ collection ranging from the 15th century to the present, including
             'tag': 'chf',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Othmer Library, Chemical Heritage Foundation',
-            'blurb': """The Chemical Heritage Foundation's Donald F. and Mildred Topp Othmer
+            'name': 'Science History Institute, Othmer Library',
+            'blurb': """The Science History Institute's Donald F. and Mildred Topp Othmer
 Library of Chemical History collects, preserves, and makes accessible
 materials relating to the history of science, technology, and medicine
 with an emphasis on chemical and material sciences and technologies from
@@ -438,13 +438,13 @@ archival materials, and historical photographs of great value to
 researchers and our cultural heritage. Together these collections form
 an unrivaled resource for the history of chemistry and related sciences,
 technologies, and industries.""",
-            'include_file': 'ChemHeritageFoundation.html',
+            'include_file': 'SciHistoryInstitute.html',
         },
         {
             'tag': 'cpp',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'The Historical Medical Library of the College of Physicians of Philadelphia',
+            'name': 'College of Physicians of Philadelphia, The Historical Medical Library',
             'blurb': """Established in 1788, the Historical Medical Library was Philadelphia's
 central medical library for over 150 years, serving its medical schools,
 hospitals, physicians and other health professionals. Today, it is an
@@ -457,7 +457,7 @@ students and popular writers each year.""",
             'tag': 'manchester',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'The University of Manchester Library Special Collections',
+            'name': 'University of Manchester Library, Special Collections',
             'blurb': """The University of Manchester Library's manuscripts and archives are
 internationally important. Their subject range is extraordinarily
 diverse and the collections span many centuries, from the 3rd millennium
@@ -483,7 +483,7 @@ scope, importance and interest.""",
         },
         {
             'tag': 'drexarc',
-            'name': 'Drexel University Archives and Special Collections',
+            'name': 'Drexel University, Archives and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """
@@ -500,7 +500,7 @@ family; and the history of education.""",
         },
         {
             'tag': 'drexmed',
-            'name': "Legacy Center, Drexel University College of Medicine",
+            'name': "Drexel University College of Medicine, Legacy Center",
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Drexel University College of Medicine Legacy Center supports
@@ -516,7 +516,7 @@ from 1502 to the present, with the bulk of the materials ranging from
         },
         {
             'tag': 'haverford',
-            'name': 'Quaker and Special Collections, Haverford College',
+            'name': 'Haverford College, Quaker and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb':  """Quaker & Special Collections contains Haverford College's
@@ -569,7 +569,7 @@ art.""",
         },
         {
             'tag': 'libpa',
-            'name': 'Rare Collections Library of the State Library of Pennsylvania',
+            'name': 'State Library of Pennsylvania, Rare Collections Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The State Library of Pennsylvania collects and preserves the
@@ -582,7 +582,7 @@ Pennsylvania religion, natural history, and genealogy.""",
         },
         {
             'tag': 'friendshl',
-            'name': 'Friends Historical Library, Swarthmore College',
+            'name': 'Swarthmore College, Friends Historical Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Established in 1871 at Swarthmore College, two years after the College
@@ -674,7 +674,7 @@ under a Creative Commons Attribution License.""",
         },
         {
             'tag': 'ism',
-            'name': 'J. Welles Henderson Archives and Library of the Independence Seaport Museum',
+            'name': 'Independence Seaport Museum, J. Welles Henderson Archives and Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Independence  Seaport Museum's J. Welles Henderson Archives and
@@ -707,7 +707,7 @@ periodicals, pamphlets, and manuscripts.""",
         },
         {
             'tag': 'pennmuseumarchives',
-            'name': 'Penn Museum Archives',
+            'name': 'University of Pennsylvania Museum of Archaeology and Anthropology, Archives',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Penn Museum Archives is the institutional repository of the Penn
@@ -721,7 +721,7 @@ million images and nearly one thousand reels of film.""",
         },
         {
             'tag': 'uarc',
-            'name': 'University Archives and Records Center, University of Pennsylvania',
+            'name': 'University of Pennsylvania Archives and Records Center',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The University Archives and Records Center (UARC) serves the
@@ -781,7 +781,7 @@ illumination.""",
         },
         {
             'tag': 'kislak',
-            'name': 'Jay I. Kislak Foundation',
+            'name': 'Kislak Foundation',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Established in 1984, the Jay I. Kislak Foundation is a private nonprofit
@@ -842,7 +842,7 @@ with the larger community of scholars and independent researchers.""",
         },
         {
             'tag': 'rosenbach',
-            'name': 'Rosenbach of the Free Library of Philadelphia',
+            'name': 'Free Library of Philadelphia, The Rosenbach',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Rosenbach seeks to foster inquiry, learning and creative thought by
