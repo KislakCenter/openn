@@ -6,33 +6,9 @@
   <xsl:import href="openn_templates.xsl"/>
   <xd:doc scope="stylesheet">
     <xd:desc>
-      <xd:p><xd:b>Created on:</xd:b> Nov 19, 2013</xd:p>
+      <xd:p><xd:b>Created:</xd:b> 2018</xd:p>
       <xd:p><xd:b>Author:</xd:b> emeryr</xd:p>
-      <xd:p> * title * creator (s) * date of origin * place of origin * summary/abstract * foliation
-        so we can generate page labels * language(s) * item level content, if applicable, is
-        optional </xd:p>
-      <xd:p>
-        <xd:b>dorp, October 27 2014, modified to add</xd:b>
-      </xd:p>
-      <xd:p> * provenance * subject terms * genre/form terms * notes</xd:p>
-      <xd:p>
-        <xd:b>rde, October 28, 2014, multiple chagnes</xd:b>
-      </xd:p>
-      <xd:p>Pulling data from marc fields, instead of Penn in Hand "*_field" elements</xd:p>
-      <xd:p>Tighten code; remove mid-tag line breaks</xd:p>
-      <xd:p>
-        <xd:b>dorp, January 23 2015, modified to add</xd:b>
-      </xd:p>
-      <xd:p> *Foliation *Layout *Colophon *Collation *Script *Decoration *Binding *Origin
-        *Watermarks *Signatures</xd:p>
-      <xd:p>
-        <xd:b>emeryr, January 27 2015, fix bugs, tighten code to</xd:b>
-      </xd:p>
-      <xd:p> prefer for-each elements to if/for-each combinations where possible</xd:p>
-      <xd:p>
-        <xd:b>emeryr, February 5, 2015, modified to add</xd:b>
-      </xd:p>
-      <xd:p> *Pagination; treated as *Foliation</xd:p>
+    
     </xd:desc>
   </xd:doc>
   <xsl:output indent="yes"/>
