@@ -302,4 +302,15 @@
       </title>
     </series>
   </xsl:template>
+  
+  <xsl:template name="join-text">
+    <xsl:param name="nodes"/>
+    <xsl:param name="separator" select="', '"/>
+    <xsl:for-each select="$nodes">
+      <xsl:value-of select="text()"/>
+      <xsl:if test="position() != last()">
+        <xsl:value-of select="$separator"/>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
 </xsl:stylesheet>
