@@ -368,9 +368,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -389,9 +387,7 @@
             "if": {
               "field": "tag1",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -413,9 +409,7 @@
           "repeating": true,
           "data_type": "string",
           "Value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -434,9 +428,7 @@
             "if": {
               "field": "tag2",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -458,9 +450,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -479,9 +469,7 @@
             "if": {
               "field": "tag3",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -503,9 +491,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -524,9 +510,7 @@
             "if": {
               "field": "tag4",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -548,9 +532,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -569,9 +551,7 @@
             "if": {
               "field": "tag5",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -593,9 +573,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -614,9 +592,7 @@
             "if": {
               "field": "tag6",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -638,9 +614,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -659,9 +633,7 @@
             "if": {
               "field": "tag7",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -683,9 +655,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -704,9 +674,7 @@
             "if": {
               "field": "tag8",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -728,9 +696,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -749,9 +715,7 @@
             "if": {
               "field": "tag9",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -773,9 +737,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -794,9 +756,7 @@
             "if": {
               "field": "tag10",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -818,9 +778,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -839,9 +797,7 @@
             "if": {
               "field": "tag11",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -863,9 +819,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -884,9 +838,7 @@
             "if": {
               "field": "tag12",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -908,9 +860,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -929,9 +879,7 @@
             "if": {
               "field": "tag13",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -953,9 +901,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -974,9 +920,7 @@
             "if": {
               "field": "tag14",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
@@ -998,9 +942,7 @@
           "repeating": true,
           "data_type": "string",
           "value_list": [
-            "TOC1",
-            "TOC2",
-            "TOC3",
+            "TOC",
             "INC",
             "EXP",
             "DECO",
@@ -1019,9 +961,7 @@
             "if": {
               "field": "tag15",
               "is": [
-                "TOC1",
-                "TOC2",
-                "TOC3",
+                "TOC",
                 "INC",
                 "EXP",
                 "DECO"
