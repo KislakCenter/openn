@@ -1,4 +1,5 @@
 # Byte-compiled / optimized / DLL files
+,,
 __pycache__/
 *.py[cod]
 
@@ -80,7 +81,7 @@ shunit2*
 vendor/*
 
 # ignore MySQL dumps
-*.dmp
+*.dmp*
 
 *junk*
 openn/tests/data/print_marc/*_TEI.xml

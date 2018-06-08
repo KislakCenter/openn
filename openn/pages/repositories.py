@@ -8,6 +8,8 @@ from django.template.loader import get_template
 from operator import itemgetter
 
 from openn.pages.page import Page
+from openn.openn_functions import sort_value
+
 
 class Repositories(Page):
 
@@ -20,7 +22,7 @@ class Repositories(Page):
     def get_context(self, ctx_dict={}):
         repositories = self.live_repositories()
 
-        repositories.sort(key=lambda x: x.name())
+        repositories.sort(key=lambda x: sort_value(x.name()))
         ctx = { 'repositories': repositories }
         ctx.update(ctx_dict)
         return super(Repositories, self).get_context(ctx)
