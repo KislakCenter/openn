@@ -76,7 +76,7 @@
           "data_type": "uri"
         },
         "title": {
-          "field_name": "Manuscript Name",
+          "field_name": "Title",
           "required": true,
           "repeating": true,
           "data_type": "string"
@@ -303,6 +303,122 @@
           "required": true,
           "repeating": true,
           "data_type": "string"
+        },
+        "image_rights": {
+          "field_name": "Image rights",
+          "required": true,
+          "repeating": false,
+          "data_type": "string",
+          "value_list": [
+            "CC-BY-SA",
+            "CC-BY",
+            "CC0",
+            "PD"
+          ]
+        },
+        "image_copyright_holder": {
+          "field_name": "Image copyright holder",
+          "required": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "string"
+        },
+        "image_copyright_year": {
+          "field_name": "Image copyright year",
+          "required": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "year"
+        },
+        "metadata_rights": {
+          "field_name": "Metadata rights",
+          "required": true,
+          "repeating": false,
+          "data_type": "string",
+          "value_list": [
+            "CC-BY-SA",
+            "CC-BY",
+            "CC0",
+            "PD"
+          ]
+        },
+        "metadata_copyright_holder": {
+          "field_name": "Metadata copyright holder",
+          "required": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "string"
+        },
+        "metadata_copyright_year": {
+          "field_name": "Metadata copyright year",
+          "required": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "year"
         }
       }
     },
