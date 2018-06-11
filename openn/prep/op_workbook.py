@@ -136,7 +136,7 @@ class OPWorkbook:
 
         for attr in self.config:
             sheet_name = self.config[attr]['sheet_name']
-            worksheet = self.workbook.get_sheet_by_name(sheet_name)
+            worksheet = self.workbook[sheet_name]
             vsheet = ValidatableSheet(
                 worksheet, self.xlsx_path, deepcopy(self.config[attr]))
             self._sheets[attr] = vsheet
