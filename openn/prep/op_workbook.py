@@ -4,6 +4,7 @@
 import os
 import sys
 import re
+import warnings
 
 from copy import deepcopy
 
@@ -30,7 +31,10 @@ class OPWorkbook:
         """
         self.config      = config['sheet_config']
         self.xlsx_path   = xlsx_file
-        self.workbook    = load_workbook(self.xlsx_path)
+        # sigh. openpyxl doth whine.
+        warnings.simplefilter("ignore")
+        self.workbook    = load_workbook(self.xlsx_path, data_only = True)
+        warnings.simplefilter("default")
         self.errors      = []
         self.warnings    = []
         self._sheets      = {}
