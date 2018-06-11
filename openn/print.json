@@ -204,6 +204,24 @@
           "repeating": true,
           "data_type": "string"
         },
+        "place_of_publication_uri": {
+          "field_name": "Place of publication URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "printer_publisher": {
+          "field_name": "Publisher/Printer",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "printer_publisher_uri": {
+          "field_name": "Publisher/Printer URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
         "language": {
           "field_name": "Language",
           "required": true,
@@ -237,18 +255,6 @@
           "required": false,
           "repeating": true,
           "data_type": "string"
-        },
-        "related_resource": {
-          "field_name": "Related resource",
-          "required": false,
-          "repeating": true,
-          "data_type": "string"
-        },
-        "related_resource_url": {
-          "field_name": "Related resource URL",
-          "required": false,
-          "repeating": true,
-          "data_type": "uri"
         },
         "subject_names": {
           "field_name": "Subject: names",
@@ -1160,6 +1166,12 @@
           ]
         },
         {
+          "xml_attr": "tei_creation",
+          "columns": [
+            "tei_publication_date"
+          ]
+        },
+        {
           "xml_attr": "contrib_cataloger",
           "columns": [
             "metadata_creator",
@@ -1233,18 +1245,16 @@
           ]
         },
         {
-          "xml_attr": "originDate",
+          "xml_attr": "publishing",
           "columns": [
             "date_single",
             "date_range_start",
             "date_range_end",
-            "date_narrative"
-          ]
-        },
-        {
-          "xml_attr": "originPlace",
-          "columns": [
-            "place_of_origin"
+            "date_narrative",
+            "place_of_publication",
+            "place_of_publication_uri",
+            "printer_publisher",
+            "printer_publisher_uri"
           ]
         },
         {
@@ -1294,7 +1304,8 @@
         {
           "xml_attr": "extent",
           "columns": [
-            "flyleaves_leaves"
+            "extent",
+            "dimensions"
           ]
         },
         {
@@ -1349,13 +1360,6 @@
           ]
         },
         {
-          "xml_attr": "related",
-          "columns": [
-            "related_resource",
-            "related_resource_url"
-          ]
-        },
-        {
           "xml_attr": "subjects_keywords",
           "columns": [
             "subject_keyword"
@@ -1388,6 +1392,22 @@
             "subject_genreform",
             "subject_genreform_uri"
           ]
+        },
+        {
+            "xml_attr": "image_rights",
+            "columns": [
+                "image_rights",
+                "image_copyright_holder",
+                "image_copyright_year"
+            ]
+        },
+        {
+            "xml_attr": "metadata_rights",
+            "columns": [
+                "metadata_rights",
+                "metadata_copyright_holder",
+                "metadata_copyright_year"
+            ]
         }
       ]
     }

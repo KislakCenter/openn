@@ -7,13 +7,14 @@ import json
 from django.utils import unittest
 from django.test import TestCase
 from django.conf import settings
+from xmlunittest import XmlTestMixin
 
 from openn.prep.op_workbook import OPWorkbook
 from openn.prep.spreadsheet_xml import SpreadsheetXML
 from openn.tests.helpers import *
 from openn.tests.openn_test_case import OPennTestCase
 
-class TestSpreadsheetXML(OPennTestCase):
+class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
     this_dir                 = os.path.dirname(__file__)
     diaries_dir              = os.path.join(this_dir, 'data/diaries')
     sheets_dir               = os.path.join(this_dir, 'data/sheets')
@@ -21,6 +22,8 @@ class TestSpreadsheetXML(OPennTestCase):
     unicode_workbook         = os.path.join(sheets_dir, 'unicode_workbook.xlsx')
     bibliophilly_workbook    = os.path.join(this_dir,
                                             'data/bibliophilly/FLPLewisE087/openn_metadata.xlsx')
+    print_workbook           = os.path.join(this_dir,
+                                            'data/sheets/valid_print_workbook.xlsx')
 
     url1 = 'http://id.loc.gov/authorities/names/n50049445.html'
     url2 = 'http://id.loc.gov/authorities/subjects/sh99002320.html'
@@ -30,6 +33,7 @@ class TestSpreadsheetXML(OPennTestCase):
 
     pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
     biblio_philly_json      = os.path.join(this_dir, '../bibliophilly.json')
+    print_json              = os.path.join(this_dir, '../print.json')
 
     xml_config = [
         {
@@ -222,3 +226,59 @@ class TestSpreadsheetXML(OPennTestCase):
         sp_xml = SpreadsheetXML(settings.LICENSES)
 
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
+
+    def test_print(self):
+        config = json.load(open(self.print_json))
+        workbook = OPWorkbook(self.print_workbook, config)
+        sp_xml = SpreadsheetXML(settings.LICENSES)
+
+        xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
+        # print xml
+        root = self.assertXmlDocument(xml)
+        xpaths = (
+            "//administrative_contact",
+            "//administrative_contact_email",
+            "//tei_publication_date",
+            "//metadata_creator",
+            "//metadata_creator_email",
+            "//call_numberid",
+            "//alternate_id",
+            "//alternate_id_type",
+            "//record_url",
+            "//title",
+            "//volume_number",
+            "//creator_name",
+            "//creator_uri",
+            "//translator_name",
+            "//translator_uri",
+            "//artist_name",
+            "//artist_uri",
+            "//date_single",
+            "//date_narrative",
+            "//place_of_publication",
+            "//place_of_publication_uri",
+            "//printer_publisher",
+            "//printer_publisher_uri",
+            "//language",
+            "//language_name",
+            "//extent",
+            "//dimensions",
+            "//note",
+            "//subject_names",
+            "//subject_names_uri",
+            "//subject_topical",
+            "//subject_topical_uri",
+            "//subject_geographic",
+            "//subject_geographic_uri",
+            "//subject_genreform",
+            "//subject_genreform_uri",
+            "//subject_keyword",
+            "//image_rights",
+            "//image_copyright_holder",
+            "//image_copyright_year",
+            "//metadata_rights",
+            "//metadata_copyright_holder",
+            "//metadata_copyright_year",
+            )
+
+        self.assertXpathsExist(root, xpaths)
