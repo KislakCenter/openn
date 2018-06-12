@@ -298,6 +298,27 @@ PREPARATION_METHODS = [
         },
     },
     {
+        'tag': 'print',
+        'description': """Extracts metadata from print spreadsheet to build metadata for the
+            object. Requires valid openn_metadata.xslx file.""",
+        'name': 'Print Prep',
+        'package_validation': {
+            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.xlsx'],
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+            'params' : {
+                'image_rights': {
+                    'dynamic': False,
+                },
+                'config_json': os.path.join(SITE_ROOT, 'print_on_openn.json'),
+                'xsl': os.path.join(SITE_ROOT, 'xsl/print_spreadsheet_xml2tei.xsl'),
+            },
+        },
+    },
+    {
         'tag': 'gzh',
         'description': """Extracts metadata from Genizah spreadsheet to build metadata for the
             object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
@@ -1333,6 +1354,19 @@ PREP_CONFIGS = {
         "image_types": [ '*.tif', '*.jpg' ],
         'repository_prep': {
             'tag': 'diaries',
+        },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
+        }
+    },
+    'tlc-print': {
+        'repository': {
+            'tag': 'tlc'
+        },
+        "image_types": [ '*.tif' ],
+        'repository_prep': {
+            'tag': 'print',
         },
         'rights': {
             'image_rights': 'dynamic',

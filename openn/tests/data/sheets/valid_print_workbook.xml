@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doc>
+  <description>
+    <administrative>
+      <administrative_contact>Mary Smith</administrative_contact>
+      <administrative_contact_email>Marysmith@example.com</administrative_contact_email>
+    </administrative>
+    <altId>
+      <alternate_id>https://data.cerl.org/istc/ic00759000</alternate_id>
+      <alternate_id_type>ISTC</alternate_id_type>
+    </altId>
+    <artist>
+      <artist_name>da Vinci, Leonardo</artist_name>
+      <artist_uri>https://viaf.org/viaf/24604287/</artist_uri>
+    </artist>
+    <contrib_cataloger>
+      <metadata_creator>John Smith</metadata_creator>
+      <metadata_creator_email>johnsmith@example.com</metadata_creator_email>
+    </contrib_cataloger>
+    <author>
+      <author_name>Columbus, Christopher, ca. 1451-1506</author_name>
+      <author_uri>http://viaf.org/viaf/17231583</author_uri>
+    </author>
+    <extent>
+      <dimensions>170mm x 100mm</dimensions>
+      <extent>6 pp.</extent>
+    </extent>
+    <identification>
+      <call_numberid>Kislak Foundation 2009.002.00.0001</call_numberid>
+      <record_url>http://exmple.com/kf2009002000001</record_url>
+      <volume_number>v. 1</volume_number>
+    </identification>
+    <image_rights>
+      <image_copyright_holder>Bryn Mawr College Special Collections</image_copyright_holder>
+      <image_copyright_year>2018</image_copyright_year>
+      <image_rights>CC-BY</image_rights>
+    </image_rights>
+    <language>
+      <language>lat</language>
+      <language_name>Latin</language_name>
+    </language>
+    <metadata_rights>
+      <metadata_copyright_holder>Bryn Mawr College Special Collections</metadata_copyright_holder>
+      <metadata_copyright_year>2018</metadata_copyright_year>
+      <metadata_rights>CC-BY</metadata_rights>
+    </metadata_rights>
+    <notes>
+      <note>Some helpful note</note>
+    </notes>
+    <publishing>
+      <date_narrative>after 29 April 1493</date_narrative>
+      <date_single>1493</date_single>
+      <place_of_publication>Rome, Italy</place_of_publication>
+      <place_of_publication_uri>http://example.com/rome</place_of_publication_uri>
+      <printer_publisher>Silber, Eucharius, active 1480-1510</printer_publisher>
+      <printer_publisher_uri>https://viaf.org/viaf/44199037/</printer_publisher_uri>
+    </publishing>
+    <subjects_genreform>
+      <subject_genreform>Book</subject_genreform>
+      <subject_genreform_uri>http://id.log.gov/authorities/genre/book_duh.html</subject_genreform_uri>
+    </subjects_genreform>
+    <subjects_geographic>
+      <subject_geographic>Hispaniola</subject_geographic>
+      <subject_geographic_uri>http://id.loc.gov/authorities/subjects/sh85061066.html</subject_geographic_uri>
+    </subjects_geographic>
+    <subjects_keywords>
+      <subject_keyword>REMOVE THIS?</subject_keyword>
+    </subjects_keywords>
+    <subjects_names>
+      <subject_names>Columbus, Christopher</subject_names>
+      <subject_names_uri>http://viaf.org/viaf/17231583</subject_names_uri>
+    </subjects_names>
+    <subjects_topical>
+      <subject_topical>America--Discovery and exploration--Spanish--Early works to 1800</subject_topical>
+      <subject_topical_uri>http://id.loc.gov/authorities/subjects/sh2008114178.html</subject_topical_uri>
+    </subjects_topical>
+    <tei_creation>
+      <tei_publication_date>2018</tei_publication_date>
+    </tei_creation>
+    <title>
+      <title>Epistola de insulis nuper inventis</title>
+      <volume_number>v. 1</volume_number>
+    </title>
+    <translator>
+      <translator_name>Cosco, Leandro di</translator_name>
+      <translator_uri>http://viaf.org/viaf/140004</translator_uri>
+    </translator>
+  </description>
+  <pages>
+    <page>
+      <display_page>1</display_page>
+      <file_name>HelenGriffith_BMC_fc.tif</file_name>
+      <serial_number>1</serial_number>
+    </page>
+    <page>
+      <display_page>2</display_page>
+      <file_name>HelenGriffith_BMC_fpd.tif</file_name>
+      <serial_number>2</serial_number>
+    </page>
+    <page>
+      <display_page>3</display_page>
+      <file_name>HelenGriffith_BMC_0001.tif</file_name>
+      <serial_number>3</serial_number>
+    </page>
+    <page>
+      <display_page>4</display_page>
+      <file_name>HelenGriffith_BMC_0002.tif</file_name>
+      <serial_number>4</serial_number>
+    </page>
+    <page>
+      <display_page>5</display_page>
+      <file_name>HelenGriffith_BMC_0003.tif</file_name>
+      <serial_number>5</serial_number>
+    </page>
+    <page>
+      <display_page>6</display_page>
+      <file_name>HelenGriffith_BMC_0004.tif</file_name>
+      <serial_number>6</serial_number>
+    </page>
+    <page>
+      <display_page>7</display_page>
+      <file_name>HelenGriffith_BMC_0005.tif</file_name>
+      <serial_number>7</serial_number>
+    </page>
+    <page>
+      <display_page>8</display_page>
+      <file_name>HelenGriffith_BMC_0006.tif</file_name>
+      <serial_number>8</serial_number>
+    </page>
+    <page>
+      <display_page>9</display_page>
+      <file_name>HelenGriffith_BMC_0007.tif</file_name>
+      <serial_number>9</serial_number>
+    </page>
+    <page>
+      <display_page>10</display_page>
+      <file_name>HelenGriffith_BMC_0008.tif</file_name>
+      <serial_number>10</serial_number>
+    </page>
+    <page>
+      <display_page>11</display_page>
+      <file_name>HelenGriffith_BMC_0009.tif</file_name>
+      <serial_number>11</serial_number>
+    </page>
+    <page>
+      <display_page>12</display_page>
+      <file_name>HelenGriffith_BMC_0010.tif</file_name>
+      <serial_number>12</serial_number>
+    </page>
+  </pages>
+</doc>

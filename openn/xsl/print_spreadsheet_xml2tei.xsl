@@ -24,11 +24,14 @@
   </xsl:variable>
   
   <xsl:variable name="tei_title">
-    <xsl:value-of select="$institution"/>
-    <xsl:text> </xsl:text>
-    <xsl:value-of select="$call_number"/>
-    <xsl:text> </xsl:text>
-    <xsl:value-of select="$all_titles"/>
+    <xsl:variable name="tmp_title">
+      <xsl:value-of select="$institution"/>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="$call_number"/>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="$all_titles"/>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($tmp_title)"/>
   </xsl:variable>
   
   <xsl:template match="/">
@@ -39,52 +42,41 @@
             <title>
               <xsl:value-of select="$tei_title"/>
             </title>
-<!--            2018-06-07 DE stopped here -->
-            <xsl:for-each
-              select="//marc:datafield[@tag=100]|//marc:datafield[@tag=110]|//marc:datafield[@tag=111]">
-<!--              No author for Penn catalog records. -->
+            <xsl:for-each select="//author">
               <author>
-                <xsl:call-template name="subfieldSelect">
-                  <xsl:with-param name="codes">abcdgu</xsl:with-param>
-                </xsl:call-template>
+                <xsl:if test="./author_uri">
+                <xsl:attribute name="ref" select="./author_uri"/>
+                </xsl:if>
+                <xsl:value-of select="./author_name"/>
               </author>
             </xsl:for-each>
-            <xsl:comment>
-              TODO:
-              Ugh respStmt is all wrong. figure out what's going on here and fix. Which tags do we use?
-            </xsl:comment>
-            <xsl:for-each select="//marc:datafield[@tag=700]">
+            <xsl:for-each select="//translator">
               <respStmt>
-                <resp>Contributor</resp>
+                <resp>translator</resp>
                 <name>
-                  <xsl:call-template name="subfieldSelect">
-                    <xsl:with-param name="codes">abcdgu</xsl:with-param>
-                  </xsl:call-template>
+                  <xsl:if test="./translator_uri">
+                    <xsl:attribute name="ref" select="./translator_uri"/>
+                  </xsl:if>
+                  <xsl:value-of select="./translator_name"/>
+                </name>
+              </respStmt>
+            </xsl:for-each>
+            <xsl:for-each select="//artist">
+              <respStmt>
+                <resp>artist</resp>
+                <name>
+                  <xsl:if test="./artist_uri">
+                    <xsl:attribute name="ref" select="./artist_uri"/>
+                  </xsl:if>
+                  <xsl:value-of select="./artist_name"/>
                 </name>
               </respStmt>
             </xsl:for-each>
           </titleStmt>
           <publicationStmt>
-            <publisher>The University of Pennsylvania Libraries</publisher>
+            <!-- Need a publisher: <publisher>The University of Pennsylvania Libraries</publisher>-->
             <availability>
-<!--              Only Public Domain print works will go on OPenn -->
-              <licence target="http://creativecommons.org/licenses/by/4.0/legalcode"> This
-                description is ©<xsl:value-of select="year-from-date(current-date())"/> University
-                of Pennsylvania Libraries. It is licensed under a Creative Commons Attribution
-                License version 4.0 (CC-BY-4.0
-                https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the
-                terms of use see the Creative Commons Deed
-                https://creativecommons.org/licenses/by/4.0/. </licence>
-              <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All referenced
-                images and their content are free of known copyright restrictions and in the public
-                domain. See the Creative Commons Public Domain Mark page for usage details,
-                http://creativecommons.org/publicdomain/mark/1.0/. </licence>
             </availability>
-            <xsl:comment>
-              DE: We also haven't had a publication date. We should. Date the TEI is generated?
-              A: use year
-              @done
-            </xsl:comment>
             <date>
               <xsl:attribute name="when">
                 <xsl:value-of select="year-from-date(current-date())"/>

@@ -87,13 +87,13 @@
           "repeating": false,
           "data_type": "string"
         },
-        "creator_name": {
+        "author_name": {
           "field_name": "Author name",
           "required": false,
           "repeating": true,
           "data_type": "string"
         },
-        "creator_uri": {
+        "author_uri": {
           "field_name": "Author URI",
           "required": false,
           "repeating": true,
@@ -1211,10 +1211,10 @@
           ]
         },
         {
-          "xml_attr": "creator",
+          "xml_attr": "author",
           "columns": [
-            "creator_name",
-            "creator_uri"
+            "author_name",
+            "author_uri"
           ]
         },
         {
