@@ -78,7 +78,13 @@
         "title": {
           "field_name": "Title",
           "required": true,
-          "repeating": true,
+          "repeating": false,
+          "data_type": "string"
+        },
+        "edition": {
+          "field_name": "edition",
+          "required": false,
+          "repeating": false,
           "data_type": "string"
         },
         "volume_number": {
@@ -1208,6 +1214,12 @@
           "columns": [
             "title",
             "volume_number"
+          ]
+        },
+        {
+          "xml_attr": "edition",
+          "columns": [
+            "edition"
           ]
         },
         {

@@ -233,7 +233,7 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
         sp_xml = SpreadsheetXML(settings.LICENSES)
 
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
-        print xml
+        # print xml
         root = self.assertXmlDocument(xml)
         xpaths = (
             "//administrative_contact",
@@ -246,9 +246,10 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
             "//alternate_id_type",
             "//record_url",
             "//title",
+            "//edition",
             "//volume_number",
-            "//creator_name",
-            "//creator_uri",
+            "//author_name",
+            "//author_uri",
             "//translator_name",
             "//translator_uri",
             "//artist_name",

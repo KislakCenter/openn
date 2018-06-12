@@ -13,14 +13,17 @@
       <artist_name>da Vinci, Leonardo</artist_name>
       <artist_uri>https://viaf.org/viaf/24604287/</artist_uri>
     </artist>
-    <contrib_cataloger>
-      <metadata_creator>John Smith</metadata_creator>
-      <metadata_creator_email>johnsmith@example.com</metadata_creator_email>
-    </contrib_cataloger>
     <author>
       <author_name>Columbus, Christopher, ca. 1451-1506</author_name>
       <author_uri>http://viaf.org/viaf/17231583</author_uri>
     </author>
+    <contrib_cataloger>
+      <metadata_creator>John Smith</metadata_creator>
+      <metadata_creator_email>johnsmith@example.com</metadata_creator_email>
+    </contrib_cataloger>
+    <edition>
+      <edition>3rd. Ed.</edition>
+    </edition>
     <extent>
       <dimensions>170mm x 100mm</dimensions>
       <extent>6 pp.</extent>
