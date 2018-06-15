@@ -69,11 +69,185 @@
           "repeating": true,
           "data_type": "word"
         },
-        "record_url": {
-          "field_name": "Record URL",
-          "required": false,
+        "title": {
+          "field_name": "Physical volume name",
+          "required": true,
           "repeating": false,
-          "data_type": "uri"
+          "data_type": "string"
+        },
+        "language": {
+          "field_name": "Language",
+          "required": true,
+          "repeating": true,
+          "data_type": "lang"
+        },
+        "language_name": {
+          "field_name": "",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "class": "openn.prep.language_name_field.LanguageNameField",
+          "arg_fields": [
+            "language"
+          ]
+        },
+        "note": {
+          "field_name": "Note(s)",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "image_rights": {
+          "field_name": "Image rights",
+          "required": true,
+          "repeating": false,
+          "data_type": "string",
+          "value_list": [
+            "CC-BY-SA",
+            "CC-BY",
+            "CC0",
+            "PD"
+          ]
+        },
+        "image_copyright_holder": {
+          "field_name": "Image copyright holder",
+          "required": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "string"
+        },
+        "image_copyright_year": {
+          "field_name": "Image copyright year",
+          "required": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "year"
+        },
+        "metadata_rights": {
+          "field_name": "Metadata rights",
+          "required": true,
+          "repeating": false,
+          "data_type": "string",
+          "value_list": [
+            "CC-BY-SA",
+            "CC-BY",
+            "CC0",
+            "PD"
+          ]
+        },
+        "metadata_copyright_holder": {
+          "field_name": "Metadata copyright holder",
+          "required": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "string"
+        },
+        "metadata_copyright_year": {
+          "field_name": "Metadata copyright year",
+          "required": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "year"
+        }
+      }
+    },
+
+    "title": {
+      "sheet_name": "Title",
+      "data_offset": 2,
+      "heading_type": "row",
+      "repeat_limit": {
+        "fixed": 50
+      },
+      "max_column": 200,
+      "max_row": 500,
+      "fields": {
+        "alternate_id": {
+          "field_name": "Alternate ID",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "alternate_id_type": {
+          "field_name": "Alternate ID type",
+          "required": {
+            "if": {
+              "field": "alternate_id",
+              "is": "NONEMPTY"
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "alternate_id",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "word"
         },
         "title": {
           "field_name": "Title",
@@ -83,12 +257,6 @@
         },
         "edition": {
           "field_name": "edition",
-          "required": false,
-          "repeating": false,
-          "data_type": "string"
-        },
-        "volume_number": {
-          "field_name": "Volume number",
           "required": false,
           "repeating": false,
           "data_type": "string"
@@ -262,12 +430,6 @@
           "repeating": true,
           "data_type": "string"
         },
-        "note": {
-          "field_name": "Note(s)",
-          "required": false,
-          "repeating": true,
-          "data_type": "string"
-        },
         "subject_names": {
           "field_name": "Subject: names",
           "required": false,
@@ -333,112 +495,7 @@
             "CC0",
             "PD"
           ]
-        },
-        "image_copyright_holder": {
-          "field_name": "Image copyright holder",
-          "required": {
-            "if": {
-              "field": "image_rights",
-              "is": [
-                "CC-BY-SA",
-                "CC-BY",
-                "CC0"
-              ]
-            }
-          },
-          "blank": {
-            "if": {
-              "field": "image_rights",
-              "is": [
-                "PD"
-              ]
-            }
-          },
-          "repeating": false,
-          "data_type": "string"
-        },
-        "image_copyright_year": {
-          "field_name": "Image copyright year",
-          "required": {
-            "if": {
-              "field": "image_rights",
-              "is": [
-                "CC-BY-SA",
-                "CC-BY",
-                "CC0"
-              ]
-            }
-          },
-          "blank": {
-            "if": {
-              "field": "image_rights",
-              "is": [
-                "PD"
-              ]
-            }
-          },
-          "repeating": false,
-          "data_type": "year"
-        },
-        "metadata_rights": {
-          "field_name": "Metadata rights",
-          "required": true,
-          "repeating": false,
-          "data_type": "string",
-          "value_list": [
-            "CC-BY-SA",
-            "CC-BY",
-            "CC0",
-            "PD"
-          ]
-        },
-        "metadata_copyright_holder": {
-          "field_name": "Metadata copyright holder",
-          "required": {
-            "if": {
-              "field": "metadata_rights",
-              "is": [
-                "CC-BY-SA",
-                "CC-BY",
-                "CC0"
-              ]
-            }
-          },
-          "blank": {
-            "if": {
-              "field": "metadata_rights",
-              "is": [
-                "PD"
-              ]
-            }
-          },
-          "repeating": false,
-          "data_type": "string"
-        },
-        "metadata_copyright_year": {
-          "field_name": "Metadata copyright year",
-          "required": {
-            "if": {
-              "field": "metadata_rights",
-              "is": [
-                "CC-BY-SA",
-                "CC-BY",
-                "CC0"
-              ]
-            }
-          },
-          "blank": {
-            "if": {
-              "field": "metadata_rights",
-              "is": [
-                "PD"
-              ]
-            }
-          },
-          "repeating": false,
-          "data_type": "year"
         }
-      }
     },
     "pages": {
       "sheet_name": "Pages",

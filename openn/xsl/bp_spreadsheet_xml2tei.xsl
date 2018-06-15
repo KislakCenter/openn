@@ -659,6 +659,27 @@
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template name="standalone-date-string">
+    <xsl:param name="node"/>
+    <xsl:choose>
+      <xsl:when test="./date_narrative">
+        <xsl:value-of select="./date_narrative"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="./date_single">
+            <xsl:value-of select="./date_single"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="./date_range_start"/>
+            <xsl:text> - </xsl:text>
+            <xsl:value-of select="./date_range_end"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <xsl:template name="page-id">
     <xsl:param name="serial_num"/>
     <xsl:value-of select="concat('surface-', $idified_call_number, '-', $serial_num)"/>

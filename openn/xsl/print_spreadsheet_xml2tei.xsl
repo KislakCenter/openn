@@ -75,8 +75,7 @@
           </titleStmt>
           <publicationStmt>
             <!-- Need a publisher: <publisher>The University of Pennsylvania Libraries</publisher>-->
-            <availability>
-            </availability>
+            <publisher>PLACEHOLDER</publisher>
             <date>
               <xsl:attribute name="when">
                 <xsl:value-of select="year-from-date(current-date())"/>
@@ -86,170 +85,111 @@
           <sourceDesc>
             <biblStruct>
               <monogr>
-                <xsl:for-each
-                  select="//marc:datafield[@tag=100]|//marc:datafield[@tag=110]|//marc:datafield[@tag=700]">
-                  <!-- Don't pull 710. That's the collection @done -->
+                <xsl:for-each select="//author">
                   <author>
-                    <xsl:call-template name="subfieldSelect">
-                      <xsl:with-param name="codes">abcdgu</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:if test="./author_uri">
+                      <xsl:attribute name="ref" select="./author_uri"/>
+                    </xsl:if>
+                    <xsl:value-of select="./author_name"/>
                   </author>
                 </xsl:for-each>
-                <xsl:for-each select="//marc:datafield[@tag=245]">
-                  <xsl:for-each select="marc:subfield">
-                    <xsl:if test="@code='a'">
-                      <title>
-                        <xsl:attribute name="level">m</xsl:attribute>
-                        <xsl:attribute name="type">marc245a</xsl:attribute>
-                        <xsl:call-template name="chopPunctuation">
-                          <xsl:with-param name="chopString">
-                            <xsl:value-of select="."/>
-                          </xsl:with-param>
-                        </xsl:call-template>
-                      </title>
+                <xsl:for-each select="//translator">
+                  <author>
+                    <xsl:if test="./translator_uri">
+                      <xsl:attribute name="ref" select="./translator_uri"/>
                     </xsl:if>
-                    <xsl:if test="@code='b'">
-                      <title>
-                        <xsl:attribute name="level">m</xsl:attribute>
-                        <xsl:attribute name="type">marc245b</xsl:attribute>
-                        <xsl:call-template name="chopPunctuation">
-                          <xsl:with-param name="chopString">
-                            <xsl:value-of select="."/>
-                          </xsl:with-param>
-                        </xsl:call-template>
-                      </title>
-                    </xsl:if>
-                  </xsl:for-each>
+                    <xsl:value-of select="./translator_name"/>
+                  </author>
                 </xsl:for-each>
-                <xsl:for-each
-                  select="//marc:datafield[@tag=130]|//marc:datafield[@tag=240]|//marc:datafield[@tag=246]">
+                <xsl:for-each select="//artist">
+                  <author>
+                    <xsl:if test="./artist_uri">
+                      <xsl:attribute name="ref" select="./artist_uri"/>
+                    </xsl:if>
+                    <xsl:value-of select="./artist_name"/>
+                  </author>
+                </xsl:for-each>
+                <xsl:for-each select="/doc/description/title">
                   <title>
-                    <xsl:call-template name="subfieldSelect">
-                      <xsl:with-param name="codes">abcdgu</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:value-of select="./title"/>
+                    <xsl:if test="./volume_number">
+                      <xsl:text>, </xsl:text>
+                      <xsl:value-of select="./volume_number"/>
+                    </xsl:if>
                   </title>
                 </xsl:for-each>
-                <xsl:for-each select="//marc:datafield[@tag=250]">
+                <xsl:for-each select="/doc/description/edition">
                   <edition>
-                    <xsl:call-template name="subfieldSelect">
-                      <xsl:with-param name="codes">abcdgu</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:value-of select="./edition"/>
                   </edition>
                 </xsl:for-each>
                 <imprint>
-                  <!--
-                    pubPlace pull prefer 752$a$d (order: '$d, $a'); fallback to 260$a @done
-                  -->
-                  <xsl:call-template name="pubPlace">
-                    <xsl:with-param name="marc752d" select="//marc:datafield[@tag=752]/marc:subfield[@code='d']"/>
-                    <xsl:with-param name="marc752a" select="//marc:datafield[@tag=752]/marc:subfield[@code='a']"/>
-                    <xsl:with-param name="marc260a" select="//marc:datafield[@tag=260]/marc:subfield[@code='a']"/>
-                  </xsl:call-template>
-                  <xsl:for-each select="//marc:datafield[@tag=260]/marc:subfield[@code='b']">
-                    <publisher>
-                      <xsl:call-template name="chopPunctuation">
-                        <xsl:with-param name="chopString">
-                          <xsl:value-of select="."/>
-                        </xsl:with-param>
-                      </xsl:call-template>
-                    </publisher>
-                  </xsl:for-each>
-
-                  <!--
-                    @done
-                    
-                    DE: Is this dangerous? Can it be a range? An LC partial date? Circa date?
-                    They won't validate as date attributes. (DE)
-                    A: pull ctrl field 008 positions 7-10; figure out if number.
-                   
-                    Samples:
-                    #12345678901234567890
-                    #131218q19001936mr
-                    #12345678901234567890
-                    #930202s1980
-                    See: https://www.loc.gov/marc/bibliographic/bd008a.html
-                    06 - Type of date/Publication status
-                          b - No dates given; B.C. date involved
-                          c - Continuing resource currently published
-                          d - Continuing resource ceased publication
-                          e - Detailed date
-                          i - Inclusive dates of collection
-                          k - Range of years of bulk of collection
-                          m - Multiple dates
-                          n - Dates unknown
-                    Common s, q, m, new data starts at character 15.
-                    Multiple date codes: c, d, i, k, m
-                    For 'c' see: https://franklin.library.upenn.edu/catalog/FRANKLIN_9937563503681
-                        008 920427c18459999nyumr p 0 a0eng
-                    TODO: 260$c for publication date - the title page date in brackets if not on title page and 'n.d.' if 'no date';
-                    'n.d.' algorithm: strip non-alnum chars; downcase; if val == 'nd' => 'no date'
-                    -->
+                  <xsl:for-each select="//publication">
+                    <xsl:if test="./printer_publisher">
+                      <publisher>
+                        <name>
+                        <xsl:if test="./printer_publisher_uri">
+                          <xsl:attribute name="ref" select="./printer_publisher_uri"/>
+                        </xsl:if>
+                        <xsl:value-of select="./printer_publisher"/>
+                        </name>
+                      </publisher>
+                    </xsl:if>
+                    <xsl:if test="./place_of_publication">
+                      <pubPlace>
+                        <xsl:if test="./place_of_publication_uri">
+                          <xsl:attribute name="ref" select="./place_of_publication_uri"/>
+                        </xsl:if>
+                        <xsl:value-of select="./place_of_publication"/>
+                      </pubPlace>
+                    </xsl:if>
                     <date>
-                      <xsl:call-template name="dateAttributes">
-                        <xsl:with-param name="marc008" select="//marc:controlfield[@tag='008']"/>
-                      </xsl:call-template>
-                      <xsl:call-template name="dateString">
-                        <xsl:with-param name="marc260c" select="//marc:controlfield[@tag='260']/marc:subfield[@code='c']"/>
-                        <xsl:with-param name="marc008" select="//marc:controlfield[@tag='008']"/>
+                      <xsl:choose>
+                        <xsl:when test="./date_single">
+                          <xsl:attribute name="when" select="./date_single"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:if test="./date_range_start">
+                            <xsl:attribute name="from" select="./date_range_start"/>
+                          </xsl:if>
+                          <xsl:if test="./date_range_end">
+                            <xsl:attribute name="to" select="./date_range_end"/>
+                          </xsl:if>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                      <xsl:call-template name="standalone-date-string">
+                        <xsl:with-param name="node" select="."/>
                       </xsl:call-template>
                     </date>
+                  </xsl:for-each>
                 </imprint>
-                <!-- 
-                  @done
-                  DE: I'm skipping subfield 'b' here. It should be combined with 'a' if it exists.
-                  A: Join $a $c; remove trailing :; and join with '; '
-                -->
-                <xsl:variable name="marc300a" select="//marc:datafield[@tag=300]/marc:subfield[@code='a']"/>
-                <xsl:variable name="marc300c" select="//marc:datafield[@tag=300]/marc:subfield[@code='c']"/>
-                <xsl:if test="$marc300a or $marc300c">
+                <xsl:if test="/doc/description/extent">
                   <extent>
-                  <xsl:choose>
-                    <xsl:when test="$marc300c">
-                      <xsl:if test="$marc300a">
-                        <xsl:value-of select="$marc300a"/>
-                        <xsl:text>; </xsl:text>
-                      </xsl:if>
-                      <xsl:value-of select="$marc300c"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="$marc300a"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
+                    <xsl:if test="/doc/description/extent/extent">
+                      <xsl:value-of select="/doc/description/extent/extent"/>
+                    </xsl:if>
+                    <xsl:if test="/doc/description/extent/dimensions">
+                      <dimensions>
+                        <dim>
+                          <xsl:value-of select="/doc/description/extent/dimensions"/>
+                        </dim>
+                      </dimensions>
+                    </xsl:if>
                   </extent>
                 </xsl:if>
               </monogr>
-              <!--
-                @done
-                TODO: Need to examine our marc and figure out which to use. TEI
-                recommends 4xx and 8xx be used here, without providing much detail. Need to
-                investigate subfield. In sample marc, we use 440, 490, 810, 830, 856; the last
-                being the facsimile.
-                A: 440$a | 490$a | 830$a in that order, with $v if it is there
-              -->
-              <xsl:choose>
-                <xsl:when test="//marc:datafield[@tag=440]/marc:subfield[@code='a']">
-                  <xsl:call-template name="seriesTitle">
-                    <xsl:with-param name="seriesElement" select="//marc:datafield[@tag=440]"/>
-                  </xsl:call-template>
-                </xsl:when>
-                <xsl:when test="//marc:datafield[@tag=490]/marc:subfield[@code='a']">
-                  <xsl:call-template name="seriesTitle">
-                    <xsl:with-param name="seriesElement" select="//marc:datafield[@tag=490]"/>
-                  </xsl:call-template>
-                </xsl:when>
-                <xsl:when test="//marc:datafield[@tag=830]/marc:subfield[@code='a']">
-                  <xsl:call-template name="seriesTitle">
-                    <xsl:with-param name="seriesElement" select="//marc:datafield[@tag=830]"/>
-                  </xsl:call-template>
-                </xsl:when>
-              </xsl:choose>
-              <xsl:if test="//marc:datafield[@tag='500']">
-                <xsl:for-each select="//marc:datafield[@tag='500']">
-                  <note>
-                    <xsl:value-of select="normalize-space(marc:subfield[@code='a'])"/>
-                  </note>
-                </xsl:for-each>
-              </xsl:if>         
+              <xsl:if test="//series">
+                <series>
+                  <title>
+                    <xsl:value-of select="//series/series_title"/>
+                  </title>
+                </series>
+              </xsl:if>
+              <xsl:for-each select="//notes/note">
+                <note>
+                  <xsl:value-of select="normalize-space()"/>
+                </note>
+              </xsl:for-each>
               <idno>
                 <xsl:attribute name="type">
                   <xsl:text>LC_call_number</xsl:text>
@@ -278,73 +218,54 @@
             </biblStruct>
           </sourceDesc>
         </fileDesc>
-        <xsl:comment>
-          DE: Stuff to address, lost to the removal of msDesc:
-              - provenance
-              - section, chapter names?
-              - illustrations?
-           A: email Dot, cc'ing group; also LVT to find examples
-        </xsl:comment>
         <encodingDesc>
           <classDecl>
-          <xsl:comment>
-            DE: Do we want to use these taxonomy tags for keywords? If so, what taxonomy goes with what?
-          </xsl:comment>
           <taxonomy xml:id="LCC"><bibl>Library of Congress Classification</bibl></taxonomy>
           <taxonomy xml:id="LCSH"><bibl>Library of Congress Subject Headings</bibl></taxonomy>
           </classDecl>
         </encodingDesc>
         <profileDesc>
-          <xsl:comment>
-            Language: Found an item (bibid: 1761820, 9917618203503681) with 041$a (=eng)
-            and 041$h (=fre). Work is an English translation from French. How to handle?
-            A: Pull 041$a however many times it occurs -- can be multiple.
-            https://www.loc.gov/marc/bibliographic/bd041.html
-          </xsl:comment>
-          <xsl:if test="//marc:datafield[@tag='041']/marc:subfield[@code='a']">
+          <xsl:if test="/doc/description/language">
             <langUsage>
-            <xsl:for-each select="//marc:datafield[@tag='041']/marc:subfield[@code='a']">
+              <xsl:for-each select="/doc/description/language">
                 <language>
-                  <xsl:attribute name="ident" select="."/>
+                  <xsl:if test="./language">
+                    <xsl:attribute name="ident" select="./language"/>
+                  </xsl:if>
+                  <xsl:if test="./language_name">
+                    <xsl:value-of select="./language_name"/>
+                  </xsl:if>
                 </language>
-            </xsl:for-each>
+              </xsl:for-each>
             </langUsage>
           </xsl:if>
           <textClass>
-            <xsl:comment>
-              DE: classCode@scheme based on 050-099 -- Do we want to map these?
-            </xsl:comment>
-            <xsl:comment>
-              DE: Keywords -- Which types/tags will we have? Do we want to map them to
-              the taxonomies as suggested in the TEI recommendations (see above)?
-            </xsl:comment>
-            <!-- DE: Switching to marc 610 and joining subfields -->
-            <xsl:if test="//marc:datafield[@tag='610' or @tag='650']">
-              <keywords xmlns="http://www.tei-c.org/ns/1.0" n="subjects">
-                <xsl:for-each select="//marc:datafield[@tag='610' or @tag='650']">
+            <xsl:if test="/doc/description/subjects_names|/doc/description/subjects_geographic|/doc/description/subjects_topical">
+              <keywords n="subjects">
+                <xsl:for-each select="/doc/description/subjects_names|/doc/description/subjects_geographic|/doc/description/subjects_topical">
                   <term>
-                    <xsl:call-template name="join-keywords">
-                      <xsl:with-param name="datafield" select="."/>
-                    </xsl:call-template>
+                    <xsl:if test="./subject_topical_uri | ./subject_geographic_uri | ./subject_names_uri">
+                      <xsl:attribute name="target" select="./subject_topical_uri | ./subject_geographic_uri | ./subject_names_uri"/>
+                    </xsl:if>
+                    <xsl:value-of select="./subject_topical | ./subject_geographic | ./subject_names"/>
                   </term>
                 </xsl:for-each>
               </keywords>
             </xsl:if>
-            <xsl:if test="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
+            <xsl:if test="/doc/description/subjects_genreform">
               <keywords n="form/genre">
-                <xsl:for-each
-                  select="//marc:datafield[@tag='655' and child::marc:subfield[@code='a']]">
+                <xsl:for-each select="/doc/description/subjects_genreform">
                   <term>
-                    <xsl:call-template name="join-genre">
-                      <xsl:with-param name="datafield" select="."/>
-                    </xsl:call-template>
+                    <xsl:if test="./subject_genreform_uri">
+                      <xsl:attribute name="target" select="./subject_genreform_uri"/>
+                    </xsl:if>
+                    <xsl:value-of select="./subject_genreform"/>
                   </term>
                 </xsl:for-each>
               </keywords>
             </xsl:if>
           </textClass>
         </profileDesc>
-        <!-- DOT MOD ENDS HERE -->
       </teiHeader>
       <facsimile>
         <!--

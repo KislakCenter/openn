@@ -286,6 +286,27 @@
     </xsl:if>
   </xsl:template>
   
+  <xsl:template name="standalone-date-string">
+    <xsl:param name="node"/>
+    <xsl:choose>
+      <xsl:when test="$node/date_narrative">
+        <xsl:value-of select="$node/date_narrative"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$node/date_single">
+            <xsl:value-of select="$node/date_single"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$node/date_range_start"/>
+            <xsl:text> - </xsl:text>
+            <xsl:value-of select="$node/date_range_end"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   <xsl:template name="seriesTitle">
     <xsl:param name="seriesElement"/>
     <series>

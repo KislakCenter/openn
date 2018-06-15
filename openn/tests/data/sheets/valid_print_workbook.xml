@@ -42,6 +42,10 @@
       <language>lat</language>
       <language_name>Latin</language_name>
     </language>
+    <language>
+      <language>eng</language>
+      <language_name>English</language_name>
+    </language>
     <metadata_rights>
       <metadata_copyright_holder>Bryn Mawr College Special Collections</metadata_copyright_holder>
       <metadata_copyright_year>2018</metadata_copyright_year>
@@ -50,14 +54,17 @@
     <notes>
       <note>Some helpful note</note>
     </notes>
-    <publishing>
+    <publication>
       <date_narrative>after 29 April 1493</date_narrative>
       <date_single>1493</date_single>
       <place_of_publication>Rome, Italy</place_of_publication>
       <place_of_publication_uri>http://example.com/rome</place_of_publication_uri>
       <printer_publisher>Silber, Eucharius, active 1480-1510</printer_publisher>
       <printer_publisher_uri>https://viaf.org/viaf/44199037/</printer_publisher_uri>
-    </publishing>
+    </publication>
+    <series>
+      <series_title>A Series Title</series_title>
+    </series>
     <subjects_genreform>
       <subject_genreform>Book</subject_genreform>
       <subject_genreform_uri>http://id.log.gov/authorities/genre/book_duh.html</subject_genreform_uri>
