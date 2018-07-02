@@ -17,6 +17,8 @@ from openn.prep.workbook_data import WorkbookData
 from openpyxl import load_workbook
 from openpyxl.workbook import workbook
 
+import warnings
+
 
 class OPWorkbook:
 
@@ -30,7 +32,9 @@ class OPWorkbook:
         """
         self.config      = config['sheet_config']
         self.xlsx_path   = xlsx_file
+        warnings.simplefilter("ignore")
         self.workbook    = load_workbook(self.xlsx_path)
+        warnings.simplefilter("always")
         self.errors      = []
         self.warnings    = []
         self._sheets      = {}
@@ -136,7 +140,7 @@ class OPWorkbook:
 
         for attr in self.config:
             sheet_name = self.config[attr]['sheet_name']
-            worksheet = self.workbook.get_sheet_by_name(sheet_name)
+            worksheet = self.workbook[sheet_name]
             vsheet = ValidatableSheet(
                 worksheet, self.xlsx_path, deepcopy(self.config[attr]))
             self._sheets[attr] = vsheet
