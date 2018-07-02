@@ -11,7 +11,7 @@ lxml==3.3.4
 markdown2==2.3.0
 MarkupSafe==0.23
 MySQL-python==1.2.5
-openpyxl==2.5.4
+openpyxl==2.4.9
 Pillow==2.4.0
 PyExifTool==0.1
 Pygments==1.6
