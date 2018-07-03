@@ -23,7 +23,7 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
     bibliophilly_workbook    = os.path.join(this_dir,
                                             'data/bibliophilly/FLPLewisE087/openn_metadata.xlsx')
     print_workbook           = os.path.join(this_dir,
-                                            'data/sheets/valid_print_workbook.xlsx')
+                                            'data/sheets/valid_print_workbook_sketch.xlsx')
 
     url1 = 'http://id.loc.gov/authorities/names/n50049445.html'
     url2 = 'http://id.loc.gov/authorities/subjects/sh99002320.html'
@@ -33,7 +33,7 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
 
     pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
     biblio_philly_json      = os.path.join(this_dir, '../bibliophilly.json')
-    print_json              = os.path.join(this_dir, '../print.json')
+    print_json              = os.path.join(this_dir, '../print_test.json')
 
     xml_config = [
         {
@@ -188,8 +188,6 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
                         'metadata_copyright_year',
                     ],
                 },
-
-
             ]
         }
     ]
@@ -244,10 +242,9 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
             "//call_numberid",
             "//alternate_id",
             "//alternate_id_type",
-            "//record_url",
-            "//title",
+            "//title/title",
+            "//series_title",
             "//edition",
-            "//volume_number",
             "//author_name",
             "//author_uri",
             "//translator_name",
@@ -265,7 +262,6 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
             "//extent",
             "//dimensions",
             "//note",
-            "//series_title",
             "//subject_names",
             "//subject_names_uri",
             "//subject_topical",
@@ -274,7 +270,6 @@ class TestSpreadsheetXML(OPennTestCase, XmlTestMixin):
             "//subject_geographic_uri",
             "//subject_genreform",
             "//subject_genreform_uri",
-            "//subject_keyword",
             "//image_rights",
             "//image_copyright_holder",
             "//image_copyright_year",

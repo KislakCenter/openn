@@ -1,7 +1,8 @@
 {
   "sheet_config": {
     "description": {
-      "sheet_name": "Description",
+      "sheet_name_pattern": "^Description$",
+      "sheet_attr": "description",
       "data_offset": 2,
       "heading_type": "row",
       "repeat_limit": {
@@ -32,6 +33,12 @@
           "field_name": "Metadata Creator",
           "required": true,
           "repeating": true,
+          "data_type": "string"
+        },
+        "metadata_publisher": {
+          "field_name": "Metadata Publisher",
+          "required": true,
+          "repeating": false,
           "data_type": "string"
         },
         "metadata_creator_email": {
@@ -216,7 +223,8 @@
       }
     },
     "title": {
-      "sheet_name": "Title",
+      "sheet_name_pattern": "^Title\\s+\\d+\\s*",
+      "sheet_attr": "title",
       "data_offset": 2,
       "heading_type": "row",
       "repeat_limit": {
@@ -260,6 +268,12 @@
           "repeating": false,
           "data_type": "string"
         },
+        "series_title": {
+          "field_name": "Series Title",
+          "required": false,
+          "repeating": false,
+          "data_type": "string"
+        },
         "author_name": {
           "field_name": "Author name",
           "required": false,
@@ -295,24 +309,6 @@
           "required": false,
           "repeating": true,
           "data_type": "uri"
-        },
-        "former_owner_name": {
-          "field_name": "Former Owner name",
-          "required": false,
-          "repeating": true,
-          "data_type": "string"
-        },
-        "former_owner_uri": {
-          "field_name": "Former Owner URI",
-          "required": false,
-          "repeating": true,
-          "data_type": "uri"
-        },
-        "provenance_details": {
-          "field_name": "Provenance details",
-          "required": false,
-          "repeating": false,
-          "data_type": "string"
         },
         "date_single": {
           "field_name": "Publication date (single)",
@@ -395,28 +391,6 @@
           "repeating": true,
           "data_type": "uri"
         },
-        "language": {
-          "field_name": "Language",
-          "required": true,
-          "repeating": true,
-          "data_type": "lang"
-        },
-        "language_name": {
-          "field_name": "",
-          "required": false,
-          "repeating": true,
-          "data_type": "string",
-          "class": "openn.prep.language_name_field.LanguageNameField",
-          "arg_fields": [
-            "language"
-          ]
-        },
-        "series_title": {
-          "field_name": "Series Title",
-          "required": false,
-          "repeating": false,
-          "data_type": "string"
-        },
         "extent": {
           "field_name": "Extent",
           "required": true,
@@ -436,7 +410,7 @@
           "data_type": "string"
         },
         "subject_names_uri": {
-          "field_name": "Subject: names URI [?]",
+          "field_name": "Subject: names URI",
           "required": false,
           "repeating": true,
           "data_type": "uri"
@@ -448,7 +422,7 @@
           "data_type": "string"
         },
         "subject_topical_uri": {
-          "field_name": "Subject: topical URI [?]",
+          "field_name": "Subject: topical URI",
           "required": false,
           "repeating": true,
           "data_type": "uri"
@@ -460,7 +434,7 @@
           "data_type": "string"
         },
         "subject_geographic_uri": {
-          "field_name": "Subject: geographic URI [?]",
+          "field_name": "Subject: geographic URI",
           "required": false,
           "repeating": true,
           "data_type": "uri"
@@ -482,22 +456,12 @@
           "required": true,
           "repeating": true,
           "data_type": "string"
-        },
-        "image_rights": {
-          "field_name": "Image rights",
-          "required": true,
-          "repeating": false,
-          "data_type": "string",
-          "value_list": [
-            "CC-BY-SA",
-            "CC-BY",
-            "CC0",
-            "PD"
-          ]
         }
+      }
     },
     "pages": {
-      "sheet_name": "Pages",
+      "sheet_name_pattern": "^Pages$",
+      "sheet_attr": "pages",
       "data_offset": 1,
       "heading_type": "column",
       "repeat_limit": {
@@ -1236,7 +1200,8 @@
         {
           "xml_attr": "tei_creation",
           "columns": [
-            "tei_publication_date"
+            "tei_publication_date",
+            "metadata_publisher"
           ]
         },
         {
@@ -1249,19 +1214,7 @@
         {
           "xml_attr": "identification",
           "columns": [
-            "repository_country",
-            "repository_city",
-            "repository_name",
-            "repository_institution",
-            "record_url",
-            "source_collection",
-            "call_numberid",
-            "archival_drawer",
-            "archival_box",
-            "archival_folder",
-            "archival_item",
-            "full_call_number",
-            "volume_number"
+            "call_numberid"
           ]
         },
         {
@@ -1274,48 +1227,91 @@
         {
           "xml_attr": "title",
           "columns": [
-            "title",
-            "volume_number"
+            "title"
           ]
         },
         {
-          "xml_attr": "edition",
+          "xml_attr": "language",
           "columns": [
+            "language",
+            "language_name"
+          ]
+        },
+        {
+          "xml_attr": "notes",
+          "columns": [
+            "note"
+          ]
+        },
+        {
+            "xml_attr": "image_rights",
+            "columns": [
+                "image_rights",
+                "image_copyright_holder",
+                "image_copyright_year"
+            ]
+        },
+        {
+            "xml_attr": "metadata_rights",
+            "columns": [
+                "metadata_rights",
+                "metadata_copyright_holder",
+                "metadata_copyright_year"
+            ]
+        }
+      ]
+    },
+    {
+      "sheet_root": "title",
+      "sheet_attr": "title1",
+      "composite_fields": {
+        "full_title": [
+          "repository_name",
+          "full_call_number",
+          "title"
+        ]
+      },
+      "field_groups": [
+        {
+          "xml_attr": "altId",
+          "columns": [
+            "alternate_id",
+            "alternate_id_type"
+          ]
+        },
+        {
+          "xml_attr": "title",
+          "columns": [
+            "title",
             "edition"
           ]
         },
         {
-          "xml_attr": "author",
+          "xml_attr": "language",
+          "columns": [
+            "language",
+            "language_name"
+          ]
+        },
+        {
+          "xml_attr": "authors",
           "columns": [
             "author_name",
             "author_uri"
           ]
         },
         {
-          "xml_attr": "translator",
+          "xml_attr": "translators",
           "columns": [
             "translator_name",
             "translator_uri"
           ]
         },
         {
-          "xml_attr": "artist",
+          "xml_attr": "artists",
           "columns": [
             "artist_name",
             "artist_uri"
-          ]
-        },
-        {
-          "xml_attr": "former_owner",
-          "columns": [
-            "former_owner_name",
-            "former_owner_uri"
-          ]
-        },
-        {
-          "xml_attr": "provenance",
-          "columns": [
-            "provenance_details"
           ]
         },
         {
@@ -1338,42 +1334,10 @@
           ]
         },
         {
-          "xml_attr": "language",
-          "columns": [
-            "language",
-            "language_name"
-          ]
-        },
-        {
           "xml_attr": "extent",
           "columns": [
             "extent",
             "dimensions"
-          ]
-        },
-        {
-          "xml_attr": "support",
-          "columns": [
-            "watermarks",
-            "support_material"
-          ]
-        },
-        {
-          "xml_attr": "colophon",
-          "columns": [
-            "colophon"
-          ]
-        },
-        {
-          "xml_attr": "notes",
-          "columns": [
-            "note"
-          ]
-        },
-        {
-          "xml_attr": "subjects_keywords",
-          "columns": [
-            "subject_keyword"
           ]
         },
         {
@@ -1403,22 +1367,6 @@
             "subject_genreform",
             "subject_genreform_uri"
           ]
-        },
-        {
-            "xml_attr": "image_rights",
-            "columns": [
-                "image_rights",
-                "image_copyright_holder",
-                "image_copyright_year"
-            ]
-        },
-        {
-            "xml_attr": "metadata_rights",
-            "columns": [
-                "metadata_rights",
-                "metadata_copyright_holder",
-                "metadata_copyright_year"
-            ]
         }
       ]
     }

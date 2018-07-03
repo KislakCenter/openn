@@ -38,7 +38,7 @@ class OPWorkbook:
         warnings.simplefilter("always")
         self.errors      = []
         self.warnings    = []
-        self._sheets      = {}
+        self._sheets     = []
         self._set_sheets()
 
     # --------------------------------------------------------------------
@@ -84,8 +84,7 @@ class OPWorkbook:
         return self.pages.has_errors()
 
     def sheets(self):
-        for attr in self._sheets:
-            yield self._sheets[attr]
+        return list(self._sheets)
 
     def file_errors(self, ):
         errors = []
@@ -139,9 +138,13 @@ class OPWorkbook:
     # --------------------------------------------------------------------
     def _set_sheets(self):
 
+        sheet_names = self.workbook.sheetnames
         for attr in self.config:
-            sheet_name = self.config[attr]['sheet_name']
-            worksheet = self.workbook[sheet_name]
-            vsheet = ValidatableSheet(
-                worksheet, self.xlsx_path, deepcopy(self.config[attr]))
-            self._sheets[attr] = vsheet
+            sheet_name_pattern = self.config[attr]['sheet_name_pattern']
+            name_re = re.compile(sheet_name_pattern, re.IGNORECASE)
+            matched_names = filter(lambda x: name_re.match(x), sheet_names)
+            for sheet_name in matched_names:
+                worksheet = self.workbook[sheet_name]
+                vsheet = ValidatableSheet(
+                    worksheet, self.xlsx_path, deepcopy(self.config[attr]))
+                self._sheets.append(vsheet)
