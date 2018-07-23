@@ -79,7 +79,7 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 TIME_ZONE = 'US/Eastern'
 USE_TZ = True
 
-OPENN_HOST = 'openn.library.upenn.edu'
+OPENN_HOST = os.getenv('OPENN_HOST', 'openn.library.upenn.edu')
 
 # put the openn/bin dir in the path
 os.environ['PATH'] = os.path.join(PROJECT_PATH, 'bin') + os.pathsep + os.environ['PATH']
