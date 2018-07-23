@@ -1263,7 +1263,7 @@
     },
     {
       "sheet_root": "title",
-      "sheet_attr": "title1",
+      "sheet_attr": "title",
       "composite_fields": {
         "full_title": [
           "repository_name",

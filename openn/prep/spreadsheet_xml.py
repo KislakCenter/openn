@@ -20,11 +20,18 @@ class SpreadsheetXML(object):
 
     def build_dict(self,workbook_data,xml_config):
         structure = {}
-        for sheet_config in xml_config:
-            attr = sheet_config['sheet_attr']
-            sheet_data = workbook_data.sheet_data(attr)
+        print xml_config
+        for sheet_data in workbook_data.sheet_datas():
+            attr = sheet_data.sheet_attr()
+            print
+            print attr
+            # sheet_data = workbook_data.sheet_data(attr)
+            sheet_config = next(x for x in xml_config if x['sheet_attr'] == attr)
             data = self.build_sheet_dict(sheet_data, sheet_config)
-            structure[sheet_config['sheet_root']] = data
+            sheet_root = sheet_config['sheet_root']
+            if structure.get(sheet_root, None) is None:
+                structure[sheet_root] = []
+            structure[sheet_root].append(data)
         return structure
 
     def build_sheet_dict(self, sheet_data, sheet_config):
