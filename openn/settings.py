@@ -359,7 +359,7 @@ REPOSITORIES = {
             'tag': 'pennmss',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'University of Pennsylvania Books & Manuscripts',
+            'name': 'University of Pennsylvania Libraries',
             'blurb': """With approximately 250,000 printed books and nearly ten million
 pieces of manuscript material, the Rare Book and Manuscript Library is
 a small part of the University's 5 million-volume library system.
@@ -375,7 +375,7 @@ Church history, the Inquisition, magic, and witchcraft.""",
             'tag': 'ljs',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Lawrence J. Schoenberg Manuscripts',
+            'name': 'University of Pennsylvania Libraries, Lawrence J. Schoenberg Manuscripts',
             'blurb': """These manuscripts are from the Lawrence J. Schoenberg collection in
 the Rare Books and Manuscripts Library at the University of
 Pennsylvania. With its emphasis on the history of science and the
@@ -392,7 +392,7 @@ intellectual heritage.""",
             'tag': 'bates',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Barbara Bates Center for the Study of the History of Nursing',
+            'name': 'University of Pennsylvania School of Nursing, Barbara Bates Center',
             'blurb': """The Barbara Bates Center for the Study of the History of Nursing is the
 largest repository for primary source materials and rare books about the
 history of nursing. The Center holds an extensive collection of
@@ -408,7 +408,7 @@ linear feet.""",
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Bryn Mawr College Library Special Collections',
+            'name': 'Bryn Mawr College, Special Collections',
             'blurb': """The Bryn Mawr College Special Collections includes rare books,
 manuscripts, the college archives, works of art on paper, and
 ethnographic and archaeological objects. The rare book collection
@@ -424,8 +424,8 @@ collection ranging from the 15th century to the present, including
             'tag': 'chf',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Othmer Library, Chemical Heritage Foundation',
-            'blurb': """The Chemical Heritage Foundation's Donald F. and Mildred Topp Othmer
+            'name': 'Science History Institute, Othmer Library',
+            'blurb': """The Science History Institute's Donald F. and Mildred Topp Othmer
 Library of Chemical History collects, preserves, and makes accessible
 materials relating to the history of science, technology, and medicine
 with an emphasis on chemical and material sciences and technologies from
@@ -438,13 +438,13 @@ archival materials, and historical photographs of great value to
 researchers and our cultural heritage. Together these collections form
 an unrivaled resource for the history of chemistry and related sciences,
 technologies, and industries.""",
-            'include_file': 'ChemHeritageFoundation.html',
+            'include_file': 'SciHistoryInstitute.html',
         },
         {
             'tag': 'cpp',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'The Historical Medical Library of the College of Physicians of Philadelphia',
+            'name': 'College of Physicians of Philadelphia, The Historical Medical Library',
             'blurb': """Established in 1788, the Historical Medical Library was Philadelphia's
 central medical library for over 150 years, serving its medical schools,
 hospitals, physicians and other health professionals. Today, it is an
@@ -457,7 +457,7 @@ students and popular writers each year.""",
             'tag': 'manchester',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'The University of Manchester Library Special Collections',
+            'name': 'University of Manchester Library, Special Collections',
             'blurb': """The University of Manchester Library's manuscripts and archives are
 internationally important. Their subject range is extraordinarily
 diverse and the collections span many centuries, from the 3rd millennium
@@ -483,7 +483,7 @@ scope, importance and interest.""",
         },
         {
             'tag': 'drexarc',
-            'name': 'Drexel University Archives and Special Collections',
+            'name': 'Drexel University, Archives and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """
@@ -500,7 +500,7 @@ family; and the history of education.""",
         },
         {
             'tag': 'drexmed',
-            'name': "Legacy Center, Drexel University College of Medicine",
+            'name': "Drexel University College of Medicine, Legacy Center",
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Drexel University College of Medicine Legacy Center supports
@@ -516,7 +516,7 @@ from 1502 to the present, with the bulk of the materials ranging from
         },
         {
             'tag': 'haverford',
-            'name': 'Quaker and Special Collections, Haverford College',
+            'name': 'Haverford College, Quaker and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb':  """Quaker & Special Collections contains Haverford College's
@@ -537,18 +537,21 @@ collections are open to all.""",
             'name': 'Lehigh University Libraries, Special Collections',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Lehigh University Special Collections serves as the repository for the
-University's collections of rare books and manuscripts, and for
-holdings relating to its own history. It encompasses a rare book
-collection of over 25,000 volumes, with first editions of English and
-American literature from the 17th to the 19th centuries, strengths in
-travel and exploration, natural history and ornithology, and works of
-historical significance in science and technology. Materials relating
-to the University include documents and publications of the
-University, papers of faculty members, and memorabilia from the
-University's history. Special Collections also holds manuscripts and
-personal papers, in addition to papers relating to the University's
-history.""",
+            'blurb': """Lehigh University Libraries' Special Collections serves as the
+repository for the University's collections of rare books and
+manuscripts as well as for holdings relating to Lehigh's institutional
+and cultural history. The catalog encompasses over 40,000 volumes,
+including first editions of English and American literature from the
+seventeenth to the nineteenth centuries and represents diverse topics
+such as travel and exploration, natural history, and ornithology. A
+special focus on the history of science and technology includes an
+expansive assortment of material related to large-scale construction and
+the use of iron and steel in industrial life, as well as a collection of
+classic and seminal works relating to bridge building and design.
+University materials include official documents and publications of the
+school administration, papers and publications of faculty members,
+theses and dissertations composed by graduate students, and memorabilia
+from the broad spectrum of campus life.""",
             'include_file': 'LehighUniversity.html',
         },
         {
@@ -566,7 +569,7 @@ art.""",
         },
         {
             'tag': 'libpa',
-            'name': 'Rare Collections Library of the State Library of Pennsylvania',
+            'name': 'State Library of Pennsylvania, Rare Collections Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The State Library of Pennsylvania collects and preserves the
@@ -579,7 +582,7 @@ Pennsylvania religion, natural history, and genealogy.""",
         },
         {
             'tag': 'friendshl',
-            'name': 'Friends Historical Library, Swarthmore College',
+            'name': 'Swarthmore College, Friends Historical Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Established in 1871 at Swarthmore College, two years after the College
@@ -671,7 +674,7 @@ under a Creative Commons Attribution License.""",
         },
         {
             'tag': 'ism',
-            'name': 'J. Welles Henderson Archives and Library of the Independence Seaport Museum',
+            'name': 'Independence Seaport Museum, J. Welles Henderson Archives and Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Independence  Seaport Museum's J. Welles Henderson Archives and
@@ -704,7 +707,7 @@ periodicals, pamphlets, and manuscripts.""",
         },
         {
             'tag': 'pennmuseumarchives',
-            'name': 'Penn Museum Archives',
+            'name': 'University of Pennsylvania Museum of Archaeology and Anthropology, Archives',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Penn Museum Archives is the institutional repository of the Penn
@@ -718,7 +721,7 @@ million images and nearly one thousand reels of film.""",
         },
         {
             'tag': 'uarc',
-            'name': 'University Archives and Records Center, University of Pennsylvania',
+            'name': 'University of Pennsylvania Archives and Records Center',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The University Archives and Records Center (UARC) serves the
@@ -778,7 +781,7 @@ illumination.""",
         },
         {
             'tag': 'kislak',
-            'name': 'Jay I. Kislak Foundation',
+            'name': 'Kislak Foundation',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Established in 1984, the Jay I. Kislak Foundation is a private nonprofit
@@ -811,8 +814,35 @@ discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
         },
         {
+            'tag': 'udel',
+            'name': 'University of Delaware Library',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Special Collections at the University of Delaware Library collects,
+preserves, and makes accessible rare and unique materials such as rare
+books, artists' books, fine press books, manuscripts and archives.  The
+Special Collections have four main collecting areas in literature, art,
+history and Delawareana, and science and technology.""",
+            'include_file': 'UniversityOfDelaware.html',
+        },
+        {
+            'tag': 'temple',
+            'name': 'Temple University Libraries, Special Collections Research Center',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Special Collections Research Center (SCRC) is the principal
+repository for and steward of the Libraries' rare books, manuscripts,
+archives and University records.  The SCRC collects, preserves, and
+makes accessible primary resources and rare or unique materials, to
+stimulate, enrich, and support research, teaching, learning, and
+administration at Temple University.  SCRC makes these resources
+available to a broad constituency as part of the University's engagement
+with the larger community of scholars and independent researchers.""",
+            'include_file': 'TempleUniversity.html',
+        },
+        {
             'tag': 'rosenbach',
-            'name': 'Rosenbach of the Free Library of Philadelphia',
+            'name': 'Free Library of Philadelphia, The Rosenbach',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Rosenbach seeks to foster inquiry, learning and creative thought by
@@ -1131,6 +1161,48 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'brynmawr-bphil': {
+        'repository': {
+            'tag': 'brynmawr'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'udel-bphil': {
+        'repository': {
+            'tag': 'udel'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'temple-bphil': {
+        'repository': {
+            'tag': 'temple'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'rosenbach-bphil': {
         'repository': {
             'tag': 'rosenbach'
@@ -1148,6 +1220,20 @@ PREP_CONFIGS = {
     'chf-bphil': {
         'repository': {
             'tag': 'chf'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'lehigh-bphil': {
+        'repository': {
+            'tag': 'lehigh'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
