@@ -79,16 +79,28 @@ def setup_logger(logger):
     # logger = logging.getLogger(__name__)
     logging.debug("We're debugging!")
 
-def update_online_statuses():
-    for doc in opfunc.queryset_iterator(Document.objects.all()):
-        if doc.is_online:
-            pass
-        else:
-            if doc.is_live():
-                doc.is_online = True
-                doc.save()
+def update_online(doc):
+    if doc.is_online:
+        pass
+    else:
+        if doc.is_live():
+            doc.is_online = True
+            doc.save()
         logging.info("Is document online? %-15s %-20s %s" % (
             doc.repository.tag, doc.base_dir, str(doc.is_online)))
+
+
+def update_online_statuses():
+    for doc in opfunc.queryset_iterator(Document.objects.all()):
+        update_online(doc)
+        # if doc.is_online:
+        #     pass
+        # else:
+        #     if doc.is_live():
+        #         doc.is_online = True
+        #         doc.save()
+        # logging.info("Is document online? %-15s %-20s %s" % (
+        #     doc.repository.tag, doc.base_dir, str(doc.is_online)))
 
 def is_makeable(page, opts):
     make_page = False
@@ -102,6 +114,7 @@ def is_makeable(page, opts):
 
 def make_browse_html(docid, opts):
     doc = Document.objects.get(pk=docid)
+    update_online(doc)
     repo_tag = doc.repository.tag
     repo_wrapper = get_repo_wrapper(repo_tag)
     page = Browse(document=doc, repository_wrapper=repo_wrapper,
