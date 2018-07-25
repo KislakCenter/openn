@@ -822,6 +822,28 @@ discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
         },
         {
+            'tag': 'pma',
+            'name': 'Philadelphia Museum of Art',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Philadelphia Museum of Art houses a world-renowned collection in a
+landmark building. Highlights of the collection include: the largest and
+most importnat collection of works by Marcel Duchamp; the greatest
+collection of sculpture by Constantin Brancusi outside Europe. The
+finest public collection of Auguste Rodin's sculpture in the United
+States; superb Impressionist and Post-Impressionist paintings by Edouard
+Manet, Claude Monet, Pierre-Auguste Renoir, Camille Pissarro and Edgar
+Degas; exceptional American painting, sculpture, furniture, silver, and
+ceramics that reflect Philadelphia's central role in American history;
+and extraordinary "period rooms" and architectural ensembles from around
+the world.  The museum's landmark building, opened in 1928 at the
+western end of Benjamin Franklin Parkway. The other buildings that make
+up its campus include the Perelman Building, the Rodin Museum, and the
+two great eighteenth-century houses in Fairmount Park, Mount Pleasant
+and Cedar Grove.""",
+            'include_file': 'PhiladelphiaMuseumOfArt.html',
+        },
+        {
             'tag': 'udel',
             'name': 'University of Delaware Library',
             'metadata_type': 'TEI',
@@ -1200,6 +1222,20 @@ PREP_CONFIGS = {
     'temple-bphil': {
         'repository': {
             'tag': 'temple'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'pma-bphil': {
+        'repository': {
+            'tag': 'pma'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
