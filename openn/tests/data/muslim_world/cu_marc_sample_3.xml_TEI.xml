@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Description of MS Or 355: Kitāb nafīs yafṣuḥu fīhi ʻan al-lughah
+          al-Turkīyah.</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>The University of Pennsylvania Libraries</publisher>
+        <availability>
+          <licence target="http://creativecommons.org/licenses/by/4.0/legalcode"> This description
+            is ©2018 University of Pennsylvania Libraries. It is licensed under a Creative Commons
+            Attribution License version 4.0 (CC-BY-4.0
+            https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of
+            use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. </licence>
+          <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All referenced images
+            and their content are free of known copyright restrictions and in the public domain. See
+            the Creative Commons Public Domain Mark page for usage details,
+            http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+        </availability>
+      </publicationStmt>
+      <notesStmt>
+        <note>Manuscript codex.</note>
+        <note>Title from opening page (f. 1r) and introduction (f. 2r).</note>
+        <note>Includes catchwords.</note>
+        <note>Watermarks are a double cross.</note>
+        <note>Shelfmark: MS Or 355</note>
+      </notesStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <settlement>Philadelphia</settlement>
+            <institution/>
+            <repository/>
+            <idno type="call-number">MS Or 355</idno>
+            <altIdentifier type="bibid">
+              <idno>ocm00000NEW </idno>
+            </altIdentifier>
+          </msIdentifier>
+          <msContents>
+            <summary>Turkish grammar explained in Arabic, covering the imperative (al-ʼamr),
+              negative imperative (al-nahī), simple past and past perfect (al-māḍī), present
+              tense (muḍāriʿ al-misnad), and verbal nouns (ism al-fāʿil), before proceeding to
+              the construction of simple sentences and additional suffixes..</summary>
+            <textLang mainLang="ara" otherLangs="tur">Arabic and Turkish</textLang>
+            <msItem>
+              <title>Kitāb nafīs yafṣuḥu fīhi ʻan al-lughah al-Turkīyah.</title>
+              <respStmt>
+                <resp>former owner</resp>
+                <persName>Smith, David Eugene, 1860-1944</persName>
+              </respStmt>
+            </msItem>
+          </msContents>
+          <physDesc>
+            <objectDesc>
+              <supportDesc material="mixed">
+                <support>
+                  <p>laid paper with watermarks</p>
+                </support>
+                <extent>58 leaves: 166 x 121 (130 x 70) mm bound to 165 x 134 mm</extent>
+              </supportDesc>
+              <layoutDesc>
+                <layout>12 lines per page.</layout>
+              </layoutDesc>
+            </objectDesc>
+            <scriptDesc>
+              <scriptNote>Naskh.</scriptNote>
+            </scriptDesc>
+          </physDesc>
+          <history>
+            <origin/>
+          </history>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <textClass>
+        <keywords n="subjects">
+          <term>Turkish language--Grammar</term>
+          <term>Turkish language--Grammar, Comparative--Arabic</term>
+          <term>Manuscripts, Persian--New York (State)--New York</term>
+        </keywords>
+      </textClass>
+    </profileDesc>
+  </teiHeader>
+  <facsimile>
+    <graphic url=""/>
+  </facsimile>
+</TEI>

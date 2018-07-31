@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Description of MS Or 66 - FOLIO/FLAT: Majmūʻah.</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>The University of Pennsylvania Libraries</publisher>
+        <availability>
+          <licence target="http://creativecommons.org/licenses/by/4.0/legalcode"> This description
+            is ©2018 University of Pennsylvania Libraries. It is licensed under a Creative Commons
+            Attribution License version 4.0 (CC-BY-4.0
+            https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of
+            use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. </licence>
+          <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All referenced images
+            and their content are free of known copyright restrictions and in the public domain. See
+            the Creative Commons Public Domain Mark page for usage details,
+            http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+        </availability>
+      </publicationStmt>
+      <notesStmt>
+        <note>Manuscript codex.</note>
+        <note>Title supplied by cataloger.</note>
+        <note>Support: Non-European laid paper.</note>
+        <note>Shelfmark: MS Or 66</note>
+        <note>Accompanying material: Contains a tipped-in note between following 30v-31r, dated
+          1318/1900-01, with the seal of a certain ʿAlī-Rizā Khān.</note>
+      </notesStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <settlement>Philadelphia</settlement>
+            <institution/>
+            <repository/>
+            <idno type="call-number">MS Or 66 - FOLIO/FLAT</idno>
+            <altIdentifier type="bibid">
+              <idno>ocm00000NEW </idno>
+            </altIdentifier>
+          </msIdentifier>
+          <msContents>
+            <summary>Anthology of classical and contemporary Persian poetry containing the work of
+              at least three dozen poets. The frequency of the nisba Isfahānī suggests production
+              in that city. Arranged alphabetically by rhyme syllable, the text is in two parts: the
+              first (following 1r-66r), missing its initial folios, begins amidst poems ending in
+              the letter "be"; the second (ff. 67v-161v), complete from "alif" to "ye", consists of
+              ghazals.</summary>
+            <textLang>Persian</textLang>
+            <msItem>
+              <title>Majmūʻah.</title>
+              <respStmt>
+                <resp>former owner</resp>
+                <persName>Smith, David Eugene, 1860-1944</persName>
+              </respStmt>
+            </msItem>
+          </msContents>
+          <physDesc>
+            <objectDesc>
+              <supportDesc material="mixed">
+                <support>
+                  <p>paper</p>
+                </support>
+                <extent>161 leaves: 299 x 194 (280 x 175) mm bound to 295 x 203 mm</extent>
+              </supportDesc>
+              <layoutDesc>
+                <layout>15 lines per page in two columns with 32 marginal lines across three
+                  sides.</layout>
+              </layoutDesc>
+            </objectDesc>
+            <scriptDesc>
+              <scriptNote>Shikastah.</scriptNote>
+            </scriptDesc>
+          </physDesc>
+          <history>
+            <origin>
+              <p>Muḥarram 1189 AH.</p>
+            </origin>
+            <provenance>Gift of David Eugene Smith, 1931-1934.</provenance>
+          </history>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <textClass>
+        <keywords n="subjects">
+          <term>Persian poetry</term>
+          <term>Manuscripts, Persian--New York (State)--New York</term>
+        </keywords>
+      </textClass>
+    </profileDesc>
+  </teiHeader>
+  <facsimile>
+    <graphic url=""/>
+  </facsimile>
+</TEI>

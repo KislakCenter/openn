@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Description of MS Or 261: Dalāʼil al-khayrāt /</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>The University of Pennsylvania Libraries</publisher>
+        <availability>
+          <licence target="http://creativecommons.org/licenses/by/4.0/legalcode"> This description
+            is ©2018 University of Pennsylvania Libraries. It is licensed under a Creative Commons
+            Attribution License version 4.0 (CC-BY-4.0
+            https://creativecommons.org/licenses/by/4.0/legalcode. For a description of the terms of
+            use see the Creative Commons Deed https://creativecommons.org/licenses/by/4.0/. </licence>
+          <licence target="http://creativecommons.org/publicdomain/mark/1.0/"> All referenced images
+            and their content are free of known copyright restrictions and in the public domain. See
+            the Creative Commons Public Domain Mark page for usage details,
+            http://creativecommons.org/publicdomain/mark/1.0/. </licence>
+        </availability>
+      </publicationStmt>
+      <notesStmt>
+        <note>Manuscript codex.</note>
+        <note>Title from introduction (f. 5r).</note>
+        <note>Shelfmark: MS Or 261.</note>
+        <note>Written in brown-black, red, green, and yellow ink.</note>
+      </notesStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <settlement>Philadelphia</settlement>
+            <institution/>
+            <repository/>
+            <idno type="call-number">MS Or 261</idno>
+            <altIdentifier type="bibid">
+              <idno>ocm00000NEW </idno>
+            </altIdentifier>
+          </msIdentifier>
+          <msContents>
+            <summary>An illuminated copy of al-Jazūlī's classic work on the Prophet Muḥammad
+              which has been partially vocalized. The flyleaves are inscribed in what appear to be
+              two hands. The opening leaves include a Qur'anic passage, 18:107-110 (f.1r), followed
+              by the Beautiful Names of God (al-ʿasmāʿ al-husnā) (following 1v-2r). The closing
+              leaves contain a supplication (duʿāʼ) on the repeated pattern of "yā [fāʿil] ghayr
+              [mafʿūl]" (following 268v-269r) and a quatrain (f. 270r).</summary>
+            <textLang>Arabic</textLang>
+            <msItem>
+              <title>Dalāʼil al-khayrāt /</title>
+              <author>Jazūlī, Muḥammad ibn Sulaymān, -1465</author>
+              <respStmt>
+                <resp>former owner</resp>
+                <persName>Smith, David Eugene, 1860-1944</persName>
+              </respStmt>
+            </msItem>
+          </msContents>
+          <physDesc>
+            <objectDesc>
+              <supportDesc material="mixed">
+                <support>
+                  <p>laid paper</p>
+                </support>
+                <extent>270 leaves: 193 x 158 (135 x 105) mm bound to 195 x 160 mm</extent>
+              </supportDesc>
+              <layoutDesc>
+                <layout>5 to 9 lines per page.</layout>
+              </layoutDesc>
+            </objectDesc>
+            <scriptDesc>
+              <scriptNote>Maghribī.</scriptNote>
+            </scriptDesc>
+          </physDesc>
+          <history>
+            <origin/>
+          </history>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <textClass>
+        <keywords n="subjects">
+          <term>Islam--Prayers and devotions--Early works to 1800</term>
+          <term>Manuscripts, Arabic--New York (State)--New York</term>
+        </keywords>
+      </textClass>
+    </profileDesc>
+  </teiHeader>
+  <facsimile>
+    <graphic url=""/>
+  </facsimile>
+</TEI>
