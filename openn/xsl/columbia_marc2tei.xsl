@@ -28,9 +28,9 @@
             <xd:p> *Pagination; treated as *Foliation</xd:p>
         </xd:desc>
     </xd:doc>
-    
+
     <xsl:output indent="yes"/>
-    
+
     <xsl:variable name="institution">
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text"
@@ -56,10 +56,16 @@
         </xsl:call-template>
     </xsl:variable>
     <xsl:template match="/">
-        
+
         <TEI xmlns="http://www.tei-c.org/ns/1.0">
             <teiHeader>
                 <fileDesc>
+                  <xsl:comment>
+                    TODO: ? for Mitch/Dot/Will: CU MARC uses 588$a to give description provenance ('Item cataloged from digital facsimile and existing description.'). Should we include that?
+                  </xsl:comment>
+                  <xsl:comment>
+                    TODO: ? for Mitch/Dot: Do we include CU MARC 710$a for "name of agency of production" (AMREMM): "Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)". Is so, where?
+                  </xsl:comment>
                     <titleStmt>
                         <title>
                             <xsl:value-of
@@ -84,8 +90,7 @@
                                 http://creativecommons.org/publicdomain/mark/1.0/. </licence>
                         </availability>
                     </publicationStmt>
-                    
-                    <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
+
                     <xsl:if test="//marc:datafield[@tag='500']">
                         <notesStmt>
                             <xsl:for-each select="//marc:datafield[@tag='500']">
@@ -102,8 +107,7 @@
                             </xsl:for-each>
                         </notesStmt>
                     </xsl:if>
-                    <!-- END DOT MOD -->
-                    
+
                     <sourceDesc>
                         <msDesc>
                             <msIdentifier>
@@ -114,6 +118,9 @@
                                 <repository>
                                     <xsl:value-of select="$repository"/>
                                 </repository>
+                              <xsl:comment>
+                                TODO: Shelfmark pulled from 099$a. CU MARC has 500$a => "Shelfmark: MS Or 355". Is this alw the same value as 099$a?
+                              </xsl:comment>
                                 <idno type="call-number">
                                     <xsl:value-of select="$call_number"/>
                                 </idno>
@@ -135,7 +142,7 @@
                                 <summary>
                                     <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"/>
                                 </summary>
-                                
+
                                 <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
                                     <textLang>
                                         <xsl:if test="//marc:datafield[@tag='041']/marc:subfield[@code='a']">
@@ -159,8 +166,6 @@
                                             <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']" />
                                         </xsl:call-template>
                                     </title>
-                                    <!-- DE: Grab authors from marc 110, 100 and 700 -->
-                                    <!-- DE: marc 110 is a corporate author -->
                                     <xsl:for-each select="//marc:datafield[@tag='110']/marc:subfield[@code='a']">
                                         <author>
                                             <xsl:call-template name="chomp-period">
@@ -168,7 +173,6 @@
                                             </xsl:call-template>
                                         </author>
                                     </xsl:for-each>
-                                    <!-- marc 100: primary author, person -->
                                     <xsl:for-each select="//marc:datafield[@tag='100']">
                                         <author>
                                             <xsl:call-template name="extract-pn">
@@ -176,7 +180,6 @@
                                             </xsl:call-template>
                                         </author>
                                     </xsl:for-each>
-                                    <!-- DE: marc 700's w/o a relator (code='e') are secondary authors -->
                                     <xsl:for-each select="//marc:datafield[@tag='700' and not(child::marc:subfield[@code='e'])]">
                                         <author>
                                             <xsl:call-template name="extract-pn">
@@ -220,7 +223,7 @@
                                         </xsl:choose>
                                     </xsl:for-each>
                                 </msItem>
-                                
+
                                 <xsl:for-each select="//page/tocentry[@name='toc']">
                                     <xsl:variable name="locus" select="./parent::page/@visiblepage"/>
                                     <msItem>
@@ -238,6 +241,9 @@
                                     </msItem>
                                 </xsl:for-each>
                             </msContents>
+                          <xsl:comment>
+                           TODO: Columbia binding in field 563
+                          </xsl:comment>
                             <physDesc>
                                 <xsl:if test="//marc:datafield[@tag='300']">
                                     <xsl:variable name="datafield" select="//marc:datafield[@tag='300']"/>
@@ -287,7 +293,7 @@
                                                 <foliation>
                                                     <xsl:choose>
                                                         <xsl:when test="starts-with(., 'Foliation:')">
-                                                            <xsl:value-of select="normalize-space(substring(.,11))"/>        
+                                                            <xsl:value-of select="normalize-space(substring(.,11))"/>
                                                         </xsl:when>
                                                         <xsl:otherwise>
                                                             <xsl:value-of select="normalize-space(substring(.,12))"/>
@@ -308,11 +314,11 @@
                                                                 <xsl:value-of select="normalize-space(substring(.,12))"/>
                                                             </signatures>
                                                         </p>
-                                                    </xsl:for-each>                                           
+                                                    </xsl:for-each>
                                                 </collation>
                                             </xsl:if>
                                         </supportDesc>
-                                        
+
                                         <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(.,'Layout:')]">
                                             <layoutDesc>
                                                 <layout>
@@ -320,7 +326,7 @@
                                                 </layout>
                                             </layoutDesc>
                                         </xsl:for-each>
-                                        
+
                                     </objectDesc>
                                 </xsl:if>
                                 <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Script:')]">
@@ -349,6 +355,7 @@
                                         </xsl:for-each>
                                     </decoDesc>
                                 </xsl:if>
+
                                 <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Binding:')]">
                                     <bindingDesc>
                                         <binding>
@@ -360,14 +367,16 @@
                                 </xsl:for-each>
                             </physDesc>
                             <history>
+                              <xsl:comment>
+                              TODO: Add Columbia orgin info: coming from field 264
+                              </xsl:comment>
+
                                 <origin>
                                     <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Origin:')]">
                                         <p>
                                             <xsl:value-of select="normalize-space(substring(.,8))"/>
                                         </p>
                                     </xsl:for-each>
-                                    <!-- DOT ADDED AN IF STATEMENT AROUND ORIGDATE, SO IF THERE IS NO ORIGDATE IN THE MARC RECORD ORIGDATE WILL NOT BE CREATED -->
-                                    <!-- DE: just use the marc field -->
                                     <xsl:for-each select="//marc:datafield[@tag='260']/marc:subfield[@code='c']">
                                         <origDate>
                                             <xsl:call-template name="chomp-period">
@@ -379,9 +388,6 @@
                                             </xsl:call-template>
                                         </origDate>
                                     </xsl:for-each>
-                                    <!-- END DOT MOD -->
-                                    
-                                    <!-- DE: Cleaner code for origPlace; add only if present -->
                                     <xsl:for-each select="//marc:datafield[@tag='260']/marc:subfield[@code='a']">
                                         <origPlace>
                                             <xsl:call-template name="clean-up-text">
@@ -389,21 +395,20 @@
                                         </origPlace>
                                     </xsl:for-each>
                                 </origin>
-                                
-                                <!-- DOT ADDED PROVENANCE -->
+                                <xsl:comment>
+                                  TODO: CU MARC uses 541$a for acquistion; Question for Mitch/Dot: Use tei:acquisition or tei:provenance for this? We don't use tei:acquisition in any of our other TEI.
+                                </xsl:comment>
                                 <xsl:for-each select="//marc:datafield[@tag='561']">
                                     <provenance>
                                         <xsl:value-of select="marc:subfield[@code='a']"/>
                                     </provenance>
                                 </xsl:for-each>
-                                <!-- END DOT MOD -->
-                                
+
                             </history>
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-                
-                <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
+
                 <profileDesc>
                     <textClass>
                         <!-- DE: Switching to marc 610 and joining subfields -->
@@ -431,39 +436,24 @@
                         </xsl:if>
                     </textClass>
                 </profileDesc>
-                <!-- DOT MOD ENDS HERE -->
-                
+
             </teiHeader>
             <facsimile>
-                <!--
-                    <xsl:for-each select="//xml[@name='pages']/page">
-                    <surface>
-                    <xsl:attribute name="n">
-                    <xsl:call-template name="clean-up-text">
-                    <xsl:with-param name="some-text">
-                    <xsl:value-of select="./@visiblepage"/>
-                    </xsl:with-param>
-                    </xsl:call-template>
-                    </xsl:attribute>
-                    <graphic url="{concat(./@image, '.tif')}"/>
-                    </surface>
-                    </xsl:for-each>
-                -->
                 <graphic url=""/>
             </facsimile>
         </TEI>
     </xsl:template>
-    
+
     <xsl:template name="clean-up-text">
         <xsl:param name="some-text"/>
         <xsl:value-of select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$',''))" />
     </xsl:template>
-    
+
     <xsl:template name="chomp-period">
         <xsl:param name="string"/>
         <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>
     </xsl:template>
-    
+
     <xsl:template name="join-keywords">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -477,7 +467,7 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+
     <xsl:template name="join-genre">
         <xsl:param name="datafield"/>
         <xsl:call-template name="chomp-period">
@@ -491,7 +481,7 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+
     <!-- Extract personal names, employing the date if present. -->
     <xsl:template name="extract-pn">
         <xsl:param name="datafield"/>
@@ -506,7 +496,7 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-  
+
     <!--  Return true if two or more of the items in $strings match the source. -->
     <xsl:template name="matches-two">
       <xsl:param name="source"/> <!-- 'paper with parchment tags' -->
@@ -520,7 +510,7 @@
       </xsl:variable>
       <xsl:value-of select="count($matches) &gt; 1"/>
     </xsl:template>
-      
+
     <xsl:template name="other-langs">
         <xsl:param name="tags"/>
         <xsl:for-each select="$tags">
