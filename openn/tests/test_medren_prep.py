@@ -29,6 +29,8 @@ class TestMedrenPrep(OPennTestCase):
     # staged_source    = os.path.join(staging_dir, 'mscodex1589')
     template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
     staged_source    = os.path.join(staging_dir, 'mscodex1223')
+    mscodex1223_pih  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_pih.xml')
+    staged_pih       = os.path.join(staged_source, 'pih.xml')
     prep_cfg_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
@@ -41,6 +43,39 @@ class TestMedrenPrep(OPennTestCase):
     complex_pih_xml  = os.path.join(complex_staged, 'pih.xml')
     ljs_prep_config = prep_cfg_factory.create_prep_config('ljs-pih')
     pp               = PrettyPrinter(indent=2)
+    expected_xpaths  = (
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:titleStmt/ns:title',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:publicationStmt/ns:publisher',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:publicationStmt/ns:availability/ns:licence',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:notesStmt/ns:note',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msIdentifier/ns:settlement',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msIdentifier/ns:institution',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msIdentifier/ns:repository',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msIdentifier/ns:idno',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msIdentifier/ns:idno/@type',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msIdentifier/ns:altIdentifier/ns:idno',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msIdentifier/ns:altIdentifier/@type',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msContents/ns:summary',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msContents/ns:textLang',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msContents/ns:msItem/@n',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msContents/ns:msItem/ns:title',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msContents/ns:msItem/ns:author',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msContents/ns:msItem/ns:respStmt/ns:resp',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:msContents/ns:msItem/ns:respStmt/ns:persName',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:physDesc/ns:objectDesc/ns:supportDesc/@material',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:physDesc/ns:objectDesc/ns:supportDesc/ns:support/ns:p',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:physDesc/ns:objectDesc/ns:supportDesc/ns:extent',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:physDesc/ns:objectDesc/ns:layoutDesc/ns:layout',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:physDesc/ns:scriptDesc/ns:scriptNote',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:physDesc/ns:bindingDesc/ns:binding/ns:p',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:history/ns:origin/ns:p',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:history/ns:origin/ns:origDate',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:history/ns:origin/ns:origPlace',
+        '/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:history/ns:provenance',
+        '/ns:TEI/ns:teiHeader/ns:profileDesc/ns:textClass/ns:keywords/@n',
+        '/ns:TEI/ns:teiHeader/ns:profileDesc/ns:textClass/ns:keywords/ns:term',
+        '/ns:TEI/ns:facsimile/ns:graphic')
 
     def setUp(self):
         if not os.path.exists(self.staging_dir):
@@ -113,6 +148,21 @@ class TestMedrenPrep(OPennTestCase):
         self.assertNotHasFile(files, 'extra', 'data/ljs472_wk1_body0065b.tif')
         self.assertNotHasFile(files, 'document', 'data/ljs472_wk1_back0002a.tif')
         self.assertNotHasFile(files, 'document', 'data/ljs472_wk1_back0002a.tif')
+
+    def test_tei_generation(self):
+        self.stage_template()
+        doc_count = Document.objects.count()
+        repo_wrapper = self.pennpih_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'mscodex1223')
+        prep = MedrenPrep(source_dir=self.staged_source, document=doc,
+                          prep_config = self.pennpih_prep_config)
+        shutil.copyfile(self.mscodex1223_pih, self.staged_pih)
+        xml = prep.gen_partial_tei()
+        root = self.assertXmlDocument(xml)
+        # self.assertXpathValues(root, './sub/text()', ('a', 'b', 'c'))
+        self.assertXpathsExist(root, self.expected_xpaths)
+        self.assertXpathValues(root, '//ns:titleStmt/ns:title/text()', ('Description of University of Pennsylvania Ms. Codex 1223: Fragments of the Digests of Justinian, Book 37, Titles 7-9',))
+
 
 if __name__ == '__main__':
     unittest.main()

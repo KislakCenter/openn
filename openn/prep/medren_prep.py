@@ -144,7 +144,10 @@ class MedrenPrep(RepositoryPrep):
 
     def check_valid_xml(self, pih_xml):
         tree = etree.parse(open(pih_xml))
-        r = tree.xpath("/page/response/result/doc/arr[@name='call_number_field']/str")
+        # r = tree.xpath("/page/response/result/doc/arr[@name='call_number_field']/str")
+        # /page/result[1]/xml[1]/*[namespace-uri()='http://www.loc.gov/MARC21/slim' and local-name()='record'][1]/*[namespace-uri()='http://www.loc.gov/MARC21/slim' and local-name()='datafield'][7]/*[namespace-uri()='http://www.loc.gov/MARC21/slim' and local-name()='subfield'][1]
+        ns = { 'marc': 'http://www.loc.gov/MARC21/slim' }
+        r = tree.xpath("/page/result/xml/marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']", namespaces=ns)
 
         if len(r) < 1:
             raise OPennException('No call number found in PIH XML: %s' % pih_xml)
@@ -167,7 +170,7 @@ class MedrenPrep(RepositoryPrep):
     def get_xml(self, bibid):
         url = self.full_url(bibid)
         status = self.check_url(bibid)
-        if status != 200:
+        if status not in (200,303):
             raise OPennException('Got status %d calling: %s' % (status, url))
         return urllib2.urlopen(url).read()
 
