@@ -30,6 +30,7 @@ class TestMedrenPrep(OPennTestCase):
     template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
     staged_source    = os.path.join(staging_dir, 'mscodex1223')
     mscodex1223_pih  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_pih.xml')
+    mscodex1223_marmite  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_marmite.xml')
     staged_pih       = os.path.join(staged_source, 'pih.xml')
     prep_cfg_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
@@ -76,6 +77,16 @@ class TestMedrenPrep(OPennTestCase):
         '/ns:TEI/ns:teiHeader/ns:profileDesc/ns:textClass/ns:keywords/@n',
         '/ns:TEI/ns:teiHeader/ns:profileDesc/ns:textClass/ns:keywords/ns:term',
         '/ns:TEI/ns:facsimile/ns:graphic')
+
+    expected_titles = (
+        'Fragments of the Digests of Justinian, Book 37, Titles 7-9',
+        'De dotis collatione (37.7.1.4), f. 1r',
+        'De ventre in possessionem mittendo et curatore eius (37.9.1), f. 1v',
+        'De coniungendis cum emancipato liberis eius (37.8.1.10), f. 2r')
+
+    expected_deconotes = (
+        'Initials (1-line to 3-line) alternating in red and blue ink, paragraph marks in red and blue ink, six-line Title 8 initial in red and blue ink.',
+        'Puzzle initial, Initial S, f. 1v')
 
     def setUp(self):
         if not os.path.exists(self.staging_dir):
@@ -156,13 +167,16 @@ class TestMedrenPrep(OPennTestCase):
         doc = PrepSetup().prep_document(repo_wrapper, 'mscodex1223')
         prep = MedrenPrep(source_dir=self.staged_source, document=doc,
                           prep_config = self.pennpih_prep_config)
-        shutil.copyfile(self.mscodex1223_pih, self.staged_pih)
+        shutil.copyfile(self.mscodex1223_marmite, self.staged_pih)
         xml = prep.gen_partial_tei()
         root = self.assertXmlDocument(xml)
         # self.assertXpathValues(root, './sub/text()', ('a', 'b', 'c'))
         self.assertXpathsExist(root, self.expected_xpaths)
         self.assertXpathValues(root, '//ns:titleStmt/ns:title/text()', ('Description of University of Pennsylvania Ms. Codex 1223: Fragments of the Digests of Justinian, Book 37, Titles 7-9',))
-
+        self.assertXpathValues(root, '//ns:msContents/ns:msItem/ns:title/text()', self.expected_titles)
+        self.assertXpathValues(root, '//ns:msContents/ns:msItem/@n', ('1r', '1v', '2r'))
+        self.assertXpathValues(root, '//ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote/text()', self.expected_deconotes)
+        self.assertXpathValues(root, '//ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote/@n', ('1v',))
 
 if __name__ == '__main__':
     unittest.main()
