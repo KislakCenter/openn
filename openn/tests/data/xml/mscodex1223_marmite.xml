@@ -162,6 +162,12 @@
         <marc:library>KislakCntr</marc:library>
         <marc:location>scmss</marc:location>
       </marc:holding>
+      <marc:holding>
+        <marc:holding_id>22315803310003681x</marc:holding_id>
+        <marc:call_number>Ms. Codex 1223</marc:call_number>
+        <marc:library>KislakCntr</marc:library>
+        <marc:location>scmss</marc:location>
+      </marc:holding>
     </marc:holdings>
   </marc:record>
     </xml>

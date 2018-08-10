@@ -172,7 +172,7 @@ class TestMedrenPrep(OPennTestCase):
         root = self.assertXmlDocument(xml)
         # self.assertXpathValues(root, './sub/text()', ('a', 'b', 'c'))
         self.assertXpathsExist(root, self.expected_xpaths)
-        self.assertXpathValues(root, '//ns:titleStmt/ns:title/text()', ('Description of University of Pennsylvania Ms. Codex 1223: Fragments of the Digests of Justinian, Book 37, Titles 7-9',))
+        self.assertXpathValues(root, '//ns:titleStmt/ns:title/text()', ('Description of University of Pennsylvania Oversize Ms. Codex 1223: Fragments of the Digests of Justinian, Book 37, Titles 7-9',))
         self.assertXpathValues(root, '//ns:msContents/ns:msItem/ns:title/text()', self.expected_titles)
         self.assertXpathValues(root, '//ns:msContents/ns:msItem/@n', ('1r', '1v', '2r'))
         self.assertXpathValues(root, '//ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote/text()', self.expected_deconotes)

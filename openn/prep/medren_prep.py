@@ -99,6 +99,23 @@ class MedrenPrep(RepositoryPrep):
     def url_path(self):
         return self.pih_path
 
+    # TODO: Add handling for holdingid.txt and holding_id
+
+    def holdingid_filename(self):
+        if not os.path.exists(self.source_dir):
+            raise OPennException("Could not find source_dir: %s" % self.source_dir)
+        holdingid_txt = os.path.join(self.source_dir, 'holdingid.txt')
+        if not os.path.exists(holdingid_txt):
+            return None
+        return holdingid_txt
+
+    def get_holdingid(self):
+        holdingid_file = self.holdingid_filename()
+        if holdingid_file is None:
+            return None
+        holdingid = open(holdingid_file).read().strip()
+        return holdingid
+
     def bibid_filename(self):
         if not os.path.exists(self.source_dir):
             raise OPennException("Could not find source_dir: %s" % self.source_dir)
@@ -279,10 +296,14 @@ class MedrenPrep(RepositoryPrep):
         return outfile
 
     def gen_partial_tei(self):
-        # xsl_command = os.path.join(os.path.dirname(__file__), 'op-gen-tei')
-        bibid = self.get_bibid()
-        xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
+        xsl_command = ['op-gen-tei']
+
+        holdingid = self.get_holdingid()
+        if holdingid is not None:
+            xsl_command.append("-p HOLDING_ID=%s" % (str(holdingid),))
+        xsl_command.append(self.pih_filename)
+        xsl_command.append(self.xsl)
+        p = subprocess.Popen(xsl_command,
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()

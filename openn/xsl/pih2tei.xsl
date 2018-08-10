@@ -30,7 +30,9 @@
     </xd:doc>
     
     <xsl:output indent="yes"/>
-    
+  
+  <xsl:param name="HOLDING_ID"/>
+  
     <xsl:variable name="institution">
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text"
@@ -43,11 +45,27 @@
                 select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"/>
         </xsl:call-template>
     </xsl:variable>
+  
     <xsl:variable name="call_number">
-        <xsl:call-template name="clean-up-text">
-            <xsl:with-param name="some-text"
-                select="//marc:datafield[@tag='099']/marc:subfield[@code='a']"/>
-        </xsl:call-template>
+        <xsl:choose>
+          <xsl:when test="$HOLDING_ID">
+            <xsl:if test="not(//marc:holding_id/text() = $HOLDING_ID)">
+              <xsl:message terminate="yes">
+ERROR: No entry found for holding ID: '<xsl:value-of select="$HOLDING_ID"/>'.
+              </xsl:message>
+            </xsl:if>
+            <xsl:value-of select="//marc:holding_id[text() = $HOLDING_ID]/parent::marc:holding/marc:call_number"/>
+          </xsl:when>
+          <xsl:when test="count(//marc:holding) &gt; 1">
+            <xsl:message terminate="yes">
+ERROR: Record has more than one holding; please provide HOLDING_ID:
+    <xsl:copy-of select="//marc:holdings"/>
+            </xsl:message>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="//marc:holding_id[1]/parent::marc:holding/marc:call_number"/>
+          </xsl:otherwise>
+        </xsl:choose>
     </xsl:variable>
     <xsl:variable name="ms_title">
         <xsl:call-template name="clean-up-text">
