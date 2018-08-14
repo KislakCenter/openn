@@ -242,7 +242,7 @@ PREPARATION_METHODS = [
         'description': "Uses metadata scraped from Penn in Hand to build metadata for the object. Requires bibid.txt file containing the object's BibID",
         'name': 'Penn in Hand Prep',
         'package_validation': {
-            'valid_names': ['*.tif', 'bibid.txt'],
+            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.tif', 'bibid.txt'],
         },

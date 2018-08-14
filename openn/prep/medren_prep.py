@@ -161,9 +161,8 @@ class MedrenPrep(RepositoryPrep):
 
     def check_valid_xml(self, pih_xml):
         tree = etree.parse(open(pih_xml))
-        # r = tree.xpath("/page/response/result/doc/arr[@name='call_number_field']/str")
-        # /page/result[1]/xml[1]/*[namespace-uri()='http://www.loc.gov/MARC21/slim' and local-name()='record'][1]/*[namespace-uri()='http://www.loc.gov/MARC21/slim' and local-name()='datafield'][7]/*[namespace-uri()='http://www.loc.gov/MARC21/slim' and local-name()='subfield'][1]
         ns = { 'marc': 'http://www.loc.gov/MARC21/slim' }
+        # TODO handle the holding ID
         r = tree.xpath("/page/result/xml/marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']", namespaces=ns)
 
         if len(r) < 1:
@@ -303,8 +302,7 @@ class MedrenPrep(RepositoryPrep):
             xsl_command.append("-p HOLDING_ID=%s" % (str(holdingid),))
         xsl_command.append(self.pih_filename)
         xsl_command.append(self.xsl)
-        p = subprocess.Popen(xsl_command,
-                stderr=subprocess.PIPE,
+        p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()
         if p.returncode != 0:
@@ -313,7 +311,7 @@ class MedrenPrep(RepositoryPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
-        xsl_command = 'op-gen-tei'
+        xsl_command = ['op-gen-tei']
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid
         if bibid is None:
@@ -321,9 +319,14 @@ class MedrenPrep(RepositoryPrep):
         if not self.NEW_BIBID_RE.match(bibid):
             bibid = '99%s3503681' % (str(bibid),)
         self.write_xml(bibid,self.pih_filename)
-        p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
-                stderr=subprocess.PIPE,
-                stdout=subprocess.PIPE)
+        for key in kwargs:
+            key_value = '%s="%s"' % (key, kwargs[key])
+            xsl_command.append(key_value)
+        xsl_command.append(self.pih_filename)
+        xsl_command.append(self.xsl)
+
+        p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE)
         out, err = p.communicate()
         if p.returncode != 0:
             raise OPennException("TEI Generation failed: %s" % err)
@@ -384,4 +387,5 @@ class MedrenPrep(RepositoryPrep):
         # files to cleanup
         self.add_removal(self.pih_filename)
         self.add_removal(self.bibid_filename())
+        self.add_removal(self.holdingid_filename())
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
