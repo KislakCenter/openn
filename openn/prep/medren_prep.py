@@ -110,11 +110,16 @@ class MedrenPrep(RepositoryPrep):
         return holdingid_txt
 
     def get_holdingid(self):
-        holdingid_file = self.holdingid_filename()
-        if holdingid_file is None:
-            return None
-        holdingid = open(holdingid_file).read().strip()
-        return holdingid
+        try:
+            self.holding_id
+        except NameError:
+            holdingid_file = self.holdingid_filename()
+            if holdingid_file is None:
+                self.holding_id = None
+            else:
+                self.holding_id = open(holdingid_file).read().strip()
+
+        return self.holding_id
 
     def bibid_filename(self):
         if not os.path.exists(self.source_dir):
