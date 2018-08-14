@@ -112,7 +112,7 @@ class MedrenPrep(RepositoryPrep):
     def get_holdingid(self):
         try:
             self.holding_id
-        except NameError:
+        except AttributeError:
             holdingid_file = self.holdingid_filename()
             if holdingid_file is None:
                 self.holding_id = None
@@ -168,12 +168,28 @@ class MedrenPrep(RepositoryPrep):
         tree = etree.parse(open(pih_xml))
         ns = { 'marc': 'http://www.loc.gov/MARC21/slim' }
         # TODO handle the holding ID
-        r = tree.xpath("/page/result/xml/marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']", namespaces=ns)
+        if self.get_holdingid() is None:
+            xpath = "//marc:holding/marc:call_number/text()"
+            call_numbers = tree.xpath(xpath, namespaces=ns)
+            if len(call_numbers) > 1:
+                raise OPennException('Please provide holding ID; more than one'
+                        ' call number found in PIH XML: (%s)' % pih_xml)
+            elif len(call_numbers) < 1:
+                raise OPennException('No call number found in holdings info in'
+                        ' PIH XML: (%s)' % pih_xml)
+            else:
+                call_no = call_numbers[0]
+        else:
+            holdingid = self.get_holdingid()
+            xpath = "//marc:holding_id[text() = '%s']/parent::marc:holding/marc:call_number/text()" % holdingid
+            call_numbers = tree.xpath(xpath, namespaces=ns)
+            if len(call_numbers) != 1:
+                raise OPennException('Expected 1 call number for holding ID'
+                        ' %s; found %d in PIH XML %s' % (self.get_holdingid(),
+                            len(call_numbers), pih_xml))
+            else:
+                call_no = call_numbers[0]
 
-        if len(r) < 1:
-            raise OPennException('No call number found in PIH XML: %s' % pih_xml)
-
-        call_no = r[0].text
         return call_no
 
     def full_url(self, bibid):

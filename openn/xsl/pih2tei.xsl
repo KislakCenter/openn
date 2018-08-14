@@ -63,7 +63,7 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
             </xsl:message>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="//marc:holding_id[1]/parent::marc:holding/marc:call_number"/>
+            <xsl:value-of select="//marc:holding[1]/marc:call_number/text()"/>
           </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>

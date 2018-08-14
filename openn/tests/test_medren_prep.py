@@ -30,8 +30,10 @@ class TestMedrenPrep(OPennTestCase):
     template_dir     = os.path.join(os.path.dirname(__file__), 'data/mscodex1223')
     staged_source    = os.path.join(staging_dir, 'mscodex1223')
     mscodex1223_pih  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_pih.xml')
+    bad_holdingid_txt = os.path.join(os.path.dirname(__file__), 'data/xml/bad_holdingid.txt')
     mscodex1223_marmite  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_marmite.xml')
     staged_pih       = os.path.join(staged_source, 'pih.xml')
+    staged_holdingid = os.path.join(staged_source, 'holdingid.txt')
     prep_cfg_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
         prep_methods=settings.PREPARATION_METHODS,
@@ -125,9 +127,21 @@ class TestMedrenPrep(OPennTestCase):
         doc = PrepSetup().prep_document(repo_wrapper, 'mscodex1223')
         prep = MedrenPrep(source_dir=self.staged_source, document=doc,
                           prep_config = self.pennpih_prep_config)
-        # run
+
         prep.prep_dir()
 
+    def test_bad_holdingid(self):
+        # setup
+        self.stage_template()
+        shutil.copyfile(self.bad_holdingid_txt, self.staged_holdingid)
+        doc_count = Document.objects.count()
+        repo_wrapper = self.pennpih_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'mscodex1223')
+        prep = MedrenPrep(source_dir=self.staged_source, document=doc,
+                          prep_config = self.pennpih_prep_config)
+        # run
+        with self.assertRaisesRegexp(OPennException, r'999999999999999999'):
+            prep.prep_dir()
     # ljs472_wk1_back0002a.tif    # not used by PIH
     # ljs472_wk1_back0002b.tif    # not used by PIH
     # ljs472_wk1_body0065a.tif    # extra file; listed in PIH
