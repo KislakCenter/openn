@@ -62,9 +62,11 @@
                 <fileDesc>
                   <xsl:comment>
                     TODO: ? for Mitch/Dot/Will: CU MARC uses 588$a to give description provenance ('Item cataloged from digital facsimile and existing description.'). Should we include that?
+                    ANSWER: NO
                   </xsl:comment>
                   <xsl:comment>
                     TODO: ? for Mitch/Dot: Do we include CU MARC 710$a for "name of agency of production" (AMREMM): "Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)". Is so, where?
+                    ANSWER: NO
                   </xsl:comment>
                     <titleStmt>
                         <title>
@@ -123,6 +125,7 @@
                                 </repository>
                               <xsl:comment>
                                 TODO: Shelfmark pulled from 099$a. CU MARC has 500$a => "Shelfmark: MS Or 355". Is this alw the same value as 099$a?
+                                ANSWER: Value in  099$a and 500$a Shelfmark: will always be the same.
                               </xsl:comment>
                                 <idno type="call-number">
                                     <xsl:value-of select="$call_number"/>
@@ -255,6 +258,7 @@
                             </msContents>
                           <xsl:comment>
                            TODO: Columbia binding in field 563
+                           ANSWER: YES
                           </xsl:comment>
                             <physDesc>
                                 <xsl:if test="//marc:datafield[@tag='300']">
@@ -381,6 +385,7 @@
                             <history>
                               <xsl:comment>
                               TODO: Add Columbia orgin info: coming from field 264
+                              ANSWER: NO
                               </xsl:comment>
 
                                 <origin>
@@ -409,6 +414,7 @@
                                 </origin>
                                 <xsl:comment>
                                   TODO: CU MARC uses 541$a for acquistion; Question for Mitch/Dot: Use tei:acquisition or tei:provenance for this? We don't use tei:acquisition in any of our other TEI.
+                                  ANSWER: YES ADD TO PROVENANCE ONLY
                                 </xsl:comment>
                                 <xsl:for-each select="//marc:datafield[@tag='561']">
                                     <provenance>
