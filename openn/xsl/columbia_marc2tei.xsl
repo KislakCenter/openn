@@ -73,6 +73,9 @@
                             />
                         </title>
                     </titleStmt>
+                    <xsl:comment>
+                        TODO: Change publisher, licence information for MMW Columnbia, FLP, etc.
+                    </xsl:comment>
                     <publicationStmt>
                         <publisher>The University of Pennsylvania Libraries</publisher>
                         <availability>
@@ -161,6 +164,15 @@
                                     </textLang>
                                 </xsl:if>
                                 <msItem>
+                                    <xsl:comment>
+                                        TODO: Need to pull title, author, others(??) values in vernacualar from 880 fields.
+                                    </xsl:comment>
+                                    <xsl:comment>
+                                        TODO: ? for Peter: What fields should we pull author from and that will have alternate representations in 880 fields. For Penn medieval MSS we pull author from 110$a, 100$adbcd, 700$abcd
+                                    </xsl:comment>
+                                    <xsl:comment>
+                                        TODO: ? for Peter: What other roles will CU MARC records have: scribe, artist, etc.? which will have corresponding 880s. For Penn medieval MMS we pull values from 700$abcd where the relator term 700$e is present.
+                                    </xsl:comment>
                                     <title>
                                         <xsl:call-template name="clean-up-text">
                                             <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']" />
