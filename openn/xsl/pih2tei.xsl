@@ -296,7 +296,7 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
                                                 <extent>
                                                     <xsl:call-template name="chomp-period">
                                                         <xsl:with-param name="string">
-                                                            <xsl:value-of select="normalize-space(concat($datafield/marc:subfield[@code='a'], ' ', $datafield/marc:subfield[@code='c']))"/>
+                                                          <xsl:value-of select="normalize-space(concat($datafield/marc:subfield[@code='a'], ' ', $datafield/marc:subfield[@code='f'], ' ', $datafield/marc:subfield[@code='c']))"/>
                                                         </xsl:with-param>
                                                     </xsl:call-template>
                                                 </extent>

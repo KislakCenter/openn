@@ -32,6 +32,7 @@ class TestMedrenPrep(OPennTestCase):
     mscodex1223_pih  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_pih.xml')
     bad_holdingid_txt = os.path.join(os.path.dirname(__file__), 'data/xml/bad_holdingid.txt')
     mscodex1223_marmite  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_marmite.xml')
+    msoversize8_marmite  = os.path.join(os.path.dirname(__file__), 'data/xml/msoversize8_marmite.xml')
     staged_pih       = os.path.join(staged_source, 'pih.xml')
     staged_holdingid = os.path.join(staged_source, 'holdingid.txt')
     prep_cfg_factory = PrepConfigFactory(
@@ -184,13 +185,25 @@ class TestMedrenPrep(OPennTestCase):
         shutil.copyfile(self.mscodex1223_marmite, self.staged_pih)
         xml = prep.gen_partial_tei()
         root = self.assertXmlDocument(xml)
-        # self.assertXpathValues(root, './sub/text()', ('a', 'b', 'c'))
         self.assertXpathsExist(root, self.expected_xpaths)
         self.assertXpathValues(root, '//ns:titleStmt/ns:title/text()', ('Description of University of Pennsylvania Oversize Ms. Codex 1223: Fragments of the Digests of Justinian, Book 37, Titles 7-9',))
         self.assertXpathValues(root, '//ns:msContents/ns:msItem/ns:title/text()', self.expected_titles)
         self.assertXpathValues(root, '//ns:msContents/ns:msItem/@n', ('1r', '1v', '2r'))
         self.assertXpathValues(root, '//ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote/text()', self.expected_deconotes)
         self.assertXpathValues(root, '//ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote/@n', ('1v',))
+        self.assertXpathValues(root, '//ns:extent/text()', ('2 leaves : 429 x 289 (237 x 135) mm. bound to 439 x 295 mm',))
+
+    def test_tei_extent(self):
+        self.stage_template()
+        repo_wrapper = self.pennpih_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'mscodex1223')
+        prep = MedrenPrep(source_dir=self.staged_source, document=doc,
+                          prep_config = self.pennpih_prep_config)
+        shutil.copyfile(self.msoversize8_marmite, self.staged_pih)
+        os.remove(self.staged_holdingid)
+        xml = prep.gen_partial_tei()
+        root = self.assertXmlDocument(xml)
+        self.assertXpathValues(root, '//ns:extent/text()', ('1 item (1 leaf) : 36 x 44 cm',))
 
 if __name__ == '__main__':
     unittest.main()
