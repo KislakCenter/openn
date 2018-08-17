@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
    <teiHeader>
-      <fileDesc><!--
-                    TODO: ? for Mitch/Dot/Will: CU MARC uses 588$a to give description provenance ('Item cataloged from digital facsimile and existing description.'). Should we include that?
-                  --><!--
-                    TODO: ? for Mitch/Dot: Do we include CU MARC 710$a for "name of agency of production" (AMREMM): "Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)". Is so, where?
-                  -->
+      <fileDesc>
          <titleStmt>
             <title>Description of MS Or 261: Dalāʼil al-khayrāt /</title>
          </titleStmt>
-         <!--
-                        TODO: Change publisher, license information for MMW Columnbia, FLP, etc.
-                    -->
          <publicationStmt>
             <publisher>The University of Pennsylvania Libraries</publisher>
             <availability>
@@ -41,9 +34,6 @@
                   <settlement>Philadelphia</settlement>
                   <institution/>
                   <repository/>
-                  <!--
-                                TODO: Shelfmark pulled from 099$a. CU MARC has 500$a => "Shelfmark: MS Or 355". Is this alw the same value as 099$a?
-                              -->
                   <idno type="call-number">MS Or 261</idno>
                   <altIdentifier type="bibid">
                      <idno>ocm00000NEW </idno>
@@ -52,13 +42,7 @@
                <msContents>
                   <summary>An illuminated copy of al-Jazūlī's classic work on the Prophet Muḥammad which has been partially vocalized. The flyleaves are inscribed in what appear to be two hands. The opening leaves include a Qur'anic passage, 18:107-110 (f.1r), followed by the Beautiful Names of God (al-ʿasmāʿ al-husnā) (following 1v-2r). The closing leaves contain a supplication (duʿāʼ) on the repeated pattern of "yā [fāʿil] ghayr [mafʿūl]" (following 268v-269r) and a quatrain (f. 270r).</summary>
                   <textLang>Arabic</textLang>
-                  <msItem><!--
-                                        TODO: Need to pull title, author, others(??) values in vernacualar from 880 fields. 
-                                    --><!--
-                                        TODO: ? for Peter: What fields should we pull author from and that will have alternate representations in 880 fields. For Penn medieval MSS we pull author from 110$a, 100$adbcd, 700$abcd 
-                                    --><!--
-                                        TODO: ? for Peter: What other roles will CU MARC records have: scribe, artist, etc.? which will have corresponding 880s. For Penn medieval MMS we pull values from 700$abcd where the relator term 700$e is present. 
-                                    -->
+                  <msItem>
                      <title>Dalāʼil al-khayrāt /</title>
                      <author>Jazūlī, Muḥammad ibn Sulaymān, -1465</author>
                      <respStmt>
@@ -67,9 +51,6 @@
                      </respStmt>
                   </msItem>
                </msContents>
-               <!--
-                           TODO: Columbia binding in field 563
-                          -->
                <physDesc>
                   <objectDesc>
                      <supportDesc material="mixed">
@@ -86,13 +67,8 @@
                      <scriptNote>Maghribī.</scriptNote>
                   </scriptDesc>
                </physDesc>
-               <history><!--
-                              TODO: Add Columbia orgin info: coming from field 264
-                              -->
+               <history>
                   <origin/>
-                  <!--
-                                  TODO: CU MARC uses 541$a for acquistion; Question for Mitch/Dot: Use tei:acquisition or tei:provenance for this? We don't use tei:acquisition in any of our other TEI.
-                                -->
                </history>
             </msDesc>
          </sourceDesc>
