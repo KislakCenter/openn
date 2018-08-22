@@ -66,7 +66,12 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
             <xsl:value-of select="//marc:holding[1]/marc:call_number/text()"/>
           </xsl:otherwise>
         </xsl:choose>
+      <xsl:if test="//marc:record/marc:datafield[@tag='773']/marc:subfield[@code='g']">
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="//marc:record/marc:datafield[@tag='773']/marc:subfield[@code='g']"/>
+      </xsl:if>
     </xsl:variable>
+  
     <xsl:variable name="ms_title">
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text"

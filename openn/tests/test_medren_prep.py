@@ -33,6 +33,7 @@ class TestMedrenPrep(OPennTestCase):
     bad_holdingid_txt = os.path.join(os.path.dirname(__file__), 'data/xml/bad_holdingid.txt')
     mscodex1223_marmite  = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex1223_marmite.xml')
     msoversize8_marmite  = os.path.join(os.path.dirname(__file__), 'data/xml/msoversize8_marmite.xml')
+    ms_coll_390_item_1044_marmite  = os.path.join(os.path.dirname(__file__), 'data/xml/ms_coll_390_item_1044_marmite.xml')
     staged_pih       = os.path.join(staged_source, 'pih.xml')
     staged_holdingid = os.path.join(staged_source, 'holdingid.txt')
     prep_cfg_factory = PrepConfigFactory(
@@ -192,6 +193,19 @@ class TestMedrenPrep(OPennTestCase):
         self.assertXpathValues(root, '//ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote/text()', self.expected_deconotes)
         self.assertXpathValues(root, '//ns:msDesc/ns:physDesc/ns:decoDesc/ns:decoNote/@n', ('1v',))
         self.assertXpathValues(root, '//ns:extent/text()', ('2 leaves : 429 x 289 (237 x 135) mm. bound to 439 x 295 mm',))
+
+    def test_tei_with_item_number(self):
+        self.stage_template()
+        doc_count = Document.objects.count()
+        repo_wrapper = self.pennpih_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'mscodex1223')
+        prep = MedrenPrep(source_dir=self.staged_source, document=doc,
+                          prep_config = self.pennpih_prep_config)
+        shutil.copyfile(self.ms_coll_390_item_1044_marmite, self.staged_pih)
+        os.remove(self.staged_holdingid)
+        xml = prep.gen_partial_tei()
+        root = self.assertXmlDocument(xml)
+        self.assertXpathValues(root, '//ns:msDesc/ns:msIdentifier/ns:idno/text()', ('Ms. Coll. 390 Item 1044',))
 
     def test_tei_extent(self):
         self.stage_template()
