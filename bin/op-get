@@ -18,7 +18,7 @@ cmd=`basename $0`
 COMMAND=$cmd
 
 ### OPTIONS
-while getopts "hfb:" opt; do
+while getopts "hfb:x:" opt; do
   case $opt in
     h)
       usage
@@ -26,6 +26,9 @@ while getopts "hfb:" opt; do
       ;;
     b)
       BIBID=$OPTARG
+      ;;
+    x)
+      HOLDING_ID=$OPTARG
       ;;
     f)
       FORCE=true
@@ -157,4 +160,13 @@ elif [[ -n "$mm_bibid" ]]; then
     echo $mm_bibid > "$bibid_file"
 else
     warning "No bibid provided; $bibid_file not created!"
+fi
+
+holdingid_file="${dest}/holdingid.txt"
+if [[ -n "${HOLDING_ID}" ]]; then
+    message "Holding ID provided (${HOLDING_ID})"
+    message "Writing ${HOLDING_ID} to ${holdingid_file}"
+    echo "${HOLDING_ID}" > "${holdingid_file}"
+else
+    message "No holding ID provided; ${holdingid_file} not created"
 fi

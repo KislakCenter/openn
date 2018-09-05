@@ -67,11 +67,11 @@ class TestValidatableSheet(OPennTestCase):
         self.assertTrue(ValidatableSheet.is_valid_email('joe@example.com'))
 
     def test_is_valid_lang(self):
-        for x in ('eng', 'eng ', ' eng ', 'en'):
+        for x in ('eng', 'eng ', ' eng ', 'en', 'xno'):
             self.assertTrue(ValidatableSheet.is_valid_lang(x), ('%s should be a valid lang' % x))
 
     def test_is_not_valid_lang(self):
-        for x in ('engx', 'x ', ' e ', 'enx'):
+        for x in ('engx', 'x ', ' e ', 'enz'):
             self.assertFalse(ValidatableSheet.is_valid_lang(x), ('%s should not be a valid lang' % x))
 
     def test_is_valid_integer(self):

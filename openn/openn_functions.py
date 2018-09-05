@@ -176,6 +176,11 @@ def localize_datetime(dtime):
     else:
         return dtime.astimezone(tzone)
 
+TITLE_SORT_RE = re.compile(r'^\s*(A|An|The)\s+', flags=re.IGNORECASE)
+
+def sort_value(s):
+    return TITLE_SORT_RE.sub('', s)
+
 # query formatted string:
 # taken from here:
 #

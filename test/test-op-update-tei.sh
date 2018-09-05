@@ -50,6 +50,7 @@ testSpreadsheet() {
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status
+    # save_and_open "${TEST_STAGING_DIR}/MC_968_11_4_v03/data/MC_968_11_4_v03_TEI.xml"
     assertFalse "Should find PARTIAL_TEI.xml in $destdir; found `ls $TEST_STAGING_DIR/PARTIAL_TEI.xml 2>/dev/null`" "ls $TEST_STAGING_DIR/PARTIAL_TEI.xml"
 }
 

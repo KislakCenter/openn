@@ -84,7 +84,7 @@
                     }
                 },
                 "repeating": false,
-                "data_type": "string"
+                "data_type": "word"
             },
             "title": {
                 "field_name": "Title",

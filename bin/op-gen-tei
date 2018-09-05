@@ -67,7 +67,7 @@ print_help() {
 
 ################################################################################
 ### OPTIONS
-while getopts "hj:" opt; do
+while getopts "hj:p:" opt; do
   case $opt in
     h)
       usage
@@ -76,6 +76,9 @@ while getopts "hj:" opt; do
       ;;
     j)
       OPENN_SAXON_JAR=$OPTARG
+      ;;
+    p)
+      XSL_PARAMS="${XSL_PARAMS} ${OPTARG}"
       ;;
     \?)
       echo "ERROR Invalid option: -$OPTARG" >&2
@@ -123,9 +126,16 @@ else
 fi
 
 CLASSPATH=$CLASSPATH:$OPENN_SAXON_JAR
+SAXON_OPTS="${SAXON_OPTS} -s:${XML}"
+SAXON_OPTS="${SAXON_OPTS} -xsl:${XSL}"
+SAXON_OPTS="${SAXON_OPTS} project_path=${APP_DIR}"
+SAXON_OPTS="${SAXON_OPTS} ${XSL_PARAMS}"
 
-java -cp $CLASSPATH net.sf.saxon.Transform -s:$XML -xsl:$XSL project_path="$APP_DIR"
+xml=`java -cp $CLASSPATH net.sf.saxon.Transform ${SAXON_OPTS}`
 
+if [[ -z ${xml} ]]; then exit 1; fi
+
+echo "${xml}"
 
 ################################################################################
 ### EXIT

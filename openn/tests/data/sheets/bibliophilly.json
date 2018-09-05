@@ -133,7 +133,7 @@
                         }
                     },
                     "repeating": true,
-                    "data_type": "string"
+                    "data_type": "word"
                 },
                 "record_url": {
                     "field_name": "Record URL",
@@ -507,6 +507,18 @@
                 "unique": true,
                 "data_type": "string",
                 "file_list": true
+            },
+            "serial_number": {
+                "field_name": "SERIAL_NUM",
+                "required": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "integer",
+                "unique": true
             },
             "tag1": {
                 "field_name": "TAG1",
@@ -972,6 +984,7 @@
                 "columns": [
                     "file_name",
                     "display_page",
+                    "serial_number",
                     "tag1",
                     "value1",
                     "tag2",

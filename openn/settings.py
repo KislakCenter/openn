@@ -32,6 +32,7 @@ REQUIRED_ENV_VARS = [
     'OPENN_DB_USER',
     'OPENN_DB_PASSWORD',
     'OPENN_DB_HOST',
+    'OPENN_DB_PORT',
     'OPENN_SAXON_JAR',
     'OPENN_STAGING_DIR',
     'OPENN_PACKAGE_DIR' ]
@@ -43,8 +44,9 @@ DATABASES = {
         'USER': os.environ['OPENN_DB_USER'],
         'PASSWORD': os.environ['OPENN_DB_PASSWORD'],
         'HOST': os.environ['OPENN_DB_HOST'],
+        'PORT': os.environ['OPENN_DB_PORT'],
         'OPTIONS': {
-            'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci',
+            'init_command': 'SET character_set_connection=utf8,collation_connection=utf8_unicode_ci',
         },
     }
 }
@@ -77,7 +79,7 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 TIME_ZONE = 'US/Eastern'
 USE_TZ = True
 
-OPENN_HOST = 'openn.library.upenn.edu'
+OPENN_HOST = os.getenv('OPENN_HOST', 'openn.library.upenn.edu')
 
 # put the openn/bin dir in the path
 os.environ['PATH'] = os.path.join(PROJECT_PATH, 'bin') + os.pathsep + os.environ['PATH']
@@ -231,6 +233,8 @@ LICENSES = {
 
 IMAGE_TYPES = ( '*.tif', '*.jpg' )
 
+# http://mdproc.library.upenn.edu:9292/records/9915808403503681/show?format=openn
+
 
 PREPARATION_METHODS = [
     {
@@ -238,15 +242,15 @@ PREPARATION_METHODS = [
         'description': "Uses metadata scraped from Penn in Hand to build metadata for the object. Requires bibid.txt file containing the object's BibID",
         'name': 'Penn in Hand Prep',
         'package_validation': {
-            'valid_names': ['*.tif', 'bibid.txt'],
+            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.tif', 'bibid.txt'],
         },
         'prep_class': {
             'class_name': 'openn.prep.medren_prep.MedrenPrep',
             'params': {
-                'pih_host': 'dla.library.upenn.edu',
-                'pih_path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
+                'pih_host': 'mdproc.library.upenn.edu:9292',
+                'pih_path': '/records/{0}/create?format=openn',
                 'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
             },
         },
@@ -296,6 +300,27 @@ PREPARATION_METHODS = [
         },
     },
     {
+        'tag': 'gzh',
+        'description': """Extracts metadata from Genizah spreadsheet to build metadata for the
+            object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
+        'name': 'Genizah Prep',
+        'package_validation': {
+            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*', '.DS_Store'],
+            'required_names': ['*.xlsx'],
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+            'params' : {
+                'image_rights': {
+                    'dynamic': False,
+                },
+                'config_json': os.path.join(SITE_ROOT, 'genizah.json'),
+                'xsl': os.path.join(SITE_ROOT, 'xsl/bp_spreadsheet_xml2tei.xsl'),
+            },
+        },
+    },
+    {
         'tag': 'dirlesstei',
         'description': """Directory-less TEI prep: Does not process a directory; add the
 folder name to the database; requires a TEI file.""",
@@ -336,7 +361,7 @@ REPOSITORIES = {
             'tag': 'pennmss',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'University of Pennsylvania Books & Manuscripts',
+            'name': 'University of Pennsylvania Libraries',
             'blurb': """With approximately 250,000 printed books and nearly ten million
 pieces of manuscript material, the Rare Book and Manuscript Library is
 a small part of the University's 5 million-volume library system.
@@ -352,7 +377,7 @@ Church history, the Inquisition, magic, and witchcraft.""",
             'tag': 'ljs',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Lawrence J. Schoenberg Manuscripts',
+            'name': 'University of Pennsylvania Libraries, Lawrence J. Schoenberg Manuscripts',
             'blurb': """These manuscripts are from the Lawrence J. Schoenberg collection in
 the Rare Books and Manuscripts Library at the University of
 Pennsylvania. With its emphasis on the history of science and the
@@ -369,7 +394,7 @@ intellectual heritage.""",
             'tag': 'bates',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Barbara Bates Center for the Study of the History of Nursing',
+            'name': 'University of Pennsylvania School of Nursing, Barbara Bates Center',
             'blurb': """The Barbara Bates Center for the Study of the History of Nursing is the
 largest repository for primary source materials and rare books about the
 history of nursing. The Center holds an extensive collection of
@@ -385,7 +410,7 @@ linear feet.""",
             'tag': 'brynmawr',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Bryn Mawr College Library Special Collections',
+            'name': 'Bryn Mawr College, Special Collections',
             'blurb': """The Bryn Mawr College Special Collections includes rare books,
 manuscripts, the college archives, works of art on paper, and
 ethnographic and archaeological objects. The rare book collection
@@ -401,8 +426,8 @@ collection ranging from the 15th century to the present, including
             'tag': 'chf',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Othmer Library, Chemical Heritage Foundation',
-            'blurb': """The Chemical Heritage Foundation's Donald F. and Mildred Topp Othmer
+            'name': 'Science History Institute, Othmer Library',
+            'blurb': """The Science History Institute's Donald F. and Mildred Topp Othmer
 Library of Chemical History collects, preserves, and makes accessible
 materials relating to the history of science, technology, and medicine
 with an emphasis on chemical and material sciences and technologies from
@@ -415,13 +440,34 @@ archival materials, and historical photographs of great value to
 researchers and our cultural heritage. Together these collections form
 an unrivaled resource for the history of chemistry and related sciences,
 technologies, and industries.""",
-            'include_file': 'ChemHeritageFoundation.html',
+            'include_file': 'SciHistoryInstitute.html',
+        },
+        {
+            'tag': 'cpp',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'College of Physicians of Philadelphia, The Historical Medical Library',
+            'blurb': """Established in 1788, the Historical Medical Library was Philadelphia's
+central medical library for over 150 years, serving its medical schools,
+hospitals, physicians and other health professionals. Today, it is an
+independent research library devoted to the history of medicine and the
+medical humanities, serving hundreds of scholars, health professionals,
+students and popular writers each year.""",
+            'include_file': 'CollegeOfPhysicians.html',
+        },
+        {
+            'tag': 'columbia',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Columbia University, Rare Books & Manuscripts Library',
+            'blurb': """Blurb to go here.""",
+            'include_file': 'ColumbiaUniversity.html',
         },
         {
             'tag': 'manchester',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'The University of Manchester Library Special Collections',
+            'name': 'University of Manchester Library, Special Collections',
             'blurb': """The University of Manchester Library's manuscripts and archives are
 internationally important. Their subject range is extraordinarily
 diverse and the collections span many centuries, from the 3rd millennium
@@ -447,7 +493,7 @@ scope, importance and interest.""",
         },
         {
             'tag': 'drexarc',
-            'name': 'Drexel University Archives and Special Collections',
+            'name': 'Drexel University, Archives and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """
@@ -464,7 +510,7 @@ family; and the history of education.""",
         },
         {
             'tag': 'drexmed',
-            'name': "Legacy Center, Drexel University College of Medicine",
+            'name': "Drexel University College of Medicine, Legacy Center",
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Drexel University College of Medicine Legacy Center supports
@@ -480,7 +526,7 @@ from 1502 to the present, with the bulk of the materials ranging from
         },
         {
             'tag': 'haverford',
-            'name': 'Quaker and Special Collections, Haverford College',
+            'name': 'Haverford College, Quaker and Special Collections',
             'metadata_type': 'TEI',
             'live': True,
             'blurb':  """Quaker & Special Collections contains Haverford College's
@@ -498,21 +544,24 @@ collections are open to all.""",
         },
         {
             'tag': 'lehigh',
-            'name': 'Special Collections, Lehigh University Library',
+            'name': 'Lehigh University Libraries, Special Collections',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Lehigh University Special Collections serves as the repository for the
-University's collections of rare books and manuscripts, and for
-holdings relating to its own history. It encompasses a rare book
-collection of over 25,000 volumes, with first editions of English and
-American literature from the 17th to the 19th centuries, strengths in
-travel and exploration, natural history and ornithology, and works of
-historical significance in science and technology. Materials relating
-to the University include documents and publications of the
-University, papers of faculty members, and memorabilia from the
-University's history. Special Collections also holds manuscripts and
-personal papers, in addition to papers relating to the University's
-history.""",
+            'blurb': """Lehigh University Libraries' Special Collections serves as the
+repository for the University's collections of rare books and
+manuscripts as well as for holdings relating to Lehigh's institutional
+and cultural history. The catalog encompasses over 40,000 volumes,
+including first editions of English and American literature from the
+seventeenth to the nineteenth centuries and represents diverse topics
+such as travel and exploration, natural history, and ornithology. A
+special focus on the history of science and technology includes an
+expansive assortment of material related to large-scale construction and
+the use of iron and steel in industrial life, as well as a collection of
+classic and seminal works relating to bridge building and design.
+University materials include official documents and publications of the
+school administration, papers and publications of faculty members,
+theses and dissertations composed by graduate students, and memorabilia
+from the broad spectrum of campus life.""",
             'include_file': 'LehighUniversity.html',
         },
         {
@@ -530,7 +579,7 @@ art.""",
         },
         {
             'tag': 'libpa',
-            'name': 'Rare Collections Library of the State Library of Pennsylvania',
+            'name': 'State Library of Pennsylvania, Rare Collections Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The State Library of Pennsylvania collects and preserves the
@@ -543,7 +592,7 @@ Pennsylvania religion, natural history, and genealogy.""",
         },
         {
             'tag': 'friendshl',
-            'name': 'Friends Historical Library, Swarthmore College',
+            'name': 'Swarthmore College, Friends Historical Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Established in 1871 at Swarthmore College, two years after the College
@@ -635,7 +684,7 @@ under a Creative Commons Attribution License.""",
         },
         {
             'tag': 'ism',
-            'name': 'J. Welles Henderson Archives and Library of the Independence Seaport Museum',
+            'name': 'Independence Seaport Museum, J. Welles Henderson Archives and Library',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Independence  Seaport Museum's J. Welles Henderson Archives and
@@ -668,7 +717,7 @@ periodicals, pamphlets, and manuscripts.""",
         },
         {
             'tag': 'pennmuseumarchives',
-            'name': 'Penn Museum Archives',
+            'name': 'University of Pennsylvania Museum of Archaeology and Anthropology, Archives',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The Penn Museum Archives is the institutional repository of the Penn
@@ -682,7 +731,7 @@ million images and nearly one thousand reels of film.""",
         },
         {
             'tag': 'uarc',
-            'name': 'University Archives and Records Center, University of Pennsylvania',
+            'name': 'University of Pennsylvania Archives and Records Center',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The University Archives and Records Center (UARC) serves the
@@ -741,6 +790,21 @@ illumination.""",
             'no_document': True,
         },
         {
+            'tag': 'kislak',
+            'name': 'Kislak Foundation',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Established in 1984, the Jay I. Kislak Foundation is a private nonprofit
+cultural institution engaged in the collection, conservation, research
+and interpretation of rare books, manuscripts, maps and indigenous art
+and cultural artifacts of the Americas and other parts of the world.
+Kislak collections are rich in primary research materials on the history
+of Florida, the Caribbean and Mesoamerica, with special emphasis on
+native cultures, their contact with Europeans and the colonial period to
+about 1820.""",
+            'include_file': 'KislakFoundation.html',
+        },
+        {
             'tag': 'flp',
             'name': 'Free Library of Philadelphia, Special Collections',
             'metadata_type': 'TEI',
@@ -758,6 +822,72 @@ children's books and original artworks by children's illustrators;
 hundreds of incunables; and books, manuscripts, and maps relating to the
 discovery, exploration, and settlement of the Americas. """,
             'include_file': 'FreeLibraryOfPhiladelphia.html',
+        },
+        {
+            'tag': 'pma',
+            'name': 'Philadelphia Museum of Art',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Philadelphia Museum of Art houses a world-renowned collection in a
+landmark building. Highlights of the collection include: the largest and
+most importnat collection of works by Marcel Duchamp; the greatest
+collection of sculpture by Constantin Brancusi outside Europe. The
+finest public collection of Auguste Rodin's sculpture in the United
+States; superb Impressionist and Post-Impressionist paintings by Edouard
+Manet, Claude Monet, Pierre-Auguste Renoir, Camille Pissarro and Edgar
+Degas; exceptional American painting, sculpture, furniture, silver, and
+ceramics that reflect Philadelphia's central role in American history;
+and extraordinary "period rooms" and architectural ensembles from around
+the world.  The museum's landmark building, opened in 1928 at the
+western end of Benjamin Franklin Parkway. The other buildings that make
+up its campus include the Perelman Building, the Rodin Museum, and the
+two great eighteenth-century houses in Fairmount Park, Mount Pleasant
+and Cedar Grove.""",
+            'include_file': 'PhiladelphiaMuseumOfArt.html',
+        },
+        {
+            'tag': 'udel',
+            'name': 'University of Delaware Library',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Special Collections at the University of Delaware Library collects,
+preserves, and makes accessible rare and unique materials such as rare
+books, artists' books, fine press books, manuscripts and archives.  The
+Special Collections have four main collecting areas in literature, art,
+history and Delawareana, and science and technology.""",
+            'include_file': 'UniversityOfDelaware.html',
+        },
+        {
+            'tag': 'temple',
+            'name': 'Temple University Libraries, Special Collections Research Center',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Special Collections Research Center (SCRC) is the principal
+repository for and steward of the Libraries' rare books, manuscripts,
+archives and University records.  The SCRC collects, preserves, and
+makes accessible primary resources and rare or unique materials, to
+stimulate, enrich, and support research, teaching, learning, and
+administration at Temple University.  SCRC makes these resources
+available to a broad constituency as part of the University's engagement
+with the larger community of scholars and independent researchers.""",
+            'include_file': 'TempleUniversity.html',
+        },
+        {
+            'tag': 'rosenbach',
+            'name': 'Free Library of Philadelphia, The Rosenbach',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Rosenbach seeks to foster inquiry, learning and creative thought by
+engaging audiences in programs, exhibitions, and research inspired by
+our collections of nearly 400,000 rare books, manuscripts, and fine and
+decorative art objects, including some of the best-known literary and
+historical objects in the world. In December 2013, the Rosenbach became
+affiliated with the Free Library of Philadelphia, bringing together two
+of the world's preeminent collections of rare books, manuscripts,
+Americana and art. The combined holdings of the Rosenbach and the Free
+Library of Philadelphia inspire unique exhibitions and programs
+throughout the year.""",
+            'include_file': 'Rosenbach.html',
         },
     ],
 }
@@ -1063,9 +1193,135 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'brynmawr-bphil': {
+        'repository': {
+            'tag': 'brynmawr'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'udel-bphil': {
+        'repository': {
+            'tag': 'udel'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'temple-bphil': {
+        'repository': {
+            'tag': 'temple'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'pma-bphil': {
+        'repository': {
+            'tag': 'pma'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'rosenbach-bphil': {
+        'repository': {
+            'tag': 'rosenbach'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'chf-bphil': {
         'repository': {
             'tag': 'chf'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'lehigh-bphil': {
+        'repository': {
+            'tag': 'lehigh'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'tlc-bphil': {
+        'repository': {
+            'tag': 'tlc'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'cpp-bphil': {
+        'repository': {
+            'tag': 'cpp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'friendshl-bphil': {
+        'repository': {
+            'tag': 'friendshl'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
@@ -1090,6 +1346,32 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC-BY',
         }
     },
+    'kislak-bphil': {
+        'repository': {
+            'tag': 'kislak'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC-BY',
+        }
+    },
+    'penn-gzh': {
+        'repository': {
+            'tag': 'pennmss'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'gzh',
+        },
+        'rights': {
+            'image_rights': 'CC-BY',
+            'metadata_rights': 'CC-BY',
+        }
+    },
     'pennmuseum-diaries': {
         'repository': {
             'tag': 'pennmuseum'
@@ -1098,18 +1380,9 @@ PREP_CONFIGS = {
         'repository_prep': {
             'tag': 'diaries',
         },
-        'common_prep': {
-            'image_rights': {
-                'dynamic': True,
-            },
-            'rights_statements': {
-                'images': {
-                    'dynamic': True,
-                },
-                'metadata': {
-                    'dynamic': True,
-                },
-            },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
         }
     },
 }
@@ -1152,6 +1425,23 @@ Resources.""",
                         collections. OPenn currently hosts a pilot group of 53 diary volumes.""",
             'csv_only': False,
             'include_file': 'PACSCLDiaries.html',
+            'live': True,
+        },
+        {
+            'tag': 'genizah',
+            'name': 'Cairo Genizah',
+            'blurb': """In the late 1990s, thanks to a significant gift from a Penn alum named
+						Jeffrey Keil, W' 65 and PAR '91, Penn initiated a project, in
+						collaboration with Cambridge University Libraries, to apply digital
+						technologies to discover new intellectual matches among physically
+						dispersed Cario genizah fragments. Through this initiative it was demonstrated
+						how digital technologies may serve as discovery tools to identify
+						matches among a global diaspora of thousands of fragments of medieval
+						manuscripts (see: http://sceti.library.upenn.edu/genizah/index.cfm).
+						This collection of Cairo genizah fragments consists of Penn manuscripts
+						that were part of this project.""",
+            'csv_only': False,
+            'include_file': 'CairoGenizah.html',
             'live': True,
         },
         {

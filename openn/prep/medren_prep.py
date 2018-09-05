@@ -27,8 +27,18 @@ class MedrenPrep(RepositoryPrep):
     })
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
-    DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front\d{4}\w*\.tif$', 'body\d{4}\w*\.tif$', 'back\d{4}\w*\.tif$' ]
-    STRICT_IMAGE_PATTERN_RE = re.compile('^\w*_(front|body|back)\d{4}.tif$')
+    NEW_BIBID_RE = re.compile('^99\d+3503681$')
+    DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front_?\d{4}\w*\.tif$', 'body_?\d{4}\w*\.tif$', 'back_?\d{4}\w*\.tif$' ]
+    # 2017-11-13 DE: Accommodate odd file pattern:
+    #
+    #    cajs_rarms228_wk1_body_0003.tif
+    #
+    # typically, this file would be
+    #
+    #   cajs_rarms228_wk1_body0003.tif
+    #
+    # i.e., without '_' between `body` and `0003`.
+    STRICT_IMAGE_PATTERN_RE = re.compile('^\w*_(front|body|back)_?\d{4}.tif$')
 
     logger = logging.getLogger(__name__)
 
@@ -89,6 +99,28 @@ class MedrenPrep(RepositoryPrep):
     def url_path(self):
         return self.pih_path
 
+    # TODO: Add handling for holdingid.txt and holding_id
+
+    def holdingid_filename(self):
+        if not os.path.exists(self.source_dir):
+            raise OPennException("Could not find source_dir: %s" % self.source_dir)
+        holdingid_txt = os.path.join(self.source_dir, 'holdingid.txt')
+        if not os.path.exists(holdingid_txt):
+            return None
+        return holdingid_txt
+
+    def get_holdingid(self):
+        try:
+            self.holding_id
+        except AttributeError:
+            holdingid_file = self.holdingid_filename()
+            if holdingid_file is None:
+                self.holding_id = None
+            else:
+                self.holding_id = open(holdingid_file).read().strip()
+
+        return self.holding_id
+
     def bibid_filename(self):
         if not os.path.exists(self.source_dir):
             raise OPennException("Could not find source_dir: %s" % self.source_dir)
@@ -101,7 +133,10 @@ class MedrenPrep(RepositoryPrep):
         bibid = open(self.bibid_filename()).read().strip()
         if not re.match('\d+$', bibid):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
-        return bibid
+        if len(bibid) > 7:
+            return bibid
+        else:
+            return '99%s3503681' % (str(bibid),)
 
     @property
     def pih_filename(self):
@@ -131,12 +166,30 @@ class MedrenPrep(RepositoryPrep):
 
     def check_valid_xml(self, pih_xml):
         tree = etree.parse(open(pih_xml))
-        r = tree.xpath("/page/response/result/doc/arr[@name='call_number_field']/str")
+        ns = { 'marc': 'http://www.loc.gov/MARC21/slim' }
+        # TODO handle the holding ID
+        if self.get_holdingid() is None:
+            xpath = "//marc:holding/marc:call_number/text()"
+            call_numbers = tree.xpath(xpath, namespaces=ns)
+            if len(call_numbers) > 1:
+                raise OPennException('Please provide holding ID; more than one'
+                        ' call number found in PIH XML: (%s)' % pih_xml)
+            elif len(call_numbers) < 1:
+                raise OPennException('No call number found in holdings info in'
+                        ' PIH XML: (%s)' % pih_xml)
+            else:
+                call_no = call_numbers[0]
+        else:
+            holdingid = self.get_holdingid()
+            xpath = "//marc:holding_id[text() = '%s']/parent::marc:holding/marc:call_number/text()" % holdingid
+            call_numbers = tree.xpath(xpath, namespaces=ns)
+            if len(call_numbers) != 1:
+                raise OPennException('Expected 1 call number for holding ID'
+                        ' %s; found %d in PIH XML %s' % (self.get_holdingid(),
+                            len(call_numbers), pih_xml))
+            else:
+                call_no = call_numbers[0]
 
-        if len(r) < 1:
-            raise OPennException('No call number found in PIH XML: %s' % pih_xml)
-
-        call_no = r[0].text
         return call_no
 
     def full_url(self, bibid):
@@ -154,7 +207,7 @@ class MedrenPrep(RepositoryPrep):
     def get_xml(self, bibid):
         url = self.full_url(bibid)
         status = self.check_url(bibid)
-        if status != 200:
+        if status not in (200,303):
             raise OPennException('Got status %d calling: %s' % (status, url))
         return urllib2.urlopen(url).read()
 
@@ -263,11 +316,14 @@ class MedrenPrep(RepositoryPrep):
         return outfile
 
     def gen_partial_tei(self):
-        # xsl_command = os.path.join(os.path.dirname(__file__), 'op-gen-tei')
-        bibid = self.get_bibid()
-        xsl_command = 'op-gen-tei'
-        p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
-                stderr=subprocess.PIPE,
+        xsl_command = ['op-gen-tei']
+
+        holdingid = self.get_holdingid()
+        if holdingid is not None:
+            xsl_command.append("-p HOLDING_ID=%s" % (str(holdingid),))
+        xsl_command.append(self.pih_filename)
+        xsl_command.append(self.xsl)
+        p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
         out, err = p.communicate()
         if p.returncode != 0:
@@ -276,15 +332,22 @@ class MedrenPrep(RepositoryPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
-        xsl_command = 'op-gen-tei'
+        xsl_command = ['op-gen-tei']
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid
         if bibid is None:
             raise OPennException("Whoah now. bibid is none. That ain't right.")
+        if not self.NEW_BIBID_RE.match(bibid):
+            bibid = '99%s3503681' % (str(bibid),)
         self.write_xml(bibid,self.pih_filename)
-        p = subprocess.Popen([xsl_command, self.pih_filename, self.xsl],
-                stderr=subprocess.PIPE,
-                stdout=subprocess.PIPE)
+        for key in kwargs:
+            key_value = '%s="%s"' % (key, kwargs[key])
+            xsl_command.append(key_value)
+        xsl_command.append(self.pih_filename)
+        xsl_command.append(self.xsl)
+
+        p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE)
         out, err = p.communicate()
         if p.returncode != 0:
             raise OPennException("TEI Generation failed: %s" % err)
@@ -345,4 +408,5 @@ class MedrenPrep(RepositoryPrep):
         # files to cleanup
         self.add_removal(self.pih_filename)
         self.add_removal(self.bibid_filename())
+        self.add_removal(self.holdingid_filename())
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))

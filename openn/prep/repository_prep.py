@@ -47,6 +47,8 @@ class RepositoryPrep(Status):
             self.add_removal(removal)
 
     def add_removal(self, removal):
+        if removal is None:
+            return
         self._removals.append(removal)
 
     def reset_removals(self):
@@ -123,10 +125,12 @@ class RepositoryPrep(Status):
             f.seek(0)
             tei = OPennTEI(f)
             tei.validate()
-        except Exception as ex:
-            raise OPennException("Error creating TEI: %s" % str(ex))
         finally:
             f.close()
+        # except Exception as ex:
+        #     raise OPennException("Error creating TEI: %s" % str(ex))
+        # finally:
+        #     f.close()
 
         return outfile
 

@@ -133,7 +133,7 @@
                         }
                     },
                     "repeating": true,
-                    "data_type": "string"
+                    "data_type": "word"
                 },
                 "record_url": {
                     "field_name": "Record URL",
@@ -373,7 +373,7 @@
                   "required": false,
                   "repeating": false,
                   "data_type": "word",
-                  "value_list": [ "parchment", "paper", "mixed" ]
+                  "value_list": [ "parchment", "paper", "mixed", "palm-leaf", "amatl" ]
               },
               "page_count": {
                 "field_name": "Number of physical pages",
@@ -461,7 +461,7 @@
             },
             "subject_keyword": {
                 "field_name": "Subject: keywords",
-                "required": false,
+                "required": true,
                 "repeating": true,
                 "data_type": "string"
             }
@@ -499,6 +499,18 @@
                         "is": "EMPTY"
                     }
                 }
+            },
+            "serial_number": {
+                "field_name": "SERIAL_NUM",
+                "required": {
+                    "if": {
+                        "field": "file_name",
+                        "is": "NONEMPTY"
+                    }
+                },
+                "repeating": true,
+                "data_type": "integer",
+                "unique": true
             },
             "file_name": {
                 "field_name": "FILE_NAME",
@@ -970,6 +982,7 @@
             {
                 "xml_attr": "page",
                 "columns": [
+                    "serial_number",
                     "file_name",
                     "display_page",
                     "tag1",

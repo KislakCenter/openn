@@ -80,10 +80,14 @@ class SpreadsheetPrep(RepositoryPrep):
             self.document.image_copyright_year      = xml.image_copyright_year()
             self.document.image_rights_more_info    = xml.image_rights_more_info()
         elif self.prep_config.image_rights().startswith('PD'):
+            # TODO: set document.image_licence
+            self.document.image_licence = self.prep_config.image_rights()
             self.document.image_copyright_holder = None
             self.document.image_copyright_year = None
             self.document.image_rights_more_info = None
         else:
+            # TODO: set document.image_licence
+            self.document.image_licence = self.prep_config.image_rights()
             self.document.image_copyright_holder = self.prep_config.rights_holder()
             self.document.image_copyright_year = datetime.now(pytz.UTC).year
             self.document.image_rights_more_info = self.prep_config.rights_more_info()
@@ -94,10 +98,14 @@ class SpreadsheetPrep(RepositoryPrep):
             self.document.metadata_copyright_year      = xml.metadata_copyright_year()
             self.document.metadata_rights_more_info    = xml.metadata_rights_more_info()
         elif self.prep_config.metadata_rights().startswith('PD'):
+            # TODO: set document.metadata_licence
+            self.document.metadata_licence = self.prep_config.metadata_rights()
             self.document.metadata_copyright_holder = None
             self.document.metadata_copyright_year = None
             self.document.metadata_rights_more_info = None
         else:
+            # TODO: set document.metadata_licence
+            self.document.metadata_licence = self.prep_config.metadata_rights()
             self.document.metadata_copyright_holder = self.prep_config.rights_holder()
             self.document.metadata_copyright_year = datetime.now(pytz.UTC).year
             self.document.metadata_rights_more_info = self.prep_config.rights_more_info()
@@ -171,6 +179,10 @@ class SpreadsheetPrep(RepositoryPrep):
             el             = xml.xpath(query)
             label          = el[0].text if len(el) > 0 else None
             image['label'] = label
+            query          = "//file_name[text()='%s']/parent::page/serial_number" % (base,)
+            el             = xml.xpath(query)
+            serial_number  = el[0].text if len(el) > 0 else None
+            image['serial_number'] = serial_number
 
         return files
 
@@ -227,7 +239,6 @@ class SpreadsheetPrep(RepositoryPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
-        xsl_command = 'op-gen-tei'
         xlsx_path = None
 
         try:
@@ -250,9 +261,46 @@ class SpreadsheetPrep(RepositoryPrep):
         partial_tei = self.gen_partial_tei()
         # xxxxx
         self.write_partial_tei(self.source_dir, partial_tei)
+        self.check_page_count(self.openn_xml_path(), doc)
+        self.update_serial_numbers(self.openn_xml_path(), doc)
         self.validate_partial_tei()
         self.add_removal(self.openn_xml_path())
         self.add_removal(self.xlsx_path)
+
+    def update_serial_numbers(self, openn_xml_path, doc):
+        xml = OPennXML(codecs.open(openn_xml_path, 'r', 'utf-8'))
+
+        # nothing to do if there are no serial numbers
+        if not xml.has_serial_numbers():
+            return
+
+        # do nothing if no images
+        if doc.image_set.filter(image_type='document').count() == 0:
+            return
+
+        # do nothing if we already have serial_number
+        first_image = doc.image_set.filter(image_type='document').first()
+        if first_image.serial_number is not None:
+            return
+
+        images = doc.image_set.filter(image_type='document')
+        for page in xml.page_objects():
+            base = os.path.basename(str(page.file_name))
+            image = [x for x in images if x.filename.endswith(base)][0]
+            image.serial_number = page.serial_number
+            image.save()
+
+    def check_page_count(self, openn_xml_path, doc):
+        """
+         Make sure the spreadsheet and the database agree on the number of
+         pages; otherwise, we can't proceed.
+        """
+        xml = OPennXML(codecs.open(openn_xml_path, 'r', 'utf-8'))
+        image_count = doc.image_set.filter(image_type='document').count()
+        page_count = xml.page_count()
+        if page_count != image_count:
+            msg = "Spreadsheet page count (%d) does not match document image count (%d)"
+            raise OPennException(msg, page_count, image_count)
 
     def archive_xlsx(self):
         repo_wrapper = self.prep_config.repository_wrapper()
