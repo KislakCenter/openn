@@ -66,6 +66,7 @@ class OPennPrep:
         repo_prep._cleanup()
 
         common_prep = CommonPrep(source_dir, document, prep_config)
+        common_prep.update_document()
         common_prep.update_tei()
         common_prep._cleanup()
 

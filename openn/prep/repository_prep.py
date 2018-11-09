@@ -47,6 +47,8 @@ class RepositoryPrep(Status):
             self.add_removal(removal)
 
     def add_removal(self, removal):
+        if removal is None:
+            return
         self._removals.append(removal)
 
     def reset_removals(self):

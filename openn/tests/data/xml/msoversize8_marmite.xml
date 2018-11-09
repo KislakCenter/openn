@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<page>
+  <result xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+    <xml name="marcrecord">
+      <marc:record>
+    <marc:leader>02253ctm a2200445Ia 4500</marc:leader>
+    <marc:controlfield tag="001">9914711813503681</marc:controlfield>
+    <marc:controlfield tag="005">20150526170133.0</marc:controlfield>
+    <marc:controlfield tag="008">940411s1000    pau           000 0 lat d</marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)ocn155962581</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)155962581</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUR94-A24</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(PU)1471181-penndb-Voyager</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+  <marc:subfield code="a">PU</marc:subfield>
+  <marc:subfield code="e">dacs</marc:subfield>
+  <marc:subfield code="c">PAULM</marc:subfield>
+  <marc:subfield code="d">PAULM</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="049">
+  <marc:subfield code="a">PAUM</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="079">
+  <marc:subfield code="a">ocn122479964</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="9" tag="099">
+  <marc:subfield code="a">Ms. Oversize 8</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="100">
+  <marc:subfield code="a">Otto</marc:subfield>
+  <marc:subfield code="b">III,</marc:subfield>
+  <marc:subfield code="c">Holy Roman Emperor,</marc:subfield>
+  <marc:subfield code="d">980-1002.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="245">
+  <marc:subfield code="a">Diploma issued to Adam, son of Teutio,</marc:subfield>
+  <marc:subfield code="f">1000.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+  <marc:subfield code="a">1</marc:subfield>
+  <marc:subfield code="f">item (1 leaf) :</marc:subfield>
+  <marc:subfield code="b">parchment ;</marc:subfield>
+  <marc:subfield code="c">36 x 44 cm.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Dated 10 July 1000, in Pavia.  Date given on line 11.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Written in a notarial hand.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Incipit: In nomine sanctae ...  Notum sit omnibus fidelibus.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Explicit: ... hanc paginam sigillare iussimus.  Heribertus cancellarius vice petri cumani episcopi novit.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">Described in Zacour, Norman P. and Rudolf Hirsch. Catalogue of Manuscripts in the Libraries of the University of Pennsylvania to 1800 (Philadelphia: University of Pennsylvania Press, 1965),</marc:subfield>
+  <marc:subfield code="c">p. 154 (Ms. Lea 27).</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">Text and bibliography given in Bo&#x308;hmer, J. F.  Die Regesten des Kaiserreiches unter Otto III, new edition (1956),</marc:subfield>
+  <marc:subfield code="c">no. 1386.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="520">
+  <marc:subfield code="a">Diploma issued to Adam, son of Teutio.  It takes Adam under imperial protection and gives him the right to live under Roman law.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="524">
+  <marc:subfield code="a">UPenn Ms. Oversize 8</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="545">
+  <marc:subfield code="a">Otto III reigned 996-1002.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="546">
+  <marc:subfield code="a">In Latin.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="561">
+  <marc:subfield code="a">J. F. Bo&#x308;hmer, Die Regesten des Kaiserreiches unter Otto III, indicates that this diploma was once in the Archivio Magherini Graziani.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="561">
+  <marc:subfield code="a">Purchased from L. Witten, New Haven, 1957.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="651">
+  <marc:subfield code="a">Holy Roman Empire</marc:subfield>
+  <marc:subfield code="x">History</marc:subfield>
+  <marc:subfield code="y">843-1273.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="651">
+  <marc:subfield code="a">Italy</marc:subfield>
+  <marc:subfield code="x">History</marc:subfield>
+  <marc:subfield code="y">Germanic rule, 962-1268.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="7" tag="655">
+  <marc:subfield code="a">Diplomas.</marc:subfield>
+  <marc:subfield code="2">aat</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="655">
+  <marc:subfield code="a">Manuscripts, Italian</marc:subfield>
+  <marc:subfield code="y">11th century.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="655">
+  <marc:subfield code="a">Manuscripts, Medieval.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="700">
+  <marc:subfield code="a">Adam,</marc:subfield>
+  <marc:subfield code="c">son of Teutio.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="852">
+  <marc:subfield code="b">Henry Charles Lea Library, Special Collections,</marc:subfield>
+  <marc:subfield code="a">Van Pelt Library, University of Pennsylvania,</marc:subfield>
+  <marc:subfield code="e">Philadelphia, Pennsylvania, 19104-6206.</marc:subfield>
+  <marc:subfield code="j">Ms. Oversize 8</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2="1" tag="856">
+  <marc:subfield code="z">Facsimile</marc:subfield>
+  <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/medren/1471181</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="994">
+  <marc:subfield code="a">C0</marc:subfield>
+  <marc:subfield code="b">PAULM</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+  <marc:subfield code="a">DLA</marc:subfield>
+  <marc:subfield code="b">20111006</marc:subfield>
+</marc:datafield>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22412880750003681</marc:holding_id>
+        <marc:call_number>Ms. Oversize 8</marc:call_number>
+        <marc:library>KislakCntr</marc:library>
+        <marc:location>scmss</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+    </xml>
+    <xml name="pages">
+      <page number="1" id="9914711813503681_351966" seq="1" side="recto" image.id="msoversize8_wk1_body0001" image="msoversize8_wk1_body0001" visiblepage="Side 1"/>
+      <page number="2" id="9914711813503681_351967" seq="2" side="verso" image.id="msoversize8_wk1_body0002" image="msoversize8_wk1_body0002" visiblepage="Side 2"/>
+    </xml>
+  </result>
+</page>
