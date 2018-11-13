@@ -151,9 +151,5 @@ class TestSpreadsheetPrep(OPennTestCase):
 
         self.assertIn('FILE_NAME', str(oe.exception))
 
-    def test_print(self):
-        self.stage_template()
-
-
 if __name__ == '__main__':
     unittest.main()

@@ -241,7 +241,7 @@ class ValidatableSheet(object):
 
     @property
     def sheet_name(self):
-        return self.worksheet.title
+        return self.config['sheet_name']
 
     @property
     def data_offset(self):

@@ -35,7 +35,6 @@ class SheetData:
         for i in xrange(len(attrs)):
             vdict[attrs[i]] = matrix[i]
 
-        # print ">>> %r >>>>" % (vdict,)
         return vdict
 
     def value_matrix(self, *attrs):
@@ -48,7 +47,6 @@ class SheetData:
         for values in matrix:
             if len(values) < max_len:
                 values.extend([ None ] * (max_len - len(values)))
-        # print "<<< %r <<<<" % (matrix,)
         return matrix
 
     def composite_values(self, *attrs):
