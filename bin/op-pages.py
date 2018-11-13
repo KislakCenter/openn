@@ -273,7 +273,10 @@ def browse(opts):
     docids = [doc.id for doc in opfunc.queryset_iterator(
         Document.objects.filter(is_online = True))]
     for docid in docids:
-        document(docid, opts)
+        try:
+            document(docid, opts)
+        except OPennException:
+            pass
 
 def repositories_html(opts):
     """ Generate Repositories.html """

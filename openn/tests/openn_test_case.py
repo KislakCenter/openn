@@ -4,13 +4,14 @@
 from django.utils import unittest
 from django.test import TestCase
 
+from xmlunittest import XmlTestCase
 from openn.tests.helpers import *
 
 import logging
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-class OPennTestCase(TestCase):
+class OPennTestCase(TestCase, XmlTestCase):
 
     @classmethod
     def setUpClass(cls):

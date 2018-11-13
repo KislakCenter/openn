@@ -113,7 +113,7 @@ the '--out-dir' option.
 For example, note the following, for a document with ID 4221 and base
 directory 'lewis_e_018':
 
-   $ %prog -k xlsx=lewis_e_018_metadata.xlsx flp-bphil 4221
+   $ {0} -k xlsx=lewis_e_018_metadata.xlsx flp-bphil 4221
 
 This will create a new directory 'lewis_e_018' in the current directory, as
 well as the contained 'data' directory, and the TEI file:
@@ -124,11 +124,14 @@ Note: script will not run if './lewis_e_018' already exists.
 
 For spreadsheet-based TEI, the 'xlsx' keyword must be used:
 
-    $ %prog -k xlsx=path/to/file.xlsx flp-bphil 4732
+    $ {0} -k xlsx=path/to/file.xlsx flp-bphil 4732
 
-For Penn in Hand, no keyword arguments are necessary.
+For Penn in Hand, use the 'HOLDING_ID' keyword if the BibID is associated with
+more than one call number:
 
-"""
+    $ {0} -k HOLDING_ID=22315803310003681 penn-pih 459
+
+""".format(os.path.basename(sys.argv[0]))
 
     # usage = "%prog COLLECTION SOURCE_DIR"
 

@@ -233,6 +233,8 @@ LICENSES = {
 
 IMAGE_TYPES = ( '*.tif', '*.jpg' )
 
+# http://mdproc.library.upenn.edu:9292/records/9915808403503681/show?format=openn
+
 
 PREPARATION_METHODS = [
     {
@@ -240,15 +242,15 @@ PREPARATION_METHODS = [
         'description': "Uses metadata scraped from Penn in Hand to build metadata for the object. Requires bibid.txt file containing the object's BibID",
         'name': 'Penn in Hand Prep',
         'package_validation': {
-            'valid_names': ['*.tif', 'bibid.txt'],
+            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.tif', 'bibid.txt'],
         },
         'prep_class': {
             'class_name': 'openn.prep.medren_prep.MedrenPrep',
             'params': {
-                'pih_host': 'dla.library.upenn.edu',
-                'pih_path': '/dla/medren/pageturn.xml?id=MEDREN_{0}',
+                'pih_host': 'mdproc.library.upenn.edu:9292',
+                'pih_path': '/records/{0}/create?format=openn',
                 'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
             },
         },
