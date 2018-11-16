@@ -49,8 +49,8 @@
   <!-- Extract personal names, employing the date if present. -->
   <xsl:template name="extract-pn">
     <xsl:param name="datafield"/>
-    <xsl:call-template name="chomp-period">
-      <xsl:with-param name="string">
+    <xsl:call-template name="chopPunctuation">
+      <xsl:with-param name="chopString">
         <xsl:for-each
           select="$datafield/marc:subfield[@code = 'a' or @code = 'b' or @code = 'c' or @code = 'd']">
           <xsl:value-of select="."/>
