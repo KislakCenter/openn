@@ -85,3 +85,4 @@ vendor/*
 
 *junk*
 openn/tests/data/print_marc/*_TEI.xml
+openn/tests/data/muslim_world/*_TEI.xml
