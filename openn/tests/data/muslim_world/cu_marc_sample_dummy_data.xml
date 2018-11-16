@@ -117,7 +117,12 @@
       <marc:subfield code="6">880-04</marc:subfield>
       <marc:subfield code="a">Smith, David Eugene (700 sample),</marc:subfield>
       <marc:subfield code="d">1860-1944,</marc:subfield>
-      <marc:subfield code="d"></marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="700" ind1="1" ind2=" ">
+      <marc:subfield code="6">880-05</marc:subfield>
+      <marc:subfield code="a">Jazūlī, Muḥammad ibn Sulaymān (700 scribe sample),</marc:subfield>
+      <marc:subfield code="d">-1465.</marc:subfield>
+      <marc:subfield code="e">scribe</marc:subfield>
     </marc:datafield>
     <marc:datafield tag="710" ind1="2" ind2=" ">
       <marc:subfield code="a">Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)</marc:subfield>
@@ -140,6 +145,12 @@
       <marc:subfield code="6">700-04/r</marc:subfield>
       <marc:subfield code="a">جزولي، محمد بن سليمان،</marc:subfield>
       <marc:subfield code="d">1860-1944</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="880" ind1="1" ind2=" ">
+      <marc:subfield code="6">700-05/r</marc:subfield>
+      <marc:subfield code="a">جزولي، محمد بن سليمان،</marc:subfield>
+      <marc:subfield code="d">-1465</marc:subfield>
+      <marc:subfield code="e">scribe</marc:subfield>
     </marc:datafield>
     <marc:datafield tag="994" ind1=" " ind2=" ">
       <marc:subfield code="a">C0</marc:subfield>

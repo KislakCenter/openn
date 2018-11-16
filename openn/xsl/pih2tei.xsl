@@ -213,14 +213,14 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
                                     <!-- DE: marc 110 is a corporate author -->
                                     <xsl:for-each select="//marc:datafield[@tag='110' and ./marc:subfield[@code='a']]">
                                         <author>
-                                          <name>
+                                          <name type="authority">
                                             <xsl:call-template name="chopPunctuation">
                                                 <xsl:with-param name="chopString" select="./marc:subfield[@code='a']" />
                                             </xsl:call-template>
                                           </name>
                                             <!-- Look for an associaed graphical representation of the name -->
                                             <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
-                                                <name>
+                                                <name type="vernacular">
                                                     <xsl:variable name="datafield880" as="node()">
                                                         <xsl:call-template name="locate880">
                                                             <xsl:with-param name="datafield" select="."/>
@@ -236,14 +236,14 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
                                     <!-- marc 100: primary author, person -->
                                     <xsl:for-each select="//marc:datafield[@tag='100']">
                                         <author>
-                                          <persName>
+                                          <persName type="authority">
                                             <xsl:call-template name="extract-pn">
                                                 <xsl:with-param name="datafield" select="."/>
                                             </xsl:call-template>
                                           </persName>
                                             <!-- Look for an associaed graphical representation of the name -->
                                             <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
-                                                <persName>
+                                                <persName type="vernacular">
                                                     <xsl:variable name="datafield880" as="node()">
                                                         <xsl:call-template name="locate880">
                                                             <xsl:with-param name="datafield" select="."/>
@@ -259,14 +259,14 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
                                     <!-- DE: marc 700's w/o a relator (code='e') are secondary authors -->
                                     <xsl:for-each select="//marc:datafield[@tag='700' and not(child::marc:subfield[@code='e'])]">
                                         <author>
-                                          <persName>
+                                          <persName type="authority">
                                             <xsl:call-template name="extract-pn">
                                                 <xsl:with-param name="datafield" select="."/>
                                             </xsl:call-template>
                                           </persName>
                                             <!-- Look for an associaed graphical representation of the name -->
                                             <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
-                                              <persName>
+                                                <persName type="vernacular">
                                                   <xsl:variable name="datafield880" as="node()">
                                                       <xsl:call-template name="locate880">
                                                           <xsl:with-param name="datafield" select="."/>
@@ -279,30 +279,38 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
                                           </xsl:if>
                                         </author>
                                     </xsl:for-each>
-                                    <xsl:for-each select="//marc:datafield[@tag='700']/marc:subfield[@code='e']">
+                                    <xsl:for-each select="//marc:datafield[@tag='700' and ./marc:subfield[@code='e']]">
                                         <respStmt>
                                             <resp>
-                                                <xsl:call-template name="chomp-period">
-                                                    <xsl:with-param name="string">
+                                                <xsl:call-template name="chopPunctuation">
+                                                    <xsl:with-param name="chopString">
                                                         <xsl:call-template name="clean-up-text">
-                                                            <xsl:with-param name="some-text" select="."/>
+                                                            <xsl:with-param name="some-text" select="./marc:subfield[@code='e']"/>
                                                         </xsl:call-template>
                                                     </xsl:with-param>
                                                 </xsl:call-template>
                                             </resp>
-                                            <persName>
-                                                <xsl:call-template name="chomp-period">
-                                                    <xsl:with-param name="string">
-                                                        <xsl:call-template name="clean-up-text">
-                                                            <xsl:with-param name="some-text">
-                                                                <xsl:call-template name="extract-pn">
-                                                                    <xsl:with-param name="datafield" select="./parent::marc:datafield"/>
-                                                                </xsl:call-template>
-                                                            </xsl:with-param>
+                                            <persName type="authority">
+                                                <xsl:call-template name="clean-up-text">
+                                                    <xsl:with-param name="some-text">
+                                                        <xsl:call-template name="extract-pn">
+                                                            <xsl:with-param name="datafield" select="."/>
                                                         </xsl:call-template>
                                                     </xsl:with-param>
                                                 </xsl:call-template>
                                             </persName>
+
+                                            <!-- Look for an associaed graphical representation of the name -->
+                                            <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
+                                                <persName type="vernacular">
+                                                    <xsl:variable name="datafield880" as="node()">
+                                                        <xsl:call-template name="locate880">
+                                                            <xsl:with-param name="datafield" select="."/>
+                                                        </xsl:call-template>
+                                                    </xsl:variable>
+                                                    <xsl:value-of select="$datafield880/marc:subfield[@code='a']"/>
+                                                </persName>
+                                            </xsl:if>
                                         </respStmt>
                                     </xsl:for-each>
                                     <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a']">
