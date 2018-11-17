@@ -49,28 +49,45 @@
 
     <xsl:variable name="call_number">
         <xsl:choose>
-          <xsl:when test="$HOLDING_ID">
-            <xsl:if test="not(//marc:holding_id/text() = $HOLDING_ID)">
-              <xsl:message terminate="yes">
-ERROR: No entry found for holding ID: '<xsl:value-of select="$HOLDING_ID"/>'.
-              </xsl:message>
-            </xsl:if>
-            <xsl:value-of select="//marc:holding_id[text() = $HOLDING_ID]/parent::marc:holding/marc:call_number"/>
-          </xsl:when>
-          <xsl:when test="count(//marc:holding) &gt; 1">
-            <xsl:message terminate="yes">
-ERROR: Record has more than one holding; please provide HOLDING_ID:
-    <xsl:copy-of select="//marc:holdings"/>
-            </xsl:message>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="//marc:holding[1]/marc:call_number/text()"/>
-          </xsl:otherwise>
+            <xsl:when test="//marc:holdings/marc:holding">
+
+                <xsl:choose>
+                    <xsl:when test="$HOLDING_ID">
+                        <xsl:if test="not(//marc:holding_id/text() = $HOLDING_ID)">
+                            <xsl:message terminate="yes">
+                                ERROR: No entry found for holding ID: '<xsl:value-of select="$HOLDING_ID"/>'.
+                            </xsl:message>
+                        </xsl:if>
+                        <xsl:value-of select="//marc:holding_id[text() = $HOLDING_ID]/parent::marc:holding/marc:call_number"/>
+                    </xsl:when>
+                    <xsl:when test="count(//marc:holding) &gt; 1">
+                        <xsl:message terminate="yes">
+                            ERROR: Record has more than one holding; please provide HOLDING_ID:
+                            <xsl:copy-of select="//marc:holdings"/>
+                        </xsl:message>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="//marc:holding[1]/marc:call_number/text()"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="//marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']"/>
+            </xsl:otherwise>
         </xsl:choose>
-      <xsl:if test="//marc:record/marc:datafield[@tag='773']/marc:subfield[@code='g']">
-        <xsl:text> </xsl:text>
-        <xsl:value-of select="//marc:record/marc:datafield[@tag='773']/marc:subfield[@code='g']"/>
-      </xsl:if>
+        <!--
+            Datafield 773 is used to indicate a constituent unit within an item.
+
+            Penn uses 773$g to indicate the item number for objects in a collection.
+            From the specification:
+
+                $g - Related parts (R)
+
+        -->
+        <xsl:if test="//marc:record/marc:datafield[@tag='773']/marc:subfield[@code='g']">
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="//marc:record/marc:datafield[@tag='773']/marc:subfield[@code='g']"/>
+        </xsl:if>
     </xsl:variable>
 
     <xsl:variable name="ms_title">
@@ -91,6 +108,9 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
                             />
                         </title>
                     </titleStmt>
+                    <xsl:comment>
+                        TODO: Change publisher, licence information for MMW Columnbia, FLP, etc.
+                    </xsl:comment>
                     <publicationStmt>
                         <publisher>The University of Pennsylvania Libraries</publisher>
                         <availability>
@@ -209,6 +229,19 @@ ERROR: Record has more than one holding; please provide HOLDING_ID:
                                             <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']" />
                                         </xsl:call-template>
                                     </title>
+                                    <xsl:if test="starts-with(//marc:datafield[@tag='245']/marc:subfield[@code='6']/text(), '880')">
+                                        <title type="vernacular">
+                                            <xsl:variable name="datafield880" as="node()">
+                                                <xsl:call-template name="locate880">
+                                                    <xsl:with-param name="datafield" select="//marc:datafield[@tag='245']"/>
+                                                </xsl:call-template>
+                                            </xsl:variable>
+                                            <xsl:call-template name="chopPunctuation">
+                                                <xsl:with-param name="chopString" select="$datafield880/marc:subfield[@code='a']"/>
+                                            </xsl:call-template>
+                                        </title>
+                                    </xsl:if>
+
                                     <!-- DE: Grab authors from marc 110, 100 and 700 -->
                                     <!-- DE: marc 110 is a corporate author -->
                                     <xsl:for-each select="//marc:datafield[@tag='110' and ./marc:subfield[@code='a']]">
