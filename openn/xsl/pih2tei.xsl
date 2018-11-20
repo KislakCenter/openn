@@ -47,22 +47,31 @@
         </xsl:call-template>
     </xsl:variable>
 
+    <!--
+      <xsl:comment>
+        TODO: Shelfmark pulled from 099$a. CU MARC has 500$a => "Shelfmark: MS Or 355". Is this alw the same value as 099$a?
+        ANSWER: Value in  099$a and 500$a Shelfmark: will always be the same.
+        DONE
+      </xsl:comment>
+    -->
     <xsl:variable name="call_number">
         <xsl:choose>
+            <!-- HOLDINGS
+            If we have a marc:holdings section (Penn manuscritps), then get the call number there
+            -->
             <xsl:when test="//marc:holdings/marc:holding">
-
                 <xsl:choose>
                     <xsl:when test="$HOLDING_ID">
                         <xsl:if test="not(//marc:holding_id/text() = $HOLDING_ID)">
                             <xsl:message terminate="yes">
-                                ERROR: No entry found for holding ID: '<xsl:value-of select="$HOLDING_ID"/>'.
+                                <xsl:text>ERROR: No entry found for holding ID: '</xsl:text><xsl:value-of select="$HOLDING_ID"/><xsl:text>'.</xsl:text>
                             </xsl:message>
                         </xsl:if>
                         <xsl:value-of select="//marc:holding_id[text() = $HOLDING_ID]/parent::marc:holding/marc:call_number"/>
                     </xsl:when>
                     <xsl:when test="count(//marc:holding) &gt; 1">
                         <xsl:message terminate="yes">
-                            ERROR: Record has more than one holding; please provide HOLDING_ID:
+                            <xsl:text>ERROR: Record has more than one holding; please provide HOLDING_ID: </xsl:text>
                             <xsl:copy-of select="//marc:holdings"/>
                         </xsl:message>
                     </xsl:when>
@@ -72,6 +81,7 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
+                <!-- There is no holding record, get the call number from 099$a -->
                 <xsl:value-of select="//marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']"/>
             </xsl:otherwise>
         </xsl:choose>
@@ -79,6 +89,13 @@
             Datafield 773 is used to indicate a constituent unit within an item.
 
             Penn uses 773$g to indicate the item number for objects in a collection.
+
+            For example, from Ms Coll 390, item 747 (BibID 9947742213503681):
+
+            773:	0_|t  Collection of Indic Manuscripts, ca. 1505-1850. |g  Item 747
+
+            See http://dla.library.upenn.edu/dla/medren/record.html?id=MEDREN_9947742213503681&doubleside=0&rotation=0&fq=collection_facet%3A%22Indic%20Manuscripts%22&detail=staff
+
             From the specification:
 
                 $g - Related parts (R)
@@ -96,11 +113,25 @@
                 select="//marc:datafield[@tag='245']/marc:subfield[@code='a']"/>
         </xsl:call-template>
     </xsl:variable>
+
+    <!-- Process the Marc XML record -->
     <xsl:template match="/">
 
         <TEI xmlns="http://www.tei-c.org/ns/1.0">
             <teiHeader>
                 <fileDesc>
+                    <!--
+                  <xsl:comment>
+                    TODO: ? for Mitch/Dot/Will: CU MARC uses 588$a to give description provenance ('Item cataloged from digital facsimile and existing description.'). Should we include that?
+                    ANSWER: NO
+                    DONE
+                  </xsl:comment>
+                  <xsl:comment>
+                    TODO: ? for Mitch/Dot: Do we include CU MARC 710$a for "name of agency of production" (AMREMM): "Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)". Is so, where?
+                    ANSWER: NO
+                    DONE
+                  </xsl:comment>
+                    -->
                     <titleStmt>
                         <title>
                             <xsl:value-of
@@ -108,9 +139,11 @@
                             />
                         </title>
                     </titleStmt>
+                    <!--
                     <xsl:comment>
                         TODO: Change publisher, licence information for MMW Columnbia, FLP, etc.
                     </xsl:comment>
+                    -->
                     <publicationStmt>
                         <publisher>The University of Pennsylvania Libraries</publisher>
                         <availability>
@@ -200,7 +233,7 @@
                                 <!--
                                     For now for vernacular scripts, extracting just the text of the name, subfield $a
 
-                                    TODO: Looking into concatenating bidirectional strings; i.e., adding vernacular arabic script with latin character dates
+                                    TODO: Look into concatenating bidirectional strings; i.e., adding vernacular arabic script with latin character dates
 
                                     Experiments using the recommendations here have not worked:
 
@@ -224,9 +257,33 @@
 
                                 -->
                                 <msItem>
+                                    <!--
+                                    <xsl:comment>
+                                        TODO: Need to pull title, author, others(??) values in vernacualar from 880 fields.
+                                        ANSWER: Yes
+                                        DONE
+
+                                        TODO: Confirm with Dot that title/@type is appropriate; add @type non-vernacular title
+
+                                        TODO: Confirm with Dot that  author/name|persName inertions will work
+                                        TODO: Confirm with Dot that name|persName/@type vernacular/authority is OK
+                                    </xsl:comment>
+                                    <xsl:comment>
+                                        TODO: ? for Peter: What fields should we pull author from and that will have alternate representations in 880 fields. For Penn medieval MSS we pull author from 110$a, 100$adbcd, 700$abcd
+                                        ANSWER: In most of our manuscripts the author would be in MARC 100 but your setup would cover other cases.
+                                        DONE
+                                    </xsl:comment>
+                                    <xsl:comment>
+                                        TODO: ? for Peter: What other roles will CU MARC records have: scribe, artist, etc.? which will have corresponding 880s. For Penn medieval MMS we pull values from 700$abcd where the relator term 700$e is present.
+                                        ANSWER: In addition to scribe, artist , etc.roles we have seen and may include in the future the following: patron, translator, calligrapher,  former owner.
+                                        DONE - no need to change anything; right now just pulling whatever is there
+
+                                        TODO: Confirm with Dot that this 'promiscuous' approach is ok
+                                    </xsl:comment>
+                                    -->
                                     <title>
                                         <xsl:call-template name="clean-up-text">
-                                            <xsl:with-param name="some-text" select="//marc:datafield[@tag='245']/marc:subfield[@code='a']" />
+                                            <xsl:with-param name="some-text" select="$ms_title" />
                                         </xsl:call-template>
                                     </title>
                                     <xsl:if test="starts-with(//marc:datafield[@tag='245']/marc:subfield[@code='6']/text(), '880')">
@@ -266,7 +323,7 @@
                                             </xsl:if>
                                         </author>
                                     </xsl:for-each>
-                                    <!-- marc 100: primary author, person -->
+                                    <!-- marc 100: primary author, person name -->
                                     <xsl:for-each select="//marc:datafield[@tag='100']">
                                         <author>
                                           <persName type="authority">
@@ -289,7 +346,19 @@
                                             </xsl:if>
                                         </author>
                                     </xsl:for-each>
-                                    <!-- DE: marc 700's w/o a relator (code='e') are secondary authors -->
+                                    <!--
+                                        700 added entry, persnal name
+                                        DE: marc 700's w/o a relator (code='e') are secondary authors
+
+                                        Note that 700 fields for secondary authors, may include a work title 770$t:
+
+                                                <datafield tag="700" ind1="1" ind2="2">
+                                                    <subfield code="6">880-03</subfield>
+                                                    <subfield code="a">Shāfiʻī, Shams al-Dīn,</subfield>
+                                                    <subfield code="t">Shamsīyah fī al-kashf ʻan mā ʼawdaʻ fī al-jadāwil al-zahrīyah.</subfield>
+                                                </datafield>
+
+                                    -->
                                     <xsl:for-each select="//marc:datafield[@tag='700' and not(child::marc:subfield[@code='e'])]">
                                         <author>
                                           <persName type="authority">
@@ -312,6 +381,15 @@
                                           </xsl:if>
                                         </author>
                                     </xsl:for-each>
+                                    <!--
+                                        ??? MARC 710 added entry - coporate name
+
+                                        TODO: Ask Mitch/Amey/Kelly - Will we ever have an MS with an added corp. author?
+                                    -->
+                                    <!--
+                                        respStmts:
+                                        Add datafields 700 with a relator term (code='e') as respStmts
+                                    -->
                                     <xsl:for-each select="//marc:datafield[@tag='700' and ./marc:subfield[@code='e']]">
                                         <respStmt>
                                             <resp>
@@ -374,6 +452,16 @@
                                     </msItem>
                                 </xsl:for-each>
                             </msContents>
+                            <!--
+                                 <xsl:comment>
+                                    TODO: Columbia binding in field 563
+                                    ANSWER: YES
+                                    DONE
+
+                                    TODO: Confirm with Peter (or Kelly?) that these will always begin 'Binding: '
+                                    TODO: Or come up a more flexible way of testing 562 is alw. binding;
+                                 </xsl:comment>
+                            -->
                             <physDesc>
                                 <xsl:if test="//marc:datafield[@tag='300']">
                                     <xsl:variable name="datafield" select="//marc:datafield[@tag='300']"/>
@@ -485,17 +573,32 @@
                                         </xsl:for-each>
                                     </decoDesc>
                                 </xsl:if>
-                                <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Binding:')]">
+                                <xsl:if test="//marc:datafield[@tag='563' or (@tag='500' and starts-with(./marc:subfield[@code='a']/text(), 'Binding:'))]">
                                     <bindingDesc>
                                         <binding>
-                                            <p>
-                                                <xsl:value-of select="normalize-space(substring(.,9))"/>
-                                            </p>
+                                            <xsl:for-each select="//marc:datafield[@tag='563' or (@tag='500' and starts-with(./marc:subfield[@code='a']/text(), 'Binding:'))]">
+                                                <p>
+                                                <xsl:choose>
+                                                    <xsl:when test="matches(./marc:subfield[@code='a']/text(), '^binding:', 'i')">
+                                                        <xsl:value-of select="normalize-space(substring(./marc:subfield[@code='a']/text(),9))"/>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <xsl:value-of select="normalize-space(./marc:subfield[@code='a']/text())"/>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                                </p>
+                                            </xsl:for-each>
                                         </binding>
                                     </bindingDesc>
-                                </xsl:for-each>
+                                </xsl:if>
                             </physDesc>
                             <history>
+                                <!--
+                              <xsl:comment>
+                              TODO: Add Columbia orgin info: coming from field 264
+                              ANSWER: NO
+                              </xsl:comment>
+                                -->
                                 <origin>
                                     <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Origin:')]">
                                         <p>
@@ -527,9 +630,21 @@
                                 </origin>
 
                                 <!-- DOT ADDED PROVENANCE -->
-                                <xsl:for-each select="//marc:datafield[@tag='561']">
+                                <!--
+                                <xsl:comment>
+                                  TODO: CU MARC uses 541$a for acquistion; Question for Mitch/Dot: Use tei:acquisition or tei:provenance for this? We don't use tei:acquisition in any of our other TEI.
+                                  ANSWER: YES ADD TO PROVENANCE ONLY
+                                  DONE
+                                </xsl:comment>
+                                -->
+                                <xsl:for-each select="//marc:datafield[@tag='541']/marc:subfield[@code='a']">
                                     <provenance>
-                                        <xsl:value-of select="marc:subfield[@code='a']"/>
+                                        <xsl:value-of select="."/>
+                                    </provenance>
+                                </xsl:for-each>
+                                <xsl:for-each select="//marc:datafield[@tag='561']/marc:subfield[@code='a']">
+                                    <provenance>
+                                        <xsl:value-of select="."/>
                                     </provenance>
                                 </xsl:for-each>
                                 <!-- END DOT MOD -->
