@@ -128,6 +128,11 @@
       <marc:subfield code="a">Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)</marc:subfield>
       <marc:subfield code="5">NNC</marc:subfield>
     </marc:datafield>
+    <marc:datafield tag="710" ind1="2" ind2=" ">
+      <marc:subfield code="a">University of Edinburgh</marc:subfield>
+      <marc:subfield code="5">NNC</marc:subfield>
+      <marc:subfield code="e">former owner.</marc:subfield>
+    </marc:datafield>
     <marc:datafield tag="880" ind1="1" ind2=" ">
       <marc:subfield code="6">100-01/r</marc:subfield>
       <marc:subfield code="a">جزولي، محمد بن سليمان،</marc:subfield>
