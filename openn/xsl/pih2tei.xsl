@@ -80,9 +80,19 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
+            <xsl:when test="//marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']">
+              <!-- The call number is in 099$a -->
+              <xsl:value-of select="//marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']"/>
+            </xsl:when>
+            <xsl:when test="//marc:record/marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(text(), 'Shelfmark:')]">
+              <xsl:call-template name="chopPunctuation">
+                <xsl:with-param name="chopString" select="normalize-space(substring(//marc:record/marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(text(), 'Shelfmark:')],11))"/>
+              </xsl:call-template>
+            </xsl:when>
             <xsl:otherwise>
-                <!-- There is no holding record, get the call number from 099$a -->
-                <xsl:value-of select="//marc:record/marc:datafield[@tag='099']/marc:subfield[@code='a']"/>
+              <xsl:message terminate="yes">
+                <xsl:text>ERROR: No call number found in marc:holdings, datafield 099$a or datafield 500$a beginning with 'Shelfmark'.</xsl:text>
+              </xsl:message>
             </xsl:otherwise>
         </xsl:choose>
         <!--
@@ -139,11 +149,9 @@
                             />
                         </title>
                     </titleStmt>
-                    <!--
                     <xsl:comment>
                         TODO: Change publisher, licence information for MMW Columnbia, FLP, etc.
                     </xsl:comment>
-                    -->
                     <publicationStmt>
                         <publisher>The University of Pennsylvania Libraries</publisher>
                         <availability>
@@ -169,7 +177,7 @@
                                 <xsl:variable name="test" select="marc:subfield[@code='a']"/>
                                 <xsl:choose>
                                     <xsl:when
-                                        test="not(starts-with($test,'Pagination:')) and not(starts-with($test,'Foliation:')) and not(starts-with($test,'Layout:')) and not(starts-with($test,'Colophon:')) and not(starts-with($test,'Collation:')) and not(starts-with($test,'Script:')) and not(starts-with($test,'Decoration:')) and not(starts-with($test,'Binding:')) and not(starts-with($test,'Origin:')) and not(starts-with($test,'Watermarks:')) and not(starts-with($test,'Watermark:')) and not(starts-with($test,'Signatures:'))">
+                                      test="not(starts-with($test,'Pagination:')) and not(starts-with($test,'Foliation:')) and not(starts-with($test,'Layout:')) and not(starts-with($test,'Colophon:')) and not(starts-with($test,'Collation:')) and not(starts-with($test,'Script:')) and not(starts-with($test,'Decoration:')) and not(starts-with($test,'Binding:')) and not(starts-with($test,'Origin:')) and not(starts-with($test,'Watermarks:')) and not(starts-with($test,'Watermark:')) and not(starts-with($test,'Signatures:')) and not(starts-with($test,'Shelfmark:'))">
                                         <note>
                                             <xsl:value-of
                                                 select="normalize-space(marc:subfield[@code='a'])"/>
@@ -215,7 +223,9 @@
 
                                 <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
                                     <textLang>
-                                        <xsl:if test="//marc:datafield[@tag='041']/marc:subfield[@code='a']">
+                                      <xsl:choose>
+                                        <xsl:when test="//marc:datafield[@tag='041']/marc:subfield[@code='a']">
+                                          <!-- If we have 0414a values; pull language codes from there -->
                                             <xsl:attribute name="mainLang" select="//marc:datafield[@tag='041']/marc:subfield[@code='a'][1]"/>
                                             <xsl:if test="count(//marc:datafield[@tag='041']/marc:subfield[@code='a']) &gt; 1">
                                                 <xsl:attribute name="otherLangs">
@@ -224,7 +234,12 @@
                                                     </xsl:call-template>
                                                 </xsl:attribute>
                                             </xsl:if>
-                                        </xsl:if>
+                                        </xsl:when>
+                                        <!-- Else, if there's a lanugage in 008$a, pull the mainLang code from there. -->
+                                        <xsl:when test="not(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3) = '   ')">
+                                          <xsl:attribute name="mainLang" select="normalize-space(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3))"/>
+                                        </xsl:when>
+                                      </xsl:choose>
                                         <xsl:call-template name="chomp-period">
                                             <xsl:with-param name="string" select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
                                         </xsl:call-template>
@@ -239,7 +254,7 @@
 
                                         https://www.w3.org/International/questions/qa-bidi-unicode-controls
 
-                                    At least in Oxygen, the bidi codes I used show up as little boxes rather than afffect character orientation
+                                    At least in Oxygen, the bidi codes I used show up as little boxes rather than change script direction
 
                                     Would need to check the orientation code in the linkage; e.g. the '/r' in '100-01/r'* ,
 
@@ -249,7 +264,7 @@
                                           <marc:subfield code="d">-1465</marc:subfield>
                                         </marc:datafield>
 
-                                    MARC page with details on orientatiion codes for lingage control subfield, '$6':
+                                    MARC page with details on orientation codes for linkage control subfield, '$6':
 
                                         https://www.loc.gov/marc/bibliographic/ecbdcntf.html
 
@@ -257,6 +272,7 @@
 
                                 -->
                                 <msItem>
+                                  <!-- ====================== TITLE ===================== -->
                                     <!--
                                     <xsl:comment>
                                         TODO: Need to pull title, author, others(??) values in vernacualar from 880 fields.
@@ -267,18 +283,6 @@
 
                                         TODO: Confirm with Dot that  author/name|persName inertions will work
                                         TODO: Confirm with Dot that name|persName/@type vernacular/authority is OK
-                                    </xsl:comment>
-                                    <xsl:comment>
-                                        TODO: ? for Peter: What fields should we pull author from and that will have alternate representations in 880 fields. For Penn medieval MSS we pull author from 110$a, 100$adbcd, 700$abcd
-                                        ANSWER: In most of our manuscripts the author would be in MARC 100 but your setup would cover other cases.
-                                        DONE
-                                    </xsl:comment>
-                                    <xsl:comment>
-                                        TODO: ? for Peter: What other roles will CU MARC records have: scribe, artist, etc.? which will have corresponding 880s. For Penn medieval MMS we pull values from 700$abcd where the relator term 700$e is present.
-                                        ANSWER: In addition to scribe, artist , etc.roles we have seen and may include in the future the following: patron, translator, calligrapher,  former owner.
-                                        DONE - no need to change anything; right now just pulling whatever is there
-
-                                        TODO: Confirm with Dot that this 'promiscuous' approach is ok
                                     </xsl:comment>
                                     -->
                                     <title>
@@ -299,8 +303,59 @@
                                         </title>
                                     </xsl:if>
 
+                                  <!-- ====================== AUTHORS ===================== -->
+                                  <!--
+                                    <xsl:comment>
+                                        TODO: Need to pull title, author, others(??) values in vernacualar from 880 fields.
+                                        ANSWER: Yes
+                                        DONE
+
+                                        TODO: Confirm with Dot that title/@type is appropriate; add @type non-vernacular title
+
+                                        TODO: Confirm with Dot that  author/name|persName insertions will work
+                                        TODO: Confirm with Dot that name|persName/@type vernacular/authority is OK
+                                    </xsl:comment>
+                                    <xsl:comment>
+                                        TODO: ? for Peter: What fields should we pull author from and that will have alternate representations in 880 fields. For Penn medieval MSS we pull author from 110$a, 100$adbcd, 700$abcd
+                                        ANSWER: In most of our manuscripts the author would be in MARC 100 but your setup would cover other cases.
+                                        DONE
+                                    </xsl:comment>
+                                    <xsl:comment>
+                                        TODO: ? for Peter: What other roles will CU MARC records have: scribe, artist, etc.? which will have corresponding 880s. For Penn medieval MMS we pull values from 700$abcd where the relator term 700$e is present.
+                                        ANSWER: In addition to scribe, artist , etc.roles we have seen and may include in the future the following: patron, translator, calligrapher,  former owner.
+                                        DONE - no need to change anything; right now just pulling whatever is there
+
+                                        TODO: Confirm with Dot that this 'promiscuous' approach is ok
+                                    </xsl:comment>
+                                    -->
                                     <!-- DE: Grab authors from marc 110, 100 and 700 -->
                                     <!-- DE: marc 110 is a corporate author -->
+
+                                  <!-- ====== 100: Author, Personal Name -->
+                                  <xsl:for-each select="//marc:datafield[@tag='100']">
+                                    <author>
+                                      <persName type="authority">
+                                        <xsl:call-template name="extract-pn">
+                                          <xsl:with-param name="datafield" select="."/>
+                                        </xsl:call-template>
+                                      </persName>
+                                      <!-- Look for an associaed graphical representation of the name -->
+                                      <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
+                                        <persName type="vernacular">
+                                          <xsl:variable name="datafield880" as="node()">
+                                            <xsl:call-template name="locate880">
+                                              <xsl:with-param name="datafield" select="."/>
+                                            </xsl:call-template>
+                                          </xsl:variable>
+                                          <xsl:call-template name="chopPunctuation">
+                                            <xsl:with-param name="chopString" select="$datafield880/marc:subfield[@code='a']"/>
+                                          </xsl:call-template>
+                                        </persName>
+                                      </xsl:if>
+                                    </author>
+                                  </xsl:for-each>
+
+                                  <!-- ====== 110: Author, Personal Name -->
                                     <xsl:for-each select="//marc:datafield[@tag='110' and ./marc:subfield[@code='a']]">
                                         <author>
                                           <name type="authority">
@@ -323,31 +378,10 @@
                                             </xsl:if>
                                         </author>
                                     </xsl:for-each>
-                                    <!-- marc 100: primary author, person name -->
-                                    <xsl:for-each select="//marc:datafield[@tag='100']">
-                                        <author>
-                                          <persName type="authority">
-                                            <xsl:call-template name="extract-pn">
-                                                <xsl:with-param name="datafield" select="."/>
-                                            </xsl:call-template>
-                                          </persName>
-                                            <!-- Look for an associaed graphical representation of the name -->
-                                            <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
-                                                <persName type="vernacular">
-                                                    <xsl:variable name="datafield880" as="node()">
-                                                        <xsl:call-template name="locate880">
-                                                            <xsl:with-param name="datafield" select="."/>
-                                                        </xsl:call-template>
-                                                    </xsl:variable>
-                                                    <xsl:call-template name="chopPunctuation">
-                                                        <xsl:with-param name="chopString" select="$datafield880/marc:subfield[@code='a']"/>
-                                                    </xsl:call-template>
-                                                </persName>
-                                            </xsl:if>
-                                        </author>
-                                    </xsl:for-each>
+
+                                  <!-- ====== 700: Secondary Author, Personal Name -->
                                     <!--
-                                        700 added entry, persnal name
+                                        700 added entry
                                         DE: marc 700's w/o a relator (code='e') are secondary authors
 
                                         Note that 700 fields for secondary authors, may include a work title 770$t:
@@ -366,7 +400,7 @@
                                                 <xsl:with-param name="datafield" select="."/>
                                             </xsl:call-template>
                                           </persName>
-                                            <!-- Look for an associaed graphical representation of the name -->
+                                            <!-- Look for an associated graphical representation of the name -->
                                             <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
                                                 <persName type="vernacular">
                                                   <xsl:variable name="datafield880" as="node()">
@@ -381,11 +415,33 @@
                                           </xsl:if>
                                         </author>
                                     </xsl:for-each>
-                                    <!--
-                                        ??? MARC 710 added entry - coporate name
 
-                                        TODO: Ask Mitch/Amey/Kelly - Will we ever have an MS with an added corp. author?
-                                    -->
+                                  <!-- ====== 710: Secondary Author, Corporate Name -->
+                                  <xsl:for-each select="//marc:datafield[@tag='710' and not(child::marc:subfield[@code='e']) and not(contains(child::marc:subfield[@code='a'],'Columbia University'))]">
+                                    <author>
+                                      <name type="authority">
+                                        <xsl:call-template name="extract-pn">
+                                          <xsl:with-param name="datafield" select="."/>
+                                        </xsl:call-template>
+                                      </name>
+                                      <!-- Look for an associaed graphical representation of the name -->
+                                      <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
+                                        <name type="vernacular">
+                                          <xsl:variable name="datafield880" as="node()">
+                                            <xsl:call-template name="locate880">
+                                              <xsl:with-param name="datafield" select="."/>
+                                            </xsl:call-template>
+                                          </xsl:variable>
+                                          <xsl:call-template name="chopPunctuation">
+                                            <xsl:with-param name="chopString" select="$datafield880/marc:subfield[@code='a']"/>
+                                          </xsl:call-template>
+                                        </name>
+                                      </xsl:if>
+                                    </author>
+                                  </xsl:for-each>
+
+                                  <!-- ====================== RESP STATEMENTS ===================== -->
+                                  <!-- ====== 700$a$e: Related name, personal -->
                                     <!--
                                         respStmts:
                                         Add datafields 700 with a relator term (code='e') as respStmts
@@ -424,6 +480,45 @@
                                             </xsl:if>
                                         </respStmt>
                                     </xsl:for-each>
+
+                                  <!-- ====== 710$a$e: Related name, corporate -->
+                                  <xsl:for-each select="//marc:datafield[@tag='710' and ./marc:subfield[@code='e']]">
+                                    <respStmt>
+                                      <resp>
+                                        <xsl:call-template name="chopPunctuation">
+                                          <xsl:with-param name="chopString">
+                                            <xsl:call-template name="clean-up-text">
+                                              <xsl:with-param name="some-text" select="./marc:subfield[@code='e']"/>
+                                            </xsl:call-template>
+                                          </xsl:with-param>
+                                        </xsl:call-template>
+                                      </resp>
+                                      <name type="authority">
+                                        <xsl:call-template name="clean-up-text">
+                                          <xsl:with-param name="some-text">
+                                            <xsl:call-template name="extract-pn">
+                                              <xsl:with-param name="datafield" select="."/>
+                                            </xsl:call-template>
+                                          </xsl:with-param>
+                                        </xsl:call-template>
+                                      </name>
+
+                                      <!-- Look for an associaed graphical representation of the name -->
+                                      <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
+                                        <name type="vernacular">
+                                          <xsl:variable name="datafield880" as="node()">
+                                            <xsl:call-template name="locate880">
+                                              <xsl:with-param name="datafield" select="."/>
+                                            </xsl:call-template>
+                                          </xsl:variable>
+                                          <xsl:value-of select="$datafield880/marc:subfield[@code='a']"/>
+                                        </name>
+                                      </xsl:if>
+                                    </respStmt>
+                                  </xsl:for-each>
+
+                                  <!-- ====================== COLOPHON ===================== -->
+
                                     <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a']">
                                         <xsl:choose>
                                             <xsl:when test="starts-with(.,'Colophon')">
@@ -434,6 +529,8 @@
                                         </xsl:choose>
                                     </xsl:for-each>
                                 </msItem>
+
+                              <!-- ====================== MS ITEMS ===================== -->
 
                                 <xsl:for-each select="//page/tocentry[@name='toc']">
                                     <xsl:variable name="locus" select="./parent::page/@visiblepage"/>
@@ -452,6 +549,8 @@
                                     </msItem>
                                 </xsl:for-each>
                             </msContents>
+
+                          <!-- ====================== PHYS DESC ===================== -->
                             <!--
                                  <xsl:comment>
                                     TODO: Columbia binding in field 563
@@ -473,6 +572,8 @@
                                       </xsl:call-template>
                                     </xsl:variable>
                                     <objectDesc>
+
+                                      <!-- ====================== SUPPORT DESC ===================== -->
                                         <supportDesc>
                                             <xsl:if test="$support">
                                                 <xsl:attribute name="material">
@@ -487,6 +588,7 @@
                                                 </xsl:attribute>
                                             </xsl:if>
                                             <xsl:if test="$support">
+                                              <!-- ====================== SUPPORT ===================== -->
                                                 <support>
                                                     <p>
                                                         <xsl:value-of select="$support"/>
@@ -498,6 +600,8 @@
                                                     </xsl:for-each>
                                                 </support>
                                             </xsl:if>
+
+                                          <!-- ====================== EXTENT ===================== -->
                                             <xsl:if test="$datafield/marc:subfield[@code='a'] or $datafield/marc:subfield[@code='c']">
                                                 <extent>
                                                     <xsl:call-template name="chomp-period">
@@ -507,7 +611,9 @@
                                                     </xsl:call-template>
                                                 </extent>
                                             </xsl:if>
-                                            <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and (starts-with(., 'Foliation:') or starts-with(., 'Pagination:'))]">
+
+                                          <!-- ====================== FOLIATION ===================== -->
+                                          <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and (starts-with(., 'Foliation:') or starts-with(., 'Pagination:'))]">
                                                 <foliation>
                                                     <xsl:choose>
                                                         <xsl:when test="starts-with(., 'Foliation:')">
@@ -519,7 +625,9 @@
                                                     </xsl:choose>
                                                 </foliation>
                                             </xsl:for-each>
-                                            <xsl:if test="contains(.,'Collation:') or contains(.,'Signatures')">
+
+                                          <!-- ====================== COLLATION ===================== -->
+                                          <xsl:if test="contains(.,'Collation:') or contains(.,'Signatures')">
                                                 <collation>
                                                     <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Collation:')]">
                                                         <p>
@@ -537,6 +645,7 @@
                                             </xsl:if>
                                         </supportDesc>
 
+                                      <!-- ====================== LAYOUT DESC ===================== -->
                                         <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(.,'Layout:')]">
                                             <layoutDesc>
                                                 <layout>
@@ -547,14 +656,18 @@
 
                                     </objectDesc>
                                 </xsl:if>
-                                <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Script:')]">
+
+                              <!-- ====================== SCRITP DESC ===================== -->
+                              <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Script:')]">
                                     <scriptDesc>
                                         <scriptNote>
                                             <xsl:value-of select="normalize-space(substring(.,8))"/>
                                         </scriptNote>
                                     </scriptDesc>
                                 </xsl:for-each>
-                                <xsl:if test="starts-with(.,'Decoration:') or count(//page/tocentry[@name='ill']) > 0">
+
+                              <!-- ====================== DECO DESC ===================== -->
+                              <xsl:if test="starts-with(.,'Decoration:') or count(//page/tocentry[@name='ill']) > 0">
                                     <decoDesc>
                                         <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a'and starts-with(., 'Decoration:')]">
                                             <decoNote>
@@ -573,7 +686,9 @@
                                         </xsl:for-each>
                                     </decoDesc>
                                 </xsl:if>
-                                <xsl:if test="//marc:datafield[@tag='563' or (@tag='500' and starts-with(./marc:subfield[@code='a']/text(), 'Binding:'))]">
+
+                              <!-- ====================== BINDING DESC ===================== -->
+                              <xsl:if test="//marc:datafield[@tag='563' or (@tag='500' and starts-with(./marc:subfield[@code='a']/text(), 'Binding:'))]">
                                     <bindingDesc>
                                         <binding>
                                             <xsl:for-each select="//marc:datafield[@tag='563' or (@tag='500' and starts-with(./marc:subfield[@code='a']/text(), 'Binding:'))]">
@@ -592,8 +707,12 @@
                                     </bindingDesc>
                                 </xsl:if>
                             </physDesc>
-                            <history>
-                                <!--
+
+                          <!-- ====================== HISTORY ===================== -->
+                          <history>
+
+                            <!-- ====================== ORIGIN ===================== -->
+                            <!--
                               <xsl:comment>
                               TODO: Add Columbia orgin info: coming from field 264
                               ANSWER: NO
@@ -637,7 +756,9 @@
                                   DONE
                                 </xsl:comment>
                                 -->
-                                <xsl:for-each select="//marc:datafield[@tag='541']/marc:subfield[@code='a']">
+
+                            <!-- ====================== PROVENANCE ===================== -->
+                            <xsl:for-each select="//marc:datafield[@tag='541']/marc:subfield[@code='a']">
                                     <provenance>
                                         <xsl:value-of select="."/>
                                     </provenance>
@@ -653,6 +774,8 @@
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
+
+              <!-- ====================== PROFILE DESC: KEYWORDS AND SUBJECT HEADINGS ===================== -->
 
                 <!-- DOT ADDED KEYWORDS FOR SUBJECTS AND GENRE/FORM -->
                 <profileDesc>
