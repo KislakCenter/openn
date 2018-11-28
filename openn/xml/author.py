@@ -9,7 +9,12 @@ class Author(XMLWhatsit):
 
     @property
     def name(self):
-        return self._get_text('.')
+        if self.has_node('./t:persName'):
+            return self._get_text('./t:persName[1]')
+        elif self.has_node('./t:name'):
+            return self._get_text('./t:name[1]')
+        else:
+            return self._get_text('.')
 
     @property
     def ref(self):

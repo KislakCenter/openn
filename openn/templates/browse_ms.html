@@ -45,7 +45,7 @@
           <h4>Other related names</h4>
           <ul class="list-unstyled">
           {% for resp in doc.tei.related_names %}
-             <li>{{ resp.pers_name }}, {{resp.resp}}
+             <li>{{ resp.name }}, {{resp.resp}}
              {% if resp.ref %}
              ({{ resp.ref|urlize }})
              {% endif %}

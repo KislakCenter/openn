@@ -33,6 +33,11 @@ class XMLWhatsit:
 
         return xmltodict.parse(s)
 
+    def has_node(self,xpath):
+        nodes = self._get_nodes(xpath)
+
+        return len(nodes) > 0
+
     def _get_objects(self,xpath):
         objs = []
         for e in self._get_nodes(xpath):
