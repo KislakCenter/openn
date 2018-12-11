@@ -3,6 +3,7 @@
 
 import os
 import json
+import pprint
 
 from django.utils import unittest
 from django.test import TestCase
@@ -20,9 +21,11 @@ class TestOPWorkbook(OPennTestCase):
 
     pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
     bibliophilly_json       = os.path.join(sheets_dir, 'bibliophilly.json')
+    muslim_world_json       = os.path.join(this_dir, 'data/muslim_world/muslimworld.json')
 
     valid_workbook          = os.path.join(sheets_dir, 'valid_workbook.xlsx')
     untrimmed_workbook      = os.path.join(this_dir, 'data/bibliophilly/FLPLewisE018/openn_metadata.xlsx')
+    muslim_world_workbook   = os.path.join(this_dir, 'data/muslim_world/ms_or_24.xlsx')
 
 
     def setUp(self):
@@ -55,6 +58,13 @@ class TestOPWorkbook(OPennTestCase):
 
     def test_untrimmed_workbook(self):
         wkbk = OPWorkbook(self.untrimmed_workbook, json.load(open(self.bibliophilly_json)))
+        wkbk.validate()
+        self.assertFalse(wkbk.has_metadata_errors())
+
+    def test_muslimworld(self):
+        config_dict = json.load(open(self.muslim_world_json))
+        wkbk = OPWorkbook(self.muslim_world_workbook, config_dict)
+        attrs = [key for key in config_dict['sheet_config']['pages']['fields']]
         wkbk.validate()
         self.assertFalse(wkbk.has_metadata_errors())
 

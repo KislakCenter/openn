@@ -21,6 +21,7 @@ class TestSpreadsheetXML(OPennTestCase):
     unicode_workbook         = os.path.join(sheets_dir, 'unicode_workbook.xlsx')
     bibliophilly_workbook    = os.path.join(this_dir,
                                             'data/bibliophilly/FLPLewisE087/openn_metadata.xlsx')
+    muslim_world_workbook    = os.path.join(this_dir, 'data/muslim_world/ms_or_24.xlsx')
 
     url1 = 'http://id.loc.gov/authorities/names/n50049445.html'
     url2 = 'http://id.loc.gov/authorities/subjects/sh99002320.html'
@@ -30,6 +31,7 @@ class TestSpreadsheetXML(OPennTestCase):
 
     pacscl_diairies_json    = os.path.join(sheets_dir, 'pacscl_diaries.json')
     biblio_philly_json      = os.path.join(this_dir, '../bibliophilly.json')
+    muslim_world_json       = os.path.join(this_dir, 'data/muslim_world/muslimworld.json')
 
     xml_config = [
         {
@@ -222,3 +224,11 @@ class TestSpreadsheetXML(OPennTestCase):
         sp_xml = SpreadsheetXML(settings.LICENSES)
 
         xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
+
+    def test_muslimworld(self):
+        config = json.load(open(self.muslim_world_json))
+        workbook = OPWorkbook(self.muslim_world_workbook, config)
+        sp_xml = SpreadsheetXML(settings.LICENSES)
+
+        xml = sp_xml.build_xml(workbook.data(), config['xml_config'])
+        # print xml
