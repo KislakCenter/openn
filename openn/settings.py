@@ -460,7 +460,30 @@ students and popular writers each year.""",
             'metadata_type': 'TEI',
             'live': True,
             'name': 'Columbia University, Rare Books & Manuscripts Library',
-            'blurb': """Blurb to go here.""",
+            'blurb': u"""The Libraries at Columbia are at the heart of the University. The
+collections serve the research needs of the Columbia faculty,
+undergraduate and graduate students, and the community, while providing
+a wealth of items for the use of scholars from around the world. The
+Rare Book and Manuscript Library, largest of Columbia's repositories for
+the special collections of the University, holds collections spanning
+more than 4,000 years, from cuneiform tablets to born-digital objects.
+Some 600,000 printed books and 17 miles of manuscripts, personal papers,
+and records form the core of the RBML holdings, along with well over one
+million photographs, prints and drawings, maps, coins, scientific
+instruments, playing cards, theater set models and other realia, and
+audio and moving image materials. The collections cover a broad range of
+subjects, and provide researchers with a great depth of material to
+study. RBML holds important early manuscripts and printed books in
+Arabic, Latin, Greek, Hebrew, and a wide variety of other languages.
+Particular collecting strengths include the history of English and
+American literature, journalism, finance and economics, mathematics and
+astronomy, printing and publishing, theater and the performing arts,
+photography, American history, Russian and East European Emigré history
+and culture, Hebraica and Judaica, and Latino arts and activism. RBML is
+home to one of the oldest oral history collections in the country, and
+is also the repository for archives that support the mission of the
+Center for Human Rights Documentation and Research.
+""",
             'include_file': 'ColumbiaUniversity.html',
         },
         {
@@ -1418,28 +1441,49 @@ Resources.""",
         {
             'tag': 'pacscl-diaries',
             'name': 'PACSCL Diaries',
-            'blurb': """The PACSCL Diaries Project will allow researchers an intimate view into a
-                        wide variety of personalities, largely from Philadelphia, as they went about their
-                        daily lives and commented on the world around them. The project will
-                        ultimately provide an online archive of diaries drawn from PACSCL member
-                        collections. OPenn currently hosts a pilot group of 53 diary volumes.""",
+            'blurb': """The PACSCL Diaries Project will allow researchers an intimate view into
+a wide variety of personalities, largely from Philadelphia, as they went
+about their daily lives and commented on the world around them. The
+project will ultimately provide an online archive of diaries drawn from
+PACSCL member collections. OPenn currently hosts a pilot group of 53
+diary volumes.""",
             'csv_only': False,
             'include_file': 'PACSCLDiaries.html',
+            'live': True,
+        },
+        {
+            'tag': 'muslimworld',
+            'name': 'Manuscripts of the Muslim World',
+            'blurb': """This collection will include digital editions of more than 500
+manuscripts and 827 paintings from the Islamicate world broadly
+construed. Together these holdings represent in great breadth the
+flourishing intellectual and cultural heritage of Muslim lands from 1000
+to 1900, coving mathematics, astrology, history, law, literature, as
+well as the Qur'an and Hadith. The bulk of the collection consists of
+manuscripts in Arabic and Persian, along with examples of Coptic,
+Samaritan, Syriac, Turkish, and Berber. The primary partners are
+Columbia University, the Free Library of Philadelphia, and the
+University of Pennsylvania with signifiant contributions from Bryn Mawr
+College and Haverford College. This collection is funded by the Council
+on Library and Information Resources.""",
+            'csv_only': False,
+            'include_file': 'MuslimWorld.html',
             'live': True,
         },
         {
             'tag': 'genizah',
             'name': 'Cairo Genizah',
             'blurb': """In the late 1990s, thanks to a significant gift from a Penn alum named
-						Jeffrey Keil, W' 65 and PAR '91, Penn initiated a project, in
-						collaboration with Cambridge University Libraries, to apply digital
-						technologies to discover new intellectual matches among physically
-						dispersed Cario genizah fragments. Through this initiative it was demonstrated
-						how digital technologies may serve as discovery tools to identify
-						matches among a global diaspora of thousands of fragments of medieval
-						manuscripts (see: http://sceti.library.upenn.edu/genizah/index.cfm).
-						This collection of Cairo genizah fragments consists of Penn manuscripts
-						that were part of this project.""",
+Jeffrey Keil, W' 65 and PAR '91, Penn initiated a project, in
+collaboration with Cambridge University Libraries, to apply digital
+technologies to discover new intellectual matches among physically
+dispersed Cario genizah fragments. Through this initiative it was
+demonstrated how digital technologies may serve as discovery tools to
+identify matches among a global diaspora of thousands of fragments of
+medieval manuscripts (see:
+http://sceti.library.upenn.edu/genizah/index.cfm). This collection of
+Cairo genizah fragments consists of Penn manuscripts that were part of
+this project.""",
             'csv_only': False,
             'include_file': 'CairoGenizah.html',
             'live': True,
