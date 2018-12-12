@@ -24,7 +24,7 @@ class Updater(object):
                 if unicode(getattr(repo,key)) == unicode(new_val):
                     continue
                 self.logger.info("Updating repository '%s' field '%s' to '%s'", repo.tag, key,
-                                  unicode(new_val).encode('utf8'))
+                                  unicode(new_val))
                 setattr(repo, key, new_val)
                 repo.save()
 
