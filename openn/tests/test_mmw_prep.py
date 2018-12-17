@@ -27,8 +27,8 @@ class TestMMWPrep(OPennTestCase):
 
     staging_dir      = os.path.join(os.path.dirname(__file__), 'staging')
     staged_source    = os.path.join(staging_dir, 'ms_or_24')
-    staged_pages_xlsx = os.path.join(staged_source, 'openn_metadata.xlsx')
-    staged_description_xml = os.path.join(staged_source, 'descriptive.xml')
+    staged_pages_xlsx = os.path.join(staged_source, 'pages.xlsx')
+    staged_description_xml = os.path.join(staged_source, 'marc.xml')
 
     prep_cfg_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,

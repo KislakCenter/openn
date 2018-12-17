@@ -260,9 +260,9 @@ PREPARATION_METHODS = [
         'description': "Uses metadata scraped from MARC XML and extracts metadata from a spreadsheet to build metadata for the object. Requires bibid.txt or description.xml file and page.xlsx file.",
         'name': 'Manuscripts of the Muslim World Prep',
         'package_validation': {
-            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt', 'descriptive.xml', 'openn_metadata.xlsx'],
+            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt', 'marc.xml', 'pages.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
-            'required_names': ['*.tif', 'openn_metadata.xlsx'],
+            'required_names': ['*.tif', 'pages.xlsx'],
         },
         'prep_class': {
             'class_name': 'openn.prep.mmw_prep.MMWPrep',

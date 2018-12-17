@@ -71,7 +71,7 @@ class MMWPrep(RepositoryPrep):
 
     @property
     def xlsx_path(self):
-        return os.path.join(self.source_dir, 'openn_metadata.xlsx')
+        return os.path.join(self.source_dir, 'pages.xlsx')
 
     def workbook(self):
         if self._workbook is None:
@@ -91,7 +91,7 @@ class MMWPrep(RepositoryPrep):
         self.workbook().validate_file_lists()
 
     def openn_xml_path(self):
-        return os.path.join(self.source_dir, 'openn_metadata.xml')
+        return os.path.join(self.source_dir, 'pages.xml')
 
     def write_openn_xml(self,outfile):
         if os.path.exists(outfile):
@@ -167,7 +167,6 @@ class MMWPrep(RepositoryPrep):
         all_images = self.image_files(self.data_dir)
         all_images = [ self.source_dir_re.sub('', x) for x in all_images ]
         doc_images = []
-
         for img in expected:
             if img in all_images:
                 all_images.remove(img)
@@ -216,7 +215,7 @@ class MMWPrep(RepositoryPrep):
 
     @property
     def pih_filename(self):
-        return os.path.join(self.source_dir, 'descriptive.xml')
+        return os.path.join(self.source_dir, 'marc.xml')
 
     def xml_file_names(self, openn_xml_path):
         names = []
@@ -304,56 +303,6 @@ class MMWPrep(RepositoryPrep):
         else:
             return label
 
-    def build_file_list(self,pih_xml):
-        """Build a list of files using the pih_xml file.
-
-        The resulting file list will have the format:
-
-            {
-              "document": [
-                {
-                  "filename": "data/mscodex1589_wk1_front0001.tif",
-                  "image_type": "document",
-                  "label": "Front cover"
-                },
-                {
-                  "filename": "data/mscodex1589_wk1_front0002.tif",
-                  "image_type": "document",
-                  "label": "Inside front cover"
-                },
-                // ...
-               ],
-              "extra": [
-                {
-                  "image_type": "extra",
-                  "filename": "data/mscodex1589_test ref1_1.tif"
-                }
-              ]
-           }
-
-        The 'document' files will include:
-
-           - all files listed in PIH XML
-
-           - all identifiable 'blank' files; that is, those matching
-             the STRICT_IMAGE_PATTERN_RE not found in the PIH list
-
-        """
-        expected = self.xml_file_names(pih_xml)
-        files = self.prep_file_list(expected)
-        xml = etree.parse(open(pih_xml))
-        for image in files.get('document'):
-            base           = os.path.basename(image['filename'])
-            query          = "//file_name[text()='%s']/parent::page/display_page" % (base,)
-            el             = xml.xpath(query)
-            label          = el[0].text if len(el) > 0 else None
-            image['label'] = label
-            query          = "//file_name[text()='%s']/parent::page/serial_number" % (base,)
-            el             = xml.xpath(query)
-            serial_number  = el[0].text if len(el) > 0 else None
-            image['serial_number'] = serial_number
-        return files
-
     def include_file(self, filename, pttrn, expected_files):
         if re.search(pttrn, filename):
             base = os.path.basename(filename)
@@ -437,7 +386,7 @@ class MMWPrep(RepositoryPrep):
         if os.path.exists(os.path.join(self.source_dir, 'bibid.txt')):
             bibid = self.get_bibid()
             self.write_xml(bibid, self.pih_filename)
-        elif os.path.exists(os.path.join(self.source_dir, 'descriptive.xml')):
+        elif os.path.exists(os.path.join(self.source_dir, 'marc.xml')):
             pass
 
         # now read the structural metadata
