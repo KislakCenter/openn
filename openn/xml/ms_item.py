@@ -9,7 +9,12 @@ class MSItem(XMLWhatsit):
 
     @property
     def title(self):
-        return self._get_text('.//t:title')
+        return self._get_text('.//t:title[not(@type="vernacular")][1]')
+
+    @property
+    def title_vernacular(self):
+        if self.has_node('./t:title[@type = "vernacular"]'):
+            return self._get_text('.//t:title[@type="vernacular"][1]')
 
     @property
     def incipit(self):

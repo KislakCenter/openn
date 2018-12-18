@@ -192,7 +192,28 @@
                     <sourceDesc>
                         <msDesc>
                             <msIdentifier>
-                                <settlement>Philadelphia</settlement>
+                              <xsl:choose>
+                                <xsl:when test="//marc:datafield[@tag='650']/marc:subfield[@code='z']">
+                                  <settlement>
+                                  <xsl:for-each select="//marc:datafield[@tag='650']/marc:subfield[@code='z']">
+                                    <xsl:if test="position() = last()">
+                                      <xsl:call-template name="chopPunctuation">
+                                        <xsl:with-param name="chopString" select="."></xsl:with-param>
+                                      </xsl:call-template>
+                                    </xsl:if>
+                                  </xsl:for-each>
+                                  </settlement>
+                                </xsl:when>
+                                <xsl:when test="//marc:datafield[@tag='852']/marc:subfield[@code='e' and matches(text(), 'Philadelphia', 'i')]">
+                                  <settlement>Philadelphia</settlement>
+                                </xsl:when>
+                                <xsl:when test="//marc:datafield[@tag='040']/marc:subfield[@code='a' and (matches(text(),'^PAU') or text() = 'PLF')]">
+                                  <settlement>Philadelphia</settlement>
+                                </xsl:when>
+                                <xsl:when test="//marc:datafield[@tag='040']/marc:subfield[@code='a' and text() = 'ZCU']">
+                                  <settlement>New York</settlement>
+                                </xsl:when>
+                              </xsl:choose>
                                 <institution>
                                     <xsl:value-of select="$institution"/>
                                 </institution>

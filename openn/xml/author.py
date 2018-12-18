@@ -10,9 +10,18 @@ class Author(XMLWhatsit):
     @property
     def name(self):
         if self.has_node('./t:persName'):
-            return self._get_text('./t:persName[1]')
+            return self._get_text('./t:persName[not(@type = "vernacular")][1]')
         elif self.has_node('./t:name'):
-            return self._get_text('./t:name[1]')
+            return self._get_text('./t:name[not(@type = "vernacular")][1]')
+        else:
+            return self._get_text('.')
+
+    @property
+    def vernacular(self):
+        if self.has_node('./t:persName[@type = "vernacular"]'):
+            return self._get_text('./t:persName[@type = "vernacular"][1]')
+        elif self.has_node('./t:name[@type = "vernacular"]'):
+            return self._get_text('./t:name[@type = "vernacular"][1]')
         else:
             return self._get_text('.')
 
