@@ -22,12 +22,14 @@ from openn.xml.openn_tei import OPennTEI
 
 class MMWPrep(RepositoryPrep):
 
-    SPREADSHEET_OPEN_XML_WRITTEN    = 60
-    MEDREN_LICENCE_TYPES_SAVED = 65
+    SPREADSHEET_OPEN_XML_WRITTEN = 60
+    MEDREN_LICENCE_TYPES_SAVED   = 65
+    MARC_XML_STAGED              = 87
 
     STATUS_NAMES = RepositoryPrep.build_status_names({
         60: 'SPREADSHEET_OPEN_XML_WRITTEN',
-        65: 'MEDREN_LICENCE_TYPES_SAVED'
+        65: 'MEDREN_LICENCE_TYPES_SAVED',
+        87: 'MARC_XML_STAGED',
     })
 
     BLANK_RE = re.compile('blank', re.IGNORECASE)
@@ -214,7 +216,7 @@ class MMWPrep(RepositoryPrep):
             return '99%s3503681' % (str(bibid),)
 
     @property
-    def pih_filename(self):
+    def marc_xml(self):
         return os.path.join(self.source_dir, 'marc.xml')
 
     def xml_file_names(self, openn_xml_path):
@@ -227,7 +229,7 @@ class MMWPrep(RepositoryPrep):
     def check_file_names(self, expected):
         # print sys_file_names(source_dir)
         if len(expected) < 1:
-            raise OPennException("Penn in Hand XML lists no files: see %s" % self.pih_filename)
+            raise OPennException("Penn in Hand XML lists no files: see %s" % self.marc_xml)
         missing = []
         for file in expected:
             path = os.path.join(self.source_dir, file)
@@ -345,7 +347,7 @@ class MMWPrep(RepositoryPrep):
         holdingid = self.get_holdingid()
         if holdingid is not None:
             xsl_command.append("-p HOLDING_ID=%s" % (str(holdingid),))
-        xsl_command.append(self.pih_filename)
+        xsl_command.append(self.marc_xml)
         xsl_command.append(self.xsl)
         p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE)
@@ -366,11 +368,11 @@ class MMWPrep(RepositoryPrep):
             raise OPennException("Whoah now. bibid is none. That ain't right.")
         if not is_new_bibid(bibid):
             bibid = '99%s3503681' % (str(bibid),)
-        self.write_xml(bibid,self.pih_filename)
+        self.write_xml(bibid,self.marc_xml)
         for key in kwargs:
             key_value = '%s="%s"' % (key, kwargs[key])
             xsl_command.append(key_value)
-        xsl_command.append(self.pih_filename)
+        xsl_command.append(self.marc_xml)
         xsl_command.append(self.xsl)
 
         p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
@@ -380,16 +382,19 @@ class MMWPrep(RepositoryPrep):
             raise OPennException("TEI Generation failed: %s" % err)
 
         self.write_partial_tei(self.source_dir, out)
-        self.add_removal(self.pih_filename)
+        self.add_removal(self.marc_xml)
 
     def get_marc_xml(self):
         if os.path.exists(os.path.join(self.source_dir, 'bibid.txt')):
             bibid = self.get_bibid()
-            self.write_xml(bibid, self.pih_filename)
+            self.write_xml(bibid, self.marc_xml)
         elif os.path.exists(os.path.join(self.source_dir, 'marc.xml')):
             pass
 
-        # now read the structural metadata
+    def stage_marc_xml(self):
+        if not os.path.exists(self.data_dir):
+            os.mkdir(self.data_dir)
+        shutil.move(self.marc_xml, self.data_dir)
 
     def _do_prep_dir(self):
         if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
@@ -397,7 +402,7 @@ class MMWPrep(RepositoryPrep):
         else:
             self.logger.info("[%s] Validating metadata", self.basedir)
             self.get_marc_xml()
-            self.check_valid_xml(self.pih_filename)
+            self.check_valid_xml(self.marc_xml)
             self.write_status(self.REPOSITORY_PREP_MD_VALIDATED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILES_VALIDATED:
@@ -445,8 +450,17 @@ class MMWPrep(RepositoryPrep):
             self.validate_partial_tei()
             self.write_status(self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN)
 
+        if self.get_status() > self.MARC_XML_STAGED:
+            self.logger.warning("[%s] marc.xml already staged", self.basedir)
+        else:
+            self.logger.info("[%s] Staging marc.xml", self.basedir)
+            self.stage_marc_xml()
+            self.write_status(self.MARC_XML_STAGED)
+
         # files to cleanup
-        self.add_removal(self.pih_filename)
+        self.add_removal(self.marc_xml)
         self.add_removal(self.bibid_filename())
         self.add_removal(self.holdingid_filename())
+        self.add_removal(self.openn_xml_path())
+        self.add_removal(self.xlsx_path)
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
