@@ -102,7 +102,7 @@ class Page(object):
 
         # NOT needed if page last generated date is stale
         if self.site_file.last_generated > comp_date:
-            logging.info(
+            logging.debug(
                 "subject hasn't changed since %s HTML last generated; skipping",
                 self._get_human_name())
             return False

@@ -159,7 +159,7 @@ def make_curated_collections_html(opts):
             if not opts.dry_run:
                 page.create_pages()
         else:
-            logging.info("Skipping page: %s" % (page.outfile_path(), ))
+            logging.debug("Skipping page: %s" % (page.outfile_path(), ))
     except TemplateDoesNotExist as ex:
         msg = "Could not find template: %s" % (settings.CURATED_COLLECTIONS_TEMPLATE,)
         raise OPennException(msg)
