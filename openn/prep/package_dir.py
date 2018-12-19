@@ -40,6 +40,7 @@ class PackageDir:
     def __init__(self, source_dir):
         self.source_dir = source_dir
         self.source_dir_re = re.compile('^%s' % os.path.join(source_dir, '*'))
+        self._chmod_failed = False
 
     def check_valid(self):
         """ Confirm that the source dir has a data directory, PARTIAL_TEI.xml, and
@@ -122,7 +123,14 @@ class PackageDir:
             src = os.path.join(self.source_dir, curr_name)
             dst = os.path.join(self.source_dir, new_name)
             os.rename(src, dst)
-            os.chmod(dst, 0664)
+
+            if not self._chmod_failed:
+                try:
+                    os.chmod(dst, 0664)
+                except OSError:
+                    self._chmod_failed = True
+                    self.logger.warning("Unable to chmod files: %s", (dst,))
+
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
 
