@@ -444,17 +444,22 @@ class OPennTEI(XMLWhatsit):
             funder_element.text = funder
             title_stmt.append(funder_element)
 
+    def build_title(self):
+        if self.repository:
+            title = "%s %s: %s" % (self.repository, self.call_number, self.title)
+        else:
+            title = "%s: %s" % (self.call_number, self.title)
+
     def metadata_license_args(self, document):
         args = document.metadata_license_args()
-        title = "%s %s: %s" % (self.repository, self.call_number, self.title)
-        args['title'] = title
+
+        args['title'] = self.build_title()
 
         return args
 
     def image_license_args(self, document):
         args = document.image_license_args()
-        title = "%s, %s: %s" % (self.repository, self.call_number, self.title)
-        args['title'] = title
+        args['title'] = self.build_title()
 
         return args
     def add_file_list(self,document):
