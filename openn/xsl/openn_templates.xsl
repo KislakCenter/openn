@@ -24,7 +24,8 @@
     <xsl:param name="datafield"/>
     <xsl:call-template name="chomp-period">
       <xsl:with-param name="string">
-        <xsl:for-each select="./marc:subfield">
+        <!--  Join only letter subfield@code value; skip numeric -->
+        <xsl:for-each select="./marc:subfield[matches(@code, '[a-z]')]">
           <xsl:value-of select="."/>
           <xsl:if test="position() != last()">
             <xsl:text>--</xsl:text>
