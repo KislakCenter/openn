@@ -450,9 +450,10 @@ class OPennTEI(XMLWhatsit):
         else:
             title = "%s: %s" % (self.call_number, self.title)
 
+        return title
+
     def metadata_license_args(self, document):
         args = document.metadata_license_args()
-
         args['title'] = self.build_title()
 
         return args
@@ -462,6 +463,7 @@ class OPennTEI(XMLWhatsit):
         args['title'] = self.build_title()
 
         return args
+
     def add_file_list(self,document):
         """
            <facsimile>
