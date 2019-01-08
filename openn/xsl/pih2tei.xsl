@@ -736,7 +736,7 @@
                             <!--
                               <xsl:comment>
                               TODO: Add Columbia orgin info: coming from field 264
-                              ANSWER: NO
+                              ANSWER: YES
                               </xsl:comment>
                                 -->
                                 <origin>
@@ -747,7 +747,7 @@
                                     </xsl:for-each>
                                     <!-- DOT ADDED AN IF STATEMENT AROUND ORIGDATE, SO IF THERE IS NO ORIGDATE IN THE MARC RECORD ORIGDATE WILL NOT BE CREATED -->
                                     <!-- DE: just use the marc field -->
-                                    <xsl:for-each select="//marc:datafield[@tag='260']/marc:subfield[@code='c']">
+                                    <xsl:for-each select="//marc:datafield[@tag='260' or @tag='264']/marc:subfield[@code='c']">
                                         <origDate>
                                             <xsl:call-template name="chomp-period">
                                                 <xsl:with-param name="string">
@@ -761,7 +761,7 @@
                                     <!-- END DOT MOD -->
 
                                     <!-- DE: Cleaner code for origPlace; add only if present -->
-                                    <xsl:for-each select="//marc:datafield[@tag='260']/marc:subfield[@code='a']">
+                                  <xsl:for-each select="//marc:datafield[@tag='260' or @tag='264']/marc:subfield[@code='a']">
                                         <origPlace>
                                             <xsl:call-template name="clean-up-text">
                                                 <xsl:with-param name="some-text" select="."/>                                            </xsl:call-template>
