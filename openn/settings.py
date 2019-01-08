@@ -459,7 +459,7 @@ students and popular writers each year.""",
             'tag': 'columbia',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Columbia University, Rare Books & Manuscripts Library',
+            'name': 'Columbia University, Rare Book & Manuscript Library',
             'blurb': """The Libraries at Columbia are at the heart of the University. The
 collections serve the research needs of the Columbia faculty,
 undergraduate and graduate students, and the community, while providing
