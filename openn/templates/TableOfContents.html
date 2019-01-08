@@ -25,7 +25,7 @@
     {% if item.document.call_number %}
     <span class="item-id">{{ item.document.call_number }}:</span>
     {% endif %}
-    <span class="item-name">{{ item.document.title }}</span>
+    <span class="item-name">{{ item.document.title }}{% if item.tei.title_vernacular %} / {{ item.tei.title_vernacular }}{% endif %}</span>
     {% with origin=item.origin %}
     {% if origin|length > 0 %}
     <span class="item-origin">({{ origin|join:', '}})</span>

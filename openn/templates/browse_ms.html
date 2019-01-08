@@ -18,13 +18,12 @@
   </p>
 </div>
 
-<h1>{{ doc.document.call_number }} {{ doc.document.title }}</h1>
-
+<h1>{{ doc.document.call_number }} {{ doc.document.title }}{% if doc.tei.title_vernacular %} / {{ doc.tei.title_vernacular }}{% endif %}</h1>
         <div>
           <h4>Title</h4>
           <span>{{ doc.tei.title }}
             {% if doc.tei.title_vernacular %}
-              {{ doc.tei.title_vernacular }}
+              / {{ doc.tei.title_vernacular }}
             {% endif %}
           </span>
         </div>
