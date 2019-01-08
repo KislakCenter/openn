@@ -256,6 +256,25 @@ PREPARATION_METHODS = [
         },
     },
     {
+        'tag': 'mmw',
+        'description': "Uses metadata scraped from MARC XML and extracts metadata from a spreadsheet to build metadata for the object. Requires bibid.txt or description.xml file and page.xlsx file.",
+        'name': 'Manuscripts of the Muslim World Prep',
+        'package_validation': {
+            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt', 'marc.xml', 'pages.xlsx'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.tif', 'pages.xlsx'],
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.mmw_prep.MMWPrep',
+            'params': {
+                'pih_host': 'mdproc.library.upenn.edu:9292',
+                'pih_path': '/records/{0}/create?format=marc21',
+                'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+                'config_json': os.path.join(SITE_ROOT, 'muslimworld.json'),
+            },
+        },
+    },
+    {
         'tag': 'diaries',
         'description': "Extracts metadata from PACSCL Diaries spreadsheet to build metadata for the object. Requires valid openn_metadata.xslx file.",
         'name': 'PACSCL Diaries Prep',
@@ -1336,6 +1355,19 @@ PREP_CONFIGS = {
         "funders": ["Council on Library and Information Resources"],
         'repository_prep': {
             'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'columbia-mmw': {
+        'repository': {
+            'tag': 'columbia'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'mmw',
         },
         'rights': {
             'image_rights': 'PD-10',

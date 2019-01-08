@@ -1,0 +1,340 @@
+{
+  "sheet_config": {
+    "pages": {
+      "sheet_name": "Pages",
+      "data_offset": 1,
+      "heading_type": "column",
+      "repeat_limit": {
+        "fields": [
+          "file_name",
+          "display_page"
+        ]
+      },
+      "max_column": 200,
+      "max_row": 10000,
+      "fields": {
+        "object_id": {
+          "field_name": "OBJECT_ID",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "display_page": {
+          "field_name": "DISPLAY PAGE",
+          "required": {
+            "if": {
+              "field": "file_name",
+              "is": "NONEMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string",
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "serial_number": {
+          "field_name": "SERIAL_NUM",
+          "required": {
+            "if": {
+              "field": "file_name",
+              "is": "NONEMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "integer",
+          "unique": true
+        },
+        "file_name": {
+          "field_name": "FILE_NAME",
+          "required": true,
+          "repeating": true,
+          "unique": true,
+          "data_type": "string",
+          "file_list": true
+        },
+        "tag1": {
+          "field_name": "TAG1",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value1": {
+          "field_name": "VALUE1",
+          "required": {
+            "if": {
+              "field": "tag1",
+              "is": [
+                "TOC1",
+                "TOC2",
+                "TOC3",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag1",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag2": {
+          "field_name": "TAG2",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "Value_list": [
+            "TOC1",
+            "TOC2",
+            "TOC3",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value2": {
+          "field_name": "VALUE2",
+          "required": {
+            "if": {
+              "field": "tag2",
+              "is": [
+                "TOC1",
+                "TOC2",
+                "TOC3",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag2",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag3": {
+          "field_name": "TAG3",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value3": {
+          "field_name": "VALUE3",
+          "required": {
+            "if": {
+              "field": "tag3",
+              "is": [
+                "TOC1",
+                "TOC2",
+                "TOC3",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag3",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag4": {
+          "field_name": "TAG4",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value4": {
+          "field_name": "VALUE4",
+          "required": {
+            "if": {
+              "field": "tag4",
+              "is": [
+                "TOC1",
+                "TOC2",
+                "TOC3",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag4",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag5": {
+          "field_name": "TAG5",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value5": {
+          "field_name": "VALUE5",
+          "required": {
+            "if": {
+              "field": "tag5",
+              "is": [
+                "TOC1",
+                "TOC2",
+                "TOC3",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag5",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag6": {
+          "field_name": "TAG6",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value6": {
+          "field_name": "VALUE6",
+          "required": {
+            "if": {
+              "field": "tag6",
+              "is": [
+                "TOC1",
+                "TOC2",
+                "TOC3",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag6",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        }
+      }
+    }
+  },
+  "xml_config": [
+    {
+      "sheet_root": "pages",
+      "sheet_attr": "pages",
+      "field_groups": [
+        {
+          "xml_attr": "page",
+          "columns": [
+            "serial_number",
+            "file_name",
+            "display_page",
+            "tag1",
+            "value1",
+            "tag2",
+            "value2",
+            "tag3",
+            "value3",
+            "tag4",
+            "value4",
+            "tag5",
+            "value5",
+            "tag6",
+            "value6"
+          ]
+        }
+      ]
+    }
+  ]
+}

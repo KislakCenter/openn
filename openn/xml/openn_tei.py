@@ -82,7 +82,12 @@ class OPennTEI(XMLWhatsit):
 
     @property
     def title(self):
-        return self._get_text('//t:msContents/t:msItem/t:title')
+        return self._get_text('//t:msContents/t:msItem/t:title[not(@type = "vernacular")]')
+
+    @property
+    def title_vernacular(self):
+        if self.has_node('//t:msContents/t:msItem/t:title[@type = "vernacular"]'):
+            return self._get_text('//t:msContents/t:msItem/t:title[@type = "vernacular"]')
 
     @property
     def settlement(self):

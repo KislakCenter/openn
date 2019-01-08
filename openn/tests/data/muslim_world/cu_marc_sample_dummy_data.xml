@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<marc:collection xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  
+  <marc:record>
+    <marc:leader>02320ntm a22004335i 4500</marc:leader>
+    <marc:controlfield tag="001">ocm00000NEW </marc:controlfield>
+    <marc:controlfield tag="003">OCoLC</marc:controlfield>
+    <marc:controlfield tag="005">20180726125328.0</marc:controlfield>
+    <marc:controlfield tag="008">180423s18uu    mr ap         000 0 ara d</marc:controlfield>
+    <marc:datafield tag="040" ind1=" " ind2=" ">
+      <marc:subfield code="a">ZCU</marc:subfield>
+      <marc:subfield code="b">eng</marc:subfield>
+      <marc:subfield code="e">amremm</marc:subfield>
+      <marc:subfield code="c">ZCU</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="043" ind1=" " ind2=" ">
+      <marc:subfield code="a">n-us-ny</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="099" ind1=" " ind2=" ">
+      <marc:subfield code="a">MS Or 261</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="110" ind1="1" ind2=" ">
+      <marc:subfield code="6">880-03</marc:subfield>
+      <marc:subfield code="a">Jazūlī, Muḥammad ibn Sulaymān (110 sample),</marc:subfield>
+      <marc:subfield code="d">-1465.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="100" ind1="1" ind2=" ">
+      <marc:subfield code="6">880-01</marc:subfield>
+      <marc:subfield code="a">Jazūlī, Muḥammad ibn Sulaymān (100 sample),</marc:subfield>
+      <marc:subfield code="d">-1465.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="245" ind1="1" ind2="0">
+      <marc:subfield code="6">880-02</marc:subfield>
+      <marc:subfield code="a">[Dalāʼil al-khayrāt] /</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="264" ind1=" " ind2="0">
+      <marc:subfield code="a">[Morocco ?]:</marc:subfield>
+      <marc:subfield code="c">[18--?]</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="300" ind1=" " ind2=" ">
+      <marc:subfield code="a">270 leaves:</marc:subfield>
+      <marc:subfield code="b">laid paper;</marc:subfield>
+      <marc:subfield code="c">193 x 158 (135 x 105) mm bound to 195 x 160 mm.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="336" ind1=" " ind2=" ">
+      <marc:subfield code="a">text</marc:subfield>
+      <marc:subfield code="b">txt</marc:subfield>
+      <marc:subfield code="2">rdacontent</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="337" ind1=" " ind2=" ">
+      <marc:subfield code="a">unmediated</marc:subfield>
+      <marc:subfield code="b">n</marc:subfield>
+      <marc:subfield code="2">rdamedia</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="338" ind1=" " ind2=" ">
+      <marc:subfield code="a">volume</marc:subfield>
+      <marc:subfield code="b">nc</marc:subfield>
+      <marc:subfield code="2">rdacarrier</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Manuscript codex.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="546" ind1=" " ind2=" ">
+      <marc:subfield code="a">Arabic.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Title from introduction (f. 5r).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Layout: 5 to 9 lines per page.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Script: Maghribī.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Decoration: Double-page illumination of the Prophet's Mosque and Tomb (following 46v-47r) .Title illumination (following 92r, 118r, 132v, 169v, 184r, 236r, 237r, 266v).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Shelfmark: MS Or 261.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="563" ind1=" " ind2=" ">
+      <marc:subfield code="a">Binding: Brown leather (over recycled manuscript leaves).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="500" ind1=" " ind2=" ">
+      <marc:subfield code="a">Written in brown-black, red, green, and yellow ink.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="520" ind1=" " ind2=" ">
+      <marc:subfield code="a">An illuminated copy of al-Jazūlī's classic work on the Prophet Muḥammad which has been partially vocalized. The flyleaves are inscribed in what appear to be two hands. The opening leaves include a Qur'anic passage, 18:107-110 (f.1r), followed by the Beautiful Names of God (al-ʿasmāʿ al-husnā) (following 1v-2r). The closing leaves contain a supplication (duʿāʼ) on the repeated pattern of &quot;yā [fāʿil] ghayr [mafʿūl]&quot; (following 268v-269r) and a quatrain (f. 270r).</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="541" ind1=" " ind2=" ">
+      <marc:subfield code="a">Presumed to be a gift of David Eugene Smith, 1931-1934.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="588" ind1="0" ind2=" ">
+      <marc:subfield code="a">Item cataloged from digital facsimile and existing description.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="600" ind1="0" ind2="0">
+      <marc:subfield code="a">Muḥammad,</marc:subfield>
+      <marc:subfield code="c">Prophet,</marc:subfield>
+      <marc:subfield code="d">-632.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Islam</marc:subfield>
+      <marc:subfield code="x">Prayers and devotions</marc:subfield>
+      <marc:subfield code="v">Early works to 1800.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="650" ind1=" " ind2="0">
+      <marc:subfield code="a">Manuscripts, Arabic</marc:subfield>
+      <marc:subfield code="z">New York (State)</marc:subfield>
+      <marc:subfield code="z">New York.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="700" ind1="1" ind2=" ">
+      <marc:subfield code="a">Smith, David Eugene,</marc:subfield>
+      <marc:subfield code="d">1860-1944,</marc:subfield>
+      <marc:subfield code="e">former owner.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="700" ind1="1" ind2=" ">
+      <marc:subfield code="6">880-04</marc:subfield>
+      <marc:subfield code="a">Smith, David Eugene (700 sample),</marc:subfield>
+      <marc:subfield code="d">1860-1944,</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="700" ind1="1" ind2=" ">
+      <marc:subfield code="6">880-05</marc:subfield>
+      <marc:subfield code="a">Jazūlī, Muḥammad ibn Sulaymān (700 scribe sample),</marc:subfield>
+      <marc:subfield code="d">-1465.</marc:subfield>
+      <marc:subfield code="e">scribe</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="710" ind1="2" ind2=" ">
+      <marc:subfield code="a">Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)</marc:subfield>
+      <marc:subfield code="5">NNC</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="710" ind1="2" ind2=" ">
+      <marc:subfield code="a">University of Edinburgh</marc:subfield>
+      <marc:subfield code="5">NNC</marc:subfield>
+      <marc:subfield code="e">former owner.</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="880" ind1="1" ind2=" ">
+      <marc:subfield code="6">100-01/r</marc:subfield>
+      <marc:subfield code="a">جزولي، محمد بن سليمان،</marc:subfield>
+      <marc:subfield code="d">-1465</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="880" ind1="1" ind2="0">
+      <marc:subfield code="6">245-02/r</marc:subfield>
+      <marc:subfield code="a">[دلائل الخيرات] /</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="880" ind1="1" ind2="0">
+      <marc:subfield code="6">110-03/r</marc:subfield>
+      <marc:subfield code="a">[دلائل الخيرات] /</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="880" ind1="1" ind2=" ">
+      <marc:subfield code="6">700-04/r</marc:subfield>
+      <marc:subfield code="a">جزولي، محمد بن سليمان،</marc:subfield>
+      <marc:subfield code="d">1860-1944</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="880" ind1="1" ind2=" ">
+      <marc:subfield code="6">700-05/r</marc:subfield>
+      <marc:subfield code="a">جزولي، محمد بن سليمان،</marc:subfield>
+      <marc:subfield code="d">-1465</marc:subfield>
+      <marc:subfield code="e">scribe</marc:subfield>
+    </marc:datafield>
+    <marc:datafield tag="994" ind1=" " ind2=" ">
+      <marc:subfield code="a">C0</marc:subfield>
+      <marc:subfield code="b">ZCU</marc:subfield>
+    </marc:datafield>
+  </marc:record>
+  
+</marc:collection>

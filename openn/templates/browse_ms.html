@@ -22,7 +22,11 @@
 
         <div>
           <h4>Title</h4>
-          <span>{{ doc.tei.title }}</span>
+          <span>{{ doc.tei.title }}
+            {% if doc.tei.title_vernacular %}
+              {{ doc.tei.title_vernacular }}
+            {% endif %}
+          </span>
         </div>
 
         {% if doc.tei.authors %}
@@ -33,6 +37,9 @@
              <li>{{ author.name }}
              {% if author.ref %}
              ({{ author.ref|urlize }})
+             {% endif %}
+             {% if author.vernacular %}
+               {{ author.vernacular }}
              {% endif %}
              </li>
            {% endfor %}
@@ -45,9 +52,12 @@
           <h4>Other related names</h4>
           <ul class="list-unstyled">
           {% for resp in doc.tei.related_names %}
-             <li>{{ resp.pers_name }}, {{resp.resp}}
+             <li>{{ resp.name }}, {{resp.resp}}
              {% if resp.ref %}
              ({{ resp.ref|urlize }})
+             {% endif %}
+             {% if resp.vernacular %}
+              {{ resp.vernacular }}
              {% endif %}
              </li>
            {% endfor %}

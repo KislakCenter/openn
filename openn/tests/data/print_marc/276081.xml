@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<marc:records xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>01137cam a2200373 a 4500</marc:leader>
+    <marc:controlfield tag="001">992760813503681</marc:controlfield>
+    <marc:controlfield tag="005">20141121151019.0</marc:controlfield>
+    <marc:controlfield tag="008">840328s1981    gw       b    00110 ger  </marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="010">
+  <marc:subfield code="a">   82122130 </marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="015">
+  <marc:subfield code="a">GFR81-A</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="020">
+  <marc:subfield code="a">3799568271</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)ocm10145861</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)10145861</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUG84-B11605</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CaOTULAS)105207197</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="9">ABM6758</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">276081</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(PU)276081-penndb-Voyager</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="039">
+  <marc:subfield code="a">2</marc:subfield>
+  <marc:subfield code="b">3</marc:subfield>
+  <marc:subfield code="c">3</marc:subfield>
+  <marc:subfield code="d">3</marc:subfield>
+  <marc:subfield code="e">3</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+  <marc:subfield code="d">CStRLIN</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="043">
+  <marc:subfield code="a">e-gx---</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="050">
+  <marc:subfield code="a">PN4748.G3</marc:subfield>
+  <marc:subfield code="b">F4 1981</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="082">
+  <marc:subfield code="a">323.44/5</marc:subfield>
+  <marc:subfield code="2">19</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="090">
+  <marc:subfield code="a">PN4748.G3</marc:subfield>
+  <marc:subfield code="b">F4 1981</marc:subfield>
+  <marc:subfield code="i">03/28/84 CT</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="100">
+  <marc:subfield code="a">Fetscher, Elmar B.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="4" tag="245">
+  <marc:subfield code="a">Die Konstanzer Seebla&#x308;tter und die Pressezensur des Vorma&#x308;rz 1840/41 /</marc:subfield>
+  <marc:subfield code="c">Elmar B. Fetscher.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="260">
+  <marc:subfield code="a">Sigmaringen :</marc:subfield>
+  <marc:subfield code="b">Thorbecke,</marc:subfield>
+  <marc:subfield code="c">1981.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+  <marc:subfield code="a">96 p. ;</marc:subfield>
+  <marc:subfield code="c">23 cm.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="440">
+  <marc:subfield code="a">Konstanzer Geschichts- und Rechtsquellen.</marc:subfield>
+  <marc:subfield code="v">27</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Includes index.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="504">
+  <marc:subfield code="a">Bibliography: p. 91-93.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2="0" tag="630">
+  <marc:subfield code="a">Seebla&#x308;tter.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="0" tag="650">
+  <marc:subfield code="a">Freedom of the press</marc:subfield>
+  <marc:subfield code="z">Germany</marc:subfield>
+  <marc:subfield code="x">History</marc:subfield>
+  <marc:subfield code="y">19th century.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="950">
+  <marc:subfield code="l">VPL</marc:subfield>
+  <marc:subfield code="i">03/28/84 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="955">
+  <marc:subfield code="l">VPL</marc:subfield>
+  <marc:subfield code="c">1</marc:subfield>
+  <marc:subfield code="q">ser.cont.</marc:subfield>
+  <marc:subfield code="r">[00656 9052]</marc:subfield>
+  <marc:subfield code="i">03/28/84 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999"/>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22322634780003681</marc:holding_id>
+        <marc:call_number>PN4748.G3 F4 1981</marc:call_number>
+        <marc:library>Libra</marc:library>
+        <marc:location>stor</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+</marc:records>

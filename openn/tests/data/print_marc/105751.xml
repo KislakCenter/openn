@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<marc:records xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>01472cam a2200385 a 4500</marc:leader>
+    <marc:controlfield tag="001">991057513503681</marc:controlfield>
+    <marc:controlfield tag="005">20160922142507.0</marc:controlfield>
+    <marc:controlfield tag="008">861001s1790    enk           00000 eng d</marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)ocm17378919</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)17378919</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUG86-B42544</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CaOTULAS)146812686</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="9">AAQ0674</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">105751</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(PU)105751-penndb-Voyager</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+  <marc:subfield code="a">PU</marc:subfield>
+  <marc:subfield code="c">PU</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="090">
+  <marc:subfield code="a">PR3991.A1</marc:subfield>
+  <marc:subfield code="b">W74 1790</marc:subfield>
+  <marc:subfield code="i">10/02/86 CT</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2="4" tag="245">
+  <marc:subfield code="a">The Wreath of friendship, or A return from India :</marc:subfield>
+  <marc:subfield code="b">a novel, in a series of letters : in three volumes.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="260">
+  <marc:subfield code="a">London :</marc:subfield>
+  <marc:subfield code="b">Printed for William Lane ...,</marc:subfield>
+  <marc:subfield code="c">1790.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+  <marc:subfield code="a">3 v. ;</marc:subfield>
+  <marc:subfield code="c">17 cm. (12mo)</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">An epistolary novel.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Not in Blakey, D. Minerva Press.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="500">
+  <marc:subfield code="a">Advertisements: v. 1, p. [xi]-[xii].</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">BM</marc:subfield>
+  <marc:subfield code="c">v. 261, col. 277</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">ESTC (RLIN)</marc:subfield>
+  <marc:subfield code="c">N25503</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2=" " tag="510">
+  <marc:subfield code="a">English novel, 1770-1829,</marc:subfield>
+  <marc:subfield code="c">1790:35</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="561">
+  <marc:subfield code="a">Foster, Levina (bookplate)</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="651">
+  <marc:subfield code="y">1790</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="7" tag="655">
+  <marc:subfield code="a">Epistolary fiction</marc:subfield>
+  <marc:subfield code="z">England</marc:subfield>
+  <marc:subfield code="y">18th century.</marc:subfield>
+  <marc:subfield code="2">rbgenr</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2="7" tag="655">
+  <marc:subfield code="a">Booksellers' advertisements</marc:subfield>
+  <marc:subfield code="z">England</marc:subfield>
+  <marc:subfield code="y">18th century.</marc:subfield>
+  <marc:subfield code="2">rbgenr</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="2" ind2=" " tag="710">
+  <marc:subfield code="a">Collection of British and American Fiction, 1660-1830 (University of Pennsylvania)</marc:subfield>
+  <marc:subfield code="5">PU</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2="2" tag="740">
+  <marc:subfield code="a">Return from India.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="4" ind2="1" tag="856">
+  <marc:subfield code="z">Facsimile</marc:subfield>
+  <marc:subfield code="u">http://hdl.library.upenn.edu/1017/d/print/105751</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="950">
+  <marc:subfield code="l">RBC</marc:subfield>
+  <marc:subfield code="e">\\Singer-\Menden-\hall\</marc:subfield>
+  <marc:subfield code="v">3 v.</marc:subfield>
+  <marc:subfield code="i">10/02/86 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="955">
+  <marc:subfield code="l">RBC</marc:subfield>
+  <marc:subfield code="c">1:(v.1-3)</marc:subfield>
+  <marc:subfield code="q">725292-94</marc:subfield>
+  <marc:subfield code="s">Godfrey F. Singer Mem.</marc:subfield>
+  <marc:subfield code="i">10/02/86 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+  <marc:subfield code="a">DLA</marc:subfield>
+  <marc:subfield code="b">20160912</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999">
+  <marc:subfield code="z">CHR 1790</marc:subfield>
+  <marc:subfield code="z">PRO Foster, Levina (bookplate)</marc:subfield>
+</marc:datafield>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22416569620003681</marc:holding_id>
+        <marc:call_number>PR3991.A1 W74 1790</marc:call_number>
+        <marc:library>KislakCntr</marc:library>
+        <marc:location>scsing</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+</marc:records>

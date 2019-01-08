@@ -1,0 +1,1370 @@
+{
+  "sheet_config": {
+    "description": {
+      "sheet_name": "Description",
+      "data_offset": 2,
+      "heading_type": "row",
+      "repeat_limit": {
+        "fixed": 50
+      },
+      "max_column": 200,
+      "max_row": 500,
+      "fields": {
+        "administrative_contact": {
+          "field_name": "Administrative Contact",
+          "required": true,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "administrative_contact_email": {
+          "field_name": "Administrative Contact email",
+          "required": true,
+          "repeating": true,
+          "data_type": "email"
+        },
+        "tei_publication_date": {
+          "field_name": "TEI Publication date",
+          "required": true,
+          "repeating": true,
+          "data_type": "integer"
+        },
+        "metadata_creator": {
+          "field_name": "Metadata Creator",
+          "required": true,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "metadata_creator_email": {
+          "field_name": "Metadata Creator Email",
+          "required": true,
+          "repeating": true,
+          "data_type": "email"
+        },
+        "call_numberid": {
+          "field_name": "Call Number/ID",
+          "required": true,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "alternate_id": {
+          "field_name": "Alternate ID",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "alternate_id_type": {
+          "field_name": "Alternate ID type",
+          "required": {
+            "if": {
+              "field": "alternate_id",
+              "is": "NONEMPTY"
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "alternate_id",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "word"
+        },
+        "record_url": {
+          "field_name": "Record URL",
+          "required": false,
+          "repeating": false,
+          "data_type": "uri"
+        },
+        "title": {
+          "field_name": "Title",
+          "required": true,
+          "repeating": false,
+          "data_type": "string"
+        },
+        "edition": {
+          "field_name": "edition",
+          "required": false,
+          "repeating": false,
+          "data_type": "string"
+        },
+        "volume_number": {
+          "field_name": "Volume number",
+          "required": false,
+          "repeating": false,
+          "data_type": "string"
+        },
+        "author_name": {
+          "field_name": "Author name",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "author_uri": {
+          "field_name": "Author URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "translator_name": {
+          "field_name": "Translator name",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "translator_uri": {
+          "field_name": "Translator URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "artist_name": {
+          "field_name": "Artist name",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "artist_uri": {
+          "field_name": "Artist URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "former_owner_name": {
+          "field_name": "Former Owner name",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "former_owner_uri": {
+          "field_name": "Former Owner URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "provenance_details": {
+          "field_name": "Provenance details",
+          "required": false,
+          "repeating": false,
+          "data_type": "string"
+        },
+        "date_single": {
+          "field_name": "Publication date (single)",
+          "required": {
+            "if": {
+              "field": "date_range_start",
+              "is": "EMPTY"
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "date_range_start",
+              "is": "NONEMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "year"
+        },
+        "date_range_start": {
+          "field_name": "Publication date (range) start",
+          "required": {
+            "if": {
+              "field": "date_single",
+              "is": "EMPTY"
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "date_single",
+              "is": "NONEMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "year"
+        },
+        "date_range_end": {
+          "field_name": "Publication date (range) end",
+          "required": {
+            "if": {
+              "field": "date_range_start",
+              "is": "NONEMPTY"
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "date_range_start",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "year"
+        },
+        "date_narrative": {
+          "field_name": "Publication date (narrative)",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "place_of_publication": {
+          "field_name": "Place of publication",
+          "required": true,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "place_of_publication_uri": {
+          "field_name": "Place of publication URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "printer_publisher": {
+          "field_name": "Publisher/Printer",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "printer_publisher_uri": {
+          "field_name": "Publisher/Printer URI",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "language": {
+          "field_name": "Language",
+          "required": true,
+          "repeating": true,
+          "data_type": "lang"
+        },
+        "language_name": {
+          "field_name": "",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "class": "openn.prep.language_name_field.LanguageNameField",
+          "arg_fields": [
+            "language"
+          ]
+        },
+        "series_title": {
+          "field_name": "Series Title",
+          "required": false,
+          "repeating": false,
+          "data_type": "string"
+        },
+        "extent": {
+          "field_name": "Extent",
+          "required": true,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "dimensions": {
+          "field_name": "Dimensions",
+          "required": true,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "note": {
+          "field_name": "Note(s)",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "subject_names": {
+          "field_name": "Subject: names",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "subject_names_uri": {
+          "field_name": "Subject: names URI [?]",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "subject_topical": {
+          "field_name": "Subject: topical",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "subject_topical_uri": {
+          "field_name": "Subject: topical URI [?]",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "subject_geographic": {
+          "field_name": "Subject: geographic",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "subject_geographic_uri": {
+          "field_name": "Subject: geographic URI [?]",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "subject_genreform": {
+          "field_name": "Subject: genre/form",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "subject_genreform_uri": {
+          "field_name": "Subject: genre/form URI [?]",
+          "required": false,
+          "repeating": true,
+          "data_type": "uri"
+        },
+        "subject_keyword": {
+          "field_name": "Subject: keywords",
+          "required": true,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "image_rights": {
+          "field_name": "Image rights",
+          "required": true,
+          "repeating": false,
+          "data_type": "string",
+          "value_list": [
+            "CC-BY-SA",
+            "CC-BY",
+            "CC0",
+            "PD"
+          ]
+        },
+        "image_copyright_holder": {
+          "field_name": "Image copyright holder",
+          "required": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "string"
+        },
+        "image_copyright_year": {
+          "field_name": "Image copyright year",
+          "required": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "image_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "year"
+        },
+        "metadata_rights": {
+          "field_name": "Metadata rights",
+          "required": true,
+          "repeating": false,
+          "data_type": "string",
+          "value_list": [
+            "CC-BY-SA",
+            "CC-BY",
+            "CC0",
+            "PD"
+          ]
+        },
+        "metadata_copyright_holder": {
+          "field_name": "Metadata copyright holder",
+          "required": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "string"
+        },
+        "metadata_copyright_year": {
+          "field_name": "Metadata copyright year",
+          "required": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "CC-BY-SA",
+                "CC-BY",
+                "CC0"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "metadata_rights",
+              "is": [
+                "PD"
+              ]
+            }
+          },
+          "repeating": false,
+          "data_type": "year"
+        }
+      }
+    },
+    "pages": {
+      "sheet_name": "Pages",
+      "data_offset": 1,
+      "heading_type": "column",
+      "repeat_limit": {
+        "fields": [
+          "file_name",
+          "display_page"
+        ]
+      },
+      "max_column": 200,
+      "max_row": 10000,
+      "fields": {
+        "object_id": {
+          "field_name": "OBJECT_ID",
+          "required": false,
+          "repeating": true,
+          "data_type": "string"
+        },
+        "display_page": {
+          "field_name": "DISPLAY PAGE",
+          "required": {
+            "if": {
+              "field": "file_name",
+              "is": "NONEMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string",
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "serial_number": {
+          "field_name": "SERIAL_NUM",
+          "required": {
+            "if": {
+              "field": "file_name",
+              "is": "NONEMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "integer",
+          "unique": true
+        },
+        "file_name": {
+          "field_name": "FILE_NAME",
+          "required": true,
+          "repeating": true,
+          "unique": true,
+          "data_type": "string",
+          "file_list": true
+        },
+        "tag1": {
+          "field_name": "TAG1",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value1": {
+          "field_name": "VALUE1",
+          "required": {
+            "if": {
+              "field": "tag1",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag1",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag2": {
+          "field_name": "TAG2",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "Value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value2": {
+          "field_name": "VALUE2",
+          "required": {
+            "if": {
+              "field": "tag2",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag2",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag3": {
+          "field_name": "TAG3",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value3": {
+          "field_name": "VALUE3",
+          "required": {
+            "if": {
+              "field": "tag3",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag3",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag4": {
+          "field_name": "TAG4",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value4": {
+          "field_name": "VALUE4",
+          "required": {
+            "if": {
+              "field": "tag4",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag4",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag5": {
+          "field_name": "TAG5",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value5": {
+          "field_name": "VALUE5",
+          "required": {
+            "if": {
+              "field": "tag5",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag5",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag6": {
+          "field_name": "TAG6",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value6": {
+          "field_name": "VALUE6",
+          "required": {
+            "if": {
+              "field": "tag6",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag6",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag7": {
+          "field_name": "TAG7",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value7": {
+          "field_name": "VALUE7",
+          "required": {
+            "if": {
+              "field": "tag7",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag7",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag8": {
+          "field_name": "TAG8",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value8": {
+          "field_name": "VALUE8",
+          "required": {
+            "if": {
+              "field": "tag8",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag8",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag9": {
+          "field_name": "TAG9",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value9": {
+          "field_name": "VALUE9",
+          "required": {
+            "if": {
+              "field": "tag9",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag9",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag10": {
+          "field_name": "TAG10",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value10": {
+          "field_name": "VALUE10",
+          "required": {
+            "if": {
+              "field": "tag10",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag10",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag11": {
+          "field_name": "TAG11",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value11": {
+          "field_name": "VALUE11",
+          "required": {
+            "if": {
+              "field": "tag11",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag11",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag12": {
+          "field_name": "TAG12",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value12": {
+          "field_name": "VALUE12",
+          "required": {
+            "if": {
+              "field": "tag12",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag12",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag13": {
+          "field_name": "TAG13",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value13": {
+          "field_name": "VALUE13",
+          "required": {
+            "if": {
+              "field": "tag13",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag13",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag14": {
+          "field_name": "TAG14",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value14": {
+          "field_name": "VALUE14",
+          "required": {
+            "if": {
+              "field": "tag14",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag14",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        },
+        "tag15": {
+          "field_name": "TAG15",
+          "required": false,
+          "repeating": true,
+          "data_type": "string",
+          "value_list": [
+            "TOC",
+            "INC",
+            "EXP",
+            "DECO",
+            "BLANK"
+          ],
+          "blank": {
+            "if": {
+              "field": "file_name",
+              "is": "EMPTY"
+            }
+          }
+        },
+        "value15": {
+          "field_name": "VALUE15",
+          "required": {
+            "if": {
+              "field": "tag15",
+              "is": [
+                "TOC",
+                "INC",
+                "EXP",
+                "DECO"
+              ]
+            }
+          },
+          "blank": {
+            "if": {
+              "field": "tag15",
+              "is": "EMPTY"
+            }
+          },
+          "repeating": true,
+          "data_type": "string"
+        }
+      }
+    }
+  },
+  "xml_config": [
+    {
+      "sheet_root": "pages",
+      "sheet_attr": "pages",
+      "field_groups": [
+        {
+          "xml_attr": "page",
+          "columns": [
+            "serial_number",
+            "file_name",
+            "display_page",
+            "tag1",
+            "value1",
+            "tag2",
+            "value2",
+            "tag3",
+            "value3",
+            "tag4",
+            "value4",
+            "tag5",
+            "value5",
+            "tag6",
+            "value6",
+            "tag7",
+            "value7",
+            "tag8",
+            "value8",
+            "tag9",
+            "value9",
+            "tag10",
+            "value10",
+            "tag11",
+            "value11",
+            "tag12",
+            "value12",
+            "tag13",
+            "value13",
+            "tag14",
+            "value14",
+            "tag15",
+            "value15"
+          ]
+        }
+      ]
+    },
+    {
+      "sheet_root": "description",
+      "sheet_attr": "description",
+      "composite_fields": {
+        "full_title": [
+          "repository_name",
+          "full_call_number",
+          "title"
+        ]
+      },
+      "field_groups": [
+        {
+          "xml_attr": "administrative",
+          "columns": [
+            "administrative_contact",
+            "administrative_contact_email"
+          ]
+        },
+        {
+          "xml_attr": "tei_creation",
+          "columns": [
+            "tei_publication_date"
+          ]
+        },
+        {
+          "xml_attr": "contrib_cataloger",
+          "columns": [
+            "metadata_creator",
+            "metadata_creator_email"
+          ]
+        },
+        {
+          "xml_attr": "identification",
+          "columns": [
+            "repository_country",
+            "repository_city",
+            "repository_name",
+            "repository_institution",
+            "record_url",
+            "source_collection",
+            "call_numberid",
+            "archival_drawer",
+            "archival_box",
+            "archival_folder",
+            "archival_item",
+            "full_call_number",
+            "volume_number"
+          ]
+        },
+        {
+          "xml_attr": "altId",
+          "columns": [
+            "alternate_id",
+            "alternate_id_type"
+          ]
+        },
+        {
+          "xml_attr": "title",
+          "columns": [
+            "title",
+            "volume_number"
+          ]
+        },
+        {
+          "xml_attr": "edition",
+          "columns": [
+            "edition"
+          ]
+        },
+        {
+          "xml_attr": "author",
+          "columns": [
+            "author_name",
+            "author_uri"
+          ]
+        },
+        {
+          "xml_attr": "translator",
+          "columns": [
+            "translator_name",
+            "translator_uri"
+          ]
+        },
+        {
+          "xml_attr": "artist",
+          "columns": [
+            "artist_name",
+            "artist_uri"
+          ]
+        },
+        {
+          "xml_attr": "former_owner",
+          "columns": [
+            "former_owner_name",
+            "former_owner_uri"
+          ]
+        },
+        {
+          "xml_attr": "provenance",
+          "columns": [
+            "provenance_details"
+          ]
+        },
+        {
+          "xml_attr": "publication",
+          "columns": [
+            "date_single",
+            "date_range_start",
+            "date_range_end",
+            "date_narrative",
+            "place_of_publication",
+            "place_of_publication_uri",
+            "printer_publisher",
+            "printer_publisher_uri"
+          ]
+        },
+        {
+          "xml_attr": "series",
+          "columns": [
+            "series_title"
+          ]
+        },
+        {
+          "xml_attr": "language",
+          "columns": [
+            "language",
+            "language_name"
+          ]
+        },
+        {
+          "xml_attr": "extent",
+          "columns": [
+            "extent",
+            "dimensions"
+          ]
+        },
+        {
+          "xml_attr": "support",
+          "columns": [
+            "watermarks",
+            "support_material"
+          ]
+        },
+        {
+          "xml_attr": "colophon",
+          "columns": [
+            "colophon"
+          ]
+        },
+        {
+          "xml_attr": "notes",
+          "columns": [
+            "note"
+          ]
+        },
+        {
+          "xml_attr": "subjects_keywords",
+          "columns": [
+            "subject_keyword"
+          ]
+        },
+        {
+          "xml_attr": "subjects_names",
+          "columns": [
+            "subject_names",
+            "subject_names_uri"
+          ]
+        },
+        {
+          "xml_attr": "subjects_topical",
+          "columns": [
+            "subject_topical",
+            "subject_topical_uri"
+          ]
+        },
+        {
+          "xml_attr": "subjects_geographic",
+          "columns": [
+            "subject_geographic",
+            "subject_geographic_uri"
+          ]
+        },
+        {
+          "xml_attr": "subjects_genreform",
+          "columns": [
+            "subject_genreform",
+            "subject_genreform_uri"
+          ]
+        },
+        {
+            "xml_attr": "image_rights",
+            "columns": [
+                "image_rights",
+                "image_copyright_holder",
+                "image_copyright_year"
+            ]
+        },
+        {
+            "xml_attr": "metadata_rights",
+            "columns": [
+                "metadata_rights",
+                "metadata_copyright_holder",
+                "metadata_copyright_year"
+            ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<marc:records xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+  <marc:record>
+    <marc:leader>00933cam a2200301 | 4500</marc:leader>
+    <marc:controlfield tag="001">992761353503681</marc:controlfield>
+    <marc:controlfield tag="005">20141121151035.0</marc:controlfield>
+    <marc:controlfield tag="008">840329s1949    nyu           00010 eng  </marc:controlfield>
+    <marc:datafield ind1=" " ind2=" " tag="010">
+  <marc:subfield code="a">   49004418 </marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)ocm03054812</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(OCoLC)3054812</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CStRLIN)PAUG84-B11656</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(CaOTULAS)105207247</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="9">ABM6813</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">276135</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="035">
+  <marc:subfield code="a">(PU)276135-penndb-Voyager</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="040">
+  <marc:subfield code="c">NIC</marc:subfield>
+  <marc:subfield code="d">NIC</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2=" " tag="041">
+  <marc:subfield code="a">eng</marc:subfield>
+  <marc:subfield code="h">lat</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="050">
+  <marc:subfield code="a">BR65.A6</marc:subfield>
+  <marc:subfield code="b">E5 1949</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="082">
+  <marc:subfield code="a">242</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="090">
+  <marc:subfield code="a">BR65.A6</marc:subfield>
+  <marc:subfield code="b">E5 1949</marc:subfield>
+  <marc:subfield code="i">03/29/84 CT</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2="0" tag="100">
+  <marc:subfield code="a">Augustine,</marc:subfield>
+  <marc:subfield code="c">of Hippo, Saint,</marc:subfield>
+  <marc:subfield code="d">354-430.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="0" tag="240">
+  <marc:subfield code="a">Confessiones.</marc:subfield>
+  <marc:subfield code="l">English</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="1" ind2="4" tag="245">
+  <marc:subfield code="a">The confessions of Saint Augustine,</marc:subfield>
+  <marc:subfield code="c">tr. by Edward B. Pusey. Introd. by Fulton J. Sheen.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="260">
+  <marc:subfield code="a">New York,</marc:subfield>
+  <marc:subfield code="b">Modern Library</marc:subfield>
+  <marc:subfield code="c">[1949]</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="300">
+  <marc:subfield code="a">xiv, 338 p.</marc:subfield>
+  <marc:subfield code="c">19 cm.</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1="0" ind2=" " tag="490">
+  <marc:subfield code="a">The Modern library of the world's best books</marc:subfield>
+  <marc:subfield code="v">[263]</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="950">
+  <marc:subfield code="l">VPL</marc:subfield>
+  <marc:subfield code="i">03/29/84 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="955">
+  <marc:subfield code="l">VPL</marc:subfield>
+  <marc:subfield code="c">1</marc:subfield>
+  <marc:subfield code="q">g.Anon.</marc:subfield>
+  <marc:subfield code="r">[00691 2237]</marc:subfield>
+  <marc:subfield code="i">03/29/84 C</marc:subfield>
+</marc:datafield>
+    <marc:datafield ind1=" " ind2=" " tag="999"/>
+    <marc:holdings>
+      <marc:holding>
+        <marc:holding_id>22322567260003681</marc:holding_id>
+        <marc:call_number>BR65.A6 E5 1949</marc:call_number>
+        <marc:library>VanPeltLib</marc:library>
+        <marc:location>vanp</marc:location>
+      </marc:holding>
+    </marc:holdings>
+  </marc:record>
+</marc:records>
