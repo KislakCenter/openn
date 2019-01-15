@@ -106,7 +106,7 @@
         <xsl:value-of select="replace(//marc:controlfield[@tag=001], '^on', '')"/>
       </xsl:when>
       <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and starts-with(., '(OCoLC)')]">
-        <xsl:value-of select="replace(//marc:datafield[@tag=035]/marc:subfield[@code='a' and starts-with(., '(OCoLC)')][1], '^\((OCoLC)\)(on)?', '')"/>
+        <xsl:value-of select="replace((//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\(OCoLC\)\d+$')])[1], '^\((OCoLC)\)', '')"/>
       </xsl:when>
     </xsl:choose>
   </xsl:variable>
@@ -270,7 +270,6 @@
                                 </repository>
                               </xsl:if>
                                 <idno type="call-number">
-                                  <xsl:value-of select="$marcSource"/>
                                     <xsl:value-of select="$call_number"/>
                                 </idno>
                               <xsl:if test="$bibid">
