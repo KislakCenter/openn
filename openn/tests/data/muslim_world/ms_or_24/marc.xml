@@ -9,7 +9,10 @@
       <subfield code="e">amremm</subfield>
       <subfield code="c">ZCU</subfield>
       <subfield code="d">OCLCO</subfield>
-      <subfield code="d">OCLCF</subfield>
+      <subfield code="d">ZCU</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="a">(NNC)13540680</subfield>
     </datafield>
     <datafield tag="043" ind1=" " ind2=" ">
       <subfield code="a">n-us-ny</subfield>
@@ -18,8 +21,7 @@
       <subfield code="a">ZCUA</subfield>
     </datafield>
     <datafield tag="245" ind1="0" ind2="0">
-      <subfield code="a">[Calendar for year 1064 AH] :</subfield>
-      <subfield code="b">[manuscript].</subfield>
+      <subfield code="a">[Calendar for year 1064 AH]</subfield>
     </datafield>
     <datafield tag="264" ind1=" " ind2="0">
       <subfield code="a">[Turkey?],</subfield>
@@ -104,40 +106,7 @@
       <subfield code="v">Early works to 1800.</subfield>
     </datafield>
     <datafield tag="650" ind1=" " ind2="0">
-      <subfield code="a">Manuscripts, Turkish</subfield>
-      <subfield code="z">New York (State)</subfield>
-      <subfield code="z">New York.</subfield>
-    </datafield>
-    <datafield tag="650" ind1=" " ind2="7">
-      <subfield code="a">Astrology, Arab.</subfield>
-      <subfield code="2">fast</subfield>
-      <subfield code="0">(OCoLC)fst00819451</subfield>
-    </datafield>
-    <datafield tag="650" ind1=" " ind2="7">
-      <subfield code="a">Islamic calendar.</subfield>
-      <subfield code="2">fast</subfield>
-      <subfield code="0">(OCoLC)fst01730291</subfield>
-    </datafield>
-    <datafield tag="650" ind1=" " ind2="7">
       <subfield code="a">Manuscripts, Turkish.</subfield>
-      <subfield code="2">fast</subfield>
-      <subfield code="0">(OCoLC)fst01008521</subfield>
-    </datafield>
-    <datafield tag="650" ind1=" " ind2="7">
-      <subfield code="a">Medicine.</subfield>
-      <subfield code="2">fast</subfield>
-      <subfield code="0">(OCoLC)fst01014893</subfield>
-    </datafield>
-    <datafield tag="651" ind1=" " ind2="7">
-      <subfield code="a">New York (State)</subfield>
-      <subfield code="z">New York.</subfield>
-      <subfield code="2">fast</subfield>
-      <subfield code="0">(OCoLC)fst01204333</subfield>
-    </datafield>
-    <datafield tag="651" ind1=" " ind2="7">
-      <subfield code="a">Turkey.</subfield>
-      <subfield code="2">fast</subfield>
-      <subfield code="0">(OCoLC)fst01208963</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
       <subfield code="a">Calendars (documents by form)</subfield>
@@ -155,11 +124,6 @@
       <subfield code="a">Manuscripts.</subfield>
       <subfield code="2">aat</subfield>
     </datafield>
-    <datafield tag="655" ind1=" " ind2="7">
-      <subfield code="a">Early works.</subfield>
-      <subfield code="2">fast</subfield>
-      <subfield code="0">(OCoLC)fst01411636</subfield>
-    </datafield>
     <datafield tag="700" ind1="1" ind2=" ">
       <subfield code="a">Smith, David Eugene,</subfield>
       <subfield code="d">1860-1944,</subfield>
@@ -171,6 +135,12 @@
     </datafield>
     <datafield tag="856" ind1="4" ind2="1">
       <subfield code="z">Digital facsimile in OPenn</subfield>
-      <subfield code="u">http://openn.library.upenn.edu/Data/0032/html/ms_or_024</subfield>
+      <subfield code="u">http://openn.library.upenn.edu/Data/0032/html/ms_or_024.html</subfield>
+    </datafield>
+    <datafield tag="852" ind1=" " ind2=" ">
+      <subfield code="b">Rare Book and Manuscript Library</subfield>
+      <subfield code="a">Columbia University</subfield>
+      <subfield code="e">New York</subfield>
+      <subfield code="u">https://clio.columbia.edu/catalog/13540680</subfield>
     </datafield>
   </record></collection>
