@@ -180,15 +180,17 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template name="other-langs">
+    <xsl:param name="mainLang"/>
     <xsl:param name="tags"/>
+    <xsl:variable name="val">
     <xsl:for-each select="$tags">
-      <xsl:if test="position() > 1">
+      <xsl:if test="not($mainLang = ./text())">
         <xsl:value-of select="."/>
-        <xsl:if test="position() != last()">
-          <xsl:text> </xsl:text>
-        </xsl:if>
+        <xsl:text> </xsl:text>
       </xsl:if>
     </xsl:for-each>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($val)"/>
   </xsl:template>
   <xsl:template name="extractPubDateWhen">
     <xsl:param name="marc008"/>

@@ -237,35 +237,33 @@
                                     </altIdentifier>
                                 </xsl:if>
                             </msIdentifier>
-                            <msContents>
-                                <summary>
-                                    <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"/>
-                                </summary>
-
-                                <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
-                                    <textLang>
-                                      <xsl:choose>
-                                        <xsl:when test="//marc:datafield[@tag='041']/marc:subfield[@code='a']">
-                                          <!-- If we have 0414a values; pull language codes from there -->
-                                            <xsl:attribute name="mainLang" select="//marc:datafield[@tag='041']/marc:subfield[@code='a'][1]"/>
-                                            <xsl:if test="count(//marc:datafield[@tag='041']/marc:subfield[@code='a']) &gt; 1">
-                                                <xsl:attribute name="otherLangs">
-                                                    <xsl:call-template name="other-langs">
-                                                        <xsl:with-param name="tags" select="//marc:datafield[@tag='041']/marc:subfield[@code='a']" />
-                                                    </xsl:call-template>
-                                                </xsl:attribute>
-                                            </xsl:if>
-                                        </xsl:when>
-                                        <!-- Else, if there's a lanugage in 008$a, pull the mainLang code from there. -->
-                                        <xsl:when test="not(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3) = '   ')">
-                                          <xsl:attribute name="mainLang" select="normalize-space(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3))"/>
-                                        </xsl:when>
-                                      </xsl:choose>
-                                        <xsl:call-template name="chomp-period">
-                                            <xsl:with-param name="string" select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
-                                        </xsl:call-template>
-                                    </textLang>
+                          <msContents>
+                            <summary>
+                              <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"/>
+                            </summary>
+                            
+                            <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
+                              <textLang>
+                                <xsl:if test="not(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3) = '   ')">
+                                  <xsl:variable name="mainLang" select="normalize-space(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3))"/>
+                                  <xsl:attribute name="mainLang" select="$mainLang"/>
+                                  <xsl:value-of select="count(//marc:datafield[@tag='041']/marc:subfield[@code='a'])"/>
+                                  <xsl:if test="//marc:datafield[@tag=041]/marc:subfield[@code='a']">
+                                  <!--<xsl:if test="count(//marc:datafield[@tag='041']/marc:subfield[@code='a']) > 1">-->
+                                    <xsl:attribute name="otherLangs">
+                                      y
+                                      <xsl:call-template name="other-langs">
+                                        <xsl:with-param name="mainLang" select="$mainLang"/>
+                                        <xsl:with-param name="tags" select="//marc:datafield[@tag='041']/marc:subfield[@code='a']" />
+                                      </xsl:call-template>
+                                    </xsl:attribute>
+                                  </xsl:if>
                                 </xsl:if>
+                                <xsl:call-template name="chomp-period">
+                                  <xsl:with-param name="string" select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
+                                </xsl:call-template>
+                              </textLang>
+                            </xsl:if>
                                 <!--
                                     For now for vernacular scripts, extracting just the text of the name, subfield $a
 
