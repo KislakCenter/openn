@@ -33,19 +33,83 @@
     <xsl:output indent="yes"/>
 
   <xsl:param name="HOLDING_ID"/>
-
-    <xsl:variable name="institution">
+  
+  <xsl:variable name="marcSource">
+    <xsl:choose>
+      <!-- If the 001 looks like on1056625870 the record comes from OCLC -->
+      <xsl:when test="matches(//marc:record/marc:controlfield[@tag=001]/text(), '^on\d+')">
+        <xsl:text>oclc</xsl:text>
+      </xsl:when>
+      <!-- Otherwise, it's probably from the OPAC -->
+      <xsl:otherwise><xsl:text>opac</xsl:text></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  
+  <xsl:variable name="institution">
+    <xsl:call-template name="clean-up-text">
+      <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"/>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:variable name="repository">
+    <xsl:call-template name="clean-up-text">
+      <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"/>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:variable name="repositorySettlement">
+    <xsl:choose>
+      <xsl:when test="matches($institution, 'University of Pennsylvania') and //marc:datafield[@tag=650]/marc:subfield[@tag='z']">
+        <xsl:for-each select="//marc:datafield[@tag='650']/marc:subfield[@code='z']">
+          <xsl:if test="position() = last()">
+            <xsl:call-template name="chopPunctuation">
+              <xsl:with-param name="chopString" select="."></xsl:with-param>
+            </xsl:call-template>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
         <xsl:call-template name="clean-up-text">
-            <xsl:with-param name="some-text"
-                select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"/>
+          <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='e']"/>
         </xsl:call-template>
-    </xsl:variable>
-    <xsl:variable name="repository">
-        <xsl:call-template name="clean-up-text">
-            <xsl:with-param name="some-text"
-                select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='b']"/>
-        </xsl:call-template>
-    </xsl:variable>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:variable name="facsimileURL" select="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]/parent::marc:datafield/marc:subfield[@code='u']"/>
+  <xsl:variable name="catalogURL" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='u']"/>
+  <xsl:variable name="bibid">
+    <xsl:choose>
+      <xsl:when test="$marcSource = 'opac'">
+        <xsl:value-of select="//marc:controlfield[@tag=001]"/>
+      </xsl:when>
+      <!--
+          035 $a (NNC)[recordnumber] 
+          852  $b Rare Book and Manuscript Library $a Columbia University $e New York $u https://clio.columbia.edu/catalog/[recordnumber]
+          
+          or, for the few dozen coming from the Burke:
+          
+          035 $a (NNC)[recordnumber]
+          852 $b Burke Library at Union Theological Seminary $a Columbia University $e New York $u https://clio.columbia.edu/catalog/[recordnumber]
+          
+          and for Free Library:
+          
+          035 $a (PLF)[recordnumber] 
+          852  ǂb Rare Book Department ǂa Free Library of Philadelphia ǂe Philadelphia ǂu https://know.freelibrary.org/Record/[recordnumber]        
+      -->
+      <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF)\)')]">
+        <xsl:value-of select="replace(//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF)\)')][1]/text(), '\((NNC|PLF)\)', '')"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
+  
+  <xsl:variable name="oclcID">
+    <xsl:choose>
+      <xsl:when test="$marcSource = 'oclc'">
+        <xsl:value-of select="replace(//marc:controlfield[@tag=001], '^on', '')"/>
+      </xsl:when>
+      <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and starts-with(., '(OCoLC)')]">
+        <xsl:value-of select="replace(//marc:datafield[@tag=035]/marc:subfield[@code='a' and starts-with(., '(OCoLC)')][1], '^\((OCoLC)\)(on)?', '')"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
 
     <!--
       <xsl:comment>
@@ -192,50 +256,43 @@
                     <sourceDesc>
                         <msDesc>
                             <msIdentifier>
-                              <xsl:choose>
-                                <xsl:when test="//marc:datafield[@tag='650']/marc:subfield[@code='z']">
-                                  <settlement>
-                                  <xsl:for-each select="//marc:datafield[@tag='650']/marc:subfield[@code='z']">
-                                    <xsl:if test="position() = last()">
-                                      <xsl:call-template name="chopPunctuation">
-                                        <xsl:with-param name="chopString" select="."></xsl:with-param>
-                                      </xsl:call-template>
-                                    </xsl:if>
-                                  </xsl:for-each>
-                                  </settlement>
-                                </xsl:when>
-                                <xsl:when test="//marc:datafield[@tag='852']/marc:subfield[@code='e' and matches(text(), 'Philadelphia', 'i')]">
-                                  <settlement>Philadelphia</settlement>
-                                </xsl:when>
-                                <xsl:when test="//marc:datafield[@tag='040']/marc:subfield[@code='a' and (matches(text(),'^PAU') or text() = 'PLF')]">
-                                  <settlement>Philadelphia</settlement>
-                                </xsl:when>
-                                <xsl:when test="//marc:datafield[@tag='040']/marc:subfield[@code='a' and text() = 'ZCU']">
-                                  <settlement>New York</settlement>
-                                </xsl:when>
-                              </xsl:choose>
+                              <xsl:if test="$repositorySettlement">
+                                <settlement><xsl:value-of select="$repositorySettlement"/></settlement>
+                              </xsl:if>
+                              <xsl:if test="$institution">
                                 <institution>
                                     <xsl:value-of select="$institution"/>
                                 </institution>
+                              </xsl:if>
+                              <xsl:if test="$repository">
                                 <repository>
                                     <xsl:value-of select="$repository"/>
                                 </repository>
+                              </xsl:if>
                                 <idno type="call-number">
+                                  <xsl:value-of select="$marcSource"/>
                                     <xsl:value-of select="$call_number"/>
                                 </idno>
+                              <xsl:if test="$bibid">
                                 <altIdentifier type="bibid">
-                                    <idno>
-                                        <xsl:value-of select="//marc:controlfield[@tag='001']"/>
-                                    </idno>
+                                    <idno><xsl:value-of select="$bibid"/></idno>
                                 </altIdentifier>
-                                <xsl:if
-                                    test="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]">
-                                    <altIdentifier type="resource">
-                                        <idno>
-                                            <xsl:value-of select="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]/parent::marc:datafield/marc:subfield[@code='u']"/>
-                                        </idno>
-                                    </altIdentifier>
-                                </xsl:if>
+                              </xsl:if>
+                              <xsl:if test="$oclcID">
+                                <altIdentifier type="oclc">
+                                  <idno><xsl:text>http://www.worldcat.org/oclc/</xsl:text><xsl:value-of select="$oclcID"/></idno>
+                                </altIdentifier>
+                              </xsl:if>
+                              <xsl:if test="$facsimileURL">
+                                <altIdentifier type='resource'>
+                                  <idno><xsl:value-of select="$facsimileURL"/></idno>
+                                </altIdentifier>
+                              </xsl:if>
+                              <xsl:if test="$catalogURL">
+                                <altIdentifier type='resource'>
+                                  <idno><xsl:value-of select="$catalogURL"/></idno>
+                                </altIdentifier>
+                              </xsl:if>
                             </msIdentifier>
                           <msContents>
                             <summary>
@@ -247,11 +304,8 @@
                                 <xsl:if test="not(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3) = '   ')">
                                   <xsl:variable name="mainLang" select="normalize-space(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3))"/>
                                   <xsl:attribute name="mainLang" select="$mainLang"/>
-                                  <xsl:value-of select="count(//marc:datafield[@tag='041']/marc:subfield[@code='a'])"/>
                                   <xsl:if test="//marc:datafield[@tag=041]/marc:subfield[@code='a']">
-                                  <!--<xsl:if test="count(//marc:datafield[@tag='041']/marc:subfield[@code='a']) > 1">-->
                                     <xsl:attribute name="otherLangs">
-                                      y
                                       <xsl:call-template name="other-langs">
                                         <xsl:with-param name="mainLang" select="$mainLang"/>
                                         <xsl:with-param name="tags" select="//marc:datafield[@tag='041']/marc:subfield[@code='a']" />

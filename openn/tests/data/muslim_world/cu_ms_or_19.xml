@@ -1,8 +1,8 @@
 <collection xmlns='http://www.loc.gov/MARC21/slim' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd'>
   <record xmlns="http://www.loc.gov/MARC21/slim">
     <leader>00000ctm a2200000Ma 4500</leader>
-    <controlfield tag="001">on1054927257</controlfield>
-    <controlfield tag="008">180928s1653    tu a          000 0 ota d</controlfield>
+    <controlfield tag="001">on1055768650</controlfield>
+    <controlfield tag="008">181005q17501899af a          000 0 per d</controlfield>
     <datafield tag="040" ind1=" " ind2=" ">
       <subfield code="a">ZCU</subfield>
       <subfield code="b">eng</subfield>
@@ -12,7 +12,7 @@
       <subfield code="d">ZCU</subfield>
     </datafield>
     <datafield tag="035" ind1=" " ind2=" ">
-      <subfield code="a">(NNC)13540680</subfield>
+      <subfield code="a">(NNC)13554124</subfield>
     </datafield>
     <datafield tag="043" ind1=" " ind2=" ">
       <subfield code="a">n-us-ny</subfield>
@@ -20,17 +20,23 @@
     <datafield tag="049" ind1=" " ind2=" ">
       <subfield code="a">ZCUA</subfield>
     </datafield>
-    <datafield tag="245" ind1="0" ind2="0">
-      <subfield code="a">[Calendar for year 1064 AH]</subfield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="6">880-01</subfield>
+      <subfield code="a">Āmulī, Rukn ibn Sharaf al-Dīn,</subfield>
+      <subfield code="d">active 1456.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="6">880-02</subfield>
+      <subfield code="a">Panjāh bāb-i sulṭānī bi-ʻilm-i usṭurlāb.</subfield>
     </datafield>
     <datafield tag="264" ind1=" " ind2="0">
-      <subfield code="a">[Turkey?],</subfield>
-      <subfield code="c">1653.</subfield>
+      <subfield code="a">[Herat],</subfield>
+      <subfield code="c">[between 1750 and 1899?]</subfield>
     </datafield>
     <datafield tag="300" ind1=" " ind2=" ">
-      <subfield code="a">8 foliated leaves :</subfield>
+      <subfield code="a">42 bi-paginated leaves :</subfield>
       <subfield code="b">paper, illustrations ;</subfield>
-      <subfield code="c">205 x 135 (148 x 85) mm.</subfield>
+      <subfield code="c">200 x 140 (165 x 110) mm, bound to 220 x 150 mm.</subfield>
     </datafield>
     <datafield tag="336" ind1=" " ind2=" ">
       <subfield code="a">text</subfield>
@@ -51,40 +57,40 @@
       <subfield code="d">manuscript.</subfield>
     </datafield>
     <datafield tag="500" ind1=" " ind2=" ">
-      <subfield code="a">Manuscript.</subfield>
+      <subfield code="a">Manuscript codex.</subfield>
     </datafield>
     <datafield tag="520" ind1=" " ind2=" ">
-      <subfield code="a">Turkish calendar, with a lunar table showing the phases of the moon. Includes information on prayer times for each day of the year and astrological signs for finding the best times for curing different illnesses.</subfield>
+      <subfield code="a">On the use of the astrolabe in calendar making and astrology; ends abruptly; no colophon.</subfield>
     </datafield>
     <datafield tag="500" ind1=" " ind2=" ">
-      <subfield code="a">Title provided by the cataloger.</subfield>
-    </datafield>
-    <datafield tag="500" ind1=" " ind2=" ">
-      <subfield code="a">Layout: Tables with a side column for marginalia.</subfield>
-    </datafield>
-    <datafield tag="500" ind1=" " ind2=" ">
-      <subfield code="a">Script: Written in naskh in black and red ink.</subfield>
-    </datafield>
-    <datafield tag="500" ind1=" " ind2=" ">
-      <subfield code="a">Decoration: Red ink decorative marks; textblock border-ruled in black and yellow; green and red endpieces on head rows and columns. Tables in red and black (f. 1v-7v inclusive); Zodiacs in red, black, and green (f. 1r, 8r) and a volvelle in red, black, green, and yellow (f. 8v).</subfield>
+      <subfield code="a">Title from p. [1] of the manuscript.</subfield>
     </datafield>
     <datafield tag="546" ind1=" " ind2=" ">
-      <subfield code="a">Ottoman Turkish.</subfield>
+      <subfield code="a">Persian.</subfield>
     </datafield>
     <datafield tag="500" ind1=" " ind2=" ">
-      <subfield code="a">Shelfmark: MS Or 24.</subfield>
+      <subfield code="a">Pagination: Numbers in ink at the top of every other page, number 11 repeats. Catchwords every verso, lower left. References in the record are to the pagination as it appears in the manuscript.</subfield>
     </datafield>
     <datafield tag="500" ind1=" " ind2=" ">
-      <subfield code="a">Origin: 1064 AH.</subfield>
+      <subfield code="a">Layout: 17 lines per page with some marginalia; frame-ruled.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Script: Written in nastaʻliq in black ink.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Decoration: Section headers and overlines in red. Includes 7 tables: pp. [24], [32], 35, [36], 43, [54], [60], and 4 diagrams: pp. 25, [26], 27, 63.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Origin: Likely copied in Herat. The work is written on different types of paper including European laid paper and machine-made paper.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Shelfmark: MS Or 19.</subfield>
     </datafield>
     <datafield tag="541" ind1="1" ind2=" ">
-      <subfield code="a">Gift of David Eugene Smith, 1931-1934.</subfield>
-    </datafield>
-    <datafield tag="561" ind1="1" ind2=" ">
-      <subfield code="a">Purchased by D.E. Smith in Nuremberg, 1908.</subfield>
+      <subfield code="a">Presumed to be a gift of David Eugene Smith, 1931-1934.</subfield>
     </datafield>
     <datafield tag="563" ind1=" " ind2=" ">
-      <subfield code="a">Not bound.</subfield>
+      <subfield code="a">Islamic binding, sewn on two wide leather thongs. Full dark brown leather, blind tooled.</subfield>
     </datafield>
     <datafield tag="530" ind1=" " ind2=" ">
       <subfield code="a">Also available as a digital facsimile.</subfield>
@@ -93,23 +99,30 @@
       <subfield code="a">Item cataloged from digital facsimile and existing description.</subfield>
     </datafield>
     <datafield tag="650" ind1=" " ind2="0">
-      <subfield code="a">Islamic calendar</subfield>
+      <subfield code="a">Astrolabes</subfield>
       <subfield code="v">Early works to 1800.</subfield>
     </datafield>
     <datafield tag="650" ind1=" " ind2="0">
-      <subfield code="a">Astrology, Arab</subfield>
+      <subfield code="a">Astronomy</subfield>
       <subfield code="v">Early works to 1800.</subfield>
     </datafield>
     <datafield tag="650" ind1=" " ind2="0">
-      <subfield code="a">Medicine</subfield>
-      <subfield code="z">Turkey</subfield>
+      <subfield code="a">Astronomical instruments</subfield>
       <subfield code="v">Early works to 1800.</subfield>
     </datafield>
     <datafield tag="650" ind1=" " ind2="0">
-      <subfield code="a">Manuscripts, Turkish.</subfield>
+      <subfield code="a">Manuscripts, Persian.</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
-      <subfield code="a">Calendars (documents by form)</subfield>
+      <subfield code="a">Manuscripts.</subfield>
+      <subfield code="2">aat</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Codices.</subfield>
+      <subfield code="2">aat</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Diagrams.</subfield>
       <subfield code="2">aat</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
@@ -117,17 +130,25 @@
       <subfield code="2">aat</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
-      <subfield code="a">Volvelles.</subfield>
-      <subfield code="2">aat</subfield>
+      <subfield code="a">Islamic bindings (Binding)</subfield>
+      <subfield code="2">rbbin</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
-      <subfield code="a">Manuscripts.</subfield>
-      <subfield code="2">aat</subfield>
+      <subfield code="a">Full covers.</subfield>
+      <subfield code="2">lobt</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Supported sewing.</subfield>
+      <subfield code="2">lobt</subfield>
     </datafield>
     <datafield tag="700" ind1="1" ind2=" ">
       <subfield code="a">Smith, David Eugene,</subfield>
       <subfield code="d">1860-1944,</subfield>
       <subfield code="e">former owner.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="0" ind2=" ">
+      <subfield code="a">Abū al-Qāsim Bābur Mīrzā,</subfield>
+      <subfield code="e">dedicatee.</subfield>
     </datafield>
     <datafield tag="710" ind1="2" ind2=" ">
       <subfield code="a">Muslim World Manuscripts (Columbia University. Rare Book and Manuscript Library)</subfield>
@@ -135,12 +156,25 @@
     </datafield>
     <datafield tag="856" ind1="4" ind2="1">
       <subfield code="z">Digital facsimile in OPenn</subfield>
-      <subfield code="u">http://openn.library.upenn.edu/Data/0032/html/ms_or_024.html</subfield>
+      <subfield code="u">http://openn.library.upenn.edu/Data/0032/html/ms_or_019.html</subfield>
     </datafield>
     <datafield tag="852" ind1=" " ind2=" ">
       <subfield code="b">Rare Book and Manuscript Library</subfield>
       <subfield code="a">Columbia University</subfield>
       <subfield code="e">New York</subfield>
-      <subfield code="u">https://clio.columbia.edu/catalog/13540680</subfield>
+      <subfield code="u">https://clio.columbia.edu/catalog/13554124</subfield>
+    </datafield>
+    <datafield tag="880" ind1="1" ind2=" ">
+      <subfield code="6">100-01/(3/r</subfield>
+      <subfield code="a">آملى، رکن بن شرف الدىن,</subfield>
+      <subfield code="d">active 1456.</subfield>
+    </datafield>
+    <datafield tag="880" ind1="1" ind2="0">
+      <subfield code="6">245-02/(4/r</subfield>
+      <subfield code="a">پنجاه باب سلطانى بعلم اسطرلاب.</subfield>
+    </datafield>
+    <datafield tag="066" ind1=" " ind2=" ">
+      <subfield code="c">(3</subfield>
+      <subfield code="c">(4</subfield>
     </datafield>
   </record></collection>
