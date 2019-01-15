@@ -47,6 +47,7 @@ class PrepConfig:
         self._repo_prep_dict   = deepcopy(repo_prep_dict)
         self._repo_wrapper     = RepositoryWrapper(repo_dict)
         self._prep_method      = PrepMethod(prep_dict)
+        self._prep_class_params = None
         self._context          = deepcopy(prep_context)
         self._rights_dict      = self._repo_prep_dict['rights']
         self._funders = self._repo_prep_dict.get('funders', [])
@@ -98,7 +99,11 @@ class PrepConfig:
         return self._funders
 
     def prep_class_params(self):
-        return self._prep_method.prep_class_params()
+        if self._prep_class_params is None:
+            self._prep_class_params = {}
+            self._prep_class_params.update(self._prep_method.prep_class_params())
+            self._prep_class_params.update(self._repo_prep_dict.get('repository_prep', {}).get('params', {}))
+        return self._prep_class_params
 
     def prep_class_parameter(self, name):
         try:

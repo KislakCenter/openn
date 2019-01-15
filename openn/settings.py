@@ -270,6 +270,7 @@ PREPARATION_METHODS = [
                 'pih_host': 'mdproc.library.upenn.edu:9292',
                 'pih_path': '/records/{0}/create?format=marc21',
                 'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+                'merge_pages_xsl': os.path.join(SITE_ROOT, 'xsl/merge_marc_pages.xsl'),
                 'config_json': os.path.join(SITE_ROOT, 'muslimworld.json'),
             },
         },
@@ -1368,6 +1369,15 @@ PREP_CONFIGS = {
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
             'tag': 'mmw',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="u"]',
+                    '//marc:datafield[@tag="035"]/marc:subfield[@code="a" and starts-with(., "(NNC)")]',
+                ]
+            },
         },
         'rights': {
             'image_rights': 'PD-10',

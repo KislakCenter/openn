@@ -56,7 +56,7 @@ class TestMMWPrep(OPennTestCase):
         )
     template_image = os.path.join(os.path.dirname(__file__), 'data/mscodex1223/mscodex1223_wk1_back0001.tif')
     template_pages_xlsx = os.path.join(os.path.dirname(__file__), 'data/muslim_world/ms_or_24.xlsx')
-    template_description_xml = os.path.join(os.path.dirname(__file__), 'data/muslim_world/cu_marc_sample_2.xml')
+    template_description_xml = os.path.join(os.path.dirname(__file__), 'data/muslim_world/cu_ms_or_24.xml')
 
     pp               = PrettyPrinter(indent=2)
     expected_xpaths  = (

@@ -25,7 +25,7 @@ setUp() {
 
 tearDown() {
     clear_tables
-    # rm -rf $TEST_STAGING_DIR/* 2>/dev/null
+    rm -rf $TEST_STAGING_DIR/* 2>/dev/null
 }
 
 COLUMBIA_MS_OR_24="ms_or_24_000_0000001.tif

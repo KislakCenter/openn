@@ -362,7 +362,7 @@ class MedrenPrep(RepositoryPrep):
             self.logger.info("[%s] Validating metadata", self.basedir)
             bibid = self.get_bibid()
             self.write_xml(bibid, self.pih_filename)
-            call_no = self.check_valid_xml(self.pih_filename)
+            self.check_valid_xml(self.pih_filename)
             self.write_status(self.REPOSITORY_PREP_MD_VALIDATED)
 
         if self.get_status() > self.REPOSITORY_PREP_FILES_VALIDATED:

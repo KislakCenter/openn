@@ -103,7 +103,6 @@ class CommonPrep(Status):
     def update_document(self):
         self.document.call_number = self.tei.call_number
         self.document.title = getattr(self.tei, 'title', 'Untitled')
-        # raise Exception("==== glerbl " + self.document.title + " ====")
         self.document.save()
         return self.document
 

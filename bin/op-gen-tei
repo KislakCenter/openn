@@ -55,6 +55,7 @@ usage() {
    echo "OPTIONS"
    echo "       -h        Help"
    echo "       -j PATH   Path to the Saxon jar file."
+   echo "       -p NAME=value Single XSLT param; repeat for multiple params"
    echo ""
    echo "OPENN_SAXON_JAR can be set in environment or Saxon jar can be installed"
    echo "to the default location: $DEFAULT_SAXON_JAR"
