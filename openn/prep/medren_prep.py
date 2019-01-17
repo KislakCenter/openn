@@ -332,7 +332,13 @@ class MedrenPrep(RepositoryPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
+        holding_id = None
+
         xsl_command = ['op-gen-tei']
+
+        if kwargs.get('HOLDING_ID'):
+            xsl_command.append('-p HOLDING_ID=%s' (str(kwargs['HOLDING_ID']),))
+
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid
         if bibid is None:

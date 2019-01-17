@@ -46,7 +46,7 @@ testSpreadsheet() {
     doc_id=`mysql -B -u openn openn_test --disable-column-names -e "select id from openn_document where base_dir = 'MC_968_11_4_v03'"`
     # create the staging directory if needed
     [[ ! -d $TEST_STAGING_DIR ]] && mkdir $TEST_STAGING_DIR
-    output=`op-update-tei -o $TEST_STAGING_DIR -k xlsx=$SPREADSHEET_DATA_XLSX haverford-diaries $doc_id 2>&1`
+    output=`op-update-tei -o $TEST_STAGING_DIR -k XLSX=$SPREADSHEET_DATA_XLSX haverford-diaries $doc_id 2>&1`
     status=$?
     [[ "$status" = 0 ]] || echo "$output"
     assertEquals 0 $status

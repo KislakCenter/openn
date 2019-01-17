@@ -113,7 +113,7 @@ the '--out-dir' option.
 For example, note the following, for a document with ID 4221 and base
 directory 'lewis_e_018':
 
-   $ {0} -k xlsx=lewis_e_018_metadata.xlsx flp-bphil 4221
+   $ {0} -k XLSX=lewis_e_018_metadata.xlsx flp-bphil 4221
 
 This will create a new directory 'lewis_e_018' in the current directory, as
 well as the contained 'data' directory, and the TEI file:
@@ -122,14 +122,40 @@ well as the contained 'data' directory, and the TEI file:
 
 Note: script will not run if './lewis_e_018' already exists.
 
-For spreadsheet-based TEI, the 'xlsx' keyword must be used:
+For spreadsheet-based TEI, the 'XLSX' keyword must be used:
 
-    $ {0} -k xlsx=path/to/file.xlsx flp-bphil 4732
+    $ {0} -k XLSX=path/to/file.xlsx flp-bphil 4732
 
 For Penn in Hand, use the 'HOLDING_ID' keyword if the BibID is associated with
 more than one call number:
 
     $ {0} -k HOLDING_ID=22315803310003681 penn-pih 459
+
+Updating the TEI for Manuscripts of the Muslim Word (mmw), requires at least two
+keywords and may require trhee. The 'PAGES_XLSX' keyword must be used:
+
+    PAGES_XLSX    path to the page-level metdata spreadsheet
+
+For MMW non-Penn Libraries manuscripts, the 'MARC_XML' keyword must be used:
+
+    MARC_XML     path to the MARC XML for the manuscript
+
+Example:
+
+    $ {0} -k PAGES_XLSX=path/to/file.xslx:MARC_XML=path/to/file.xml columbia-mmw 6850
+
+For MMW Penn Libraries manuscripts, the 'HOLDING_ID' keyword may be required:
+
+    HOLDING_ID  the manuscript's holding ID (for manuscripts that have more
+                than one holding for each BibID)
+
+Examples:
+
+    $ {0} -k PAGES_XLSX=path/to/file.xslx penn-mmw 7081
+
+    $ {0} -k  PAGES_XLSX=path/to/file.xslx:HOLDING_ID=22315803310003681 penn-mmw 7083
+
+
 
 """.format(os.path.basename(sys.argv[0]))
 

@@ -77,7 +77,7 @@ class PackageValidation(object):
             errors.append('VALID NAME CHECK: The following not found in valid name list: %s' % ('; '.join(names),))
         names = self.check_invalid_names(pkgdir)
         if len(names) > 0:
-            errors.append('INVALD NAME CHECK: The following matched invalid name patterns: %s' % ('; '.join(names),))
+            errors.append('INVALID NAME CHECK: The following matched invalid name patterns: %s' % ('; '.join(names),))
         globs = self.check_required(pkgdir)
         if len(globs) > 0:
             errors.append('REQUIRED NAME CHECK: The following required file types not found: %s' % ('; '.join(globs),))

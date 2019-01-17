@@ -80,31 +80,42 @@ def copy_current_manifest(doc, source_dir):
             raise ex
 
 def rewrite_manifest(doc, source_dir):
-    manifest_path = os.path.join(source_dir, 'manifest-sha1.txt')
-    tei_rel_path = os.path.join('data', doc.tei_basename)
-    tei_full_path = os.path.join(source_dir, tei_rel_path)
+    manifest_path  = os.path.join(source_dir, 'manifest-sha1.txt')
+    tei_rel_path   = os.path.join('data', doc.tei_basename)
+    tei_full_path  = os.path.join(source_dir, tei_rel_path)
+    marc_rel_path  = os.path.join('data', 'marc.xml')
+    marc_full_path = os.path.join(source_dir, marc_rel_path)
 
     if not os.path.exists(tei_full_path):
         raise OPennException("No TEI file found at %s" % (tei_full_path,))
 
-    sha1 = hashlib.sha1()
+    tei_sha1 = hashlib.sha1()
     with open(tei_full_path, 'rb')  as tei:
-        sha1.update(tei.read())
+        tei_sha1.update(tei.read())
+    tei_digest = tei_sha1.hexdigest()
 
-    digest = sha1.hexdigest()
+    if os.path.exists(marc_full_path):
+        marc_sha1 = hashlib.sha1()
+        with open(marc_full_path, 'rb') as marc:
+            marc_sha1.update(marc.read())
+        marc_digest = marc_sha1.hexdigest()
+
     with open(manifest_path, "r") as manifest:
         lines = manifest.readlines()
 
-    # make sure were need to update the manifest;
-    new_line_re = r'^%s\s+%s' % (digest, tei_rel_path)
+    # make sure we need to update the manifest;
+    tei_line_re = r'^%s +%s' % (tei_digest, tei_rel_path)
     for line in lines:
-        if re.search(new_line_re, line):
+        if re.search(tei_line_re, line):
             raise OPennException("Manifest already up-to-date")
 
     with open(manifest_path, "w") as manifest:
         for line in lines:
             if line.strip().endswith(tei_rel_path):
-                manifest.write("%s  %s\n" % (digest, tei_rel_path))
+                manifest.write("%s  %s\n" % (tei_digest, tei_rel_path))
+            elif line.strip().endswith(marc_rel_path) and marc_digest:
+                manifest.write('%s  %s\n"' % (marc_digest, marc_rel_path))
+                logger.info('Writing marc_digest: %s' % (marc_digest,))
             else:
                 manifest.write(line)
 

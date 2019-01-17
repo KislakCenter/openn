@@ -242,9 +242,9 @@ class SpreadsheetPrep(RepositoryPrep):
         xlsx_path = None
 
         try:
-            xlsx_path = kwargs['xlsx']
+            xlsx_path = kwargs['XLSX']
         except KeyError:
-            msg = "Must have option xlsx=/path/to/file.xlsx"
+            msg = "Must have option XLSX=/path/to/file.xlsx"
             msg += " to generate partial TEI."
             raise OPennException(msg)
 

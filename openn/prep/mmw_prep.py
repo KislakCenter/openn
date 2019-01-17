@@ -40,7 +40,7 @@ class MMWPrep(RepositoryPrep):
     logger = logging.getLogger(__name__)
 
     def __init__(self, source_dir, document, prep_config):
-        """Create a new MedrenPrep for the given 'source_dir' and document,
+        """Create a new MMWPrep for the given 'source_dir' and document,
         and PrepConfig 'prep_config'.  'prep_config.prep_class_params()'
         must include:
 
@@ -105,6 +105,7 @@ class MMWPrep(RepositoryPrep):
             smiss = ', '.join(missing)
             raise OPennException("Expected images are missing from %s: %s" % (self.source_dir, smiss))
 
+    @property
     def openn_xml_path(self):
         return os.path.join(self.source_dir, 'pages.xml')
 
@@ -191,6 +192,7 @@ class MMWPrep(RepositoryPrep):
 
         return { 'document': doc_images, 'extra': extras }
 
+    @property
     def holdingid_filename(self):
         if not os.path.exists(self.source_dir):
             raise OPennException("Could not find source_dir: %s" % self.source_dir)
@@ -203,7 +205,7 @@ class MMWPrep(RepositoryPrep):
         try:
             self.holding_id
         except AttributeError:
-            holdingid_file = self.holdingid_filename()
+            holdingid_file = self.holdingid_filename
             if holdingid_file is None:
                 self.holding_id = None
             else:
@@ -211,6 +213,7 @@ class MMWPrep(RepositoryPrep):
 
         return self.holding_id
 
+    @property
     def bibid_filename(self):
         if not os.path.exists(self.source_dir):
             raise OPennException("Could not find source_dir: %s" % self.source_dir)
@@ -220,7 +223,7 @@ class MMWPrep(RepositoryPrep):
         return bibid_txt
 
     def get_bibid(self):
-        bibid = open(self.bibid_filename()).read().strip()
+        bibid = open(self.bibid_filename).read().strip()
         if not re.match('\d+$', bibid):
             raise OPennException("Bad BibID; expected only digits; found: '%s'" % bibid)
         if len(bibid) > 7:
@@ -381,8 +384,50 @@ class MMWPrep(RepositoryPrep):
         return self.NEW_BIBID_RE.match(bibid)
 
     def regen_partial_tei(self, doc, **kwargs):
-        errors = self.package_validations.validate(self.source_dir)
-        if not os.path.exists(self.bibid_filename) and not os.path.exists(self.marc_xml):
+        pages_xlsx = None
+        marc_xml   = None
+        bibid      = None
+        holding_id = None
+
+        try:
+            pages_xlsx = kwargs['PAGES_XLSX']
+        except KeyError:
+            msg = "Must have option PAGES_XLSX=/path/to/file.xlsx"
+            msg += " to generate partial TEI."
+            raise OPennException(msg)
+
+        pages_xlsx = os.path.abspath(pages_xlsx)
+        dest = os.path.abspath(self.xlsx_path)
+
+        if pages_xlsx == dest:
+            pass
+        else:
+            shutil.copyfile(pages_xlsx, dest)
+
+        if kwargs.get('marc_xml'):
+            marc_xml = os.path.abspath(kwargs['marc_xml'])
+            dest = os.path.abspath(self.marc_xml)
+            if marc_xml == dest:
+                pass
+            else:
+                shutil.copyfile(marc_xml, dest)
+        else:
+            xsl_command = ['op-gen-tei']
+            tei = OPennTEI(doc.tei_xml)
+            bibid = tei.bibid
+            if bibid is None:
+                raise OPennException("Whoah now. bibid is none. That ain't right.")
+            if not is_new_bibid(bibid):
+                bibid = '99%s3503681' % (str(bibid),)
+            self.write_xml(bibid,self.marc_xml)
+
+        if kwargs.get('holding_id'):
+            holding_id = kwargs['holding_id']
+            with open(self.holdingid_filename) as f:
+                f.write(holding_id)
+
+        errors = self.package_validation.validate(self.source_dir)
+        if not self.bibid_filename and not os.path.exists(self.marc_xml):
             errors.append('REQUIRED NAME CHECK: One of the following required: marc.xml, bibid.txt')
 
         self.write_openn_xml(self.openn_xml_path)
@@ -392,37 +437,14 @@ class MMWPrep(RepositoryPrep):
         partial_tei_xml = self.gen_partial_tei()
         self.write_partial_tei(self.source_dir, partial_tei_xml)
         self.validate_partial_tei()
+        self.stage_marc_xml()
 
-        self.add_removal(self.marc_xml)
-        self.add_removal(self.marc_xml)
-        self.add_removal(self.bibid_filename())
-        self.add_removal(self.holdingid_filename())
-        self.add_removal(self.openn_xml_path())
+        self.add_removal(self.pih_filename)
+        self.add_removal(self.bibid_filename)
+        self.add_removal(self.holdingid_filename)
+        self.add_removal(self.openn_xml_path)
         self.add_removal(self.xlsx_path)
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
-
-        # xsl_command = ['op-gen-tei']
-        # tei = OPennTEI(doc.tei_xml)
-        # bibid = tei.bibid
-        # if bibid is None:
-        #     raise OPennException("Whoah now. bibid is none. That ain't right.")
-        # if not is_new_bibid(bibid):
-        #     bibid = '99%s3503681' % (str(bibid),)
-        # self.write_xml(bibid,self.marc_xml)
-        # for key in kwargs:
-        #     key_value = '%s="%s"' % (key, kwargs[key])
-        #     xsl_command.append(key_value)
-        # xsl_command.append(self.marc_xml)
-        # xsl_command.append(self.xsl)
-
-        # p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
-        #     stdout=subprocess.PIPE)
-        # out, err = p.communicate()
-        # if p.returncode != 0:
-        #     raise OPennException("TEI Generation failed: %s" % err)
-
-        # self.write_partial_tei(self.source_dir, out)
-        # self.add_removal(self.marc_xml)
 
     def get_marc_xml(self):
         if os.path.exists(os.path.join(self.source_dir, 'bibid.txt')):
@@ -434,7 +456,7 @@ class MMWPrep(RepositoryPrep):
     def write_pih_xml(self):
         xsl_command = ['op-gen-tei']
         xsl_command.append("-p MARC_PATH=%s" % (os.path.abspath(self.marc_xml),))
-        xsl_command.append(os.path.abspath(self.openn_xml_path()))
+        xsl_command.append(os.path.abspath(self.openn_xml_path))
         xsl_command.append(os.path.abspath(self.merge_pages_xsl))
         p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
             stdout=subprocess.PIPE)
@@ -455,7 +477,7 @@ class MMWPrep(RepositoryPrep):
             self.logger.warning("[%s] OPenn XML already written", self.basedir, )
         else:
             self.logger.info("[%s] Writing OPenn XML", self.basedir, )
-            self.write_openn_xml(self.openn_xml_path())
+            self.write_openn_xml(self.openn_xml_path)
             self.write_status(self.SPREADSHEET_OPEN_XML_WRITTEN)
 
         if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
@@ -499,7 +521,7 @@ class MMWPrep(RepositoryPrep):
             self.logger.warning("[%s] File list already written", self.basedir)
         else:
             self.logger.info("[%s] Writing file list", self.basedir)
-            file_list = self.build_file_list(self.openn_xml_path())
+            file_list = self.build_file_list(self.openn_xml_path)
             self.add_file_list(file_list)
             self.write_status(self.REPOSITORY_PREP_FILE_LIST_WRITTEN)
 
@@ -521,8 +543,8 @@ class MMWPrep(RepositoryPrep):
 
         # files to cleanup
         self.add_removal(self.marc_xml)
-        self.add_removal(self.bibid_filename())
-        self.add_removal(self.holdingid_filename())
-        self.add_removal(self.openn_xml_path())
+        self.add_removal(self.bibid_filename)
+        self.add_removal(self.holdingid_filename)
+        self.add_removal(self.openn_xml_path)
         self.add_removal(self.xlsx_path)
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
