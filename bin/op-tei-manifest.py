@@ -111,9 +111,13 @@ def rewrite_manifest(doc, source_dir):
 
     with open(manifest_path, "w") as manifest:
         for line in lines:
-            if line.strip().endswith(tei_rel_path):
+            parts = re.split('\s+', line.strip(), 1)
+            if len(parts) < 2:
+                continue
+            file = parts[1]
+            if file == tei_rel_path:
                 manifest.write("%s  %s\n" % (tei_digest, tei_rel_path))
-            elif line.strip().endswith(marc_rel_path) and marc_digest:
+            elif file == marc_rel_path and marc_digest is not None:
                 manifest.write('%s  %s\n"' % (marc_digest, marc_rel_path))
                 logger.info('Writing marc_digest: %s' % (marc_digest,))
             else:
