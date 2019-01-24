@@ -505,6 +505,22 @@ Center for Human Rights Documentation and Research.
 """,
             'include_file': 'ColumbiaUniversity.html',
         },
+                {
+            'tag': 'burke',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Columbia University, Burke Library at Union Theological Seminary',
+            'blurb': """The mission of Columbia University's Burke Library at Union Theological
+Seminary is to identify, acquire, organize, provide access to,
+interpret, and preserve for the future information in the field of
+theology and related areas of the humanities and social sciences. One of
+the largest theological libraries in North America, its holdings of over
+700,000 items include numerous western medieval and Renaissance
+manuscripts, as well as Greek, Hebrew, Arabic, Turkish, Armenian,
+Ethiopic, and Syriac materials. The collection of Syriac manuscripts in
+one of the largest in this hemisphere.""",
+            'include_file': 'BurkeLibrary.html',
+        },
         {
             'tag': 'manchester',
             'metadata_type': 'TEI',
@@ -1364,6 +1380,19 @@ PREP_CONFIGS = {
     'columbia-mmw': {
         'repository': {
             'tag': 'columbia'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'mmw',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'burke-mmw': {
+        'repository': {
+            'tag': 'burke'
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
