@@ -404,8 +404,8 @@ class MMWPrep(RepositoryPrep):
         else:
             shutil.copyfile(pages_xlsx, dest)
 
-        if kwargs.get('marc_xml'):
-            marc_xml = os.path.abspath(kwargs['marc_xml'])
+        if kwargs.get('MARC_XML'):
+            marc_xml = os.path.abspath(kwargs['MARC_XML'])
             dest = os.path.abspath(self.marc_xml)
             if marc_xml == dest:
                 pass
@@ -417,7 +417,7 @@ class MMWPrep(RepositoryPrep):
             bibid = tei.bibid
             if bibid is None:
                 raise OPennException("Whoah now. bibid is none. That ain't right.")
-            if not is_new_bibid(bibid):
+            if not self.is_new_bibid(bibid):
                 bibid = '99%s3503681' % (str(bibid),)
             self.write_xml(bibid,self.marc_xml)
 

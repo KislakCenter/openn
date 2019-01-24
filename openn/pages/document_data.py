@@ -70,4 +70,4 @@ class DocumentData:
         return len(self.deco_note_pages) > 0
 
     def origin(self):
-        return [x for x in [ self.tei.orig_place, self.tei.orig_date ] if x ]
+        return [x for x in [ self.tei.orig_place, self.tei.orig_date, self.tei.origin ] if x ]
