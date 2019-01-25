@@ -213,12 +213,21 @@
                             />
                         </title>
                     </titleStmt>
+                  <!--
                     <xsl:comment>
                         TODO: Change publisher, licence information for MMW Columnbia, FLP, etc.
+                        DONE:
+                        I'm using the holding institution. Is that correct or is Penn the publisher?
                     </xsl:comment>
+                  -->
                     <publicationStmt>
-                        <publisher>The University of Pennsylvania Libraries</publisher>
-                        <availability>
+                      <publisher>
+                        <xsl:choose>
+                          <xsl:when test="$institution"><xsl:value-of select="$institution"/></xsl:when>
+                          <xsl:otherwise>The University of Pennsylvania Libraries</xsl:otherwise>
+                        </xsl:choose>
+                      </publisher>
+                      <availability>
                             <licence target="http://creativecommons.org/licenses/by/4.0/legalcode">
                                 This description is ©<xsl:value-of select="year-from-date(current-date())"/> University of
                                 Pennsylvania Libraries. It is licensed under a Creative Commons
