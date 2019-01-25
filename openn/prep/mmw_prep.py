@@ -19,6 +19,7 @@ from openn.prep.spreadsheet_xml import SpreadsheetXML
 from openn.openn_exception import OPennException
 from openn.openn_functions import *
 from openn.xml.openn_tei import OPennTEI
+from openn.prep.marc_validator import MarcValidator
 
 class MMWPrep(RepositoryPrep):
 
@@ -262,37 +263,17 @@ class MMWPrep(RepositoryPrep):
             raise OPennException("Expected images are missing from %s: %s" % (self.source_dir, smiss))
 
     def check_valid_xml(self, marc_xml):
-        tree = etree.parse(open(marc_xml))
-        ns = { 'marc': 'http://www.loc.gov/MARC21/slim' }
-        errors = []
-        if self.get_holdingid() is None:
-            xpath = "//marc:holding/marc:call_number/text()"
-            call_numbers = tree.xpath(xpath, namespaces=ns)
-            if len(call_numbers) < 1:
-                # no holdings; assume this is not Penn MARC
-                xpath = "//marc:record/marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(text(), 'Shelfmark:')]"
-                call_numbers = tree.xpath(xpath, namespaces=ns)
-                if len(call_numbers) < 1:
-                    errors.append('No call number found in in MARC XML')
-            elif len(call_numbers) > 1:
-                errors.append('Please provide holding ID; more than one call number found in PIH XML')
-        else:
-            holdingid = self.get_holdingid()
-            xpath = "//marc:holding_id[text() = '%s']/parent::marc:holding/marc:call_number/text()" % holdingid
-            call_numbers = tree.xpath(xpath, namespaces=ns)
-            if len(call_numbers) != 1:
-                errors.append('Expected 1 call number for holding ID %s; found %d in PIH XML %s' % (self.get_holdingid(), len(call_numbers), marc_xml))
-
-        for xpath in self.prep_config.prep_class_parameter('required_xpaths'):
-            if len(tree.xpath(xpath, namespaces=ns)) < 1:
-                errors.append("Required xpath not found: '%s'" % (xpath,))
-
-        if len(errors) > 0:
-            print errors
+        xml_io = open(marc_xml)
+        required_xpaths = self.prep_config.prep_class_parameter('required_xpaths')
+        holdings_id = self.get_holdingid()
+        marc_validator = MarcValidator(xml_io, required_xpaths, holdings_id)
+        marc_validator.validate()
+        if len(marc_validator.errors) > 0:
+            # print marc_validator.errors
             self.logger.error(marc_xml)
-            for err in errors:
+            for err in marc_validator.errors:
                 self.logger.error(err)
-            raise OPennException("Errors found in MARC XML.")
+            raise OPennException("Errors found in MARC XML: %s\n" % ('\n'.join(marc_validator.errors),))
 
     def full_url(self, bibid):
         return 'http://{0}{1}'.format(self.host, self.url_path.format(bibid))

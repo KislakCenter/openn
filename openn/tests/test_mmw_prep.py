@@ -30,6 +30,7 @@ class TestMMWPrep(OPennTestCase):
     staged_penn_source = os.path.join(staging_dir, 'mscodex1905')
     staged_pages_xlsx = os.path.join(staged_source, 'pages.xlsx')
     staged_description_xml = os.path.join(staged_source, 'marc.xml')
+    staged_flp_source = os.path.join(staging_dir, 'lewis_o_003')
 
     prep_cfg_factory = PrepConfigFactory(
         prep_configs_dict=settings.PREP_CONFIGS,
@@ -38,6 +39,7 @@ class TestMMWPrep(OPennTestCase):
         prep_context=settings.PREP_CONTEXT)
     columbia_mmw_prep_config = prep_cfg_factory.create_prep_config('columbia-mmw')
     penn_mmw_prep_config = prep_cfg_factory.create_prep_config('penn-mmw')
+    flp_mmw_prep_config = prep_cfg_factory.create_prep_config('flp-mmw')
 
     # TODO: Use rich MARC XML for Columbia to test all fields
     # TODO: test all expected values in TEI
@@ -77,11 +79,25 @@ class TestMMWPrep(OPennTestCase):
         'mscodex1905_body0012.tif',
         )
 
+    flp_mmw_files = (
+        'lewis_o_3_body0001.tif',
+        'lewis_o_3_body0002.tif',
+        'lewis_o_3_body0003.tif',
+        'lewis_o_3_body0004.tif',
+        'lewis_o_3_body0005.tif',
+        'lewis_o_3_body0006.tif',
+        'lewis_o_3_body0007.tif',
+        'lewis_o_3_body0008.tif',
+        'lewis_o_3_body0009.tif',
+        'lewis_o_3_body0010.tif',
+        )
+
     template_image = os.path.join(os.path.dirname(__file__), 'data/mscodex1223/mscodex1223_wk1_back0001.tif')
     template_pages_xlsx = os.path.join(os.path.dirname(__file__), 'data/muslim_world/ms_or_15.xlsx')
     template_description_xml = os.path.join(os.path.dirname(__file__), 'data/muslim_world/cu_ms_or_15.xml')
     template_dir = os.path.join(os.path.dirname(__file__),'data/muslim_world/ms_or_15')
     template_penn_dir = os.path.join(os.path.dirname(__file__), 'data/muslim_world/mscodex1905')
+    template_flp_dir = os.path.join(os.path.dirname(__file__), 'data/muslim_world/lewis_o_003')
 
 
     pp               = PrettyPrinter(indent=2)
@@ -203,6 +219,26 @@ class TestMMWPrep(OPennTestCase):
 
         prep.prep_dir()
         path = os.path.join(self.staged_penn_source, 'PARTIAL_TEI.xml')
+        self.assertTrue(os.path.exists(path), 'Expected path to exist: %s' % path)
+
+        root = self.assertXmlDocument(open(path).read())
+        expected = list(self.expected_xpaths)
+        expected.remove('/ns:TEI/ns:teiHeader/ns:fileDesc/ns:sourceDesc/ns:msDesc/ns:history/ns:origin/ns:origPlace',)
+        self.assertXpathsExist(root, expected)
+
+    def test_flp_ms(self):
+        # self.stage_template(self.template_flp_dir)
+        shutil.copytree(self.template_flp_dir, self.staged_flp_source)
+        for image in self.flp_mmw_files:
+            self.touch(os.path.join(self.staged_flp_source, image))
+        doc_count = Document.objects.count()
+        repo_wrapper = self.flp_mmw_prep_config.repository_wrapper()
+        doc = PrepSetup().prep_document(repo_wrapper, 'lewis_o_003')
+        prep = MMWPrep(source_dir=self.staged_flp_source, document=doc,
+                        prep_config = self.flp_mmw_prep_config)
+
+        prep.prep_dir()
+        path = os.path.join(self.staged_flp_source, 'PARTIAL_TEI.xml')
         self.assertTrue(os.path.exists(path), 'Expected path to exist: %s' % path)
 
         root = self.assertXmlDocument(open(path).read())

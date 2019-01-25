@@ -110,7 +110,7 @@ class PrepConfig:
             return self.prep_class_params()[name]
         except KeyError:
             msg = "Cannot find prep_class_parameter '%s' in dict %s"
-            msg = msg % (name, json.dumps(self.prep_class_params))
+            msg = msg % (name, json.dumps(self.prep_class_params()))
             raise OPennException(msg)
 
     def prep_class_name(self):
