@@ -3,9 +3,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="xs"
     version="2.0">
-    
+
     <xsl:output indent="yes"/>
-    
     <xsl:param name="MARC_PATH"/>
     <xsl:template match="/">
         <wrapper>
@@ -29,7 +28,7 @@
                       <xsl:when test="matches($display-page, '\dv', 'i') or matches($display-page, 'verso', 'i')">
                         <xsl:text>verso</xsl:text>
                       </xsl:when>
-                      <!-- OK. We don't have r|v or recto|verso; guess based on position: odd => recto, else => verso -->                        
+                      <!-- OK. We don't have r|v or recto|verso; guess based on position: odd => recto, else => verso -->
                       <xsl:when test="position() mod 2 = 1">
                         <xsl:text>recto</xsl:text>
                       </xsl:when>

@@ -33,7 +33,7 @@
     <xsl:output indent="yes"/>
 
   <xsl:param name="HOLDING_ID"/>
-  
+
   <xsl:variable name="marcSource">
     <xsl:choose>
       <!-- If the 001 looks like on1056625870 the record comes from OCLC -->
@@ -44,7 +44,7 @@
       <xsl:otherwise><xsl:text>opac</xsl:text></xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  
+
   <xsl:variable name="institution">
     <xsl:call-template name="clean-up-text">
       <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"/>
@@ -81,25 +81,25 @@
         <xsl:value-of select="//marc:controlfield[@tag=001]"/>
       </xsl:when>
       <!--
-          035 $a (NNC)[recordnumber] 
+          035 $a (NNC)[recordnumber]
           852  $b Rare Book and Manuscript Library $a Columbia University $e New York $u https://clio.columbia.edu/catalog/[recordnumber]
-          
+
           or, for the few dozen coming from the Burke:
-          
+
           035 $a (NNC)[recordnumber]
           852 $b Burke Library at Union Theological Seminary $a Columbia University $e New York $u https://clio.columbia.edu/catalog/[recordnumber]
-          
+
           and for Free Library:
-          
-          035 $a (PLF)[recordnumber] 
-          852  ǂb Rare Book Department ǂa Free Library of Philadelphia ǂe Philadelphia ǂu https://know.freelibrary.org/Record/[recordnumber]        
+
+          035 $a (PLF)[recordnumber]
+          852  ǂb Rare Book Department ǂa Free Library of Philadelphia ǂe Philadelphia ǂu https://know.freelibrary.org/Record/[recordnumber]
       -->
       <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF)\)')]">
         <xsl:value-of select="replace(//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF)\)')][1]/text(), '\((NNC|PLF)\)', '')"/>
       </xsl:when>
     </xsl:choose>
   </xsl:variable>
-  
+
   <xsl:variable name="oclcID">
     <xsl:choose>
       <xsl:when test="$marcSource = 'oclc'">
@@ -306,7 +306,7 @@
                             <summary>
                               <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"/>
                             </summary>
-                            
+
                             <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
                               <textLang>
                                 <xsl:if test="not(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3) = '   ')">
