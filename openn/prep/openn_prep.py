@@ -15,7 +15,7 @@ class OPennPrep:
 
     logger = logging.getLogger(__name__)
 
-    def prep_dir(self, source_dir, prep_config):
+    def prep_dir(self, source_dir, prep_config, doc=None):
         try:
             prepstatus = None
             base_dir = os.path.basename(source_dir)
@@ -25,7 +25,8 @@ class OPennPrep:
 
             setup = PrepSetup()
             repo_wrapper = prep_config.repository_wrapper()
-            doc = setup.prep_document(repo_wrapper, base_dir)
+            if doc is None:
+                doc = setup.prep_document(repo_wrapper, base_dir)
             prepstatus = self._setup_prepstatus(doc)
 
 

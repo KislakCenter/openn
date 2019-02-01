@@ -346,6 +346,27 @@ class Version(OrderedModel):
         """
         return ( self.major_version, self.minor_version, self.patch_version )
 
+    def next_patch(self):
+        return {
+            'major_version': self.major_version,
+            'minor_version': self.minor_version,
+            'patch_version': self.patch_version + 1
+        }
+
+    def next_minor(self):
+        return {
+            'major_version': self.major_version,
+            'minor_version': self.minor_version + 1,
+            'patch_version': 0
+        }
+
+    def next_major(self):
+        return {
+            'major_version': self.major_version + 1,
+            'minor_version': 0,
+            'patch_version': 0
+        }
+
 class Image(OrderedModel):
     document              = models.ForeignKey(Document, default = None)
     label                 = models.CharField(max_length = 255, null = False, default = None, blank = False)

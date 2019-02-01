@@ -138,6 +138,32 @@ def clean_dir(source_dir, clobber_pattern):
                 path = os.path.join(root, name)
                 os.remove(path)
 
+def redo_document(doc):
+    if logger.getEffectiveLevel() >= logging.INFO:
+        msg = "Preparing to redo document id: %d,"
+        msg += " repository: %s, base_dir: %s"
+        logger.info(msg % doc.id, doc.collection, doc.base_dir)
+    if doc.is_online and str(os.getenv('OPENN_REDO_OK_IF_YOU_SAY_SO', None)).lower() != 'true':
+        msg = "Redo requested, but refusing to redo record "
+        msg += "for document on-line at: %s" % (doc.package_dir,)
+        raise OPennException(msg)
+    else:
+        s=  None
+        while s is None:
+            s = raw_input("Proceed with redo? Type Yes or No: ")
+            s = s.strip()
+            if s is not None:
+                if s.lower() == 'yes':
+                    logger.info("OK. Removing images from existing document.")
+                    doc.image_set.all().delete()
+                elif s.lower() == 'no':
+                    msg = "User canceled redo; no changes made"
+                    raise OPennException(msg)
+                else:
+                    msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
+                    print msg % (s,)
+                    s = None
+
 def clobber_document(params):
     doc = openn_db.get_doc(params)
 
@@ -149,12 +175,11 @@ def clobber_document(params):
     if doc.is_online:
         msg = "Clobber requested, but refusing to delete record "
         msg += "for document on-line at: %s" % (doc.package_dir,)
-        msg = msg
         raise OPennException(msg)
     else:
         s = None
         while s is None:
-            s = raw_input("Proceed? (Type: Yes or No): ")
+            s = raw_input("Proceed with clobber? Type Yes or No: ")
             s = s.strip()
             if s is not None:
                 if s.lower() == 'yes':
@@ -219,11 +244,14 @@ def main(cmdline=None):
         base_dir         = os.path.basename(source_dir)
         doc_params       = { 'base_dir': base_dir,
                              'repository': repository }
+        doc = None
 
         if openn_db.doc_exists(doc_params):
             if opts.resume:
                 pass
             elif opts.clobber:
+                pass
+            elif opts.redo:
                 pass
             elif opts.update:
                 parser.error('Update function not yet implemented')
@@ -250,7 +278,18 @@ def main(cmdline=None):
                 msg = '`op-prep --clobber` called for nonexistent document'
                 parser.error(msg)
 
-        doc = OPennPrep().prep_dir(source_dir, prep_config)
+        if opts.redo:
+            if openn_db.doc_exists(doc_params):
+                try:
+                    doc = openn_db.get_doc(doc_params)
+                    redo_document(doc)
+                except OPennException as ex:
+                    parser.error(str(ex))
+            else:
+                msg = '`op-prep --soft-clobber` called for nonexistent document'
+                parser.error(msg)
+
+        doc = OPennPrep().prep_dir(source_dir, prep_config, doc)
         stage_doc(source_dir, doc)
     except OPennException as ex:
         logger.error(unicode(ex).encode('utf8'))
@@ -314,6 +353,11 @@ prepare correctly the first time. Will fail if document is on-line.
     parser.add_option('-v', '--verbose',
                       action='store_true', dest='verbose', default=False,
                       help=verbose_help)
+
+    redo_help = 'rerun the creation, but leave the document in the database (keeps ID)'
+    parser.add_option('-s', '--soft-clobber',
+                     action='store_true', dest='redo', default=False,
+                     help=redo_help)
 
     return parser
 

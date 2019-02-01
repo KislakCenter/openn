@@ -6,8 +6,7 @@ from openn.openn_db import *
 from openn.openn_exception import OPennException
 
 class PrepSetup:
-    def prep_document(self, repo_wrapper, base_dir):
-        doc = None
+    def prep_document(self, repo_wrapper, base_dir, doc=None):
         repository = repo_wrapper.repository()
         if repository is None:
             msg = "Cannot find repo_wrapper in database for tag: %s"

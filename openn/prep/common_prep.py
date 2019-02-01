@@ -94,10 +94,20 @@ class CommonPrep(Status):
         self._removals = []
 
     def save_version(self,doc,attrs={}):
-        attrs.setdefault('major_version', 1)
-        attrs.setdefault('minor_version', 0)
-        attrs.setdefault('patch_version', 0)
-        attrs.setdefault('description', 'Initial version')
+        if doc.version_set.count() > 0:
+            version = doc.version_set.last()
+            if doc.is_online:
+                attrs.update(version.next_patch())
+                attrs.setdefault('description', 'Patch revision')
+            else:
+                attrs.update(version.minor_version())
+                attrs.setdefault('description', 'Minor revision' )
+        else:
+            attrs.setdefault('major_version', 1)
+            attrs.setdefault('minor_version', 0)
+            attrs.setdefault('patch_version', 0)
+            attrs.setdefault('description', 'Initial version')
+
         return openn_db.save_version(doc,attrs)
 
     def update_document(self):
