@@ -120,7 +120,7 @@ class MMWPrep(RepositoryPrep):
             xml = sp_xml.build_xml(self.workbook().data(), self._config['xml_config'])
             f.write(xml.encode('utf-8'))
 
-    def build_file_list(self,openn_xml_path):
+    def build_file_list(self,pih_xml):
         """Build a list of files using the pih_xml file.
 
         The resulting file list will have the format:
@@ -157,20 +157,16 @@ class MMWPrep(RepositoryPrep):
         """
 
         expected = [ os.path.join('data', x)
-                     for x in self.xml_file_names(openn_xml_path) ]
+                     for x in self.xml_file_names(pih_xml) ]
         files    = self.prep_file_list(expected)
-        xml      = etree.parse(open(openn_xml_path))
-        for image in files.get('document'):
-            base           = os.path.basename(image['filename'])
-            query          = "//file_name[text()='%s']/parent::page/display_page" % (base,)
-            el             = xml.xpath(query)
-            label          = el[0].text if len(el) > 0 else None
-            image['label'] = label
-            query          = "//file_name[text()='%s']/parent::page/serial_number" % (base,)
-            el             = xml.xpath(query)
-            serial_number  = el[0].text if len(el) > 0 else None
-            image['serial_number'] = serial_number
-
+        xml = etree.parse(open(pih_xml))
+        for tif in files.get('document'):
+            base         = os.path.splitext(os.path.basename(tif['filename']))[0]
+            # //xml[@name = 'pages']/page[@image = 'mscodex1223_wk1_back0001']
+            query        = "//xml[@name = 'pages']/page[@image = '%s']" % base
+            el           = xml.xpath(query)
+            label        = el[0].get('visiblepage') if len(el) > 0 else None
+            tif['label'] = self.prep_label(label)
         return files
 
     def prep_file_list(self, expected):
@@ -304,7 +300,7 @@ class MMWPrep(RepositoryPrep):
     def prep_label(self,label):
         if label is None:
             return 'Unlabeled'
-        if MedrenPrep.BLANK_RE.search(label):
+        if MMWPrep.BLANK_RE.search(label):
             return re.sub(';.*$', '', label)
         else:
             return label
@@ -313,27 +309,6 @@ class MMWPrep(RepositoryPrep):
         if re.search(pttrn, filename):
             base = os.path.basename(filename)
             return (base in expected_files) or self.STRICT_IMAGE_PATTERN_RE.match(base)
-
-    def prep_file_list(self, expected):
-        """" Create a list of images files in the directroy. Split the list
-        into 'document' and 'extra' files. The 'document' files list
-        comprises all those in expected.  The `extra` files list
-        consists of all TIFF's that do not match the document image
-        patterns.
-
-        """
-        all_images = self.image_files(self.data_dir)
-        all_images = [ self.source_dir_re.sub('', x) for x in all_images ]
-        doc_images = []
-
-        for img in expected:
-            if img in all_images:
-                all_images.remove(img)
-            doc_images.append( { 'filename': img, 'image_type': 'document' } )
-
-        extras = [ { 'filename': x, 'image_type': 'extra', 'label': 'None' } for x in all_images ]
-
-        return { 'document': doc_images, 'extra': extras }
 
     def write_xml(self,bibid,outfile):
         if os.path.exists(outfile):
@@ -502,7 +477,7 @@ class MMWPrep(RepositoryPrep):
             self.logger.warning("[%s] File list already written", self.basedir)
         else:
             self.logger.info("[%s] Writing file list", self.basedir)
-            file_list = self.build_file_list(self.openn_xml_path)
+            file_list = self.build_file_list(self.pih_filename)
             self.add_file_list(file_list)
             self.write_status(self.REPOSITORY_PREP_FILE_LIST_WRITTEN)
 
