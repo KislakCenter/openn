@@ -123,14 +123,7 @@ class PackageDir:
             src = os.path.join(self.source_dir, curr_name)
             dst = os.path.join(self.source_dir, new_name)
             os.rename(src, dst)
-
-            if not self._chmod_failed:
-                try:
-                    os.chmod(dst, 0664)
-                except OSError:
-                    self._chmod_failed = True
-                    self.logger.warning("Unable to chmod files: %s", (dst,))
-
+            self.chmod_file(dst)
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
 
@@ -144,9 +137,19 @@ class PackageDir:
             src = os.path.join(self.source_dir, curr_name)
             dst = os.path.join(self.source_dir, new_name)
             os.rename(src, dst)
-            os.chmod(dst, 0664)
+            self.chmod_file(dst)
             details = image_deriv.details(self.source_dir, new_name)
             fdata.add_deriv(new_name, FileList.FileData.MASTER, details)
+
+    def chmod_file(self,path):
+        if not self._chmod_failed:
+            try:
+                os.chmod(path, 0664)
+                return True
+            except OSError:
+                self._chmod_failed = True
+                self.logger.warning("Unable to chmod files: %s", (path,))
+        return False
 
     def extra_filename(self,curr_name):
         base  = os.path.basename(curr_name)
