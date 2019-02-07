@@ -501,6 +501,7 @@ class MMWPrep(RepositoryPrep):
         self.add_removal(self.marc_xml)
         self.add_removal(self.bibid_filename)
         self.add_removal(self.holdingid_filename)
+        self.add_removal(self.pih_filename)
         self.add_removal(self.openn_xml_path)
         self.add_removal(self.xlsx_path)
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))
