@@ -28,6 +28,7 @@ class Page(object):
         self.context       = deepcopy(kwargs)
         self.after_writes  = set()
         self.site_file     = None
+        self._chmod_failed = False
         self.set_site_file()
         self.add_after_write('update_last_generated')
         self.add_after_write('update_hashes')
@@ -61,7 +62,13 @@ class Page(object):
 
     def create_pages(self):
         out_dir = os.path.dirname(self.outfile_path())
-        self.ensure_dir(out_dir)
+        if not self._chmod_failed:
+            try:
+                self.ensure_dir(out_dir)
+            except OSError:
+                self._chmod_failed = True
+                self.logger.warning("Unable to chmod files: %s", (path,))
+
         f = open(self.outfile_path(), 'w+')
         ctx = self.get_context()
         try:

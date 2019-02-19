@@ -113,12 +113,6 @@ def failure_status(prepstatus, ex):
     prepstatus.error     = str(ex)
     prepstatus.save()
 
-def fix_perms(source_dir):
-    for root, dirs, files in os.walk(source_dir):
-        os.chmod(root, 0775)
-        for name in files:
-            os.chmod(os.path.join(root, name), 0664)
-
 def validate_source_dir(prep_method, source_dir):
     validation_params = prep_method.package_validations()
 
