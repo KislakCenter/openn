@@ -97,10 +97,10 @@ class CommonPrep(Status):
         if doc.version_set.count() > 0:
             version = doc.version_set.last()
             if doc.is_online:
-                attrs.update({'patch_version': version.next_patch()})
+                attrs.update(version.next_patch())
                 attrs.setdefault('description', 'Patch revision')
             else:
-                attrs.update({'minor_version': version.minor_version})
+                attrs.update(version.next_minor())
                 attrs.setdefault('description', 'Minor revision' )
         else:
             attrs.setdefault('major_version', 1)
