@@ -136,14 +136,14 @@ dest=$DEST_DIR/$base
 ### DO STUFF
 # Copying
 message "Copying $SOURCE_DIR to $dest"
-rsync_opts="-rltDhv --progress"
+rsync_opts="-rlDhv --progress"
 # if dir is on a cifs-mounted share, we skip permission options
 if [[ $FS_TYPE = cifs ]]
 then
   # do nothing
   :
 else
-  rsync_opts="$rsync_opts --no-p --no-g --chmod=ugo=rwX"
+  rsync_opts="$rsync_opts -t --no-p --no-g --chmod=ugo=rwX"
 fi
 # sync from source to dest: --no-p --no-g --chmod=ugo=rwX => Use umask
 rsync $rsync_opts "$SOURCE_DIR"/* $dest
