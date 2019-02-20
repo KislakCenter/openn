@@ -77,7 +77,7 @@ message "[$cmd] Using DEST_DIR: $DEST_DIR"
 #   $ df --print-type .
 #   Filesystem                                       Type  1K-blocks       Used  Available Use% Mounted on
 #   //oceanus.library.upenn.int/tethys_kislakscratch cifs 5368709120 1461052390 3907656730  28% /mnt/scratch02
-FS_TYPE=`df -print-type ${DEST_DIR} | awk 'NR==2 { print $2 }'`
+FS_TYPE=`df --print-type ${DEST_DIR} | awk 'NR==2 { print $2 }'`
 
 junk_files="Thumbs.db sha1manifest.txt .DS_Store"
 if [[ -n "$OPENN_JUNK_FILES" ]]; then
