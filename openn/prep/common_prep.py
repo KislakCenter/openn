@@ -100,7 +100,7 @@ class CommonPrep(Status):
                 attrs.update(version.next_patch())
                 attrs.setdefault('description', 'Patch revision')
             else:
-                attrs.update(version.minor_version())
+                attrs.update(version.next_minor())
                 attrs.setdefault('description', 'Minor revision' )
         else:
             attrs.setdefault('major_version', 1)

@@ -127,7 +127,7 @@ def stage_new(doc, source_dir):
     site_dir = os.path.join(os.environ['OPENN_SITE_DIR'], doc.package_dir)
     if os.path.exists(site_dir):
         logger.info("Found SITE dir; copying %s to %s", source_dir, site_dir)
-        print dir_util.copy_tree(source_dir, site_dir)
+        print dir_util.copy_tree(source_dir, site_dir, preserve_times=0, preserve_mode=0)
     else:
         staged_dir = os.path.join(os.environ['OPENN_STAGING_DIR'], doc.package_dir)
         if os.path.exists(staged_dir):

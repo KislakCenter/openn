@@ -42,6 +42,14 @@ key_value for key == key_name.
 def tstamp():
     return time.strftime('%Y%m%dT%H%M%S')
 
+def have_permission_error():
+    global permissions_error
+    try:
+        permissions_error
+    except:
+        permissions_error = False
+    return permissions_error
+
 def str_time():
     return time.strftime('%Y-%m-%dT%H:%M:%S')
 
@@ -137,7 +145,12 @@ def ensure_dir(dir_path):
         ensure_dir(parent)
     if not os.path.exists(dir_path):
         os.mkdir(dir_path)
-        os.chmod(dir_path, 0775)
+        if not have_permission_error():
+            try:
+                os.chmod(dir_path, 0775)
+            except OSError:
+                have_permission_error = True
+                warning('ensure_dir', "Unable to chmod files: %s", (path,))
 
 def mtime_to_datetime(path):
     """ Get the path mtime and make it time-zone aware if possible. """

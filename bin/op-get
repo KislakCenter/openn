@@ -65,6 +65,20 @@ else
 fi
 message "[$cmd] Using DEST_DIR: $DEST_DIR"
 
+# Get the file system type.
+#
+# CIFS shares are mounted with fixed permissions. With CIFS mounts, we skip
+# steps and options that attempt to change permissions.
+#
+# awk: NR => number of records or, here, record number; thus: "process the
+# second record; i.e, the second line"
+# df output is:
+#
+#   $ df --print-type .
+#   Filesystem                                       Type  1K-blocks       Used  Available Use% Mounted on
+#   //oceanus.library.upenn.int/tethys_kislakscratch cifs 5368709120 1461052390 3907656730  28% /mnt/scratch02
+FS_TYPE=`df --print-type ${DEST_DIR} | awk 'NR==2 { print $2 }'`
+
 junk_files="Thumbs.db sha1manifest.txt .DS_Store"
 if [[ -n "$OPENN_JUNK_FILES" ]]; then
     junk_files="$junk_files $OPENN_JUNK_FILES"
@@ -122,18 +136,34 @@ dest=$DEST_DIR/$base
 ### DO STUFF
 # Copying
 message "Copying $SOURCE_DIR to $dest"
+rsync_opts="-rlDhv --progress"
+# if dir is on a cifs-mounted share, we skip permission options
+if [[ $FS_TYPE = cifs ]]
+then
+  # do nothing
+  :
+else
+  rsync_opts="$rsync_opts -t --no-p --no-g --chmod=ugo=rwX"
+fi
 # sync from source to dest: --no-p --no-g --chmod=ugo=rwX => Use umask
-rsync -rltDhv --progress --no-p --no-g --chmod=ugo=rwX "$SOURCE_DIR"/* $dest
+rsync $rsync_opts "$SOURCE_DIR"/* $dest
 
 if [ $? -ne 0 ]; then
-    error "Error copying $SOURCE_DIR to $dest" >&2
+    error_no_exit "Error copying $SOURCE_DIR to $dest" >&2
 fi
 
 # Fixing perms
-message "Fixing permissions on $dest"
-chmod 775 $dest && find $dest -type d -exec chmod 775 {} \; && find $dest -type f -exec chmod 664 {} \;
-if [ $? -ne 0 ]; then
-    error "Error setting permissions on $dest" >&2
+#
+# If dir IS on a cifs-mounted share, we skip changing permissions.
+if [[ "$FS_TYPE" = cifs ]]
+then
+  warning "Drive is on CIFS file system; not changing permissions"
+else
+  message "Fixing permissions on $dest"
+  chmod 775 $dest && find $dest -type d -exec chmod 775 {} \; && find $dest -type f -exec chmod 664 {} \;
+  if [ $? -ne 0 ]; then
+    error_no_exit "Error setting permissions on $dest" >&2
+  fi
 fi
 
 # Delete junk
