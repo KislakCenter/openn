@@ -1607,6 +1607,25 @@ on Library and Information Resources.""",
             'live': True,
         },
         {
+            'tag': 'congregations',
+            'name': 'Digitizing Philadelphia\'s Historic Congregations',
+            'blurb': """The churches and synagogues of Philadelphia were gathering places in the
+18th and 19th centuries and their records reflect the changing
+political, social and cultural mores. More than 40,000 scanned images
+from vestry and trustee minutes, baptismal, birth, marriage and death
+records, pew rents, accounting records, sermons and correspondence gives
+researchers opportunities to explore these connections. Collaborating
+institutions include Christ Church, St. George's Methodist Church,
+Gloria Dei, Mikveh Israel, African Episcopal Church of St. Thomas,
+Episcopal Diocese of Pennsylvania Archives, Presbyterian Historical
+Society, St. Peter's Episcopal Church and American Baptist Historical
+Society. This project is funded by the Council on Library and
+Information Resources.""",
+            'csv_only': False,
+            'include_file': 'Congregations.html',
+            'live': True,
+        },
+        {
             'tag': 'genizah',
             'name': 'Cairo Genizah',
             'blurb': """In the late 1990s, thanks to a significant gift from a Penn alum named
