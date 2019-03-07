@@ -1422,6 +1422,26 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'ljs-mmw': {
+        'repository': {
+            'tag': 'ljs'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'mmw',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                ]
+            },
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'penn-mmw': {
         'repository': {
             'tag': 'pennmss'
