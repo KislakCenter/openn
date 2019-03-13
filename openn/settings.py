@@ -1322,6 +1322,19 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'pma-bphil-nofunder': {
+        'repository': {
+        'tag': 'pma'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'rosenbach-bphil': {
         'repository': {
             'tag': 'rosenbach'
