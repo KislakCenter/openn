@@ -320,6 +320,27 @@ PREPARATION_METHODS = [
         },
     },
     {
+        'tag': 'congs',
+        'description': """Extracts metadata from Biblio-Philly spreadsheet to build metadata for the
+            object for CLIR congregations grant. Requires valid openn_metadata.xslx file.""",
+        'name': 'CLIR Congregations Prep',
+        'package_validation': {
+            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.xlsx'],
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+            'params' : {
+                'image_rights': {
+                    'dynamic': False,
+                },
+                'config_json': os.path.join(SITE_ROOT, 'bibliophilly.json'),
+                'xsl': os.path.join(SITE_ROOT, 'xsl/bp_spreadsheet_xml2tei.xsl'),
+            },
+        },
+    },
+    {
         'tag': 'gzh',
         'description': """Extracts metadata from Genizah spreadsheet to build metadata for the
             object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
@@ -506,7 +527,7 @@ Center for Human Rights Documentation and Research.
 """,
             'include_file': 'ColumbiaUniversity.html',
         },
-                {
+        {
             'tag': 'burke',
             'metadata_type': 'TEI',
             'live': True,
@@ -549,6 +570,87 @@ and associated objects. Dating from the ancient world to the present,
 its representation of visual culture is excellent, of international
 scope, importance and interest.""",
             'include_file': 'UniversityOfManchester.html',
+        },
+        {
+            'tag': 'christchurch',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Christ Church',
+            'blurb': """Founded in 1695, Christ Church was the first Anglican church to be
+established in Pennsylvania. This fulfilled the provision outlined by
+King Charles II in the charter he granted to William Penn in 1681
+stipulating that if twenty individuals requested an Anglican clergyman
+the Bishop of London would appoint one. Accordingly, thirty-nine
+Philadelphians came together in 1695 to form Christ Church. Located on
+Second Street, just north of Market Street the Church transitioned from
+a small frame structure in its early years to the imposing Georgian
+structure built from 1727-1754 that still stands on the site today.
+Members of the Continental Congress and early government officials
+worshipped here and seven signers of the Declaration of Independence are
+buried on Church property. When the congregation grew too large to be
+accommodated here the vestry built St. Peter's at the southern edge of
+the city in 1760 and later St. James. Those United Churches remained a
+unit until the 1820s and 1830s. Christ Church is an active Episcopal
+parish today as well as a major historic site. The records consist of
+vestry minutes, parish records, accounting and financial records, deeds,
+architectural drawings, photographs, and audiovisual materials. In
+addition, there are materials from parish organizations and affiliated
+institutions such as Christ Church Hospital, Episcopal School, Christ
+Church Burial Ground, and Christ Church Preservation Trust. A detailed
+finding aid is available on-site.""",
+            'include_file': 'ChristChurch.html',
+        },
+        {
+            'tag': 'episcopaldiocese',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Episcopal Diocese of Pennsylvania Archives',
+            'blurb': """After the American Revolution, Anglicans became Episcopalians. Led by
+the Reverend William White, they organized the Episcopal Diocese of
+Pennsylvania in 1784. White became its first bishop three years later.
+Initially, the Diocese spanned a vast area, extending from Philadelphia
+to Pittsburgh, encompassing the whole of Pennsylvania. By 1910 there
+were five Episcopal dioceses in Pennsylvania, and the Diocese of
+Pennsylvania consisted of Philadelphia, Bucks, Montgomery, Chester, and
+Delaware counties. The Episcopal Diocese of Pennsylvania's Archives are
+home to a vast array of material relating to the people and parishes
+comprising the Diocese as well as the Diocese itself. Within its stacks
+are material relating to parishes that have closed, the registers, the
+vestry minutes as well as documents making up the life of these churches
+which are no longer with us. It also holds a large volume of histories,
+both at the parish level comprising both active and closed parishes, as
+well as histories of the diocese and its various organizations. The
+Archives also holds a large volume of material related to those
+committed to running the Diocese. There are records from the various
+Bishops, Standing Committee and General Conventions, to better
+understand the direction we have come from. There are also various print
+runs of the publications the Diocese has put out as well including a
+long run of the Church News.""",
+            'include_file': 'EpiscopalDiocese.html',
+        },
+        {
+            'tag': 'presbyterian',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Presbyterian Historical Society',
+            'blurb': """Organized in 1852, the Presbyterian Historical Society is the oldest
+denominational archives in the United States and serves as the national
+archives for the Presbyterian Church (U.S.A.) and its predecessor
+denominations. PHS exists to collect, preserve, and share the story of
+the American Presbyterian and Reformed experience with Presbyterians,
+the scholarly community, and the general public. The society's holdings
+include more than 250,000 titles reflecting the history of the
+Presbyterian tradition in America and over 30,000 cubic feet of official
+records and personal papers. These include records of congregations,
+presbyteries, synods, and General Assembly agencies of the current and
+some predecessor Presbyterian and Reformed denominations in America.
+These records are supplemented by the personal papers (including
+correspondence, diaries, and photographs) of significant Presbyterians
+and ecumenists, with a particular emphasis on mission history in this
+country and abroad. The society also serves as the archives for
+ecumenical organizations including the Federal and National Council of
+Churches, the American Sunday School Union, and Religious News Service.""",
+            'include_file': 'PresbyterianHistoricalSociety.html',
         },
         {
             'tag': 'drexarc',
@@ -1405,6 +1507,48 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'cchurch-congs': {
+        'repository': {
+            'tag': 'christchurch'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'presb-congs': {
+        'repository': {
+            'tag': 'presbyterian'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'episc-congs': {
+        'repository': {
+            'tag': 'episcopaldiocese'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'flp-mmw': {
         'repository': {
             'tag': 'flp'
@@ -1637,6 +1781,25 @@ College and Haverford College. This collection is funded by the Council
 on Library and Information Resources.""",
             'csv_only': False,
             'include_file': 'MuslimWorld.html',
+            'live': True,
+        },
+        {
+            'tag': 'congregations',
+            'name': 'Digitizing Philadelphia\'s Historic Congregations',
+            'blurb': """The churches and synagogues of Philadelphia were gathering places in the
+18th and 19th centuries and their records reflect the changing
+political, social and cultural mores. More than 40,000 scanned images
+from vestry and trustee minutes, baptismal, birth, marriage and death
+records, pew rents, accounting records, sermons and correspondence gives
+researchers opportunities to explore these connections. Collaborating
+institutions include Christ Church, St. George's Methodist Church,
+Gloria Dei, Mikveh Israel, African Episcopal Church of St. Thomas,
+Episcopal Diocese of Pennsylvania Archives, Presbyterian Historical
+Society, St. Peter's Episcopal Church and American Baptist Historical
+Society. This project is funded by the Council on Library and
+Information Resources.""",
+            'csv_only': False,
+            'include_file': 'Congregations.html',
             'live': True,
         },
         {
