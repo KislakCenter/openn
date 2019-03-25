@@ -409,7 +409,7 @@
         {% endif %}
         {% endwith %}
         <p></p>
-        <span class="label">{{ page.image.display_label|capfirst }}</span><br />
+        <span class="label">{{ page.image.display_label }}</span><br />
         {% for deriv in page.image.derivative_set.all %}
           <a href="{{ deriv.url }}">{{ deriv.path|basename }}</a> ({{ deriv.bytes|filesizeformat }}) <br />
         {% endfor %}
