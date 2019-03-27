@@ -320,6 +320,27 @@ PREPARATION_METHODS = [
         },
     },
     {
+        'tag': 'congs',
+        'description': """Extracts metadata from Biblio-Philly spreadsheet to build metadata for the
+            object for CLIR congregations grant. Requires valid openn_metadata.xslx file.""",
+        'name': 'CLIR Congregations Prep',
+        'package_validation': {
+            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
+            'required_names': ['*.xlsx'],
+        },
+        'prep_class': {
+            'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
+            'params' : {
+                'image_rights': {
+                    'dynamic': False,
+                },
+                'config_json': os.path.join(SITE_ROOT, 'bibliophilly.json'),
+                'xsl': os.path.join(SITE_ROOT, 'xsl/bp_spreadsheet_xml2tei.xsl'),
+            },
+        },
+    },
+    {
         'tag': 'gzh',
         'description': """Extracts metadata from Genizah spreadsheet to build metadata for the
             object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
@@ -1403,6 +1424,19 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'pma-bphil-nofunder': {
+        'repository': {
+        'tag': 'pma'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'rosenbach-bphil': {
         'repository': {
             'tag': 'rosenbach'
@@ -1467,6 +1501,48 @@ PREP_CONFIGS = {
         "funders": ["Council on Library and Information Resources"],
         'repository_prep': {
             'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'cchurch-congs': {
+        'repository': {
+            'tag': 'christchurch'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'presb-congs': {
+        'repository': {
+            'tag': 'presbyterian'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'episc-congs': {
+        'repository': {
+            'tag': 'episcopaldiocese'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
         },
         'rights': {
             'image_rights': 'PD-10',

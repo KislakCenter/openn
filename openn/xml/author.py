@@ -22,8 +22,6 @@ class Author(XMLWhatsit):
             return self._get_text('./t:persName[@type = "vernacular"][1]')
         elif self.has_node('./t:name[@type = "vernacular"]'):
             return self._get_text('./t:name[@type = "vernacular"][1]')
-        else:
-            return self._get_text('.')
 
     @property
     def ref(self):
