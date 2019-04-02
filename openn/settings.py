@@ -256,7 +256,7 @@ PREPARATION_METHODS = [
         },
     },
     {
-        'tag': 'mmw',
+        'tag': 'pagesxlsx',
         'description': "Uses metadata scraped from MARC XML and extracts metadata from a spreadsheet to build metadata for the object. Requires bibid.txt or description.xml file and page.xlsx file.",
         'name': 'Manuscripts of the Muslim World Prep',
         'package_validation': {
@@ -1067,6 +1067,26 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC-BY-40'
         },
     },
+    'penn-pagesxlsx': {
+        'repository': {
+            'tag': 'pennmss'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'pagesxlsx',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                ]
+            },
+        },
+        'rights': {
+            'image_rights': 'PD',
+            'metadata_rights': 'CC-BY-40'
+        },
+    },
     'ljs-pih': {
         'repository': {
             'tag': 'ljs'
@@ -1555,7 +1575,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1577,7 +1597,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1599,7 +1619,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1619,7 +1639,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1639,7 +1659,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
