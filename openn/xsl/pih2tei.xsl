@@ -105,8 +105,8 @@
       <xsl:when test="$marcSource = 'oclc'">
         <xsl:value-of select="replace(//marc:controlfield[@tag=001], '^on', '')"/>
       </xsl:when>
-      <xsl:when test="//marc:datafield[@tag=079]/marc:subfield[@code='a' and starts-with(., 'ocn')]">
-        <xsl:value-of select="replace(//marc:datafield[@tag=079]/marc:subfield[@code='a' and starts-with(., 'ocn')], '^ocn', '')"/>
+      <xsl:when test="//marc:datafield[@tag=079]/marc:subfield[@code='a' and matches(., '^o[a-zA-Z]*[0-9]+')]">
+        <xsl:value-of select="replace(//marc:datafield[@tag=079]/marc:subfield[@code='a' and matches(., '^o[a-zA-Z]*[0-9]+')], '^o[a-zA-Z]*', '')"/>
       </xsl:when>
       <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and starts-with(., '(OCoLC)')]">
         <xsl:value-of select="replace((//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\(OCoLC\)\d+$')])[1], '^\((OCoLC)\)', '')"/>
