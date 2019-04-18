@@ -132,6 +132,21 @@ def clean_dir(source_dir, clobber_pattern):
                 path = os.path.join(root, name)
                 os.remove(path)
 
+def handle_yes_no_input(question, yes_response, no_response, yes='Yes', no='No'):
+    s = None
+    while s is None:
+        s = raw_input("%s Type Yes or No: " % (question,))
+        s = s.strip()
+        if s is not None:
+            if s.lower() == yes.lower():
+                logger.info(yes_response)
+            elif s.lower() == no.lower():
+                raise OPennException(no_response)
+            else:
+                msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
+                print msg % (s,)
+                s = None
+
 def redo_document(doc, opts):
     if logger.getEffectiveLevel() >= logging.INFO:
         msg = "Preparing to redo document id: %d,"
@@ -143,26 +158,20 @@ def redo_document(doc, opts):
         raise OPennException(msg)
     else:
         if opts.yes is True:
-            pass
+            logger.info("Removing images from existing document.")
         elif opts.no is True:
             msg = "User canceled redo; no changes made"
             raise OPennException(msg)
         else:
-            s=  None
-            while s is None:
-                s = raw_input("Proceed with redo? Type Yes or No: ")
-                s = s.strip()
-                if s is not None:
-                    if s.lower() == 'yes':
-                        logger.info("OK. Removing images from existing document.")
-                        doc.image_set.all().delete()
-                    elif s.lower() == 'no':
-                        msg = "User canceled redo; no changes made"
-                        raise OPennException(msg)
-                    else:
-                        msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
-                        print msg % (s,)
-                        s = None
+            question     = "Proceed with redo and delete all images?"
+            yes_response = "OK. Removing images from existing document."
+            no_response  = "User canceled redo; no changes made."
+            # the following raises an exception unless the user enters yes
+            handle_yes_no_input(question, yes_response, no_response)
+
+        # We only get here if it's ok to proceed
+        doc.image_set.all().delete()
+
 
 def clobber_document(params, opts):
     doc = openn_db.get_doc(params)
@@ -178,26 +187,19 @@ def clobber_document(params, opts):
         raise OPennException(msg)
     else:
         if opts.yes is True:
-            pass
+            logger.info("Deleting existing document.")
         elif opts.no is True:
             msg = "User canceled clobber; no changes made"
             raise OPennException(msg)
         else:
-            s = None
-            while s is None:
-                s = raw_input("Proceed with clobber? Type Yes or No: ")
-                s = s.strip()
-                if s is not None:
-                    if s.lower() == 'yes':
-                        logger.info("OK. Deleting existing document.")
-                        doc.delete()
-                    elif s.lower() == 'no':
-                        msg = "User canceled clobber; no changes made"
-                        raise OPennException(msg)
-                    else:
-                        msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
-                        print msg % (s,)
-                        s = None
+            question     = "Proceed with clobber and delete this document?"
+            yes_response = "OK. Deleting existing document."
+            no_response  = "User canceled clobber; no changes made."
+            # the following raises an exception unless the user enters yes
+            handle_yes_no_input(question, yes_response, no_response)
+
+        # We only get here if it's ok to proceed
+        doc.delete()
 
 def prep_source_dir_arg(source_dir):
     if source_dir.strip().endswith('/'):
