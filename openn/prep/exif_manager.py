@@ -50,8 +50,10 @@ class ExifManager(object):
 
     def get_tag(self,tag,file):
         self.start()
-        return self._exiftool.get_tag(tag,file)
+        value = self._exiftool.get_tag(tag,file)
         self.stop()
+
+        return value
 
     def add_metadata(self,file_list,prop_dict,overwrite_original=False):
         self.start()
