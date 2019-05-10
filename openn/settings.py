@@ -1791,7 +1791,7 @@ diary volumes.""",
 manuscripts and 827 paintings from the Islamicate world broadly
 construed. Together these holdings represent in great breadth the
 flourishing intellectual and cultural heritage of Muslim lands from 1000
-to 1900, coving mathematics, astrology, history, law, literature, as
+to 1900, covering mathematics, astrology, history, law, literature, as
 well as the Qur'an and Hadith. The bulk of the collection consists of
 manuscripts in Arabic and Persian, along with examples of Coptic,
 Samaritan, Syriac, Turkish, and Berber. The primary partners are
