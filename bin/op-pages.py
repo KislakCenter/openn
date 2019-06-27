@@ -37,6 +37,9 @@ from openn.csv.curated_collection_contents_csv import CuratedCollectionContentsC
 
 logger = logging.getLogger(__name__)
 
+exception_count = 0
+EXCEPTION_CEILING = 3
+
 def cmd():
     return os.path.basename(__file__)
 
@@ -116,7 +119,7 @@ def make_toc_html(repowrap, opts):
         repowrap, toc_dir=settings.TOC_DIR,
         **{'template_name': 'TableOfContents.html', 'outdir': site_dir()})
 
-    # TODO: have TOC is_needed() check the include file; fails to make
+    # TODO: change TOC is_needed() to check the include file; fails to make
     #       now b/c TableOfContents.html seldom changes
     # For now, always force, and make them all:
     opts.force = True
@@ -146,8 +149,6 @@ def make_curated_collections_html(opts):
     except TemplateDoesNotExist as ex:
         msg = "Could not find template: %s" % (settings.CURATED_COLLECTIONS_TEMPLATE,)
         raise OPennException(msg)
-
-
 
 def make_readme_html(readme, opts):
     try:
@@ -260,6 +261,12 @@ def browse(opts):
             document(docid, opts)
         except OPennException:
             pass
+        except Exception:
+            if exception_count <= EXCEPTION_CEILING:
+                pass
+            else:
+                logging.error("Maximum number of document exceptions reached: %i", exception_count)
+                raise
 
 def repositories_html(opts):
     """ Generate Repositories.html """
