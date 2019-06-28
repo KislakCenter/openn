@@ -96,6 +96,24 @@ DERIV_CONFIGS = {
             },
         }
 
+# URL to bibliophilly keywords TEI encodingDesc. File should have content like this.
+#
+#   <?xml version="1.0" encoding="UTF-8"?>
+#   <encodingDesc xmlns="http://www.tei-c.org/ns/1.0">
+#       <classDecl>
+#           <taxonomy xml:id="keywords">
+#               <category xml:id="keyword_1">
+#                   <catDesc>Book Type</catDesc>
+#               <category xml:id="keyword_1.2">
+#                   <catDesc>Accounts</catDesc>
+#               </category>
+#               <!-- ... etc. -->
+#           </taxonomy>
+#       </classDecl>
+#   </encodingDesc>
+#
+BIBLIO_PHILLY_KEYWORDS_DIR = os.path.join(PROJECT_PATH, 'vendor', 'bibliophilly-keywords2')
+
 TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
 README_TEMPLATES = [ { 'file': 'ReadMe.html', 'title': 'Read Me' },
@@ -242,7 +260,7 @@ PREPARATION_METHODS = [
         'description': "Uses metadata scraped from Penn in Hand to build metadata for the object. Requires bibid.txt file containing the object's BibID",
         'name': 'Penn in Hand Prep',
         'package_validation': {
-            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt'],
+            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt', 'keywords.txt'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.tif', 'bibid.txt'],
         },
@@ -252,6 +270,7 @@ PREPARATION_METHODS = [
                 'pih_host': 'mdproc.library.upenn.edu:9292',
                 'pih_path': '/records/{0}/create?format=openn',
                 'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+                'encoding_desc': os.path.join(BIBLIO_PHILLY_KEYWORDS_DIR, 'bibliophilly-keywords.xml'),
             },
         },
     },
@@ -280,7 +299,7 @@ PREPARATION_METHODS = [
         'description': "Extracts metadata from PACSCL Diaries spreadsheet to build metadata for the object. Requires valid openn_metadata.xslx file.",
         'name': 'PACSCL Diaries Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.xlsx'],
         },
@@ -301,12 +320,12 @@ PREPARATION_METHODS = [
             object. Requires valid openn_metadata.xslx file.""",
         'name': 'Biblio Philly Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.xlsx'],
         },
         'before_scripts': [
-            [os.path.join(SITE_ROOT, '..', 'scripts', 'get-bibliophilly-keywords.sh')]
+            [os.path.join(SITE_ROOT, '..', 'scripts', 'get-bibliophilly-keywords.sh'), BIBLIO_PHILLY_KEYWORDS_DIR]
         ],
         'prep_class': {
             'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
@@ -316,6 +335,7 @@ PREPARATION_METHODS = [
                 },
                 'config_json': os.path.join(SITE_ROOT, 'bibliophilly.json'),
                 'xsl': os.path.join(SITE_ROOT, 'xsl/bp_spreadsheet_xml2tei.xsl'),
+                'encoding_desc': os.path.join(BIBLIO_PHILLY_KEYWORDS_DIR, 'bibliophilly-keywords.xml'),
             },
         },
     },
@@ -325,7 +345,7 @@ PREPARATION_METHODS = [
             object for CLIR congregations grant. Requires valid openn_metadata.xslx file.""",
         'name': 'CLIR Congregations Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.xlsx'],
         },
@@ -346,7 +366,7 @@ PREPARATION_METHODS = [
             object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
         'name': 'Genizah Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*', '.DS_Store'],
             'required_names': ['*.xlsx'],
         },

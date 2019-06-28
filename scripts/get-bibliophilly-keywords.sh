@@ -5,7 +5,9 @@
 cmd=`basename $0`
 
 this_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-outdir="${this_dir}/../vendor/bibliophilly-keywords"
+outdir="${1}"
+
+[[ $outdir ]] || { echo "Please provide an OUTDIR argument"; exit 1; }
 
 if [ -d "$outdir" ]; then
   echo "[$cmd] Updating keywords"

@@ -29,6 +29,7 @@ class TestOPennTEI(OPennTestCase):
     mscodex75_tei            = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex75_TEI.xml')
     mscodex906_tei           = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex906_TEI.xml')
     mscodex83_tei            = os.path.join(os.path.dirname(__file__), 'data/xml/mscodex83_TEI.xml')
+    encoding_desc            = os.path.join(os.path.dirname(__file__), 'data/bibliophilly/bibliophilly-keywords.xml')
 
 
     def setUp(self):
@@ -101,6 +102,14 @@ class TestOPennTEI(OPennTestCase):
             openn_tei.validate()
         self.assertIn('Call number', str(oe.exception))
 
+    def test_add_encoding_desc(self):
+        openn_tei = OPennTEI(open(TestOPennTEI.test_partial_tei))
+        # print openn_tei.to_string()
+        desc_string = open(self.encoding_desc).read()
+        openn_tei.add_encoding_desc(desc_string)
+        # print openn_tei.to_string()
+        root = self.assertXmlDocument(openn_tei.to_string())
+        self.assertXpathsExist(root, ('//ns:catDesc[text()= "Headpiece"]',))
 
 if __name__ == '__main__':
     unittest.main()

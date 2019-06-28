@@ -23,10 +23,12 @@ class RepositoryPrep(Status):
 
     def __init__(self, source_dir, document, prep_config):
         self.source_dir = source_dir
+        self.partial_tei_file = os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
         self.document = document
         self.prep_config = prep_config
         self._package_validation = PackageValidation(
             **self.prep_config.source_dir_validations())
+        self.encoding_desc_path = prep_config.prep_class_params().get('encoding_desc', None)
         Status.__init__(self,source_dir)
         self._removals = []
 
@@ -41,6 +43,9 @@ class RepositoryPrep(Status):
     @property
     def package_validation(self):
         return self._package_validation
+
+    def keywords_filename(self):
+        return os.path.join(self.source_dir, 'keywords.txt')
 
     def add_removals(self, removals):
         for removal in removals:
@@ -127,12 +132,15 @@ class RepositoryPrep(Status):
             tei.validate()
         finally:
             f.close()
-        # except Exception as ex:
-        #     raise OPennException("Error creating TEI: %s" % str(ex))
-        # finally:
-        #     f.close()
 
         return outfile
+
+    def build_partial_tei(self):
+        xml_string = self.gen_partial_tei()
+        tei = OPennTEI(xml_string)
+        self.add_keywords(tei)
+        self.add_encoding_desc(tei)
+        return tei.to_string()
 
     def gen_partial_tei(self):
         raise NotImplementedError
@@ -140,10 +148,48 @@ class RepositoryPrep(Status):
     def regen_partial_tei(self, doc, **kwargs):
         raise NotImplementedError
 
+    def add_encoding_desc(self, openn_tei):
+        """
+        If encoding_desc_path is defined and the TEI file has
+
+            profileDesc/textClass/keywords[@n="keywords"]
+
+        then, add the encodingDesc to the partial TEI.
+        """
+        if len(openn_tei.keywords) > 0:
+            if self.encoding_desc_path is not None and self.encoding_desc_path.strip() != '':
+                if not os.path.exists(self.encoding_desc_path):
+                    raise OPennException("TEI encodingDesc file not found: '%s'" % self.encoding_desc_path)
+                openn_tei.add_encoding_desc(open(self.encoding_desc_path).read())
+
+    def add_keywords(self, openn_tei):
+        """
+        If keywords.txt file is present, add keywords to the TEI header.
+
+        <profileDesc>
+            <textClass>
+                <keywords n="keywords">
+                    <term>15th century</term>
+                    <term>Italy</term>
+                    <term>Italian</term>
+                    <term>Commentary</term>
+                    <term>Illumination</term>
+                </keywords>
+            </textClass>
+        </profileDesc>
+        """
+        if os.path.exists(self.keywords_filename()):
+            terms = []
+            for x in open(self.keywords_filename()).readlines():
+                if len(x.strip()) > 0:
+                    terms.append(x.strip())
+
+            if len(terms) > 0:
+                openn_tei.add_keywords(terms)
+
     def validate_partial_tei(self):
-        partial_tei_file = os.path.join(self.source_dir, 'PARTIAL_TEI.xml')
         validate_cmd = 'op-vldt-tei'
-        p = subprocess.Popen([validate_cmd, partial_tei_file],
+        p = subprocess.Popen([validate_cmd, self.partial_tei_file],
                              stderr=subprocess.PIPE,
                              stdout=subprocess.PIPE)
         out, err = p.communicate()

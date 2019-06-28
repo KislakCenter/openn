@@ -340,54 +340,47 @@ class MMWPrep(RepositoryPrep):
         return self.NEW_BIBID_RE.match(bibid)
 
     def regen_partial_tei(self, doc, **kwargs):
-        pages_xlsx = None
-        marc_xml   = None
-        bibid      = None
-        holding_id = None
+        # validate directory
+        # Move files:
+        #
+        #  - pages.xlsx     required
+        #  - marc.xml       required unless bibid.txt present
+        #  - bibid.txt      ignored; BibID should be in existing TEI
+        #  - holdingid.txt  optional; may be required for Penn MSS (with BibID in TEI)
 
-        try:
-            pages_xlsx = kwargs['PAGES_XLSX']
-        except KeyError:
-            msg = "Must have option PAGES_XLSX=/path/to/file.xlsx"
-            msg += " to generate partial TEI."
-            raise OPennException(msg)
+        data_dir = kwargs.get('METADATA_DIR', None)
+        if data_dir is None or data_dir.strip() == '':
+            raise OPennException("Missing required METADATA_DIR")
 
-        pages_xlsx = os.path.abspath(pages_xlsx)
-        dest = os.path.abspath(self.xlsx_path)
+        if not os.path.exists(data_dir):
+            raise OPennException("Cannot find METADATA_DIR: '%s'" % (data_dir,))
 
-        if pages_xlsx == dest:
-            pass
-        else:
-            shutil.copyfile(pages_xlsx, dest)
+        metadata_files = ('pages.xlsx', 'marc.xml', 'holdingid.txt')
+        for file in metadata_files:
+            full_path = os.path.abspath(os.path.join(data_dir, file))
+            dest = os.path.abspath(os.path.join(self.source_dir, file))
+            if full_path == dest:
+                pass
+            elif os.path.exists(full_path):
+                shutil.copyfile(full_path, dest)
 
-        if kwargs.get('MARC_XML'):
-            marc_xml = os.path.abspath(kwargs['MARC_XML'])
-            dest = os.path.abspath(self.marc_xml)
-            if marc_xml == dest:
+        tei = OPennTEI(doc.tei_xml)
+        bibid = tei.bibid
+
+        # make sure we have the marc.xml file
+        if bibid is None:
+            if os.path.exists(self.marc_xml):
                 pass
             else:
-                shutil.copyfile(marc_xml, dest)
+                OPennException("Saved TEI lacks BibID; required MARC file missing: '%s'" % (self.marc_xml,))
         else:
-            xsl_command = ['op-gen-tei']
-            tei = OPennTEI(doc.tei_xml)
-            bibid = tei.bibid
-            if bibid is None:
-                raise OPennException("Whoah now. bibid is none. That ain't right.")
-            if not self.is_new_bibid(bibid):
+            if not self.NEW_BIBID_RE.match(bibid):
                 bibid = '99%s3503681' % (str(bibid),)
-            self.write_xml(bibid,self.marc_xml)
+            self.write_xml(bibid, self.marc_xml)
 
-        if kwargs.get('holding_id'):
-            holding_id = kwargs['holding_id']
-            with open(self.holdingid_filename) as f:
-                f.write(holding_id)
-
-        errors = self.package_validation.validate(self.source_dir)
-        if not self.bibid_filename and not os.path.exists(self.marc_xml):
-            errors.append('REQUIRED NAME CHECK: One of the following required: marc.xml, bibid.txt')
-
+        # create pages.xml from the page.xlsx
         self.write_openn_xml(self.openn_xml_path)
-        self.get_marc_xml()
+        # fake the pih.xml by merging pages.xml with marc.xml (from above)
         self.write_pih_xml()
         self.save_rights_data()
         partial_tei_xml = self.gen_partial_tei()
@@ -429,6 +422,7 @@ class MMWPrep(RepositoryPrep):
         shutil.move(self.marc_xml, self.data_dir)
 
     def _do_prep_dir(self):
+        # create pages.xml from the page.xlsx
         if self.get_status() > self.SPREADSHEET_OPEN_XML_WRITTEN:
             self.logger.warning("[%s] OPenn XML already written", self.basedir, )
         else:
@@ -436,6 +430,7 @@ class MMWPrep(RepositoryPrep):
             self.write_openn_xml(self.openn_xml_path)
             self.write_status(self.SPREADSHEET_OPEN_XML_WRITTEN)
 
+        # ensure we have marc.xml as a file from marmite
         if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
             self.logger.warning("[%s] Metadata alreaady validated", self.basedir)
         else:
@@ -444,6 +439,7 @@ class MMWPrep(RepositoryPrep):
             self.check_valid_xml(self.marc_xml)
             self.write_status(self.REPOSITORY_PREP_MD_VALIDATED)
 
+        # fake the pih.xml by merging pages.xml with marc.xml
         if self.get_status() > self.MMW_PREP_PAGES_MERGED:
             self.logger.warning("[%s] Pages alreaady merged", self.basedir)
         else:
