@@ -358,11 +358,12 @@ class MMWPrep(RepositoryPrep):
         metadata_files = ('pages.xlsx', 'marc.xml', 'holdingid.txt')
         for file in metadata_files:
             full_path = os.path.abspath(os.path.join(data_dir, file))
-            dest = os.path.abspath(os.path.join(self.source_dir, file))
-            if full_path == dest:
-                pass
-            elif os.path.exists(full_path):
-                shutil.copyfile(full_path, dest)
+            if os.path.exists(full_path):
+                dest = os.path.abspath(os.path.join(self.source_dir, file))
+                if full_path == dest:
+                    pass
+                elif os.path.exists(full_path):
+                    shutil.copyfile(full_path, dest)
 
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid

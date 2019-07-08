@@ -328,8 +328,9 @@ class MedrenPrep(RepositoryPrep):
 
             for file in metadata_files:
                 full_path = os.path.abspath(os.path.join(data_dir, file))
-                dest = os.path.abspath(os.path.join(self.source_dir, file))
-                shutil.copyfile(full_path, dest)
+                if os.path.exists(full_path):
+                    dest = os.path.abspath(os.path.join(self.source_dir, file))
+                    shutil.copyfile(full_path, dest)
 
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid
