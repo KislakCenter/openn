@@ -136,7 +136,7 @@ def stage_new(doc, source_dir):
             logger.info("Found STAGED dir; copying %s to %s", source_dir, staged_dir)
         else:
             logger.info("Copying %s to %s", source_dir, staged_dir)
-        print dir_util.copy_tree(source_dir, staged_dir)
+        print dir_util.copy_tree(source_dir, staged_dir, preserve_times=0, preserve_mode=0)
 
 def update_manifest(doc, source_dir):
     copy_current_manifest(doc, source_dir)
