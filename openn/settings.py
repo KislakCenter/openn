@@ -112,7 +112,7 @@ DERIV_CONFIGS = {
 #       </classDecl>
 #   </encodingDesc>
 #
-BIBLIO_PHILLY_KEYWORDS_DIR = os.path.join(PROJECT_PATH, 'vendor', 'bibliophilly-keywords2')
+BIBLIO_PHILLY_KEYWORDS_DIR = os.path.join(PROJECT_PATH, 'vendor', 'bibliophilly-keywords')
 
 TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
