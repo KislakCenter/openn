@@ -74,7 +74,8 @@ INSTALLED_APPS = (
         )
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+
+PROJECT_PATH = os.path.abspath(os.path.join(__file__, '../..'))
 
 TIME_ZONE = 'US/Eastern'
 USE_TZ = True
