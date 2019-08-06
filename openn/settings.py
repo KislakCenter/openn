@@ -898,7 +898,7 @@ periodicals, pamphlets, and manuscripts.""",
             'include_file': 'GermanSociety.html',
         },
         {
-            'tag': 'pennmuseumarchives',
+            'tag': 'archives',
             'name': 'University of Pennsylvania Museum of Archaeology and Anthropology, Archives',
             'metadata_type': 'TEI',
             'live': True,
@@ -1395,6 +1395,19 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'pennmuseum-bphil': {
+        'repository': {
+            'tag': 'pennmuseum'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'CC-BY-SA-20',
+            'metadata_rights': 'CC-BY-40',
+        }
+    },
     'brynmawr-bphil': {
         'repository': {
             'tag': 'brynmawr'
@@ -1672,6 +1685,26 @@ PREP_CONFIGS = {
         'rights': {
             'image_rights': 'PD-10',
             'metadata_rights': 'CC0-10',
+        }
+    },
+    'pennmuseum-mmw': {
+        'repository': {
+            'tag': 'pennmuseum'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'pagesxlsx',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                ]
+            },
+        },
+        'rights': {
+            'image_rights': 'CC-BY-SA-20',
+            'metadata_rights': 'CC-BY-40',
         }
     },
     'burke-mmw': {
