@@ -898,7 +898,7 @@ periodicals, pamphlets, and manuscripts.""",
             'include_file': 'GermanSociety.html',
         },
         {
-            'tag': 'archives',
+            'tag': 'pennmuseumarchives',
             'name': 'University of Pennsylvania Museum of Archaeology and Anthropology, Archives',
             'metadata_type': 'TEI',
             'live': True,
