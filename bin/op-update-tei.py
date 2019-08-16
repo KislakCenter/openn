@@ -91,6 +91,8 @@ def main(cmdline=None):
 
         OPennPrep().update_tei(output_dir, doc, prep_config, **kwargs)
     except OPennException as ex:
+        if opts.verbose:
+            opfunc.print_exc()
         status = 4
         parser.error(str(ex))
 
@@ -198,6 +200,9 @@ All manuscripts must have page-level metadata in a 'pages.xlsx' file.
     parser.add_option('-o', '--out-dir', dest='out_dir', default='.',
                       help="Output TEI file to OUT_DIR [default=%default]",
                       metavar="OUT_DIR")
+
+    parser.add_option('-v', '--verbose', dest='verbose', default=False,
+                      action='store_true', help='Print out lots of info, primarily stack traces')
 
     return parser
 

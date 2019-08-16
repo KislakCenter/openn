@@ -336,7 +336,7 @@ class MedrenPrep(RepositoryPrep):
         bibid = tei.bibid
         if bibid is None:
             raise OPennException("Whoah now. bibid is none. That ain't right.")
-        if not self.NEW_BIBID_RE.match(bibid):
+        if len(bibid) < 8:
             bibid = '99%s3503681' % (str(bibid),)
         self.write_xml(bibid,self.pih_filename)
 
