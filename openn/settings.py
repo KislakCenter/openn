@@ -596,7 +596,7 @@ scope, importance and interest.""",
             'tag': 'christchurch',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Christ Church',
+            'name': 'Christ Church Philadelphia',
             'blurb': """Founded in 1695, Christ Church was the first Anglican church to be
 established in Pennsylvania. This fulfilled the provision outlined by
 King Charles II in the charter he granted to William Penn in 1681
