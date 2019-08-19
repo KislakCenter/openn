@@ -1055,6 +1055,35 @@ with the larger community of scholars and independent researchers.""",
             'include_file': 'TempleUniversity.html',
         },
         {
+            'tag': 'villanova',
+            'name': 'Villanova University Libraries, Special Collections',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Villanova University Special Collections houses approximately 15,000
+items. Some of these items are rare or unique and most require special
+handling and preservation. Collections include Augustiniana, the DiOrio
+Theater collection, European imprints to 1800, the Hubbard collection,
+incunabula, limited editions, the McGarrity Collection, manuscripts, the
+Mendel Collection, North American imprints to 1864, the Reap World War
+II collection, the Sherman Thackara collection and Villanovana.""",
+            'include_file': 'VillanovaUniversity.html',
+        },
+        {
+            'tag': 'fandm',
+            'name': 'Franklin & Marshall College Library, Archives & Special Collections',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Archives & Special Collections at Franklin & Marshall College
+Library organizes, preserves, and promotes the visual and written record
+of the college, faculty and student scholarship, and the digital and
+special collections of the library. Collections include German-American
+imprints, manuscripts and rare books, posters, maps, prints, newspapers
+and photographs, as well as the permanent historical record of Franklin
+& Marshall College and its related institutions: Franklin College,
+Marshall College, and Franklin and Marshall Academy.""",
+            'include_file': 'FranklinMarshallCollege.html',
+        },
+        {
             'tag': 'rosenbach',
             'name': 'Free Library of Philadelphia, The Rosenbach',
             'metadata_type': 'TEI',
@@ -1453,6 +1482,34 @@ PREP_CONFIGS = {
     'temple-bphil': {
         'repository': {
             'tag': 'temple'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'villanova-bphil': {
+        'repository': {
+            'tag': 'villanova'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'fandm-bphil': {
+        'repository': {
+            'tag': 'fandm'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
