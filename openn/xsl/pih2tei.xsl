@@ -105,6 +105,9 @@
       <xsl:when test="$marcSource = 'oclc'">
         <xsl:value-of select="replace(//marc:controlfield[@tag=001], '^on', '')"/>
       </xsl:when>
+      <xsl:when test="//marc:datafield[@tag=079]/marc:subfield[@code='a' and matches(., '^o[a-zA-Z]*[0-9]+')]">
+        <xsl:value-of select="replace(//marc:datafield[@tag=079]/marc:subfield[@code='a' and matches(., '^o[a-zA-Z]*[0-9]+')], '^o[a-zA-Z]*', '')"/>
+      </xsl:when>
       <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and starts-with(., '(OCoLC)')]">
         <xsl:value-of select="replace((//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\(OCoLC\)\d+$')])[1], '^\((OCoLC)\)', '')"/>
       </xsl:when>
@@ -307,7 +310,7 @@
                               <xsl:value-of select="normalize-space((//marc:datafield[@tag='520']/marc:subfield[@code='a'])[last()])"/>
                             </summary>
 
-                            <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
+                            <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a'] or not(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3) = '   ')">
                               <textLang>
                                 <xsl:if test="not(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3) = '   ')">
                                   <xsl:variable name="mainLang" select="normalize-space(substring(//marc:record/marc:controlfield[@tag='008']/text(), 36, 3))"/>
@@ -321,9 +324,11 @@
                                     </xsl:attribute>
                                   </xsl:if>
                                 </xsl:if>
-                                <xsl:call-template name="chomp-period">
-                                  <xsl:with-param name="string" select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
-                                </xsl:call-template>
+                                <xsl:if test="//marc:datafield[@tag='546']/marc:subfield[@code='a']">
+                                  <xsl:call-template name="chomp-period">
+                                    <xsl:with-param name="string" select="normalize-space(//marc:datafield[@tag='546']/marc:subfield[@code='a'])" />
+                                  </xsl:call-template>
+                                </xsl:if>
                               </textLang>
                             </xsl:if>
                                 <!--
@@ -527,13 +532,14 @@
                                         respStmts:
                                         Add datafields 700 with a relator term (code='e') as respStmts
                                     -->
-                                    <xsl:for-each select="//marc:datafield[@tag='700' and ./marc:subfield[@code='e']]">
+                                      <xsl:for-each select="//marc:datafield[@tag='700']/marc:subfield[@code='e']">
+                                        <xsl:variable name="datafield700" select="./parent::marc:datafield[@tag='700']"/>
                                         <respStmt>
                                             <resp>
                                                 <xsl:call-template name="chopPunctuation">
                                                     <xsl:with-param name="chopString">
                                                         <xsl:call-template name="clean-up-text">
-                                                            <xsl:with-param name="some-text" select="./marc:subfield[@code='e']"/>
+                                                            <xsl:with-param name="some-text" select="."/>
                                                         </xsl:call-template>
                                                     </xsl:with-param>
                                                 </xsl:call-template>
@@ -542,18 +548,18 @@
                                                 <xsl:call-template name="clean-up-text">
                                                     <xsl:with-param name="some-text">
                                                         <xsl:call-template name="extract-pn">
-                                                            <xsl:with-param name="datafield" select="."/>
+                                                            <xsl:with-param name="datafield" select="$datafield700"/>
                                                         </xsl:call-template>
                                                     </xsl:with-param>
                                                 </xsl:call-template>
                                             </persName>
 
                                             <!-- Look for an associaed graphical representation of the name -->
-                                            <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
+                                            <xsl:if test="starts-with($datafield700/marc:subfield[@code='6']/text(), '880')">
                                                 <persName type="vernacular">
                                                     <xsl:variable name="datafield880" as="node()">
                                                         <xsl:call-template name="locate880">
-                                                            <xsl:with-param name="datafield" select="."/>
+                                                            <xsl:with-param name="datafield" select="$datafield700"/>
                                                         </xsl:call-template>
                                                     </xsl:variable>
                                                     <xsl:value-of select="$datafield880/marc:subfield[@code='a']"/>
@@ -563,13 +569,14 @@
                                     </xsl:for-each>
 
                                   <!-- ====== 710$a$e: Related name, corporate -->
-                                  <xsl:for-each select="//marc:datafield[@tag='710' and ./marc:subfield[@code='e']]">
+                                  <xsl:for-each select="//marc:datafield[@tag='710']/marc:subfield[@code='e']">
+                                    <xsl:variable name="datafield710" select="./parent::marc:datafield"/>
                                     <respStmt>
                                       <resp>
                                         <xsl:call-template name="chopPunctuation">
                                           <xsl:with-param name="chopString">
                                             <xsl:call-template name="clean-up-text">
-                                              <xsl:with-param name="some-text" select="./marc:subfield[@code='e']"/>
+                                              <xsl:with-param name="some-text" select="."/>
                                             </xsl:call-template>
                                           </xsl:with-param>
                                         </xsl:call-template>
@@ -578,14 +585,14 @@
                                         <xsl:call-template name="clean-up-text">
                                           <xsl:with-param name="some-text">
                                             <xsl:call-template name="extract-pn">
-                                              <xsl:with-param name="datafield" select="."/>
+                                              <xsl:with-param name="datafield" select="$datafield710"/>
                                             </xsl:call-template>
                                           </xsl:with-param>
                                         </xsl:call-template>
                                       </name>
 
                                       <!-- Look for an associaed graphical representation of the name -->
-                                      <xsl:if test="starts-with(./marc:subfield[@code='6']/text(), '880')">
+                                      <xsl:if test="starts-with($datafield710/marc:subfield[@code='6']/text(), '880')">
                                         <name type="vernacular">
                                           <xsl:variable name="datafield880" as="node()">
                                             <xsl:call-template name="locate880">

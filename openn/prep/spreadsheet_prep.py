@@ -30,6 +30,7 @@ class SpreadsheetPrep(RepositoryPrep):
 
     logger = logging.getLogger(__name__)
     BLANK_RE = re.compile('blank', re.IGNORECASE)
+    METADATA_FILES = ['openn_metadata.xlsx']
 
     def __init__(self, source_dir, document, prep_config):
         """
@@ -241,16 +242,14 @@ class SpreadsheetPrep(RepositoryPrep):
     def regen_partial_tei(self, doc, **kwargs):
         xlsx_path = None
 
-        try:
-            xlsx_path = kwargs['XLSX']
-        except KeyError:
-            msg = "Must have option XLSX=/path/to/file.xlsx"
-            msg += " to generate partial TEI."
-            raise OPennException(msg)
+        data_dir = kwargs.get('METADATA_DIR', None)
 
-        # copy the xlsx file into the source_dir as
-        # openn_metadata.xlsx
-        xlsx_path = os.path.abspath(xlsx_path)
+        if data_dir is None:
+            msg = 'METADATA_DIR is required to update TEI (document ID: %d)'
+            raise OPennException(msg % (self.document.id,))
+
+        # copy the xlsx file into the source_dir as openn_metadata.xlsx
+        xlsx_path = os.path.abspath(os.path.join(data_dir, 'openn_metadata.xlsx'))
         dest = os.path.abspath(self.xlsx_path)
         if xlsx_path == dest:
             pass
@@ -364,7 +363,7 @@ class SpreadsheetPrep(RepositoryPrep):
             self.logger.warning("[%s] Partial TEI already written", self.basedir, )
         else:
             self.logger.info("[%s] Writing partial TEI", self.basedir, )
-            partial_tei = self.gen_partial_tei()
+            partial_tei = self.build_partial_tei()
             # print partial_tei
             self.write_partial_tei(self.source_dir, partial_tei)
             self.validate_partial_tei()

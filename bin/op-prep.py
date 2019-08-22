@@ -132,33 +132,48 @@ def clean_dir(source_dir, clobber_pattern):
                 path = os.path.join(root, name)
                 os.remove(path)
 
-def redo_document(doc):
+def handle_yes_no_input(question, yes_response, no_response, yes='Yes', no='No'):
+    s = None
+    while s is None:
+        s = raw_input("%s Type Yes or No: " % (question,))
+        s = s.strip()
+        if s is not None:
+            if s.lower() == yes.lower():
+                logger.info(yes_response)
+            elif s.lower() == no.lower():
+                raise OPennException(no_response)
+            else:
+                msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
+                print msg % (s,)
+                s = None
+
+def redo_document(doc, opts):
     if logger.getEffectiveLevel() >= logging.INFO:
         msg = "Preparing to redo document id: %d,"
         msg += " repository: %s, base_dir: %s"
         logger.info(msg % doc.id, doc.collection, doc.base_dir)
-    if doc.is_online and str(os.getenv('OPENN_REDO_OK_IF_YOU_SAY_SO', None)).lower() != 'true':
+    if doc.is_online and str(os.getenv('OPENN_REDO_OVERRIDE_ONLINE_HALT', None)).lower() != 'true':
         msg = "Redo requested, but refusing to redo record "
         msg += "for document on-line at: %s" % (doc.package_dir,)
         raise OPennException(msg)
     else:
-        s=  None
-        while s is None:
-            s = raw_input("Proceed with redo? Type Yes or No: ")
-            s = s.strip()
-            if s is not None:
-                if s.lower() == 'yes':
-                    logger.info("OK. Removing images from existing document.")
-                    doc.image_set.all().delete()
-                elif s.lower() == 'no':
-                    msg = "User canceled redo; no changes made"
-                    raise OPennException(msg)
-                else:
-                    msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
-                    print msg % (s,)
-                    s = None
+        if opts.yes is True:
+            logger.info("Removing images from existing document.")
+        elif opts.no is True:
+            msg = "User canceled redo; no changes made"
+            raise OPennException(msg)
+        else:
+            question     = "Proceed with redo and delete all images?"
+            yes_response = "OK. Removing images from existing document."
+            no_response  = "User canceled redo; no changes made."
+            # the following raises an exception unless the user enters yes
+            handle_yes_no_input(question, yes_response, no_response)
 
-def clobber_document(params):
+        # We only get here if it's ok to proceed
+        doc.image_set.all().delete()
+
+
+def clobber_document(params, opts):
     doc = openn_db.get_doc(params)
 
     if logger.getEffectiveLevel() >= logging.INFO:
@@ -171,21 +186,20 @@ def clobber_document(params):
         msg += "for document on-line at: %s" % (doc.package_dir,)
         raise OPennException(msg)
     else:
-        s = None
-        while s is None:
-            s = raw_input("Proceed with clobber? Type Yes or No: ")
-            s = s.strip()
-            if s is not None:
-                if s.lower() == 'yes':
-                    logger.info("OK. Deleting existing document.")
-                    doc.delete()
-                elif s.lower() == 'no':
-                    msg = "User canceled clobber; no changes made"
-                    raise OPennException(msg)
-                else:
-                    msg = "Please enter 'Yes' or 'No'. I don't understand: %r"
-                    print msg % (s,)
-                    s = None
+        if opts.yes is True:
+            logger.info("Deleting existing document.")
+        elif opts.no is True:
+            msg = "User canceled clobber; no changes made"
+            raise OPennException(msg)
+        else:
+            question     = "Proceed with clobber and delete this document?"
+            yes_response = "OK. Deleting existing document."
+            no_response  = "User canceled clobber; no changes made."
+            # the following raises an exception unless the user enters yes
+            handle_yes_no_input(question, yes_response, no_response)
+
+        # We only get here if it's ok to proceed
+        doc.delete()
 
 def prep_source_dir_arg(source_dir):
     if source_dir.strip().endswith('/'):
@@ -265,7 +279,7 @@ def main(cmdline=None):
         if opts.clobber:
             if openn_db.doc_exists(doc_params):
                 try:
-                    clobber_document(doc_params)
+                    clobber_document(doc_params, opts)
                 except OPennException as ex:
                     parser.error(str(ex))
             else:
@@ -276,7 +290,7 @@ def main(cmdline=None):
             if openn_db.doc_exists(doc_params):
                 try:
                     doc = openn_db.get_doc(doc_params)
-                    redo_document(doc)
+                    redo_document(doc, opts)
                 except OPennException as ex:
                     parser.error(str(ex))
             else:
@@ -352,6 +366,13 @@ prepare correctly the first time. Will fail if document is on-line.
     parser.add_option('-s', '--soft-clobber',
                      action='store_true', dest='redo', default=False,
                      help=redo_help)
+
+    parser.add_option('-y', '--yes', action='store_true', dest='yes', default=False,
+                    help="Reply 'yes' to prompts")
+
+    parser.add_option('-n', '--no', action='store_true', dest='no', default=False,
+                    help="Reply 'no' to prompts")
+
 
     return parser
 

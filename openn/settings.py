@@ -74,7 +74,8 @@ INSTALLED_APPS = (
         )
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+
+PROJECT_PATH = os.path.abspath(os.path.join(__file__, '../..'))
 
 TIME_ZONE = 'US/Eastern'
 USE_TZ = True
@@ -95,6 +96,24 @@ DERIV_CONFIGS = {
             'max_side': 190,
             },
         }
+
+# URL to bibliophilly keywords TEI encodingDesc. File should have content like this.
+#
+#   <?xml version="1.0" encoding="UTF-8"?>
+#   <encodingDesc xmlns="http://www.tei-c.org/ns/1.0">
+#       <classDecl>
+#           <taxonomy xml:id="keywords">
+#               <category xml:id="keyword_1">
+#                   <catDesc>Book Type</catDesc>
+#               <category xml:id="keyword_1.2">
+#                   <catDesc>Accounts</catDesc>
+#               </category>
+#               <!-- ... etc. -->
+#           </taxonomy>
+#       </classDecl>
+#   </encodingDesc>
+#
+BIBLIO_PHILLY_KEYWORDS_DIR = os.path.join(PROJECT_PATH, 'vendor', 'bibliophilly-keywords')
 
 TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'), )
 
@@ -242,7 +261,7 @@ PREPARATION_METHODS = [
         'description': "Uses metadata scraped from Penn in Hand to build metadata for the object. Requires bibid.txt file containing the object's BibID",
         'name': 'Penn in Hand Prep',
         'package_validation': {
-            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt'],
+            'valid_names': ['*.tif', 'bibid.txt', 'holdingid.txt', 'keywords.txt'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.tif', 'bibid.txt'],
         },
@@ -252,11 +271,12 @@ PREPARATION_METHODS = [
                 'pih_host': 'mdproc.library.upenn.edu:9292',
                 'pih_path': '/records/{0}/create?format=openn',
                 'xsl': os.path.join(SITE_ROOT, 'xsl/pih2tei.xsl'),
+                'encoding_desc': os.path.join(BIBLIO_PHILLY_KEYWORDS_DIR, 'bibliophilly-keywords.xml'),
             },
         },
     },
     {
-        'tag': 'mmw',
+        'tag': 'pagesxlsx',
         'description': "Uses metadata scraped from MARC XML and extracts metadata from a spreadsheet to build metadata for the object. Requires bibid.txt or description.xml file and page.xlsx file.",
         'name': 'Manuscripts of the Muslim World Prep',
         'package_validation': {
@@ -280,7 +300,7 @@ PREPARATION_METHODS = [
         'description': "Extracts metadata from PACSCL Diaries spreadsheet to build metadata for the object. Requires valid openn_metadata.xslx file.",
         'name': 'PACSCL Diaries Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.xlsx'],
         },
@@ -301,12 +321,12 @@ PREPARATION_METHODS = [
             object. Requires valid openn_metadata.xslx file.""",
         'name': 'Biblio Philly Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.xlsx'],
         },
         'before_scripts': [
-            [os.path.join(SITE_ROOT, '..', 'scripts', 'get-bibliophilly-keywords.sh')]
+            [os.path.join(SITE_ROOT, '..', 'scripts', 'get-bibliophilly-keywords.sh'), BIBLIO_PHILLY_KEYWORDS_DIR]
         ],
         'prep_class': {
             'class_name': 'openn.prep.spreadsheet_prep.SpreadsheetPrep',
@@ -316,6 +336,7 @@ PREPARATION_METHODS = [
                 },
                 'config_json': os.path.join(SITE_ROOT, 'bibliophilly.json'),
                 'xsl': os.path.join(SITE_ROOT, 'xsl/bp_spreadsheet_xml2tei.xsl'),
+                'encoding_desc': os.path.join(BIBLIO_PHILLY_KEYWORDS_DIR, 'bibliophilly-keywords.xml'),
             },
         },
     },
@@ -325,7 +346,7 @@ PREPARATION_METHODS = [
             object for CLIR congregations grant. Requires valid openn_metadata.xslx file.""",
         'name': 'CLIR Congregations Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*'],
             'required_names': ['*.xlsx'],
         },
@@ -346,7 +367,7 @@ PREPARATION_METHODS = [
             object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
         'name': 'Genizah Prep',
         'package_validation': {
-            'valid_names': ['*.tif', '*.jpg', '*.xlsx'],
+            'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
             'invalid_names': ['CaptureOne', 'Output', '*[()]*', '.DS_Store'],
             'required_names': ['*.xlsx'],
         },
@@ -575,7 +596,7 @@ scope, importance and interest.""",
             'tag': 'christchurch',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Christ Church',
+            'name': 'Christ Church Philadelphia',
             'blurb': """Founded in 1695, Christ Church was the first Anglican church to be
 established in Pennsylvania. This fulfilled the provision outlined by
 King Charles II in the charter he granted to William Penn in 1681
@@ -1034,6 +1055,35 @@ with the larger community of scholars and independent researchers.""",
             'include_file': 'TempleUniversity.html',
         },
         {
+            'tag': 'villanova',
+            'name': 'Villanova University Libraries, Special Collections',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Villanova University Special Collections houses approximately 15,000
+items. Some of these items are rare or unique and most require special
+handling and preservation. Collections include Augustiniana, the DiOrio
+Theater collection, European imprints to 1800, the Hubbard collection,
+incunabula, limited editions, the McGarrity Collection, manuscripts, the
+Mendel Collection, North American imprints to 1864, the Reap World War
+II collection, the Sherman Thackara collection and Villanovana.""",
+            'include_file': 'VillanovaUniversity.html',
+        },
+        {
+            'tag': 'fandm',
+            'name': 'Franklin & Marshall College Library, Archives & Special Collections',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The Archives & Special Collections at Franklin & Marshall College
+Library organizes, preserves, and promotes the visual and written record
+of the college, faculty and student scholarship, and the digital and
+special collections of the library. Collections include German-American
+imprints, manuscripts and rare books, posters, maps, prints, newspapers
+and photographs, as well as the permanent historical record of Franklin
+& Marshall College and its related institutions: Franklin College,
+Marshall College, and Franklin and Marshall Academy.""",
+            'include_file': 'FranklinMarshallCollege.html',
+        },
+        {
             'tag': 'rosenbach',
             'name': 'Free Library of Philadelphia, The Rosenbach',
             'metadata_type': 'TEI',
@@ -1061,6 +1111,26 @@ PREP_CONFIGS = {
         "image_types": ['*.tif'],
         'repository_prep': {
             'tag': 'pih',
+        },
+        'rights': {
+            'image_rights': 'PD',
+            'metadata_rights': 'CC-BY-40'
+        },
+    },
+    'penn-pagesxlsx': {
+        'repository': {
+            'tag': 'pennmss'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'pagesxlsx',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                ]
+            },
         },
         'rights': {
             'image_rights': 'PD',
@@ -1354,6 +1424,19 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'pennmuseum-bphil': {
+        'repository': {
+            'tag': 'pennmuseum'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'CC-BY-SA-20',
+            'metadata_rights': 'CC-BY-40',
+        }
+    },
     'brynmawr-bphil': {
         'repository': {
             'tag': 'brynmawr'
@@ -1399,6 +1482,34 @@ PREP_CONFIGS = {
     'temple-bphil': {
         'repository': {
             'tag': 'temple'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'villanova-bphil': {
+        'repository': {
+            'tag': 'villanova'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'fandm-bphil': {
+        'repository': {
+            'tag': 'fandm'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
@@ -1555,7 +1666,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1577,7 +1688,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1599,7 +1710,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1619,7 +1730,7 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1633,13 +1744,33 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'pennmuseum-mmw': {
+        'repository': {
+            'tag': 'pennmuseum'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'pagesxlsx',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                ]
+            },
+        },
+        'rights': {
+            'image_rights': 'CC-BY-SA-20',
+            'metadata_rights': 'CC-BY-40',
+        }
+    },
     'burke-mmw': {
         'repository': {
             'tag': 'burke'
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
-            'tag': 'mmw',
+            'tag': 'pagesxlsx',
             'params': {
                 'required_xpaths': [
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
@@ -1771,7 +1902,7 @@ diary volumes.""",
 manuscripts and 827 paintings from the Islamicate world broadly
 construed. Together these holdings represent in great breadth the
 flourishing intellectual and cultural heritage of Muslim lands from 1000
-to 1900, coving mathematics, astrology, history, law, literature, as
+to 1900, covering mathematics, astrology, history, law, literature, as
 well as the Qur'an and Hadith. The bulk of the collection consists of
 manuscripts in Arabic and Persian, along with examples of Coptic,
 Samaritan, Syriac, Turkish, and Berber. The primary partners are

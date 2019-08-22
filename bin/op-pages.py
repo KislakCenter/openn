@@ -37,6 +37,9 @@ from openn.csv.curated_collection_contents_csv import CuratedCollectionContentsC
 
 logger = logging.getLogger(__name__)
 
+exception_count = 0
+EXCEPTION_CEILING = 3
+
 def cmd():
     return os.path.basename(__file__)
 
@@ -68,15 +71,7 @@ def readme_files():
 def setup_logger(logger):
     log_format = '%(asctime)s - %(name)-15s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.DEBUG, format=log_format, stream=sys.stdout)
-    # ch = logging.StreamHandler(sys.stdout)
-    # ch.setLevel(logging.DEBUG)
-    # formatter = logging.Formatter('%(asctime)s - %(name)-15s - %(levelname)s - %(message)s')
-    # ch.setFormatter(formatter)
-    # logging.getLogger().addHandler(ch)
     logger.setLevel(logging.DEBUG)
-    # logging.getLogger().setLevel(logging.DEBUG)
-    # global logger
-    # logger = logging.getLogger(__name__)
     logging.debug("We're debugging!")
 
 def update_online(doc):
@@ -89,18 +84,9 @@ def update_online(doc):
         logging.info("Is document online? %-15s %-20s %s" % (
             doc.repository.tag, doc.base_dir, str(doc.is_online)))
 
-
 def update_online_statuses():
     for doc in opfunc.queryset_iterator(Document.objects.all()):
         update_online(doc)
-        # if doc.is_online:
-        #     pass
-        # else:
-        #     if doc.is_live():
-        #         doc.is_online = True
-        #         doc.save()
-        # logging.info("Is document online? %-15s %-20s %s" % (
-        #     doc.repository.tag, doc.base_dir, str(doc.is_online)))
 
 def is_makeable(page, opts):
     make_page = False
@@ -133,7 +119,7 @@ def make_toc_html(repowrap, opts):
         repowrap, toc_dir=settings.TOC_DIR,
         **{'template_name': 'TableOfContents.html', 'outdir': site_dir()})
 
-    # TODO: have TOC is_needed() check the include file; fails to make
+    # TODO: change TOC is_needed() to check the include file; fails to make
     #       now b/c TableOfContents.html seldom changes
     # For now, always force, and make them all:
     opts.force = True
@@ -163,8 +149,6 @@ def make_curated_collections_html(opts):
     except TemplateDoesNotExist as ex:
         msg = "Could not find template: %s" % (settings.CURATED_COLLECTIONS_TEMPLATE,)
         raise OPennException(msg)
-
-
 
 def make_readme_html(readme, opts):
     try:
@@ -277,6 +261,12 @@ def browse(opts):
             document(docid, opts)
         except OPennException:
             pass
+        except Exception:
+            if exception_count <= EXCEPTION_CEILING:
+                pass
+            else:
+                logging.error("Maximum number of document exceptions reached: %i", exception_count)
+                raise
 
 def repositories_html(opts):
     """ Generate Repositories.html """
@@ -479,22 +469,6 @@ def check_options(opts):
         removed_vals[key] = opt_dict[key]
         del opt_dict[key]
 
-    # # remove dry-run
-    # dry_run = opt_dict['dry_run']
-    # opt_dict['dry_run'] = False
-    # # remove force
-    # force = opt_dict['force']
-    # opt_dict['force'] = False
-    # # remove reallyforce
-    # reallyforce = opt_dict['reallyforce']
-    # opt_dict['reallyforce'] = False
-    # # remove show-options
-    # show_options = opt_dict['show_options']
-    # opt_dict['show_options'] = False
-    # # remove verbose
-    # verbose = opt_dict['verbose']
-    # opt_dict['verbose'] = False
-
     # collect used options
     temp_os = dict((k,opt_dict[k]) for k in opt_dict if opt_dict[k])
 
@@ -503,10 +477,6 @@ def check_options(opts):
         raise OPennException("More than one option selected: %s" % (s,))
 
     temp_os = temp_os.update(removed_vals)
-    # temp_os['dry_run'] = dry_run
-    # temp_os['force'] = force
-    # temp_os['show_options'] = show_options
-    # temp_os['verbose'] = verbose
 
     return temp_os
 

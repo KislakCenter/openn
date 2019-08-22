@@ -51,17 +51,6 @@ def get_prep_config(prep_config_tag):
 
     return prep_config_factory.create_prep_config(prep_config_tag)
 
-def get_keywords(opts):
-    kws = {}
-    if opts.keywords is None:
-        pass
-    else:
-        for pair in opts.keywords.split(':'):
-            k, v = pair.split('=')
-            kws[k] = v
-
-    return kws
-
 def main(cmdline=None):
     """op-prep main
     """
@@ -70,13 +59,16 @@ def main(cmdline=None):
 
     opts, args = parser.parse_args(cmdline)
 
-    if len(args) != 2:
+    if len(args) < 2 or len(args) > 3:
         parser.error('Wrong number of arguments')
 
     # Prep config is required, b/c only some prep methods implement
     # TEI regeneration.
     prep_config_tag = args[0]
     doc_id          = args[1]
+    metadata_dir    = None
+    if len(args) > 2:
+        metadata_dir = args[2]
 
     setup_logger()
     logger = logging.getLogger(__name__)
@@ -89,85 +81,128 @@ def main(cmdline=None):
             raise OPennException("Output directory already exists: %s" % (output_dir))
         else:
             os.mkdir(output_dir)
-        kwargs = get_keywords(opts)
+
+        kwargs = {}
+        if metadata_dir is not None:
+            if os.path.exists(metadata_dir):
+                kwargs['METADATA_DIR'] = metadata_dir
+            else:
+                raise OPennException("Cannot find METADATA_DIR: '%s'" % (metadata_dir,))
 
         OPennPrep().update_tei(output_dir, doc, prep_config, **kwargs)
     except OPennException as ex:
+        if opts.verbose:
+            opfunc.print_exc()
         status = 4
         parser.error(str(ex))
 
     return status
 
-
 def make_parser():
     """op-update-tei option parser"""
 
-    usage = "%prog [OPTIONS] PREP_CONFIG DOCUMENT_ID"
+    bold = "\033[1m"
+    normal_text = "\033[00m"
+    usage = "%prog [OPTIONS] PREP_CONFIG DOCUMENT_ID [METADATA_DIR]"
     epilog = """
 
-For a package previously completed document with DOCUMENT_ID using
-PREP_CONFIG, add new TEI file to a new document base directory, like
-'mscodex123' located in OUT_DIR [default:.]; OUTPUT_DIR can be changed with
-the '--out-dir' option.
+For a previously completed document with DOCUMENT_ID using PREP_CONFIG, add a
+new TEI file to a new document base directory, like 'mscodex123'. METADATA_DIR
+contains any files needed by the TEI regeneraration process. Below are
+examples for different prep methods and files used from the METADATA_DIR.
+
+By default the new directory is created in the current directory '.', but this
+may be changed with the OUT_DIR option.
+
+NOTE: The script will not run if the target directory already exists in
+OUT_DIR.
 
 For example, note the following, for a document with ID 4221 and base
 directory 'lewis_e_018':
 
-   $ {0} -k XLSX=lewis_e_018_metadata.xlsx flp-bphil 4221
+   $ {0} flp-bphil 4221 \
+        /mnt/sceti-completed-2/Temporary_sceti-completed/BiblioPhilly/FLP/lewis_e_018
 
-This will create a new directory 'lewis_e_018' in the current directory, as
-well as the contained 'data' directory, and the TEI file:
+This will create a new directory 'lewis_e_018' in the current directory, copy
+the `openn_metadata.xlsx` file from the METADATA_DIR to the new 'lewis_e_018`
+and regenerate the TEI file:
 
    ./lewis_e_018/data/lewis_e_018_TEI.xml
 
-Note: script will not run if './lewis_e_018' already exists.
+{1}METADATA_DIR PIH FOR PREP METHOD (i.e., pih){2}
 
-For spreadsheet-based TEI, the 'XLSX' keyword must be used:
+METADATA_DIR is not required unless the mansucript has multiple holdings;
+however, if BiblioPhilly keywords should be added to the TEI, METADATA_DIR
+should be provided and contain `keywords.txt`.
 
-    $ {0} -k XLSX=path/to/file.xlsx flp-bphil 4732
+These are those manuscripts for which library systems have descriptive MARC
+and structural metadata. Those manuscripts that had SCETI-Admin records or
+are now in Colenda with page-level metdata.
 
-For Penn in Hand, use the 'HOLDING_ID' keyword if the BibID is associated with
-more than one call number:
+Under certain circumstances the METADATA_DIR is required by the application or
+the manuscript type.
 
-    $ {0} -k HOLDING_ID=22315803310003681 penn-pih 459
+bibid.txt [ignored]
+---
+The BibID is taken from the TEI data stored in the database. A
+`bibid.txt` file in the METADATA_DIR will be ignored by this script.
 
-Updating the TEI for Manuscripts of the Muslim Word (mmw), requires at least two
-keywords and may require trhee. The 'PAGES_XLSX' keyword must be used:
+holdingid.txt [conditionally required]
+---
+Conditionally required. For records with more than one holdings record,
+METADATA_DIR must be supplied and contain  a `holdingid.txt` file contatining
+the correct holdings ID.
 
-    PAGES_XLSX    path to the page-level metdata spreadsheet
+keywords.txt [optional; should be used for Penn MedRen mss]
+---
+If keywords should be added to the TEI (for inclusion in the
+BiblioPhilly interface), METADATA_DIR myst be supplied and contain a
+`keywords.txt` file.
 
-For MMW non-Penn Libraries manuscripts, the 'MARC_XML' keyword must be used:
+{1}METADATA_DIR FOR SPREADSHEET PREP METHODS (e.g., diaires, bphil){2}
 
-    MARC_XML     path to the MARC XML for the manuscript
+METADATA_DIR is required.
 
-Example:
+openn_metadata.xlsx [required]
+---
+When metadata comes solely from a spreadsheet (diaires and bphil prep
+methods), METADATA_DIR must be provided and contain a file name
+`openn_metadata.xlsx`.
 
-    $ {0} -k PAGES_XLSX=path/to/file.xslx:MARC_XML=path/to/file.xml columbia-mmw 6850
+{1}METADATA_DIR FOR PAGES.XLSX/MARC PREP METHODS (e.g., mmw){2}
 
-For MMW Penn Libraries manuscripts, the 'HOLDING_ID' keyword may be required:
+METADATA_DIR must be supplied.
 
-    HOLDING_ID  the manuscript's holding ID (for manuscripts that have more
-                than one holding for each BibID)
+METADATA_DIR contents:
 
-Examples:
+bibid.txt [Penn MSS-only, ignored]
+---
+When relevant, the BibID is taken from the TEI data stored in the database. A
+`bibid.txt` file in the METADATA_DIR will be ignored by this script.
 
-    $ {0} -k PAGES_XLSX=path/to/file.xslx penn-mmw 7081
+holdingid.txt [Penn MSS-only, conditionally required]
+---
+If a Penn manuscript's MARC record lists more than one holding, this file must
+be supplied.
 
-    $ {0} -k  PAGES_XLSX=path/to/file.xslx:HOLDING_ID=22315803310003681 penn-mmw 7083
+marc.xml [required for non-Penn MSS]
+---
+Non-Penn manuscripts added by this method must have an accompanying 'marc.xml'
+file.
 
+pages.xlsx [required]
+---
+All manuscripts must have page-level metadata in a 'pages.xlsx' file.
 
-
-""".format(os.path.basename(sys.argv[0]))
-
-    # usage = "%prog COLLECTION SOURCE_DIR"
+""".format(os.path.basename(sys.argv[0]), bold, normal_text)
 
     parser = OpOptParser(usage=usage,epilog=epilog)
     parser.add_option('-o', '--out-dir', dest='out_dir', default='.',
                       help="Output TEI file to OUT_DIR [default=%default]",
                       metavar="OUT_DIR")
-    parser.add_option('-k', '--keywords', dest='keywords',
-                      help="""Optional colon-separated name-value pairs as required by TEI update
-procedure (e.g. '-k "n1=val1:n2=val two"')""")
+
+    parser.add_option('-v', '--verbose', dest='verbose', default=False,
+                      action='store_true', help='Print out lots of info, primarily stack traces')
 
     return parser
 

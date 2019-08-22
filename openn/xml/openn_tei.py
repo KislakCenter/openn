@@ -344,6 +344,19 @@ class OPennTEI(XMLWhatsit):
     def signatures(self):
         return self._get_text('//t:supportDesc/t:collation/t:p/t:signatures')
 
+    def sync_changes(self):
+        """
+        When sub elements are added to the working tree (here `self.xml`), they aren't seen by
+        xpath though they are visible when the tree is serialized. There may be a better way
+        to do this, but I'm using this hack. It gets the XML as a string and reparses it.
+        """
+        data = self.to_string()
+        parser = etree.XMLParser(recover=True, encoding='utf-8', remove_blank_text=True)
+        if isinstance(data, unicode):
+            self.xml = etree.parse(StringIO(data.encode('utf-8')), parser)
+        else:
+            self.xml = etree.fromstring(data, parser)
+
     def validate(self):
         """Ensure that required attributes are present.  There are two: title
         and call_number.
@@ -369,6 +382,59 @@ class OPennTEI(XMLWhatsit):
         s = self.n_open_paren_re.sub('(', s)
         s = self.n_close_paren_re.sub(')', s)
         return s.strip()
+
+    def add_encoding_desc(self, xml_string):
+        """Add an encodingDesc to self. `xml_string` should be the entire text of the encodingDesc:
+
+        <encodingDesc xmlns="http://www.tei-c.org/ns/1.0">
+            <classDecl>
+                <taxonomy xml:id="keywords">
+                    <category xml:id="keyword_1">
+                        <catDesc>Book Type</catDesc>
+                    <category xml:id="keyword_1.2">
+                        <catDesc>Accounts</catDesc>
+                    </category>
+                    <!-- ... etc. -->
+                </taxonomy>
+            </classDecl>
+        </encodingDesc>
+        """
+        # remove any existing encodingDesc
+        for ed in self.xml.xpath('/t:TEI/t:teiHeader/t:encodingDesc', namespaces=self.ns):
+            ed.getparent().remove(ed)
+        # encodingDesc follows fileDesc
+        file_desc = self.xml.find('.//t:teiHeader/t:fileDesc', namespaces=self.ns)
+        parser = etree.XMLParser(recover=True, encoding='utf-8', remove_blank_text=True)
+        encoding_desc = etree.fromstring(xml_string, parser)
+        file_desc.addnext(encoding_desc)
+        self.sync_changes()
+
+    def add_keywords(self, terms=[]):
+        """
+        Add keywords from the list terms to keywords[@n="keywords"].
+        """
+        if self.has_node('//t:teiHeader/t:profileDesc'):
+            profile_desc = self._get_nodes('//t:teiHeader/t:profileDesc')[0]
+        else:
+            previous = self.xml.find('.//t:teiHeader/t:encodingDesc', namespaces=self.ns)
+            if previous is None:
+                previous = self.xml.find('.//t:teiHeader/t:fileDesc', namespaces=self.ns)
+                profile_desc = etree.SubElement(previous, 'profileDesc')
+
+        if self.has_node('//t:teiHeader/t:profileDesc/t:textClass'):
+            text_class = self._get_nodes('//t:teiHeader/t:profileDesc/t:textClass')[0]
+        else:
+            text_class = etree.SubElement(profile_desc, 'textClass')
+
+        if self.has_node('//t:teiHeader/t:profileDesc/t:textClass/t:keywords[@n="keywords"]'):
+            keywords = self._get_nodes('//t:teiHeader/t:profileDesc/t:textClass/t:keywords[@n="keywords"]')[0]
+        else:
+            keywords = etree.SubElement(text_class, 'keywords', n='keywords')
+
+        for term in terms:
+            t = etree.SubElement(keywords, 'term')
+            t.text = term
+        self.sync_changes()
 
     def ms_items(self, n, xml_id=None):
         nodes = []
@@ -503,3 +569,4 @@ class OPennTEI(XMLWhatsit):
                 graphic = etree.Element('graphic', **attrs)
                 surface.append(graphic)
             facs.append(surface)
+        self.sync_changes()

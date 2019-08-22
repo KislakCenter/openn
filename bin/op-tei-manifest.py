@@ -58,13 +58,15 @@ def copy_current_manifest(doc, source_dir):
     site_manifest = os.path.join(os.environ['OPENN_SITE_DIR'], doc.manifest_path)
     if os.path.exists(site_manifest):
         logger.info("Copying manifest from %s", site_manifest)
-        shutil.copy(site_manifest, source_dir)
+        dest = os.path.join(source_dir, os.path.basename(site_manifest))
+        shutil.copyfile(site_manifest, dest)
         return
 
     staged_manifest = os.path.join(os.environ['OPENN_STAGING_DIR'], doc.manifest_path)
     if os.path.exists(staged_manifest):
         logger.info("Copying manifest from %s", staged_manifest)
-        shutil.copy(staged_manifest, source_dir)
+        dest = os.path.join(source_dir, os.path.basename(staged_manifest))
+        shutil.copyfile(staged_manifest, dest)
         return
 
     url = "http://%s/%s" % (settings.OPENN_HOST, doc.manifest_path)
@@ -134,7 +136,7 @@ def stage_new(doc, source_dir):
             logger.info("Found STAGED dir; copying %s to %s", source_dir, staged_dir)
         else:
             logger.info("Copying %s to %s", source_dir, staged_dir)
-        print dir_util.copy_tree(source_dir, staged_dir)
+        print dir_util.copy_tree(source_dir, staged_dir, preserve_times=0, preserve_mode=0)
 
 def update_manifest(doc, source_dir):
     copy_current_manifest(doc, source_dir)

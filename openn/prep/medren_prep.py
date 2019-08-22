@@ -27,6 +27,7 @@ class MedrenPrep(RepositoryPrep):
         65: 'MEDREN_LICENCE_TYPES_SAVED'
     })
 
+
     BLANK_RE = re.compile('blank', re.IGNORECASE)
     NEW_BIBID_RE = re.compile('^99\d+3503681$')
     DEFAULT_DOCUMENT_IMAGE_PATTERNS = [ 'front_?\d{4}\w*\.tif$', 'body_?\d{4}\w*\.tif$', 'back_?\d{4}\w*\.tif$' ]
@@ -99,8 +100,6 @@ class MedrenPrep(RepositoryPrep):
     @property
     def url_path(self):
         return self.pih_path
-
-    # TODO: Add handling for holdingid.txt and holding_id
 
     def holdingid_filename(self):
         if not os.path.exists(self.source_dir):
@@ -323,34 +322,28 @@ class MedrenPrep(RepositoryPrep):
         return out
 
     def regen_partial_tei(self, doc, **kwargs):
-        holding_id = None
+        data_dir = kwargs.get('METADATA_DIR', None)
+        if data_dir:
+            metadata_files = ['keywords.txt', 'holdingid.txt']
 
-        xsl_command = ['op-gen-tei']
-
-        if kwargs.get('HOLDING_ID'):
-            xsl_command.append('-p HOLDING_ID=%s' (str(kwargs['HOLDING_ID']),))
+            for file in metadata_files:
+                full_path = os.path.abspath(os.path.join(data_dir, file))
+                if os.path.exists(full_path):
+                    dest = os.path.abspath(os.path.join(self.source_dir, file))
+                    shutil.copyfile(full_path, dest)
 
         tei = OPennTEI(doc.tei_xml)
         bibid = tei.bibid
         if bibid is None:
             raise OPennException("Whoah now. bibid is none. That ain't right.")
-        if not self.NEW_BIBID_RE.match(bibid):
+        if len(bibid) < 8:
             bibid = '99%s3503681' % (str(bibid),)
         self.write_xml(bibid,self.pih_filename)
-        for key in kwargs:
-            key_value = '%s="%s"' % (key, kwargs[key])
-            xsl_command.append(key_value)
-        xsl_command.append(self.pih_filename)
-        xsl_command.append(self.xsl)
 
-        p = subprocess.Popen(xsl_command, stderr=subprocess.PIPE,
-            stdout=subprocess.PIPE)
-        out, err = p.communicate()
-        if p.returncode != 0:
-            raise OPennException("TEI Generation failed: %s" % err)
-
-        self.write_partial_tei(self.source_dir, out)
+        partial_tei = self.build_partial_tei()
+        self.write_partial_tei(self.source_dir, partial_tei)
         self.add_removal(self.pih_filename)
+        self.add_removal(self.keywords_filename())
 
     def _do_prep_dir(self):
         if self.get_status() > self.REPOSITORY_PREP_MD_VALIDATED:
@@ -397,7 +390,7 @@ class MedrenPrep(RepositoryPrep):
             self.logger.warning("[%s] Partial TEI already written", self.basedir)
         else:
             self.logger.info("[%s] Writing partial TEI", self.basedir)
-            partial_tei_xml = self.gen_partial_tei()
+            partial_tei_xml = self.build_partial_tei()
             self.write_partial_tei(self.source_dir, partial_tei_xml)
             self.validate_partial_tei()
             self.write_status(self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN)
@@ -406,4 +399,5 @@ class MedrenPrep(RepositoryPrep):
         self.add_removal(self.pih_filename)
         self.add_removal(self.bibid_filename())
         self.add_removal(self.holdingid_filename())
+        self.add_removal(self.keywords_filename())
         self.add_removal(os.path.join(self.source_dir, 'sha1manifest.txt'))

@@ -11,8 +11,8 @@
         </xd:desc>
     </xd:doc>
     <xsl:output indent="yes"/>
-    <xsl:param name="project_path" required="yes"/>
-    <xsl:variable name="bibliophilly-keywords-xml" select="concat($project_path,'/vendor/bibliophilly-keywords/bibliophilly-keywords.xml')"/>
+    <!--<xsl:param name="project_path" required="yes"/>
+    <xsl:variable name="bibliophilly-keywords-xml" select="concat($project_path,'/vendor/bibliophilly-keywords/bibliophilly-keywords.xml')"/>-->
     <xsl:variable name="repository">
         <xsl:call-template name="clean-up-text">
             <xsl:with-param name="some-text"
@@ -401,10 +401,10 @@
                         </msDesc>
                     </sourceDesc>
                 </fileDesc>
-              <xsl:if test="//subjects_keywords">
-                <xsl:copy-of select="document($bibliophilly-keywords-xml)"/>
+<!--              <xsl:if test="//subjects_keywords">
+                <!-\-<xsl:copy-of select="document($bibliophilly-keywords-xml)"/>-\->
               </xsl:if>
-              <profileDesc>
+-->              <profileDesc>
                 <textClass>
                   <xsl:if test="//subjects_keywords">
                     <keywords n="keywords">

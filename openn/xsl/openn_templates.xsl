@@ -110,9 +110,9 @@
   -->
   <xsl:template name="locate880" as="node()">
     <xsl:param name="datafield"/>
-    <!--    From '880-01' grab the hyphen and the next 2 characters; i.e., '-01' -->
-    <xsl:variable name="index880" select="substring(./marc:subfield[@code='6'], 4, 3)"/>
-    <!--    Glue the datafield tag (i.e., '100') and the $index880 from above to give '100-01' -->
+    <!--    From '880-01' grab the hyphen and the next 2 characters; e.g., '-01' -->
+    <xsl:variable name="index880" select="substring($datafield/marc:subfield[@code='6'], 4, 3)"/>
+    <!--    Glue the datafield tag (e.g., '100') and the $index880 from above to give the search value; e.g., '100-01' -->
     <xsl:variable name="searchValue" select="concat($datafield/@tag, $index880)"/>
     <!--    Find the datafield[@tag=880] with subfield @code=6 that begins with $searchValue -->
     <xsl:copy-of select="$datafield/parent::marc:record/marc:datafield[@tag='880' and starts-with(./marc:subfield[@code='6']/text(), $searchValue)]"/>
