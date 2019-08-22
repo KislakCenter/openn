@@ -622,31 +622,76 @@ finding aid is available on-site.""",
             'include_file': 'ChristChurch.html',
         },
         {
+            'tag': 'mikvehisrael',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Congregation Mikveh Israel',
+            'blurb': """Congregation Mikveh Israel (officially Kahal Kadosh Mikveh Israel) is
+also known as the "Synagogue of the American Revolution." The oldest
+Congregation in Philadelphia, Mikveh Israel was informally established
+by religious-minded Jews in British America during the 1740s, and has
+become the second-oldest surviving Congregation in the United States. In
+Pennsylvania, and Philadelphia in particular, Jews found an environment
+of tolerance for their religious beliefs and traditions made possible by
+William Penn's "great experiment." By 1775 a community of 300 strong
+existed in a city of 35,000. Among items in the archives of Congregation
+Mikveh Israel are letters written by George Washington and Abraham
+Lincoln, and a public subscription list for the 1782 building signed by
+Benjamin Franklin, David Rittenhouse, and other civic leaders.""",
+            'include_file': 'MikvehIsrael.html',
+        },
+        {
+            'tag': 'americanbaptist',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'American Baptist Historical Society',
+            'blurb': """As the oldest Baptist historical organization (founded in 1835), the
+American Baptist Historical Society serves as guardian of the largest
+and most diverse collection of Baptist historical material worldwide,
+including the archives of the American Baptist Churches, USA, the
+American Baptist Home Mission Societies, the American Baptist Foreign
+Mission Society/International Ministries, as well as other affiliated
+agencies and some pan-Baptist organizations. The Society holds
+unparalleled resources on African American Baptists, the modern
+missionary movement, women's work, and the social gospel movement. Its
+manuscript collections include more than 1,200 collections of personal
+papers of missionaries, pastors, and other notable Baptists. The
+Society's Samuel Colgate Baptist Historical Library comprises over
+40,000 volumes.""",
+            'include_file': 'AmericanBaptistHistoricalSociety.html',
+        },
+        {
+            'tag': 'gloriadei',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Gloria Dei Church',
+            'blurb': '''In the 17th century Swedish settlers landed on the banks of the Delaware
+River establishing churches in Wilmington, Tinicum and by the mid-17th
+century in Wicaco outside of what would become Philadelphia. That latter
+church, Gloria Dei, is Pennsylvania's oldest congregation. The existing
+church was built between 1698 and 1700 and originally served a Swedish
+Lutheran congregation. The church today is part of the Episcopal Diocese
+and a national historic site. Archival records scanned as part of this
+project include vestry minutes, registers, financial correspondence
+between the original Swedish parishes and the churches in Philadelphia,
+Delaware and New Jersey as well as their "miscellaneous records."''',
+            'include_file': 'GloriaDeiChurch.html',
+        },
+        {
             'tag': 'episcopaldiocese',
             'metadata_type': 'TEI',
             'live': True,
             'name': 'Episcopal Diocese of Pennsylvania Archives',
-            'blurb': """After the American Revolution, Anglicans became Episcopalians. Led by
-the Reverend William White, they organized the Episcopal Diocese of
-Pennsylvania in 1784. White became its first bishop three years later.
-Initially, the Diocese spanned a vast area, extending from Philadelphia
-to Pittsburgh, encompassing the whole of Pennsylvania. By 1910 there
-were five Episcopal dioceses in Pennsylvania, and the Diocese of
-Pennsylvania consisted of Philadelphia, Bucks, Montgomery, Chester, and
-Delaware counties. The Episcopal Diocese of Pennsylvania's Archives are
-home to a vast array of material relating to the people and parishes
-comprising the Diocese as well as the Diocese itself. Within its stacks
-are material relating to parishes that have closed, the registers, the
-vestry minutes as well as documents making up the life of these churches
-which are no longer with us. It also holds a large volume of histories,
-both at the parish level comprising both active and closed parishes, as
-well as histories of the diocese and its various organizations. The
-Archives also holds a large volume of material related to those
-committed to running the Diocese. There are records from the various
-Bishops, Standing Committee and General Conventions, to better
-understand the direction we have come from. There are also various print
-runs of the publications the Diocese has put out as well including a
-long run of the Church News.""",
+            'blurb': """Following the American Revolution, American Anglicans led by the
+Reverend William White came together to form the Episcopal Diocese of
+Pennsylvania which once covered the entire Commonwealth. In 1865 and
+1871 new dioceses were formed out of the Diocese of Pennsylvania. Today
+the Diocese of Pennsylvania covers Philadelphia, Bucks, Montgomery,
+Chester and Delaware counties. The Archives are the official repository
+for records of the administration of the Diocese, parishes that have
+closed and histories of the Diocese, spanning the period from 1784 to
+the present. Records included in this project are the founding minutes
+of the Diocese and selected records of St. Paul's Episcopal Church.""",
             'include_file': 'EpiscopalDiocese.html',
         },
         {
@@ -654,23 +699,18 @@ long run of the Church News.""",
             'metadata_type': 'TEI',
             'live': True,
             'name': 'Presbyterian Historical Society',
-            'blurb': """Organized in 1852, the Presbyterian Historical Society is the oldest
-denominational archives in the United States and serves as the national
-archives for the Presbyterian Church (U.S.A.) and its predecessor
-denominations. PHS exists to collect, preserve, and share the story of
-the American Presbyterian and Reformed experience with Presbyterians,
-the scholarly community, and the general public. The society's holdings
-include more than 250,000 titles reflecting the history of the
-Presbyterian tradition in America and over 30,000 cubic feet of official
-records and personal papers. These include records of congregations,
-presbyteries, synods, and General Assembly agencies of the current and
-some predecessor Presbyterian and Reformed denominations in America.
-These records are supplemented by the personal papers (including
-correspondence, diaries, and photographs) of significant Presbyterians
-and ecumenists, with a particular emphasis on mission history in this
-country and abroad. The society also serves as the archives for
-ecumenical organizations including the Federal and National Council of
-Churches, the American Sunday School Union, and Religious News Service.""",
+            'blurb': """Organized in 1852, the Presbyterian Historical Society in Philadelphia
+is the oldest denominational archives in the United States. PHS serves
+as the national archives of the Presbyterian Church (U.S.A.) and exists
+to collect, preserve, and share the story of the American Presbyterian
+and Reformed experience with Presbyterians, the scholarly community, and
+the general public. The society's holdings include over 30,000 cubic
+feet of records from congregations, presbyteries, and synods from across
+the country, and from national agencies charged with overseeing
+Presbyterian mission work both in the United States and abroad. The PHS
+collection also includes personal papers and a library of over 250,000
+titles germane to Reformed history from the sixteenth century to the
+present.""",
             'include_file': 'PresbyterianHistoricalSociety.html',
         },
         {
@@ -1621,6 +1661,48 @@ PREP_CONFIGS = {
     'cchurch-congs': {
         'repository': {
             'tag': 'christchurch'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'mikvehisrael-congs': {
+        'repository': {
+            'tag': 'mikvehisrael'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'gloriadei-congs': {
+        'repository': {
+            'tag': 'gloriadei'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'americanbaptist-congs': {
+        'repository': {
+            'tag': 'americanbaptist'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
