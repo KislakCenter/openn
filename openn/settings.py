@@ -665,7 +665,7 @@ Society's Samuel Colgate Baptist Historical Library comprises over
             'metadata_type': 'TEI',
             'live': True,
             'name': 'Gloria Dei Church',
-            'blurb': """In the 17th century Swedish settlers landed on the banks of the Delaware
+            'blurb': '''In the 17th century Swedish settlers landed on the banks of the Delaware
 River establishing churches in Wilmington, Tinicum and by the mid-17th
 century in Wicaco outside of what would become Philadelphia. That latter
 church, Gloria Dei, is Pennsylvania's oldest congregation. The existing
@@ -674,7 +674,7 @@ Lutheran congregation. The church today is part of the Episcopal Diocese
 and a national historic site. Archival records scanned as part of this
 project include vestry minutes, registers, financial correspondence
 between the original Swedish parishes and the churches in Philadelphia,
-Delaware and New Jersey as well as their "miscellaneous records."""",
+Delaware and New Jersey as well as their "miscellaneous records."''',
             'include_file': 'GloriaDeiChurch.html',
         },
         {
@@ -704,7 +704,7 @@ is the oldest denominational archives in the United States. PHS serves
 as the national archives of the Presbyterian Church (U.S.A.) and exists
 to collect, preserve, and share the story of the American Presbyterian
 and Reformed experience with Presbyterians, the scholarly community, and
-the general public. The society’s holdings include over 30,000 cubic
+the general public. The society's holdings include over 30,000 cubic
 feet of records from congregations, presbyteries, and synods from across
 the country, and from national agencies charged with overseeing
 Presbyterian mission work both in the United States and abroad. The PHS
