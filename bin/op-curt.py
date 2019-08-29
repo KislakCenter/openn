@@ -28,9 +28,11 @@ from openn.curated.duplicate_membership import DuplicateMembership
 
 # Map some convenient sort by aliases
 SORT_BY_ALIASES = {
-    'id': 'curated_id',
+    'id': 'curated_collection_id',
     'tag': 'tag',
     'name': 'name',
+    'curatedcollection': 'name',
+    'doc_count': 'doc_count',
     'docs': 'doc_count'
 }
 
@@ -297,7 +299,8 @@ def list_curated_collections(args):
     configs = get_configs()
     do_validate_configuration()
     details = get_all_curated_collection_details()
-    details = sorted(details, key=lambda k: k['tag'])
+    sort_by = get_sort_by_field(args.sort_by)
+    details = sorted(details, key=lambda k: k[sort_by])
     print_list(details)
 
 def main(arguments):
@@ -333,7 +336,7 @@ With no arguments, list curated collections."""
         formatter_class=argparse.RawDescriptionHelpFormatter)
     list_parser.set_defaults(func=list_curated_collections)
     sort_by_help = """ Sort curated collections by %(metavar)s; options: tag,
-        name[the default], curated_id (or id)."""
+        name (or curatedcollection), id, docs (or doc_count); [DEFAULT: name]"""
     list_parser.add_argument('-s', '--sort-by', type=str, default='name',
                                 metavar='FIELD', help=sort_by_help)
 
