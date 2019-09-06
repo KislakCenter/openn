@@ -1786,6 +1786,28 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'haverford-mmw': {
+        'repository': {
+            'tag': 'haverford'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'pagesxlsx',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="u"]',
+                    '//marc:datafield[@tag="035"]/marc:subfield[@code="a" and starts-with(., "(NNC)")]',
+                ]
+            },
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'ljs-mmw': {
         'repository': {
             'tag': 'ljs'
