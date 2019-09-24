@@ -94,8 +94,8 @@
           035 $a (PLF)[recordnumber]
           852  ǂb Rare Book Department ǂa Free Library of Philadelphia ǂe Philadelphia ǂu https://know.freelibrary.org/Record/[recordnumber]
       -->
-      <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF)\)')]">
-        <xsl:value-of select="replace(//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF)\)')][1]/text(), '\((NNC|PLF)\)', '')"/>
+      <xsl:when test="//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF|PHC)\)')]">
+        <xsl:value-of select="replace(//marc:datafield[@tag=035]/marc:subfield[@code='a' and matches(., '^\((NNC|PLF|PHC)\)')][1]/text(), '\((NNC|PLF|PHC)\)', '')"/>
       </xsl:when>
     </xsl:choose>
   </xsl:variable>

@@ -1799,7 +1799,7 @@ PREP_CONFIGS = {
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
                     '//marc:datafield[@tag="852"]/marc:subfield[@code="u"]',
-                    '//marc:datafield[@tag="035"]/marc:subfield[@code="a" and starts-with(., "(NNC)")]',
+                    '//marc:datafield[@tag="035"]/marc:subfield[@code="a" and starts-with(., "(PHC)")]',
                 ]
             },
         },
