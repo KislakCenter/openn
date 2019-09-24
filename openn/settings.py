@@ -813,6 +813,20 @@ Pennsylvania religion, natural history, and genealogy.""",
             'include_file': 'StateLibraryOfPennsylvania.html',
         },
         {
+            'tag': 'loc',
+            'name': 'Library of Congress',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """Today's Library of Congress is an unparalleled world resource. The
+enormous size and variety of its collections make it the largest library
+in the world. The collection of more than 168 million items includes
+more than 39 million catalogued books and other print materials in 470
+languages; more than 72 million manuscripts; the largest rare book
+collection in North America; and the world's largest collection of legal
+materials, films, maps, sheet music and sound recordings.""",
+            'include_file': 'LibraryOfCongress.html',
+        },
+        {
             'tag': 'friendshl',
             'name': 'Swarthmore College, Friends Historical Library',
             'metadata_type': 'TEI',
@@ -1453,6 +1467,20 @@ PREP_CONFIGS = {
     'flp-bphil': {
         'repository': {
             'tag': 'flp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'loc-bphil': {
+        'repository': {
+            'tag': 'loc'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
