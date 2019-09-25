@@ -1027,7 +1027,7 @@ illumination.""",
         },
         {
             'tag': 'kislak',
-            'name': 'Jay I. Kislak Collection, University of Miami',
+            'name': 'University of Miami, Jay I. Kislak Collection',
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """Since its arrival in 2018, the Jay I. Kislak Collection of the Early
