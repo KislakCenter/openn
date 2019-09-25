@@ -1027,17 +1027,16 @@ illumination.""",
         },
         {
             'tag': 'kislak',
-            'name': 'Kislak Foundation',
+            'name': 'University of Miami, Jay I. Kislak Collection',
             'metadata_type': 'TEI',
             'live': True,
-            'blurb': """Established in 1984, the Jay I. Kislak Foundation is a private nonprofit
-cultural institution engaged in the collection, conservation, research
-and interpretation of rare books, manuscripts, maps and indigenous art
-and cultural artifacts of the Americas and other parts of the world.
-Kislak collections are rich in primary research materials on the history
-of Florida, the Caribbean and Mesoamerica, with special emphasis on
-native cultures, their contact with Europeans and the colonial period to
-about 1820.""",
+            'blurb': """Since its arrival in 2018, the Jay I. Kislak Collection of the Early
+Americas, Exploration and Navigation has transformed the University of
+Miami and its Libraries. The Kislak Collection at the University of
+Miami includes an assembly of rare books, manuscripts, maps,
+photographs, and artifacts that convey a multifaceted history of the
+Americas, hemispheric cultural encounters, and global exploration
+beginning with Native American cultures and extending to modern times.""",
             'include_file': 'KislakFoundation.html',
         },
         {
