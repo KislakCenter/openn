@@ -46,9 +46,13 @@
   </xsl:variable>
 
   <xsl:variable name="institution">
-    <xsl:call-template name="clean-up-text">
-      <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"/>
-    </xsl:call-template>
+      <xsl:call-template name="chomp-period">
+          <xsl:with-param name="string">
+              <xsl:call-template name="clean-up-text">
+                  <xsl:with-param name="some-text" select="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='a']"/>
+              </xsl:call-template>
+          </xsl:with-param>
+      </xsl:call-template>
   </xsl:variable>
   <xsl:variable name="repository">
     <xsl:call-template name="clean-up-text">
