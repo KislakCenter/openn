@@ -2046,6 +2046,30 @@ on Library and Information Resources.""",
             'live': True,
         },
         {
+            'tag': 'kislakcurated',
+            'name': 'Jay I. Kislak Digital Library of the Americas',
+            'blurb': """Over the course of many decades, Jay I. Kislak (1922-2018) built a
+collection of primary source material - rare books, manuscripts, maps,
+photographs, and artifacts that convey the multifaceted history of the
+Americas, hemispheric cultural encounters, and global exploration
+beginning with Native American cultures and extending to modern times.
+In 2004, the Jay I. Kislak Foundation donated more than 3,000 items from
+this collection to the Library of Congress where they are available for
+scholarly research. Beginning in 2016 the Kislak Foundation, in
+partnership with the University of Miami and Miami Dade College,
+established a Kislak Center on each campus along with a gift of 2,500
+books, manuscripts, and historic objects. The Kislak-MDC-UM partnership
+includes exhibitions, research, education, and public outreach programs
+that will serve MDC and UM students and faculty, the local communicty,
+and a global network of engaged scholars. The Jay I. Kislak Digital
+Library of the Americas aims to unite the materials from all of these
+institutions to tell a compelling story about early American history and
+culture.""",
+            'csv_only': False,
+            'include_file': 'KislakLibraryOfAmericas.html',
+            'live': True,
+        },
+        {
             'tag': 'congregations',
             'name': 'Digitizing Philadelphia\'s Historic Congregations',
             'blurb': """The churches and synagogues of Philadelphia were gathering places in the
