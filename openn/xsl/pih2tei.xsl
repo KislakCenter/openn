@@ -608,7 +608,7 @@
                                         <name type="vernacular">
                                           <xsl:variable name="datafield880" as="node()">
                                             <xsl:call-template name="locate880">
-                                              <xsl:with-param name="datafield" select="."/>
+                                              <xsl:with-param name="datafield" select="$datafield710"/>
                                             </xsl:call-template>
                                           </xsl:variable>
                                           <xsl:value-of select="$datafield880/marc:subfield[@code='a']"/>
