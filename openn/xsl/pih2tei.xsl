@@ -296,7 +296,7 @@
                                 <idno type="call-number">
                                     <xsl:value-of select="$call_number"/>
                                 </idno>
-                              <xsl:if test="$bibid">
+                              <xsl:if test="$bibid and string-length($bibid) > 0">
                                 <altIdentifier type="bibid">
                                     <idno><xsl:value-of select="$bibid"/></idno>
                                 </altIdentifier>
