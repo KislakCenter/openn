@@ -549,6 +549,24 @@ Center for Human Rights Documentation and Research.
             'include_file': 'ColumbiaUniversity.html',
         },
         {
+            'tag': 'amphilsoc',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'American Philosophical Society',
+            'blurb': """The American Philosophical Society (APS), the oldest learned society in
+the United States, was founded in 1743 by Benjamin Franklin for the
+purposes of "promoting useful knowledge." In the 21st century, it serves
+to advance knowledge and promote scholarship in the humanities and
+social, mathematical, life, and physical sciences. The APS Library and
+Museum's collections make it among the premier institutions for
+documenting and exhibiting the history of the American Revolution and
+founding, the history of science from Newton to NASA, Native American
+languages and culture, and the development of American anthropology. The
+Library houses over 13 million manuscripts, 275,000 volumes and bound
+periodicals, and 250,000 images, fine art and other objects.""",
+            'include_file': 'AmericanPhilosophicalSociety.html',
+        },
+        {
             'tag': 'burke',
             'metadata_type': 'TEI',
             'live': True,
@@ -1837,6 +1855,28 @@ PREP_CONFIGS = {
     'flp-mmw': {
         'repository': {
             'tag': 'flp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'pagesxlsx',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="u"]',
+                    '//marc:datafield[@tag="035"]/marc:subfield[@code="a" and starts-with(., "(PLF)")]',
+                ]
+            },
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'amphilsoc-mmw': {
+        'repository': {
+            'tag': 'amphilsoc'
         },
         "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
