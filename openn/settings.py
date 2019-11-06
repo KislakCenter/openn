@@ -640,6 +640,25 @@ finding aid is available on-site.""",
             'include_file': 'ChristChurch.html',
         },
         {
+            'tag': 'stthomas',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'African Episcopal Church of St. Thomas',
+            'blurb': """The African Episcopal Church of St. Thomas was an outgrowth of the
+African Church of Philadelphia founded in 1792 by the Free African
+Society, a mutual aid organization, established in 1787 by Absalom Jones
+and Richard Allen for the purpose of encouraging religion and literacy,
+and providing destitute members--especially widows and orphans-- with
+financial assistance. Absalom Jones led the congregation and became the
+first African American admitted to Holy Orders in the Episcopal Church
+when Bishop William White ordained him a deacon in 1796 and a priest in
+1802. Richard Allen formed Mother Bethel African Methodist Episcopal
+Church which became a separate Methodist denomination. Records consist
+of vestry minutes, pew rents, birth and baptismal records, as well as
+some records of the Free African Society.""",
+            'include_file': 'StThomas.html',
+        },
+        {
             'tag': 'mikvehisrael',
             'metadata_type': 'TEI',
             'live': True,
@@ -711,6 +730,24 @@ closed and histories of the Diocese, spanning the period from 1784 to
 the present. Records included in this project are the founding minutes
 of the Diocese and selected records of St. Paul's Episcopal Church.""",
             'include_file': 'EpiscopalDiocese.html',
+        },
+        {
+            'tag': 'stpeters',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'St. Peter\'s Church of Philadelphia',
+            'blurb': """In 1758 the vestry of Christ Church authorized the construction of a new
+chapel at Third and Pine Streets to accomodate its members living in the
+southern section of the city. St. Peter's Church and Christ Church
+shared the same vestry, ministers, and records and until they formally
+separated in 1832 were known as the United Churches of Christ Church and
+St. Peter's. The formal separation agreement stipulated that records
+created prior to 1832 were to be maintained by Christ Church so
+researchers looking for pre-1832 information should check Christ
+Church's collections. Records created after 1832 are maintained by St.
+Peter's, an active parish. Scanned for this project are minutes, pew
+rents and registers.""",
+            'include_file': 'StPeters.html',
         },
         {
             'tag': 'presbyterian',
@@ -1706,6 +1743,34 @@ PREP_CONFIGS = {
     'cchurch-congs': {
         'repository': {
             'tag': 'christchurch'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'stpeters-congs': {
+        'repository': {
+            'tag': 'stpeters'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'stthomas-congs': {
+        'repository': {
+            'tag': 'stthomas'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
