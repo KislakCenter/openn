@@ -370,10 +370,9 @@ class MMWPrep(RepositoryPrep):
 
         # make sure we have the marc.xml file
         if os.path.exists(self.marc_xml):
-            if bibid is None:
-                pass
-            else:
-                OPennException("Saved TEI lacks BibID; required MARC file missing: '%s'" % (self.marc_xml,))
+            pass
+        elif bibid is None:
+            OPennException("Saved TEI lacks BibID; required MARC file missing: '%s'" % (self.marc_xml,))
         else:
             if not self.NEW_BIBID_RE.match(bibid):
                 bibid = '99%s3503681' % (str(bibid),)
