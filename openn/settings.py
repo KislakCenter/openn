@@ -714,6 +714,24 @@ of the Diocese and selected records of St. Paul's Episcopal Church.""",
             'include_file': 'EpiscopalDiocese.html',
         },
         {
+            'tag': 'stpeters',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'St. Peter\'s Church of Philadelphia',
+            'blurb': """In 1758 the vestry of Christ Church authorized the construction of a new
+chapel at Third and Pine Streets to accomodate its members living in the
+southern section of the city. St. Peter's Church and Christ Church
+shared the same vestry, ministers, and records and until they formally
+separated in 1832 were known as the United Churches of Christ Church and
+St. Peter's. The formal separation agreement stipulated that records
+created prior to 1832 were to be maintained by Christ Church so
+researchers looking for pre-1832 information should check Christ
+Church's collections. Records created after 1832 are maintained by St.
+Peter's, an active parish. Scanned for this project are minutes, pew
+rents and registers.""",
+            'include_file': 'StPeters.html',
+        },
+        {
             'tag': 'presbyterian',
             'metadata_type': 'TEI',
             'live': True,
@@ -1707,6 +1725,20 @@ PREP_CONFIGS = {
     'cchurch-congs': {
         'repository': {
             'tag': 'christchurch'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'stpeters-congs': {
+        'repository': {
+            'tag': 'stpeters'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
