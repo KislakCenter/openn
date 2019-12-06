@@ -65,6 +65,7 @@
   </xsl:variable>
   <xsl:variable name="repositorySettlement">
     <xsl:choose>
+    <!--   For Penn manuscripts with a 650$z use that value -->
       <xsl:when test="matches($institution, 'University of Pennsylvania') and //marc:datafield[@tag=650]/marc:subfield[@tag='z']">
         <xsl:for-each select="//marc:datafield[@tag='650']/marc:subfield[@code='z']">
           <xsl:if test="position() = last()">
@@ -74,7 +75,11 @@
           </xsl:if>
         </xsl:for-each>
       </xsl:when>
-      <xsl:otherwise>
+      <!--
+        If it's a Penn MS without a 650$z or it's not a Penn manuscript, use the 852$e if present.
+        Muslim World MSS not from Penn have these values.
+      -->
+      <xsl:when test="//marc:record/marc:datafield[@tag='852']/marc:subfield[@code='e']">
         <xsl:call-template name="chomp-period">
           <xsl:with-param name="string">
             <xsl:call-template name="clean-up-text">
@@ -82,7 +87,15 @@
             </xsl:call-template>
           </xsl:with-param>
         </xsl:call-template>
-      </xsl:otherwise>
+      </xsl:when>
+      <!--
+        If it's a Penn MS and lacks 650$z and 852$e, then we use Philadelphia.
+        There's a remote chance we'll have docs from Penn locations not in Phila. and
+        we can deal with that when we come to it.
+      -->
+      <xsl:when test="matches($institution, 'University of Pennsylvania')">
+        <xsl:text>Philadelphia</xsl:text>
+      </xsl:when>
     </xsl:choose>
   </xsl:variable>
   <xsl:variable name="facsimileURL" select="//marc:datafield[@tag='856']/marc:subfield[@code='z' and matches(text(), 'facsimile', 'i')]/parent::marc:datafield/marc:subfield[@code='u']"/>
