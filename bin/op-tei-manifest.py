@@ -120,7 +120,7 @@ def rewrite_manifest(doc, source_dir):
             if file == tei_rel_path:
                 manifest.write("%s  %s\n" % (tei_digest, tei_rel_path))
             elif file == marc_rel_path and marc_digest is not None:
-                manifest.write('%s  %s\n"' % (marc_digest, marc_rel_path))
+                manifest.write("%s  %s\n" % (marc_digest, marc_rel_path))
                 logger.info('Writing marc_digest: %s' % (marc_digest,))
             else:
                 manifest.write(line)
