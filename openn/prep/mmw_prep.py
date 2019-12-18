@@ -369,11 +369,10 @@ class MMWPrep(RepositoryPrep):
         bibid = tei.bibid
 
         # make sure we have the marc.xml file
-        if bibid is None:
-            if os.path.exists(self.marc_xml):
-                pass
-            else:
-                OPennException("Saved TEI lacks BibID; required MARC file missing: '%s'" % (self.marc_xml,))
+        if os.path.exists(self.marc_xml):
+            pass
+        elif bibid is None:
+            OPennException("Saved TEI lacks BibID; required MARC file missing: '%s'" % (self.marc_xml,))
         else:
             if not self.NEW_BIBID_RE.match(bibid):
                 bibid = '99%s3503681' % (str(bibid),)
@@ -416,6 +415,22 @@ class MMWPrep(RepositoryPrep):
 
         with open(self.pih_filename, 'w+') as f:
             f.write(out)
+
+    def archive_xlsx(self):
+        if not os.path.exists(self.xlsx_path):
+            return
+
+        repo_wrapper = self.prep_config.repository_wrapper()
+        repo_dir = os.path.join(self.prep_config.context_var('archive_dir'),
+                                repo_wrapper.folder())
+        mkdir_p(repo_dir)
+
+        archive_xlsx = "%s_%s.xlsx" % (self.basedir, tstamptz())
+        archive_path = os.path.join(repo_dir, archive_xlsx)
+
+        self.logger.info("[%s] Archiving %s as %s",
+            self.basedir, self.xlsx_path, archive_path)
+        os.rename(self.xlsx_path, archive_path)
 
     def stage_marc_xml(self):
         if not os.path.exists(self.data_dir):
@@ -486,6 +501,7 @@ class MMWPrep(RepositoryPrep):
             self.write_partial_tei(self.source_dir, partial_tei_xml)
             self.validate_partial_tei()
             self.write_status(self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN)
+            self.archive_xlsx()
 
         if self.get_status() > self.MARC_XML_STAGED:
             self.logger.warning("[%s] marc.xml already staged", self.basedir)

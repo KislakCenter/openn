@@ -273,7 +273,7 @@
              {{ resource.text }}
              {% endif %}
              {% if resource.target %}
-             {{ resource.target|urlize }}
+             ({{ resource.target|urlize }})
              {% endif %}
              </li>
            {% endfor %}

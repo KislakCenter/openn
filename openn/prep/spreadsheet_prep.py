@@ -263,6 +263,7 @@ class SpreadsheetPrep(RepositoryPrep):
         self.check_page_count(self.openn_xml_path(), doc)
         self.update_serial_numbers(self.openn_xml_path(), doc)
         self.validate_partial_tei()
+        self.archive_xlsx()
         self.add_removal(self.openn_xml_path())
         self.add_removal(self.xlsx_path)
 
@@ -302,14 +303,15 @@ class SpreadsheetPrep(RepositoryPrep):
             raise OPennException(msg, page_count, image_count)
 
     def archive_xlsx(self):
+        if not os.path.exists(self.xlsx_path):
+            return
         repo_wrapper = self.prep_config.repository_wrapper()
         repo_dir = os.path.join(self.prep_config.context_var('archive_dir'),
                                 repo_wrapper.folder())
         mkdir_p(repo_dir)
 
         archive_xlsx = "%s_%s.xlsx" % (self.basedir, tstamptz())
-        archive_path = os.path.join(self.prep_config.context_var('archive_dir'),
-                                    archive_xlsx)
+        archive_path = os.path.join(repo_dir, archive_xlsx)
         self.logger.info("[%s] Archiving %s as %s",
             self.basedir, self.xlsx_path, archive_path)
         os.rename(self.xlsx_path, archive_path)

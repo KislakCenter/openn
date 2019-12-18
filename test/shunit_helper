@@ -21,7 +21,7 @@ export TEMPLATE_TIFF=$TEST_IMAGE_DIR/template_image.tif
 # contain what is, effectively, seed data.
 TABLES_TO_DELETE="openn_curatedmembership openn_derivative openn_image openn_version openn_prepstatus openn_document openn_sitefile openn_templatehash openn_templatefile"
 
-shunit=`dirname $0`/../shunit2/src/shunit2
+shunit=`dirname $0`/../shunit2/shunit2
 
 
 
