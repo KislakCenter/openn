@@ -85,7 +85,7 @@
                       </xsl:if>
                     </publicationStmt>
                     <!-- DOT ADDED NOTESSTMT TO HOLD ALL THE RANDOM NOTES FROM THE MARC RECORD -->
-                    <xsl:if test="//notes">
+                    <xsl:if test="//notes | //related">
                       <notesStmt>
                         <xsl:for-each select="//notes/note/node()">
                           <note><xsl:value-of select="."/></note>
