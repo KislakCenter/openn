@@ -497,7 +497,7 @@ class MMWPrep(RepositoryPrep):
             self.logger.warning("[%s] Partial TEI already written", self.basedir)
         else:
             self.logger.info("[%s] Writing partial TEI", self.basedir)
-            partial_tei_xml = self.gen_partial_tei()
+            partial_tei_xml = self.build_partial_tei()
             self.write_partial_tei(self.source_dir, partial_tei_xml)
             self.validate_partial_tei()
             self.write_status(self.REPOSITORY_PREP_PARTIAL_TEI_WRITTEN)
