@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Version:
-  VERSION = '1.14.25'
+  VERSION = '1.14.26'
 
   @classmethod
   def version(cls):
