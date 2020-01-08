@@ -1874,28 +1874,6 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
-    'amphilsoc-mmw': {
-        'repository': {
-            'tag': 'amphilsoc'
-        },
-        "image_types": ['*.tif', '*.jpg'],
-        'repository_prep': {
-            'tag': 'pagesxlsx',
-            'params': {
-                'required_xpaths': [
-                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
-                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
-                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
-                    '//marc:datafield[@tag="852"]/marc:subfield[@code="u"]',
-                    '//marc:datafield[@tag="035"]/marc:subfield[@code="a" and starts-with(., "(PLF)")]',
-                ]
-            },
-        },
-        'rights': {
-            'image_rights': 'PD-10',
-            'metadata_rights': 'CC0-10',
-        }
-    },
     'columbia-mmw': {
         'repository': {
             'tag': 'columbia'
@@ -2028,6 +2006,19 @@ PREP_CONFIGS = {
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'amphilsoc-bphil': {
+        'repository': {
+            'tag': 'amphilsoc'
+        },
+        "image_types": ['*.tif', '*.jpg'],
         'repository_prep': {
             'tag': 'bphil',
         },
