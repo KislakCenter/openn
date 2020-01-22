@@ -659,6 +659,32 @@ some records of the Free African Society.""",
             'include_file': 'StThomas.html',
         },
         {
+            'tag': 'stgeorges',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'Saint George\'s United Methodist Church of Philadelphia',
+            'blurb': """Historic St. George's United Methodist Church of Philadelphia is the
+oldest Methodist Church in America. Located in Philadelphia, the church
+was founded by Captain Thomas Webb and the Methodist Society of
+Philadelphia in 1769 for the purpose of practicing the Methodist
+religion. In December of 1769, Joseph Pilmore, a missionary of John
+Wesley, held the first prayer meeting at the church followed later by
+Thomas Coke and Bishop Francis Asbury. Bishop Asbury was the first
+pastor of St. George's United Methodist Church and ordained as many as
+35 ministers in the Methodist faith within America during his travels.
+Two African Americans, Richard Allen and Absalom Jones, licensed as lay
+preachers of Methodism, eventually left the church because of racial
+tensions and formed two new congregations. Richard Allen formed Mother
+Bethel African Methodist Episcopal Church. Absalom Jones turned to the
+Episcopal faith and established St. Thomas' African Episcopal Church.
+St. George's is known as "the church that moved the bridge," as the
+Benjamin Franklin Bridge was rerouted in the 1920s so the church would
+not be demolished by its construction. St. George's records consist of
+conference letters; account books; baptism, death, and marriage records;
+as well as journals, diaries, etc.""",
+            'include_file': 'StGeorge.html',
+        },
+        {
             'tag': 'mikvehisrael',
             'metadata_type': 'TEI',
             'live': True,
@@ -1757,6 +1783,20 @@ PREP_CONFIGS = {
     'stpeters-congs': {
         'repository': {
             'tag': 'stpeters'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'congs',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'stgeorges-congs': {
+        'repository': {
+            'tag': 'stgeorges'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
