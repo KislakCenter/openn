@@ -894,9 +894,9 @@
                 <profileDesc>
                     <textClass>
                         <!-- DE: Switching to marc 610 and joining subfields -->
-                        <xsl:if test="//marc:datafield[@tag='610' or @tag='650']">
+                        <xsl:if test="//marc:datafield[@tag='610' or @tag='650' or @tag='651']">
                             <keywords xmlns="http://www.tei-c.org/ns/1.0" n="subjects">
-                                <xsl:for-each select="//marc:datafield[@tag='610' or @tag='650']">
+                                <xsl:for-each select="//marc:datafield[@tag='610' or @tag='650' or @tag='651']">
                                     <term>
                                         <xsl:call-template name="join-keywords">
                                             <xsl:with-param name="datafield" select="."/>
