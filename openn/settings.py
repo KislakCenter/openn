@@ -2227,6 +2227,20 @@ culture.""",
             'live': True,
         },
         {
+            'tag': 'indic',
+            'name': 'Collection of Indic Manuscripts',
+            'blurb': """Penn Libraries holds more than 3,000 manuscripts from South Asia, making
+it one of the largest collections of its kind in the Americas.
+Predominantly Indic in provenance, the manuscripts are chiefly Sanskrit
+works written in Devanāgarī script. Though generally informed by
+traditional Hindu learning, the collection nevertheless remains
+thematically comprehensive and contains significant Buddhist and Jain
+texts.""",
+            'csv_only': False,
+            'include_file': 'IndicCurated.html',
+            'live': True,
+        },
+        {
             'tag': 'congregations',
             'name': 'Digitizing Philadelphia\'s Historic Congregations',
             'blurb': """The churches and synagogues of Philadelphia were gathering places in the
