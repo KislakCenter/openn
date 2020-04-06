@@ -411,7 +411,7 @@ class MMWPrep(RepositoryPrep):
             stdout=subprocess.PIPE)
         out, err = p.communicate()
         if p.returncode != 0:
-            raise OPennException("MARC/pages XML merge failed: %s" (err,))
+            raise OPennException("MARC/pages XML merge failed: %s" % (err,))
 
         with open(self.pih_filename, 'w+') as f:
             f.write(out)
