@@ -1174,6 +1174,17 @@ history and Delawareana, and science and technology.""",
             'include_file': 'UniversityOfDelaware.html',
         },
         {
+            'tag': 'britlib',
+            'name': 'British Library',
+            'metadata_type': 'TEI',
+            'live': True,
+            'blurb': """The British Library is the national library of the United Kingdom and
+gives access to the world’s most comprehensive research collection. The
+collection of over 170 million items includes artifacts from every age
+of written civilization.""",
+            'include_file': 'BritishLibrary.html',
+        },
+        {
             'tag': 'temple',
             'name': 'Temple University Libraries, Special Collections Research Center',
             'metadata_type': 'TEI',
@@ -1547,6 +1558,20 @@ PREP_CONFIGS = {
     'flp-bphil': {
         'repository': {
             'tag': 'flp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'britlib-bphil': {
+        'repository': {
+            'tag': 'britlib'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
