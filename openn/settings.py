@@ -1179,7 +1179,7 @@ history and Delawareana, and science and technology.""",
             'metadata_type': 'TEI',
             'live': True,
             'blurb': """The British Library is the national library of the United Kingdom and
-gives access to the world’s most comprehensive research collection. The
+gives access to the world's most comprehensive research collection. The
 collection of over 170 million items includes artifacts from every age
 of written civilization.""",
             'include_file': 'BritishLibrary.html',
