@@ -850,6 +850,18 @@
                                             </xsl:call-template>
                                         </origDate>
                                     </xsl:for-each>
+                                    <!-- DE: use marc field 245$f if it's there-->
+                                    <xsl:for-each select="//marc:datafield[@tag='245']/marc:subfield[@code='f']">
+                                        <origDate>
+                                            <xsl:call-template name="chomp-period">
+                                                <xsl:with-param name="string">
+                                                    <xsl:call-template name="clean-up-text">
+                                                        <xsl:with-param name="some-text" select="." />
+                                                    </xsl:call-template>
+                                                </xsl:with-param>
+                                            </xsl:call-template>
+                                        </origDate>
+                                    </xsl:for-each>
                                     <!-- END DOT MOD -->
 
                                     <!-- DE: Cleaner code for origPlace; add only if present -->
