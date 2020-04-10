@@ -364,7 +364,15 @@ PREPARATION_METHODS = [
     {
         'tag': 'gzh',
         'description': """Extracts metadata from Genizah spreadsheet to build metadata for the
-            object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil'""",
+            object. Requires valid openn_metadata.xslx file. Uses the same XSL as 'bphil' This
+            genizah.json configuration is the same as bibliophilly.json, with these exceptions:
+                - Metadata Creator/Email:   not required in genizah.json
+                - Subject: keywords:        not required in genizah.json
+                - Scribe information:       added in genizah.json
+                - Provenance Details:       repeatable in genizah.json
+                - Date requirements:        looser in genizah.json
+
+                """,
         'name': 'Genizah Prep',
         'package_validation': {
             'valid_names': ['*.tif', '*.jpg', 'openn_metadata.xlsx'],
@@ -1569,14 +1577,14 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
-    'britlib-bphil': {
+    'britlib-gzh': {
         'repository': {
             'tag': 'britlib'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
         'repository_prep': {
-            'tag': 'bphil',
+            'tag': 'gzh',
         },
         'rights': {
             'image_rights': 'PD-10',
