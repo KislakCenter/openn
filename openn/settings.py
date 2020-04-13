@@ -1582,7 +1582,7 @@ PREP_CONFIGS = {
             'tag': 'britlib'
         },
         "image_types": ['*.tif', '*.jpg'],
-        "funders": ["Council on Library and Information Resources"],
+        "funders": ["The Polonsky Foundation"],
         'repository_prep': {
             'tag': 'gzh',
         },
