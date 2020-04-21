@@ -22,30 +22,30 @@
   </xsl:template>
   <xsl:template name="join-keywords">
     <xsl:param name="datafield"/>
-    <xsl:call-template name="chomp-period">
-      <xsl:with-param name="string">
-        <!--  Join only letter subfield@code value; skip numeric -->
-        <xsl:for-each select="./marc:subfield[matches(@code, '[a-z]')]">
+    <!--  Join only letter subfield@code value; skip numeric -->
+    <xsl:for-each select="./marc:subfield[matches(@code, '[a-z]')]">
+      <xsl:call-template name="chomp-period">
+        <xsl:with-param name="string">
           <xsl:value-of select="."/>
-          <xsl:if test="position() != last()">
-            <xsl:text>--</xsl:text>
-          </xsl:if>
-        </xsl:for-each>
-      </xsl:with-param>
-    </xsl:call-template>
+        </xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="position() != last()">
+        <xsl:text>--</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
   <xsl:template name="join-genre">
     <xsl:param name="datafield"/>
-    <xsl:call-template name="chomp-period">
-      <xsl:with-param name="string">
-        <xsl:for-each select="./marc:subfield[matches(@code, '[abcvxyz]')]">
+    <xsl:for-each select="./marc:subfield[matches(@code, '[abcvxyz]')]">
+      <xsl:call-template name="chomp-period">
+        <xsl:with-param name="string">
           <xsl:value-of select="."/>
-          <xsl:if test="position() != last()">
-            <xsl:text>--</xsl:text>
-          </xsl:if>
-        </xsl:for-each>
-      </xsl:with-param>
-    </xsl:call-template>
+        </xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="position() != last()">
+        <xsl:text>--</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
   <!-- Extract personal names, employing the date if present. -->
   <xsl:template name="extract-pn">
@@ -85,13 +85,13 @@
       <xsl:copy-of select="$subfields"/>
     </xsl:element>
   </xsl:template>
-<!--  
+  <!--
   Find an associated 880 datafield.
-  
-  This template accepts a datafield with @tag=NNN and subfield @code=6 equal '880-MM' 
+
+  This template accepts a datafield with @tag=NNN and subfield @code=6 equal '880-MM'
   and locates the datafield @tag=880 with subfield @code starting with 'NNN-MM', where NNN
-  is a three-digit datafield @tag value and MM is the two-digit index of the @code=6 value. 
-  
+  is a three-digit datafield @tag value and MM is the two-digit index of the @code=6 value.
+
     <marc:datafield tag="100" ind1="1" ind2=" ">
       <marc:subfield code="6">880-01</marc:subfield>
       <marc:subfield code="a">Jazūlī, Muḥammad ibn Sulaymān,</marc:subfield>
@@ -103,21 +103,23 @@
       <marc:subfield code="a">جزولي، محمد بن سليمان،</marc:subfield>
       <marc:subfield code="d">-1465</marc:subfield>
     </marc:datafield>
-    
- For example, for datafield[@tag=100] with subfield[@code=6] with text '880-01', retur the 
+
+ For example, for datafield[@tag=100] with subfield[@code=6] with text '880-01', retur the
  880 datafield with subfield[@code=6] starting with '100-01'.
 
   -->
   <xsl:template name="locate880" as="node()">
     <xsl:param name="datafield"/>
     <!--    From '880-01' grab the hyphen and the next 2 characters; e.g., '-01' -->
-    <xsl:variable name="index880" select="substring($datafield/marc:subfield[@code='6'], 4, 3)"/>
+    <xsl:variable name="index880" select="substring($datafield/marc:subfield[@code = '6'], 4, 3)"/>
     <!--    Glue the datafield tag (e.g., '100') and the $index880 from above to give the search value; e.g., '100-01' -->
     <xsl:variable name="searchValue" select="concat($datafield/@tag, $index880)"/>
     <!--    Find the datafield[@tag=880] with subfield @code=6 that begins with $searchValue -->
-    <xsl:copy-of select="$datafield/parent::marc:record/marc:datafield[@tag='880' and starts-with(./marc:subfield[@code='6']/text(), $searchValue)]"/>
+    <xsl:copy-of
+      select="$datafield/parent::marc:record/marc:datafield[@tag = '880' and starts-with(./marc:subfield[@code = '6']/text(), $searchValue)]"
+    />
   </xsl:template>
-  
+
   <xsl:template name="subfieldSelect">
     <xsl:param name="codes"/>
     <xsl:param name="delimeter">
@@ -133,7 +135,7 @@
     </xsl:variable>
     <xsl:value-of select="substring($str, 1, string-length($str) - string-length($delimeter))"/>
   </xsl:template>
-  
+
   <xsl:template name="buildSpaces">
     <xsl:param name="spaces"/>
     <xsl:param name="char">
@@ -183,12 +185,12 @@
     <xsl:param name="mainLang"/>
     <xsl:param name="tags"/>
     <xsl:variable name="val">
-    <xsl:for-each select="$tags">
-      <xsl:if test="not($mainLang = ./text())">
-        <xsl:value-of select="."/>
-        <xsl:text> </xsl:text>
-      </xsl:if>
-    </xsl:for-each>
+      <xsl:for-each select="$tags">
+        <xsl:if test="not($mainLang = ./text())">
+          <xsl:value-of select="."/>
+          <xsl:text> </xsl:text>
+        </xsl:if>
+      </xsl:for-each>
     </xsl:variable>
     <xsl:value-of select="normalize-space($val)"/>
   </xsl:template>
@@ -227,8 +229,8 @@
   </xsl:template>
 
   <xsl:template name="dateString">
-    <!--    
-      TODO: Is this how we want to sdo this, or should we prefer the 260c for the date string? 
+    <!--
+      TODO: Is this how we want to sdo this, or should we prefer the 260c for the date string?
     -->
     <xsl:param name="marc260c"/>
     <xsl:param name="marc008"/>
