@@ -109,24 +109,60 @@
       <subfield code="a">Pseudo-Ptolemy.</subfield>
       <subfield code="t">Centiloquium.</subfield>
     </datafield>
-    <datafield tag="650" ind1=" " ind2="0">
-      <subfield code="a">Astrology, Arab</subfield>
+    <datafield tag="651" ind1=" " ind2="0">
+      <subfield code="a">Jammu and Kashmir (India)</subfield>
+      <subfield code="x">History</subfield>
       <subfield code="v">Early works to 1800.</subfield>
     </datafield>
     <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Manuscripts, Persian</subfield>
+      <subfield code="y">18th century.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Manuscripts, Oriental</subfield>
+      <subfield code="y">18th century.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="7">
+      <subfield code="a">Manuscripts, Oriental.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01008453</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="7">
       <subfield code="a">Manuscripts, Persian.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01008462</subfield>
+    </datafield>
+    <datafield tag="651" ind1=" " ind2="7">
+      <subfield code="a">India</subfield>
+      <subfield code="z">Jammu and Kashmir.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01207110</subfield>
+    </datafield>
+    <datafield tag="648" ind1=" " ind2="7">
+      <subfield code="a">1700-1799</subfield>
+      <subfield code="2">fast</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
-      <subfield code="a">Codices.</subfield>
+      <subfield code="a">Codices (bound manuscripts)</subfield>
       <subfield code="2">aat</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
-      <subfield code="a">Translations (documents)</subfield>
+      <subfield code="a">Illuminations (painting)</subfield>
       <subfield code="2">aat</subfield>
     </datafield>
     <datafield tag="655" ind1=" " ind2="7">
-      <subfield code="a">Manuscripts.</subfield>
+      <subfield code="a">Manuscripts (documents)</subfield>
       <subfield code="2">aat</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">Early works.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01411636</subfield>
+    </datafield>
+    <datafield tag="655" ind1=" " ind2="7">
+      <subfield code="a">History.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01411628</subfield>
     </datafield>
     <datafield tag="700" ind1="1" ind2=" ">
       <subfield code="a">Smith, David Eugene,</subfield>
