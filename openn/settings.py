@@ -578,7 +578,7 @@ periodicals, and 250,000 images, fine art and other objects.""",
             'tag': 'burke',
             'metadata_type': 'TEI',
             'live': True,
-            'name': 'Columbia University, Burke Library at Union Theological Seminary',
+            'name': 'Columbia University, The Burke Library at Union Theological Seminary',
             'blurb': """The mission of Columbia University's Burke Library at Union Theological
 Seminary is to identify, acquire, organize, provide access to,
 interpret, and preserve for the future information in the field of
