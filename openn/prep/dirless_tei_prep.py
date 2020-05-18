@@ -21,17 +21,18 @@ class DirlessTEIPrep(object):
 
     logger = logging.getLogger(__name__)
 
-    def __init__(self, doc, tei_file):
+    def __init__(self, source_dir, doc, prep_config):
         """Create a new TEI for the given PrepConfig 'prep_config',
         'folder_name', and 'tei_file'.
         """
-        self._doc         = doc
-        self._tei_file    = tei_file
+        self.source_dir = source_dir
+        self._doc       = doc
+        self._tei_file  = os.path.join(self.source_dir, 'TEI.xml')
 
     def validate(self):
         self._validate_tei()
 
-    def prep(self):
+    def prep_dir(self):
         self.validate()
 
         # set up the document
