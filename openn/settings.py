@@ -397,6 +397,8 @@ folder name to the database; requires a TEI file.""",
         'name': 'Directory-less TEI prep',
         'process_directory': False,
         'package_validation': {
+            'valid_names': ['TEI.xml'],
+            'required_names': ['TEI.xml'],
         },
         'prep_class': {
             'class_name': 'openn.prep.dirless_tei_prep.DirlessTEIPrep',
@@ -1252,6 +1254,20 @@ Americana and art. The combined holdings of the Rosenbach and the Free
 Library of Philadelphia inspire unique exhibitions and programs
 throughout the year.""",
             'include_file': 'Rosenbach.html',
+        },
+        {
+            'tag': 'hmml',
+            'name': 'The Hill Museum & Manuscript Library (HMML)',
+            'metadata_type': 'custom',
+            'live': True,
+            'blurb': """The Hill Museum & Manuscript Library (HMML), located at Saint John's
+University in Collegeville, Minnesota, holds the world's largest archive of
+manuscript photographs in both microfilm and digital format. HMML identifies
+manuscript collections around the world that need photographic preservation.
+HMML's archives now contain more than 200,000 complete manuscripts, ranging in
+size from large codices of hundreds of folios to brief documents consisting of
+just a few leaves.""",
+        'include_file': 'HMLL.html',
         },
     ],
 }
@@ -2167,6 +2183,18 @@ PREP_CONFIGS = {
         "image_types": [ '*.tif', '*.jpg' ],
         'repository_prep': {
             'tag': 'diaries',
+        },
+        'rights': {
+            'image_rights': 'dynamic',
+            'metadata_rights': 'dynamic',
+        }
+    },
+    'hmml-dirlesstei': {
+        'repository': {
+            'tag': 'hmml',
+        },
+        'repository_prep': {
+            'tag': 'dirlesstei',
         },
         'rights': {
             'image_rights': 'dynamic',
