@@ -14,9 +14,15 @@
 <div>
   <p>
     <span class="collection_info">Collection ID: {{ doc.repository.long_id }}</span> |
-    <span class="collection_info">Metadata type: {{ doc.repository.metadata_type }}</span>
+    <span class="collection_info">Metadata type: {{ doc.repository.metadata_type }}</span> |
+    {% if item.document.repository.metadata_type|lower != 'custom' %}
+      <span class="page-link"><a href="/{{ doc.document.tei_path }}">TEI XML</a></span> |
+    {% endif %}
+    <span class="page-link"><a href="/{{ doc.document.package_dir }}">Data</a></span>
   </p>
 </div>
+
+
 
 <h1>{{ doc.document.call_number }} {{ doc.document.title }}{% if doc.tei.title_vernacular %} / {{ doc.tei.title_vernacular }}{% endif %}</h1>
         <div>

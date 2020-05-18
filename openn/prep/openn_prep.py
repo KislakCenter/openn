@@ -36,8 +36,9 @@ class OPennPrep:
             repo_prep = repo_prep_class(source_dir, doc, prep_config)
             repo_prep.prep_dir()
 
-            common_prep = CommonPrep(source_dir, doc, prep_config)
-            common_prep.prep_dir()
+            if prep_config.process_directory():
+                common_prep = CommonPrep(source_dir, doc, prep_config)
+                common_prep.prep_dir()
             self._success_status(prepstatus)
             return doc
         except Exception as ex:

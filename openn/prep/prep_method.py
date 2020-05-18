@@ -16,6 +16,9 @@ class PrepMethod(object):
     def grab_prep_class_param(self, name):
         return self.prep_class_dict[name]
 
+    def process_directory(self):
+        return self._config.get('process_directory', True)
+
     def get_prep_class(self):
         class_name = self.get_class_name()
         return opfunc.get_class(class_name)

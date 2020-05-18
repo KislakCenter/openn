@@ -66,6 +66,9 @@ class PrepConfig:
             msg = "Got KeyError (%s) for rights dict: %s"
             raise OPennException(msg % (kex, json.dumps(self._repo_prep_dict)))
 
+    def process_directory(self):
+        return self.prep_method().process_directory()
+
     def rights_holder(self):
         if self._rights_dict.get('holder', None) is None:
             return self.repository_wrapper().name()
