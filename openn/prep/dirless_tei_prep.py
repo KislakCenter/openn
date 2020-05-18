@@ -50,7 +50,6 @@ class DirlessTEIPrep(object):
 
     def _validate_tei(self):
         # Confirm the TEI file exists
-        print "=== tei file is %s ===" % (self._tei_file,)
         if not os.path.exists(self._tei_file):
             raise OPennException("Cannot find TEI file: %s", (self._tei_file,))
 

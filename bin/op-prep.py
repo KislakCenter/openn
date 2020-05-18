@@ -298,7 +298,10 @@ def main(cmdline=None):
                 parser.error(msg)
 
         doc = OPennPrep().prep_dir(source_dir, prep_config, doc)
-        stage_doc(source_dir, doc)
+        if prep_config.process_directory():
+            stage_doc(source_dir, doc)
+        else:
+            logger.info("Per configuration '%s', skipping staging for '%s' at %s", prep_config_tag, doc.title, source_dir)
     except OPennException as ex:
         logger.error(unicode(ex).encode('utf8'))
         status = 4
