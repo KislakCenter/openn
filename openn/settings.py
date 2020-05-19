@@ -1267,7 +1267,7 @@ manuscript collections around the world that need photographic preservation.
 HMML's archives now contain more than 200,000 complete manuscripts, ranging in
 size from large codices of hundreds of folios to brief documents consisting of
 just a few leaves.""",
-        'include_file': 'HMLL.html',
+        'include_file': 'HMML.html',
         },
     ],
 }
