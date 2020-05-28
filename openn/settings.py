@@ -1264,7 +1264,7 @@ throughout the year.""",
 University in Collegeville, Minnesota, holds the world's largest archive of
 manuscript photographs in both microfilm and digital format. HMML identifies
 manuscript collections around the world that need photographic preservation.
-HMML's archives now contain more than 200,000 complete manuscripts, ranging in
+HMML's archives now contain more than 300,000 complete manuscripts, ranging in
 size from large codices of hundreds of folios to brief documents consisting of
 just a few leaves.""",
         'include_file': 'HMML.html',
