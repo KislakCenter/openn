@@ -1261,12 +1261,13 @@ throughout the year.""",
             'metadata_type': 'custom',
             'live': True,
             'blurb': """The Hill Museum & Manuscript Library (HMML), located at Saint John's
-University in Collegeville, Minnesota, holds the world's largest archive of
-manuscript photographs in both microfilm and digital format. HMML identifies
-manuscript collections around the world that need photographic preservation.
-HMML's archives now contain more than 200,000 complete manuscripts, ranging in
-size from large codices of hundreds of folios to brief documents consisting of
-just a few leaves.""",
+University in Collegeville, Minnesota, holds the world's largest archive
+of manuscript photographs in both microfilm and digital format. HMML
+identifies manuscript collections around the world that need
+photographic preservation. HMML's archives now contain more than 300,000
+complete manuscripts, ranging in size from large codices of hundreds of
+folios to brief documents consisting of just a few leaves. Hosted on
+OPenn is a palimpsest leaf from HMML, SJU MS Frag 32.""",
         'include_file': 'HMML.html',
         },
     ],
