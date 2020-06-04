@@ -16,6 +16,7 @@
       select="normalize-space(replace(replace(replace($some-text, '[\[\]]', ''), ' \)', ')'), ',$', ''))"
     />
   </xsl:template>
+  <!-- Remove a period from the end of a string. -->
   <xsl:template name="chomp-period">
     <xsl:param name="string"/>
     <xsl:value-of select="replace(normalize-space($string), '\.$', '')"/>

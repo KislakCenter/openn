@@ -894,6 +894,22 @@
                                     </provenance>
                                 </xsl:for-each>
                                 <!-- END DOT MOD -->
+                              <xsl:comment>
+                                  2020-06-04 DE: Adding proveance for LCP 796 fields --
+
+                                  As far as I can tell, 790 fields are OCLC only. They don't appear in LOC MARC.
+                                  documentation. See: http://www.loc.gov/marc/bibliographic/, which lacks 79x
+                                  fields. See also https://www.oclc.org/bibformats/en/7xx/796.html.
+
+                                  Adding this for LCP for Benjamin Rush. Not handling linkage to 880 fields for non-Latin scripts.
+                              </xsl:comment>
+                              <xsl:for-each select="//marc:datafield[@tag=796][contains(./marc:subfield[@code='e'], 'former owner')]">
+                                  <provenance>
+                                      <xsl:call-template name="extract-pn">
+                                          <xsl:with-param name="datafield" select="."/>
+                                      </xsl:call-template>
+                                  </provenance>
+                              </xsl:for-each>
 
                             </history>
                         </msDesc>
@@ -906,7 +922,7 @@
                 <profileDesc>
                     <textClass>
                         <!-- DE: Switching to marc 610 and joining subfields -->
-                        <xsl:if test="//marc:datafield[@tag='610' or @tag='650' or @tag='651' or @tag='600']">
+                        <xsl:if test="//marc:datafield[@tag='610' or @tag='650' or @tag='651' or @tag='600'] or //marc:datafield[@tag=796][contains(./marc:subfield['e'], 'associated name')] or //marc:datafield[@tag=797][contains(./marc:subfield['e'], 'associated name')]">
                             <keywords xmlns="http://www.tei-c.org/ns/1.0" n="subjects">
                                 <xsl:for-each select="//marc:datafield[@tag='610' or @tag='650' or @tag='651' or @tag='600']">
                                     <term>
@@ -915,6 +931,22 @@
                                         </xsl:call-template>
                                     </term>
                                 </xsl:for-each>
+                                <!-- <xsl:for-each select="//marc:datafield[@tag='500']/marc:subfield[@code='a' and starts-with(., 'Script:')]"> -->
+                                <xsl:for-each select="//marc:datafield[@tag=796]/marc:subfield['e' and contains(., 'associated name')]/parent::marc:datafield">
+                                    <term>
+                                        <xsl:call-template name="extract-pn">
+                                            <xsl:with-param name="datafield" select="."/>
+                                        </xsl:call-template>
+                                    </term>
+                                </xsl:for-each>
+                                <xsl:for-each select="//marc:datafield[@tag=797]/marc:subfield['e' and contains(., 'associated name')]/parent::marc:datafield">
+                                    <term>
+                                        <xsl:call-template name="extract-pn">
+                                            <xsl:with-param name="datafield" select="."/>
+                                        </xsl:call-template>
+                                    </term>
+                                </xsl:for-each>
+
                             </keywords>
                         </xsl:if>
                         <xsl:if test="//marc:datafield[@tag='655']/marc:subfield[@code='a']">
