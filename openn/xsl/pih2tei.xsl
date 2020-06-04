@@ -40,11 +40,13 @@
       <xsl:when test="matches(//marc:record/marc:controlfield[@tag=001]/text(), '^on\d+')">
         <xsl:text>oclc</xsl:text>
       </xsl:when>
+        <xsl:when test="//marc:record/marc:datafield[@tag=852]/marc:subfield[@code='a' and contains(., 'Library Company')]">
+            <xsl:text>lcp</xsl:text>
+        </xsl:when>
       <!-- Otherwise, it's probably from the OPAC -->
       <xsl:otherwise><xsl:text>opac</xsl:text></xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-
   <xsl:variable name="institution">
       <xsl:call-template name="chomp-period">
           <xsl:with-param name="string">
@@ -314,7 +316,7 @@
                                     <idno><xsl:value-of select="$bibid"/></idno>
                                 </altIdentifier>
                               </xsl:if>
-                              <xsl:if test="$oclcID">
+                              <xsl:if test="$oclcID and string-length($oclcID) &gt; 0">
                                 <altIdentifier type="oclc">
                                   <idno><xsl:text>http://www.worldcat.org/oclc/</xsl:text><xsl:value-of select="$oclcID"/></idno>
                                 </altIdentifier>

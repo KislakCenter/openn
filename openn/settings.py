@@ -1964,6 +1964,26 @@ PREP_CONFIGS = {
             'metadata_rights': 'CC0-10',
         }
     },
+    'tlc-rush': {
+        'repository': {
+            'tag': 'tlc'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        'repository_prep': {
+            'tag': 'pagesxlsx',
+            'params': {
+                'required_xpaths': [
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="b"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="a"]',
+                    '//marc:datafield[@tag="852"]/marc:subfield[@code="e"]',
+                ]
+            },
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
     'columbia-mmw': {
         'repository': {
             'tag': 'columbia'
