@@ -2309,6 +2309,25 @@ culture.""",
             'live': True,
         },
         {
+            'tag': 'medicalhub',
+            'name': 'For the Health of the New Nation: Philadelphia as the Center of American Medical Education, 1746-1868',
+            'blurb': """This initiative will digitize, describe, an provide access to 140,000
+pages of lecture tickets, course schedules, theses, dissertations,
+student notes, faculty lecture notes, commencement addresses, opening
+addresses, and matriculation records from Philadelphia, 1746-1868. The
+project will emphasize not only the voices of the medical greats, but
+also the often unheard voices of students and others. Project parters
+for this initiative are The College of Physicians of Philadelphia; The
+Legacy Center, Drexel University College of Medicine; University of
+Pennsylvania Libraries; Pennsylvania Hospital Historic Collections; The
+Library Company of Philadelphia; American Philosophical Society; Thomas
+Jefferson University Archives and Special Collections; and Philadelphia
+Area Consortium of Special Collections Libraries (PACSCL).""",
+            'csv_only': False,
+            'include_file': 'HealthOfTheNewNation.html',
+            'live': True,
+        },
+        {
             'tag': 'indic',
             'name': 'Collection of Indic Manuscripts',
             'blurb': """Penn Libraries holds more than 3,000 manuscripts from South Asia, making
