@@ -495,6 +495,23 @@ collection ranging from the 15th century to the present, including
             'include_file': 'BrynMawrCollege.html',
         },
         {
+            'tag': 'lasalle',
+            'metadata_type': 'TEI',
+            'live': True,
+            'name': 'La Salle University, Department of Special Collections',
+            'blurb': """The Department of Special Collections in the Connelly Library houses a
+diverse range of materials, from 15th century illuminated devotionals to
+subject collections treating contemporary social issues. Bodies of work
+include literature, music, films, art, archival material and ephemera.
+The collections explore a variety of themes in aural, narrative and
+illustrative form. Special Collections maintains a focus on acquiring,
+cataloging and housing unique material that is tied to undergraduate
+pedagogy and is freely available to researchers. The Department of
+Special Collections is a proud member of the Philadelphia Area
+Consortium of Special Collections Libraries.""",
+            'include_file': 'LaSalleUniversity.html',
+        },
+        {
             'tag': 'chf',
             'metadata_type': 'TEI',
             'live': True,
@@ -1583,6 +1600,20 @@ PREP_CONFIGS = {
     'flp-bphil': {
         'repository': {
             'tag': 'flp'
+        },
+        "image_types": ['*.tif', '*.jpg'],
+        "funders": ["Council on Library and Information Resources"],
+        'repository_prep': {
+            'tag': 'bphil',
+        },
+        'rights': {
+            'image_rights': 'PD-10',
+            'metadata_rights': 'CC0-10',
+        }
+    },
+    'lasalle-bphil': {
+        'repository': {
+            'tag': 'lasalle'
         },
         "image_types": ['*.tif', '*.jpg'],
         "funders": ["Council on Library and Information Resources"],
