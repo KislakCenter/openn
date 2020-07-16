@@ -83,5 +83,3 @@ class DocumentData:
             msg = "Error processing document: id: %d, base_dir: '%s'" % (document.id, document.base_dir)
             self.logger.error(msg)
             raise OPennException(msg, oex, str(oex))
-
-
