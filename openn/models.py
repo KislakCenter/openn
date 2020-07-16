@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from ordered_model.models import OrderedModel
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 import httplib
 import os
@@ -118,7 +119,10 @@ class Document(models.Model):
 
     @property
     def is_prepped(self):
-        return (self.prepstatus and self.prepstatus.succeeded) or False
+        try:
+            return (self.prepstatus and self.prepstatus.succeeded) or False
+        except ObjectDoesNotExist:
+            return False
 
     @property
     def repository_tag(self):
@@ -166,10 +170,11 @@ class Document(models.Model):
                  'title': self.title}
 
     def is_live(self):
-        c = httplib.HTTPConnection(settings.OPENN_HOST)
+        c = httplib.HTTPSConnection(settings.OPENN_HOST)
         path = '/%s' % (self.manifest_path, )
         c.request('HEAD', path)
-        return c.getresponse().status < 400
+        status = c.getresponse().status
+        return status >= 200 and  status < 300
 
     # Choosing collection, base_dir as the uniqueness columns
     # While the collection + call_number should be unique, the collection +

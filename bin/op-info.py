@@ -81,6 +81,8 @@ def add_missing_preps():
 
 def update_online_statuses():
     for doc in queryset_iterator(Document.objects.filter(is_online=False)):
+        if not doc.is_prepped:
+            continue
         if doc.is_live():
             doc.is_online = True
             doc.save()
