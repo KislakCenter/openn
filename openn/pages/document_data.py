@@ -15,7 +15,7 @@ class DocumentData:
         self._document      = document
         self._repository    = repository
         self._toc_dir       = toc_dir
-        self._tei           = OPennTEI(document.tei_xml)
+        self._tei           = self.get_tei(document)
         self._pages         = None
         self._ms_item_pages = None
         self._deco_notes    = None
