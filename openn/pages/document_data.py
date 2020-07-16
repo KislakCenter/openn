@@ -6,6 +6,7 @@ from django.conf import settings
 from openn.models import *
 from openn.xml.openn_tei import OPennTEI
 from openn.pages.document_page import DocumentPage
+from openn.openn_exception import OPennException
 
 class DocumentData:
 
