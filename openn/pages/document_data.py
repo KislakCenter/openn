@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 
 from django.conf import settings
 
@@ -7,6 +8,9 @@ from openn.xml.openn_tei import OPennTEI
 from openn.pages.document_page import DocumentPage
 
 class DocumentData:
+
+    logger = logging.getLogger(__name__)
+
     def __init__(self, document, repository, toc_dir):
         self._document      = document
         self._repository    = repository
@@ -71,3 +75,13 @@ class DocumentData:
 
     def origin(self):
         return [x for x in [ self.tei.orig_place, self.tei.orig_date, self.tei.origin ] if x ]
+
+    def get_tei(self, document):
+        try:
+            return OPennTEI(document.tei_xml)
+        except OPennException as oex:
+            msg = "Error processing document: id: %d, base_dir: '%s'" % (document.id, document.base_dir)
+            self.logger.error(msg)
+            raise OPennException(msg, oex, str(oex))
+
+
