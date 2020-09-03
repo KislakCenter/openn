@@ -55,7 +55,7 @@ find_python() {
             fp_v=`$fp_python -V 2>&1`
             if [[ "$fp_v" =~ 2\.[67]\.[0-9] ]];
             then
-                echo $fp_python
+                echo $(which $fp_python)
                 return 0
                 break
             else

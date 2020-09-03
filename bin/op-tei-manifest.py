@@ -69,7 +69,7 @@ def copy_current_manifest(doc, source_dir):
         shutil.copyfile(staged_manifest, dest)
         return
 
-    url = "http://%s/%s" % (settings.OPENN_HOST, doc.manifest_path)
+    url = "https://%s/%s" % (settings.OPENN_HOST, doc.manifest_path)
     logger.info("Downloading manifest from %s", url)
     try:
         data = urllib2.urlopen(url).read()
