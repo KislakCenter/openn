@@ -188,7 +188,7 @@ class MedrenPrep(RepositoryPrep):
     def check_url(self, bibid):
         conn = httplib.HTTPConnection(self.host)
         url = self.url_path.format(bibid)
-        self.logger.info("===== Requesting: %s" % (url,))
+        self.logger.info("===== Requesting: %s/%s", self.host, url)
         conn.request("HEAD", url)
         # conn.request("HEAD", self.url_path.format(bibid))
         res = conn.getresponse()
